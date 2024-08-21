@@ -1,0 +1,2 @@
+import{r as t,h as s}from"./p-dacfba31.js";import{f as e}from"./p-b07dd267.js";const o=":host{display:block}";const d=o;const i=class{constructor(s){t(this,s);this.first=undefined;this.middle=undefined;this.last=undefined}getText(){return e(this.first,this.middle,this.last)}render(){return s("div",{key:"70654fc83039b5f659efe99cc990e9b86d20dbe0"},"Hello, World! I'm ",this.getText())}};i.style=d;export{i as my_component};
+//# sourceMappingURL=p-bc9e0524.entry.js.map
