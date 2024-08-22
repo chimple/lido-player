@@ -1,2 +1,2 @@
-function n(n,r,t){return(n||"")+(r?` ${r}`:"")+(t?` ${t}`:"")}export{n as format};
+export{f as format}from"./p-3ca5b3ea.js";
 //# sourceMappingURL=index.esm.js.map
