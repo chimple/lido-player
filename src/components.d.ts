@@ -6,56 +6,276 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface AppCol {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+    }
+    interface AppContainer {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+    }
+    interface AppHome {
+    }
+    interface AppImage {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "src": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+    }
+    interface AppObjective {
+        "string": string;
+        "value": string;
+    }
+    interface AppRenderer {
+        "data": string;
+    }
+    interface AppRoot {
+        "xmlData": string;
+    }
+    interface AppRow {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+    }
+    interface AppText {
+        "audio": string;
+        "bgColor": string;
+        "font": string;
+        "fontSize": string;
+        "height": string;
+        "highlightWhileSpeaking": boolean;
+        "id": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "string": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLAppColElement extends Components.AppCol, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLAppColElement: {
+        prototype: HTMLAppColElement;
+        new (): HTMLAppColElement;
+    };
+    interface HTMLAppContainerElement extends Components.AppContainer, HTMLStencilElement {
+    }
+    var HTMLAppContainerElement: {
+        prototype: HTMLAppContainerElement;
+        new (): HTMLAppContainerElement;
+    };
+    interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
+    }
+    var HTMLAppHomeElement: {
+        prototype: HTMLAppHomeElement;
+        new (): HTMLAppHomeElement;
+    };
+    interface HTMLAppImageElement extends Components.AppImage, HTMLStencilElement {
+    }
+    var HTMLAppImageElement: {
+        prototype: HTMLAppImageElement;
+        new (): HTMLAppImageElement;
+    };
+    interface HTMLAppObjectiveElement extends Components.AppObjective, HTMLStencilElement {
+    }
+    var HTMLAppObjectiveElement: {
+        prototype: HTMLAppObjectiveElement;
+        new (): HTMLAppObjectiveElement;
+    };
+    interface HTMLAppRendererElement extends Components.AppRenderer, HTMLStencilElement {
+    }
+    var HTMLAppRendererElement: {
+        prototype: HTMLAppRendererElement;
+        new (): HTMLAppRendererElement;
+    };
+    interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
+    }
+    var HTMLAppRootElement: {
+        prototype: HTMLAppRootElement;
+        new (): HTMLAppRootElement;
+    };
+    interface HTMLAppRowElement extends Components.AppRow, HTMLStencilElement {
+    }
+    var HTMLAppRowElement: {
+        prototype: HTMLAppRowElement;
+        new (): HTMLAppRowElement;
+    };
+    interface HTMLAppTextElement extends Components.AppText, HTMLStencilElement {
+    }
+    var HTMLAppTextElement: {
+        prototype: HTMLAppTextElement;
+        new (): HTMLAppTextElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "app-col": HTMLAppColElement;
+        "app-container": HTMLAppContainerElement;
+        "app-home": HTMLAppHomeElement;
+        "app-image": HTMLAppImageElement;
+        "app-objective": HTMLAppObjectiveElement;
+        "app-renderer": HTMLAppRendererElement;
+        "app-root": HTMLAppRootElement;
+        "app-row": HTMLAppRowElement;
+        "app-text": HTMLAppTextElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface AppCol {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+    }
+    interface AppContainer {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+    }
+    interface AppHome {
+    }
+    interface AppImage {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "src"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+    }
+    interface AppObjective {
+        "string"?: string;
+        "value"?: string;
+    }
+    interface AppRenderer {
+        "data"?: string;
+    }
+    interface AppRoot {
+        "xmlData"?: string;
+    }
+    interface AppRow {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+    }
+    interface AppText {
+        "audio"?: string;
+        "bgColor"?: string;
+        "font"?: string;
+        "fontSize"?: string;
+        "height"?: string;
+        "highlightWhileSpeaking"?: boolean;
+        "id"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "string"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "app-col": AppCol;
+        "app-container": AppContainer;
+        "app-home": AppHome;
+        "app-image": AppImage;
+        "app-objective": AppObjective;
+        "app-renderer": AppRenderer;
+        "app-root": AppRoot;
+        "app-row": AppRow;
+        "app-text": AppText;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "app-col": LocalJSX.AppCol & JSXBase.HTMLAttributes<HTMLAppColElement>;
+            "app-container": LocalJSX.AppContainer & JSXBase.HTMLAttributes<HTMLAppContainerElement>;
+            "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
+            "app-image": LocalJSX.AppImage & JSXBase.HTMLAttributes<HTMLAppImageElement>;
+            "app-objective": LocalJSX.AppObjective & JSXBase.HTMLAttributes<HTMLAppObjectiveElement>;
+            "app-renderer": LocalJSX.AppRenderer & JSXBase.HTMLAttributes<HTMLAppRendererElement>;
+            "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "app-row": LocalJSX.AppRow & JSXBase.HTMLAttributes<HTMLAppRowElement>;
+            "app-text": LocalJSX.AppText & JSXBase.HTMLAttributes<HTMLAppTextElement>;
         }
     }
 }

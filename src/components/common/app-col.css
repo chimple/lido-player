@@ -1,0 +1,8 @@
+.col {
+  position: absolute;
+  top: var(--y, 0);
+  left: var(--x, 0);
+  height: var(--height, 100%);
+  width: var(--width, 100%);
+  background-color: var(--bgColor, #eeeeee);
+}
