@@ -3,6 +3,7 @@
   /* transition: transform 0.3s ease; */
   user-select: none;
   -webkit-user-drag: none;
+  object-fit: cover;
 }
 
 /* .image:hover {

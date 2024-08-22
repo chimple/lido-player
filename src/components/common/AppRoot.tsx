@@ -1,62 +1,26 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, getAssetPath, h, State } from '@stencil/core';
 
 @Component({
   tag: 'app-root',
   shadow: false,
+  assetsDirs: ['assets'],
 })
 export class AppRoot {
-  @Prop() xmlData: string;
-  private parseElement(element: Element): any {
-    const tagName = element.nodeName.toLowerCase();
-    const props: { [key: string]: any } = {};
+  @State() xmlData: string;
 
-    // Convert attributes to props using reduce for cleaner code
-    Array.from(element.attributes).forEach(attr => {
-      props[attr.name] = attr.value;
-    });
-
-    // Recursively parse child elements
-    const children = Array.from(element.childNodes)
-      .map(child => {
-        if (child.nodeType === 1) {
-          // ELEMENT_NODE
-          return this.parseElement(child as Element);
-        } else if (child.nodeType === 3 && child.textContent.trim() !== '') {
-          // TEXT_NODE
-          return child.textContent;
-        }
-        return null;
-      })
-      .filter(Boolean); // Remove null/undefined values
-
-    // Dynamically map tag names to Stencil components
-    const componentMapping = {
-      'app-container': <app-container {...props}>{children}</app-container>,
-      'app-objective': <app-objective {...props}>{children}</app-objective>,
-      'app-col': <app-col {...props}>{children}</app-col>,
-      'app-image': <app-image {...props}>{children}</app-image>,
-      'app-row': <app-row {...props}>{children}</app-row>,
-      'app-text': <app-text {...props}>{children}</app-text>,
-    };
-
-    if (componentMapping[tagName]) {
-      return componentMapping[tagName];
-    } else {
-      console.warn(`Unknown tag: ${tagName}`);
-      return null;
-    }
+  async componentWillLoad() {
+    const res = getAssetPath('./assets/xmlData.xml');
+    console.log('🚀 ~ AppRoot ~ componentWillLoad ~ res:', res);
+    const response = await fetch(res);
+    const data = await response.text();
+    this.xmlData = data;
   }
 
   render() {
     if (!this.xmlData) {
-      return <div>Please provide XML data.</div>;
+      return <div>Loading...</div>;
     }
 
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(this.xmlData, 'text/xml');
-
-    const rootElement = xmlDoc.documentElement;
-
-    return this.parseElement(rootElement);
+    return <app-home xmlData={this.xmlData}></app-home>;
   }
 }

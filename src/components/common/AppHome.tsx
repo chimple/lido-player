@@ -1,268 +1,63 @@
-import { Component, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'app-home',
   shadow: false,
 })
 export class AppHome {
+  @Prop() xmlData: string;
+  private parseElement(element: Element): any {
+    const tagName = element.nodeName.toLowerCase();
+    const props: { [key: string]: any } = {};
+
+    // Convert attributes to props using reduce for cleaner code
+    Array.from(element.attributes).forEach(attr => {
+      props[attr.name] = attr.value;
+    });
+
+    // Recursively parse child elements
+    const children = Array.from(element.childNodes)
+      .map(child => {
+        if (child.nodeType === 1) {
+          // ELEMENT_NODE
+          return this.parseElement(child as Element);
+        } else if (child.nodeType === 3 && child.textContent.trim() !== '') {
+          // TEXT_NODE
+          return child.textContent;
+        }
+        return null;
+      })
+      .filter(Boolean); // Remove null/undefined values
+
+    // Dynamically map tag names to Stencil components
+    const componentMapping = {
+      'app-container': <app-container {...props}>{children}</app-container>,
+      'app-objective': <app-objective {...props}>{children}</app-objective>,
+      'app-col': <app-col {...props}>{children}</app-col>,
+      'app-image': <app-image {...props}>{children}</app-image>,
+      'app-row': <app-row {...props}>{children}</app-row>,
+      'app-text': <app-text {...props}>{children}</app-text>,
+      'app-pos': <app-pos {...props}>{children}</app-pos>,
+    };
+
+    if (componentMapping[tagName]) {
+      return componentMapping[tagName];
+    } else {
+      console.warn(`Unknown tag: ${tagName}`);
+      return null;
+    }
+  }
+
   render() {
-    const xmlData = `
-      <app-container
-        id="container1"
-        value="mainContainer1"
-        height="100vh"
-        width="100vw"
-        x="0"
-        y="0"
-        bgColor="#FFFFFF"
-        type="slide"
-        visible="true"
-        audio="background1.mp3"
-        onTouch="handleContainer1Touch"
-        onMatch="handleContainer1Match"
-        onEntry="handleContainer1Entry"
-      >
+    if (!this.xmlData) {
+      return <div>Please provide XML data.</div>;
+    }
 
-        <app-col
-          id="col1"
-          value="column1"
-          height="60vh"
-          width="80vw"
-          x="0"
-          y="0"
-          bgColor="#EEEEEE"
-          type="drag"
-          visible="true"
-          audio="col1.mp3"
-          onTouch="handleCol1Touch"
-          onMatch="handleCol1Match"
-          onEntry="handleCol1Entry"
-        >
-          <app-image
-            id="image1"
-            value="carImage"
-            height="100vh"
-            width="100vw"
-            x="0"
-            y="0"
-            bgColor="#FFFFFF"
-            type="click"
-            visible="true"
-            audio="image1.mp3"
-            onTouch="handleImage1Touch"
-            onMatch="handleImage1Match"
-            onEntry="handleImage1Entry"
-            src="https://storage.needpix.com/rsynced_images/motorcycle-309786_1280.png"
-          ></app-image>
-          <app-row
-            id="row1"
-            value="row1"
-            height="7vh"
-            width="100%"
-            x="10vw"
-            y="17vh"
-            bgColor="#FFFFFF"
-            type="slide"
-            visible="true"
-            audio="row1.mp3"
-            onTouch="handleRow1Touch"
-            onMatch="handleRow1Match"
-            onEntry="handleRow1Entry"
-          >
-            <app-text
-              id="text1"
-              string="The"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word1"
-              height="7vh"
-              width="20vw"
-              x="0vw"
-              y="0"
-              bgColor="#DDDDDD"
-              type=""
-              drag="true"
-              audio=""
-              visible="true"
-              onTouch=""
-              onMatch="handleText1Match"
-              onEntry=""
-            ></app-text>
-            <app-text
-              id="text2"
-              string="car"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word2"
-              height="7vh"
-              width="20vw"
-              x="20vw"
-              visible="true"
-              y="0"
-              bgColor="#DDDDDD"
-              type=""
-              drag="true"
-              audio=""
-              onTouch=""
-              onMatch="handleText2Match"
-              onEntry=""
-            ></app-text>
-            <app-text
-              id="text3"
-              string="is"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word3"
-              height="7vh"
-              width="20vw"
-              x="40vw"
-              y="0"
-              bgColor="#DDDDDD"
-              type=""
-              audio=""
-              visible="true"
-              onTouch=""
-              onMatch="handleText3Match"
-              onEntry=""
-            ></app-text>
-            <app-text
-              id="text4"
-              string="red"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word4"
-              height="7vh"
-              width="20vw"
-              x="60vw"
-              y="0"
-              bgColor="#DDDDDD"
-              type="drag"
-              visible="true"
-              audio=""
-              onTouch=""
-              onMatch=""
-              onEntry=""
-            ></app-text>
-          </app-row>
-          <app-row
-            id="row2"
-            value="row2"
-            height="7vh"
-            width="100%"
-            x="0"
-            y="34vh"
-            bgColor="#FFFFFF"
-            type="slide"
-            visible="true"
-            audio="row2.mp3"
-            onTouch="handleRow2Touch"
-            onMatch="handleRow2Match"
-            onEntry="handleRow2Entry"
-          >
-            <app-text
-              id="text5"
-              string="This"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word5"
-              height="7vh"
-              width="20vw"
-              x="0vw"
-              y="0"
-              bgColor="#DDDDDD"
-              type=""
-              visible="true"
-              audio=""
-              onTouch=""
-              onMatch="handleText5Match"
-              onEntry=""
-            ></app-text>
-            <app-text
-              id="text6"
-              string="is"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word6"
-              height="7vh"
-              width="20vw"
-              x="20vw"
-              y="0"
-              bgColor="#DDDDDD"
-              type=""
-              visible="true"
-              audio=""
-              onTouch=""
-              onMatch="handleText6Match"
-              onEntry=""
-            ></app-text>
-            <app-text
-              id="text7"
-              string="another"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word7"
-              height="7vh"
-              width="20vw"
-              x="40vw"
-              y="0"
-              bgColor="#DDDDDD"
-              type=""
-              visible="true"
-              audio=""
-              onTouch=""
-              onMatch="handleText7Match"
-              onEntry=""
-            ></app-text>
-            <app-text
-              id="text8"
-              string="row"
-              font="Arial"
-              font-size="2vh"
-              highlightWhileSpeaking="true"
-              value="word8"
-              height="7vh"
-              width="20vw"
-              x="60vw"
-              y="0"
-              bgColor="#DDDDDD"
-              type=""
-              visible="true"
-              audio=""
-              onTouch=""
-              onMatch="handleText8Match"
-              onEntry=""
-            ></app-text>
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(this.xmlData, 'text/xml');
 
-   <app-image
-            id="image2"
-            value="carImage1"
-            height="10vh"
-            width="10vw"
-            x="85vw"
-            y="2vh"
-            bgColor="#FFFFFF"
-            type="click"
-            visible="true"
-            audio="image1.mp3"
-            onTouch="handleImage1Touch"
-            onMatch="handleImage1Match"
-            onEntry="handleImage1Entry"
-            src="https://storage.needpix.com/rsynced_images/motorcycle-309786_1280.png"
-          ></app-image>
+    const rootElement = xmlDoc.documentElement;
 
-
-          </app-row>
-        </app-col>
-      </app-container>
-    `;
-
-    return <app-root xmlData={xmlData}></app-root>;
+    return this.parseElement(rootElement);
   }
 }

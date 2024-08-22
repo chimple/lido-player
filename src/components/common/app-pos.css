@@ -1,18 +1,15 @@
-.col {
-  /* position: absolute; */
+.pos {
   top: var(--y, 0);
   left: var(--x, 0);
   height: var(--height, 100%);
   width: var(--width, 100%);
   background-color: var(--bgColor, #eeeeee);
-  /* position: relative; */
-  padding: 15px;
-  border-radius: 10px;
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+  position: fixed;
 }
 
-.col > * {
-  /* position: relative; */
+.pos > * {
+  position: absolute;
 }

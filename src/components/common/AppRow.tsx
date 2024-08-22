@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'app-row',
@@ -11,6 +11,7 @@ export class AppRow {
   @Prop() width: string;
   @Prop() x: string;
   @Prop() y: string;
+  @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
   @Prop() visible: boolean;
@@ -23,27 +24,16 @@ export class AppRow {
     const style = {
       height: this.height,
       width: this.width,
-      // backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
-      position: 'absolute',
       display: this.visible ? 'flex' : 'none',
-      // alignItems: 'center',
-      // justifyContent: 'space-between',
-      // padding: '10px',
-      // borderRadius: '8px',
+      zIndex: this.z,
     };
 
     return (
-      <div class="row" style={style} onClick={() => this.handleEvent(this.onTouch)}>
-        <slot />
-      </div>
+      <Host class="row" style={style}>
+        {/* <slot /> */}
+      </Host>
     );
-  }
-
-  private handleEvent(event: string) {
-    if (event) {
-      console.log(`Event Triggered: ${event}`);
-    }
   }
 }

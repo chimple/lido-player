@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host } from '@stencil/core';
-import Draggable from 'plain-draggable';
+import { initializeDraggable } from '../../utils/utils';
 
 @Component({
   tag: 'app-text',
@@ -17,6 +17,7 @@ export class AppText {
   @Prop() width: string;
   @Prop() x: string;
   @Prop() y: string;
+  @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
   @Prop() visible: boolean;
@@ -27,31 +28,8 @@ export class AppText {
 
   @Element() el: HTMLElement;
 
-  draggable: Draggable;
-
   componentDidLoad() {
-    this.initializeDraggable();
-  }
-
-  initializeDraggable() {
-    this.draggable = new Draggable(this.el, {
-      onDrag: () => {
-        const rect = this.draggable.element.getBoundingClientRect();
-        console.log(`🚀 ~ AppText ~ Dragging: left: ${rect.left}, top: ${rect.top}`);
-      },
-      containment: { left: 0, top: 0, width: 10000, height: 10000 },
-      snap: {
-        targets: document.querySelectorAll('.text'),
-      },
-    });
-
-    console.log('🚀 ~ AppText ~ initializeDraggable ~ draggable:', this.draggable);
-  }
-
-  disconnectedCallback() {
-    if (this.draggable) {
-      this.draggable.destroy();
-    }
+    if (this.type === 'drag') initializeDraggable(this.el);
   }
 
   render() {
@@ -61,7 +39,7 @@ export class AppText {
       backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
-      position: 'absolute',
+      zIndex: this.z,
       fontSize: this.fontSize,
       fontFamily: this.font,
       display: this.visible ? 'flex' : 'none',
@@ -74,15 +52,9 @@ export class AppText {
     };
 
     return (
-      <Host class="text" id={this.id} style={style} onClick={() => this.handleEvent(this.onTouch)}>
+      <Host class="text" id={this.id} style={style}>
         {this.string}
       </Host>
     );
-  }
-
-  private handleEvent(event: string) {
-    if (event) {
-      console.log(`Event Triggered: ${event}`);
-    }
   }
 }

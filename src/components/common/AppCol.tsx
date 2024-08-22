@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'app-col',
@@ -6,11 +6,13 @@ import { Component, Prop, h } from '@stencil/core';
   shadow: false,
 })
 export class AppCol {
+  @Prop() id: string;
   @Prop() value: string;
   @Prop() height: string;
   @Prop() width: string;
   @Prop() x: string;
   @Prop() y: string;
+  @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
   @Prop() visible: boolean;
@@ -26,22 +28,14 @@ export class AppCol {
       backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
-      position: 'relative',
-      display: this.visible ? 'block' : 'none',
-      padding: '15px',
-      borderRadius: '10px',
+      display: this.visible ? 'flex' : 'none',
+      zIndex: this.z,
     };
 
     return (
-      <div class="col" style={style} onClick={() => this.handleEvent(this.onTouch)}>
+      <Host class="col" style={style}>
         <slot />
-      </div>
+      </Host>
     );
-  }
-
-  private handleEvent(event: string) {
-    if (event) {
-      console.log(`Event Triggered: ${event}`);
-    }
   }
 }

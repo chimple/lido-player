@@ -10,6 +10,7 @@ export namespace Components {
         "audio": string;
         "bgColor": string;
         "height": string;
+        "id": string;
         "onEntry": string;
         "onMatch": string;
         "onTouch": string;
@@ -19,6 +20,7 @@ export namespace Components {
         "width": string;
         "x": string;
         "y": string;
+        "z": string;
     }
     interface AppContainer {
         "audio": string;
@@ -33,8 +35,10 @@ export namespace Components {
         "width": string;
         "x": string;
         "y": string;
+        "z": string;
     }
     interface AppHome {
+        "xmlData": string;
     }
     interface AppImage {
         "audio": string;
@@ -50,16 +54,29 @@ export namespace Components {
         "width": string;
         "x": string;
         "y": string;
+        "z": string;
     }
     interface AppObjective {
         "string": string;
         "value": string;
     }
-    interface AppRenderer {
-        "data": string;
+    interface AppPos {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "id": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+        "z": string;
     }
     interface AppRoot {
-        "xmlData": string;
     }
     interface AppRow {
         "audio": string;
@@ -74,6 +91,7 @@ export namespace Components {
         "width": string;
         "x": string;
         "y": string;
+        "z": string;
     }
     interface AppText {
         "audio": string;
@@ -93,6 +111,7 @@ export namespace Components {
         "width": string;
         "x": string;
         "y": string;
+        "z": string;
     }
 }
 declare global {
@@ -126,11 +145,11 @@ declare global {
         prototype: HTMLAppObjectiveElement;
         new (): HTMLAppObjectiveElement;
     };
-    interface HTMLAppRendererElement extends Components.AppRenderer, HTMLStencilElement {
+    interface HTMLAppPosElement extends Components.AppPos, HTMLStencilElement {
     }
-    var HTMLAppRendererElement: {
-        prototype: HTMLAppRendererElement;
-        new (): HTMLAppRendererElement;
+    var HTMLAppPosElement: {
+        prototype: HTMLAppPosElement;
+        new (): HTMLAppPosElement;
     };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
@@ -156,7 +175,7 @@ declare global {
         "app-home": HTMLAppHomeElement;
         "app-image": HTMLAppImageElement;
         "app-objective": HTMLAppObjectiveElement;
-        "app-renderer": HTMLAppRendererElement;
+        "app-pos": HTMLAppPosElement;
         "app-root": HTMLAppRootElement;
         "app-row": HTMLAppRowElement;
         "app-text": HTMLAppTextElement;
@@ -167,6 +186,7 @@ declare namespace LocalJSX {
         "audio"?: string;
         "bgColor"?: string;
         "height"?: string;
+        "id"?: string;
         "onEntry"?: string;
         "onMatch"?: string;
         "onTouch"?: string;
@@ -176,6 +196,7 @@ declare namespace LocalJSX {
         "width"?: string;
         "x"?: string;
         "y"?: string;
+        "z"?: string;
     }
     interface AppContainer {
         "audio"?: string;
@@ -190,8 +211,10 @@ declare namespace LocalJSX {
         "width"?: string;
         "x"?: string;
         "y"?: string;
+        "z"?: string;
     }
     interface AppHome {
+        "xmlData"?: string;
     }
     interface AppImage {
         "audio"?: string;
@@ -207,16 +230,29 @@ declare namespace LocalJSX {
         "width"?: string;
         "x"?: string;
         "y"?: string;
+        "z"?: string;
     }
     interface AppObjective {
         "string"?: string;
         "value"?: string;
     }
-    interface AppRenderer {
-        "data"?: string;
+    interface AppPos {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "id"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+        "z"?: string;
     }
     interface AppRoot {
-        "xmlData"?: string;
     }
     interface AppRow {
         "audio"?: string;
@@ -231,6 +267,7 @@ declare namespace LocalJSX {
         "width"?: string;
         "x"?: string;
         "y"?: string;
+        "z"?: string;
     }
     interface AppText {
         "audio"?: string;
@@ -250,6 +287,7 @@ declare namespace LocalJSX {
         "width"?: string;
         "x"?: string;
         "y"?: string;
+        "z"?: string;
     }
     interface IntrinsicElements {
         "app-col": AppCol;
@@ -257,7 +295,7 @@ declare namespace LocalJSX {
         "app-home": AppHome;
         "app-image": AppImage;
         "app-objective": AppObjective;
-        "app-renderer": AppRenderer;
+        "app-pos": AppPos;
         "app-root": AppRoot;
         "app-row": AppRow;
         "app-text": AppText;
@@ -272,7 +310,7 @@ declare module "@stencil/core" {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-image": LocalJSX.AppImage & JSXBase.HTMLAttributes<HTMLAppImageElement>;
             "app-objective": LocalJSX.AppObjective & JSXBase.HTMLAttributes<HTMLAppObjectiveElement>;
-            "app-renderer": LocalJSX.AppRenderer & JSXBase.HTMLAttributes<HTMLAppRendererElement>;
+            "app-pos": LocalJSX.AppPos & JSXBase.HTMLAttributes<HTMLAppPosElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "app-row": LocalJSX.AppRow & JSXBase.HTMLAttributes<HTMLAppRowElement>;
             "app-text": LocalJSX.AppText & JSXBase.HTMLAttributes<HTMLAppTextElement>;

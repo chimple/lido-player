@@ -1,4 +1,5 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, Element, Host } from '@stencil/core';
+import { initializeDraggable } from '../../utils/utils';
 
 @Component({
   tag: 'app-image',
@@ -11,6 +12,7 @@ export class AppImage {
   @Prop() width: string;
   @Prop() x: string;
   @Prop() y: string;
+  @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
   @Prop() visible: boolean;
@@ -20,6 +22,12 @@ export class AppImage {
   @Prop() onEntry: string;
   @Prop() src: string;
 
+  @Element() el: HTMLElement;
+
+  componentDidLoad() {
+    if (this.type === 'drag') initializeDraggable(this.el);
+  }
+
   render() {
     const style = {
       height: this.height,
@@ -27,19 +35,14 @@ export class AppImage {
       backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
-      position: 'absolute',
+      zIndex: this.z,
       display: this.visible ? 'block' : 'none',
-      objectFit: 'cover',
-      // borderRadius: '10px',
-      // boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     };
 
-    return <img src={this.src} class="image" style={style} onClick={() => this.handleEvent(this.onTouch)} />;
-  }
-
-  private handleEvent(event: string) {
-    if (event) {
-      console.log(`Event Triggered: ${event}`);
-    }
+    return (
+      <Host class="image" style={style}>
+        <img style={{ height: this.height, width: this.width }} src={this.src} />
+      </Host>
+    );
   }
 }

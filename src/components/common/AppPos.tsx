@@ -1,11 +1,12 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 
 @Component({
-  tag: 'app-container',
-  styleUrl: 'app-container.css',
+  tag: 'app-pos',
+  styleUrl: 'app-pos.css',
   shadow: false,
 })
-export class AppContainer {
+export class AppPos {
+  @Prop() id: string;
   @Prop() value: string;
   @Prop() height: string;
   @Prop() width: string;
@@ -27,11 +28,13 @@ export class AppContainer {
       backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
+      zIndex: this.z,
+      display: this.visible ? 'block' : 'none',
     };
 
     return (
-      <Host class="container" style={style}>
-        {/* <slot /> */}
+      <Host class="pos" style={style}>
+        <slot />
       </Host>
     );
   }
