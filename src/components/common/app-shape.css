@@ -1,0 +1,25 @@
+.shape {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  display: var(--display);
+  z-index: var(--z);
+}
+
+.rectangle {
+  border-radius: 0;
+}
+
+.circle {
+  width: var(--width);
+  height: var(--width); /* Make height equal to width for a perfect circle */
+  border-radius: 50%; /* 50% border-radius for a perfect circle */
+  background-color: var(--bgColor);
+}
+
+.ellipse {
+  width: var(--width);
+  height: var(--height);
+  border-radius: 50%; /* Create an ellipse shape */
+  background-color: var(--bgColor);
+}

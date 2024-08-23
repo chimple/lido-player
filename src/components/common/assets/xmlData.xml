@@ -40,7 +40,7 @@
 		</app-row>
 	</app-col>
 	<app-pos id="pos2" value="pos1" height="0" width="0" x="0" y="0" z="0" bgColor="" type="" visible="true" audio="col1.mp3" onTouch="handleCol1Touch" onMatch="handleCol1Match" onEntry="handleCol1Entry">
-		<app-image id="image4" value="carImage2" height="10vh" width="10vw" x="30vw" y="30vh" z="0" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="handleImage1Touch" onMatch="handleImage1Match" onEntry="handleImage1Entry" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
-		</app-image>
+		<app-shape id="image4" value="carImage2" height="10vh" width="10vw" x="30vw" y="30vh" z="0" bgColor="#FFFFFF" visible="true" type="drag" shapeType="circle" audio="image2.mp3" onTouch="handleImage1Touch" onMatch="handleImage1Match" onEntry="handleImage1Entry" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+		</app-shape>
 	</app-pos>
 </app-container>

@@ -93,6 +93,23 @@ export namespace Components {
         "y": string;
         "z": string;
     }
+    interface AppShape {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "id": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "shapeType": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+        "z": string;
+    }
     interface AppText {
         "audio": string;
         "bgColor": string;
@@ -163,6 +180,12 @@ declare global {
         prototype: HTMLAppRowElement;
         new (): HTMLAppRowElement;
     };
+    interface HTMLAppShapeElement extends Components.AppShape, HTMLStencilElement {
+    }
+    var HTMLAppShapeElement: {
+        prototype: HTMLAppShapeElement;
+        new (): HTMLAppShapeElement;
+    };
     interface HTMLAppTextElement extends Components.AppText, HTMLStencilElement {
     }
     var HTMLAppTextElement: {
@@ -178,6 +201,7 @@ declare global {
         "app-pos": HTMLAppPosElement;
         "app-root": HTMLAppRootElement;
         "app-row": HTMLAppRowElement;
+        "app-shape": HTMLAppShapeElement;
         "app-text": HTMLAppTextElement;
     }
 }
@@ -269,6 +293,23 @@ declare namespace LocalJSX {
         "y"?: string;
         "z"?: string;
     }
+    interface AppShape {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "id"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "shapeType"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+        "z"?: string;
+    }
     interface AppText {
         "audio"?: string;
         "bgColor"?: string;
@@ -298,6 +339,7 @@ declare namespace LocalJSX {
         "app-pos": AppPos;
         "app-root": AppRoot;
         "app-row": AppRow;
+        "app-shape": AppShape;
         "app-text": AppText;
     }
 }
@@ -313,6 +355,7 @@ declare module "@stencil/core" {
             "app-pos": LocalJSX.AppPos & JSXBase.HTMLAttributes<HTMLAppPosElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "app-row": LocalJSX.AppRow & JSXBase.HTMLAttributes<HTMLAppRowElement>;
+            "app-shape": LocalJSX.AppShape & JSXBase.HTMLAttributes<HTMLAppShapeElement>;
             "app-text": LocalJSX.AppText & JSXBase.HTMLAttributes<HTMLAppTextElement>;
         }
     }
