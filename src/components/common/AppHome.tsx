@@ -39,6 +39,7 @@ export class AppHome {
       'app-text': <app-text {...props}>{children}</app-text>,
       'app-pos': <app-pos {...props}>{children}</app-pos>,
       'app-shape': <app-shape {...props}>{children}</app-shape>,
+      'app-wrap': <app-wrap {...props}>{children}</app-wrap>,
     };
 
     if (componentMapping[tagName]) {

@@ -1,0 +1,11 @@
+.wrap {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(186px, auto));
+}
+
+.wrap > * {
+  padding: 10px;
+  background-color: var(--child-bg-color, #f0f0f0);
+  box-sizing: border-box;
+}

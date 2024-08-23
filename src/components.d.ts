@@ -130,6 +130,22 @@ export namespace Components {
         "y": string;
         "z": string;
     }
+    interface AppWrap {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "id": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+        "z": string;
+    }
 }
 declare global {
     interface HTMLAppColElement extends Components.AppCol, HTMLStencilElement {
@@ -192,6 +208,12 @@ declare global {
         prototype: HTMLAppTextElement;
         new (): HTMLAppTextElement;
     };
+    interface HTMLAppWrapElement extends Components.AppWrap, HTMLStencilElement {
+    }
+    var HTMLAppWrapElement: {
+        prototype: HTMLAppWrapElement;
+        new (): HTMLAppWrapElement;
+    };
     interface HTMLElementTagNameMap {
         "app-col": HTMLAppColElement;
         "app-container": HTMLAppContainerElement;
@@ -203,6 +225,7 @@ declare global {
         "app-row": HTMLAppRowElement;
         "app-shape": HTMLAppShapeElement;
         "app-text": HTMLAppTextElement;
+        "app-wrap": HTMLAppWrapElement;
     }
 }
 declare namespace LocalJSX {
@@ -330,6 +353,22 @@ declare namespace LocalJSX {
         "y"?: string;
         "z"?: string;
     }
+    interface AppWrap {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "id"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+        "z"?: string;
+    }
     interface IntrinsicElements {
         "app-col": AppCol;
         "app-container": AppContainer;
@@ -341,6 +380,7 @@ declare namespace LocalJSX {
         "app-row": AppRow;
         "app-shape": AppShape;
         "app-text": AppText;
+        "app-wrap": AppWrap;
     }
 }
 export { LocalJSX as JSX };
@@ -357,6 +397,7 @@ declare module "@stencil/core" {
             "app-row": LocalJSX.AppRow & JSXBase.HTMLAttributes<HTMLAppRowElement>;
             "app-shape": LocalJSX.AppShape & JSXBase.HTMLAttributes<HTMLAppShapeElement>;
             "app-text": LocalJSX.AppText & JSXBase.HTMLAttributes<HTMLAppTextElement>;
+            "app-wrap": LocalJSX.AppWrap & JSXBase.HTMLAttributes<HTMLAppWrapElement>;
         }
     }
 }
