@@ -1,0 +1,10 @@
+.random {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute; /* Container is now relative */
+}
+
+.random > * {
+  position: absolute;
+}

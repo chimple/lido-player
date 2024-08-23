@@ -40,6 +40,7 @@ export class AppHome {
       'app-pos': <app-pos {...props}>{children}</app-pos>,
       'app-shape': <app-shape {...props}>{children}</app-shape>,
       'app-wrap': <app-wrap {...props}>{children}</app-wrap>,
+      'app-random': <app-random {...props}>{children}</app-random>,
     };
 
     if (componentMapping[tagName]) {

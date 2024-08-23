@@ -76,6 +76,22 @@ export namespace Components {
         "y": string;
         "z": string;
     }
+    interface AppRandom {
+        "audio": string;
+        "bgColor": string;
+        "height": string;
+        "id": string;
+        "onEntry": string;
+        "onMatch": string;
+        "onTouch": string;
+        "type": string;
+        "value": string;
+        "visible": boolean;
+        "width": string;
+        "x": string;
+        "y": string;
+        "z": string;
+    }
     interface AppRoot {
     }
     interface AppRow {
@@ -184,6 +200,12 @@ declare global {
         prototype: HTMLAppPosElement;
         new (): HTMLAppPosElement;
     };
+    interface HTMLAppRandomElement extends Components.AppRandom, HTMLStencilElement {
+    }
+    var HTMLAppRandomElement: {
+        prototype: HTMLAppRandomElement;
+        new (): HTMLAppRandomElement;
+    };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
     var HTMLAppRootElement: {
@@ -221,6 +243,7 @@ declare global {
         "app-image": HTMLAppImageElement;
         "app-objective": HTMLAppObjectiveElement;
         "app-pos": HTMLAppPosElement;
+        "app-random": HTMLAppRandomElement;
         "app-root": HTMLAppRootElement;
         "app-row": HTMLAppRowElement;
         "app-shape": HTMLAppShapeElement;
@@ -284,6 +307,22 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface AppPos {
+        "audio"?: string;
+        "bgColor"?: string;
+        "height"?: string;
+        "id"?: string;
+        "onEntry"?: string;
+        "onMatch"?: string;
+        "onTouch"?: string;
+        "type"?: string;
+        "value"?: string;
+        "visible"?: boolean;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
+        "z"?: string;
+    }
+    interface AppRandom {
         "audio"?: string;
         "bgColor"?: string;
         "height"?: string;
@@ -376,6 +415,7 @@ declare namespace LocalJSX {
         "app-image": AppImage;
         "app-objective": AppObjective;
         "app-pos": AppPos;
+        "app-random": AppRandom;
         "app-root": AppRoot;
         "app-row": AppRow;
         "app-shape": AppShape;
@@ -393,6 +433,7 @@ declare module "@stencil/core" {
             "app-image": LocalJSX.AppImage & JSXBase.HTMLAttributes<HTMLAppImageElement>;
             "app-objective": LocalJSX.AppObjective & JSXBase.HTMLAttributes<HTMLAppObjectiveElement>;
             "app-pos": LocalJSX.AppPos & JSXBase.HTMLAttributes<HTMLAppPosElement>;
+            "app-random": LocalJSX.AppRandom & JSXBase.HTMLAttributes<HTMLAppRandomElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "app-row": LocalJSX.AppRow & JSXBase.HTMLAttributes<HTMLAppRowElement>;
             "app-shape": LocalJSX.AppShape & JSXBase.HTMLAttributes<HTMLAppShapeElement>;
