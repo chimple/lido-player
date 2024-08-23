@@ -31,7 +31,7 @@ export class AppRow {
     };
 
     return (
-      <Host class="row" style={style}>
+      <Host class="row" type={this.type} style={style}>
         {/* <slot /> */}
       </Host>
     );

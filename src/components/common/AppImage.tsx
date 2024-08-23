@@ -40,7 +40,7 @@ export class AppImage {
     };
 
     return (
-      <Host class="image" style={style}>
+      <Host class="image" type={this.type} style={style}>
         <img style={{ height: this.height, width: this.width }} src={this.src} />
       </Host>
     );

@@ -43,16 +43,10 @@ export class AppText {
       fontSize: this.fontSize,
       fontFamily: this.font,
       display: this.visible ? 'flex' : 'none',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      borderRadius: '8px',
-      color: '#333',
-      cursor: 'pointer',
     };
 
     return (
-      <Host class="text" id={this.id} style={style}>
+      <Host class="text" type={this.type} id={this.id} style={style}>
         {this.string}
       </Host>
     );

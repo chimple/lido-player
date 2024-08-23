@@ -33,7 +33,7 @@ export class AppCol {
     };
 
     return (
-      <Host class="col" style={style}>
+      <Host class="col" type={this.type} style={style}>
         <slot />
       </Host>
     );

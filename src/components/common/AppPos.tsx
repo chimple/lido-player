@@ -33,7 +33,7 @@ export class AppPos {
     };
 
     return (
-      <Host class="pos" style={style}>
+      <Host class="pos" type={this.type} style={style}>
         <slot />
       </Host>
     );
