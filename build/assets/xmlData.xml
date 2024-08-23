@@ -4,7 +4,7 @@
 		</app-image>
 	</app-pos>
 	<app-col id="col2" value="column1" height="60vh" width="80vw" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onTouch="handleCol1Touch" onMatch="handleCol1Match" onEntry="handleCol1Entry">
-		<app-row id="row1" value="row1" height="7vh" width="100%" x="10vw" y="17vh" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="row1.mp3" onTouch="handleRow1Touch" onMatch="handleRow1Match" onEntry="handleRow1Entry">
+		<app-row id="row1" value="row1" height="7vh" width="100%" x="10vw" y="17vh" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onTouch="handleRow1Touch" onMatch="handleRow1Match" onEntry="handleRow1Entry">
 			<app-text id="text1" string="The" font="Arial" font-size="2vh" highlightWhileSpeaking="true" value="word1" height="7vh" width="20vw" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="handleText1Match" onEntry="">
 			</app-text>
 			<app-text id="text2" string="car" font="Arial" font-size="2vh" highlightWhileSpeaking="true" value="word2" height="7vh" width="20vw" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onTouch="" onMatch="handleText2Match" onEntry="">
@@ -26,7 +26,7 @@
 			<app-image id="image2" value="carImage2" height="10vh" width="10vw" x="85vw" y="2vh" z="0" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="handleImage1Touch" onMatch="handleImage1Match" onEntry="handleImage1Entry" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA3L2pvYjk0OS0xMjAucG5n.png">
 			</app-image>
 		</app-row>
-		<app-row id="row2" value="row2" height="7vh" width="100%" x="0" y="34vh" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="row2.mp3" onTouch="handleRow2Touch" onMatch="handleRow2Match" onEntry="handleRow2Entry">
+		<app-random id="row2" value="row2" height="80vh" width="80vw" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row2.mp3" onTouch="handleRow2Touch" onMatch="handleRow2Match" onEntry="handleRow2Entry">
 			<app-text id="text5" string="This" font="Arial" font-size="2vh" highlightWhileSpeaking="true" value="word5" height="7vh" width="20vw" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" visible="true" audio="" onTouch="" onMatch="handleText5Match" onEntry="">
 			</app-text>
 			<app-text id="text6" string="is" font="Arial" font-size="2vh" highlightWhileSpeaking="true" value="word6" height="7vh" width="20vw" x="20vw" y="0" z="0" bgColor="#DDDDDD" type="drag" visible="true" audio="" onTouch="" onMatch="handleText6Match" onEntry="">
@@ -37,10 +37,10 @@
 			</app-text>
 			<app-image id="image2" value="carImage2" height="10vh" width="10vw" x="85vw" y="2vh" z="0" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="handleImage1Touch" onMatch="handleImage1Match" onEntry="handleImage1Entry" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA3L2pvYjk0OS0xMjAucG5n.png">
 			</app-image>
-		</app-row>
+		</app-random>
 	</app-col>
 	<app-pos id="pos2" value="pos1" height="0" width="0" x="0" y="0" z="0" bgColor="" type="" visible="true" audio="col1.mp3" onTouch="handleCol1Touch" onMatch="handleCol1Match" onEntry="handleCol1Entry">
-		<app-image id="image4" value="carImage2" height="10vh" width="10vw" x="30vw" y="30vh" z="0" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="handleImage1Touch" onMatch="handleImage1Match" onEntry="handleImage1Entry" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
-		</app-image>
+		<app-shape id="image4" value="carImage2" height="10vh" width="10vw" x="30vw" y="30vh" z="0" bgColor="#FFFFFF" visible="true" type="drag" shapeType="circle" audio="image2.mp3" onTouch="handleImage1Touch" onMatch="handleImage1Match" onEntry="handleImage1Entry" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+		</app-shape>
 	</app-pos>
 </app-container>
