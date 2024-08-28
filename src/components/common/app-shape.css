@@ -11,7 +11,7 @@
 }
 
 .circle {
-  width: var(--width);
+  width: var(--width); /* Ensures width is always used for both dimensions */
   height: var(--width); /* Make height equal to width for a perfect circle */
   border-radius: 50%; /* 50% border-radius for a perfect circle */
   background-color: var(--bgColor);

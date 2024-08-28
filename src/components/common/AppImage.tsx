@@ -32,16 +32,17 @@ export class AppImage {
     const style = {
       height: this.height,
       width: this.width,
-      backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
       zIndex: this.z,
-      display: this.visible ? 'block' : 'none',
+      display: this.visible ? 'flex' : 'none',
+      alignItems: 'center', // Vertically center
+      justifyContent: 'center', // Horizontally center
     };
 
     return (
-      <Host class="image" type={this.type} style={style}>
-        <img style={{ height: this.height, width: this.width }} src={this.src} />
+      <Host type={this.type} style={style}>
+        <img class="image" src={this.src} />
       </Host>
     );
   }

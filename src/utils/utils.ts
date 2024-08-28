@@ -9,7 +9,7 @@ export function initializeDraggable(_element: HTMLElement) {
   const snapTargets = Array.from(document.querySelectorAll('[type="drop"]'));
 
   const draggable = new Draggable(_element, {
-    containment: { left: 0, top: 0, width: 10000, height: 10000 },
+    containment: document.getElementById('container'),
     snap: {
       targets: snapTargets,
       // gravity: 70,
