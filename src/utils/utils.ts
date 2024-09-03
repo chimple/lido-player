@@ -43,6 +43,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       startY = event.touches[0].clientY;
     }
 
+    // Apply dragging styles to the element
+    element.style.opacity = '0.8';
+    element.style.cursor = 'grabbing';
+
     // Parse the current transform values at the start of each drag
     const transform = window.getComputedStyle(element).transform;
     if (transform !== 'none') {
@@ -130,6 +134,23 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
     // Apply transform with translation within boundaries
     element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
+
+    // Check for overlaps and apply overlapping styles
+    const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    allElements.forEach(otherElement => {
+      const otherRect = otherElement.getBoundingClientRect();
+
+      // Check if there is overlap
+      const isOverlapping = elementRect.left < otherRect.right && elementRect.right > otherRect.left && elementRect.top < otherRect.bottom && elementRect.bottom > otherRect.top;
+
+      if (isOverlapping) {
+        otherElement.style.border = '2px dashed #ff0000'; // Red dashed border
+        otherElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
+      } else {
+        otherElement.style.border = ''; // Reset border
+        otherElement.style.backgroundColor = ''; // Reset background color
+      }
+    });
   };
 
   const onEnd = (): void => {
@@ -139,9 +160,19 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     document.removeEventListener('touchmove', onMove);
     document.removeEventListener('touchend', onEnd);
 
+    // Reset styles when dragging ends
+    element.style.opacity = '';
+    element.style.cursor = 'move';
+
+    // Reset overlapping styles from all elements
+    const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    allElements.forEach(otherElement => {
+      otherElement.style.border = ''; // Reset border
+      otherElement.style.backgroundColor = ''; // Reset background color
+    });
+
     // Check for overlaps and log the most overlapping element
     const elementRect = element.getBoundingClientRect();
-    const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
     let mostOverlappedElement: HTMLElement | null = null;
     let maxOverlapArea = 0;
 
@@ -161,7 +192,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     });
 
     if (mostOverlappedElement) {
-      console.log('Most overlapping element:', mostOverlappedElement['onMatch']);
+      console.log('Most overlapping element:', mostOverlappedElement, mostOverlappedElement['onMatch']);
     }
   };
 
