@@ -191,8 +191,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       }
     });
 
-    if (mostOverlappedElement) {
-      console.log('Most overlapping element:', mostOverlappedElement, mostOverlappedElement['onMatch']);
+    if (!mostOverlappedElement) return;
+    console.log('Most overlapping element:', mostOverlappedElement['value'], element['value']);
+    if (mostOverlappedElement['value'] === element['value']) {
+      console.log('🚀 ~ onEnd ~ mostOverlappedElement onMatch:', mostOverlappedElement['onMatch']);
     }
   };
 

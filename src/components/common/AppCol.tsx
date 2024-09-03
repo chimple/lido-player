@@ -40,7 +40,7 @@ export class AppCol {
     };
 
     return (
-      <Host class="col" type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
+      <Host class="col" type={this.type} value={this.value} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <slot />
       </Host>
     );

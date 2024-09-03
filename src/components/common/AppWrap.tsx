@@ -39,7 +39,7 @@ export class AppWrap {
     };
 
     return (
-      <Host class="wrap" type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
+      <Host class="wrap" value={this.value} type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <slot />
       </Host>
     );

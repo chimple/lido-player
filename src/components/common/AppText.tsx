@@ -46,7 +46,7 @@ export class AppText {
     };
 
     return (
-      <Host class="text" type={this.type} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry} id={this.id} style={style}>
+      <Host class="text" value={this.value} type={this.type} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry} id={this.id} style={style}>
         {this.string}
       </Host>
     );

@@ -40,7 +40,7 @@ export class AppPos {
     };
 
     return (
-      <Host class="pos" type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
+      <Host class="pos" type={this.type} style={style} value={this.value} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <slot />
       </Host>
     );

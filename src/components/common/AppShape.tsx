@@ -40,6 +40,6 @@ export class AppShape {
       backgroundColor: this.shapeType !== 'polygon' ? this.bgColor : 'transparent',
     };
 
-    return <Host class={`shape ${this.shapeType}`} type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}></Host>;
+    return <Host class={`shape ${this.shapeType}`} value={this.value} type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}></Host>;
   }
 }
