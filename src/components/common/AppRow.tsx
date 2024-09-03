@@ -1,4 +1,5 @@
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Host, Prop, h, Element } from '@stencil/core';
+import { enableDraggingWithScaling } from '../../utils/utils';
 
 @Component({
   tag: 'app-row',
@@ -19,6 +20,12 @@ export class AppRow {
   @Prop() onTouch: string;
   @Prop() onMatch: string;
   @Prop() onEntry: string;
+
+  @Element() el: HTMLElement;
+
+  componentDidLoad() {
+    if (this.type === 'drag') enableDraggingWithScaling(this.el);
+  }
 
   render() {
     const style = {

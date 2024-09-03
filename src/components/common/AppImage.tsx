@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host } from '@stencil/core';
-import { initializeDraggable } from '../../utils/utils';
+import { enableDraggingWithScaling } from '../../utils/utils';
 
 @Component({
   tag: 'app-image',
@@ -25,7 +25,7 @@ export class AppImage {
   @Element() el: HTMLElement;
 
   componentDidLoad() {
-    if (this.type === 'drag') initializeDraggable(this.el);
+    if (this.type === 'drag') enableDraggingWithScaling(this.el);
   }
 
   render() {
