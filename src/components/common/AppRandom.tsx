@@ -46,7 +46,7 @@ export class AppRandom {
     };
 
     return (
-      <Host class="random" type={this.type} style={style}>
+      <Host class="random" type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <slot />
       </Host>
     );

@@ -41,7 +41,7 @@ export class AppImage {
     };
 
     return (
-      <Host type={this.type} style={style}>
+      <Host type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <img class="image" src={this.src} />
       </Host>
     );

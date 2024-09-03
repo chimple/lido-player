@@ -89,8 +89,6 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   // Start observing the element
   observer.observe(container, observerConfig);
 
-  // Output the distance
-
   const onMove = (event: MouseEvent | TouchEvent): void => {
     if (!isDragging) return;
 
@@ -129,6 +127,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     const newLeftClamp = newLeft + initialElementLeftPx <= containerRect.left ? maxLeft : Math.min(newLeft, maxRight);
 
     const newTopClamp = newTop + initialElementTopPx <= containerRect.top ? maxTop : Math.min(newTop, maxBottom);
+
     // Apply transform with translation within boundaries
     element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
   };
@@ -139,6 +138,31 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
     document.removeEventListener('touchend', onEnd);
+
+    // Check for overlaps and log the most overlapping element
+    const elementRect = element.getBoundingClientRect();
+    const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    let mostOverlappedElement: HTMLElement | null = null;
+    let maxOverlapArea = 0;
+
+    allElements.forEach(otherElement => {
+      const otherRect = otherElement.getBoundingClientRect();
+
+      // Calculate overlap
+      const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
+      const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
+      const overlapArea = overlapWidth * overlapHeight;
+
+      // Update the most overlapped element if this one has a larger overlap area
+      if (overlapArea > maxOverlapArea) {
+        maxOverlapArea = overlapArea;
+        mostOverlappedElement = otherElement;
+      }
+    });
+
+    if (mostOverlappedElement) {
+      console.log('Most overlapping element:', mostOverlappedElement['onMatch']);
+    }
   };
 
   // Initialize draggable element styles

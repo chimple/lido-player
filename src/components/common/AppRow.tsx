@@ -38,7 +38,7 @@ export class AppRow {
     };
 
     return (
-      <Host class="row" type={this.type} style={style}>
+      <Host class="row" type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         {/* <slot /> */}
       </Host>
     );
