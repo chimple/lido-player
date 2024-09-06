@@ -15,6 +15,7 @@ export class AppRandom {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
+  @Prop() tabIndex:number;
   @Prop() visible: boolean;
   @Prop() audio: string;
   @Prop() onTouch: string;
@@ -46,7 +47,7 @@ export class AppRandom {
     };
 
     return (
-      <Host class="random" type={this.type} value={this.value} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
+      <Host class="random" type={this.type} tabindex={this.tabIndex} value={this.value} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <slot />
       </Host>
     );

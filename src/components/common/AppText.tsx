@@ -20,6 +20,7 @@ export class AppText {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
+  @Prop() tabIndex:number;
   @Prop() visible: boolean;
   @Prop() audio: string;
   @Prop() onTouch: string;
@@ -46,7 +47,7 @@ export class AppText {
     };
 
     return (
-      <Host class="text" value={this.value} type={this.type} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry} id={this.id} style={style}>
+      <Host class="text" value={this.value} type={this.type} tabindex={this.tabIndex} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry} id={this.id} style={style}>
         {this.string}
       </Host>
     );

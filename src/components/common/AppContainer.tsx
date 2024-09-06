@@ -6,6 +6,8 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
   shadow: false,
 })
 export class AppContainer {
+  @Prop() id: string;
+  @Prop() objective: string;
   @Prop() value: string;
   @Prop() height: string;
   @Prop() width: string;
@@ -14,6 +16,7 @@ export class AppContainer {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
+  @Prop() tabIndex: number;
   @Prop() visible: boolean;
   @Prop() audio: string;
   @Prop() onTouch: string;
@@ -65,6 +68,6 @@ export class AppContainer {
       transform: 'translate(-50%,-50%)',
     };
 
-    return <Host id="container" class="container" style={style}></Host>;
+    return <Host id="container" class="container" objective={this.objective} style={style}></Host>;
   }
 }

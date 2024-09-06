@@ -14,6 +14,7 @@ export namespace Components {
         "onEntry": string;
         "onMatch": string;
         "onTouch": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -26,9 +27,12 @@ export namespace Components {
         "audio": string;
         "bgColor": string;
         "height": string;
+        "id": string;
+        "objective": string;
         "onEntry": string;
         "onMatch": string;
         "onTouch": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -48,6 +52,7 @@ export namespace Components {
         "onMatch": string;
         "onTouch": string;
         "src": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -68,6 +73,7 @@ export namespace Components {
         "onEntry": string;
         "onMatch": string;
         "onTouch": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -84,6 +90,7 @@ export namespace Components {
         "onEntry": string;
         "onMatch": string;
         "onTouch": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -101,6 +108,7 @@ export namespace Components {
         "onEntry": string;
         "onMatch": string;
         "onTouch": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -118,6 +126,7 @@ export namespace Components {
         "onMatch": string;
         "onTouch": string;
         "shapeType": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -138,6 +147,7 @@ export namespace Components {
         "onMatch": string;
         "onTouch": string;
         "string": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -154,6 +164,7 @@ export namespace Components {
         "onEntry": string;
         "onMatch": string;
         "onTouch": string;
+        "tabIndex": number;
         "type": string;
         "value": string;
         "visible": boolean;
@@ -260,6 +271,7 @@ declare namespace LocalJSX {
         "onEntry"?: string;
         "onMatch"?: string;
         "onTouch"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -272,9 +284,12 @@ declare namespace LocalJSX {
         "audio"?: string;
         "bgColor"?: string;
         "height"?: string;
+        "id"?: string;
+        "objective"?: string;
         "onEntry"?: string;
         "onMatch"?: string;
         "onTouch"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -294,6 +309,7 @@ declare namespace LocalJSX {
         "onMatch"?: string;
         "onTouch"?: string;
         "src"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -314,6 +330,7 @@ declare namespace LocalJSX {
         "onEntry"?: string;
         "onMatch"?: string;
         "onTouch"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -330,6 +347,7 @@ declare namespace LocalJSX {
         "onEntry"?: string;
         "onMatch"?: string;
         "onTouch"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -347,6 +365,7 @@ declare namespace LocalJSX {
         "onEntry"?: string;
         "onMatch"?: string;
         "onTouch"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -364,6 +383,7 @@ declare namespace LocalJSX {
         "onMatch"?: string;
         "onTouch"?: string;
         "shapeType"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -384,6 +404,7 @@ declare namespace LocalJSX {
         "onMatch"?: string;
         "onTouch"?: string;
         "string"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;
@@ -400,6 +421,7 @@ declare namespace LocalJSX {
         "onEntry"?: string;
         "onMatch"?: string;
         "onTouch"?: string;
+        "tabIndex"?: number;
         "type"?: string;
         "value"?: string;
         "visible"?: boolean;

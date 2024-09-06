@@ -16,6 +16,7 @@ export class AppShape {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
+  @Prop() tabIndex:number;
   @Prop() shapeType: string;
   @Prop() visible: boolean;
   @Prop() audio: string;
@@ -40,6 +41,6 @@ export class AppShape {
       backgroundColor: this.shapeType !== 'polygon' ? this.bgColor : 'transparent',
     };
 
-    return <Host class={`shape ${this.shapeType}`} value={this.value} type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}></Host>;
+    return <Host class={`shape ${this.shapeType}`} value={this.value} type={this.type} tabindex={this.tabIndex} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}></Host>;
   }
 }

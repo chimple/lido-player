@@ -15,6 +15,7 @@ export class AppImage {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
+  @Prop() tabIndex:number;
   @Prop() visible: boolean;
   @Prop() audio: string;
   @Prop() onTouch: string;
@@ -41,7 +42,7 @@ export class AppImage {
     };
 
     return (
-      <Host type={this.type} style={style} value={this.value} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
+      <Host type={this.type} tabindex={this.tabIndex} style={style} value={this.value} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <img class="image" src={this.src} />
       </Host>
     );

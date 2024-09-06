@@ -16,6 +16,7 @@ export class AppWrap {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
+  @Prop() tabIndex:number;
   @Prop() visible: boolean;
   @Prop() audio: string;
   @Prop() onTouch: string;
@@ -39,7 +40,7 @@ export class AppWrap {
     };
 
     return (
-      <Host class="wrap" value={this.value} type={this.type} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
+      <Host class="wrap" value={this.value} type={this.type} tabindex={this.tabIndex} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         <slot />
       </Host>
     );

@@ -1,3 +1,5 @@
+import { DragSelectedMapKey, SelectedValuesKey } from './constants';
+
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
@@ -206,7 +208,20 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
     if (!mostOverlappedElement) return;
 
-    console.log('Most overlapping element:', mostOverlappedElement['value'], element['value']);
+    console.log('Most overlapping element:', mostOverlappedElement.getAttribute('tabindex'), mostOverlappedElement['tabindex'], element['value']);
+
+    let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
+    if (!dragScore[mostOverlappedElement.getAttribute('tabindex')]) {
+      dragScore[mostOverlappedElement.getAttribute('tabindex')] = [];
+    }
+    // dragScore[mostOverlappedElement.getAttribute('tabindex')].push(element['value']);
+    dragScore[mostOverlappedElement.getAttribute('tabindex')] = [element['value']];
+
+    localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
+    const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
+    const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(dragScore[key]), []);
+    console.log('🚀 ~ onEnd ~ dragScore:', dragScore, sortedValues);
+    localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
 
     // Add pulse and highlight effect for a successful match
     if (mostOverlappedElement['value'] === element['value']) {
@@ -233,6 +248,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         }
       }, 1000); // Adjust the delay time as needed (1000ms in this case)
     }
+
+    onActivityComplete();
   };
 
   // Function to apply a pulse and highlight effect using inline styles
@@ -250,39 +267,6 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }, 500); // Extended duration for the pulse effect
   };
 
-  // Function to execute actions parsed from the onMatch string
-  const executeActions = (actionsString: string, dropElement: HTMLElement, dragElement: HTMLElement): void => {
-    const actions = parseActions(actionsString);
-    console.log('🚀 ~ executeActions ~ actions:', actions);
-    actions.forEach(action => {
-      const targetElement = action.actor === 'this' ? dropElement : action.actor === 'element' ? dragElement : document.getElementById(action.actor);
-      console.log('🚀 ~ executeActions ~ targetElement:', targetElement);
-      if (targetElement) {
-        targetElement.style[action.action as any] = action.value;
-      }
-    });
-  };
-
-  // Function to parse actions string
-  const parseActions = (input: string): Array<{ actor: string; action: string; value: string }> => {
-    const actions = [];
-    const actionStrings = input.split(';').map(action => action.trim());
-
-    actionStrings.forEach(actionString => {
-      if (actionString) {
-        const [actorAction, value] = actionString.split('=').map(part => part.trim());
-        const lastDotIndex = actorAction.lastIndexOf('.');
-        if (lastDotIndex !== -1) {
-          const actor = actorAction.substring(0, lastDotIndex).trim();
-          const action = actorAction.substring(lastDotIndex + 1).trim();
-          actions.push({ actor, action, value: value.replace(/['"]/g, '') });
-        }
-      }
-    });
-
-    return actions;
-  };
-
   // Initialize draggable element styles
   element.style.cursor = 'move';
   element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
@@ -290,3 +274,122 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   element.addEventListener('mousedown', onStart);
   element.addEventListener('touchstart', onStart);
 }
+
+// Function to execute actions parsed from the onMatch string
+const executeActions = (actionsString: string, dropElement: HTMLElement, dragElement: HTMLElement): void => {
+  console.log('🚀 ~ executeActions ~ actionsString:', actionsString);
+  const actions = parseActions(actionsString);
+  console.log('🚀 ~ executeActions ~ actions:', actions);
+  actions.forEach(action => {
+    const targetElement = action.actor === 'this' ? dropElement : action.actor === 'element' ? dragElement : document.getElementById(action.actor);
+    console.log('🚀 ~ executeActions ~ targetElement:', targetElement, action.action);
+    if (targetElement) {
+      targetElement.style[action.action] = action.value;
+    }
+  });
+};
+
+// Function to parse actions string
+const parseActions = (input: string): Array<{ actor: string; action: string; value: string }> => {
+  const actions = [];
+  const actionStrings = input.split(';').map(action => action.trim());
+
+  actionStrings.forEach(actionString => {
+    if (actionString) {
+      const [actorAction, value] = actionString.split('=').map(part => part.trim());
+      const lastDotIndex = actorAction.lastIndexOf('.');
+      if (lastDotIndex !== -1) {
+        const actor = actorAction.substring(0, lastDotIndex).trim();
+        const action = actorAction.substring(lastDotIndex + 1).trim();
+        actions.push({ actor, action, value: value.replace(/['"]/g, '') });
+      }
+    }
+  });
+
+  return actions;
+};
+
+const matchStringPattern = (pattern: string, arr: string[]): boolean => {
+  const patternGroups = pattern.split(',').map(group => group.trim());
+
+  let arrIndex = 0;
+  let options = new Set<string>();
+
+  for (const group of patternGroups) {
+    if (group.startsWith('(') && group.endsWith(')')) {
+      // Inside parentheses: '|' acts like "OR" condition
+      const choices = group
+        .slice(1, -1)
+        .split('|')
+        .map(option => option.trim());
+
+      if (arrIndex >= arr.length) return false;
+
+      if (!choices.includes(arr[arrIndex])) return false;
+
+      arrIndex++;
+    } else if (group.includes('|')) {
+      // Outside parentheses: '|' acts as optional order
+      const choices = group.split('|').map(option => option.trim());
+
+      for (const choice of choices) {
+        options.add(choice);
+      }
+    } else {
+      // Exact match required
+      if (arrIndex >= arr.length || arr[arrIndex] !== group) return false;
+
+      arrIndex++;
+    }
+  }
+
+  // Validate the optional ordered items against the remaining array elements
+  while (arrIndex < arr.length) {
+    if (!options.has(arr[arrIndex])) {
+      return false;
+    }
+    options.delete(arr[arrIndex]);
+    arrIndex++;
+  }
+
+  return arrIndex === arr.length;
+};
+
+const countPatternWords = (pattern: string): number => {
+  const patternGroups = pattern.split(',').map(group => group.trim());
+
+  let wordCount = 0;
+
+  for (const group of patternGroups) {
+    if (group.startsWith('(') && group.endsWith(')')) {
+      wordCount += 1;
+    } else {
+      wordCount += group.split('|').length;
+    }
+  }
+
+  return wordCount;
+};
+
+export function onActivityComplete() {
+  const container = document.getElementById('container');
+  if (!container) return;
+  const objectiveString = container['objective'];
+  const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
+  const res = matchStringPattern(objectiveString, objectiveArray);
+  console.log('🚀 ~ onActivityComplete ~ res:', res);
+  if (res) {
+    localStorage.removeItem(SelectedValuesKey);
+    localStorage.removeItem(DragSelectedMapKey);
+
+    setTimeout(() => {
+      triggerNextContainer();
+    }, 1500);
+  }
+}
+
+export const triggerNextContainer = () => {
+  const event = new CustomEvent('nextContainer');
+  console.log('🚀 ~ triggerNextContainer ~ event:', event);
+  window.dispatchEvent(event);
+};

@@ -15,6 +15,7 @@ export class AppRow {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
+  @Prop() tabIndex:number;
   @Prop() visible: boolean;
   @Prop() audio: string;
   @Prop() onTouch: string;
@@ -38,7 +39,7 @@ export class AppRow {
     };
 
     return (
-      <Host class="row" type={this.type} value={this.value} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
+      <Host class="row" type={this.type} tabindex={this.tabIndex} value={this.value} style={style} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry}>
         {/* <slot /> */}
       </Host>
     );
