@@ -1,4 +1,5 @@
 import { Component, Prop, h, State } from '@stencil/core';
+import { DragSelectedMapKey, SelectedValuesKey } from '../../utils/constants';
 
 @Component({
   tag: 'app-home',
@@ -13,6 +14,11 @@ export class AppHome {
   componentWillLoad() {
     window.addEventListener('nextContainer', this.nextContainer);
     this.parseXMLData(this.xmlData);
+
+    window.addEventListener('beforeunload', () => {
+      localStorage.removeItem(SelectedValuesKey);
+      localStorage.removeItem(DragSelectedMapKey);
+    });
   }
 
   disconnectedCallback() {
@@ -81,6 +87,8 @@ export class AppHome {
   }
 
   private nextContainer = () => {
+    localStorage.removeItem(SelectedValuesKey);
+    localStorage.removeItem(DragSelectedMapKey);
     if (this.currentContainerIndex < this.containers.length - 1) {
       this.currentContainerIndex++;
     } else {

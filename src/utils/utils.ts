@@ -4,7 +4,7 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
-export function enableDraggingWithScaling(element: HTMLElement): void {
+function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
   let startX = 0;
   let startY = 0;
@@ -276,7 +276,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 }
 
 // Function to execute actions parsed from the onMatch string
-const executeActions = (actionsString: string, dropElement: HTMLElement, dragElement: HTMLElement): void => {
+const executeActions = (actionsString: string, dropElement: HTMLElement, dragElement?: HTMLElement): void => {
   console.log('🚀 ~ executeActions ~ actionsString:', actionsString);
   const actions = parseActions(actionsString);
   console.log('🚀 ~ executeActions ~ actions:', actions);
@@ -371,13 +371,13 @@ const countPatternWords = (pattern: string): number => {
   return wordCount;
 };
 
-export function onActivityComplete() {
+function onActivityComplete() {
   const container = document.getElementById('container');
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
-  console.log('🚀 ~ onActivityComplete ~ res:', res);
+  console.log('🚀 ~ onActivityComplete ~ res:', res, objectiveString, objectiveArray);
   if (res) {
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
@@ -393,3 +393,50 @@ export const triggerNextContainer = () => {
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
   window.dispatchEvent(event);
 };
+
+export const initEventsForElement = (element: HTMLElement, type: string) => {
+  switch (type) {
+    case 'drag': {
+      enableDraggingWithScaling(element);
+      break;
+    }
+    case 'click': {
+      addClickListener(element);
+      break;
+    }
+    default:
+      break;
+  }
+};
+
+function addClickListener(element: HTMLElement): void {
+  element.style.cursor = 'pointer';
+  if (!element) {
+    console.error('No element provided.');
+    return;
+  }
+
+  const onClick = () => {
+    console.log('Element clicked:', element);
+    localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
+    element.style.border = '2px solid yellow';
+    element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
+
+    element.style.transition = 'transform 0.2s ease, border 0.5s ease';
+    element.style.transform = 'scale(1.1)';
+
+    setTimeout(() => {
+      element.style.transform = 'scale(1)';
+      element.style.border = '';
+      element.style.boxShadow = '';
+      const container = document.getElementById('container');
+      const objective = container['objective'];
+      if (objective && element['value'] === objective) {
+        const onTouch = element.getAttribute('onTouch');
+        executeActions(onTouch, element);
+      }
+    }, 500);
+    onActivityComplete();
+  };
+  element.addEventListener('click', onClick);
+}

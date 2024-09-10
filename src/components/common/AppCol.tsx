@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h,Element } from '@stencil/core';
-import { enableDraggingWithScaling } from '../../utils/utils';
+import { initEventsForElement } from '../../utils/utils';
 
 @Component({
   tag: 'app-col',
@@ -26,7 +26,8 @@ export class AppCol {
   @Element() el: HTMLElement;
 
   componentDidLoad() {
-    if (this.type === 'drag') enableDraggingWithScaling(this.el);
+        initEventsForElement(this.el,this.type)
+
   }
 
   render() {
