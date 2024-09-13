@@ -93,6 +93,8 @@ export class AppHome {
       this.currentContainerIndex++;
     } else {
       this.showCompletionMessage = true;
+      const event = new CustomEvent('gameCompleted');
+      window.dispatchEvent(event);
       setTimeout(() => {
         this.showCompletionMessage = false;
       }, 3000);
