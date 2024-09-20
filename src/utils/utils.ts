@@ -208,8 +208,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
     if (!mostOverlappedElement) return;
 
-    console.log('Most overlapping element:', mostOverlappedElement.getAttribute('tabindex'), mostOverlappedElement['tabindex'], element['value']);
-
     let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
     if (!dragScore[mostOverlappedElement.getAttribute('tabindex')]) {
       dragScore[mostOverlappedElement.getAttribute('tabindex')] = [];
@@ -224,49 +222,18 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
 
     // Add pulse and highlight effect for a successful match
-    if (mostOverlappedElement['value'] === element['value']) {
-      console.log('🚀 ~ onEnd ~ mostOverlappedElement onMatch:', mostOverlappedElement['onMatch']);
-
-      // Apply a pulse and highlight effect
-      applyPulseAndHighlightEffect(mostOverlappedElement);
-      applyPulseAndHighlightEffect(element);
-
-      // Delay the execution of the action to show the effects
-      setTimeout(() => {
-        // Reset the visual effect after the delay
-        mostOverlappedElement.style.transition = '';
-        mostOverlappedElement.style.boxShadow = '';
-        mostOverlappedElement.style.backgroundColor = '';
-        element.style.transition = '';
-        element.style.boxShadow = '';
-        element.style.backgroundColor = '';
-
-        // Perform actions if onMatch is defined
-        const onMatch = mostOverlappedElement.getAttribute('onMatch');
-        if (onMatch) {
-          executeActions(onMatch, mostOverlappedElement, element);
-        }
-      }, 1000); // Adjust the delay time as needed (1000ms in this case)
+    if (matchStringPattern(mostOverlappedElement['value'], [element['value']])) {
+      // Perform actions if onMatch is defined
+      const onMatch = mostOverlappedElement.getAttribute('onMatch');
+      if (onMatch) {
+        executeActions(onMatch, mostOverlappedElement, element);
+      }
+    } else {
+      showWrongAnswerAnimation([mostOverlappedElement, element]);
     }
 
     onActivityComplete();
   };
-
-  // Function to apply a pulse and highlight effect using inline styles
-  const applyPulseAndHighlightEffect = (el: HTMLElement): void => {
-    // Apply a longer background color change to light green and pulse effect
-    el.style.transition = 'box-shadow 0.5s ease, background-color 0.5s ease';
-    el.style.backgroundColor = 'rgba(144, 238, 144, 0.7)'; // Light green color
-
-    // Apply a subtle pulse effect using box-shadow
-    el.style.boxShadow = '0 0 15px 7px rgba(144, 238, 144, 0.5)'; // Light green shadow
-
-    // Reset box-shadow after the effect duration
-    setTimeout(() => {
-      el.style.boxShadow = '0 0 0px 0px rgba(144, 238, 144, 0.0)'; // Reset shadow
-    }, 500); // Extended duration for the pulse effect
-  };
-
   // Initialize draggable element styles
   element.style.cursor = 'move';
   element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
@@ -280,11 +247,26 @@ const executeActions = (actionsString: string, dropElement: HTMLElement, dragEle
   console.log('🚀 ~ executeActions ~ actionsString:', actionsString);
   const actions = parseActions(actionsString);
   console.log('🚀 ~ executeActions ~ actions:', actions);
+
   actions.forEach(action => {
     const targetElement = action.actor === 'this' ? dropElement : action.actor === 'element' ? dragElement : document.getElementById(action.actor);
     console.log('🚀 ~ executeActions ~ targetElement:', targetElement, action.action);
+
     if (targetElement) {
-      targetElement.style[action.action] = action.value;
+      // Handle the 'transform' property separately
+      if (action.action === 'transform') {
+        // Get the existing transform style
+        const currentTransform = window.getComputedStyle(targetElement).transform;
+
+        // Combine the new transform with the existing one
+        targetElement.style.transform =
+          currentTransform !== 'none'
+            ? `${currentTransform} ${action.value}` // Append the new transform value to the existing one
+            : action.value; // If no existing transform, just use the new one
+      } else {
+        // Apply other style properties directly
+        targetElement.style[action.action] = action.value;
+      }
     }
   });
 };
@@ -431,12 +413,61 @@ function addClickListener(element: HTMLElement): void {
       element.style.boxShadow = '';
       const container = document.getElementById('container');
       const objective = container['objective'];
-      if (objective && element['value'] === objective) {
+      if (matchStringPattern(objective, [element['value']])) {
         const onTouch = element.getAttribute('onTouch');
         executeActions(onTouch, element);
+      } else {
+        showWrongAnswerAnimation([element]);
       }
     }, 500);
     onActivityComplete();
   };
   element.addEventListener('click', onClick);
+}
+
+export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
+  const styleId = 'wrong-answer-animation-style';
+
+  // Check if the style is already added, if not, add it
+  if (!document.getElementById(styleId)) {
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.innerHTML = `
+          @keyframes enhanced-shake {
+              0% { left: 0; }
+              10% { left: -8px; }
+              20% { left: 8px; }
+              30% { left: -8px; }
+              40% { left: 8px; }
+              50% { left: -6px; }
+              60% { left: 6px; }
+              70% { left: -4px; }
+              80% { left: 4px; }
+              90% { left: -2px; }
+              100% { left: 0; }
+          }
+          
+          .wrong-answer {
+              position: relative; /* Enable relative positioning to move the element */
+              animation: enhanced-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+              background-color: #ffdddd; /* Flash red background to indicate wrong answer */
+              box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle red shadow */
+          }
+      `;
+    document.head.appendChild(style);
+  }
+
+  elements.forEach(element => {
+    // Add the class to trigger the animation
+    element.classList.add('wrong-answer');
+
+    // Remove the class after the animation ends to reset the element
+    element.addEventListener(
+      'animationend',
+      () => {
+        element.classList.remove('wrong-answer');
+      },
+      { once: true },
+    );
+  });
 }
