@@ -1,94 +1,182 @@
 <main>
-	<app-container id="container" value="mainContainer1" objective="apple" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos1" value="pos1" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+	<app-container id="container" value="mainContainer" objective="o4" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
 			</app-image>
 		</app-pos>
-		<app-col id="col2" value="column1" height="500px" width="700px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<!-- <app-row id="row1" value="row1" height="100px" width="100%" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry=""> -->
-			<app-text id="text1" tabIndex="1" string="Click on the apple" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="a,a,a,a,a" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="Which of these is an official language of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q2" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
 			</app-text>
-			<!--
-			<app-text id="text2" tabIndex="2" string="Apple" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="apple" height="100px" width="150px" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-text id="text3" tabIndex="3" string="Bike" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="bike" height="100px" width="150px" x="40vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			-->
-			<!-- </app-row> -->
-			<app-row id="row2" value="row2" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row2.mp3" onTouch="" onMatch="" onEntry="">
-				<app-image id="image22" tabIndex="4" value="bike" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="click" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_png_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xMS1wLTNkLW1vdG9yYmlrZS1qai0xLWRfMS5wbmc.png">
-				</app-image>
-				<app-image id="image13" tabIndex="5" value="car" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="click" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA3L2pvYjk0OS0xMjAucG5n.png">
-				</app-image>
-				<app-image id="image42" tabIndex="6" value="apple" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="click" audio="image2.mp3" onTouch="this.visibility=hidden" onMatch="" onEntry="" src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Bkd2F0ZXJjb2xvcmZydWl0YmF0Y2gxLTQ1Mi1nbG95XzEuanBn.jpg">
-				</app-image>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o5" string="English" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o4" string="Hindi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o6" string="Bengali" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
 			</app-row>
 		</app-col>
-		<!--
-		<app-pos id="pos2" value="pos1" height="500px" width="500px" x="100px" y="100px" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-text id="text9" string="red" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="word4" height="100px" width="100px" x="200px" y="100px" z="0" bgColor="#DDDDDD" type="drag" visible="true" audio="" onTouch="" onMatch="" onEntry="">
-		</app-text>
-		</app-pos>
-		-->
 	</app-container>
-	<app-container id="container" value="mainContainer1" objective="car,apple,bike" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos1" value="pos1" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+	<app-container id="container" value="mainContainer" objective="o25" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
 			</app-image>
 		</app-pos>
-		<app-col id="col2" value="column1" height="500px" width="700px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="text1" tabIndex="1" string="Car" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="a,a,a,a,a" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="What do plants need to perform photosynthesis?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q9" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o27" string="Artificial light" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
-				<app-text id="text2" tabIndex="2" string="Apple" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="apple" height="100px" width="150px" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+				<app-text id="textA2" tabIndex="3" value="o25" string="Sunlight" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
-				<app-text id="text3" tabIndex="3" string="Bike" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="bike" height="100px" width="150px" x="40vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+				<app-text id="textA3" tabIndex="4" value="o26" string="Moonlight" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
-			</app-row>
-			<app-row id="row2" value="row2" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row2.mp3" onTouch="" onMatch="" onEntry="">
-				<app-image id="image22" tabIndex="4" value="bike" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_png_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xMS1wLTNkLW1vdG9yYmlrZS1qai0xLWRfMS5wbmc.png">
-				</app-image>
-				<app-image id="image13" tabIndex="5" value="car" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA3L2pvYjk0OS0xMjAucG5n.png">
-				</app-image>
-				<app-image id="image42" tabIndex="6" value="apple" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Bkd2F0ZXJjb2xvcmZydWl0YmF0Y2gxLTQ1Mi1nbG95XzEuanBn.jpg">
-				</app-image>
 			</app-row>
 		</app-col>
-		<!--
-		<app-pos id="pos2" value="pos1" height="500px" width="500px" x="100px" y="100px" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-text id="text9" string="red" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="word4" height="100px" width="100px" x="200px" y="100px" z="0" bgColor="#DDDDDD" type="drag" visible="true" audio="" onTouch="" onMatch="" onEntry="">
-		</app-text>
-		</app-pos>
-		-->
 	</app-container>
-	<app-container id="container" value="mainContainer1" objective="car,apple,bike" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos1" value="pos1" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+	<app-container id="container" value="mainContainer" objective="o19" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
 			</app-image>
 		</app-pos>
-		<app-col id="col2" value="column1" height="500px" width="700px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="text1" tabIndex="1" string="Car1" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="a,a,a,a,a" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="What is 5 + 3?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q7" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o21" string="6" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
-				<app-text id="text2" tabIndex="2" string="Apple1" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="apple" height="100px" width="150px" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+				<app-text id="textA2" tabIndex="3" value="o19" string="8" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
-				<app-text id="text3" tabIndex="3" string="Bike1" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="bike" height="100px" width="150px" x="40vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+				<app-text id="textA3" tabIndex="4" value="o20" string="7" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
-			</app-row>
-			<app-row id="row2" value="row2" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row2.mp3" onTouch="" onMatch="" onEntry="">
-				<app-image id="image22" tabIndex="4" value="bike" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_png_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xMS1wLTNkLW1vdG9yYmlrZS1qai0xLWRfMS5wbmc.png">
-				</app-image>
-				<app-image id="image13" tabIndex="5" value="car" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA3L2pvYjk0OS0xMjAucG5n.png">
-				</app-image>
-				<app-image id="image42" tabIndex="6" value="apple" height="100px" width="100px" x="" y="" z="" bgColor="#FFFFFF" visible="true" type="drag" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Bkd2F0ZXJjb2xvcmZydWl0YmF0Y2gxLTQ1Mi1nbG95XzEuanBn.jpg">
-				</app-image>
 			</app-row>
 		</app-col>
-		<!--
-		<app-pos id="pos2" value="pos1" height="500px" width="500px" x="100px" y="100px" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-text id="text9" string="red" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="word4" height="100px" width="100px" x="200px" y="100px" z="0" bgColor="#DDDDDD" type="drag" visible="true" audio="" onTouch="" onMatch="" onEntry="">
-		</app-text>
+	</app-container>
+	<app-container id="container" value="mainContainer" objective="o16" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+			</app-image>
 		</app-pos>
-		-->
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="What is the primary function of Indian Railways?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q6" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o18" string="Employment" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o17" string="Communication" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o16" string="Transportation" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+			</app-row>
+		</app-col>
+	</app-container>
+	<app-container id="container" value="mainContainer" objective="o1" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+			</app-image>
+		</app-pos>
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="Which of the following is a state in India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q1" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o1" string="Maharashtra" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o3" string="Kolkata" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o2" string="Delhi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+			</app-row>
+		</app-col>
+	</app-container>
+	<app-container id="container" value="mainContainer" objective="o13" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+			</app-image>
+		</app-pos>
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="Who is the current Prime Minister of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q5" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o15" string="Amit Shah" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o13" string="Narendra Modi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o14" string="Rahul Gandhi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+			</app-row>
+		</app-col>
+	</app-container>
+	<app-container id="container" value="mainContainer" objective="o22" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+			</app-image>
+		</app-pos>
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="What is the synonym of 'Happy'?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q8" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o24" string="Angry" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o22" string="Joyful" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o23" string="Sad" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+			</app-row>
+		</app-col>
+	</app-container>
+	<app-container id="container" value="mainContainer" objective="o7" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+			</app-image>
+		</app-pos>
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="What is the capital of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q3" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o8" string="Mumbai" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o9" string="Chennai" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o7" string="New Delhi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+			</app-row>
+		</app-col>
+	</app-container>
+	<app-container id="container" value="mainContainer" objective="o10" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+			</app-image>
+		</app-pos>
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="Which of these is a major city in India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q4" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o12" string="Goa" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o11" string="Hampi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o10" string="Bangalore" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+			</app-row>
+		</app-col>
+	</app-container>
+	<app-container id="container" value="mainContainer" objective="o28" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+			</app-image>
+		</app-pos>
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-text id="text1" tabIndex="1" string="Who was the first president of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q10" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
+			</app-text>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="2" value="o30" string="Jawaharlal Nehru" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="3" value="o28" string="Dr. Rajendra Prasad" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="4" value="o29" string="Gopal Krishna Gokhale" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+			</app-row>
+		</app-col>
 	</app-container>
 </main>
