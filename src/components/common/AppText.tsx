@@ -12,6 +12,7 @@ export class AppText {
   @Prop() string: string;
   @Prop() font: string;
   @Prop() fontSize: string;
+  @Prop() fontColor: string;
   @Prop() highlightWhileSpeaking: boolean;
   @Prop() height: string;
   @Prop() width: string;
@@ -20,7 +21,7 @@ export class AppText {
   @Prop() z: string;
   @Prop() bgColor: string;
   @Prop() type: string;
-  @Prop() tabIndex:number;
+  @Prop() tabIndex: number;
   @Prop() visible: boolean;
   @Prop() audio: string;
   @Prop() onTouch: string;
@@ -30,8 +31,7 @@ export class AppText {
   @Element() el: HTMLElement;
 
   componentDidLoad() {
-        initEventsForElement(this.el,this.type)
-
+    initEventsForElement(this.el, this.type);
   }
 
   render() {
@@ -44,11 +44,23 @@ export class AppText {
       zIndex: this.z,
       fontSize: this.fontSize,
       fontFamily: this.font,
+      color: this.fontColor,
       display: this.visible ? 'flex' : 'none',
     };
 
     return (
-      <Host class="text" value={this.value} type={this.type} tabindex={this.tabIndex} audio={this.audio} onTouch={this.onTouch} onMatch={this.onMatch} onEntry={this.onEntry} id={this.id} style={style}>
+      <Host
+        class="text"
+        value={this.value}
+        type={this.type}
+        tabindex={this.tabIndex}
+        audio={this.audio}
+        onTouch={this.onTouch}
+        onMatch={this.onMatch}
+        onEntry={this.onEntry}
+        id={this.id}
+        style={style}
+      >
         {this.string}
       </Host>
     );

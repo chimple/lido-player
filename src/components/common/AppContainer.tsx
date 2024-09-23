@@ -46,6 +46,7 @@ export class AppContainer {
 
   componentDidLoad() {
     this.scaleContainer(this.el);
+    document.body.style.backgroundColor = this.bgColor;
     window.addEventListener('resize', () => this.scaleContainer(this.el));
     window.addEventListener('load', () => this.scaleContainer(this.el));
   }
@@ -54,15 +55,15 @@ export class AppContainer {
     const style = {
       // height: this.height,
       // width: '100%',
-      // backgroundColor: this.bgColor,
+      backgroundColor: this.bgColor,
       // top: this.y,
       // left: this.x,
       width: '1600px',
       height: '900px',
       position: 'absolute',
-      backgroundColor: '#ffffff',
-      border: '1px solid #ddd',
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      // backgroundColor: '#ffffff',
+      // border: '1px solid #ddd',
+      // boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
       top: '50%',
       left: '50%',
       transform: 'translate(-50%,-50%)',

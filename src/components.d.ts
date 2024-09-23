@@ -139,6 +139,7 @@ export namespace Components {
         "audio": string;
         "bgColor": string;
         "font": string;
+        "fontColor": string;
         "fontSize": string;
         "height": string;
         "highlightWhileSpeaking": boolean;
@@ -396,6 +397,7 @@ declare namespace LocalJSX {
         "audio"?: string;
         "bgColor"?: string;
         "font"?: string;
+        "fontColor"?: string;
         "fontSize"?: string;
         "height"?: string;
         "highlightWhileSpeaking"?: boolean;

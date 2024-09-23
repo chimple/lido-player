@@ -104,6 +104,24 @@ export class AppHome {
     this.containers = [...this.containers];
   };
 
+  private renderDots() {
+    return (
+      <div class="dot-container">
+        {this.containers.map((_, index) => (
+          <span
+            class={`dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+            onClick={() => this.jumpToContainer(index)}
+          ></span>
+        ))}
+      </div>
+    );
+  }
+
+  private jumpToContainer(index: number) {
+    this.currentContainerIndex = index;
+    this.containers = [...this.containers]; // Trigger re-render
+  }
+
   render() {
     if (!this.xmlData) {
       return <div>Please provide XML data.</div>;
@@ -111,11 +129,13 @@ export class AppHome {
 
     return (
       <div>
-        <div key={this.currentContainerIndex}>
-          {this.containers[this.currentContainerIndex]}
-          {/* <button onClick={this.nextContainer}>Next Container</button> */}
-        </div>
+        <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]}</div>
+
+        {/* Render the dots below the container */}
+        {this.renderDots()}
+
         {this.showCompletionMessage && <div class="snackbar">All containers have been displayed!</div>}
+
         <style>
           {`
             .snackbar {
@@ -132,6 +152,35 @@ export class AppHome {
               left: 50%;
               transform: translateX(-50%);
               font-size: 17px;
+            }
+
+            .dot-container {
+              text-align: center;
+              position: relative;
+              z-index: 1;
+            }
+
+            .dot {
+              height: 15px;
+              width: 15px;
+              margin: 0 4px;
+              background-color: #bbb;
+              border-radius: 50%;
+              display: inline-block;
+              transition: background-color 0.3s;
+              cursor: pointer;
+            }
+
+            .dot.completed {
+              background-color: black;
+            }
+
+            .dot.current {
+              background-color: green;
+            }
+
+            .dot:not(.completed):not(.current) {
+              background-color: #bbb;
             }
           `}
         </style>
