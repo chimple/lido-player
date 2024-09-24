@@ -6,242 +6,794 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    /**
+     * @component AppCol
+     * The `AppCol` component is a dynamic column-like UI element that can be
+     * customized via various properties such as dimensions, position, visibility,
+     * background color, and event handlers. It is designed to work within
+     * containers (`app-container`) and can include child components like
+     * `app-text`, `app-row`, etc.
+     */
     interface AppCol {
+        /**
+          * Audio file URL or identifier for sound that will be associated with the column.
+         */
         "audio": string;
+        /**
+          * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor": string;
+        /**
+          * The height of the column component (CSS value, e.g., '100px', '50%').
+         */
         "height": string;
+        /**
+          * The unique identifier for the column component.
+         */
         "id": string;
+        /**
+          * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+         */
         "onEntry": string;
+        /**
+          * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
+         */
         "onMatch": string;
+        /**
+          * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+         */
         "onTouch": string;
+        /**
+          * The tab index value, used to set the tab order of the column for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * Defines the type of the column, which can be used for styling or specific logic handling.
+         */
         "type": string;
+        /**
+          * The value associated with the column component. Typically used for internal logic.
+         */
         "value": string;
+        /**
+          * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+         */
         "visible": boolean;
+        /**
+          * The width of the column component (CSS value, e.g., '100px', '50%').
+         */
         "width": string;
+        /**
+          * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * The z-index of the column to control stacking order.
+         */
         "z": string;
     }
+    /**
+     * @component AppContainer
+     * The `AppContainer` component acts as a container for other elements. It scales responsively
+     * based on the window size, adjusts background color, and provides various configurable properties
+     * such as dimensions, positioning, visibility, and custom event handlers.
+     */
     interface AppContainer {
+        /**
+          * URL or identifier of an audio file associated with the container.
+         */
         "audio": string;
+        /**
+          * Background color of the container (CSS color value).
+         */
         "bgColor": string;
+        /**
+          * The height of the container (CSS value).
+         */
         "height": string;
+        /**
+          * Unique identifier for the container.
+         */
         "id": string;
+        /**
+          * Objective or purpose of the container. Can be used for internal logic or tracking.
+         */
         "objective": string;
+        /**
+          * Event handler triggered when the container is entered, useful for triggering animations or logic.
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a specific match condition is met within the container.
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the container is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * TabIndex for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * Type of the container, which can be used for conditional logic or styling purposes.
+         */
         "type": string;
+        /**
+          * Value assigned to the container. This can be used for logic related to this component.
+         */
         "value": string;
+        /**
+          * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
+         */
         "visible": boolean;
+        /**
+          * The width of the container (CSS value).
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the container.
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the container.
+         */
         "y": string;
+        /**
+          * Z-index to control the stacking order of the container.
+         */
         "z": string;
     }
+    /**
+     * @component AppHome
+     * The `AppHome` component renders a series of containers parsed from the provided XML data.
+     * It handles navigation between containers, resets the state on page reloads or container transitions,
+     * and displays progress indicators (dots) for each container.
+     */
     interface AppHome {
+        /**
+          * XML data passed to the component, which is parsed and used to render various containers.
+         */
         "xmlData": string;
     }
+    /**
+     * @component AppImage
+     * The `AppImage` component displays an image element within a container. It is a versatile
+     * component that allows dynamic sizing, positioning, visibility control, and event handling.
+     * The component is designed to work in different types of environments, supporting custom
+     * events such as touch, match, and entry events.
+     */
     interface AppImage {
+        /**
+          * URL or identifier of an audio file associated with the image.
+         */
         "audio": string;
+        /**
+          * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor": string;
+        /**
+          * The height of the image component (CSS value, e.g., '100px', '50%').
+         */
         "height": string;
+        /**
+          * Event handler triggered when the image is entered (useful for animations or logic on entry).
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a matching action occurs.
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the image is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * The source URL of the image to be displayed.
+         */
         "src": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * Defines the type of the image component, which can be used for conditional logic or styling purposes.
+         */
         "type": string;
+        /**
+          * The value associated with the image. Typically used for internal logic or identification.
+         */
         "value": string;
+        /**
+          * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
+         */
         "visible": boolean;
+        /**
+          * The width of the image component (CSS value, e.g., '100px', '50%').
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the image within its container (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the image within its container (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the image relative to other elements.
+         */
         "z": string;
     }
-    interface AppObjective {
-        "string": string;
-        "value": string;
-    }
+    /**
+     * @component AppPos
+     * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+     * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
+     * events for interaction such as touch, match, and entry events.
+     */
     interface AppPos {
+        /**
+          * URL or identifier for an audio file associated with the component.
+         */
         "audio": string;
+        /**
+          * Background color of the component (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor": string;
+        /**
+          * The height of the component (CSS value, e.g., '100px', '50%').
+         */
         "height": string;
+        /**
+          * Unique identifier for the positional element.
+         */
         "id": string;
+        /**
+          * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a matching action occurs (e.g., custom logic for interactions).
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the component is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * Tab index to support keyboard navigation within the component.
+         */
         "tabIndex": number;
+        /**
+          * The type of the component, used for conditional logic or specific styles.
+         */
         "type": string;
+        /**
+          * Value assigned to the component, often used for internal logic or data tracking.
+         */
         "value": string;
+        /**
+          * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
+         */
         "visible": boolean;
+        /**
+          * The width of the component (CSS value, e.g., '100px', '50%').
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the component (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the component (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the element relative to others.
+         */
         "z": string;
     }
+    /**
+     * @component AppRandom
+     * The `AppRandom` component randomly positions its child elements within its container.
+     * This component can be used when a random layout of elements is required. It allows
+     * full customization via props such as dimensions, positioning, visibility, and event handling.
+     */
     interface AppRandom {
+        /**
+          * URL or identifier for an audio file associated with the component.
+         */
         "audio": string;
+        /**
+          * Background color of the container (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor": string;
+        /**
+          * The height of the container (CSS value, e.g., '100px', '50%').
+         */
         "height": string;
+        /**
+          * Unique identifier for the random container.
+         */
         "id": string;
+        /**
+          * Event handler triggered when the component is entered (useful for animations or logic on entry).
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a matching action occurs.
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the component is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * The type of the component, used for conditional logic or specific styling.
+         */
         "type": string;
+        /**
+          * Value associated with the component, often used for internal logic.
+         */
         "value": string;
+        /**
+          * Controls the visibility of the container. If `true`, the container is visible; otherwise, it is hidden.
+         */
         "visible": boolean;
+        /**
+          * The width of the container (CSS value, e.g., '100px', '50%').
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the container (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the container (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the container relative to other elements.
+         */
         "z": string;
     }
+    /**
+     * @component AppRoot
+     * The `AppRoot` component is the main application entry point. It loads an external XML data file
+     * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
+     * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+     */
     interface AppRoot {
     }
+    /**
+     * @component AppRow
+     * The `AppRow` component is used to create a flexible row element that can contain other elements.
+     * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
+     */
     interface AppRow {
+        /**
+          * URL or identifier of an audio file associated with the row.
+         */
         "audio": string;
+        /**
+          * Background color of the row (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor": string;
+        /**
+          * The height of the row (CSS value, e.g., '100px', '50%').
+         */
         "height": string;
+        /**
+          * Event handler triggered when the row is entered, often used for triggering animations or custom logic.
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a matching action occurs within the row.
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the row is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * Defines the type of the row, used for conditional logic or specific styling.
+         */
         "type": string;
+        /**
+          * Value associated with the row, typically used for internal logic or data.
+         */
         "value": string;
+        /**
+          * Controls the visibility of the row. If `true`, the row is visible; otherwise, it is hidden.
+         */
         "visible": boolean;
+        /**
+          * The width of the row (CSS value, e.g., '100px', '50%').
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the row (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the row (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the row relative to other elements.
+         */
         "z": string;
     }
+    /**
+     * @component AppShape
+     * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+     * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
+     * Additionally, it supports custom events for interaction like touch, match, and entry.
+     */
     interface AppShape {
+        /**
+          * URL or identifier for an audio file associated with the shape.
+         */
         "audio": string;
+        /**
+          * Background color of the shape (CSS color value, e.g., '#FFFFFF', 'blue'). This is ignored for polygons.
+         */
         "bgColor": string;
+        /**
+          * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+         */
         "height": string;
+        /**
+          * Unique identifier for the shape element.
+         */
         "id": string;
+        /**
+          * Event handler triggered when the shape is entered (useful for animations or logic on entry).
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a matching action occurs with the shape.
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the shape is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * Type of shape to render (e.g., 'circle', 'rectangle', 'polygon').
+         */
         "shapeType": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * Defines the type of the shape, which can be used for conditional logic or specific styling.
+         */
         "type": string;
+        /**
+          * Value associated with the shape, typically used for internal logic or tracking.
+         */
         "value": string;
+        /**
+          * Controls the visibility of the shape. If `true`, the shape is visible; otherwise, it is hidden.
+         */
         "visible": boolean;
+        /**
+          * The width of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the shape (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the shape (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the shape relative to other elements.
+         */
         "z": string;
     }
+    /**
+     * @component AppText
+     * The `AppText` component is used to display text with customizable styling.
+     * It allows you to set the font, size, color, and background color, along with
+     * positioning and visibility control. The component supports custom events like touch, match, and entry.
+     */
     interface AppText {
+        /**
+          * URL or identifier for an audio file associated with the text component.
+         */
         "audio": string;
+        /**
+          * Background color of the text component (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor": string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
         "font": string;
+        /**
+          * Font color for the text (CSS color value, e.g., '#000000', 'red').
+         */
         "fontColor": string;
+        /**
+          * Font size for the text (CSS value, e.g., '16px', '1.5em').
+         */
         "fontSize": string;
+        /**
+          * Height of the text component (CSS value, e.g., '100px', '50%').
+         */
         "height": string;
+        /**
+          * When set to `true`, the text will highlight while being spoken, typically used for accessibility.
+         */
         "highlightWhileSpeaking": boolean;
+        /**
+          * Unique identifier for the text element.
+         */
         "id": string;
+        /**
+          * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a matching action occurs with the text component.
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the text component is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * The string of text to be displayed in the component.
+         */
         "string": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * Defines the type of the component, which can be used for conditional logic or specific styling.
+         */
         "type": string;
+        /**
+          * Value associated with the text element, typically used for internal logic or tracking.
+         */
         "value": string;
+        /**
+          * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+         */
         "visible": boolean;
+        /**
+          * Width of the text component (CSS value, e.g., '100px', '50%').
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the text component (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the text component relative to other elements.
+         */
         "z": string;
     }
+    /**
+     * @component AppWrap
+     * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+     * The component can display its content as a grid and supports custom events like touch, match, and entry.
+     * It allows for full customization via props like dimensions, background color, visibility, and z-index.
+     */
     interface AppWrap {
+        /**
+          * URL or identifier of an audio file associated with the wrap container.
+         */
         "audio": string;
+        /**
+          * Background color of the wrap container (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor": string;
+        /**
+          * The height of the wrap container (CSS value, e.g., '100px', '50%').
+         */
         "height": string;
+        /**
+          * Unique identifier for the wrap element.
+         */
         "id": string;
+        /**
+          * Event handler triggered when the wrap container is entered (useful for animations or logic on entry).
+         */
         "onEntry": string;
+        /**
+          * Event handler triggered when a matching action occurs with the wrap container.
+         */
         "onMatch": string;
+        /**
+          * Event handler triggered when the wrap container is touched or clicked.
+         */
         "onTouch": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex": number;
+        /**
+          * Defines the type of the wrap container, which can be used for conditional logic or specific styling.
+         */
         "type": string;
+        /**
+          * Value associated with the wrap element, typically used for internal logic or tracking.
+         */
         "value": string;
+        /**
+          * Controls the visibility of the wrap container. If `true`, the container is visible; otherwise, it is hidden.
+         */
         "visible": boolean;
+        /**
+          * The width of the wrap container (CSS value, e.g., '100px', '50%').
+         */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the wrap container (CSS value, e.g., '10px', '5vw').
+         */
         "x": string;
+        /**
+          * Y-axis (vertical) position of the wrap container (CSS value, e.g., '10px', '5vh').
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the wrap container relative to other elements.
+         */
         "z": string;
     }
 }
 declare global {
+    /**
+     * @component AppCol
+     * The `AppCol` component is a dynamic column-like UI element that can be
+     * customized via various properties such as dimensions, position, visibility,
+     * background color, and event handlers. It is designed to work within
+     * containers (`app-container`) and can include child components like
+     * `app-text`, `app-row`, etc.
+     */
     interface HTMLAppColElement extends Components.AppCol, HTMLStencilElement {
     }
     var HTMLAppColElement: {
         prototype: HTMLAppColElement;
         new (): HTMLAppColElement;
     };
+    /**
+     * @component AppContainer
+     * The `AppContainer` component acts as a container for other elements. It scales responsively
+     * based on the window size, adjusts background color, and provides various configurable properties
+     * such as dimensions, positioning, visibility, and custom event handlers.
+     */
     interface HTMLAppContainerElement extends Components.AppContainer, HTMLStencilElement {
     }
     var HTMLAppContainerElement: {
         prototype: HTMLAppContainerElement;
         new (): HTMLAppContainerElement;
     };
+    /**
+     * @component AppHome
+     * The `AppHome` component renders a series of containers parsed from the provided XML data.
+     * It handles navigation between containers, resets the state on page reloads or container transitions,
+     * and displays progress indicators (dots) for each container.
+     */
     interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
     }
     var HTMLAppHomeElement: {
         prototype: HTMLAppHomeElement;
         new (): HTMLAppHomeElement;
     };
+    /**
+     * @component AppImage
+     * The `AppImage` component displays an image element within a container. It is a versatile
+     * component that allows dynamic sizing, positioning, visibility control, and event handling.
+     * The component is designed to work in different types of environments, supporting custom
+     * events such as touch, match, and entry events.
+     */
     interface HTMLAppImageElement extends Components.AppImage, HTMLStencilElement {
     }
     var HTMLAppImageElement: {
         prototype: HTMLAppImageElement;
         new (): HTMLAppImageElement;
     };
-    interface HTMLAppObjectiveElement extends Components.AppObjective, HTMLStencilElement {
-    }
-    var HTMLAppObjectiveElement: {
-        prototype: HTMLAppObjectiveElement;
-        new (): HTMLAppObjectiveElement;
-    };
+    /**
+     * @component AppPos
+     * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+     * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
+     * events for interaction such as touch, match, and entry events.
+     */
     interface HTMLAppPosElement extends Components.AppPos, HTMLStencilElement {
     }
     var HTMLAppPosElement: {
         prototype: HTMLAppPosElement;
         new (): HTMLAppPosElement;
     };
+    /**
+     * @component AppRandom
+     * The `AppRandom` component randomly positions its child elements within its container.
+     * This component can be used when a random layout of elements is required. It allows
+     * full customization via props such as dimensions, positioning, visibility, and event handling.
+     */
     interface HTMLAppRandomElement extends Components.AppRandom, HTMLStencilElement {
     }
     var HTMLAppRandomElement: {
         prototype: HTMLAppRandomElement;
         new (): HTMLAppRandomElement;
     };
+    /**
+     * @component AppRoot
+     * The `AppRoot` component is the main application entry point. It loads an external XML data file
+     * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
+     * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+     */
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
     var HTMLAppRootElement: {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    /**
+     * @component AppRow
+     * The `AppRow` component is used to create a flexible row element that can contain other elements.
+     * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
+     */
     interface HTMLAppRowElement extends Components.AppRow, HTMLStencilElement {
     }
     var HTMLAppRowElement: {
         prototype: HTMLAppRowElement;
         new (): HTMLAppRowElement;
     };
+    /**
+     * @component AppShape
+     * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+     * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
+     * Additionally, it supports custom events for interaction like touch, match, and entry.
+     */
     interface HTMLAppShapeElement extends Components.AppShape, HTMLStencilElement {
     }
     var HTMLAppShapeElement: {
         prototype: HTMLAppShapeElement;
         new (): HTMLAppShapeElement;
     };
+    /**
+     * @component AppText
+     * The `AppText` component is used to display text with customizable styling.
+     * It allows you to set the font, size, color, and background color, along with
+     * positioning and visibility control. The component supports custom events like touch, match, and entry.
+     */
     interface HTMLAppTextElement extends Components.AppText, HTMLStencilElement {
     }
     var HTMLAppTextElement: {
         prototype: HTMLAppTextElement;
         new (): HTMLAppTextElement;
     };
+    /**
+     * @component AppWrap
+     * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+     * The component can display its content as a grid and supports custom events like touch, match, and entry.
+     * It allows for full customization via props like dimensions, background color, visibility, and z-index.
+     */
     interface HTMLAppWrapElement extends Components.AppWrap, HTMLStencilElement {
     }
     var HTMLAppWrapElement: {
@@ -253,7 +805,6 @@ declare global {
         "app-container": HTMLAppContainerElement;
         "app-home": HTMLAppHomeElement;
         "app-image": HTMLAppImageElement;
-        "app-objective": HTMLAppObjectiveElement;
         "app-pos": HTMLAppPosElement;
         "app-random": HTMLAppRandomElement;
         "app-root": HTMLAppRootElement;
@@ -264,172 +815,662 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    /**
+     * @component AppCol
+     * The `AppCol` component is a dynamic column-like UI element that can be
+     * customized via various properties such as dimensions, position, visibility,
+     * background color, and event handlers. It is designed to work within
+     * containers (`app-container`) and can include child components like
+     * `app-text`, `app-row`, etc.
+     */
     interface AppCol {
+        /**
+          * Audio file URL or identifier for sound that will be associated with the column.
+         */
         "audio"?: string;
+        /**
+          * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor"?: string;
+        /**
+          * The height of the column component (CSS value, e.g., '100px', '50%').
+         */
         "height"?: string;
+        /**
+          * The unique identifier for the column component.
+         */
         "id"?: string;
+        /**
+          * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+         */
         "onEntry"?: string;
+        /**
+          * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+         */
         "onTouch"?: string;
+        /**
+          * The tab index value, used to set the tab order of the column for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * Defines the type of the column, which can be used for styling or specific logic handling.
+         */
         "type"?: string;
+        /**
+          * The value associated with the column component. Typically used for internal logic.
+         */
         "value"?: string;
+        /**
+          * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+         */
         "visible"?: boolean;
+        /**
+          * The width of the column component (CSS value, e.g., '100px', '50%').
+         */
         "width"?: string;
+        /**
+          * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * The z-index of the column to control stacking order.
+         */
         "z"?: string;
     }
+    /**
+     * @component AppContainer
+     * The `AppContainer` component acts as a container for other elements. It scales responsively
+     * based on the window size, adjusts background color, and provides various configurable properties
+     * such as dimensions, positioning, visibility, and custom event handlers.
+     */
     interface AppContainer {
+        /**
+          * URL or identifier of an audio file associated with the container.
+         */
         "audio"?: string;
+        /**
+          * Background color of the container (CSS color value).
+         */
         "bgColor"?: string;
+        /**
+          * The height of the container (CSS value).
+         */
         "height"?: string;
+        /**
+          * Unique identifier for the container.
+         */
         "id"?: string;
+        /**
+          * Objective or purpose of the container. Can be used for internal logic or tracking.
+         */
         "objective"?: string;
+        /**
+          * Event handler triggered when the container is entered, useful for triggering animations or logic.
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a specific match condition is met within the container.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the container is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * TabIndex for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * Type of the container, which can be used for conditional logic or styling purposes.
+         */
         "type"?: string;
+        /**
+          * Value assigned to the container. This can be used for logic related to this component.
+         */
         "value"?: string;
+        /**
+          * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
+         */
         "visible"?: boolean;
+        /**
+          * The width of the container (CSS value).
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the container.
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the container.
+         */
         "y"?: string;
+        /**
+          * Z-index to control the stacking order of the container.
+         */
         "z"?: string;
     }
+    /**
+     * @component AppHome
+     * The `AppHome` component renders a series of containers parsed from the provided XML data.
+     * It handles navigation between containers, resets the state on page reloads or container transitions,
+     * and displays progress indicators (dots) for each container.
+     */
     interface AppHome {
+        /**
+          * XML data passed to the component, which is parsed and used to render various containers.
+         */
         "xmlData"?: string;
     }
+    /**
+     * @component AppImage
+     * The `AppImage` component displays an image element within a container. It is a versatile
+     * component that allows dynamic sizing, positioning, visibility control, and event handling.
+     * The component is designed to work in different types of environments, supporting custom
+     * events such as touch, match, and entry events.
+     */
     interface AppImage {
+        /**
+          * URL or identifier of an audio file associated with the image.
+         */
         "audio"?: string;
+        /**
+          * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor"?: string;
+        /**
+          * The height of the image component (CSS value, e.g., '100px', '50%').
+         */
         "height"?: string;
+        /**
+          * Event handler triggered when the image is entered (useful for animations or logic on entry).
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a matching action occurs.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the image is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * The source URL of the image to be displayed.
+         */
         "src"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * Defines the type of the image component, which can be used for conditional logic or styling purposes.
+         */
         "type"?: string;
+        /**
+          * The value associated with the image. Typically used for internal logic or identification.
+         */
         "value"?: string;
+        /**
+          * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
+         */
         "visible"?: boolean;
+        /**
+          * The width of the image component (CSS value, e.g., '100px', '50%').
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the image within its container (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the image within its container (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the image relative to other elements.
+         */
         "z"?: string;
     }
-    interface AppObjective {
-        "string"?: string;
-        "value"?: string;
-    }
+    /**
+     * @component AppPos
+     * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+     * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
+     * events for interaction such as touch, match, and entry events.
+     */
     interface AppPos {
+        /**
+          * URL or identifier for an audio file associated with the component.
+         */
         "audio"?: string;
+        /**
+          * Background color of the component (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor"?: string;
+        /**
+          * The height of the component (CSS value, e.g., '100px', '50%').
+         */
         "height"?: string;
+        /**
+          * Unique identifier for the positional element.
+         */
         "id"?: string;
+        /**
+          * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a matching action occurs (e.g., custom logic for interactions).
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the component is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * Tab index to support keyboard navigation within the component.
+         */
         "tabIndex"?: number;
+        /**
+          * The type of the component, used for conditional logic or specific styles.
+         */
         "type"?: string;
+        /**
+          * Value assigned to the component, often used for internal logic or data tracking.
+         */
         "value"?: string;
+        /**
+          * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
+         */
         "visible"?: boolean;
+        /**
+          * The width of the component (CSS value, e.g., '100px', '50%').
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the component (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the component (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the element relative to others.
+         */
         "z"?: string;
     }
+    /**
+     * @component AppRandom
+     * The `AppRandom` component randomly positions its child elements within its container.
+     * This component can be used when a random layout of elements is required. It allows
+     * full customization via props such as dimensions, positioning, visibility, and event handling.
+     */
     interface AppRandom {
+        /**
+          * URL or identifier for an audio file associated with the component.
+         */
         "audio"?: string;
+        /**
+          * Background color of the container (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor"?: string;
+        /**
+          * The height of the container (CSS value, e.g., '100px', '50%').
+         */
         "height"?: string;
+        /**
+          * Unique identifier for the random container.
+         */
         "id"?: string;
+        /**
+          * Event handler triggered when the component is entered (useful for animations or logic on entry).
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a matching action occurs.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the component is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * The type of the component, used for conditional logic or specific styling.
+         */
         "type"?: string;
+        /**
+          * Value associated with the component, often used for internal logic.
+         */
         "value"?: string;
+        /**
+          * Controls the visibility of the container. If `true`, the container is visible; otherwise, it is hidden.
+         */
         "visible"?: boolean;
+        /**
+          * The width of the container (CSS value, e.g., '100px', '50%').
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the container (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the container (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the container relative to other elements.
+         */
         "z"?: string;
     }
+    /**
+     * @component AppRoot
+     * The `AppRoot` component is the main application entry point. It loads an external XML data file
+     * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
+     * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+     */
     interface AppRoot {
     }
+    /**
+     * @component AppRow
+     * The `AppRow` component is used to create a flexible row element that can contain other elements.
+     * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
+     */
     interface AppRow {
+        /**
+          * URL or identifier of an audio file associated with the row.
+         */
         "audio"?: string;
+        /**
+          * Background color of the row (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor"?: string;
+        /**
+          * The height of the row (CSS value, e.g., '100px', '50%').
+         */
         "height"?: string;
+        /**
+          * Event handler triggered when the row is entered, often used for triggering animations or custom logic.
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a matching action occurs within the row.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the row is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * Defines the type of the row, used for conditional logic or specific styling.
+         */
         "type"?: string;
+        /**
+          * Value associated with the row, typically used for internal logic or data.
+         */
         "value"?: string;
+        /**
+          * Controls the visibility of the row. If `true`, the row is visible; otherwise, it is hidden.
+         */
         "visible"?: boolean;
+        /**
+          * The width of the row (CSS value, e.g., '100px', '50%').
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the row (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the row (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the row relative to other elements.
+         */
         "z"?: string;
     }
+    /**
+     * @component AppShape
+     * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+     * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
+     * Additionally, it supports custom events for interaction like touch, match, and entry.
+     */
     interface AppShape {
+        /**
+          * URL or identifier for an audio file associated with the shape.
+         */
         "audio"?: string;
+        /**
+          * Background color of the shape (CSS color value, e.g., '#FFFFFF', 'blue'). This is ignored for polygons.
+         */
         "bgColor"?: string;
+        /**
+          * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+         */
         "height"?: string;
+        /**
+          * Unique identifier for the shape element.
+         */
         "id"?: string;
+        /**
+          * Event handler triggered when the shape is entered (useful for animations or logic on entry).
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a matching action occurs with the shape.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the shape is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * Type of shape to render (e.g., 'circle', 'rectangle', 'polygon').
+         */
         "shapeType"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * Defines the type of the shape, which can be used for conditional logic or specific styling.
+         */
         "type"?: string;
+        /**
+          * Value associated with the shape, typically used for internal logic or tracking.
+         */
         "value"?: string;
+        /**
+          * Controls the visibility of the shape. If `true`, the shape is visible; otherwise, it is hidden.
+         */
         "visible"?: boolean;
+        /**
+          * The width of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the shape (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the shape (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the shape relative to other elements.
+         */
         "z"?: string;
     }
+    /**
+     * @component AppText
+     * The `AppText` component is used to display text with customizable styling.
+     * It allows you to set the font, size, color, and background color, along with
+     * positioning and visibility control. The component supports custom events like touch, match, and entry.
+     */
     interface AppText {
+        /**
+          * URL or identifier for an audio file associated with the text component.
+         */
         "audio"?: string;
+        /**
+          * Background color of the text component (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor"?: string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
         "font"?: string;
+        /**
+          * Font color for the text (CSS color value, e.g., '#000000', 'red').
+         */
         "fontColor"?: string;
+        /**
+          * Font size for the text (CSS value, e.g., '16px', '1.5em').
+         */
         "fontSize"?: string;
+        /**
+          * Height of the text component (CSS value, e.g., '100px', '50%').
+         */
         "height"?: string;
+        /**
+          * When set to `true`, the text will highlight while being spoken, typically used for accessibility.
+         */
         "highlightWhileSpeaking"?: boolean;
+        /**
+          * Unique identifier for the text element.
+         */
         "id"?: string;
+        /**
+          * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a matching action occurs with the text component.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the text component is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * The string of text to be displayed in the component.
+         */
         "string"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * Defines the type of the component, which can be used for conditional logic or specific styling.
+         */
         "type"?: string;
+        /**
+          * Value associated with the text element, typically used for internal logic or tracking.
+         */
         "value"?: string;
+        /**
+          * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+         */
         "visible"?: boolean;
+        /**
+          * Width of the text component (CSS value, e.g., '100px', '50%').
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the text component (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the text component relative to other elements.
+         */
         "z"?: string;
     }
+    /**
+     * @component AppWrap
+     * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+     * The component can display its content as a grid and supports custom events like touch, match, and entry.
+     * It allows for full customization via props like dimensions, background color, visibility, and z-index.
+     */
     interface AppWrap {
+        /**
+          * URL or identifier of an audio file associated with the wrap container.
+         */
         "audio"?: string;
+        /**
+          * Background color of the wrap container (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
         "bgColor"?: string;
+        /**
+          * The height of the wrap container (CSS value, e.g., '100px', '50%').
+         */
         "height"?: string;
+        /**
+          * Unique identifier for the wrap element.
+         */
         "id"?: string;
+        /**
+          * Event handler triggered when the wrap container is entered (useful for animations or logic on entry).
+         */
         "onEntry"?: string;
+        /**
+          * Event handler triggered when a matching action occurs with the wrap container.
+         */
         "onMatch"?: string;
+        /**
+          * Event handler triggered when the wrap container is touched or clicked.
+         */
         "onTouch"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
         "tabIndex"?: number;
+        /**
+          * Defines the type of the wrap container, which can be used for conditional logic or specific styling.
+         */
         "type"?: string;
+        /**
+          * Value associated with the wrap element, typically used for internal logic or tracking.
+         */
         "value"?: string;
+        /**
+          * Controls the visibility of the wrap container. If `true`, the container is visible; otherwise, it is hidden.
+         */
         "visible"?: boolean;
+        /**
+          * The width of the wrap container (CSS value, e.g., '100px', '50%').
+         */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the wrap container (CSS value, e.g., '10px', '5vw').
+         */
         "x"?: string;
+        /**
+          * Y-axis (vertical) position of the wrap container (CSS value, e.g., '10px', '5vh').
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the wrap container relative to other elements.
+         */
         "z"?: string;
     }
     interface IntrinsicElements {
@@ -437,7 +1478,6 @@ declare namespace LocalJSX {
         "app-container": AppContainer;
         "app-home": AppHome;
         "app-image": AppImage;
-        "app-objective": AppObjective;
         "app-pos": AppPos;
         "app-random": AppRandom;
         "app-root": AppRoot;
@@ -451,17 +1491,84 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * @component AppCol
+             * The `AppCol` component is a dynamic column-like UI element that can be
+             * customized via various properties such as dimensions, position, visibility,
+             * background color, and event handlers. It is designed to work within
+             * containers (`app-container`) and can include child components like
+             * `app-text`, `app-row`, etc.
+             */
             "app-col": LocalJSX.AppCol & JSXBase.HTMLAttributes<HTMLAppColElement>;
+            /**
+             * @component AppContainer
+             * The `AppContainer` component acts as a container for other elements. It scales responsively
+             * based on the window size, adjusts background color, and provides various configurable properties
+             * such as dimensions, positioning, visibility, and custom event handlers.
+             */
             "app-container": LocalJSX.AppContainer & JSXBase.HTMLAttributes<HTMLAppContainerElement>;
+            /**
+             * @component AppHome
+             * The `AppHome` component renders a series of containers parsed from the provided XML data.
+             * It handles navigation between containers, resets the state on page reloads or container transitions,
+             * and displays progress indicators (dots) for each container.
+             */
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
+            /**
+             * @component AppImage
+             * The `AppImage` component displays an image element within a container. It is a versatile
+             * component that allows dynamic sizing, positioning, visibility control, and event handling.
+             * The component is designed to work in different types of environments, supporting custom
+             * events such as touch, match, and entry events.
+             */
             "app-image": LocalJSX.AppImage & JSXBase.HTMLAttributes<HTMLAppImageElement>;
-            "app-objective": LocalJSX.AppObjective & JSXBase.HTMLAttributes<HTMLAppObjectiveElement>;
+            /**
+             * @component AppPos
+             * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+             * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
+             * events for interaction such as touch, match, and entry events.
+             */
             "app-pos": LocalJSX.AppPos & JSXBase.HTMLAttributes<HTMLAppPosElement>;
+            /**
+             * @component AppRandom
+             * The `AppRandom` component randomly positions its child elements within its container.
+             * This component can be used when a random layout of elements is required. It allows
+             * full customization via props such as dimensions, positioning, visibility, and event handling.
+             */
             "app-random": LocalJSX.AppRandom & JSXBase.HTMLAttributes<HTMLAppRandomElement>;
+            /**
+             * @component AppRoot
+             * The `AppRoot` component is the main application entry point. It loads an external XML data file
+             * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
+             * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+             */
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            /**
+             * @component AppRow
+             * The `AppRow` component is used to create a flexible row element that can contain other elements.
+             * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
+             */
             "app-row": LocalJSX.AppRow & JSXBase.HTMLAttributes<HTMLAppRowElement>;
+            /**
+             * @component AppShape
+             * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+             * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
+             * Additionally, it supports custom events for interaction like touch, match, and entry.
+             */
             "app-shape": LocalJSX.AppShape & JSXBase.HTMLAttributes<HTMLAppShapeElement>;
+            /**
+             * @component AppText
+             * The `AppText` component is used to display text with customizable styling.
+             * It allows you to set the font, size, color, and background color, along with
+             * positioning and visibility control. The component supports custom events like touch, match, and entry.
+             */
             "app-text": LocalJSX.AppText & JSXBase.HTMLAttributes<HTMLAppTextElement>;
+            /**
+             * @component AppWrap
+             * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+             * The component can display its content as a grid and supports custom events like touch, match, and entry.
+             * It allows for full customization via props like dimensions, background color, visibility, and z-index.
+             */
             "app-wrap": LocalJSX.AppWrap & JSXBase.HTMLAttributes<HTMLAppWrapElement>;
         }
     }
