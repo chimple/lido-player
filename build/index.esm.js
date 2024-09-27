@@ -1,2 +1,2 @@
-export{f as format}from"./p-bda07bab.js";
+export{f as format}from"./p-be47b959.js";
 //# sourceMappingURL=index.esm.js.map
