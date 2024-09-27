@@ -9,6 +9,8 @@
 
 | Property                 | Attribute                  | Description                                                                                             | Type      | Default     |
 | ------------------------ | -------------------------- | ------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `ariaHidden`             | `aria-hidden`              | The ARIA hidden attribute of the container. Used for accessibility to hide the element.                 | `string`  | `undefined` |
+| `ariaLabel`              | `aria-label`               | The ARIA label of the container. Used for accessibility to indicate the purpose of the element.         | `string`  | `undefined` |
 | `audio`                  | `audio`                    | URL or identifier for an audio file associated with the text component.                                 | `string`  | `undefined` |
 | `bgColor`                | `bg-color`                 | Background color of the text component (CSS color value, e.g., '#FFFFFF', 'blue').                      | `string`  | `undefined` |
 | `font`                   | `font`                     | Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').                                 | `string`  | `undefined` |

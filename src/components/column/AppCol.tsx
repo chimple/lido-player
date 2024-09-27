@@ -37,6 +37,16 @@ export class AppCol {
   @Prop() width: string;
 
   /**
+   * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+   */
+  @Prop() ariaLabel: string;
+
+  /**
+   * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+   */
+  @Prop() ariaHidden: string;
+
+  /**
    * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
    */
   @Prop() x: string;
@@ -123,6 +133,8 @@ export class AppCol {
         tabindex={this.tabIndex}
         value={this.value}
         style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}

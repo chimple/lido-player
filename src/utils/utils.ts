@@ -4,6 +4,21 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
+// Function to get the scale of an element
+const getElementScale = (el: HTMLElement): number => {
+  const transform = window.getComputedStyle(el).transform;
+  if (transform === 'none') {
+    return 1; // No scaling
+  } else {
+    const matrix = transform.match(/matrix\(([^)]+)\)/);
+    if (matrix) {
+      const matrixValues = matrix[1].split(', ');
+      const scaleX = parseFloat(matrixValues[0]);
+      return scaleX; // Assuming uniform scaling (same scale in X and Y)
+    }
+  }
+  return 1; // Fallback to no scaling
+};
 function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
   let startX = 0;
@@ -18,23 +33,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     return;
   }
 
-  // Function to get the scale of an element
-  const getElementScale = (el: HTMLElement): number => {
-    const transform = window.getComputedStyle(el).transform;
-    if (transform === 'none') {
-      return 1; // No scaling
-    } else {
-      const matrix = transform.match(/matrix\(([^)]+)\)/);
-      if (matrix) {
-        const matrixValues = matrix[1].split(', ');
-        const scaleX = parseFloat(matrixValues[0]);
-        return scaleX; // Assuming uniform scaling (same scale in X and Y)
-      }
-    }
-    return 1; // Fallback to no scaling
-  };
-
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    removeHighlight(element);
     isDragging = true;
 
     if (event instanceof MouseEvent) {
@@ -168,7 +168,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     }
   };
 
-  const onEnd = (): void => {
+  const onEnd = (endEv): void => {
+    console.log('🚀 ~ onEnd ~ endEv:', endEv);
     isDragging = false;
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
@@ -206,33 +207,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       }
     });
 
-    if (!mostOverlappedElement) return;
-
-    let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
-    if (!dragScore[mostOverlappedElement.getAttribute('tabindex')]) {
-      dragScore[mostOverlappedElement.getAttribute('tabindex')] = [];
-    }
-    // dragScore[mostOverlappedElement.getAttribute('tabindex')].push(element['value']);
-    dragScore[mostOverlappedElement.getAttribute('tabindex')] = [element['value']];
-
-    localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
-    const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
-    const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(dragScore[key]), []);
-    console.log('🚀 ~ onEnd ~ dragScore:', dragScore, sortedValues);
-    localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
-
-    // Add pulse and highlight effect for a successful match
-    if (matchStringPattern(mostOverlappedElement['value'], [element['value']])) {
-      // Perform actions if onMatch is defined
-      const onMatch = mostOverlappedElement.getAttribute('onMatch');
-      if (onMatch) {
-        executeActions(onMatch, mostOverlappedElement, element);
-      }
-    } else {
-      showWrongAnswerAnimation([mostOverlappedElement, element]);
-    }
-
-    onActivityComplete();
+    onElementDropComplete(element, mostOverlappedElement);
   };
   // Initialize draggable element styles
   element.style.cursor = 'move';
@@ -240,6 +215,39 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
   element.addEventListener('mousedown', onStart);
   element.addEventListener('touchstart', onStart);
+  element.addEventListener('click', ev => {
+    onClickDropOrDragElement(element, 'drag');
+  });
+}
+
+function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): void {
+  if (!dropElement) return;
+
+  let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
+  if (!dragScore[dropElement.getAttribute('tabindex')]) {
+    dragScore[dropElement.getAttribute('tabindex')] = [];
+  }
+  // dragScore[mostOverlappedElement.getAttribute('tabindex')].push(element['value']);
+  dragScore[dropElement.getAttribute('tabindex')] = [dragElement['value']];
+
+  localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
+  const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
+  const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(dragScore[key]), []);
+  console.log('🚀 ~ onEnd ~ dragScore:', dragScore, sortedValues);
+  localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+
+  // Add pulse and highlight effect for a successful match
+  if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
+    // Perform actions if onMatch is defined
+    const onMatch = dropElement.getAttribute('onMatch');
+    if (onMatch) {
+      executeActions(onMatch, dropElement, dragElement);
+    }
+  } else {
+    showWrongAnswerAnimation([dropElement, dragElement]);
+  }
+
+  onActivityComplete();
 }
 
 // Function to execute actions parsed from the onMatch string
@@ -386,6 +394,10 @@ export const initEventsForElement = (element: HTMLElement, type: string) => {
       addClickListener(element);
       break;
     }
+    case 'drop': {
+      handleDropElement(element);
+      break;
+    }
     default:
       break;
   }
@@ -470,4 +482,81 @@ export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
       { once: true },
     );
   });
+}
+
+function handleDropElement(element: HTMLElement): void {
+  element.onclick = () => {
+    onClickDropOrDragElement(element, 'drop');
+  };
+}
+
+function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): void {
+  // Remove the highlight class from elements matching the selector
+  const highlightedElements = document.querySelectorAll(`[type='${type}']`);
+  highlightedElements.forEach(el => {
+    removeHighlight(el as HTMLElement);
+  });
+
+  // Dynamically create the highlight class if it doesn't exist
+  if (!document.getElementById('dynamic-highlight-style')) {
+    const style = document.createElement('style');
+    style.id = 'dynamic-highlight-style';
+    style.innerHTML = `
+      .highlight {
+        border: 4px solid #e74c3c; /* Thicker red border for more visibility */
+        border-radius: 12px; /* Larger rounded corners */
+        background-color: rgba(231, 76, 60, 0.3); /* Stronger, more noticeable background */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+        outline: 4px solid rgba(231, 76, 60, 0.6); /* Glow effect */
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  element?.classList.add('highlight');
+  element.ariaPressed = 'true';
+
+  const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight");
+  const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight");
+
+  if (selectedDropElement && selectedDragElement) {
+    // Add a transition for a smooth, slower movement
+    (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
+
+    // Reset the transform of the drag element before calculating the new position
+    (selectedDragElement as HTMLElement).style.transform = '';
+    const container = document.getElementById('container');
+
+    const containerScale = getElementScale(container);
+    console.log('🚀 ~ onClickDropOrDragElement ~ containerScale:', containerScale);
+
+    // Get the positions of the drop and drag elements
+    const dropRect = selectedDropElement.getBoundingClientRect();
+    const dragRect = selectedDragElement.getBoundingClientRect();
+
+    // Calculate the difference in positions
+    const translateX = (dropRect.left - dragRect.left) / containerScale;
+    const translateY = (dropRect.top - dragRect.top) / containerScale;
+
+    // Move the drag element to the drop position
+    selectedDragElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
+
+    setTimeout(() => {
+      onElementDropComplete(selectedDragElement, selectedDropElement);
+    }, 500);
+
+    // Remove highlights after moving the element
+    const allElements = document.querySelectorAll(`*`);
+    allElements.forEach(el => {
+      removeHighlight(el as HTMLElement);
+    });
+    setTimeout(() => {
+      selectedDragElement.style.transform = '';
+    }, 1000);
+  }
+}
+
+function removeHighlight(element: HTMLElement): void {
+  element.classList.remove('highlight');
+  element.ariaPressed = 'false';
 }

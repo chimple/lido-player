@@ -1,181 +1,117 @@
 <main>
-	<app-container id="container" value="mainContainer" objective="o4" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+	<app-container id="container" value="mainContainer1" objective="match2,match1,match3" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
 			</app-image>
 		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="Which of these is an official language of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q2" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o5" string="English" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+		<app-col id="col2" value="column1" height="500px" width="700px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="text1" tabIndex="1" string="Tamil Nadu" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="match2" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
 				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o4" string="Hindi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				<app-text id="text2" tabIndex="2" string="Gujarat" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="match1" height="100px" width="150px" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onTouch="" onMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
 				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o6" string="Bengali" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				<app-text id="text3" tabIndex="3" string="Rajasthan" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="match3" height="100px" width="150px" x="40vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
+				</app-text>
+			</app-row>
+			<app-row id="row2" value="row2" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row2.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="1" value="match1" string="Garba" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="2" value="match2" string="Pongal" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="3" value="match3" string="Puppet shows" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
 			</app-row>
 		</app-col>
 	</app-container>
-	<app-container id="container" value="mainContainer" objective="o25" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+	<app-container id="container" value="mainContainer1" objective="match5,match6,match4" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onTouch="" onMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
 			</app-image>
 		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="What do plants need to perform photosynthesis?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q9" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o27" string="Artificial light" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+		<app-col id="col2" value="column1" height="500px" width="700px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="text1" tabIndex="1" string="Punjab" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="match5" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
 				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o25" string="Sunlight" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				<app-text id="text2" tabIndex="2" string="Santiniketan" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="match6" height="100px" width="150px" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onTouch="" onMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
 				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o26" string="Moonlight" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				<app-text id="text3" tabIndex="3" string="Bengal" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="match4" height="100px" width="150px" x="40vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
+				</app-text>
+			</app-row>
+			<app-row id="row2" value="row2" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row2.mp3" onTouch="" onMatch="" onEntry="">
+				<app-text id="textA1" tabIndex="1" value="match6" string="School in Bengal" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA2" tabIndex="2" value="match5" string="Bhangra" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+				</app-text>
+				<app-text id="textA3" tabIndex="3" value="match4" string="Painting and music" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onTouch="" onMatch="" onEntry="">
 				</app-text>
 			</app-row>
 		</app-col>
 	</app-container>
-	<app-container id="container" value="mainContainer" objective="o19" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+	<app-container id="container" value="mainContainer" objective="option2" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#D4CDCD" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/An%20abstract%20image%20representing%20the%20cultural%20diversity%20of%20India.%20The%20image%20features%20a%20blend%20of%20colors%20like%20saffron%2C%20white%2C%20and%20green%2C%20symbolizing%20the%20Indian%20flag%2C%20with%20motifs%20representing%20various%20cultural%20elements%20like%20dance%2C%20festivals%2C%20and%20art%20forms.?width=1600&amp;height=900&amp;nologo=true&amp;enhance=true&amp;private=true" altText="An abstract image representing the cultural diversity of India. The image features a blend of colors like saffron, white, and green, symbolizing the Indian flag, with motifs representing various cultural elements like dance, festivals, and art forms.">
 			</app-image>
 		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="What is 5 + 3?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q7" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o21" string="6" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-col id="col1" value="column1" height="320px" width="700px" x="0" y="0" z="0" tabIndex="1" bgColor="transparent" type="" visible="true" audio="" onTouch="" onMatch="" onEntry="">
+				<app-text id="text1" string="Which dance form is popular in Gujarat?" fontColor="#333333" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="question1" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#EFEFEF" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
 				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o19" string="8" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o20" string="7" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
+				<app-image id="image1" value="image1" height="200px" width="300px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20vibrant%20depiction%20of%20people%20dressed%20in%20traditional%20Gujarati%20attire%20performing%20Garba.%20The%20image%20features%20bright%20colors%20like%20red%2C%20yellow%2C%20and%20green%2C%20with%20intricate%20patterns%20on%20the%20clothing.%20The%20background%20shows%20a%20festive%20setting%20with%20decorations%20and%20lights.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A vibrant depiction of people dressed in traditional Gujarati attire performing Garba. The image features bright colors like red, yellow, and green, with intricate patterns on the clothing. The background shows a festive setting with decorations and lights.">
+				</app-image>
+			</app-col>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-col id="col2" value="option3" height="300px" width="250px" tabIndex="2" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onMatch="" onEntry="">
+					<app-text id="textA1" value="textA2" string="Pongal" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#F5F5F5" type="" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+					</app-text>
+					<app-image id="image2" value="image2" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20festive%20scene%20of%20people%20celebrating%20Pongal%20in%20Tamil%20Nadu.%20The%20image%20features%20traditional%20clothing%2C%20decorated%20cows%2C%20and%20people%20preparing%20Pongal%20dish.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A festive scene of people celebrating Pongal in Tamil Nadu. The image features traditional clothing, decorated cows, and people preparing Pongal dish.">
+					</app-image>
+				</app-col>
+				<app-col id="col3" value="option1" height="300px" width="250px" tabIndex="3" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onMatch="" onEntry="">
+					<app-text id="textA2" value="textA2" string="Bhangra" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#F5F5F5" type="" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+					</app-text>
+					<app-image id="image3" value="image3" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20group%20of%20people%20dressed%20in%20colorful%20Punjabi%20attire%20performing%20Bhangra.%20The%20image%20showcases%20energetic%20dance%20moves%20with%20traditional%20instruments%20in%20the%20background.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A group of people dressed in colorful Punjabi attire performing Bhangra. The image showcases energetic dance moves with traditional instruments in the background.">
+					</app-image>
+				</app-col>
+				<app-col id="col4" value="option2" height="300px" width="250px" tabIndex="4" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onMatch="" onEntry="">
+					<app-text id="textA3"  value="textA3" string="Garba" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#EFEFEF" type="" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+					</app-text>
+					<app-image id="image4" value="image4" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20vibrant%20depiction%20of%20people%20dressed%20in%20traditional%20Gujarati%20attire%20performing%20Garba.%20The%20image%20features%20bright%20colors%20like%20red%2C%20yellow%2C%20and%20green%2C%20with%20intricate%20patterns%20on%20the%20clothing.%20The%20background%20shows%20a%20festive%20setting%20with%20decorations%20and%20lights.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A vibrant depiction of people dressed in traditional Gujarati attire performing Garba. The image features bright colors like red, yellow, and green, with intricate patterns on the clothing. The background shows a festive setting with decorations and lights.">
+					</app-image>
+				</app-col>
 			</app-row>
 		</app-col>
 	</app-container>
-	<app-container id="container" value="mainContainer" objective="o16" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
+	<app-container id="container" value="mainContainer" objective="option4" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#D4CDCD" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
+		<app-pos id="pos" value="pos" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
+			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/An%20abstract%20image%20representing%20the%20cultural%20diversity%20of%20India.%20The%20image%20features%20a%20blend%20of%20colors%20like%20saffron%2C%20white%2C%20and%20green%2C%20symbolizing%20the%20Indian%20flag%2C%20with%20motifs%20representing%20various%20cultural%20elements%20like%20dance%2C%20festivals%2C%20and%20art%20forms.?width=1600&amp;height=900&amp;nologo=true&amp;enhance=true&amp;private=true" altText="An abstract image representing the cultural diversity of India. The image features a blend of colors like saffron, white, and green, symbolizing the Indian flag, with motifs representing various cultural elements like dance, festivals, and art forms.">
 			</app-image>
 		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="What is the primary function of Indian Railways?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q6" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o18" string="Employment" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
+			<app-col id="col1" value="column1" height="320px" width="700px" x="0" y="0" z="0" tabIndex="1" bgColor="transparent" type="" visible="true" audio="" onTouch="" onMatch="" onEntry="">
+				<app-text id="text1" string="What is Meenakshi's favorite festival in Tamil Nadu?" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="question2" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#F5F5F5" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
 				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o17" string="Communication" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o16" string="Transportation" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o1" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
-			</app-image>
-		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="Which of the following is a state in India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q1" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o1" string="Maharashtra" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o3" string="Kolkata" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o2" string="Delhi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o13" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
-			</app-image>
-		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="Who is the current Prime Minister of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q5" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o15" string="Amit Shah" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o13" string="Narendra Modi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o14" string="Rahul Gandhi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o22" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
-			</app-image>
-		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="What is the synonym of 'Happy'?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q8" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o24" string="Angry" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o22" string="Joyful" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o23" string="Sad" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o7" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
-			</app-image>
-		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="What is the capital of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q3" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o8" string="Mumbai" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o9" string="Chennai" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o7" string="New Delhi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o10" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
-			</app-image>
-		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="Which of these is a major city in India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q4" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o12" string="Goa" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o11" string="Hampi" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o10" string="Bangalore" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o28" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col.mp3" onTouch="" onMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onTouch="" onMatch="" onEntry="" src="" altText="">
-			</app-image>
-		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="antiquewhite" type="" visible="true" audio="col1.mp3" onTouch="" onMatch="" onEntry="">
-			<app-text id="text1" tabIndex="1" string="Who was the first president of India?" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q10" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onTouch="" onMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-			</app-text>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="#FFFFFF" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="2" value="o30" string="Jawaharlal Nehru" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="3" value="o28" string="Dr. Rajendra Prasad" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="4" value="o29" string="Gopal Krishna Gokhale" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="click" audio="" visible="true" onTouch="" onMatch="" onEntry="">
-				</app-text>
+				<app-image id="image1" value="image1" height="200px" width="300px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20festive%20scene%20of%20people%20celebrating%20Pongal%20in%20Tamil%20Nadu.%20The%20image%20features%20traditional%20clothing%2C%20decorated%20cows%2C%20and%20people%20preparing%20Pongal%20dish.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A festive scene of people celebrating Pongal in Tamil Nadu. The image features traditional clothing, decorated cows, and people preparing Pongal dish.">
+				</app-image>
+			</app-col>
+			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row1.mp3" onTouch="" onMatch="" onEntry="">
+				<app-col id="col2" value="option6" height="300px" width="250px" tabIndex="2" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onMatch="" onEntry="">
+					<app-text id="textA1" value="textA2" string="Holi" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#FFFFFF" type="" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+					</app-text>
+					<app-image id="image2" value="image2" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20colorful%20image%20of%20people%20celebrating%20Holi%20with%20vibrant%20powders%20and%20water.%20The%20background%20shows%20joyful%20faces%20and%20a%20festive%20atmosphere.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A colorful image of people celebrating Holi with vibrant powders and water. The background shows joyful faces and a festive atmosphere.">
+					</app-image>
+				</app-col>
+				<app-col id="col3" value="option4" height="300px" width="250px" tabIndex="3" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onMatch="" onEntry="">
+					<app-text id="textA2" value="textA2" string="Pongal" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#F5F5F5" type="" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+					</app-text>
+					<app-image id="image3" value="image3" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20festive%20scene%20of%20people%20celebrating%20Pongal%20in%20Tamil%20Nadu.%20The%20image%20features%20traditional%20clothing%2C%20decorated%20cows%2C%20and%20people%20preparing%20Pongal%20dish.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A festive scene of people celebrating Pongal in Tamil Nadu. The image features traditional clothing, decorated cows, and people preparing Pongal dish.">
+					</app-image>
+				</app-col>
+				<app-col id="col4" value="option5" height="300px" width="250px" tabIndex="4" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onMatch="" onEntry="">
+					<app-text id="textA3"  value="textA3" string="Diwali" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#FFF8DC" type="" audio="" visible="true" onTouch="" onMatch="" onEntry="">
+					</app-text>
+					<app-image id="image4" value="image4" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onTouch="" onMatch="" onEntry="" src="https://pollinations.ai/p/A%20vibrant%20depiction%20of%20Diwali%20celebrations%20with%20fireworks%2C%20decorated%20homes%2C%20and%20people%20lighting%20lamps%20and%20candles.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A vibrant depiction of Diwali celebrations with fireworks, decorated homes, and people lighting lamps and candles.">
+					</app-image>
+				</app-col>
 			</app-row>
 		</app-col>
 	</app-container>

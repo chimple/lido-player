@@ -29,6 +29,16 @@ export class AppRow {
   @Prop() width: string;
 
   /**
+   * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+   */
+  @Prop() ariaLabel: string;
+
+  /**
+   * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+   */
+  @Prop() ariaHidden: string;
+
+  /**
    * X-axis (horizontal) position of the row (CSS value, e.g., '10px', '5vw').
    */
   @Prop() x: string;
@@ -115,6 +125,8 @@ export class AppRow {
         tabindex={this.tabIndex}
         value={this.value}
         style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}

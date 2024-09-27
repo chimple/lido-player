@@ -2,7 +2,7 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 
 /**
  * @component AppRandom
- * 
+ *
  * The `AppRandom` component randomly positions its child elements within its container.
  * This component can be used when a random layout of elements is required. It allows
  * full customization via props such as dimensions, positioning, visibility, and event handling.
@@ -32,6 +32,16 @@ export class AppRandom {
    * The width of the container (CSS value, e.g., '100px', '50%').
    */
   @Prop() width: string;
+
+  /**
+   * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+   */
+  @Prop() ariaLabel: string;
+
+  /**
+   * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+   */
+  @Prop() ariaHidden: string;
 
   /**
    * X-axis (horizontal) position of the container (CSS value, e.g., '10px', '5vw').
@@ -130,6 +140,8 @@ export class AppRandom {
         tabindex={this.tabIndex}
         value={this.value}
         style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}

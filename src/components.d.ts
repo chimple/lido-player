@@ -16,6 +16,14 @@ export namespace Components {
      */
     interface AppCol {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
+        /**
           * Audio file URL or identifier for sound that will be associated with the column.
          */
         "audio": string;
@@ -83,6 +91,14 @@ export namespace Components {
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
     interface AppContainer {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
         /**
           * URL or identifier of an audio file associated with the container.
          */
@@ -169,6 +185,14 @@ export namespace Components {
      */
     interface AppImage {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
+        /**
           * URL or identifier of an audio file associated with the image.
          */
         "audio": string;
@@ -237,6 +261,14 @@ export namespace Components {
      */
     interface AppPos {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
+        /**
           * URL or identifier for an audio file associated with the component.
          */
         "audio": string;
@@ -304,6 +336,14 @@ export namespace Components {
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
     interface AppRandom {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the component.
          */
@@ -380,6 +420,14 @@ export namespace Components {
      */
     interface AppRow {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
+        /**
           * URL or identifier of an audio file associated with the row.
          */
         "audio": string;
@@ -443,6 +491,14 @@ export namespace Components {
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
     interface AppShape {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the shape.
          */
@@ -515,6 +571,14 @@ export namespace Components {
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
     interface AppText {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the text component.
          */
@@ -603,6 +667,14 @@ export namespace Components {
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
     interface AppWrap {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
         /**
           * URL or identifier of an audio file associated with the wrap container.
          */
@@ -825,6 +897,14 @@ declare namespace LocalJSX {
      */
     interface AppCol {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
+        /**
           * Audio file URL or identifier for sound that will be associated with the column.
          */
         "audio"?: string;
@@ -892,6 +972,14 @@ declare namespace LocalJSX {
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
     interface AppContainer {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
         /**
           * URL or identifier of an audio file associated with the container.
          */
@@ -978,6 +1066,14 @@ declare namespace LocalJSX {
      */
     interface AppImage {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
+        /**
           * URL or identifier of an audio file associated with the image.
          */
         "audio"?: string;
@@ -1046,6 +1142,14 @@ declare namespace LocalJSX {
      */
     interface AppPos {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
+        /**
           * URL or identifier for an audio file associated with the component.
          */
         "audio"?: string;
@@ -1113,6 +1217,14 @@ declare namespace LocalJSX {
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
     interface AppRandom {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the component.
          */
@@ -1189,6 +1301,14 @@ declare namespace LocalJSX {
      */
     interface AppRow {
         /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
+        /**
           * URL or identifier of an audio file associated with the row.
          */
         "audio"?: string;
@@ -1252,6 +1372,14 @@ declare namespace LocalJSX {
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
     interface AppShape {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the shape.
          */
@@ -1324,6 +1452,14 @@ declare namespace LocalJSX {
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
     interface AppText {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the text component.
          */
@@ -1412,6 +1548,14 @@ declare namespace LocalJSX {
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
     interface AppWrap {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
         /**
           * URL or identifier of an audio file associated with the wrap container.
          */

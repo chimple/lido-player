@@ -3,7 +3,7 @@ import { initEventsForElement } from '../../utils/utils';
 
 /**
  * @component AppImage
- * 
+ *
  * The `AppImage` component displays an image element within a container. It is a versatile
  * component that allows dynamic sizing, positioning, visibility control, and event handling.
  * The component is designed to work in different types of environments, supporting custom
@@ -29,6 +29,16 @@ export class AppImage {
    * The width of the image component (CSS value, e.g., '100px', '50%').
    */
   @Prop() width: string;
+
+  /**
+   * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+   */
+  @Prop() ariaLabel: string;
+
+  /**
+   * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+   */
+  @Prop() ariaHidden: string;
 
   /**
    * X-axis (horizontal) position of the image within its container (CSS value, e.g., '10px', '5vw').
@@ -121,13 +131,14 @@ export class AppImage {
         type={this.type}
         tabindex={this.tabIndex}
         style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
         value={this.value}
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}
         onEntry={this.onEntry}
       >
-        {/* Render the image element */}
         <img class="image" src={this.src} />
       </Host>
     );

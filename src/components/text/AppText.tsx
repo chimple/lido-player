@@ -60,6 +60,16 @@ export class AppText {
   @Prop() width: string;
 
   /**
+   * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+   */
+  @Prop() ariaLabel: string;
+
+  /**
+   * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+   */
+  @Prop() ariaHidden: string;
+
+  /**
    * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
    */
   @Prop() x: string;
@@ -154,6 +164,8 @@ export class AppText {
         onEntry={this.onEntry}
         id={this.id}
         style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
       >
         {this.string}
       </Host>

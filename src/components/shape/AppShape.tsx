@@ -37,6 +37,16 @@ export class AppShape {
   @Prop() width: string;
 
   /**
+   * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+   */
+  @Prop() ariaLabel: string;
+
+  /**
+   * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+   */
+  @Prop() ariaHidden: string;
+
+  /**
    * X-axis (horizontal) position of the shape (CSS value, e.g., '10px', '5vw').
    */
   @Prop() x: string;
@@ -129,6 +139,8 @@ export class AppShape {
         type={this.type}
         tabindex={this.tabIndex}
         style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}

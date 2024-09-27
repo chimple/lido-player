@@ -39,6 +39,16 @@ export class AppContainer {
   @Prop() width: string;
 
   /**
+   * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+   */
+  @Prop() ariaLabel: string;
+
+  /**
+   * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+   */
+  @Prop() ariaHidden: string;
+
+  /**
    * X-axis (horizontal) position of the container.
    */
   @Prop() x: string;
@@ -152,7 +162,7 @@ export class AppContainer {
     };
 
     return (
-      <Host id="container" class="container" objective={this.objective} style={style}>
+      <Host id="container" tabindex={0} class="container" objective={this.objective} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden}>
         <slot />
       </Host>
     );
