@@ -19,6 +19,7 @@ const getElementScale = (el: HTMLElement): number => {
   }
   return 1; // Fallback to no scaling
 };
+
 function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
   let startX = 0;
@@ -169,7 +170,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   };
 
   const onEnd = (endEv): void => {
-    console.log('🚀 ~ onEnd ~ endEv:', endEv);
     isDragging = false;
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
@@ -220,7 +220,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
-function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): void {
+async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
@@ -233,56 +233,92 @@ function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElemen
   localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
   const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(dragScore[key]), []);
-  console.log('🚀 ~ onEnd ~ dragScore:', dragScore, sortedValues);
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
 
   // Add pulse and highlight effect for a successful match
   if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
     // Perform actions if onMatch is defined
-    const onMatch = dropElement.getAttribute('onMatch');
+    const onMatch = dropElement.getAttribute('onCorrectMatch');
     if (onMatch) {
-      executeActions(onMatch, dropElement, dragElement);
+      await executeActions(onMatch, dropElement, dragElement);
     }
   } else {
     showWrongAnswerAnimation([dropElement, dragElement]);
   }
 
-  onActivityComplete();
+  await onActivityComplete();
 }
 
 // Function to execute actions parsed from the onMatch string
-const executeActions = (actionsString: string, dropElement: HTMLElement, dragElement?: HTMLElement): void => {
-  console.log('🚀 ~ executeActions ~ actionsString:', actionsString);
+const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
   const actions = parseActions(actionsString);
-  console.log('🚀 ~ executeActions ~ actions:', actions);
 
-  actions.forEach(action => {
-    const targetElement = action.actor === 'this' ? dropElement : action.actor === 'element' ? dragElement : document.getElementById(action.actor);
-    console.log('🚀 ~ executeActions ~ targetElement:', targetElement, action.action);
+  for (let i = 0; i < actions.length; i++) {
+    const action = actions[i];
+    const targetElement = action.actor === 'this' ? thisElement : action.actor === 'element' ? element : document.getElementById(action.actor);
 
     if (targetElement) {
       // Handle the 'transform' property separately
-      if (action.action === 'transform') {
-        // Get the existing transform style
-        const currentTransform = window.getComputedStyle(targetElement).transform;
+      switch (action.action) {
+        case 'transform': {
+          const currentTransform = window.getComputedStyle(targetElement).transform;
+          targetElement.style.transform = currentTransform !== 'none' ? `${currentTransform} ${action.value}` : action.value;
+          break;
+        }
+        case 'speak': {
+          {
+            const audioUrl = targetElement.getAttribute('audio');
+            if (audioUrl) {
+              let audioElement = document.getElementById('audio') as HTMLAudioElement;
+              if (!audioElement) {
+                const newAudio = document.createElement('audio');
+                newAudio.id = 'audio';
+                document.body.appendChild(newAudio);
+                audioElement = newAudio;
+              }
 
-        // Combine the new transform with the existing one
-        targetElement.style.transform =
-          currentTransform !== 'none'
-            ? `${currentTransform} ${action.value}` // Append the new transform value to the existing one
-            : action.value; // If no existing transform, just use the new one
-      } else {
-        // Apply other style properties directly
-        targetElement.style[action.action] = action.value;
+              audioElement.pause();
+              audioElement.currentTime = 0;
+              audioElement.src = audioUrl;
+              console.log('🚀 ~ executeActions ~ audioElement.src:', audioElement.src);
+
+              try {
+                await audioElement.play();
+                highlightSpeakingElement(targetElement);
+                while (!audioElement.ended || audioElement.error) {
+                  await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                stopHighlightForSpeakingElement(targetElement);
+              } catch (error) {
+                console.log('🚀 ~ executeActions ~ audioElement.src: error', error);
+              }
+            }
+            break;
+          }
+        }
+
+        case 'sleep': {
+          const isNumber = !isNaN(Number(action.value));
+          if (isNumber) {
+            await new Promise(resolve => setTimeout(resolve, Number(action.value)));
+          }
+          break;
+        }
+
+        default: {
+          targetElement.style[action.action] = action.value;
+          break;
+        }
       }
     }
-  });
+  }
 };
 
 // Function to parse actions string
 const parseActions = (input: string): Array<{ actor: string; action: string; value: string }> => {
   const actions = [];
-  const actionStrings = input.split(';').map(action => action.trim());
+  if (!input) return actions;
+  const actionStrings = input.split(';')?.map(action => action.trim());
 
   actionStrings.forEach(actionString => {
     if (actionString) {
@@ -361,20 +397,17 @@ const countPatternWords = (pattern: string): number => {
   return wordCount;
 };
 
-function onActivityComplete() {
+async function onActivityComplete() {
   const container = document.getElementById('container');
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
-  console.log('🚀 ~ onActivityComplete ~ res:', res, objectiveString, objectiveArray);
   if (res) {
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
-
-    setTimeout(() => {
-      triggerNextContainer();
-    }, 1500);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    triggerNextContainer();
   }
 }
 
@@ -384,14 +417,14 @@ export const triggerNextContainer = () => {
   window.dispatchEvent(event);
 };
 
-export const initEventsForElement = (element: HTMLElement, type: string) => {
+export const initEventsForElement = async (element: HTMLElement, type: string) => {
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
       break;
     }
     case 'click': {
-      addClickListener(element);
+      addClickListenerForClickType(element);
       break;
     }
     case 'drop': {
@@ -401,16 +434,30 @@ export const initEventsForElement = (element: HTMLElement, type: string) => {
     default:
       break;
   }
+  const onEntry = element.getAttribute('onEntry');
+  await executeActions(onEntry, element);
+  onTouchListenerForOnTouch(element);
 };
 
-function addClickListener(element: HTMLElement): void {
+function onTouchListenerForOnTouch(element: HTMLElement) {
+  if (!element) return;
+  const onTouch = element.getAttribute('onTouch');
+  if (!onTouch) return;
+  element.onclick = async () => {
+    console.log('🚀 ~ element.onclick= ~ onTouch:', onTouch);
+    if (!onTouch) return;
+    await executeActions(onTouch, element);
+  };
+}
+
+function addClickListenerForClickType(element: HTMLElement): void {
   element.style.cursor = 'pointer';
   if (!element) {
     console.error('No element provided.');
     return;
   }
 
-  const onClick = () => {
+  const onClick = async () => {
     console.log('Element clicked:', element);
     localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
     element.style.border = '2px solid yellow';
@@ -419,20 +466,19 @@ function addClickListener(element: HTMLElement): void {
     element.style.transition = 'transform 0.2s ease, border 0.5s ease';
     element.style.transform = 'scale(1.1)';
 
-    setTimeout(() => {
-      element.style.transform = 'scale(1)';
-      element.style.border = '';
-      element.style.boxShadow = '';
-      const container = document.getElementById('container');
-      const objective = container['objective'];
-      if (matchStringPattern(objective, [element['value']])) {
-        const onTouch = element.getAttribute('onTouch');
-        executeActions(onTouch, element);
-      } else {
-        showWrongAnswerAnimation([element]);
-      }
-    }, 500);
-    onActivityComplete();
+    element.style.transform = 'scale(1)';
+    element.style.border = '';
+    element.style.boxShadow = '';
+    const container = document.getElementById('container');
+    const objective = container['objective'];
+    if (matchStringPattern(objective, [element['value']])) {
+      const onTouch = element.getAttribute('onCorrectTouch');
+      await executeActions(onTouch, element);
+    } else {
+      showWrongAnswerAnimation([element]);
+    }
+
+    await onActivityComplete();
   };
   element.addEventListener('click', onClick);
 }
@@ -490,7 +536,7 @@ function handleDropElement(element: HTMLElement): void {
   };
 }
 
-function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): void {
+async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
   highlightedElements.forEach(el => {
@@ -541,22 +587,71 @@ function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): 
     // Move the drag element to the drop position
     selectedDragElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
-    setTimeout(() => {
-      onElementDropComplete(selectedDragElement, selectedDropElement);
-    }, 500);
-
     // Remove highlights after moving the element
     const allElements = document.querySelectorAll(`*`);
     allElements.forEach(el => {
       removeHighlight(el as HTMLElement);
     });
-    setTimeout(() => {
-      selectedDragElement.style.transform = '';
-    }, 1000);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    await onElementDropComplete(selectedDragElement, selectedDropElement);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
 }
 
 function removeHighlight(element: HTMLElement): void {
   element.classList.remove('highlight');
   element.ariaPressed = 'false';
+}
+
+// Function to highlight the speaking element
+function highlightSpeakingElement(element: HTMLElement): void {
+  if (!element) return;
+
+  // Add a custom class for highlighting
+  element.classList.add('speaking-highlight');
+
+  // Inject keyframe animation and class styles into the document's head if it doesn't already exist
+  const styleId = 'speaking-highlight-style';
+  if (!document.getElementById(styleId)) {
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.innerHTML = `
+      .speaking-highlight {
+        box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9); /* Stronger orange glow effect */
+        border: 3px solid orange;
+        transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
+        transform: scale(1.05); /* Subtle scale effect to pop the element */
+        animation: pulseEffect 1.5s infinite; /* Pulsing animation */
+      }
+
+      @keyframes pulseEffect {
+        0% {
+          box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9);
+          transform: scale(1.05);
+        }
+        50% {
+          box-shadow: 0 0 30px 15px rgba(255, 165, 0, 1);
+          transform: scale(1.1);
+        }
+        100% {
+          box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9);
+          transform: scale(1.05);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// Function to stop highlighting
+function stopHighlightForSpeakingElement(element: HTMLElement): void {
+  if (!element) return;
+
+  // Remove the custom class for highlighting
+  element.classList.remove('speaking-highlight');
+
+  // Remove inline styles
+  element.style.boxShadow = '';
+  element.style.border = '';
 }

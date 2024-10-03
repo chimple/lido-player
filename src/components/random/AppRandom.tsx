@@ -86,7 +86,17 @@ export class AppRandom {
   /**
    * Event handler triggered when the component is touched or clicked.
    */
-  @Prop() onTouch: string;
+    @Prop() onTouch: string;
+
+  /**
+   * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+   */
+  @Prop() onCorrectTouch: string;
+
+  /**
+   * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+   */
+  @Prop() onCorrectMatch: string;
 
   /**
    * Event handler triggered when a matching action occurs.
@@ -145,6 +155,8 @@ export class AppRandom {
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}
+        onCorrectMatch={this.onCorrectMatch}
+        onCorrectTouch={this.onCorrectTouch}
         onEntry={this.onEntry}
       >
         {/* Slot to render child elements that will be randomly positioned */}
