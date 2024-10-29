@@ -22,6 +22,7 @@
 
 - [app-container](../container)
 - [app-col](../column)
+- [app-trace](../trace)
 - [app-image](../image)
 - [app-row](../row)
 - [app-text](../text)
@@ -35,6 +36,7 @@
 graph TD;
   app-home --> app-container
   app-home --> app-col
+  app-home --> app-trace
   app-home --> app-image
   app-home --> app-row
   app-home --> app-text

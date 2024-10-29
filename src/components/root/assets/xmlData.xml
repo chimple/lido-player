@@ -1,5 +1,9 @@
 <main>
 	<app-container id="container" value="mainContainer1" objective="ma6,ma4,ma5" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+		<app-trace id="trace1" value="trace1" svgSource="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/Temp-Folder/trace-test-svg/A_test.svg" height="800px" width="800px" mode="showFlow" x="" y="" z="" ariaLabel="" ariaHidden="" tabIndex="1">
+		</app-trace>
+	</app-container>
+	<app-container id="container" value="mainContainer1" objective="ma6,ma4,ma5" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
 		<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
 			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
 			</app-image>

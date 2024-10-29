@@ -105,6 +105,7 @@ export class AppHome {
     const componentMapping = {
       'app-container': <app-container {...props}>{children}</app-container>,
       'app-col': <app-col {...props}>{children}</app-col>,
+      'app-trace': <app-trace {...props}>{children}</app-trace>,
       'app-image': <app-image {...props}>{children}</app-image>,
       'app-row': <app-row {...props}>{children}</app-row>,
       'app-text': <app-text {...props}>{children}</app-text>,
