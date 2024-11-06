@@ -220,6 +220,9 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
+const dragArr = [];
+const dropArr = [];
+
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
@@ -241,6 +244,13 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     const onMatch = dropElement.getAttribute('onCorrectMatch');
     if (onMatch) {
       await executeActions(onMatch, dropElement, dragElement);
+
+      dragArr.push(dragElement);
+      dropArr.push(dropElement);
+
+      // dragElement.style.cursor = "unset";
+      // dragElement.style.transform = "unset";
+      // dropElement.replaceWith(dragElement)
     }
   } else {
     showWrongAnswerAnimation([dropElement, dragElement]);
@@ -404,9 +414,28 @@ async function onActivityComplete() {
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
   if (res) {
+    for (let i = 0; i < dropArr.length; i++) {
+      console.log(dropArr);
+      const dropItem = dropArr[i];
+      const matchingDragItem = dragArr[i];
+
+      if (matchingDragItem) {
+        matchingDragItem.style.backgroundColor = 'green'; // Indicate a successful match
+        matchingDragItem.style.transform = 'unset'; // Reset transform
+        dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
+      }
+    }
+
+    const onMatch = container.getAttribute('onCorrectMatch');
+    console.log('onMatch,', container, onMatch);
+    if (onMatch) {
+      await executeActions(onMatch, container);
+    }
+
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
     await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 3000));
     triggerNextContainer();
   }
 }
