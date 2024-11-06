@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute  | Description                                                                              | Type     | Default     |
-| --------- | ---------- | ---------------------------------------------------------------------------------------- | -------- | ----------- |
-| `xmlData` | `xml-data` | XML data passed to the component, which is parsed and used to render various containers. | `string` | `undefined` |
+| Property       | Attribute       | Description                                                                              | Type     | Default     |
+| -------------- | --------------- | ---------------------------------------------------------------------------------------- | -------- | ----------- |
+| `initialIndex` | `initial-index` | Initial index of the container being displayed.                                          | `number` | `0`         |
+| `xmlData`      | `xml-data`      | XML data passed to the component, which is parsed and used to render various containers. | `string` | `undefined` |
 
 
 ## Dependencies

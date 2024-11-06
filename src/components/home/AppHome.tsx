@@ -19,9 +19,14 @@ export class AppHome {
   @Prop() xmlData: string;
 
   /**
+   * Initial index of the container being displayed.
+   */
+  @Prop() initialIndex: number = 0;
+
+  /**
    * Current index of the container being displayed.
    */
-  @State() currentContainerIndex: number = 0;
+  @State() currentContainerIndex: number = this.initialIndex;
 
   /**
    * Boolean that controls the display of the completion message after all containers have been viewed.
@@ -34,12 +39,52 @@ export class AppHome {
   @State() containers: any[] = [];
 
   /**
+   * Event handler for transitioning to the next container in the sequence.
+   * If the last container is reached, it shows a completion message.
+   */
+  nextContainer = (index?: number | undefined) => {
+    if (index != undefined && index == this.currentContainerIndex) return;
+    // Clear selected values from localStorage on container transition
+    localStorage.removeItem(SelectedValuesKey);
+    localStorage.removeItem(DragSelectedMapKey);
+
+    if (index != undefined && index < this.containers.length) {
+      // Move to the next container
+      this.currentContainerIndex = index;
+      window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
+    } else if (this.currentContainerIndex < this.containers.length - 1) {
+      // Move to the next container
+      this.currentContainerIndex++;
+      window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
+    } else {
+      // Show the completion message if all containers have been viewed
+      this.showCompletionMessage = true;
+      const event = new CustomEvent('gameCompleted');
+      window.dispatchEvent(event);
+
+      // Hide the completion message after 3 seconds
+      setTimeout(() => {
+        this.showCompletionMessage = false;
+      }, 3000);
+    }
+
+    // Reset the containers array to trigger a re-render
+    this.containers = [...this.containers];
+  };
+
+  /**
    * Lifecycle method that runs before the component is loaded. It sets up event listeners for transitioning
    * between containers and parses the XML data into containers.
    */
   componentWillLoad() {
     // Listen for 'nextContainer' event to transition between containers
-    window.addEventListener('nextContainer', this.nextContainer);
+    window.addEventListener('nextContainer', () => {
+      this.nextContainer();
+    });
+
+    window.addEventListener('changeContainer', (e: any) => {
+      this.nextContainer(e.detail.index);
+    });
 
     // Parse the provided XML data
     this.parseXMLData(this.xmlData);
@@ -55,7 +100,12 @@ export class AppHome {
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
    */
   disconnectedCallback() {
-    window.removeEventListener('nextContainer', this.nextContainer);
+    window.removeEventListener('nextContainer', () => {
+      this.nextContainer();
+    });
+    window.removeEventListener('changeContainer', (e: any) => {
+      this.nextContainer(e.detail.index);
+    });
   }
 
   /**
@@ -145,34 +195,6 @@ export class AppHome {
   }
 
   /**
-   * Event handler for transitioning to the next container in the sequence.
-   * If the last container is reached, it shows a completion message.
-   */
-  private nextContainer = () => {
-    // Clear selected values from localStorage on container transition
-    localStorage.removeItem(SelectedValuesKey);
-    localStorage.removeItem(DragSelectedMapKey);
-
-    if (this.currentContainerIndex < this.containers.length - 1) {
-      // Move to the next container
-      this.currentContainerIndex++;
-    } else {
-      // Show the completion message if all containers have been viewed
-      this.showCompletionMessage = true;
-      const event = new CustomEvent('gameCompleted');
-      window.dispatchEvent(event);
-
-      // Hide the completion message after 3 seconds
-      setTimeout(() => {
-        this.showCompletionMessage = false;
-      }, 3000);
-    }
-
-    // Reset the containers array to trigger a re-render
-    this.containers = [...this.containers];
-  };
-
-  /**
    * Renders navigation dots for each container, indicating the progress of the user.
    * Clicking on a dot allows the user to jump to a specific container.
    */
@@ -195,8 +217,9 @@ export class AppHome {
    * @param index - The index of the container to jump to.
    */
   private jumpToContainer(index: number) {
-    this.currentContainerIndex = index;
-    this.containers = [...this.containers]; // Trigger re-render
+    this.nextContainer(index);
+    // this.currentContainerIndex = index;
+    // this.containers = [...this.containers]; // Trigger re-render
   }
 
   render() {
@@ -236,8 +259,12 @@ export class AppHome {
 
             .dot-container {
               text-align: center;
-              position: relative;
+              position: fixed;
               z-index: 1;
+              width: fit-content;
+              top: 1%;
+              left: 50%;
+              transform: translate(-50%);
             }
 
             .dot {
@@ -252,7 +279,7 @@ export class AppHome {
             }
 
             .dot.completed {
-              background-color: black;
+              background-color: grey;
             }
 
             .dot.current {

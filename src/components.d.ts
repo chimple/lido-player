@@ -188,6 +188,10 @@ export namespace Components {
      */
     interface AppHome {
         /**
+          * Initial index of the container being displayed.
+         */
+        "initialIndex": number;
+        /**
           * XML data passed to the component, which is parsed and used to render various containers.
          */
         "xmlData": string;
@@ -1197,6 +1201,10 @@ declare namespace LocalJSX {
      * and displays progress indicators (dots) for each container.
      */
     interface AppHome {
+        /**
+          * Initial index of the container being displayed.
+         */
+        "initialIndex"?: number;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
          */
