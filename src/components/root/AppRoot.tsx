@@ -10,6 +10,7 @@ import { Component, getAssetPath, h, State } from '@stencil/core';
 @Component({
   tag: 'app-root',
   shadow: false,
+  styleUrl: '../../index.css',
   assetsDirs: ['assets'], // Specifies the directory for static assets
 })
 export class AppRoot {
