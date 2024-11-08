@@ -1,152 +1,541 @@
 <main>
-	<app-container id="container" value="mainContainer1" objective="ma6,ma4,ma5" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-		<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
-			</app-image>
-		</app-pos>
-		<app-col id="col2" value="column1" height="500px" width="700px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-text id="text1" tabIndex="1" string="School" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="ma6" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
-				</app-text>
-				<app-text id="text2" tabIndex="2" string="Art" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="ma4" height="100px" width="150px" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
-				</app-text>
-				<app-text id="text3" tabIndex="3" string="Music" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="ma5" height="100px" width="150px" x="40vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
-				</app-text>
-			</app-row>
-			<app-row id="row2" value="row2" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="1" value="ma4" string="Painting" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="2" value="ma6" string="Santiniketan" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="3" value="ma5" string="Bengal" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer1" objective="ma3,ma2,ma1" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-		<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="#EEEEEE" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
-			</app-image>
-		</app-pos>
-		<app-col id="col2" value="column1" height="500px" width="700px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-text id="text1" tabIndex="1" string="State" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="ma3" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
-				</app-text>
-				<app-text id="text2" tabIndex="2" string="Festival" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="ma2" height="100px" width="150px" x="20vw" visible="true" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
-				</app-text>
-				<app-text id="text3" tabIndex="3" string="Language" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="ma1" height="100px" width="150px" x="40vw" y="0" z="0" bgColor="#DDDDDD" type="drop" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;l" onEntry="">
-				</app-text>
-			</app-row>
-			<app-row id="row2" value="row2" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-text id="textA1" tabIndex="1" value="ma2" string="Pongal" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA2" tabIndex="2" value="ma1" string="Tamil" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				</app-text>
-				<app-text id="textA3" tabIndex="3" value="ma3" string="Tamil Nadu" fontColor="black" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#DDDDDD" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				</app-text>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o1" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#F5F5DC" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/An%20abstract%20representation%20of%20India%27s%20cultural%20diversity%2C%20featuring%20elements%20like%20traditional%20dances%2C%20colorful%20attire%2C%20and%20regional%20symbols%2C%20all%20intertwined%20in%20a%20harmonious%20blend%20of%20vivid%20colors%20like%20saffron%2C%20green%2C%20and%20white.?width=1600&amp;height=900&amp;nologo=true&amp;enhance=true&amp;private=true" altText="An abstract representation of India's cultural diversity, featuring elements like traditional dances, colorful attire, and regional symbols, all intertwined in a harmonious blend of vivid colors like saffron, green, and white.">
-			</app-image>
-		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-col id="col1" value="column1" height="320px" width="700px" tabIndex="1" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-text id="text1" string="What language does Ramu speak, and what is the cultural dance of Gujarat?" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q1" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#E0E0E0" type="drop" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-				</app-text>
-				<app-image id="image1" value="image1" height="200px" width="300px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/A%20picturesque%20scene%20of%20a%20traditional%20Garba%20dance%20being%20performed%20in%20a%20vibrant%20setting%20in%20Gujarat.%20The%20image%20showcases%20dancers%20in%20colorful%20attire%2C%20with%20intricate%20patterns%20and%20bright%20hues%20like%20red%2C%20yellow%2C%20and%20green%2C%20capturing%20the%20festive%20spirit.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A picturesque scene of a traditional Garba dance being performed in a vibrant setting in Gujarat. The image showcases dancers in colorful attire, with intricate patterns and bright hues like red, yellow, and green, capturing the festive spirit.">
-				</app-image>
+	<app-container id="container" value="mainContainer1" objective="start" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+
+		<!-- Accessibilty Popup -->
+		<app-pos id="access" tabIndex="1" visible="true" height="820px" width="500px" x="1080px" y="50px" z="1" bgColor="white" onEntry="this.borderRadius='5px'; this.border='1px solid'; this.visibility='hidden';">
+			<app-text visible="true" string="Accessbility Options" width="500px" height="74px" font="Poppins" font-size="22px" bgColor="#FFE7C3" onEntry="this.boxShadow='unset'; this.fontWeight='600'; this.borderRadius='10px';"></app-text>
+
+			<app-pos visible="true" height="20px" width="20px" bgColor="transparent" x="400px" y="26px" z="0" onEntry="this.cursor='pointer';" onTouch="access.visibility='hidden';">
+				<app-image visible="true" height="20px" width="20px" src="./assets/images/cancel.png"></app-image>
+			</app-pos>
+
+			<app-col visible="true" height="650px" width="470px" onEntry="this.marginTop='80px';" bgColor="transparent">
+				<app-col visible="true" height="120px" width="400px" onEntry="" bgColor="transparent">
+
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Language" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="60px" width="400px" onEntry="this.border='1px solid'; this.borderRadius='10px'; this.justifyContent='flex-start'; this.gap='30px';" bgColor="transparent">
+						<app-text visible="true" font="Poppins" font-size="22px" string="English" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start'; this.marginLeft='20px';" bgColor="transparent"></app-text>
+						<app-image visible="true" width="20px" height="20px" src="./assets/images/dropDown.png"></app-image>
+					</app-row>
+
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Content" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/zoom.png"></app-image>
+							<app-text visible="true" string="Bigger Text" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/hide.png"></app-image>
+							<app-text visible="true" string="Hide Images" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/lineSpacing.png"></app-image>
+							<app-text visible="true" string="Line Spacing" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Colors" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/brightness.png"></app-image>
+							<app-text visible="true" string="Brightness" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/contrast.png"></app-image>
+							<app-text visible="true" string="Contrast" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/invert.png"></app-image>
+							<app-text visible="true" string="Invert Colors" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Navigation" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/sound.png"></app-image>
+							<app-text visible="true" string="Read Page" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
 			</app-col>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-col id="col2" value="o3" tabIndex="2" height="300px" width="250px" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA1" value="textA2" string="Punjabi, Bhangra" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#EFEFEF" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					</app-text>
-					<app-image id="image2" value="image2" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/Energetic%20Bhangra%20dancers%20in%20traditional%20Punjabi%20attire%2C%20with%20vibrant%20turbans%20and%20dhols%2C%20expressing%20joy%20and%20enthusiasm.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="Energetic Bhangra dancers in traditional Punjabi attire, with vibrant turbans and dhols, expressing joy and enthusiasm.">
-					</app-image>
-				</app-col>
-				<app-col id="col3" value="o2" height="300px" width="250px" tabIndex="3" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA2" value="textA2" string="Tamil, Bharatanatyam" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#F0F0F0" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					</app-text>
-					<app-image id="image3" value="image3" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/Dancers%20performing%20Bharatanatyam%2C%20showcasing%20elegant%20classical%20dance%20poses%20with%20detailed%20costumes%20and%20expressive%20eye%20movements.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="Dancers performing Bharatanatyam, showcasing elegant classical dance poses with detailed costumes and expressive eye movements.">
-					</app-image>
-				</app-col>
-				<app-col id="col4" value="o1" height="300px" width="250px" tabIndex="4" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA3" value="textA3" string="Gujarati, Garba" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#F5F5F5" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					</app-text>
-					<app-image id="image4" value="image4" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/A%20vivid%20depiction%20of%20Garba%20dance%20with%20dancers%20in%20circular%20formation%2C%20wearing%20traditional%20Gujarati%20dresses%20adorned%20with%20mirror%20work%20and%20bright%20colors.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="A vivid depiction of Garba dance with dancers in circular formation, wearing traditional Gujarati dresses adorned with mirror work and bright colors.">
-					</app-image>
-				</app-col>
-			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o4" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#F5F5DC" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/An%20abstract%20representation%20of%20India%27s%20cultural%20diversity%2C%20featuring%20elements%20like%20traditional%20dances%2C%20colorful%20attire%2C%20and%20regional%20symbols%2C%20all%20intertwined%20in%20a%20harmonious%20blend%20of%20vivid%20colors%20like%20saffron%2C%20green%2C%20and%20white.?width=1600&amp;height=900&amp;nologo=true&amp;enhance=true&amp;private=true" altText="An abstract representation of India's cultural diversity, featuring elements like traditional dances, colorful attire, and regional symbols, all intertwined in a harmonious blend of vivid colors like saffron, green, and white.">
-			</app-image>
+
+
+			<app-pos visible="true" height="60px" width="360px" bgColor="transparent" x="70px" y='750px'>
+				<app-text visible="true" height="60px" width="360px" string="Reset Settings" font="Poppins" bgColor="#FFE7C3" font-size="22px" fontColor="black"></app-text>
+			</app-pos>
+
 		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-col id="col1" value="column1" height="320px" width="700px" tabIndex="1" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-text id="text1" string="What is Gulabo from Rajasthan known for?" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q3" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#F0E68C" type="drop" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-				</app-text>
-				<app-image id="image1" value="image1" height="200px" width="300px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/A%20vibrant%20image%20of%20a%20traditional%20Rajasthani%20puppet%20show%20with%20puppets%20in%20colorful%20attire%2C%20set%20against%20a%20backdrop%20of%20Rajasthani%20architecture%20with%20intricate%20designs%20and%20rich%20colors.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="A vibrant image of a traditional Rajasthani puppet show with puppets in colorful attire, set against a backdrop of Rajasthani architecture with intricate designs and rich colors.">
-				</app-image>
-			</app-col>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-col id="col2" value="o6" tabIndex="2" height="300px" width="250px" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA1" value="textA2" string="Garba dance, Gujarati" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#FFE4B5" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					</app-text>
-					<app-image id="image2" value="image2" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/A%20festive%20Garba%20dance%20scene%20with%20dancers%20in%20traditional%20Gujarati%20attire%2C%20showcasing%20dynamic%20movements%20and%20joyful%20expressions.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="A festive Garba dance scene with dancers in traditional Gujarati attire, showcasing dynamic movements and joyful expressions.">
-					</app-image>
-				</app-col>
-				<app-col id="col3" value="o4" height="300px" width="250px" tabIndex="3" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA2" value="textA2" string="Colorful clothing, Puppet shows" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#FFD700" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					</app-text>
-					<app-image id="image3" value="image3" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/Rajasthani%20puppets%20in%20lively%20colors%2C%20with%20detailed%20costumes%20and%20expressive%20faces%2C%20performing%20in%20a%20traditional%20puppet%20theatre.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="Rajasthani puppets in lively colors, with detailed costumes and expressive faces, performing in a traditional puppet theatre.">
-					</app-image>
-				</app-col>
-				<app-col id="col4" value="o5" height="300px" width="250px" tabIndex="4" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA3" value="textA3" string="Classical music, Painting" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#FAFAD2" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					</app-text>
-					<app-image id="image4" value="image4" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/An%20artist%20painting%20a%20serene%20landscape%20with%20a%20palette%20of%20vibrant%20colors%2C%20surrounded%20by%20musical%20instruments.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="An artist painting a serene landscape with a palette of vibrant colors, surrounded by musical instruments.">
-					</app-image>
-				</app-col>
+
+		<!-- Nav Bar -->
+		<app-pos id="pos1" value="pos1" height="200px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.borderStyle='solid'; this.borderWidth='0 0 1px'; this.display='flex'; this.alignItems='center';">
+			<app-row id="row1" visible="true" height="200px" width="1500px" bgColor="transparent">
+				<app-row id="row2" visible="true" height="50px" width="250px" onEntry="" bgColor="transparent">
+					<app-text visible="true" string="" font="Poppins" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					<app-text visible="true" string="" font="Poppins" font-size="25px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+				</app-row>
+				
+				<app-text visible="true" string="My Face" font="Poppins" font-size="40px" width="250px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" bgColor="transparent" ></app-text>
+
+				<app-row id="row2" tabIndex="2" visible="true" height="80px" width="250px" onEntry="" bgColor="transparent">
+					<app-col id="col1" visible="true" height="80px" width="100%" bgColor="transparent">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/exit.png">
+						</app-image>
+						<app-text visible="true" string="Exit Game" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+					<app-col id="col1" tabIndex="3" visible="true" height="80px" width="100%" bgColor="transparent" onTouch="access.visibility='visible';">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/access.png">
+						</app-image>
+						<app-text visible="true" string="Accessibility" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+				</app-row>
+
+				<!-- <app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+				</app-image> -->
 			</app-row>
-		</app-col>
-	</app-container>
-	<app-container id="container" value="mainContainer" objective="o7" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#F5F5DC" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-		<app-pos id="pos" value="pos" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-image id="image" value="image" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/An%20abstract%20representation%20of%20India%27s%20cultural%20diversity%2C%20featuring%20elements%20like%20traditional%20dances%2C%20colorful%20attire%2C%20and%20regional%20symbols%2C%20all%20intertwined%20in%20a%20harmonious%20blend%20of%20vivid%20colors%20like%20saffron%2C%20green%2C%20and%20white.?width=1600&amp;height=900&amp;nologo=true&amp;enhance=true&amp;private=true" altText="An abstract representation of India's cultural diversity, featuring elements like traditional dances, colorful attire, and regional symbols, all intertwined in a harmonious blend of vivid colors like saffron, green, and white.">
-			</app-image>
 		</app-pos>
-		<app-col id="col" value="column" height="800px" width="900px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-			<app-col id="col1" value="column1" height="320px" width="700px" tabIndex="1" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-text id="text1" string="What cultural elements does Surinder from Punjab introduce?" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" value="q5" height="100px" width="700px" x="0vw" y="0" z="0" bgColor="#90EE90" type="drop" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.visibility=hidden; element.visibility=hidden;" onEntry="">
-				</app-text>
-				<app-image id="image1" value="image1" height="200px" width="300px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/An%20image%20capturing%20the%20vibrant%20energy%20of%20a%20Bhangra%20performance%2C%20with%20dancers%20in%20vivid%20traditional%20Punjabi%20costumes%2C%20set%20against%20a%20backdrop%20of%20lush%20green%20fields.?width=1024&amp;height=1024&amp;nologo=true&amp;enhance=true&amp;private=true" altText="An image capturing the vibrant energy of a Bhangra performance, with dancers in vivid traditional Punjabi costumes, set against a backdrop of lush green fields.">
-				</app-image>
+
+		<app-row visible="true" height="700px" width="1500px" bgColor="transparent" onEntry="this.marginTop='200px'; ">
+					<app-col visible="true" height="600px" width="100%" onEntry="this.border='4px solid'; this.borderRadius='20px';" bgColor="transparent">
+							<app-col visible="true" onEntry="this.alignItems='flex-start';" bgColor="transparent">
+								<app-text visible="true" width="100%" string="Match the picture of the sense organs to their functions" font="Poppins" font-size="26px" fontColor="#993300" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+								<app-text visible="true" width="90%" string='This activity features a set of three images representing an eye, an ear, and a nose. The task for students is to choose the words to the correct pictures by double tapping the right answer. Below these images are the words "smell," "hear," and "see," which describe the functions of the respective sense organs.' font="Poppins" font-size="20px" fontColor="black" onEntry="this.boxShadow='unset'; this.textAlign='left';"></app-text>
+							</app-col>
+							<app-col visible="true" onEntry="this.alignItems='flex-start';" bgColor="transparent">
+								<app-text visible="true" width="100%" string="Description" font="Poppins" font-size="26px" fontColor="#993300" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+								<app-text visible="true" width="90%" string=' This activity features a set of three images representing an eye, an ear, and a nose.    The task for students is to choose the words to the correct pictures by double tapping the right answer.Below these images are the words "smell," "hear," and "see," which describe the functions of the respective sense organs.' font="Poppins" font-size="20px" fontColor="black" onEntry="this.boxShadow='unset'; this.textAlign='left';"></app-text>
+							</app-col>
+							<app-col visible="true" onEntry="this.alignItems='flex-start';" bgColor="transparent">
+								<app-text visible="true" width="100%" string="Learning Outcome" font="Poppins" font-size="26px" fontColor="#993300" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+								<app-text visible="true" width="90%" string='This exercises helps children learn about the senses in a fun   and interactive way, associating each sense with its corresponding body part.' font="Poppins" font-size="20px" fontColor="black" onEntry="this.boxShadow='unset'; this.textAlign='left';"></app-text>
+							</app-col>
+					</app-col>
+					<app-col visible="true" height="600px" width="600px" bgColor="transparent">
+						<app-image visible="true" height="400px" width="500px" src="./assets/images/VIimage.png"></app-image>
+						<app-text visible="true" value="start" type="click" height="80px" width="250px" bgColor="#CCEFBD" font="Poppins" fontColor="black" font-size="40px" onEntry="this.boxShadow='unset';" onTouch="this.border='2px solid green';" string="Start"></app-text>
+					</app-col>
+		</app-row>
+	</app-container>
+
+	<app-container id="container" value="mainContainer1" objective="ear" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+
+		<!-- Accessibilty Popup -->
+		<app-pos id="access" tabIndex="1" visible="true" height="820px" width="500px" x="1080px" y="50px" z="1" bgColor="white" onEntry="this.borderRadius='5px'; this.border='1px solid'; this.visibility='hidden';">
+			<app-text visible="true" string="Accessbility Options" width="500px" height="74px" font="Poppins" font-size="22px" bgColor="#FFE7C3" onEntry="this.boxShadow='unset'; this.fontWeight='600'; this.borderRadius='10px';"></app-text>
+
+			<app-pos visible="true" height="20px" width="20px" bgColor="transparent" x="400px" y="26px" z="0" onEntry="this.cursor='pointer';" onTouch="access.visibility='hidden';">
+				<app-image visible="true" height="20px" width="20px" src="./assets/images/cancel.png"></app-image>
+			</app-pos>
+
+			<app-col visible="true" height="650px" width="470px" onEntry="this.marginTop='80px';" bgColor="transparent">
+				<app-col visible="true" height="120px" width="400px" onEntry="" bgColor="transparent">
+
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Language" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="60px" width="400px" onEntry="this.border='1px solid'; this.borderRadius='10px'; this.justifyContent='flex-start'; this.gap='30px';" bgColor="transparent">
+						<app-text visible="true" font="Poppins" font-size="22px" string="English" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start'; this.marginLeft='20px';" bgColor="transparent"></app-text>
+						<app-image visible="true" width="20px" height="20px" src="./assets/images/dropDown.png"></app-image>
+					</app-row>
+
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Content" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/zoom.png"></app-image>
+							<app-text visible="true" string="Bigger Text" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/hide.png"></app-image>
+							<app-text visible="true" string="Hide Images" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/lineSpacing.png"></app-image>
+							<app-text visible="true" string="Line Spacing" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Colors" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/brightness.png"></app-image>
+							<app-text visible="true" string="Brightness" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/contrast.png"></app-image>
+							<app-text visible="true" string="Contrast" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/invert.png"></app-image>
+							<app-text visible="true" string="Invert Colors" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Navigation" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/sound.png"></app-image>
+							<app-text visible="true" string="Read Page" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
 			</app-col>
-			<app-row id="row1" value="row1" height="100px" width="100%" x="0" y="" z="0" bgColor="transparent" type="" visible="true" audio="row1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-				<app-col id="col2" value="o9" tabIndex="2" height="300px" width="250px" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA1" value="textA2" string="Rajasthani, Puppet Show" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#E0FFFF" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					</app-text>
-					<app-image id="image2" value="image2" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/A%20traditional%20puppet%20show%20with%20vibrant%20puppets%20in%20detailed%20costumes%2C%20performing%20against%20a%20backdrop%20of%20Rajasthani%20culture.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="A traditional puppet show with vibrant puppets in detailed costumes, performing against a backdrop of Rajasthani culture.">
+
+
+			<app-pos visible="true" height="60px" width="360px" bgColor="transparent" x="70px" y='750px'>
+				<app-text visible="true" height="60px" width="360px" string="Reset Settings" font="Poppins" bgColor="#FFE7C3" font-size="22px" fontColor="black"></app-text>
+			</app-pos>
+
+		</app-pos>
+
+		<app-pos id="pos1" value="pos1" height="200px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="white" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.borderStyle='solid'; this.borderWidth='0 0 1px'; this.display='flex'; this.alignItems='center';">
+			<app-row id="row1" visible="true" height="200px" width="1500px" bgColor="transparent">
+				<app-row id="row2" visible="true" height="50px" width="250px" onEntry="" bgColor="transparent">
+					<app-text visible="true" string="" font="Poppins" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					<app-text visible="true" string="" font="Poppins" font-size="25px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+				</app-row>
+				
+				<app-text visible="true" string="My Face" font="Poppins" font-size="40px" width="250px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" bgColor="transparent" ></app-text>
+
+				<app-row id="row2" tabIndex="2" visible="true" height="80px" width="250px" onEntry="" bgColor="transparent">
+					<app-col id="col1" visible="true" height="80px" width="100%" bgColor="transparent">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/exit.png">
+						</app-image>
+						<app-text visible="true" string="Exit Game" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+					<app-col id="col1" tabIndex="3" visible="true" height="80px" width="100%" bgColor="transparent" onTouch="access.visibility='visible';">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/access.png">
+						</app-image>
+						<app-text visible="true" string="Accessibility" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+				</app-row>
+
+				<!-- <app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+				</app-image> -->
+			</app-row>
+		</app-pos>
+
+		<app-col id="col2" value="column1" height="500px" width="800px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+			<app-col id="col2" value="column1" height="300px" width="800px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+				<app-text id="text1" string="Question 1/6" fontColor="black" font="Poppins" font-size="36px" highlightWhileSpeaking="true" value="ma3" height="100px" width="750px" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.justifyContent='flex-start'; this.boxShadow='unset';">
+				</app-text>
+
+				<app-text id="text1" string="Which part of the body helps us hear a sound ?" fontColor="black" font="Poppins" font-size="40px" highlightWhileSpeaking="true" value="ear" height="212px" width="700px" x="0vw" y="0" z="0" bgColor="#FFE7C3" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.justifyContent='flex-start'; this.boxShadow='unset'; this.textAlign='left'; this.padding='0 50px'; this.fontWeight='500';">
+				</app-text>
+
+			</app-col>
+			<app-row id="row3" value="row3" height="100px" width="700px" x="0" y="0" z="0" bgColor="" type="slide" visible="true" audio="row3.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+				<app-col height="" width="180px" visible="true" bgColor="transparent">
+					<app-image id="image3" value="ear" height="125px" width="180px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="this.border='4px solid #469849';" type="click" onCorrectMatch="" onEntry="this.border='2px solid'; this.borderRadius='10px';" src="./assets/images/bodyParts/ear.png">
 					</app-image>
-				</app-col>
-				<app-col id="col3" value="o7" height="300px" width="250px" tabIndex="3" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA2" value="textA2" string="Punjabi, Bhangra" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#98FB98" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+					<app-text id="text1" string="EAR" fontColor="#4E4D4D" font="Poppins" font-size="28px" highlightWhileSpeaking="true" value="ma3" height="" width="" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset';">
 					</app-text>
-					<app-image id="image3" value="image3" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/Bhangra%20dancers%20in%20colorful%20traditional%20attire%2C%20performing%20energetically%20with%20joyful%20expressions%2C%20accompanied%20by%20the%20rhythmic%20beats%20of%20dhol%20drums.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="Bhangra dancers in colorful traditional attire, performing energetically with joyful expressions, accompanied by the rhythmic beats of dhol drums.">
-					</app-image>
 				</app-col>
-				<app-col id="col4" value="o8" height="300px" width="250px" tabIndex="4" x="0" y="0" z="0" bgColor="transparent" type="click" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green';" onCorrectMatch="" onEntry="">
-					<app-text id="textA3" value="textA3" string="Tamil, Bharatanatyam" fontColor="#000000" font="Arial" font-size="30px" highlightWhileSpeaking="true" height="100px" width="150px" x="0vw" y="0" z="0" bgColor="#AFEEEE" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+				<app-col height="" width="180px" visible="true" bgColor="transparent">
+					<app-image id="image3" value="nose" height="125px" width="180px" type="click" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.border='2px solid'; this.borderRadius='10px';" src="./assets/images/bodyParts/nose.png">
+					</app-image>
+					<app-text id="text1" string="NOSE" fontColor="#4E4D4D" font="Poppins" font-size="28px" highlightWhileSpeaking="true" value="ma3" height="" width="" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset';">
 					</app-text>
-					<app-image id="image4" value="image4" height="100px" width="200px" ariaHidden="true" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://pollinations.ai/p/Dancers%20in%20Bharatanatyam%20attire%2C%20showcasing%20intricate%20dance%20poses%20and%20expressive%20hand%20gestures%2C%20set%20against%20a%20temple%20backdrop.?width=1024&amp;amp;height=1024&amp;amp;nologo=true&amp;amp;enhance=true&amp;amp;private=true" altText="Dancers in Bharatanatyam attire, showcasing intricate dance poses and expressive hand gestures, set against a temple backdrop.">
-					</app-image>
 				</app-col>
+				<app-col height="" width="180px" visible="true" bgColor="transparent">
+					<app-image id="image3" value="eyes" height="125px" width="180px" type="click" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.border='2px solid'; this.borderRadius='10px';" src="./assets/images/bodyParts/eyes.png">
+					</app-image>
+					<app-text id="text1" string="EYES" fontColor="#4E4D4D" font="Poppins" font-size="28px" highlightWhileSpeaking="true" value="ma3" height="" width="" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset';">
+					</app-text>
+				</app-col>
+			</app-row>
+			
+		</app-col>
+	</app-container>
+
+	<app-container id="container" value="mainContainer1" objective="start" ariaLabel="Select the first item, then the second item to match. One of the item will be moved and checked for a correct match" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+
+		<!-- Accessibilty Popup -->
+		<app-pos id="access" tabIndex="1" visible="true" height="820px" width="500px" x="1080px" y="50px" z="1" bgColor="white" onEntry="this.borderRadius='5px'; this.border='1px solid'; this.visibility='hidden';">
+			<app-text visible="true" string="Accessbility Options" width="500px" height="74px" font="Poppins" font-size="22px" bgColor="#FFE7C3" onEntry="this.boxShadow='unset'; this.fontWeight='600'; this.borderRadius='10px';"></app-text>
+
+			<app-pos visible="true" height="20px" width="20px" bgColor="transparent" x="400px" y="26px" z="0" onEntry="this.cursor='pointer';" onTouch="access.visibility='hidden';">
+				<app-image visible="true" height="20px" width="20px" src="./assets/images/cancel.png"></app-image>
+			</app-pos>
+
+			<app-col visible="true" height="650px" width="470px" onEntry="this.marginTop='80px';" bgColor="transparent">
+				<app-col visible="true" height="120px" width="400px" onEntry="" bgColor="transparent">
+
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Language" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="60px" width="400px" onEntry="this.border='1px solid'; this.borderRadius='10px'; this.justifyContent='flex-start'; this.gap='30px';" bgColor="transparent">
+						<app-text visible="true" font="Poppins" font-size="22px" string="English" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start'; this.marginLeft='20px';" bgColor="transparent"></app-text>
+						<app-image visible="true" width="20px" height="20px" src="./assets/images/dropDown.png"></app-image>
+					</app-row>
+
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Content" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/zoom.png"></app-image>
+							<app-text visible="true" string="Bigger Text" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/hide.png"></app-image>
+							<app-text visible="true" string="Hide Images" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/lineSpacing.png"></app-image>
+							<app-text visible="true" string="Line Spacing" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Colors" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/brightness.png"></app-image>
+							<app-text visible="true" string="Brightness" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/contrast.png"></app-image>
+							<app-text visible="true" string="Contrast" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/invert.png"></app-image>
+							<app-text visible="true" string="Invert Colors" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Navigation" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/sound.png"></app-image>
+							<app-text visible="true" string="Read Page" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+			</app-col>
+
+
+			<app-pos visible="true" height="60px" width="360px" bgColor="transparent" x="70px" y='750px'>
+				<app-text visible="true" height="60px" width="360px" string="Reset Settings" font="Poppins" bgColor="#FFE7C3" font-size="22px" fontColor="black"></app-text>
+			</app-pos>
+
+		</app-pos>
+
+		<!-- Nav Bar -->
+		<app-pos id="pos1" value="pos1" height="200px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.borderStyle='solid'; this.borderWidth='0 0 1px'; this.display='flex'; this.alignItems='center';">
+			<app-row id="row1" visible="true" height="200px" width="1500px" bgColor="transparent">
+				<app-row id="row2" visible="true" height="50px" width="250px" onEntry="" bgColor="transparent">
+					<app-text visible="true" string="" font="Poppins" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					<app-text visible="true" string="" font="Poppins" font-size="25px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+				</app-row>
+				
+				<app-text visible="true" string="My Face" font="Poppins" font-size="40px" width="250px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" bgColor="transparent" ></app-text>
+
+				<app-row id="row2" tabIndex="2" visible="true" height="80px" width="250px" onEntry="" bgColor="transparent">
+					<app-col id="col1" visible="true" height="80px" width="100%" bgColor="transparent">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/exit.png">
+						</app-image>
+						<app-text visible="true" string="Exit Game" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+					<app-col id="col1" tabIndex="3" visible="true" height="80px" width="100%" bgColor="transparent" onTouch="access.visibility='visible';">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/access.png">
+						</app-image>
+						<app-text visible="true" string="Accessibility" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+				</app-row>
+
+				<!-- <app-image id="image3" value="carImage2" height="900px" width="1600px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="https://images.pexels.com/photos/9846108/pexels-photo-9846108.jpeg">
+				</app-image> -->
+			</app-row>
+		</app-pos>
+
+		<app-row visible="true" height="700px" width="1500px" bgColor="transparent" onEntry="this.marginTop='200px'; ">
+					<app-col visible="true" height="600px" width="100%" onEntry="this.border='4px solid'; this.borderRadius='20px';" bgColor="transparent">
+							<app-col visible="true" onEntry="this.alignItems='flex-start';" bgColor="transparent">
+								<app-text visible="true" width="100%" string="Match the picture of the sense organs to their functions" font="Poppins" font-size="26px" fontColor="#993300" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+								<app-text visible="true" width="90%" string='This activity features a set of three images representing an eye, an ear, and a nose. The task for students is to choose the words to the correct pictures by double tapping the right answer. Below these images are the words "smell," "hear," and "see," which describe the functions of the respective sense organs.' font="Poppins" font-size="20px" fontColor="black" onEntry="this.boxShadow='unset'; this.textAlign='left';"></app-text>
+							</app-col>
+							<app-col visible="true" onEntry="this.alignItems='flex-start';" bgColor="transparent">
+								<app-text visible="true" width="100%" string="Description" font="Poppins" font-size="26px" fontColor="#993300" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+								<app-text visible="true" width="90%" string=' This activity features a set of three images representing an eye, an ear, and a nose.    The task for students is to choose the words to the correct pictures by double tapping the right answer.Below these images are the words "smell," "hear," and "see," which describe the functions of the respective sense organs.' font="Poppins" font-size="20px" fontColor="black" onEntry="this.boxShadow='unset'; this.textAlign='left';"></app-text>
+							</app-col>
+							<app-col visible="true" onEntry="this.alignItems='flex-start';" bgColor="transparent">
+								<app-text visible="true" width="100%" string="Learning Outcome" font="Poppins" font-size="26px" fontColor="#993300" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+								<app-text visible="true" width="90%" string='This exercises helps children learn about the senses in a fun   and interactive way, associating each sense with its corresponding body part.' font="Poppins" font-size="20px" fontColor="black" onEntry="this.boxShadow='unset'; this.textAlign='left';"></app-text>
+							</app-col>
+					</app-col>
+					<app-col visible="true" height="600px" width="600px" bgColor="transparent">
+						<app-image visible="true" height="400px" width="500px" src="./assets/images/HIimage.png"></app-image>
+						<app-text value="start" type="click" visible="true" height="80px" width="250px" bgColor="#CCEFBD" font="Poppins" fontColor="black" font-size="40px" onEntry="this.boxShadow='unset';" onTouch="this.border='2px solid green';" string="Start"></app-text>
+					</app-col>
+		</app-row>
+	</app-container>
+
+	<app-container id="container" value="mainContainer" objective="eyes,nose,ear" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="white" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+
+		<!-- Accessibilty Popup -->
+		<app-pos id="access" tabIndex="1" visible="true" height="820px" width="500px" x="1080px" y="50px" z="1" bgColor="white" onEntry="this.borderRadius='5px'; this.border='1px solid'; this.visibility='hidden';">
+			<app-text visible="true" string="Accessbility Options" width="500px" height="74px" font="Poppins" font-size="22px" bgColor="#FFE7C3" onEntry="this.boxShadow='unset'; this.fontWeight='600'; this.borderRadius='10px';"></app-text>
+
+			<app-pos visible="true" height="20px" width="20px" bgColor="transparent" x="400px" y="26px" z="0" onEntry="this.cursor='pointer';" onTouch="access.visibility='hidden';">
+				<app-image visible="true" height="20px" width="20px" src="./assets/images/cancel.png"></app-image>
+			</app-pos>
+
+			<app-col visible="true" height="650px" width="470px" onEntry="this.marginTop='80px';" bgColor="transparent">
+				<app-col visible="true" height="120px" width="400px" onEntry="" bgColor="transparent">
+
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Language" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="60px" width="400px" onEntry="this.border='1px solid'; this.borderRadius='10px'; this.justifyContent='flex-start'; this.gap='30px';" bgColor="transparent">
+						<app-text visible="true" font="Poppins" font-size="22px" string="English" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start'; this.marginLeft='20px';" bgColor="transparent"></app-text>
+						<app-image visible="true" width="20px" height="20px" src="./assets/images/dropDown.png"></app-image>
+					</app-row>
+
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Content" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/zoom.png"></app-image>
+							<app-text visible="true" string="Bigger Text" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';" ></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/hide.png"></app-image>
+							<app-text visible="true" string="Hide Images" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/lineSpacing.png"></app-image>
+							<app-text visible="true" string="Line Spacing" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Colors" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/brightness.png"></app-image>
+							<app-text visible="true" string="Brightness" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/contrast.png"></app-image>
+							<app-text visible="true" string="Contrast" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent" onTouch="">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/invert.png"></app-image>
+							<app-text visible="true" string="Invert Colors" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+				<app-col visible="true" height="" width="400px" onEntry="" bgColor="transparent">
+					<app-text visible="true" font="Poppins" width="390px" font-size="22px" fontColor="#993300" string="Navigation" onEntry="this.boxShadow='unset'; this.justifyContent='flex-start';"></app-text>
+
+					<app-row visible="true" height="100px" width="400px">
+						<app-col visible="true" height="80px" width="80px" onEntry="this.border='2px solid #993300';" bgColor="transparent">
+							<app-image visible="true" height="30px" width="30px" src="./assets/images/icons/sound.png"></app-image>
+							<app-text visible="true" string="Read Page" font="Poppins" font-size="16px" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+					</app-row>
+				</app-col>
+			</app-col>
+
+
+			<app-pos visible="true" height="60px" width="360px" bgColor="transparent" x="70px" y='750px'>
+				<app-text visible="true" height="60px" width="360px" string="Reset Settings" font="Poppins" bgColor="#FFE7C3" font-size="22px" fontColor="black"></app-text>
+			</app-pos>
+
+		</app-pos>
+
+		<app-pos id="pos1" value="pos1" height="200px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.borderStyle='solid'; this.borderWidth='0 0 1px'; this.display='flex'; this.alignItems='center';">
+			<app-row id="row1" visible="true" height="200px" width="1500px" bgColor="transparent">
+				<app-row id="row2" visible="true" height="50px" width="250px" onEntry="" bgColor="transparent">
+					<app-text visible="true" string="" font="Poppins" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					<app-text visible="true" string="" font="Poppins" font-size="25px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+				</app-row>
+				
+				<app-text visible="true" string="My Face" font="Poppins" font-size="40px" width="250px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" bgColor="transparent" ></app-text>
+
+				<app-row id="row2" visible="true" height="80px" width="250px" onEntry="" bgColor="transparent">
+					<app-col id="col1" visible="true" height="80px" width="100%" bgColor="transparent">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/exit.png">
+						</app-image>
+						<app-text visible="true" string="Exit Game" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+					<app-col id="col1" visible="true" height="80px" width="100%" bgColor="transparent" onTouch="access.visibility='visible';">
+						<app-image id="image3" value="carImage2" height="55px" width="55px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" type="" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" src="./assets/images/access.png">
+						</app-image>
+						<app-text visible="true" string="Accessibility" font="Poppins" font-size="16px" height="100%" width="100%" onEntry="this.boxShadow='unset';" bgColor="transparent" ></app-text>
+					</app-col>
+				</app-row>
+
+			</app-row>
+		</app-pos>
+
+		<app-col id="col" value="column" height="600px" width="1600px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.marginTop='200px';" >
+			<app-text id="text1" string="Question 2/6" fontColor="black" font="Poppins" font-size="36px" highlightWhileSpeaking="true" value="ma3" height="100px" width="1000px" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.justifyContent='flex-start'; this.boxShadow='unset';">
+			</app-text>
+			<app-row id="col" value="column" height="900px" width="1050px" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" >
+
+				<app-col id="col1" value="column1" height="" width="160px" tabIndex="1" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+					<app-col id="col1" value="eyes" tabIndex="1" height="120px" width="160px" x="0" y="0" z="0" bgColor="white" type="drop" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;" onEntry="">
+						<app-image id="image3" value="eyes"  height="90px" width="160px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" type="" onCorrectMatch="" onEntry="this.border='2px solid'; this.borderRadius='10px';" src="./assets/images/bodyParts/eyes.png">
+						</app-image>
+						<app-text id="text1" string="EYES" fontColor="black" font="Poppins" font-size="28px" highlightWhileSpeaking="true" value="ma3" height="" width="100%" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset';">
+						</app-text>
+					</app-col>
+					<app-col id="col1" value="nose" tabIndex="2" height="120px" width="160px" x="0" y="0" z="0" bgColor="white" type="drop" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;" onEntry="">
+						<app-image id="image3" value="nose" height="90px" width="160px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" type="" onCorrectMatch="" onEntry="this.border='2px solid'; this.borderRadius='10px';" src="./assets/images/bodyParts/nose.png">
+						</app-image>
+						<app-text id="text1" string="NOSE" fontColor="black" font="Poppins" font-size="28px" highlightWhileSpeaking="true" value="ma3" height="" width="100%" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset';">
+						</app-text>
+					</app-col>
+					<app-col id="col1" value="ear" tabIndex="3" height="120px" width="160px" x="0" y="0" z="0" bgColor="white" type="drop" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="this.transition='all 0.5s ease'; this.transform='scale(1.2)'; this.backgroundColor='green'; element.transition='all 0.5s ease'; element.transform='scale(1.2)'; element.backgroundColor='green';this.visibility=hidden; element.visibility=hidden;" onEntry="">
+						<app-image id="image3" value="ear" height="90px" width="160px" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" type="" onCorrectMatch="" onEntry="this.border='2px solid'; this.borderRadius='10px';" src="./assets/images/bodyParts/ear.png">
+						</app-image>
+						<app-text id="text1" string="EAR" fontColor="black" font="Poppins" font-size="28px" highlightWhileSpeaking="true" value="ma3" height="" width="100%" x="0vw" y="0" z="0" bgColor="transparent" type="" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset';">
+						</app-text>
+					</app-col>
+				</app-col>
+
+				<app-col id="col1" value="column1" height="" width="255px" tabIndex="1" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
+					<app-text id="text1" string="SMELL" tabIndex="4" fontColor="black" font="Poppins" font-size="40px" highlightWhileSpeaking="true" value="nose" height="112px" width="255px" x="0vw" y="0" z="0" bgColor="#FFE7C3" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset'; this.border='1px solid'; ">
+					</app-text>
+					<app-text id="text1" string="HEAR" tabIndex="5" fontColor="black" font="Poppins" font-size="40px" highlightWhileSpeaking="true" value="ear" height="112px" width="255px" x="0vw" y="0" z="0" bgColor="#FFE7C3" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset'; this.border='1px solid';">
+					</app-text>
+					<app-text id="text1" string="SEE" tabIndex="6" fontColor="black" font="Poppins" font-size="40px" highlightWhileSpeaking="true" value="eyes" height="112px" width="255px" x="0vw" y="0" z="0" bgColor="#FFE7C3" type="drag" audio="" visible="true" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.boxShadow='unset'; this.border='1px solid';">
+					</app-text>
+				</app-col>
+
+				<app-image id="image3" value="ear" height="360px" width="360px" x="0" y="0" z="0" bgColor="white" visible="true" audio="image2.mp3" onMatch="" onTouch="" onCorrectTouch="" type="" onCorrectMatch="" onEntry="this.border='2px solid'; this.borderRadius='10px';" src="./assets/images/girl.png">
+				</app-image>
+				
 			</app-row>
 		</app-col>
 	</app-container>
+	
 </main>

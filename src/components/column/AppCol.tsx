@@ -138,6 +138,7 @@ export class AppCol {
 
     return (
       <Host
+        id={this.id}
         class="col"
         type={this.type}
         tabindex={this.tabIndex}

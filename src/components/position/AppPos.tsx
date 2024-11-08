@@ -136,6 +136,7 @@ export class AppPos {
 
     return (
       <Host
+        id={this.id}
         class="pos"
         type={this.type}
         tabindex={this.tabIndex}

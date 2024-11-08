@@ -434,8 +434,8 @@ async function onActivityComplete() {
 
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    // await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     triggerNextContainer();
   }
 }
@@ -471,6 +471,8 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
   const onTouch = element.getAttribute('onTouch');
+  console.log(onTouch);
+  
   if (!onTouch) return;
   element.onclick = async () => {
     console.log('🚀 ~ element.onclick= ~ onTouch:', onTouch);

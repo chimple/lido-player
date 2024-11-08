@@ -172,7 +172,11 @@ export class AppContainer {
     };
 
     return (
-      <Host id="container" tabindex={0} class="container" objective={this.objective} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden}>
+      <Host id="container" tabindex={0} class="container" objective={this.objective} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} onTouch={this.onTouch}
+      onMatch={this.onMatch}
+      onCorrectMatch={this.onCorrectMatch}
+      onCorrectTouch={this.onCorrectTouch}
+      onEntry={this.onEntry}>
         <slot />
       </Host>
     );

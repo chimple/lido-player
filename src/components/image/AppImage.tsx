@@ -1,4 +1,4 @@
-import { Component, Prop, h, Element, Host } from '@stencil/core';
+import { Component, Prop, h, Element, Host, getAssetPath } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
@@ -136,6 +136,8 @@ export class AppImage {
       justifyContent: 'center', // Horizontally center the image
     };
 
+    const imageSrc = getAssetPath(this.src);
+
     return (
       <Host
         type={this.type}
@@ -151,7 +153,7 @@ export class AppImage {
         onCorrectTouch={this.onCorrectTouch}
         onEntry={this.onEntry}
       >
-        <img class="image" src={this.src} />
+        <img class="image" src={imageSrc} />
       </Host>
     );
   }
