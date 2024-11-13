@@ -414,17 +414,17 @@ async function onActivityComplete() {
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
   if (res) {
-    for (let i = 0; i < dropArr.length; i++) {
-      console.log(dropArr);
-      const dropItem = dropArr[i];
-      const matchingDragItem = dragArr[i];
+    // for (let i = 0; i < dropArr.length; i++) {
+    //   console.log(dropArr);
+    //   const dropItem = dropArr[i];
+    //   const matchingDragItem = dragArr[i];
 
-      if (matchingDragItem) {
-        matchingDragItem.style.backgroundColor = 'green'; // Indicate a successful match
-        matchingDragItem.style.transform = 'unset'; // Reset transform
-        dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
-      }
-    }
+    //   if (matchingDragItem) {
+    //     matchingDragItem.style.backgroundColor = 'green'; // Indicate a successful match
+    //     matchingDragItem.style.transform = 'unset'; // Reset transform
+    //     dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
+    //   }
+    // }
 
     const onMatch = container.getAttribute('onCorrectMatch');
     console.log('onMatch,', container, onMatch);
@@ -435,7 +435,7 @@ async function onActivityComplete() {
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
     // await new Promise(resolve => setTimeout(resolve, 1500));
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 0));
     triggerNextContainer();
   }
 }
@@ -472,7 +472,7 @@ function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
   const onTouch = element.getAttribute('onTouch');
   console.log(onTouch);
-  
+
   if (!onTouch) return;
   element.onclick = async () => {
     console.log('🚀 ~ element.onclick= ~ onTouch:', onTouch);
@@ -517,32 +517,40 @@ function addClickListenerForClickType(element: HTMLElement): void {
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
   const styleId = 'wrong-answer-animation-style';
 
+  executeActions("tryAgain.speak='true'", document.getElementById('tryAgain'));
+
   // Check if the style is already added, if not, add it
   if (!document.getElementById(styleId)) {
     const style = document.createElement('style');
     style.id = styleId;
     style.innerHTML = `
-          @keyframes enhanced-shake {
-              0% { left: 0; }
-              10% { left: -8px; }
-              20% { left: 8px; }
-              30% { left: -8px; }
-              40% { left: 8px; }
-              50% { left: -6px; }
-              60% { left: 6px; }
-              70% { left: -4px; }
-              80% { left: 4px; }
-              90% { left: -2px; }
-              100% { left: 0; }
-          }
+          // @keyframes enhanced-shake {
+          //     0% { left: 0; }
+          //     10% { left: -8px; }
+          //     20% { left: 8px; }
+          //     30% { left: -8px; }
+          //     40% { left: 8px; }
+          //     50% { left: -6px; }
+          //     60% { left: 6px; }
+          //     70% { left: -4px; }
+          //     80% { left: 4px; }
+          //     90% { left: -2px; }
+          //     100% { left: 0; }
+          // }
+
           
           .wrong-answer {
-              position: relative; /* Enable relative positioning to move the element */
-              animation: enhanced-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-              background-color: #ffdddd; /* Flash red background to indicate wrong answer */
-              box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle red shadow */
+              // position: relative; /* Enable relative positioning to move the element */
+              // animation: enhanced-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+              // background-color: #ffdddd; /* Flash red background to indicate wrong answer */
+              // box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle red shadow */
+
+              border: 4px solid red;
           }
+
+          
       `;
+
     document.head.appendChild(style);
   }
 
@@ -587,6 +595,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
         outline: 4px solid rgba(231, 76, 60, 0.6); /* Glow effect */
       }
     `;
+
     document.head.appendChild(style);
   }
 

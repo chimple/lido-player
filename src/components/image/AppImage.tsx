@@ -128,6 +128,7 @@ export class AppImage {
     const style = {
       height: this.height,
       width: this.width,
+      backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
       zIndex: this.z,
@@ -152,6 +153,7 @@ export class AppImage {
         onCorrectMatch={this.onCorrectMatch}
         onCorrectTouch={this.onCorrectTouch}
         onEntry={this.onEntry}
+        
       >
         <img class="image" src={imageSrc} />
       </Host>

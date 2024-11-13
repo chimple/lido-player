@@ -177,7 +177,7 @@ export class AppHome {
    */
   private renderDots() {
     return (
-      <div class="dot-container">
+      <div id="dot-indicator" class="dot-container">
         {this.containers.map((_, index) => (
           <span
             class={`dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}

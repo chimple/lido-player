@@ -1,4 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
+import { initEventsForElement } from '../../utils/utils';
 
 /**
  * @component AppContainer
@@ -91,7 +92,7 @@ export class AppContainer {
   /**
    * Event handler triggered when the container is touched or clicked.
    */
-    @Prop() onTouch: string;
+  @Prop() onTouch: string;
 
   /**
    * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
@@ -157,6 +158,7 @@ export class AppContainer {
     // Re-scale the container on window resize or load events
     window.addEventListener('resize', () => this.scaleContainer(this.el));
     window.addEventListener('load', () => this.scaleContainer(this.el));
+    initEventsForElement(this.el, this.type);
   }
 
   render() {
@@ -172,11 +174,20 @@ export class AppContainer {
     };
 
     return (
-      <Host id="container" tabindex={0} class="container" objective={this.objective} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} onTouch={this.onTouch}
-      onMatch={this.onMatch}
-      onCorrectMatch={this.onCorrectMatch}
-      onCorrectTouch={this.onCorrectTouch}
-      onEntry={this.onEntry}>
+      <Host
+        id="container"
+        tabindex={0}
+        class="container"
+        objective={this.objective}
+        style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
+        onTouch={this.onTouch}
+        onMatch={this.onMatch}
+        onCorrectMatch={this.onCorrectMatch}
+        onCorrectTouch={this.onCorrectTouch}
+        onEntry={this.onEntry}
+      >
         <slot />
       </Host>
     );
