@@ -24,6 +24,11 @@ export class AppHome {
   @Prop() initialIndex: number = 0;
 
   /**
+   * Boolean that controls the playability of the game.
+   */
+  @Prop() canplay: boolean = true;
+
+  /**
    * Current index of the container being displayed.
    */
   @State() currentContainerIndex: number = this.initialIndex;
@@ -153,7 +158,11 @@ export class AppHome {
 
     // Map XML tags to Stencil components
     const componentMapping = {
-      'app-container': <app-container {...props}>{children}</app-container>,
+      'app-container': (
+        <app-container {...props} canplay={this.canplay}>
+          {children}
+        </app-container>
+      ),
       'app-col': <app-col {...props}>{children}</app-col>,
       'app-trace': <app-trace {...props}>{children}</app-trace>,
       'app-image': <app-image {...props}>{children}</app-image>,

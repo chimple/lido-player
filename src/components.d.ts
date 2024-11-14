@@ -116,6 +116,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay": boolean;
+        /**
           * The height of the container (CSS value).
          */
         "height": string;
@@ -187,6 +191,10 @@ export namespace Components {
      * and displays progress indicators (dots) for each container.
      */
     interface AppHome {
+        /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay": boolean;
         /**
           * Initial index of the container being displayed.
          */
@@ -1130,6 +1138,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay"?: boolean;
+        /**
           * The height of the container (CSS value).
          */
         "height"?: string;
@@ -1201,6 +1213,10 @@ declare namespace LocalJSX {
      * and displays progress indicators (dots) for each container.
      */
     interface AppHome {
+        /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay"?: boolean;
         /**
           * Initial index of the container being displayed.
          */

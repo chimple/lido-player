@@ -41,6 +41,6 @@ export class AppRoot {
     }
 
     // Once the XML data is loaded, pass it to the `app-home` component
-    return <app-home initialIndex={0} xmlData={this.xmlData}></app-home>;
+    return <app-home initialIndex={0} canplay={true} xmlData={this.xmlData}></app-home>;
   }
 }

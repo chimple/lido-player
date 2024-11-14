@@ -418,6 +418,10 @@ export const triggerNextContainer = () => {
 };
 
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
+  const container = document.getElementById('container');
+  if (!container) return;
+  const canplay = container.getAttribute('canplay');
+  if (canplay != null && canplay === 'false') return;
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);

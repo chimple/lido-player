@@ -91,7 +91,7 @@ export class AppContainer {
   /**
    * Event handler triggered when the container is touched or clicked.
    */
-    @Prop() onTouch: string;
+  @Prop() onTouch: string;
 
   /**
    * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
@@ -112,6 +112,11 @@ export class AppContainer {
    * Event handler triggered when the container is entered, useful for triggering animations or logic.
    */
   @Prop() onEntry: string;
+
+  /**
+   * Boolean that controls the playability of the game.
+   */
+  @Prop() canplay: boolean = true;
 
   /**
    * Reference to the HTML element that represents this container component.
@@ -170,9 +175,19 @@ export class AppContainer {
       left: '50%',
       transform: 'translate(-50%, -50%)', // Centering the container
     };
+    console.log('🚀 ~ AppContainer ~ canplay:', this.canplay);
 
     return (
-      <Host id="container" tabindex={0} class="container" objective={this.objective} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden}>
+      <Host
+        id="container"
+        tabindex={0}
+        class="container"
+        objective={this.objective}
+        style={style}
+        canplay={JSON.stringify(this.canplay)}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
+      >
         <slot />
       </Host>
     );
