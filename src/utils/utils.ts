@@ -226,6 +226,9 @@ const dropArr = [];
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
+  // executeActions("this.alignMatch = 'true'", dropElement, dragElement); 
+
+
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
   if (!dragScore[dropElement.getAttribute('tabindex')]) {
     dragScore[dropElement.getAttribute('tabindex')] = [];
@@ -246,11 +249,9 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
       await executeActions(onMatch, dropElement, dragElement);
 
       dragArr.push(dragElement);
+      
       dropArr.push(dropElement);
 
-      // dragElement.style.cursor = "unset";
-      // dragElement.style.transform = "unset";
-      // dropElement.replaceWith(dragElement)
     }
   } else {
     showWrongAnswerAnimation([dropElement, dragElement]);
@@ -274,6 +275,16 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const currentTransform = window.getComputedStyle(targetElement).transform;
           targetElement.style.transform = currentTransform !== 'none' ? `${currentTransform} ${action.value}` : action.value;
           break;
+        }
+        case 'alignMatch' : {
+          const dropElement = targetElement;
+          const dragElement = element;
+
+          if(dropElement.childElementCount == 0){
+            dragElement.style.transform = 'translate(0, 0)';
+            dropElement.appendChild(dragElement);
+          }
+          
         }
         case 'speak': {
           {
@@ -414,17 +425,18 @@ async function onActivityComplete() {
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
   if (res) {
-    // for (let i = 0; i < dropArr.length; i++) {
-    //   console.log(dropArr);
-    //   const dropItem = dropArr[i];
-    //   const matchingDragItem = dragArr[i];
+    for (let i = 0; i < dropArr.length; i++) {
+      console.log(dropArr);
+      const dropItem = dropArr[i];
+      const matchingDragItem = dragArr[i];
 
-    //   if (matchingDragItem) {
-    //     matchingDragItem.style.backgroundColor = 'green'; // Indicate a successful match
-    //     matchingDragItem.style.transform = 'unset'; // Reset transform
-    //     dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
-    //   }
-    // }
+      if (matchingDragItem) {
+        matchingDragItem.style.backgroundColor = '#6bcb51'; // Indicate a successful match
+        matchingDragItem.style.color='white';
+        matchingDragItem.style.transform = 'unset'; // Reset transform
+        dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
+      }
+    }
 
     const onMatch = container.getAttribute('onCorrectMatch');
     console.log('onMatch,', container, onMatch);
@@ -435,7 +447,7 @@ async function onActivityComplete() {
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
     // await new Promise(resolve => setTimeout(resolve, 1500));
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     triggerNextContainer();
   }
 }
@@ -545,7 +557,7 @@ export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
               // background-color: #ffdddd; /* Flash red background to indicate wrong answer */
               // box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle red shadow */
 
-              border: 4px solid red;
+              // border: 4px solid red;
           }
 
           
@@ -605,6 +617,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight");
 
+ 
   if (selectedDropElement && selectedDragElement) {
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
