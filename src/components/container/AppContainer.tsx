@@ -117,6 +117,11 @@ export class AppContainer {
   @Prop() onEntry: string;
 
   /**
+   * Boolean that controls the playability of the game.
+   */
+  @Prop() canplay: boolean = true;
+
+  /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;
@@ -174,6 +179,7 @@ export class AppContainer {
       left: '50%',
       transform: 'translate(-50%, -50%)', // Centering the container
     };
+    console.log('🚀 ~ AppContainer ~ canplay:', this.canplay);
 
     return (
       <Host

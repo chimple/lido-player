@@ -118,6 +118,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay": boolean;
+        /**
           * The height of the container (CSS value).
          */
         "height": string;
@@ -191,6 +195,14 @@ export namespace Components {
      * and displays progress indicators (dots) for each container.
      */
     interface AppHome {
+        /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay": boolean;
+        /**
+          * Initial index of the container being displayed.
+         */
+        "initialIndex": number;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
          */
@@ -740,6 +752,56 @@ export namespace Components {
          */
         "z": string;
     }
+    interface AppTrace {
+        /**
+          * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
+         */
+        "ariaHidden": string;
+        /**
+          * Accessible label for screen readers, providing a textual description of the component's purpose.
+         */
+        "ariaLabel": string;
+        /**
+          * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
+         */
+        "height": string;
+        /**
+          * Unique identifier for this `app-trace` component instance.
+         */
+        "id": string;
+        /**
+          * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`.
+         */
+        "mode": string;
+        /**
+          * Source URL or path for the SVG file used in this component.
+         */
+        "svgSource": string;
+        /**
+          * Sets the tab order of the component within the page, enabling keyboard navigation.
+         */
+        "tabIndex": number;
+        /**
+          * A custom string value associated with the component for additional data or identification.
+         */
+        "value": string;
+        /**
+          * Specifies the width of the component container, accepts any valid CSS width value (e.g., `"100px"`, `"50%"`).
+         */
+        "width": string;
+        /**
+          * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
+         */
+        "x": string;
+        /**
+          * Defines the y-coordinate position (top offset) of the component container, using any valid CSS `top` value (e.g., `"10px"`, `"5%"`).
+         */
+        "y": string;
+        /**
+          * Sets the z-index of the component, controlling its stacking order on the page.
+         */
+        "z": string;
+    }
     /**
      * @component AppWrap
      * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
@@ -950,6 +1012,12 @@ declare global {
         prototype: HTMLAppTextElement;
         new (): HTMLAppTextElement;
     };
+    interface HTMLAppTraceElement extends Components.AppTrace, HTMLStencilElement {
+    }
+    var HTMLAppTraceElement: {
+        prototype: HTMLAppTraceElement;
+        new (): HTMLAppTraceElement;
+    };
     /**
      * @component AppWrap
      * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
@@ -973,6 +1041,7 @@ declare global {
         "app-row": HTMLAppRowElement;
         "app-shape": HTMLAppShapeElement;
         "app-text": HTMLAppTextElement;
+        "app-trace": HTMLAppTraceElement;
         "app-wrap": HTMLAppWrapElement;
     }
 }
@@ -1089,6 +1158,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay"?: boolean;
+        /**
           * The height of the container (CSS value).
          */
         "height"?: string;
@@ -1162,6 +1235,14 @@ declare namespace LocalJSX {
      * and displays progress indicators (dots) for each container.
      */
     interface AppHome {
+        /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay"?: boolean;
+        /**
+          * Initial index of the container being displayed.
+         */
+        "initialIndex"?: number;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
          */
@@ -1711,6 +1792,56 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
+    interface AppTrace {
+        /**
+          * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
+         */
+        "ariaHidden"?: string;
+        /**
+          * Accessible label for screen readers, providing a textual description of the component's purpose.
+         */
+        "ariaLabel"?: string;
+        /**
+          * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
+         */
+        "height"?: string;
+        /**
+          * Unique identifier for this `app-trace` component instance.
+         */
+        "id"?: string;
+        /**
+          * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`.
+         */
+        "mode"?: string;
+        /**
+          * Source URL or path for the SVG file used in this component.
+         */
+        "svgSource"?: string;
+        /**
+          * Sets the tab order of the component within the page, enabling keyboard navigation.
+         */
+        "tabIndex"?: number;
+        /**
+          * A custom string value associated with the component for additional data or identification.
+         */
+        "value"?: string;
+        /**
+          * Specifies the width of the component container, accepts any valid CSS width value (e.g., `"100px"`, `"50%"`).
+         */
+        "width"?: string;
+        /**
+          * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
+         */
+        "x"?: string;
+        /**
+          * Defines the y-coordinate position (top offset) of the component container, using any valid CSS `top` value (e.g., `"10px"`, `"5%"`).
+         */
+        "y"?: string;
+        /**
+          * Sets the z-index of the component, controlling its stacking order on the page.
+         */
+        "z"?: string;
+    }
     /**
      * @component AppWrap
      * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
@@ -1808,6 +1939,7 @@ declare namespace LocalJSX {
         "app-row": AppRow;
         "app-shape": AppShape;
         "app-text": AppText;
+        "app-trace": AppTrace;
         "app-wrap": AppWrap;
     }
 }
@@ -1887,6 +2019,7 @@ declare module "@stencil/core" {
              * positioning and visibility control. The component supports custom events like touch, match, and entry.
              */
             "app-text": LocalJSX.AppText & JSXBase.HTMLAttributes<HTMLAppTextElement>;
+            "app-trace": LocalJSX.AppTrace & JSXBase.HTMLAttributes<HTMLAppTraceElement>;
             /**
              * @component AppWrap
              * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.

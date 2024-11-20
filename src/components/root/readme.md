@@ -17,6 +17,7 @@ graph TD;
   app-root --> app-home
   app-home --> app-container
   app-home --> app-col
+  app-home --> app-trace
   app-home --> app-image
   app-home --> app-row
   app-home --> app-text

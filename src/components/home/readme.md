@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute  | Description                                                                              | Type     | Default     |
-| --------- | ---------- | ---------------------------------------------------------------------------------------- | -------- | ----------- |
-| `xmlData` | `xml-data` | XML data passed to the component, which is parsed and used to render various containers. | `string` | `undefined` |
+| Property       | Attribute       | Description                                                                              | Type      | Default     |
+| -------------- | --------------- | ---------------------------------------------------------------------------------------- | --------- | ----------- |
+| `canplay`      | `canplay`       | Boolean that controls the playability of the game.                                       | `boolean` | `true`      |
+| `initialIndex` | `initial-index` | Initial index of the container being displayed.                                          | `number`  | `0`         |
+| `xmlData`      | `xml-data`      | XML data passed to the component, which is parsed and used to render various containers. | `string`  | `undefined` |
 
 
 ## Dependencies
@@ -22,6 +24,7 @@
 
 - [app-container](../container)
 - [app-col](../column)
+- [app-trace](../trace)
 - [app-image](../image)
 - [app-row](../row)
 - [app-text](../text)
@@ -35,6 +38,7 @@
 graph TD;
   app-home --> app-container
   app-home --> app-col
+  app-home --> app-trace
   app-home --> app-image
   app-home --> app-row
   app-home --> app-text
