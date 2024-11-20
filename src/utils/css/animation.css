@@ -1,0 +1,97 @@
+/* animations */
+
+@keyframes rightToPlace {
+  from {
+    transform: translateX(2000px);
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes placeToLeft {
+  from {
+  }
+  to {
+    transform: translateX(-2000px);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+    color: red;
+    outline: 4px solid red;
+  }
+  10% {
+    transform: translateX(-5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  20% {
+    transform: translateX(5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  30% {
+    transform: translateX(-5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  40% {
+    transform: translateX(5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  50% {
+    transform: translateX(-5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  60% {
+    transform: translateX(5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  70% {
+    transform: translateX(-5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  80% {
+    transform: translateX(5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  90% {
+    transform: translateX(-5px);
+    color: red;
+    outline: 4px solid red;
+  }
+  100% {
+    transform: translateX(0);
+    color: red;
+    outline: 4px solid red;
+  }
+}
+
+@keyframes fallAndBounce {
+  0% {
+    transform: translateY(-1000px);
+  }
+  25%{
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-200px);
+  }
+  75% {
+    transform: translateY(0);
+  }
+  90% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

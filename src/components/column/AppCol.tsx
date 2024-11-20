@@ -96,6 +96,8 @@ export class AppCol {
    */
   @Prop() onCorrectTouch: string;
 
+  @Prop() onInCorrectTouch: string;
+
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
@@ -105,6 +107,8 @@ export class AppCol {
    * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
    */
   @Prop() onMatch: string;
+
+  @Prop() onWrong: string;
 
   /**
    * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
@@ -149,8 +153,10 @@ export class AppCol {
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}
+        onWrong={this.onWrong}
         onCorrectMatch={this.onCorrectMatch}
         onCorrectTouch={this.onCorrectTouch}
+        onInCorrectTouch={this.onInCorrectTouch}
         onEntry={this.onEntry}
       >
         <slot />

@@ -119,6 +119,8 @@ export class AppText {
    */
   @Prop() onCorrectTouch: string;
 
+  @Prop() onInCorrectTouch: string;
+
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
@@ -128,6 +130,8 @@ export class AppText {
    * Event handler triggered when a matching action occurs with the text component.
    */
   @Prop() onMatch: string;
+  
+  @Prop() onWrong: string;
 
   /**
    * Event handler triggered when the text component is entered (useful for animations or logic on entry).
@@ -171,8 +175,10 @@ export class AppText {
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}
+        onWrong={this.onWrong}
         onCorrectMatch={this.onCorrectMatch}
         onCorrectTouch={this.onCorrectTouch}
+        onInCorrectTouch={this.onInCorrectTouch}
         onEntry={this.onEntry}
         id={this.id}
         style={style}

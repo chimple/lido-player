@@ -11,6 +11,7 @@ import { DragSelectedMapKey, SelectedValuesKey } from '../../utils/constants';
 @Component({
   tag: 'app-home',
   shadow: false,
+  styleUrls: ['./../../index.css', '../../utils/css/animation.css']
 })
 export class AppHome {
   /**

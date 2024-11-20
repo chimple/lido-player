@@ -90,6 +90,8 @@ export class AppImage {
    */
   @Prop() onCorrectTouch: string;
 
+  @Prop() onInCorrectTouch: string;
+
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
@@ -99,6 +101,8 @@ export class AppImage {
    * Event handler triggered when a matching action occurs.
    */
   @Prop() onMatch: string;
+
+  @Prop() onWrong: string;
 
   /**
    * Event handler triggered when the image is entered (useful for animations or logic on entry).
@@ -137,25 +141,26 @@ export class AppImage {
       justifyContent: 'center', // Horizontally center the image
     };
 
-    const imageSrc = getAssetPath(this.src);
-
+    
     return (
       <Host
         type={this.type}
         tabindex={this.tabIndex}
-        style={style}
+        style={style} 
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         value={this.value}
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}
+        onWrong={this.onWrong}
         onCorrectMatch={this.onCorrectMatch}
         onCorrectTouch={this.onCorrectTouch}
+        onInCorrectTouch={this.onInCorrectTouch}
         onEntry={this.onEntry}
         
       >
-        <img class="image" src={imageSrc} />
+        <img class="image" src={this.src} style={style}  />
       </Host>
     );
   }

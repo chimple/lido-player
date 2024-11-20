@@ -220,14 +220,14 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
-const dragArr = [];
-const dropArr = [];
+
 
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
-  // executeActions("this.alignMatch = 'true'", dropElement, dragElement); 
+  const onMatch = dropElement.getAttribute("onMatch");
 
+  await executeActions(onMatch, dropElement, dragElement);
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
   if (!dragScore[dropElement.getAttribute('tabindex')]) {
@@ -244,17 +244,18 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   // Add pulse and highlight effect for a successful match
   if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
     // Perform actions if onMatch is defined
-    const onMatch = dropElement.getAttribute('onCorrectMatch');
-    if (onMatch) {
-      await executeActions(onMatch, dropElement, dragElement);
+    const onCorrectMatch = dropElement.getAttribute('onCorrectMatch');
+    if (onCorrectMatch) {
 
-      dragArr.push(dragElement);
-      
-      dropArr.push(dropElement);
+      await executeActions(onCorrectMatch, dropElement, dragElement);
 
     }
   } else {
-    showWrongAnswerAnimation([dropElement, dragElement]);
+    const onWrong = dropElement.getAttribute('onWrong');
+
+    await executeActions(onWrong, dropElement, dragElement);
+    
+    // showWrongAnswerAnimation([dropElement, dragElement]);
   }
 
   await onActivityComplete();
@@ -282,6 +283,10 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
           if(dropElement.childElementCount == 0){
             dragElement.style.transform = 'translate(0, 0)';
+            dropElement.appendChild(dragElement);
+          }else{
+            dragElement.style.transform = 'translate(0, 0)';
+            dragElement.parentElement.appendChild(dropElement.firstChild);
             dropElement.appendChild(dragElement);
           }
           
@@ -357,6 +362,7 @@ const parseActions = (input: string): Array<{ actor: string; action: string; val
 };
 
 const matchStringPattern = (pattern: string, arr: string[]): boolean => {
+  
   const patternGroups = pattern.split(',').map(group => group.trim());
 
   let arrIndex = 0;
@@ -419,21 +425,25 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete() {
+
+  const dragArr = document.querySelectorAll(`[type='drag']`);
+  const dropArr = document.querySelectorAll(`[type='drop']`);
+
   const container = document.getElementById('container');
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
+  
   if (res) {
+    
     for (let i = 0; i < dropArr.length; i++) {
-      console.log(dropArr);
+      
       const dropItem = dropArr[i];
-      const matchingDragItem = dragArr[i];
+      const matchingDragItem = dragArr[i] as HTMLElement;
 
       if (matchingDragItem) {
-        matchingDragItem.style.backgroundColor = '#6bcb51'; // Indicate a successful match
-        matchingDragItem.style.color='white';
-        matchingDragItem.style.transform = 'unset'; // Reset transform
+        matchingDragItem.style.transform = 'translate(0, 0)'; // Reset transform
         dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
       }
     }
@@ -446,9 +456,17 @@ async function onActivityComplete() {
 
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
-    // await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     await new Promise(resolve => setTimeout(resolve, 2000));
     triggerNextContainer();
+  }else{
+    const objectName = objectiveString.split(',').map(item => item.trim());
+    
+    if(objectiveArray.length == objectName.length){
+      const onWrong = container.getAttribute('onWrong');
+      await executeActions(onWrong, container);
+    }
+    
   }
 }
 
@@ -517,8 +535,16 @@ function addClickListenerForClickType(element: HTMLElement): void {
     if (matchStringPattern(objective, [element['value']])) {
       const onTouch = element.getAttribute('onCorrectTouch');
       await executeActions(onTouch, element);
+
+      const onContainerTouch = container.getAttribute('onCorrectTouch');
+      await executeActions(onContainerTouch, element);
     } else {
-      showWrongAnswerAnimation([element]);
+      const onContainerIncorrect = container.getAttribute('onIncorrectTouch');
+      await executeActions(onContainerIncorrect, element);
+      const onIncorrect = element.getAttribute('onIncorrectTouch');
+      await executeActions(onIncorrect, element);
+      
+      // showWrongAnswerAnimation([element]);
     }
 
     await onActivityComplete();
@@ -536,28 +562,28 @@ export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
     const style = document.createElement('style');
     style.id = styleId;
     style.innerHTML = `
-          // @keyframes enhanced-shake {
-          //     0% { left: 0; }
-          //     10% { left: -8px; }
-          //     20% { left: 8px; }
-          //     30% { left: -8px; }
-          //     40% { left: 8px; }
-          //     50% { left: -6px; }
-          //     60% { left: 6px; }
-          //     70% { left: -4px; }
-          //     80% { left: 4px; }
-          //     90% { left: -2px; }
-          //     100% { left: 0; }
-          // }
+          @keyframes enhanced-shake {
+              0% { left: 0; }
+              10% { left: -8px; }
+              20% { left: 8px; }
+              30% { left: -8px; }
+              40% { left: 8px; }
+              50% { left: -6px; }
+              60% { left: 6px; }
+              70% { left: -4px; }
+              80% { left: 4px; }
+              90% { left: -2px; }
+              100% { left: 0; }
+          }
 
           
           .wrong-answer {
-              // position: relative; /* Enable relative positioning to move the element */
-              // animation: enhanced-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-              // background-color: #ffdddd; /* Flash red background to indicate wrong answer */
-              // box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle red shadow */
+              position: relative; /* Enable relative positioning to move the element */
+              animation: enhanced-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+              background-color: #ffdddd; /* Flash red background to indicate wrong answer */
+              box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle red shadow */
 
-              // border: 4px solid red;
+              border: 4px solid red;
           }
 
           
@@ -590,6 +616,7 @@ function handleDropElement(element: HTMLElement): void {
 async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
+  
   highlightedElements.forEach(el => {
     removeHighlight(el as HTMLElement);
   });

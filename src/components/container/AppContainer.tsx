@@ -108,6 +108,8 @@ export class AppContainer {
    * Event handler triggered when a specific match condition is met within the container.
    */
   @Prop() onMatch: string;
+  @Prop() onWrong: string;
+  @Prop() onIncorrectTouch: string;
 
   /**
    * Event handler triggered when the container is entered, useful for triggering animations or logic.
@@ -184,6 +186,8 @@ export class AppContainer {
         aria-hidden={this.ariaHidden}
         onTouch={this.onTouch}
         onMatch={this.onMatch}
+        onWrong={this.onWrong}
+        onIncorrectTouch={this.onIncorrectTouch}
         onCorrectMatch={this.onCorrectMatch}
         onCorrectTouch={this.onCorrectTouch}
         onEntry={this.onEntry}
