@@ -22,8 +22,10 @@
 | `onCorrectMatch`         | `on-correct-match`         | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic. | `string`  | `undefined` |
 | `onCorrectTouch`         | `on-correct-touch`         | Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.    | `string`  | `undefined` |
 | `onEntry`                | `on-entry`                 | Event handler triggered when the text component is entered (useful for animations or logic on entry).            | `string`  | `undefined` |
+| `onInCorrectTouch`       | `on-in-correct-touch`      |                                                                                                                  | `string`  | `undefined` |
 | `onMatch`                | `on-match`                 | Event handler triggered when a matching action occurs with the text component.                                   | `string`  | `undefined` |
 | `onTouch`                | `on-touch`                 | Event handler triggered when the text component is touched or clicked.                                           | `string`  | `undefined` |
+| `onWrong`                | `on-wrong`                 |                                                                                                                  | `string`  | `undefined` |
 | `string`                 | `string`                   | The string of text to be displayed in the component.                                                             | `string`  | `undefined` |
 | `tabIndex`               | `tab-index`                | Tab index for keyboard navigation.                                                                               | `number`  | `undefined` |
 | `type`                   | `type`                     | Defines the type of the component, which can be used for conditional logic or specific styling.                  | `string`  | `undefined` |

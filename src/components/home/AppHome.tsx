@@ -11,6 +11,7 @@ import { DragSelectedMapKey, SelectedValuesKey } from '../../utils/constants';
 @Component({
   tag: 'app-home',
   shadow: false,
+  styleUrls: ['./../../index.css', '../../utils/css/animation.css']
 })
 export class AppHome {
   /**
@@ -209,7 +210,7 @@ export class AppHome {
    */
   private renderDots() {
     return (
-      <div class="dot-container">
+      <div id="dot-indicator" class="dot-container">
         {this.containers.map((_, index) => (
           <span
             class={`dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}

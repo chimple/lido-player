@@ -220,8 +220,14 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
+
+
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
+
+  const onMatch = dropElement.getAttribute("onMatch");
+
+  await executeActions(onMatch, dropElement, dragElement);
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
   if (!dragScore[dropElement.getAttribute('tabindex')]) {
@@ -238,12 +244,18 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   // Add pulse and highlight effect for a successful match
   if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
     // Perform actions if onMatch is defined
-    const onMatch = dropElement.getAttribute('onCorrectMatch');
-    if (onMatch) {
-      await executeActions(onMatch, dropElement, dragElement);
+    const onCorrectMatch = dropElement.getAttribute('onCorrectMatch');
+    if (onCorrectMatch) {
+
+      await executeActions(onCorrectMatch, dropElement, dragElement);
+
     }
   } else {
-    showWrongAnswerAnimation([dropElement, dragElement]);
+    const onWrong = dropElement.getAttribute('onWrong');
+
+    await executeActions(onWrong, dropElement, dragElement);
+    
+    // showWrongAnswerAnimation([dropElement, dragElement]);
   }
 
   await onActivityComplete();
@@ -264,6 +276,20 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const currentTransform = window.getComputedStyle(targetElement).transform;
           targetElement.style.transform = currentTransform !== 'none' ? `${currentTransform} ${action.value}` : action.value;
           break;
+        }
+        case 'alignMatch' : {
+          const dropElement = targetElement;
+          const dragElement = element;
+
+          if(dropElement.childElementCount == 0){
+            dragElement.style.transform = 'translate(0, 0)';
+            dropElement.appendChild(dragElement);
+          }else{
+            dragElement.style.transform = 'translate(0, 0)';
+            dragElement.parentElement.appendChild(dropElement.firstChild);
+            dropElement.appendChild(dragElement);
+          }
+          
         }
         case 'speak': {
           {
@@ -336,6 +362,7 @@ const parseActions = (input: string): Array<{ actor: string; action: string; val
 };
 
 const matchStringPattern = (pattern: string, arr: string[]): boolean => {
+  
   const patternGroups = pattern.split(',').map(group => group.trim());
 
   let arrIndex = 0;
@@ -398,16 +425,48 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete() {
+
+  const dragArr = document.querySelectorAll(`[type='drag']`);
+  const dropArr = document.querySelectorAll(`[type='drop']`);
+
   const container = document.getElementById('container');
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
+  
   if (res) {
+    
+    for (let i = 0; i < dropArr.length; i++) {
+      
+      const dropItem = dropArr[i];
+      const matchingDragItem = dragArr[i] as HTMLElement;
+
+      if (matchingDragItem) {
+        matchingDragItem.style.transform = 'translate(0, 0)'; // Reset transform
+        dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
+      }
+    }
+
+    const onMatch = container.getAttribute('onCorrectMatch');
+    console.log('onMatch,', container, onMatch);
+    if (onMatch) {
+      await executeActions(onMatch, container);
+    }
+
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
     await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     triggerNextContainer();
+  }else{
+    const objectName = objectiveString.split(',').map(item => item.trim());
+    
+    if(objectiveArray.length == objectName.length){
+      const onWrong = container.getAttribute('onWrong');
+      await executeActions(onWrong, container);
+    }
+    
   }
 }
 
@@ -446,6 +505,8 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
   const onTouch = element.getAttribute('onTouch');
+  console.log(onTouch);
+
   if (!onTouch) return;
   element.onclick = async () => {
     console.log('🚀 ~ element.onclick= ~ onTouch:', onTouch);
@@ -478,8 +539,16 @@ function addClickListenerForClickType(element: HTMLElement): void {
     if (matchStringPattern(objective, [element['value']])) {
       const onTouch = element.getAttribute('onCorrectTouch');
       await executeActions(onTouch, element);
+
+      const onContainerTouch = container.getAttribute('onCorrectTouch');
+      await executeActions(onContainerTouch, element);
     } else {
-      showWrongAnswerAnimation([element]);
+      const onContainerIncorrect = container.getAttribute('onIncorrectTouch');
+      await executeActions(onContainerIncorrect, element);
+      const onIncorrect = element.getAttribute('onIncorrectTouch');
+      await executeActions(onIncorrect, element);
+      
+      // showWrongAnswerAnimation([element]);
     }
 
     await onActivityComplete();
@@ -489,6 +558,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
   const styleId = 'wrong-answer-animation-style';
+
+  executeActions("tryAgain.speak='true'", document.getElementById('tryAgain'));
 
   // Check if the style is already added, if not, add it
   if (!document.getElementById(styleId)) {
@@ -508,14 +579,20 @@ export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
               90% { left: -2px; }
               100% { left: 0; }
           }
+
           
           .wrong-answer {
               position: relative; /* Enable relative positioning to move the element */
               animation: enhanced-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
               background-color: #ffdddd; /* Flash red background to indicate wrong answer */
               box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Subtle red shadow */
+
+              border: 4px solid red;
           }
+
+          
       `;
+
     document.head.appendChild(style);
   }
 
@@ -543,6 +620,7 @@ function handleDropElement(element: HTMLElement): void {
 async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
+  
   highlightedElements.forEach(el => {
     removeHighlight(el as HTMLElement);
   });
@@ -560,6 +638,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
         outline: 4px solid rgba(231, 76, 60, 0.6); /* Glow effect */
       }
     `;
+
     document.head.appendChild(style);
   }
 
@@ -569,6 +648,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight");
 
+ 
   if (selectedDropElement && selectedDragElement) {
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move

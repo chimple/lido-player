@@ -1,4 +1,5 @@
 import { Component, getAssetPath, h, State } from '@stencil/core';
+// import { Style } from './../../index.css';
 
 /**
  * @component AppRoot
@@ -28,6 +29,8 @@ export class AppRoot {
 
     // Fetch the XML data asynchronously
     const response = await fetch(res);
+    
+    
     const data = await response.text();
 
     // Store the XML data in the component's state

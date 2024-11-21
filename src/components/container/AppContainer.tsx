@@ -1,4 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
+import { initEventsForElement } from '../../utils/utils';
 
 /**
  * @component AppContainer
@@ -107,6 +108,8 @@ export class AppContainer {
    * Event handler triggered when a specific match condition is met within the container.
    */
   @Prop() onMatch: string;
+  @Prop() onWrong: string;
+  @Prop() onIncorrectTouch: string;
 
   /**
    * Event handler triggered when the container is entered, useful for triggering animations or logic.
@@ -162,6 +165,7 @@ export class AppContainer {
     // Re-scale the container on window resize or load events
     window.addEventListener('resize', () => this.scaleContainer(this.el));
     window.addEventListener('load', () => this.scaleContainer(this.el));
+    initEventsForElement(this.el, this.type);
   }
 
   render() {
@@ -184,9 +188,15 @@ export class AppContainer {
         class="container"
         objective={this.objective}
         style={style}
-        canplay={JSON.stringify(this.canplay)}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        onTouch={this.onTouch}
+        onMatch={this.onMatch}
+        onWrong={this.onWrong}
+        onIncorrectTouch={this.onIncorrectTouch}
+        onCorrectMatch={this.onCorrectMatch}
+        onCorrectTouch={this.onCorrectTouch}
+        onEntry={this.onEntry}
       >
         <slot />
       </Host>
