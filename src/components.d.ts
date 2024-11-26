@@ -470,10 +470,22 @@ export namespace Components {
     /**
      * @component AppRoot
      * The `AppRoot` component is the main application entry point. It loads an external XML data file
-     * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
-     * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+     * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+     * The XML path can be configured via a prop.
      */
     interface AppRoot {
+        /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay": boolean;
+        /**
+          * Initial index of the container being displayed.
+         */
+        "initialIndex": number;
+        /**
+          * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
+         */
+        "xmlPath": string;
     }
     /**
      * @component AppRow
@@ -968,8 +980,8 @@ declare global {
     /**
      * @component AppRoot
      * The `AppRoot` component is the main application entry point. It loads an external XML data file
-     * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
-     * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+     * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+     * The XML path can be configured via a prop.
      */
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
@@ -1510,10 +1522,22 @@ declare namespace LocalJSX {
     /**
      * @component AppRoot
      * The `AppRoot` component is the main application entry point. It loads an external XML data file
-     * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
-     * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+     * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+     * The XML path can be configured via a prop.
      */
     interface AppRoot {
+        /**
+          * Boolean that controls the playability of the game.
+         */
+        "canplay"?: boolean;
+        /**
+          * Initial index of the container being displayed.
+         */
+        "initialIndex"?: number;
+        /**
+          * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
+         */
+        "xmlPath"?: string;
     }
     /**
      * @component AppRow
@@ -1995,8 +2019,8 @@ declare module "@stencil/core" {
             /**
              * @component AppRoot
              * The `AppRoot` component is the main application entry point. It loads an external XML data file
-             * from the `assets` directory and passes it down to the `app-home` component for rendering. The component
-             * uses the Stencil lifecycle to fetch the XML data asynchronously before rendering the content.
+             * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+             * The XML path can be configured via a prop.
              */
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             /**

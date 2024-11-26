@@ -13,6 +13,7 @@
 | `ariaLabel`        | `aria-label`         | The ARIA label of the container. Used for accessibility to indicate the purpose of the element.                  | `string`  | `undefined` |
 | `audio`            | `audio`              | URL or identifier of an audio file associated with the container.                                                | `string`  | `undefined` |
 | `bgColor`          | `bg-color`           | Background color of the container (CSS color value).                                                             | `string`  | `undefined` |
+| `canplay`          | `canplay`            | Boolean that controls the playability of the game.                                                               | `boolean` | `true`      |
 | `height`           | `height`             | The height of the container (CSS value).                                                                         | `string`  | `undefined` |
 | `id`               | `id`                 | Unique identifier for the container.                                                                             | `string`  | `undefined` |
 | `objective`        | `objective`          | Objective or purpose of the container. Can be used for internal logic or tracking.                               | `string`  | `undefined` |
@@ -31,7 +32,6 @@
 | `x`                | `x`                  | X-axis (horizontal) position of the container.                                                                   | `string`  | `undefined` |
 | `y`                | `y`                  | Y-axis (vertical) position of the container.                                                                     | `string`  | `undefined` |
 | `z`                | `z`                  | Z-index to control the stacking order of the container.                                                          | `string`  | `undefined` |
-
 
 
 ## Dependencies

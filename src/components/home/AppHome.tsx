@@ -11,7 +11,7 @@ import { DragSelectedMapKey, SelectedValuesKey } from '../../utils/constants';
 @Component({
   tag: 'app-home',
   shadow: false,
-  styleUrls: ['./../../index.css', '../../utils/css/animation.css']
+  styleUrls: ['./../../index.css', '../../utils/css/animation.css', './app-home.css'],
 })
 export class AppHome {
   /**
@@ -248,59 +248,6 @@ export class AppHome {
 
         {/* Show completion message if all containers have been displayed */}
         {this.showCompletionMessage && <div class="snackbar">All containers have been displayed!</div>}
-
-        <style>
-          {`
-            .snackbar {
-              visibility: visible;
-              min-width: 250px;
-              background-color: #333;
-              color: #fff;
-              text-align: center;
-              border-radius: 2px;
-              padding: 16px;
-              position: fixed;
-              z-index: 1;
-              bottom: 30px;
-              left: 50%;
-              transform: translateX(-50%);
-              font-size: 17px;
-            }
-
-            .dot-container {
-              text-align: center;
-              position: fixed;
-              z-index: 1;
-              width: fit-content;
-              top: 1%;
-              left: 50%;
-              transform: translate(-50%);
-            }
-
-            .dot {
-              height: 15px;
-              width: 15px;
-              margin: 0 4px;
-              background-color: #bbb;
-              border-radius: 50%;
-              display: inline-block;
-              transition: background-color 0.3s;
-              cursor: pointer;
-            }
-
-            .dot.completed {
-              background-color: grey;
-            }
-
-            .dot.current {
-              background-color: green;
-            }
-
-            .dot:not(.completed):not(.current) {
-              background-color: #bbb;
-            }
-          `}
-        </style>
       </div>
     );
   }
