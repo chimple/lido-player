@@ -32,7 +32,6 @@
 | `y`           | `y`             | Y-axis (vertical) position of the container.                                                                     | `string`  | `undefined` |
 | `z`           | `z`             | Z-index to control the stacking order of the container.                                                          | `string`  | `undefined` |
 
-
 ## Dependencies
 
 ### Used by

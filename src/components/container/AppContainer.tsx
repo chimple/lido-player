@@ -122,6 +122,11 @@ export class AppContainer {
   @Prop() isContinueOnCorrect: string;
 
   /**
+   * Base URL for the container.
+   */
+  @Prop() baseUrl: string = '';
+
+  /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;

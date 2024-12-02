@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host, getAssetPath } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 
 /**
  * @component AppImage
@@ -83,7 +83,7 @@ export class AppImage {
   /**
    * Event handler triggered when the image is touched or clicked.
    */
-    @Prop() onTouch: string;
+  @Prop() onTouch: string;
 
   /**
    * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
@@ -139,12 +139,11 @@ export class AppImage {
       justifyContent: 'center', // Horizontally center the image
     };
 
-    
     return (
       <Host
         type={this.type}
         tabindex={this.tabIndex}
-        style={style} 
+        style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         value={this.value}
@@ -154,9 +153,8 @@ export class AppImage {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
-        
       >
-        <img class="image" src={this.src} style={style}  />
+        <img class="image" src={convertUrlToRelative(this.src)} alt="" style={style} />
       </Host>
     );
   }
