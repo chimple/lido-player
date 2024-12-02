@@ -97,19 +97,16 @@ export class AppContainer {
   /**
    * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
    */
-  @Prop() onCorrectTouch: string;
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
-  @Prop() onCorrectMatch: string;
+  @Prop() onCorrect: string;
 
   /**
    * Event handler triggered when a specific match condition is met within the container.
    */
-  @Prop() onMatch: string;
-  @Prop() onWrong: string;
-  @Prop() onIncorrectTouch: string;
+  @Prop() onInCorrect: string;
 
   /**
    * Event handler triggered when the container is entered, useful for triggering animations or logic.
@@ -120,6 +117,9 @@ export class AppContainer {
    * Boolean that controls the playability of the game.
    */
   @Prop() canplay: boolean = true;
+
+  @Prop() showCheck: string;
+  @Prop() isContinueOnCorrect: string;
 
   /**
    * Reference to the HTML element that represents this container component.
@@ -191,12 +191,11 @@ export class AppContainer {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
-        onWrong={this.onWrong}
-        onIncorrectTouch={this.onIncorrectTouch}
-        onCorrectMatch={this.onCorrectMatch}
-        onCorrectTouch={this.onCorrectTouch}
+        onInCorrect={this.onInCorrect}
+        onCorrect={this.onCorrect}
         onEntry={this.onEntry}
+        showCheck={this.showCheck}
+        isContinueOnCorrect={this.isContinueOnCorrect}
       >
         <slot />
       </Host>

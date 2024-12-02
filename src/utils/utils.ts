@@ -220,12 +220,17 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
-
-
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
-  const onMatch = dropElement.getAttribute("onMatch");
+  const container = document.getElementById('container');
+  const objectiveString = container.getAttribute('objective');
+  const showCheck = container.getAttribute('showCheck');
+  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
+
+  
+
+  const onMatch = dropElement.getAttribute('onMatch');
 
   await executeActions(onMatch, dropElement, dragElement);
 
@@ -244,21 +249,50 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   // Add pulse and highlight effect for a successful match
   if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
     // Perform actions if onMatch is defined
-    const onCorrectMatch = dropElement.getAttribute('onCorrectMatch');
+    const onCorrectMatch = dropElement.getAttribute('onCorrect');
     if (onCorrectMatch) {
-
       await executeActions(onCorrectMatch, dropElement, dragElement);
-
     }
   } else {
-    const onWrong = dropElement.getAttribute('onWrong');
+    const onWrong = dropElement.getAttribute('onInCorrect');
 
     await executeActions(onWrong, dropElement, dragElement);
-    
+
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
+  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey));
 
-  await onActivityComplete();
+  if (selectValues) {
+    if (selectValues.length  == countPatternWords(objectiveString)) {
+      
+        if(showCheck == "false"){
+          setTimeout(() => {
+            triggerNextContainer()
+          }, 1000);
+        }
+        if(isContinueOnCorrect != 'true'){
+          if(showCheck == "true" ){
+            const checkButton = document.getElementById('checkBtn');
+            checkButton.classList.remove('disable-check-button');
+          }
+        }
+
+        if(isContinueOnCorrect == "true" && showCheck == "true"){
+          const objectiveArray = selectValues;
+          const res = matchStringPattern(objectiveString, objectiveArray);
+          
+          if(res){
+            const checkButton = document.getElementById('checkBtn');
+            checkButton.classList.remove('disable-check-button');
+          }
+        }
+        
+    }
+  }
+  
+  if(showCheck != 'true'){
+    await onActivityComplete();
+  }
 }
 
 // Function to execute actions parsed from the onMatch string
@@ -277,19 +311,29 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           targetElement.style.transform = currentTransform !== 'none' ? `${currentTransform} ${action.value}` : action.value;
           break;
         }
-        case 'alignMatch' : {
+        case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
 
-          if(dropElement.childElementCount == 0){
+          if (dropElement.childElementCount == 0) {
             dragElement.style.transform = 'translate(0, 0)';
             dropElement.appendChild(dragElement);
-          }else{
+          } else {
             dragElement.style.transform = 'translate(0, 0)';
             dragElement.parentElement.appendChild(dropElement.firstChild);
             dropElement.appendChild(dragElement);
           }
-          
+          break;
+        }
+        case 'addClass': {
+          thisElement.classList.add(action.value);
+          break;
+        }
+        case 'next': {
+          if(action.value='true'){
+            triggerNextContainer();
+          }
+          break;
         }
         case 'speak': {
           {
@@ -362,7 +406,6 @@ const parseActions = (input: string): Array<{ actor: string; action: string; val
 };
 
 const matchStringPattern = (pattern: string, arr: string[]): boolean => {
-  
   const patternGroups = pattern.split(',').map(group => group.trim());
 
   let arrIndex = 0;
@@ -425,49 +468,60 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete() {
-
+  
   const dragArr = document.querySelectorAll(`[type='drag']`);
   const dropArr = document.querySelectorAll(`[type='drop']`);
+  
 
   const container = document.getElementById('container');
+  const showCheck = container.getAttribute('showCheck');
+  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
-  
-  if (res) {
-    
-    for (let i = 0; i < dropArr.length; i++) {
-      
-      const dropItem = dropArr[i];
-      const matchingDragItem = dragArr[i] as HTMLElement;
 
-      if (matchingDragItem) {
-        matchingDragItem.style.transform = 'translate(0, 0)'; // Reset transform
-        dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
+    if (res) {
+      
+    
+      for (let i = 0; i < dropArr.length; i++) {
+        const dropItem = dropArr[i];
+        const matchingDragItem = dragArr[i] as HTMLElement;
+  
+        if (matchingDragItem) {
+          matchingDragItem.style.transform = 'translate(0, 0)'; // Reset transform
+          dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
+        }
+      }
+  
+      const onMatch = container.getAttribute('onCorrect');
+      if (onMatch) {
+        await executeActions(onMatch, container);
+      }
+  
+      localStorage.removeItem(SelectedValuesKey);
+      localStorage.removeItem(DragSelectedMapKey);
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      
+      
+      if(isContinueOnCorrect != 'true'){
+        triggerNextContainer();
+      }
+      
+      
+    } else {
+      const objectName = objectiveString.split(',').map(item => item.trim());
+  
+      if (objectiveArray.length == objectName.length) {
+        const onWrong = container.getAttribute('onInCorrect');
+        
+        await executeActions(onWrong, container);
       }
     }
-
-    const onMatch = container.getAttribute('onCorrectMatch');
-    console.log('onMatch,', container, onMatch);
-    if (onMatch) {
-      await executeActions(onMatch, container);
-    }
-
-    localStorage.removeItem(SelectedValuesKey);
-    localStorage.removeItem(DragSelectedMapKey);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    triggerNextContainer();
-  }else{
-    const objectName = objectiveString.split(',').map(item => item.trim());
-    
-    if(objectiveArray.length == objectName.length){
-      const onWrong = container.getAttribute('onWrong');
-      await executeActions(onWrong, container);
-    }
-    
-  }
+  
+  
 }
 
 export const triggerNextContainer = () => {
@@ -498,7 +552,14 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
       break;
   }
   const onEntry = element.getAttribute('onEntry');
+  
   await executeActions(onEntry, element);
+  // const showCheck = container.getAttribute('showCheck');
+  // if(showCheck == "true"){
+  //   if(onEntry == 'disableCheckButton'){
+  //     element.classList.add(onEntry);
+  //   }
+  // }
   onTouchListenerForOnTouch(element);
 };
 
@@ -523,35 +584,33 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
-    console.log('Element clicked:', element);
-    localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
-    element.style.border = '2px solid yellow';
-    element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
 
-    element.style.transition = 'transform 0.2s ease, border 0.5s ease';
-    element.style.transform = 'scale(1.1)';
+      const container = document.getElementById('container');
+      console.log('Element clicked:', element);
+      localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
+      element.style.border = '2px solid yellow';
+      element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
 
-    element.style.transform = 'scale(1)';
-    element.style.border = '';
-    element.style.boxShadow = '';
-    const container = document.getElementById('container');
-    const objective = container['objective'];
-    if (matchStringPattern(objective, [element['value']])) {
-      const onTouch = element.getAttribute('onCorrectTouch');
-      await executeActions(onTouch, element);
+      element.style.transition = 'transform 0.2s ease, border 0.5s ease';
+      element.style.transform = 'scale(1.1)';
 
-      const onContainerTouch = container.getAttribute('onCorrectTouch');
-      await executeActions(onContainerTouch, element);
-    } else {
-      const onContainerIncorrect = container.getAttribute('onIncorrectTouch');
-      await executeActions(onContainerIncorrect, element);
-      const onIncorrect = element.getAttribute('onIncorrectTouch');
-      await executeActions(onIncorrect, element);
+      element.style.transform = 'scale(1)';
+      element.style.border = '';
+      element.style.boxShadow = '';
       
-      // showWrongAnswerAnimation([element]);
-    }
+      const objective = container['objective'];
+      if (matchStringPattern(objective, [element['value']])) {
+        const onTouch = element.getAttribute('onCorrect');
+        await executeActions(onTouch, element);
+      } else {
+        const onIncorrect = element.getAttribute('onInCorrect');
+        await executeActions(onIncorrect, element);
 
-    await onActivityComplete();
+        // showWrongAnswerAnimation([element]);
+      }
+
+      await onActivityComplete();
+    
   };
   element.addEventListener('click', onClick);
 }
@@ -620,7 +679,7 @@ function handleDropElement(element: HTMLElement): void {
 async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
-  
+
   highlightedElements.forEach(el => {
     removeHighlight(el as HTMLElement);
   });
@@ -648,7 +707,6 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight");
 
- 
   if (selectedDropElement && selectedDragElement) {
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move

@@ -18,6 +18,7 @@ export class AppText {
    * Unique identifier for the text element.
    */
   @Prop() id: string;
+  @Prop() additionalClass: string;
 
   /**
    * Value associated with the text element, typically used for internal logic or tracking.
@@ -112,14 +113,14 @@ export class AppText {
   /**
    * Event handler triggered when the text component is touched or clicked.
    */
-    @Prop() onTouch: string;
+  @Prop() onTouch: string;
 
   /**
    * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
    */
-  @Prop() onCorrectTouch: string;
+  @Prop() onCorrect: string;
 
-  @Prop() onInCorrectTouch: string;
+  @Prop() onInCorrect: string;
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
@@ -130,7 +131,7 @@ export class AppText {
    * Event handler triggered when a matching action occurs with the text component.
    */
   @Prop() onMatch: string;
-  
+
   @Prop() onWrong: string;
 
   /**
@@ -168,17 +169,15 @@ export class AppText {
 
     return (
       <Host
-        class="text"
+        class='text'
         value={this.value}
         type={this.type}
         tabindex={this.tabIndex}
         audio={this.audio}
         onTouch={this.onTouch}
         onMatch={this.onMatch}
-        onWrong={this.onWrong}
-        onCorrectMatch={this.onCorrectMatch}
-        onCorrectTouch={this.onCorrectTouch}
-        onInCorrectTouch={this.onInCorrectTouch}
+        onCorrect={this.onCorrect}
+        onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
         id={this.id}
         style={style}
