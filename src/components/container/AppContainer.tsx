@@ -94,19 +94,16 @@ export class AppContainer {
    */
   @Prop() onTouch: string;
 
-  /**
-   * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
-   */
+    /**
+  * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+  */
+
+  @Prop() onInCorrect: string;
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
   @Prop() onCorrect: string;
-
-  /**
-   * Event handler triggered when a specific match condition is met within the container.
-   */
-  @Prop() onInCorrect: string;
 
   /**
    * Event handler triggered when the container is entered, useful for triggering animations or logic.

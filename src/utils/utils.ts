@@ -259,39 +259,10 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
-  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey));
-
-  if (selectValues) {
-    if (selectValues.length  == countPatternWords(objectiveString)) {
-      
-        if(showCheck == "false" && isContinueOnCorrect == "false"){
-          setTimeout(() => {
-            triggerNextContainer()
-          }, 1000);
-        }
-        if(isContinueOnCorrect != 'true'){
-          if(showCheck == "true" ){
-            const checkButton = document.getElementById('checkBtn');
-            checkButton.classList.remove('disable-check-button');
-          }
-        }
-
-        if(isContinueOnCorrect == "true" && showCheck == "true"){
-          const objectiveArray = selectValues;
-          const res = matchStringPattern(objectiveString, objectiveArray);
-          
-          if(res){
-            const checkButton = document.getElementById('checkBtn');
-            checkButton.classList.remove('disable-check-button');
-          }
-        }
-        
-    }
-  }
   
-  if(showCheck != 'true'){
+  
     await onActivityComplete();
-  }
+  
 }
 
 // Function to execute actions parsed from the onMatch string
@@ -326,15 +297,8 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           break;
         }
         case 'addClass': {
-          thisElement.classList.add(action.value);
+          targetElement.classList.add(action.value);          
           break;
-        }
-        case 'next': {
-          if(action.value='true'){
-            triggerNextContainer();
-          }
-          break;
-
         }
         case 'speak': {
           {
@@ -471,21 +435,21 @@ const countPatternWords = (pattern: string): number => {
 
 async function onActivityComplete() {
 
+  const container = document.getElementById('container');
+  if (!container) return;
+
+  const showCheck = container.getAttribute('showCheck');
+  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
+
   const dragArr = document.querySelectorAll(`[type='drag']`);
   const dropArr = document.querySelectorAll(`[type='drop']`);
   
-
-  const container = document.getElementById('container');
-  const showCheck = container.getAttribute('showCheck');
-  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
-  if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
 
-
+  if(showCheck != "true"){
     if (res) {
-      
     
       for (let i = 0; i < dropArr.length; i++) {
         const dropItem = dropArr[i];
@@ -507,13 +471,7 @@ async function onActivityComplete() {
       await new Promise(resolve => setTimeout(resolve, 1500));
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-
-      
-      
-      if(isContinueOnCorrect != 'true'){
         triggerNextContainer();
-      }
-      
       
     } else {
       const objectName = objectiveString.split(',').map(item => item.trim());
@@ -524,7 +482,32 @@ async function onActivityComplete() {
         await executeActions(onWrong, container);
       }
     }
+  }
+    
   
+  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey));
+
+  if (selectValues) {
+    if (selectValues.length  == countPatternWords(objectiveString)) {
+      const checkButton = document.getElementById('checkButton');
+      
+        if(showCheck == "false" && isContinueOnCorrect == "false"){
+          setTimeout(() => {
+            triggerNextContainer()
+          }, 1000);
+        }
+        if(isContinueOnCorrect != 'true'){
+          if(showCheck == "true" ){
+            checkButton.classList.remove('disable-check-button');
+          }
+        }   
+        if(isContinueOnCorrect == "true" && showCheck == "true"){
+          if(res){
+            checkButton.classList.remove('disable-check-button');
+          } 
+        }
+    }
+  }
 
 }
 
@@ -590,7 +573,12 @@ function addClickListenerForClickType(element: HTMLElement): void {
   const onClick = async () => {
 
       const container = document.getElementById('container');
+
       console.log('Element clicked:', element);
+      if(element.getAttribute("id") == "checkButton"){
+        triggerNextContainer();
+      }
+      
       localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
       element.style.border = '2px solid yellow';
       element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';

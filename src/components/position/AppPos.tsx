@@ -90,9 +90,8 @@ export class AppPos {
     @Prop() onTouch: string;
 
   /**
-   * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+   * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
    */
-
   @Prop() onInCorrect: string;
 
   /**

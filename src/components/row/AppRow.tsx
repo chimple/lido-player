@@ -81,18 +81,17 @@ export class AppRow {
   /**
    * Event handler triggered when the row is touched or clicked.
    */
-    @Prop() onTouch: string;
+  @Prop() onTouch: string;
 
   /**
-   * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+   * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
    */
-  @Prop() onCorrect: string;
-
   @Prop() onInCorrect: string;
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
+  @Prop() onCorrect: string;
 
   /**
    * Event handler triggered when a matching action occurs within the row.

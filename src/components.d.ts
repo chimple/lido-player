@@ -40,13 +40,16 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
         /**
           * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
          */
         "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect": string;
         /**
           * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
@@ -142,7 +145,7 @@ export namespace Components {
          */
         "onEntry": string;
         /**
-          * Event handler triggered when a specific match condition is met within the container.
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
         /**
@@ -236,13 +239,16 @@ export namespace Components {
          */
         "height": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the image is entered (useful for animations or logic on entry).
          */
         "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect": string;
         /**
           * Event handler triggered when a matching action occurs.
@@ -329,7 +335,7 @@ export namespace Components {
          */
         "onEntry": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
         /**
@@ -405,13 +411,16 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the component is entered (useful for animations or logic on entry).
          */
         "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect": string;
         /**
           * Event handler triggered when a matching action occurs.
@@ -505,13 +514,16 @@ export namespace Components {
          */
         "height": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the row is entered, often used for triggering animations or custom logic.
          */
         "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect": string;
         /**
           * Event handler triggered when a matching action occurs within the row.
@@ -586,13 +598,16 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the shape is entered (useful for animations or logic on entry).
          */
         "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect": string;
         /**
           * Event handler triggered when a matching action occurs with the shape.
@@ -688,17 +703,16 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
-         */
-        "onCorrect": string;
-        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
-        "onCorrectMatch": string;
+        "onCorrect": string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
          */
         "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect": string;
         /**
           * Event handler triggered when a matching action occurs with the text component.
@@ -708,7 +722,6 @@ export namespace Components {
           * Event handler triggered when the text component is touched or clicked.
          */
         "onTouch": string;
-        "onWrong": string;
         /**
           * The string of text to be displayed in the component.
          */
@@ -828,17 +841,16 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
-         */
-        "onCorrect": string;
-        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
-        "onCorrectMatch": string;
+        "onCorrect": string;
         /**
           * Event handler triggered when the wrap container is entered (useful for animations or logic on entry).
          */
         "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect": string;
         /**
           * Event handler triggered when a matching action occurs with the wrap container.
@@ -848,7 +860,6 @@ export namespace Components {
           * Event handler triggered when the wrap container is touched or clicked.
          */
         "onTouch": string;
-        "onWrong": string;
         /**
           * Tab index for keyboard navigation.
          */
@@ -1074,13 +1085,16 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
         /**
           * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
          */
         "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect"?: string;
         /**
           * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
@@ -1176,7 +1190,7 @@ declare namespace LocalJSX {
          */
         "onEntry"?: string;
         /**
-          * Event handler triggered when a specific match condition is met within the container.
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
         /**
@@ -1270,13 +1284,16 @@ declare namespace LocalJSX {
          */
         "height"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the image is entered (useful for animations or logic on entry).
          */
         "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when a matching action occurs.
@@ -1363,7 +1380,7 @@ declare namespace LocalJSX {
          */
         "onEntry"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
         /**
@@ -1439,13 +1456,16 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the component is entered (useful for animations or logic on entry).
          */
         "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when a matching action occurs.
@@ -1539,13 +1559,16 @@ declare namespace LocalJSX {
          */
         "height"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the row is entered, often used for triggering animations or custom logic.
          */
         "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when a matching action occurs within the row.
@@ -1620,13 +1643,16 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the shape is entered (useful for animations or logic on entry).
          */
         "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when a matching action occurs with the shape.
@@ -1722,17 +1748,16 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
-         */
-        "onCorrect"?: string;
-        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
-        "onCorrectMatch"?: string;
+        "onCorrect"?: string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
          */
         "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when a matching action occurs with the text component.
@@ -1742,7 +1767,6 @@ declare namespace LocalJSX {
           * Event handler triggered when the text component is touched or clicked.
          */
         "onTouch"?: string;
-        "onWrong"?: string;
         /**
           * The string of text to be displayed in the component.
          */
@@ -1862,17 +1886,16 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
-         */
-        "onCorrect"?: string;
-        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
-        "onCorrectMatch"?: string;
+        "onCorrect"?: string;
         /**
           * Event handler triggered when the wrap container is entered (useful for animations or logic on entry).
          */
         "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when a matching action occurs with the wrap container.
@@ -1882,7 +1905,6 @@ declare namespace LocalJSX {
           * Event handler triggered when the wrap container is touched or clicked.
          */
         "onTouch"?: string;
-        "onWrong"?: string;
         /**
           * Tab index for keyboard navigation.
          */
