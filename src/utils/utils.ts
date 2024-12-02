@@ -223,12 +223,11 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
+
   const container = document.getElementById('container');
   const objectiveString = container.getAttribute('objective');
   const showCheck = container.getAttribute('showCheck');
   const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
-
-  
 
   const onMatch = dropElement.getAttribute('onMatch');
 
@@ -323,6 +322,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
             dragElement.parentElement.appendChild(dropElement.firstChild);
             dropElement.appendChild(dragElement);
           }
+
           break;
         }
         case 'addClass': {
@@ -334,11 +334,13 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
             triggerNextContainer();
           }
           break;
+
         }
         case 'speak': {
           {
-            const audioUrl = targetElement.getAttribute('audio');
+            let audioUrl = targetElement.getAttribute('audio');
             if (audioUrl) {
+              audioUrl = convertUrlToRelative(audioUrl);
               let audioElement = document.getElementById('audio') as HTMLAudioElement;
               if (!audioElement) {
                 const newAudio = document.createElement('audio');
@@ -468,7 +470,7 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete() {
-  
+
   const dragArr = document.querySelectorAll(`[type='drag']`);
   const dropArr = document.querySelectorAll(`[type='drop']`);
   
@@ -480,6 +482,7 @@ async function onActivityComplete() {
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
+
 
     if (res) {
       
@@ -504,6 +507,7 @@ async function onActivityComplete() {
       await new Promise(resolve => setTimeout(resolve, 1500));
       await new Promise(resolve => setTimeout(resolve, 2000));
 
+
       
       
       if(isContinueOnCorrect != 'true'){
@@ -521,7 +525,7 @@ async function onActivityComplete() {
       }
     }
   
-  
+
 }
 
 export const triggerNextContainer = () => {
@@ -594,6 +598,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
       element.style.transition = 'transform 0.2s ease, border 0.5s ease';
       element.style.transform = 'scale(1.1)';
 
+
       element.style.transform = 'scale(1)';
       element.style.border = '';
       element.style.boxShadow = '';
@@ -608,6 +613,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
         // showWrongAnswerAnimation([element]);
       }
+
 
       await onActivityComplete();
     
@@ -796,4 +802,16 @@ function stopHighlightForSpeakingElement(element: HTMLElement): void {
   // Remove inline styles
   element.style.boxShadow = '';
   element.style.border = '';
+}
+
+export function convertUrlToRelative(url: string): string {
+  //check if url is web
+  if (url.startsWith('http')) {
+    return url;
+  }
+  const container = document.getElementById('container');
+  if (!container) return url;
+  const baseUrl = container.getAttribute('baseUrl');
+  if (!baseUrl) return url;
+  return baseUrl + url;
 }
