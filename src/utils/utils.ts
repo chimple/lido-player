@@ -222,13 +222,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
-
-
-  const container = document.getElementById('container');
-  const objectiveString = container.getAttribute('objective');
-  const showCheck = container.getAttribute('showCheck');
-  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
-
+  
   const onMatch = dropElement.getAttribute('onMatch');
 
   await executeActions(onMatch, dropElement, dragElement);
