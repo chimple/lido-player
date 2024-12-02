@@ -122,6 +122,11 @@ export class AppContainer {
   @Prop() canplay: boolean = true;
 
   /**
+   * Base URL for the container.
+   */
+  @Prop() baseUrl: string = '';
+
+  /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;
@@ -197,6 +202,7 @@ export class AppContainer {
         onCorrectMatch={this.onCorrectMatch}
         onCorrectTouch={this.onCorrectTouch}
         onEntry={this.onEntry}
+        baseUrl={this.baseUrl}
       >
         <slot />
       </Host>

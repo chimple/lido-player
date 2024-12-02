@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host, getAssetPath } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 
 /**
  * @component AppImage
@@ -158,7 +158,7 @@ export class AppImage {
         onInCorrectTouch={this.onInCorrectTouch}
         onEntry={this.onEntry}
       >
-        <img class="image" src={this.src} alt="" style={style} />
+        <img class="image" src={convertUrlToRelative(this.src)} alt="" style={style} />
       </Host>
     );
   }

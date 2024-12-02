@@ -29,6 +29,11 @@ export class AppRoot {
   @Prop() canplay: boolean = true;
 
   /**
+   * Base URL for the containers.
+   */
+  @Prop() baseUrl: string = '';
+
+  /**
    * State variable to hold the XML data fetched from the specified path or URL.
    */
   @State() xmlData: string;
@@ -39,16 +44,19 @@ export class AppRoot {
    */
   async componentWillLoad() {
     // Validate the xmlPath prop
-    if (!this.xmlPath) {
-      console.error('XML path is not provided.');
-      return;
-    }
-
+    // if (!this.xmlPath) {
+    //   console.error('XML path is not provided.');
+    //   return;
+    // }
+    const xmlPath = this.xmlPath ?? this.baseUrl + '/index.xml';
+    console.log('🚀 ~ AppRoot ~ componentWillLoad ~ this.baseUrl:', this.baseUrl);
+    console.log('🚀 ~ AppRoot ~ componentWillLoad ~ this.xmlPath:', this.xmlPath);
+    console.log('🚀 ~ AppRoot ~ componentWillLoad ~ xmlPath:', xmlPath);
     // Fetch the XML data
     try {
-      const resolvedPath = this.xmlPath.startsWith('http')
-        ? this.xmlPath // Use the provided URL if it's an HTTP/HTTPS link
-        : getAssetPath(this.xmlPath); // Otherwise, resolve it as an asset path
+      const resolvedPath = xmlPath.startsWith('http')
+        ? xmlPath // Use the provided URL if it's an HTTP/HTTPS link
+        : getAssetPath(xmlPath); // Otherwise, resolve it as an asset path
 
       const response = await fetch(resolvedPath);
       if (!response.ok) {
@@ -76,6 +84,6 @@ export class AppRoot {
     }
 
     // Once the XML data is loaded, pass it to the `app-home` component
-    return <app-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData}></app-home>;
+    return <app-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl}></app-home>;
   }
 }

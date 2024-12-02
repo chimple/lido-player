@@ -114,6 +114,10 @@ export namespace Components {
          */
         "audio": string;
         /**
+          * Base URL for the container.
+         */
+        "baseUrl": string;
+        /**
           * Background color of the container (CSS color value).
          */
         "bgColor": string;
@@ -195,6 +199,10 @@ export namespace Components {
      * and displays progress indicators (dots) for each container.
      */
     interface AppHome {
+        /**
+          * Base URL for the containers.
+         */
+        "baseUrl": string;
         /**
           * Boolean that controls the playability of the game.
          */
@@ -474,6 +482,10 @@ export namespace Components {
      * The XML path can be configured via a prop.
      */
     interface AppRoot {
+        /**
+          * Base URL for the containers.
+         */
+        "baseUrl": string;
         /**
           * Boolean that controls the playability of the game.
          */
@@ -1166,6 +1178,10 @@ declare namespace LocalJSX {
          */
         "audio"?: string;
         /**
+          * Base URL for the container.
+         */
+        "baseUrl"?: string;
+        /**
           * Background color of the container (CSS color value).
          */
         "bgColor"?: string;
@@ -1247,6 +1263,10 @@ declare namespace LocalJSX {
      * and displays progress indicators (dots) for each container.
      */
     interface AppHome {
+        /**
+          * Base URL for the containers.
+         */
+        "baseUrl"?: string;
         /**
           * Boolean that controls the playability of the game.
          */
@@ -1526,6 +1546,10 @@ declare namespace LocalJSX {
      * The XML path can be configured via a prop.
      */
     interface AppRoot {
+        /**
+          * Base URL for the containers.
+         */
+        "baseUrl"?: string;
         /**
           * Boolean that controls the playability of the game.
          */

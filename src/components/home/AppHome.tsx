@@ -30,6 +30,11 @@ export class AppHome {
   @Prop() canplay: boolean = true;
 
   /**
+   * Base URL for the containers.
+   */
+  @Prop() baseUrl: string = '';
+
+  /**
    * Current index of the container being displayed.
    */
   @State() currentContainerIndex: number = this.initialIndex;
@@ -160,7 +165,7 @@ export class AppHome {
     // Map XML tags to Stencil components
     const componentMapping = {
       'app-container': (
-        <app-container {...props} canplay={this.canplay}>
+        <app-container {...props} canplay={this.canplay} baseUrl={this.baseUrl}>
           {children}
         </app-container>
       ),

@@ -220,12 +220,10 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
-
-
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
-  const onMatch = dropElement.getAttribute("onMatch");
+  const onMatch = dropElement.getAttribute('onMatch');
 
   await executeActions(onMatch, dropElement, dragElement);
 
@@ -246,15 +244,13 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     // Perform actions if onMatch is defined
     const onCorrectMatch = dropElement.getAttribute('onCorrectMatch');
     if (onCorrectMatch) {
-
       await executeActions(onCorrectMatch, dropElement, dragElement);
-
     }
   } else {
     const onWrong = dropElement.getAttribute('onWrong');
 
     await executeActions(onWrong, dropElement, dragElement);
-    
+
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
 
@@ -277,24 +273,24 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           targetElement.style.transform = currentTransform !== 'none' ? `${currentTransform} ${action.value}` : action.value;
           break;
         }
-        case 'alignMatch' : {
+        case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
 
-          if(dropElement.childElementCount == 0){
+          if (dropElement.childElementCount == 0) {
             dragElement.style.transform = 'translate(0, 0)';
             dropElement.appendChild(dragElement);
-          }else{
+          } else {
             dragElement.style.transform = 'translate(0, 0)';
             dragElement.parentElement.appendChild(dropElement.firstChild);
             dropElement.appendChild(dragElement);
           }
-          
         }
         case 'speak': {
           {
-            const audioUrl = targetElement.getAttribute('audio');
+            let audioUrl = targetElement.getAttribute('audio');
             if (audioUrl) {
+              audioUrl = convertUrlToRelative(audioUrl);
               let audioElement = document.getElementById('audio') as HTMLAudioElement;
               if (!audioElement) {
                 const newAudio = document.createElement('audio');
@@ -362,7 +358,6 @@ const parseActions = (input: string): Array<{ actor: string; action: string; val
 };
 
 const matchStringPattern = (pattern: string, arr: string[]): boolean => {
-  
   const patternGroups = pattern.split(',').map(group => group.trim());
 
   let arrIndex = 0;
@@ -425,7 +420,6 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete() {
-
   const dragArr = document.querySelectorAll(`[type='drag']`);
   const dropArr = document.querySelectorAll(`[type='drop']`);
 
@@ -434,11 +428,9 @@ async function onActivityComplete() {
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
-  
+
   if (res) {
-    
     for (let i = 0; i < dropArr.length; i++) {
-      
       const dropItem = dropArr[i];
       const matchingDragItem = dragArr[i] as HTMLElement;
 
@@ -459,14 +451,13 @@ async function onActivityComplete() {
     await new Promise(resolve => setTimeout(resolve, 1500));
     await new Promise(resolve => setTimeout(resolve, 2000));
     triggerNextContainer();
-  }else{
+  } else {
     const objectName = objectiveString.split(',').map(item => item.trim());
-    
-    if(objectiveArray.length == objectName.length){
+
+    if (objectiveArray.length == objectName.length) {
       const onWrong = container.getAttribute('onWrong');
       await executeActions(onWrong, container);
     }
-    
   }
 }
 
@@ -547,7 +538,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
       await executeActions(onContainerIncorrect, element);
       const onIncorrect = element.getAttribute('onIncorrectTouch');
       await executeActions(onIncorrect, element);
-      
+
       // showWrongAnswerAnimation([element]);
     }
 
@@ -620,7 +611,7 @@ function handleDropElement(element: HTMLElement): void {
 async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
-  
+
   highlightedElements.forEach(el => {
     removeHighlight(el as HTMLElement);
   });
@@ -648,7 +639,6 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight");
 
- 
   if (selectedDropElement && selectedDragElement) {
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
@@ -738,4 +728,16 @@ function stopHighlightForSpeakingElement(element: HTMLElement): void {
   // Remove inline styles
   element.style.boxShadow = '';
   element.style.border = '';
+}
+
+export function convertUrlToRelative(url: string): string {
+  //check if url is web
+  if (url.startsWith('http')) {
+    return url;
+  }
+  const container = document.getElementById('container');
+  if (!container) return url;
+  const baseUrl = container.getAttribute('baseUrl');
+  if (!baseUrl) return url;
+  return baseUrl + url;
 }
