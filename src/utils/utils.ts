@@ -264,7 +264,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   if (selectValues) {
     if (selectValues.length  == countPatternWords(objectiveString)) {
       
-        if(showCheck == "false"){
+        if(showCheck == "false" && isContinueOnCorrect == "false"){
           setTimeout(() => {
             triggerNextContainer()
           }, 1000);
