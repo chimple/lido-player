@@ -223,12 +223,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
-
-  const container = document.getElementById('container');
-  const objectiveString = container.getAttribute('objective');
-  const showCheck = container.getAttribute('showCheck');
-  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
-
   const onMatch = dropElement.getAttribute('onMatch');
 
   await executeActions(onMatch, dropElement, dragElement);
@@ -259,10 +253,9 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
-  
-  
-    await onActivityComplete();
-  
+
+  // await onActivityComplete();
+  handleCheckButtonState();
 }
 
 // Function to execute actions parsed from the onMatch string
@@ -297,7 +290,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           break;
         }
         case 'addClass': {
-          targetElement.classList.add(action.value);          
+          targetElement.classList.add(action.value);
           break;
         }
         case 'speak': {
@@ -434,82 +427,74 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete() {
-
   const container = document.getElementById('container');
   if (!container) return;
 
-  const showCheck = container.getAttribute('showCheck');
-  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect');
-
   const dragArr = document.querySelectorAll(`[type='drag']`);
   const dropArr = document.querySelectorAll(`[type='drop']`);
-  
+
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
 
-  if(showCheck != "true"){
-    if (res) {
-    
-      for (let i = 0; i < dropArr.length; i++) {
-        const dropItem = dropArr[i];
-        const matchingDragItem = dragArr[i] as HTMLElement;
-  
-        if (matchingDragItem) {
-          matchingDragItem.style.transform = 'translate(0, 0)'; // Reset transform
-          dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
-        }
-      }
-  
-      const onMatch = container.getAttribute('onCorrect');
-      if (onMatch) {
-        await executeActions(onMatch, container);
-      }
-  
-      localStorage.removeItem(SelectedValuesKey);
-      localStorage.removeItem(DragSelectedMapKey);
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      await new Promise(resolve => setTimeout(resolve, 2000));
+  if (res) {
+    for (let i = 0; i < dropArr.length; i++) {
+      const dropItem = dropArr[i];
+      const matchingDragItem = dragArr[i] as HTMLElement;
 
-        triggerNextContainer();
-      
-    } else {
-      const objectName = objectiveString.split(',').map(item => item.trim());
-  
-      if (objectiveArray.length == objectName.length) {
-        const onWrong = container.getAttribute('onInCorrect');
-        
-        await executeActions(onWrong, container);
+      if (matchingDragItem) {
+        matchingDragItem.style.transform = 'translate(0, 0)'; // Reset transform
+        dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
       }
     }
-  }
-    
-  
-  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey));
 
-  if (selectValues) {
-    if (selectValues.length  == countPatternWords(objectiveString)) {
-      const checkButton = document.getElementById('checkButton');
-      
-        if(showCheck == "false" && isContinueOnCorrect == "false"){
-          setTimeout(() => {
-            triggerNextContainer()
-          }, 1000);
-        }
-        if(isContinueOnCorrect != 'true'){
-          if(showCheck == "true" ){
-            checkButton.classList.remove('disable-check-button');
-          }
-        }   
-        if(isContinueOnCorrect == "true" && showCheck == "true"){
-          if(res){
-            checkButton.classList.remove('disable-check-button');
-          } 
-        }
+    const onMatch = container.getAttribute('onCorrect');
+    if (onMatch) {
+      await executeActions(onMatch, container);
+    }
+
+    localStorage.removeItem(SelectedValuesKey);
+    localStorage.removeItem(DragSelectedMapKey);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    triggerNextContainer();
+  } else {
+    const objectName = objectiveString.split(',').map(item => item.trim());
+
+    if (objectiveArray.length == objectName.length) {
+      const onWrong = container.getAttribute('onInCorrect');
+
+      await executeActions(onWrong, container);
     }
   }
-
 }
+
+const handleCheckButtonState = () => {
+  const container = document.getElementById('container');
+  const objectiveString = container['objective'];
+  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
+
+  if (!selectValues || selectValues.length !== countPatternWords(objectiveString)) return;
+
+  const showCheck = container.getAttribute('showCheck') === 'true';
+  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
+  const checkButton = document.getElementById('checkButton');
+
+  if (isContinueOnCorrect) {
+    if (showCheck && matchStringPattern(objectiveString, selectValues)) {
+      checkButton.classList.remove('disable-check-button');
+    } else if (!showCheck) {
+      onActivityComplete();
+    }
+  } else {
+    if (showCheck) {
+      checkButton.classList.remove('disable-check-button');
+    } else {
+      setTimeout(triggerNextContainer, 1000);
+    }
+  }
+};
 
 export const triggerNextContainer = () => {
   const event = new CustomEvent('nextContainer');
@@ -539,14 +524,9 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
       break;
   }
   const onEntry = element.getAttribute('onEntry');
-  
+
   await executeActions(onEntry, element);
-  // const showCheck = container.getAttribute('showCheck');
-  // if(showCheck == "true"){
-  //   if(onEntry == 'disableCheckButton'){
-  //     element.classList.add(onEntry);
-  //   }
-  // }
+
   onTouchListenerForOnTouch(element);
 };
 
@@ -571,40 +551,36 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
+    const container = document.getElementById('container');
 
-      const container = document.getElementById('container');
+    console.log('Element clicked:', element);
+    if (element.getAttribute('id') == 'checkButton') {
+      triggerNextContainer();
+    }
 
-      console.log('Element clicked:', element);
-      if(element.getAttribute("id") == "checkButton"){
-        triggerNextContainer();
-      }
-      
-      localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
-      element.style.border = '2px solid yellow';
-      element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
+    localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
+    element.style.border = '2px solid yellow';
+    element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
 
-      element.style.transition = 'transform 0.2s ease, border 0.5s ease';
-      element.style.transform = 'scale(1.1)';
+    element.style.transition = 'transform 0.2s ease, border 0.5s ease';
+    element.style.transform = 'scale(1.1)';
 
+    element.style.transform = 'scale(1)';
+    element.style.border = '';
+    element.style.boxShadow = '';
 
-      element.style.transform = 'scale(1)';
-      element.style.border = '';
-      element.style.boxShadow = '';
-      
-      const objective = container['objective'];
-      if (matchStringPattern(objective, [element['value']])) {
-        const onTouch = element.getAttribute('onCorrect');
-        await executeActions(onTouch, element);
-      } else {
-        const onIncorrect = element.getAttribute('onInCorrect');
-        await executeActions(onIncorrect, element);
+    const objective = container['objective'];
+    if (matchStringPattern(objective, [element['value']])) {
+      const onTouch = element.getAttribute('onCorrect');
+      await executeActions(onTouch, element);
+    } else {
+      const onIncorrect = element.getAttribute('onInCorrect');
+      await executeActions(onIncorrect, element);
 
-        // showWrongAnswerAnimation([element]);
-      }
+      // showWrongAnswerAnimation([element]);
+    }
 
-
-      await onActivityComplete();
-    
+    await onActivityComplete();
   };
   element.addEventListener('click', onClick);
 }

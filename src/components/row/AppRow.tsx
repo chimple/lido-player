@@ -98,7 +98,6 @@ export class AppRow {
    */
   @Prop() onMatch: string;
 
-
   /**
    * Event handler triggered when the row is entered, often used for triggering animations or custom logic.
    */

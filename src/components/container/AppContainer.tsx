@@ -94,10 +94,9 @@ export class AppContainer {
    */
   @Prop() onTouch: string;
 
-    /**
-  * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
-  */
-
+  /**
+   * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+   */
   @Prop() onInCorrect: string;
 
   /**
@@ -115,7 +114,14 @@ export class AppContainer {
    */
   @Prop() canplay: boolean = true;
 
+  /**
+   * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
+   */
   @Prop() showCheck: string;
+
+  /**
+   * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
+   */
   @Prop() isContinueOnCorrect: string;
 
   /**

@@ -131,6 +131,9 @@ export namespace Components {
           * Unique identifier for the container.
          */
         "id": string;
+        /**
+          * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
+         */
         "isContinueOnCorrect": string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
@@ -152,6 +155,9 @@ export namespace Components {
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch": string;
+        /**
+          * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
+         */
         "showCheck": string;
         /**
           * TabIndex for keyboard navigation.
@@ -661,7 +667,6 @@ export namespace Components {
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
     interface AppText {
-        "additionalClass": string;
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1176,6 +1181,9 @@ declare namespace LocalJSX {
           * Unique identifier for the container.
          */
         "id"?: string;
+        /**
+          * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
+         */
         "isContinueOnCorrect"?: string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
@@ -1197,6 +1205,9 @@ declare namespace LocalJSX {
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
+         */
         "showCheck"?: string;
         /**
           * TabIndex for keyboard navigation.
@@ -1706,7 +1717,6 @@ declare namespace LocalJSX {
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
     interface AppText {
-        "additionalClass"?: string;
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */

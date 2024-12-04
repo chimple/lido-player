@@ -18,7 +18,6 @@ export class AppText {
    * Unique identifier for the text element.
    */
   @Prop() id: string;
-  @Prop() additionalClass: string;
 
   /**
    * Value associated with the text element, typically used for internal logic or tracking.
@@ -130,7 +129,6 @@ export class AppText {
    */
   @Prop() onMatch: string;
 
-
   /**
    * Event handler triggered when the text component is entered (useful for animations or logic on entry).
    */
@@ -166,7 +164,7 @@ export class AppText {
 
     return (
       <Host
-        class='text'
+        class="text"
         value={this.value}
         type={this.type}
         tabindex={this.tabIndex}

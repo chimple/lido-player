@@ -100,7 +100,6 @@ export class AppImage {
    */
   @Prop() onMatch: string;
 
-
   /**
    * Event handler triggered when the image is entered (useful for animations or logic on entry).
    */

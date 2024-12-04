@@ -87,7 +87,7 @@ export class AppPos {
   /**
    * Event handler triggered when the component is touched or clicked.
    */
-    @Prop() onTouch: string;
+  @Prop() onTouch: string;
 
   /**
    * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
@@ -103,7 +103,6 @@ export class AppPos {
    * Event handler triggered when a matching action occurs (e.g., custom logic for interactions).
    */
   @Prop() onMatch: string;
-
 
   /**
    * Event handler triggered when the component is entered, often used to trigger animations or custom logic.

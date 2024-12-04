@@ -89,23 +89,22 @@ export class AppCol {
   /**
    * Event handler for a touch event, where a custom function can be triggered when the column is touched.
    */
-    @Prop() onTouch: string;
+  @Prop() onTouch: string;
 
   /**
-  * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
-  */
-
+   * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+   */
   @Prop() onInCorrect: string;
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
   @Prop() onCorrect: string;
+
   /**
    * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
    */
   @Prop() onMatch: string;
-
 
   /**
    * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
