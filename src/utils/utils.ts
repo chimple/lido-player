@@ -242,20 +242,19 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   // Add pulse and highlight effect for a successful match
   if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
     // Perform actions if onMatch is defined
-    const onCorrectMatch = dropElement.getAttribute('onCorrect');
-    if (onCorrectMatch) {
-      await executeActions(onCorrectMatch, dropElement, dragElement);
+    const onCorrect = dropElement.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, dropElement, dragElement);
     }
   } else {
-    const onWrong = dropElement.getAttribute('onInCorrect');
+    const onInCorrect = dropElement.getAttribute('onInCorrect');
 
-    await executeActions(onWrong, dropElement, dragElement);
+    await executeActions(onInCorrect, dropElement, dragElement);
 
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
 
-  // await onActivityComplete();
-  handleCheckButtonState();
+  await onActivityComplete();
 }
 
 // Function to execute actions parsed from the onMatch string
@@ -430,6 +429,13 @@ async function onActivityComplete() {
   const container = document.getElementById('container');
   if (!container) return;
 
+  // Handle the state of the check button
+  handleCheckButtonState();
+  const isContinueOnCorrect = container.getAttribute('isContinueOnCorect');
+  const showCheck = container.getAttribute('showCheck');
+  if (isContinueOnCorrect || showCheck) return;
+  // End of check button handling logic
+
   const dragArr = document.querySelectorAll(`[type='drag']`);
   const dropArr = document.querySelectorAll(`[type='drop']`);
 
@@ -448,24 +454,23 @@ async function onActivityComplete() {
       }
     }
 
-    const onMatch = container.getAttribute('onCorrect');
-    if (onMatch) {
-      await executeActions(onMatch, container);
+    const onCorrect = container.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, container);
     }
 
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     triggerNextContainer();
   } else {
     const objectName = objectiveString.split(',').map(item => item.trim());
 
     if (objectiveArray.length == objectName.length) {
-      const onWrong = container.getAttribute('onInCorrect');
+      const onInCorrect = container.getAttribute('onInCorrect');
 
-      await executeActions(onWrong, container);
+      await executeActions(onInCorrect, container);
     }
   }
 }
@@ -482,16 +487,18 @@ const handleCheckButtonState = () => {
   const checkButton = document.getElementById('checkButton');
 
   if (isContinueOnCorrect) {
-    if (showCheck && matchStringPattern(objectiveString, selectValues)) {
+    const isCorrect = matchStringPattern(objectiveString, selectValues);
+    if (!isCorrect) return;
+    if (showCheck) {
       checkButton.classList.remove('disable-check-button');
-    } else if (!showCheck) {
-      onActivityComplete();
+    } else {
+      triggerNextContainer();
     }
   } else {
     if (showCheck) {
       checkButton.classList.remove('disable-check-button');
     } else {
-      setTimeout(triggerNextContainer, 1000);
+      triggerNextContainer();
     }
   }
 };
@@ -571,11 +578,11 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
     const objective = container['objective'];
     if (matchStringPattern(objective, [element['value']])) {
-      const onTouch = element.getAttribute('onCorrect');
-      await executeActions(onTouch, element);
+      const onCorrect = element.getAttribute('onCorrect');
+      await executeActions(onCorrect, element);
     } else {
-      const onIncorrect = element.getAttribute('onInCorrect');
-      await executeActions(onIncorrect, element);
+      const onInCorrect = element.getAttribute('onInCorrect');
+      await executeActions(onInCorrect, element);
 
       // showWrongAnswerAnimation([element]);
     }
