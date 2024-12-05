@@ -95,21 +95,14 @@ export class AppContainer {
   @Prop() onTouch: string;
 
   /**
-   * Event handler for a Correct touch event, where a custom function can be triggered when the column is touched.
+   * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
    */
-  @Prop() onCorrectTouch: string;
+  @Prop() onInCorrect: string;
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
-  @Prop() onCorrectMatch: string;
-
-  /**
-   * Event handler triggered when a specific match condition is met within the container.
-   */
-  @Prop() onMatch: string;
-  @Prop() onWrong: string;
-  @Prop() onIncorrectTouch: string;
+  @Prop() onCorrect: string;
 
   /**
    * Event handler triggered when the container is entered, useful for triggering animations or logic.
@@ -120,6 +113,16 @@ export class AppContainer {
    * Boolean that controls the playability of the game.
    */
   @Prop() canplay: boolean = true;
+
+  /**
+   * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
+   */
+  @Prop() showCheck: string;
+
+  /**
+   * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
+   */
+  @Prop() isContinueOnCorrect: string;
 
   /**
    * Base URL for the container.
@@ -196,13 +199,11 @@ export class AppContainer {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
-        onWrong={this.onWrong}
-        onIncorrectTouch={this.onIncorrectTouch}
-        onCorrectMatch={this.onCorrectMatch}
-        onCorrectTouch={this.onCorrectTouch}
+        onInCorrect={this.onInCorrect}
+        onCorrect={this.onCorrect}
         onEntry={this.onEntry}
-        baseUrl={this.baseUrl}
+        showCheck={this.showCheck}
+        isContinueOnCorrect={this.isContinueOnCorrect}
       >
         <slot />
       </Host>

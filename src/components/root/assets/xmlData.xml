@@ -1,51 +1,14 @@
 <main>
 
-	
-	<app-container id="container" value="mainContainer1" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="this.border='2px solid green'; this.boxShadow='0 0 10px green';" onCorrectMatch="" onEntry="" onIncorrectTouch="this.border='2px solid red'; this.boxShadow='0 0 10px rgba(255, 0, 0, 0.5)';">
+	<app-container id="container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrect="truck.animation='placeToLeft 2s 1s linear';" showCheck="false" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="">
 
 				<!-- Background -->
-				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					<app-image visible="true" src="./build/assets/images/twoColorBg.jpg" z="0" width="1600px" height="900px" onEntry=""></app-image>
-				</app-pos>
-
-				<app-col visible="true" width="850px" height="500px" z="1" onEntry="this.animation='fallAndBounce 2s ease-in-out';">
-					<app-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string='Which animal is known as the "king of the jungle"?' font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)"></app-text>
-
-					<app-row visible="true" width="800px" height="100px" bgColor="transparent" >
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/giraffe.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="GIRAFFE" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
-						</app-col>
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="leopard">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/leopard.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="LEOPARD" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
-						</app-col>
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="lion">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/lion.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="LION" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
-						</app-col>
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/tiger.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="TIGER" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
-						</app-col>
-						
-						
-					</app-row>
-
-
-				</app-col>
-
-	</app-container>
-
-	<app-container id="container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="truck.animation='placeToLeft 2s 1s linear';" onEntry="" onWrong="drag.backgroundColor='red';">
-
-				<!-- Background -->
-				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="" >
+				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrect="" onEntry="" >
 					<app-image visible="true" src="./build/assets/images/truck/road.jpg" z="0" height="900px" width="1600px"></app-image>
 				</app-pos>
 
 				<!-- Drop Elements -->
-				<app-pos id="truck" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="-160px" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.animation='rightToPlace 2s linear';">
+				<app-pos id="truck" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="-160px" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrect="" onEntry="this.animation='rightToPlace 2s linear';">
 
 					<app-image visible="true" src="./build/assets/images/truck/blueTruck.png" z="0" onEntry="this.marginTop='-100px';"></app-image>
 
@@ -56,12 +19,12 @@
 
 					
 					<app-row visible="true" bgColor="transparent" width="700px" height="150px" x="490px" y="620px">
-						<app-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop" onMatch="this.alignMatch='true';" onCorrectMatch="this.boxShadow='unset'; element.animation='unset';" onWrong=""></app-text>
-						<app-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onMatch="this.alignMatch='true';" onCorrectMatch="this.boxShadow='unset'; element.animation='unset';" onWrong=""></app-text>
-						<app-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="see" type="drop" onMatch="this.alignMatch='true';" onCorrectMatch="this.boxShadow='unset'; element.animation='unset';" onWrong=""></app-text>
-						<app-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="with" type="drop" onMatch="this.alignMatch='true';" onCorrectMatch="this.boxShadow='unset'; element.animation='unset';" onWrong=""></app-text>
-						<app-text visible="true" tabIndex="5" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="my" type="drop" onMatch="this.alignMatch='true';" onCorrectMatch="this.boxShadow='unset'; element.animation='unset';" onWrong=""></app-text>
-						<app-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="eyes" type="drop" onMatch="this.alignMatch='true';" onCorrectMatch="this.boxShadow='unset'; element.animation='unset';" onWrong=""></app-text>
+						<app-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+						<app-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+						<app-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="see" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+						<app-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="with" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+						<app-text visible="true" tabIndex="5" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="my" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+						<app-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="eyes" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
 					</app-row>
 				</app-pos>
 
@@ -78,39 +41,48 @@
 					</app-row>
 				</app-pos>
 					
-				
-				
+				<app-pos visible="true" id="check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<app-text visible="true" id="checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch="this.next='true';"></app-text>
+				</app-pos>
+			
 	</app-container>
 
-	<app-container id="container" value="mainContainer1" objective="o1,o2,o3,o4" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="truck.animation='placeToLeft 2s 1s linear';" onEntry="">
+	<app-container id="container" value="mainContainer1" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="false" isContinueOnCorrect="true">
 
-				<!-- Background Image -->
-				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="">
-					<app-image visible="true" src="./build/assets/images/truck/road.jpg" z="0" height="900px" width="1600px"></app-image>
+				<!-- Background -->
+				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrect="" onEntry="">
+					<app-image visible="true" src="./build/assets/images/twoColorBg.jpg" z="0" width="1600px" height="900px" onEntry=""></app-image>
 				</app-pos>
 
-				<!-- Drop Elements -->
-				<app-pos id="truck" value="pos1" height="900px" width="1600px" ariaHidden="true" x="-70px" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrectTouch="" onCorrectMatch="" onEntry="this.animation='rightToPlace 2s linear';">
+				<app-col visible="true" width="850px" height="500px" z="1" onEntry="this.animation='fallAndBounce 2s ease-in-out';">
+					<app-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string='Which animal is known as the "king of the jungle"?' font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)"></app-text>
 
-					<app-image visible="true" src="./build/assets/images/truck/truck.png" z="0" onEntry="this.marginTop='-230px';" width="1400px"></app-image>
-					<app-image visible="true" src="./build/assets/images/truck/face.png" z="0" width="370px" x="650px" y="210px"></app-image>
+					<app-row visible="true" width="800px" height="100px" bgColor="transparent" >
+						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onCorrect="this.border='2px solid red';">
+							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/giraffe.png" ></app-image>
+							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="GIRAFFE" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="leopard" onInCorrect="this.border='2px solid red';">
+							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/leopard.png" ></app-image>
+							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="LEOPARD" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="lion" onCorrect="this.border='2px solid green';">
+							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/lion.png" ></app-image>
+							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="LION" bgColor="transparent" onEntry="this.boxShadow='unset';" ></app-text>
+						</app-col>
+						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onInCorrect="this.border='2px solid red';">
+							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/tiger.png" ></app-image>
+							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="TIGER" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
+						</app-col>
+						
+						
+					</app-row>
 
-					<!-- Dashes box -->
-					<app-text visible="true" tabIndex="1" onEntry="this.border='dashed 2px';" bgColor="white" z="0" width="100px" height="40px" x="660px" y="220px" type="drop" value="o1" onCorrectMatch="this.boxShadow='unset'; this.alignMatch='true';"></app-text>
-					<app-text visible="true" tabIndex="2" onEntry="this.border='dashed 2px';" bgColor="white" z="0" width="100px" height="40px" x="900px" y="270px" type="drop" value="o2" onCorrectMatch="this.boxShadow='unset'; this.alignMatch='true';"></app-text>
-					<app-text visible="true" tabIndex="3" onEntry="this.border='dashed 2px';" bgColor="white" z="0" width="100px" height="40px" x="650px" y="460px" type="drop" value="o3" onCorrectMatch="this.boxShadow='unset'; this.alignMatch='true';"></app-text>
-					<app-text visible="true" tabIndex="4" onEntry="this.border='dashed 2px';" bgColor="white" z="0" width="100px" height="40px" x="870px" y="480px" type="drop" value="o4" onCorrectMatch="this.boxShadow='unset'; this.alignMatch='true';"></app-text>
-					
-				</app-pos>
 
-				<!-- Options -->
-				<app-pos visible="true" width="1600px" height="700px" bgColor="transparent" x="1280px" y="100px" z="1">
-					<app-col visible="true" width="200px" bgColor="transparent">
-						<app-text visible="true" tabIndex="5" width="150px" height="50px" string="Forehead" font="Poppins" font-size="20px" value="o2" type="drag" bgColor="#f58787"></app-text>
-						<app-text visible="true" tabIndex="6" width="150px" height="50px" string="Face" font="Poppins" font-size="20px" value="o1" type="drag" bgColor="#8be7f7"></app-text>
-						<app-text visible="true" tabIndex="7" width="150px" height="50px" string="Cheek" font="Poppins" font-size="20px" value="o3" type="drag" bgColor="#e989fa"></app-text>
-						<app-text visible="true" tabIndex="8" width="150px" height="50px" string="Chin" font="Poppins" font-size="20px" value="o4" type="drag" bgColor="yellow"></app-text>
-					</app-col>
+				</app-col>
+
+				<app-pos visible="true" id="check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<app-text visible="true" id="checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch="this.next='true';"></app-text>
 				</app-pos>
 
 	</app-container>
