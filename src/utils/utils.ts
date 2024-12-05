@@ -429,41 +429,18 @@ async function onActivityComplete() {
   const container = document.getElementById('container');
   if (!container) return;
 
-  // Handle the state of the check button
-  handleCheckButtonState();
-  const isContinueOnCorrect = container.getAttribute('isContinueOnCorect');
-  const showCheck = container.getAttribute('showCheck');
-  if (isContinueOnCorrect || showCheck) return;
-  // End of check button handling logic
-
-  const dragArr = document.querySelectorAll(`[type='drag']`);
-  const dropArr = document.querySelectorAll(`[type='drop']`);
-
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
   const res = matchStringPattern(objectiveString, objectiveArray);
 
   if (res) {
-    for (let i = 0; i < dropArr.length; i++) {
-      const dropItem = dropArr[i];
-      const matchingDragItem = dragArr[i] as HTMLElement;
-
-      if (matchingDragItem) {
-        matchingDragItem.style.transform = 'translate(0, 0)'; // Reset transform
-        dropItem.appendChild(matchingDragItem); // Replace in the DOM then automatically change parent
-      }
-    }
-
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
 
-    localStorage.removeItem(SelectedValuesKey);
-    localStorage.removeItem(DragSelectedMapKey);
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    triggerNextContainer();
+    // await new Promise(resolve => setTimeout(resolve, 500));
+    // triggerNextContainer();
   } else {
     const objectName = objectiveString.split(',').map(item => item.trim());
 
@@ -473,6 +450,9 @@ async function onActivityComplete() {
       await executeActions(onInCorrect, container);
     }
   }
+
+  // Handle the state of the check button
+  handleCheckButtonState();
 }
 
 const handleCheckButtonState = () => {
@@ -489,6 +469,8 @@ const handleCheckButtonState = () => {
   if (isContinueOnCorrect) {
     const isCorrect = matchStringPattern(objectiveString, selectValues);
     if (!isCorrect) return;
+    localStorage.removeItem(SelectedValuesKey);
+    localStorage.removeItem(DragSelectedMapKey);
     if (showCheck) {
       checkButton.classList.remove('disable-check-button');
     } else {
