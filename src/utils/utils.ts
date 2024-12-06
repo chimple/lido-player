@@ -467,29 +467,19 @@ async function onActivityComplete() {
 
 const handleCheckButtonState = () => {
   const container = document.getElementById('container');
+  const objectiveString = container['objective'];
+  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
+
+  if (!selectValues || selectValues.length !== countPatternWords(objectiveString)) return;
 
   const showCheck = container.getAttribute('showCheck') == 'true';
   const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') == 'true';
 
-  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
-  const objectiveString = container['objective'];
-
-  if (!selectValues || selectValues.length !== countPatternWords(objectiveString)) return;
-
-  if (isContinueOnCorrect) {
-    if (showCheck) {
-      const checkButton = document.getElementById('checkButton');
-      checkButton.classList.remove('disable-check-button');
-    } else {
-      onActivityComplete();
-    }
+  if (showCheck) {
+    const checkButton = document.getElementById('checkButton');
+    checkButton.classList.remove('disable-check-button');
   } else {
-    if (showCheck) {
-      const checkButton = document.getElementById('checkButton');
-      checkButton.classList.remove('disable-check-button');
-    } else {
-      triggerNextContainer();
-    }
+    isContinueOnCorrect ? onActivityComplete() : triggerNextContainer();
   }
 };
 
