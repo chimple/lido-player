@@ -1,6 +1,6 @@
 <main>
 
-	<app-container id="container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrect="truck.animation='placeToLeft 2s 1s linear';" showCheck="false" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="">
+	<app-container id="container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onMatch="" onTouch="" onCorrect="truck.animation='placeToLeft 2s 0.3s linear';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="true"  onEntry="" onInCorrect="">
 
 				<!-- Background -->
 				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onMatch="" onTouch="" onCorrect="" onEntry="" >
@@ -17,7 +17,6 @@
 						<app-image visible="true" src="./build/assets/images/truck/seeing.png" width="" height="150px"></app-image>
 					</app-col>
 
-					
 					<app-row visible="true" bgColor="transparent" width="700px" height="150px" x="490px" y="620px">
 						<app-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
 						<app-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
@@ -27,8 +26,6 @@
 						<app-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="eyes" type="drop" onMatch="this.alignMatch='true';" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
 					</app-row>
 				</app-pos>
-
-				
 
 				<app-pos visible="true" bgColor="transparent" width="900px" height="150px" z="1" x="380px" y="700px">
 					<app-row visible="true" bgColor="transparent" width="900px" height="150px" >

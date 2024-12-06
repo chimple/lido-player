@@ -223,8 +223,19 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
 
-  const onMatch = dropElement.getAttribute('onMatch');
+  const container = document.getElementById('container');
+  const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
+  if (isAllowOnlyCorrect) {
+    const isCorrect = matchStringPattern(dropElement['value'], [dragElement['value']]);
+    if (!isCorrect) {
+      dragElement.style.transform = 'translate(0,0)';
+      return;
+    } else {
+      executeActions("this.alignMatch='true'", dropElement, dragElement);
+    }
+  }
 
+  const onMatch = dropElement.getAttribute('onMatch');
   await executeActions(onMatch, dropElement, dragElement);
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
@@ -254,7 +265,8 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
 
-  await onActivityComplete();
+  // await onActivityComplete();
+  handleCheckButtonState();
 }
 
 // Function to execute actions parsed from the onMatch string
@@ -438,9 +450,10 @@ async function onActivityComplete() {
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
-
-    // await new Promise(resolve => setTimeout(resolve, 500));
-    // triggerNextContainer();
+    localStorage.removeItem(SelectedValuesKey);
+    localStorage.removeItem(DragSelectedMapKey);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    triggerNextContainer();
   } else {
     const objectName = objectiveString.split(',').map(item => item.trim());
 
@@ -450,34 +463,29 @@ async function onActivityComplete() {
       await executeActions(onInCorrect, container);
     }
   }
-
-  // Handle the state of the check button
-  handleCheckButtonState();
 }
 
 const handleCheckButtonState = () => {
   const container = document.getElementById('container');
-  const objectiveString = container['objective'];
+
+  const showCheck = container.getAttribute('showCheck') == 'true';
+  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') == 'true';
+
   const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
+  const objectiveString = container['objective'];
 
   if (!selectValues || selectValues.length !== countPatternWords(objectiveString)) return;
 
-  const showCheck = container.getAttribute('showCheck') === 'true';
-  const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
-  const checkButton = document.getElementById('checkButton');
-
   if (isContinueOnCorrect) {
-    const isCorrect = matchStringPattern(objectiveString, selectValues);
-    if (!isCorrect) return;
-    localStorage.removeItem(SelectedValuesKey);
-    localStorage.removeItem(DragSelectedMapKey);
     if (showCheck) {
+      const checkButton = document.getElementById('checkButton');
       checkButton.classList.remove('disable-check-button');
     } else {
-      triggerNextContainer();
+      onActivityComplete();
     }
   } else {
     if (showCheck) {
+      const checkButton = document.getElementById('checkButton');
       checkButton.classList.remove('disable-check-button');
     } else {
       triggerNextContainer();
@@ -544,7 +552,12 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
     console.log('Element clicked:', element);
     if (element.getAttribute('id') == 'checkButton') {
-      triggerNextContainer();
+      const isCorrect = container.getAttribute('isContinueOnCorrect') == 'true';
+      if (isCorrect) {
+        await onActivityComplete();
+      } else {
+        triggerNextContainer();
+      }
     }
 
     localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
