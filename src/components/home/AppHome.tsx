@@ -1,4 +1,4 @@
-import { Component, Prop, h, State } from '@stencil/core';
+import { Component, Prop, h, State, Host } from '@stencil/core';
 import { DragSelectedMapKey, SelectedValuesKey } from '../../utils/constants';
 
 /**
@@ -67,12 +67,13 @@ export class AppHome {
       // Move to the next container
       this.currentContainerIndex++;
       window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
-    } else {
+    } else if (this.currentContainerIndex >= this.containers.length - 1) {
       // Show the completion message if all containers have been viewed
       this.showCompletionMessage = true;
       const event = new CustomEvent('gameCompleted');
       window.dispatchEvent(event);
 
+      this.currentContainerIndex = 0;
       // Hide the completion message after 3 seconds
       setTimeout(() => {
         this.showCompletionMessage = false;
@@ -244,7 +245,7 @@ export class AppHome {
     }
 
     return (
-      <div>
+      <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]}</div>
 
@@ -253,7 +254,7 @@ export class AppHome {
 
         {/* Show completion message if all containers have been displayed */}
         {this.showCompletionMessage && <div class="snackbar">All containers have been displayed!</div>}
-      </div>
+      </Host>
     );
   }
 }
