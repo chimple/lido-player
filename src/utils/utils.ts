@@ -1,4 +1,4 @@
-import { DragSelectedMapKey, SelectedValuesKey } from './constants';
+import { ActivityEndKey, ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey } from './constants';
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -464,6 +464,28 @@ async function onActivityComplete() {
     }
   }
 }
+
+const storeActivityScore = (score: number) => {
+  const appHome = document.querySelector('app-home');
+  if (!appHome) return;
+  const index = Number(appHome.getAttribute('index') ?? 0);
+  const totalIndex = Number(appHome.getAttribute('totalIndex') ?? 0);
+
+  const activityScore = JSON.parse(localStorage.getItem(ActivityScoreKey) ?? '{}');
+  const activityScoreKey = index.toString();
+  activityScore[activityScoreKey] = score;
+
+  //send Custom Event to parent
+  window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
+
+  localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
+  if (totalIndex - 1 == index) {
+    const scoresArray: number[] = Object.values(activityScore);
+    const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
+    window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
+    localStorage.removeItem(ActivityScoreKey);
+  }
+};
 
 const handleCheckButtonState = () => {
   const container = document.getElementById('container');
