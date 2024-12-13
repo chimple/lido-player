@@ -20,58 +20,36 @@
 @keyframes shake {
   0% {
     transform: translateX(0);
-    color: red;
-    outline: 4px solid red;
   }
   10% {
     transform: translateX(-5px);
-    color: red;
-    outline: 4px solid red;
   }
   20% {
     transform: translateX(5px);
-    color: red;
-    outline: 4px solid red;
   }
   30% {
     transform: translateX(-5px);
-    color: red;
-    outline: 4px solid red;
   }
   40% {
     transform: translateX(5px);
-    color: red;
-    outline: 4px solid red;
   }
   50% {
     transform: translateX(-5px);
-    color: red;
-    outline: 4px solid red;
   }
   60% {
     transform: translateX(5px);
-    color: red;
-    outline: 4px solid red;
   }
   70% {
     transform: translateX(-5px);
-    color: red;
-    outline: 4px solid red;
   }
   80% {
     transform: translateX(5px);
-    color: red;
-    outline: 4px solid red;
   }
   90% {
     transform: translateX(-5px);
-    color: red;
-    outline: 4px solid red;
   }
   100% {
     transform: translateX(0);
-    color: red;
-    outline: 4px solid red;
   }
 }
 
@@ -79,7 +57,7 @@
   0% {
     transform: translateY(-1000px);
   }
-  25%{
+  25% {
     transform: translateY(0px);
   }
   50% {

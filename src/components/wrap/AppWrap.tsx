@@ -100,11 +100,6 @@ export class AppWrap {
   @Prop() onCorrect: string;
 
   /**
-   * Event handler triggered when a matching action occurs with the wrap container.
-   */
-  @Prop() onMatch: string;
-
-  /**
    * Event handler triggered when the wrap container is entered (useful for animations or logic on entry).
    */
   @Prop() onEntry: string;
@@ -145,7 +140,6 @@ export class AppWrap {
         aria-hidden={this.ariaHidden}
         audio={this.audio}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}

@@ -100,11 +100,6 @@ export class AppPos {
   @Prop() onCorrect: string;
 
   /**
-   * Event handler triggered when a matching action occurs (e.g., custom logic for interactions).
-   */
-  @Prop() onMatch: string;
-
-  /**
    * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
    */
   @Prop() onEntry: string;
@@ -146,7 +141,6 @@ export class AppPos {
         value={this.value}
         audio={this.audio}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
