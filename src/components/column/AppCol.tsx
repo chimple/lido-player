@@ -102,11 +102,6 @@ export class AppCol {
   @Prop() onCorrect: string;
 
   /**
-   * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
-   */
-  @Prop() onMatch: string;
-
-  /**
    * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
    */
   @Prop() onEntry: string;
@@ -148,7 +143,6 @@ export class AppCol {
         aria-hidden={this.ariaHidden}
         audio={this.audio}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}

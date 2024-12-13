@@ -125,11 +125,6 @@ export class AppText {
   @Prop() onCorrect: string;
 
   /**
-   * Event handler triggered when a matching action occurs with the text component.
-   */
-  @Prop() onMatch: string;
-
-  /**
    * Event handler triggered when the text component is entered (useful for animations or logic on entry).
    */
   @Prop() onEntry: string;
@@ -170,7 +165,6 @@ export class AppText {
         tabindex={this.tabIndex}
         audio={this.audio}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}

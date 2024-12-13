@@ -96,11 +96,6 @@ export class AppImage {
   @Prop() onCorrect: string;
 
   /**
-   * Event handler triggered when a matching action occurs.
-   */
-  @Prop() onMatch: string;
-
-  /**
    * Event handler triggered when the image is entered (useful for animations or logic on entry).
    */
   @Prop() onEntry: string;
@@ -147,7 +142,6 @@ export class AppImage {
         value={this.value}
         audio={this.audio}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}

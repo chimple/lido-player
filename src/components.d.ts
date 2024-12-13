@@ -52,10 +52,6 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
-          * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
-         */
-        "onMatch": string;
-        /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch": string;
@@ -257,10 +253,6 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
-          * Event handler triggered when a matching action occurs.
-         */
-        "onMatch": string;
-        /**
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch": string;
@@ -345,10 +337,6 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
-          * Event handler triggered when a matching action occurs (e.g., custom logic for interactions).
-         */
-        "onMatch": string;
-        /**
           * Event handler triggered when the component is touched or clicked.
          */
         "onTouch": string;
@@ -428,10 +416,6 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
-        /**
-          * Event handler triggered when a matching action occurs.
-         */
-        "onMatch": string;
         /**
           * Event handler triggered when the component is touched or clicked.
          */
@@ -532,10 +516,6 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
-          * Event handler triggered when a matching action occurs within the row.
-         */
-        "onMatch": string;
-        /**
           * Event handler triggered when the row is touched or clicked.
          */
         "onTouch": string;
@@ -615,10 +595,6 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
-        /**
-          * Event handler triggered when a matching action occurs with the shape.
-         */
-        "onMatch": string;
         /**
           * Event handler triggered when the shape is touched or clicked.
          */
@@ -719,10 +695,6 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
-        /**
-          * Event handler triggered when a matching action occurs with the text component.
-         */
-        "onMatch": string;
         /**
           * Event handler triggered when the text component is touched or clicked.
          */
@@ -857,10 +829,6 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
-        /**
-          * Event handler triggered when a matching action occurs with the wrap container.
-         */
-        "onMatch": string;
         /**
           * Event handler triggered when the wrap container is touched or clicked.
          */
@@ -1102,10 +1070,6 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
-          * Event handler for a matching action, which can be used to hide the column or trigger other custom logic.
-         */
-        "onMatch"?: string;
-        /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
@@ -1307,10 +1271,6 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
-          * Event handler triggered when a matching action occurs.
-         */
-        "onMatch"?: string;
-        /**
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch"?: string;
@@ -1395,10 +1355,6 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
-          * Event handler triggered when a matching action occurs (e.g., custom logic for interactions).
-         */
-        "onMatch"?: string;
-        /**
           * Event handler triggered when the component is touched or clicked.
          */
         "onTouch"?: string;
@@ -1478,10 +1434,6 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
-        /**
-          * Event handler triggered when a matching action occurs.
-         */
-        "onMatch"?: string;
         /**
           * Event handler triggered when the component is touched or clicked.
          */
@@ -1582,10 +1534,6 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
-          * Event handler triggered when a matching action occurs within the row.
-         */
-        "onMatch"?: string;
-        /**
           * Event handler triggered when the row is touched or clicked.
          */
         "onTouch"?: string;
@@ -1665,10 +1613,6 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
-        /**
-          * Event handler triggered when a matching action occurs with the shape.
-         */
-        "onMatch"?: string;
         /**
           * Event handler triggered when the shape is touched or clicked.
          */
@@ -1769,10 +1713,6 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
-        /**
-          * Event handler triggered when a matching action occurs with the text component.
-         */
-        "onMatch"?: string;
         /**
           * Event handler triggered when the text component is touched or clicked.
          */
@@ -1907,10 +1847,6 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
-        /**
-          * Event handler triggered when a matching action occurs with the wrap container.
-         */
-        "onMatch"?: string;
         /**
           * Event handler triggered when the wrap container is touched or clicked.
          */
