@@ -94,11 +94,6 @@ export class AppRow {
   @Prop() onCorrect: string;
 
   /**
-   * Event handler triggered when a matching action occurs within the row.
-   */
-  @Prop() onMatch: string;
-
-  /**
    * Event handler triggered when the row is entered, often used for triggering animations or custom logic.
    */
   @Prop() onEntry: string;
@@ -139,7 +134,6 @@ export class AppRow {
         aria-hidden={this.ariaHidden}
         audio={this.audio}
         onTouch={this.onTouch}
-        onMatch={this.onMatch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
