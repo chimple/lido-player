@@ -1,4 +1,5 @@
-import { ActivityEndKey, ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, SelectedValuesKey } from './constants';
+import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -222,7 +223,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   if (!dropElement) return;
-
   const onMatch = dropElement.getAttribute('onMatch');
 
   await executeActions(onMatch, dropElement, dragElement);
@@ -240,7 +240,10 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
 
   // Add pulse and highlight effect for a successful match
-  if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
+
+  const isCorrect = matchStringPattern(dropElement['value'], [dragElement['value']]);
+  dispatchElementDropEvent(dragElement, dropElement, isCorrect);
+  if (isCorrect) {
     // Perform actions if onMatch is defined
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {
@@ -466,13 +469,15 @@ const storeActivityScore = (score: number) => {
   activityScore[activityScoreKey] = score;
 
   //send Custom Event to parent
-  window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
+  // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
+  dispatchActivityEndEvent(index, totalIndex, score);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
     const scoresArray: number[] = Object.values(activityScore);
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
-    window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
+    // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
+    dispatchLessonEndEvent(finalScore);
     localStorage.removeItem(ActivityScoreKey);
   }
 };
@@ -511,9 +516,10 @@ const handleCheckButtonState = () => {
 };
 
 export const triggerNextContainer = () => {
-  const event = new CustomEvent('nextContainer');
+  // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
-  window.dispatchEvent(event);
+  // window.dispatchEvent(event);
+  dispatchNextContainerEvent();
 };
 
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
@@ -566,10 +572,10 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
   const onClick = async () => {
     const container = document.getElementById('container');
-
     console.log('Element clicked:', element);
     if (element.getAttribute('id') == 'checkButton') {
       triggerNextContainer();
+      return;
     }
 
     localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
@@ -584,7 +590,9 @@ function addClickListenerForClickType(element: HTMLElement): void {
     element.style.boxShadow = '';
 
     const objective = container['objective'];
-    if (matchStringPattern(objective, [element['value']])) {
+    const isCorrect = matchStringPattern(objective, [element['value']]);
+    dispatchClickEvent(element, isCorrect);
+    if (isCorrect) {
       const onCorrect = element.getAttribute('onCorrect');
       await executeActions(onCorrect, element);
     } else {

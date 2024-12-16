@@ -1,5 +1,6 @@
 import { Component, Prop, h, State, Host } from '@stencil/core';
 import { DragSelectedMapKey, SelectedValuesKey } from '../../utils/constants';
+import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
 
 /**
  * @component AppHome
@@ -62,16 +63,19 @@ export class AppHome {
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
       this.currentContainerIndex = index;
-      window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
+      // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
+      dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex < this.containers.length - 1) {
       // Move to the next container
       this.currentContainerIndex++;
-      window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
+      // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
+      dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex >= this.containers.length - 1) {
       // Show the completion message if all containers have been viewed
       this.showCompletionMessage = true;
-      const event = new CustomEvent('gameCompleted');
-      window.dispatchEvent(event);
+      // const event = new CustomEvent('gameCompleted');
+      // window.dispatchEvent(event);
+      dispatchGameCompletedEvent();
 
       this.currentContainerIndex = 0;
       // Hide the completion message after 3 seconds
