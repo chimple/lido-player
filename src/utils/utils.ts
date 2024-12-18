@@ -1,4 +1,4 @@
-import { ActivityEndKey, ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey } from './constants';
+import { ActivityEndKey, ActivityScoreKey, DragSelectedMapKey, FinalScoreKey, LessonEndKey, SelectedValuesKey, RightMovesKey, WrongMovesKey } from './constants';
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -232,7 +232,6 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     if (dragSelectedData) {
       let dragSelected = JSON.parse(dragSelectedData);
       const dropIndex = dragElement.parentElement.getAttribute('tabIndex');
-      console.log('drop index', dropIndex);
       if (dropIndex && dragSelected.hasOwnProperty(dropIndex)) {
         delete dragSelected[dropIndex];
       }
@@ -243,7 +242,8 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   }
 
   // Add pulse and highlight effect for a successful match
-  if (matchStringPattern(dropElement['value'], [dragElement['value']])) {
+  const res = matchStringPattern(dropElement['value'], [dragElement['value']]);
+  if (res) {
     // Perform actions if onMatch is defined
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {
@@ -256,6 +256,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
+  storingEachActivityScore(res);
 
   await onActivityComplete(dragElement, dropElement);
 }
@@ -458,6 +459,27 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
   handleShowCheck();
 }
 
+const storingEachActivityScore = (flag: boolean) => {
+  let rightMoves = JSON.parse(localStorage.getItem(RightMovesKey) || '0');
+  let wrongMoves = JSON.parse(localStorage.getItem(WrongMovesKey) || '0');
+  if (flag) {
+    rightMoves += 1;
+    localStorage.setItem(RightMovesKey, JSON.stringify(rightMoves));
+  } else {
+    wrongMoves += 1;
+    localStorage.setItem(WrongMovesKey, JSON.stringify(wrongMoves));
+  }
+};
+
+const calculateScore = () => {
+  const rightMoves = JSON.parse(localStorage.getItem(RightMovesKey) || '0');
+  const wrongMoves = JSON.parse(localStorage.getItem(WrongMovesKey) || '0');
+  let score = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
+  storeActivityScore(score);
+  localStorage.removeItem(RightMovesKey);
+  localStorage.removeItem(WrongMovesKey);
+};
+
 const storeActivityScore = (score: number) => {
   const appHome = document.querySelector('app-home');
   if (!appHome) return;
@@ -475,6 +497,9 @@ const storeActivityScore = (score: number) => {
   if (totalIndex - 1 == index) {
     const scoresArray: number[] = Object.values(activityScore);
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
+    let final = JSON.parse(localStorage.getItem(FinalScoreKey) || '0');
+    final = finalScore;
+    localStorage.setItem(FinalScoreKey, JSON.stringify(final));
     window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     localStorage.removeItem(ActivityScoreKey);
   }
@@ -524,6 +549,7 @@ const validateObjectiveStatus = async () => {
       triggerNextContainer();
     }
   }
+  await calculateScore();
 };
 
 export const triggerNextContainer = () => {
@@ -586,6 +612,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
     console.log('Element clicked:', element);
     if (element.getAttribute('id') == 'checkButton') {
       validateObjectiveStatus();
+      return;
     }
 
     localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
@@ -600,7 +627,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
     element.style.boxShadow = '';
 
     const objective = container['objective'];
-    if (matchStringPattern(objective, [element['value']])) {
+    const res = matchStringPattern(objective, [element['value']]);
+    if (res) {
       const onCorrect = element.getAttribute('onCorrect');
       await executeActions(onCorrect, element);
     } else {
@@ -609,8 +637,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
       // showWrongAnswerAnimation([element]);
     }
-
-    await onActivityComplete();
+    storingEachActivityScore(res);
+    handleShowCheck();
   };
   element.addEventListener('click', onClick);
 }
