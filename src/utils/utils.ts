@@ -259,7 +259,6 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
   storingEachActivityScore(isCorrect);
-
   await onActivityComplete(dragElement, dropElement);
 }
 
@@ -501,7 +500,7 @@ const storeActivityScore = (score: number) => {
     const scoresArray: number[] = Object.values(activityScore);
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
     let final = JSON.parse(localStorage.getItem(FinalScoreKey) || '0');
-    final = finalScore;
+    final = Math.floor(finalScore);
     localStorage.setItem(FinalScoreKey, JSON.stringify(final));
     window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
