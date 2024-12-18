@@ -1,4 +1,5 @@
-import { ActivityEndKey, ActivityScoreKey, DragSelectedMapKey, FinalScoreKey, LessonEndKey, SelectedValuesKey, RightMovesKey, WrongMovesKey } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, FinalScoreKey, LessonEndKey, RightMovesKey, SelectedValuesKey, WrongMovesKey } from './constants';
+import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -242,8 +243,9 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   }
 
   // Add pulse and highlight effect for a successful match
-  const res = matchStringPattern(dropElement['value'], [dragElement['value']]);
-  if (res) {
+  const isCorrect = matchStringPattern(dropElement['value'], [dragElement['value']]);
+  dispatchElementDropEvent(dragElement, dropElement, isCorrect);
+  if (isCorrect) {
     // Perform actions if onMatch is defined
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {
@@ -256,7 +258,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
-  storingEachActivityScore(res);
+  storingEachActivityScore(isCorrect);
 
   await onActivityComplete(dragElement, dropElement);
 }
@@ -491,7 +493,8 @@ const storeActivityScore = (score: number) => {
   activityScore[activityScoreKey] = score;
 
   //send Custom Event to parent
-  window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
+  // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
+  dispatchActivityEndEvent(index, totalIndex, score);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
@@ -501,6 +504,8 @@ const storeActivityScore = (score: number) => {
     final = finalScore;
     localStorage.setItem(FinalScoreKey, JSON.stringify(final));
     window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
+    // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
+    dispatchLessonEndEvent(finalScore);
     localStorage.removeItem(ActivityScoreKey);
   }
 };
@@ -553,9 +558,10 @@ const validateObjectiveStatus = async () => {
 };
 
 export const triggerNextContainer = () => {
-  const event = new CustomEvent('nextContainer');
+  // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
-  window.dispatchEvent(event);
+  // window.dispatchEvent(event);
+  dispatchNextContainerEvent();
 };
 
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
@@ -608,7 +614,6 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
   const onClick = async () => {
     const container = document.getElementById('container');
-
     console.log('Element clicked:', element);
     if (element.getAttribute('id') == 'checkButton') {
       validateObjectiveStatus();
@@ -627,8 +632,10 @@ function addClickListenerForClickType(element: HTMLElement): void {
     element.style.boxShadow = '';
 
     const objective = container['objective'];
-    const res = matchStringPattern(objective, [element['value']]);
-    if (res) {
+
+    const isCorrect = matchStringPattern(objective, [element['value']]);
+    dispatchClickEvent(element, isCorrect);
+    if (isCorrect) {
       const onCorrect = element.getAttribute('onCorrect');
       await executeActions(onCorrect, element);
     } else {
@@ -637,7 +644,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
       // showWrongAnswerAnimation([element]);
     }
-    storingEachActivityScore(res);
+    storingEachActivityScore(isCorrect);
     handleShowCheck();
   };
   element.addEventListener('click', onClick);
