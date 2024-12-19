@@ -1,5 +1,7 @@
-import { ActivityScoreKey, DragSelectedMapKey, FinalScoreKey, LessonEndKey, RightMovesKey, SelectedValuesKey, WrongMovesKey } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey } from './constants';
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
+import GameScore from './constants';
+const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -461,24 +463,22 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
 }
 
 const storingEachActivityScore = (flag: boolean) => {
-  let rightMoves = JSON.parse(localStorage.getItem(RightMovesKey) || '0');
-  let wrongMoves = JSON.parse(localStorage.getItem(WrongMovesKey) || '0');
   if (flag) {
-    rightMoves += 1;
-    localStorage.setItem(RightMovesKey, JSON.stringify(rightMoves));
+    gameScore.rightMoves += 1;
   } else {
-    wrongMoves += 1;
-    localStorage.setItem(WrongMovesKey, JSON.stringify(wrongMoves));
+    gameScore.wrongMoves += 1;
   }
+  console.log('Right Moves : ', gameScore.rightMoves);
+  console.log('Wrong Moves : ', gameScore.wrongMoves);
 };
 
 const calculateScore = () => {
-  const rightMoves = JSON.parse(localStorage.getItem(RightMovesKey) || '0');
-  const wrongMoves = JSON.parse(localStorage.getItem(WrongMovesKey) || '0');
-  let score = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
-  storeActivityScore(score);
-  localStorage.removeItem(RightMovesKey);
-  localStorage.removeItem(WrongMovesKey);
+  const rightMoves = gameScore.rightMoves;
+  const wrongMoves = gameScore.wrongMoves;
+  let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
+  storeActivityScore(finalScore);
+  gameScore.rightMoves = 0;
+  gameScore.wrongMoves = 0;
 };
 
 const storeActivityScore = (score: number) => {
@@ -499,10 +499,8 @@ const storeActivityScore = (score: number) => {
   if (totalIndex - 1 == index) {
     const scoresArray: number[] = Object.values(activityScore);
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
-    let final = JSON.parse(localStorage.getItem(FinalScoreKey) || '0');
-    final = Math.floor(finalScore);
-    localStorage.setItem(FinalScoreKey, JSON.stringify(final));
-    window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
+    gameScore.finalScore = Math.floor(finalScore);
+    console.log("Total Score : ",gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     dispatchLessonEndEvent(finalScore);
     localStorage.removeItem(ActivityScoreKey);
@@ -542,14 +540,12 @@ const validateObjectiveStatus = async () => {
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
-    await new Promise(resolve => setTimeout(resolve, 1000));
     triggerNextContainer();
   } else {
     const onInCorrect = container.getAttribute('onInCorrect');
     await executeActions(onInCorrect, container);
     const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
     if (!isContinueOnCorrect) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
       triggerNextContainer();
     }
   }
@@ -613,7 +609,6 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
   const onClick = async () => {
     const container = document.getElementById('container');
-    console.log('Element clicked:', element);
     if (element.getAttribute('id') == 'checkButton') {
       validateObjectiveStatus();
       return;

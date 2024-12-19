@@ -1,17 +1,14 @@
-export const DragSelectedMapKey = 'dragSelectedMap';
-export const SelectedValuesKey = 'selectedValues';
-export const ActivityScoreKey = 'activityScore';
-export const ActivityEndKey = 'activityEnd';
-export const LessonEndKey = 'lessonEnd';
+export const DragSelectedMapKey = 'lidoDragSelectedMap';
+export const SelectedValuesKey = 'lidoSelectedValues';
+export const ActivityScoreKey = 'lidoActivityScore';
+export const ActivityEndKey = 'lidoActivityEnd';
+export const LessonEndKey = 'lidoLessonEnd';
 export const NextContainerKey = 'nextContainer';
-export const ActivityChangeKey = 'activityChange';
-export const GameCompletedKey = 'gameCompleted';
-export const GameExitKey = 'gameExit';
-export const ElementDropKey = 'elementDrop';
-export const ElementClickKey = 'elementClick';
-export const RightMovesKey = 'rightMoves';
-export const WrongMovesKey = 'wrongMoves';
-export const FinalScoreKey = 'finalScore';
+export const ActivityChangeKey = 'lidoActivityChange';
+export const GameCompletedKey = 'lidoGameCompleted';
+export const GameExitKey = 'lidoGameExit';
+export const ElementDropKey = 'lidoElementDrop';
+export const ElementClickKey = 'lidoElementClick';
 
 export enum TraceMode {
   NoFlow = 'noFlow',
@@ -19,4 +16,10 @@ export enum TraceMode {
   FreeTrace = 'freeTrace',
   BlindTracing = 'blindTracing',
   BlindFreeTrace = 'blindFreeTrace',
+}
+
+export default class GameScore{
+  rightMoves: number = 0;
+  wrongMoves: number = 0;
+  finalScore: number = 0;
 }
