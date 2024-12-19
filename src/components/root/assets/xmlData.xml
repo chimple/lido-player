@@ -1,6 +1,6 @@
 <main>
 
-	<app-container id="container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="truck.animation='placeToLeft 2s 0.3s linear';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+	<app-container id="container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="truck.animation='placeToLeft 2s 0.3s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
 
 				<!-- Background -->
 				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
@@ -44,14 +44,14 @@
 			
 	</app-container>
 
-	<app-container id="container" value="mainContainer1" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="false" isContinueOnCorrect="true">
+	<app-container id="container" value="mainContainer2" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="true" isContinueOnCorrect="false">
 
 				<!-- Background -->
 				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 					<app-image visible="true" src="./build/assets/images/twoColorBg.jpg" z="0" width="1600px" height="900px" onEntry=""></app-image>
 				</app-pos>
 
-				<app-col visible="true" width="850px" height="500px" z="1" onEntry="this.animation='fallAndBounce 2s ease-in-out';">
+				<app-col visible="true" width="850px" height="500px" z="1" onEntry="">
 					<app-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string='Which animal is known as the "king of the jungle"?' font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)"></app-text>
 
 					<app-row visible="true" width="800px" height="100px" bgColor="transparent" >
@@ -82,6 +82,38 @@
 					<app-text visible="true" id="checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch="this.next='true';"></app-text>
 				</app-pos>
 
+	</app-container>
+
+	<app-container id="container" value="mainContainer3" objective="I,play,football" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+
+				<!-- Background -->
+				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
+					<app-image visible="true" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/43792164-c63c-4852-bb4c-98d73eb5830a/dgsd397-3fdeed3a-50e5-4afb-a7c6-9ef653df03ef.png/v1/fit/w_663,h_367,q_70,strp/wiow_wallpaper_purple_stars_by_oryanthetornadobunny_dgsd397-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzY3IiwicGF0aCI6IlwvZlwvNDM3OTIxNjQtYzYzYy00ODUyLWJiNGMtOThkNzNlYjU4MzBhXC9kZ3NkMzk3LTNmZGVlZDNhLTUwZTUtNGFmYi1hN2M2LTllZjY1M2RmMDNlZi5wbmciLCJ3aWR0aCI6Ijw9NjYzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.g-0mvzVssBM9TTLO1xQo9ju5KlEBa4FdDVoGrIutCNg" z="0" height="900px" width="1600px"></app-image>
+				</app-pos>
+
+				<!-- Drop Elements -->
+
+				<app-col id="box" visible="true" x="630px" y="365px" z="0" width="700px" height="300px" bgColor="#B9E9FF">
+					<app-text visible="true" string="What do you play?" bgColor="transparent" font="Poppins" font-size="30px" onEntry="this.boxShadow='unset';"></app-text>
+					<app-row id="dropId" visible="true" bgColor="transparent" width="500px" height="">
+						<app-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+						<app-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="play" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+						<app-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="football" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
+					</app-row>
+				</app-col>
+
+				<app-pos visible="true" bgColor="transparent" width="900px" height="150px" z="1" x="350px" y="700px">
+					<app-row visible="true" bgColor="transparent" width="900px" height="150px" >
+						<app-text visible="true" id="drag" tabIndex="4" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="football" value="football" type="drag" font="Poppins" font-size="25px" fontColor="white"></app-text>
+						<app-text visible="true" id="drag" tabIndex="5" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="I" value="I" type="drag" font="Poppins" font-size="25px" fontColor="white"></app-text>
+						<app-text visible="true" id="drag" tabIndex="6" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="play" value="play" type="drag" font="Poppins" font-size="25px" fontColor="white"></app-text>
+					</app-row>
+				</app-pos>
+					
+				<app-pos visible="true" id="check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<app-text visible="true" id="checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch="this.next='true';"></app-text>
+				</app-pos>
+			
 	</app-container>
 
 </main>

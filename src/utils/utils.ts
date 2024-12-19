@@ -1,5 +1,7 @@
-import { ActivityScoreKey, DragSelectedMapKey, SelectedValuesKey } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey } from './constants';
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
+import GameScore from './constants';
+const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -233,7 +235,6 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     if (dragSelectedData) {
       let dragSelected = JSON.parse(dragSelectedData);
       const dropIndex = dragElement.parentElement.getAttribute('tabIndex');
-      console.log('drop index', dropIndex);
       if (dropIndex && dragSelected.hasOwnProperty(dropIndex)) {
         delete dragSelected[dropIndex];
       }
@@ -244,7 +245,6 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   }
 
   // Add pulse and highlight effect for a successful match
-
   const isCorrect = matchStringPattern(dropElement['value'], [dragElement['value']]);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
   if (isCorrect) {
@@ -260,7 +260,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
-
+  storingEachActivityScore(isCorrect);
   await onActivityComplete(dragElement, dropElement);
 }
 
@@ -462,6 +462,25 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
   handleShowCheck();
 }
 
+const storingEachActivityScore = (flag: boolean) => {
+  if (flag) {
+    gameScore.rightMoves += 1;
+  } else {
+    gameScore.wrongMoves += 1;
+  }
+  console.log('Right Moves : ', gameScore.rightMoves);
+  console.log('Wrong Moves : ', gameScore.wrongMoves);
+};
+
+const calculateScore = () => {
+  const rightMoves = gameScore.rightMoves;
+  const wrongMoves = gameScore.wrongMoves;
+  let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
+  storeActivityScore(finalScore);
+  gameScore.rightMoves = 0;
+  gameScore.wrongMoves = 0;
+};
+
 const storeActivityScore = (score: number) => {
   const appHome = document.querySelector('app-home');
   if (!appHome) return;
@@ -480,6 +499,8 @@ const storeActivityScore = (score: number) => {
   if (totalIndex - 1 == index) {
     const scoresArray: number[] = Object.values(activityScore);
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
+    gameScore.finalScore = Math.floor(finalScore);
+    console.log("Total Score : ",gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     dispatchLessonEndEvent(finalScore);
     localStorage.removeItem(ActivityScoreKey);
@@ -519,17 +540,16 @@ const validateObjectiveStatus = async () => {
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
-    await new Promise(resolve => setTimeout(resolve, 1000));
     triggerNextContainer();
   } else {
     const onInCorrect = container.getAttribute('onInCorrect');
     await executeActions(onInCorrect, container);
     const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
     if (!isContinueOnCorrect) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
       triggerNextContainer();
     }
   }
+  await calculateScore();
 };
 
 export const triggerNextContainer = () => {
@@ -589,9 +609,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
   const onClick = async () => {
     const container = document.getElementById('container');
-    console.log('Element clicked:', element);
     if (element.getAttribute('id') == 'checkButton') {
-      triggerNextContainer();
+      validateObjectiveStatus();
       return;
     }
 
@@ -607,6 +626,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
     element.style.boxShadow = '';
 
     const objective = container['objective'];
+
     const isCorrect = matchStringPattern(objective, [element['value']]);
     dispatchClickEvent(element, isCorrect);
     if (isCorrect) {
@@ -618,8 +638,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
       // showWrongAnswerAnimation([element]);
     }
-
-    await onActivityComplete();
+    storingEachActivityScore(isCorrect);
+    handleShowCheck();
   };
   element.addEventListener('click', onClick);
 }
