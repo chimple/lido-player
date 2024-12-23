@@ -1,120 +1,120 @@
 <main>
 
-	<app-container id="container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="truck.animation='placeToLeft 2s 0.3s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+	<lido-container id="lido-container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-truck.animation='placeToLeft 2s 0.3s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
 
 				<!-- Background -->
-				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
-					<app-image visible="true" src="./build/assets/images/truck/road.jpg" z="0" height="900px" width="1600px"></app-image>
-				</app-pos>
+				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
+					<lido-image visible="true" src="./build/assets/images/truck/road.jpg" z="0" height="900px" width="1600px"></lido-image>
+				</lido-pos>
 
 				<!-- Drop Elements -->
-				<app-pos id="truck" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="-160px" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="this.animation='rightToPlace 2s linear';">
+				<lido-pos id="lido-truck" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="-160px" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="this.animation='rightToPlace 2s linear';">
 
-					<app-image visible="true" src="./build/assets/images/truck/blueTruck.png" z="0" onEntry="this.marginTop='-100px';"></app-image>
+					<lido-image visible="true" src="./build/assets/images/truck/blueTruck.png" z="0" onEntry="this.marginTop='-100px';"></lido-image>
 
-					<app-col visible="true" bgColor="white" x="630px" y="365px" z="0" width="400px" height="250px">
-						<app-text visible="true" string="How can you see?" bgColor="transparent" font="Poppins" font-size="30px" onEntry="this.boxShadow='unset';"></app-text>
-						<app-image visible="true" src="./build/assets/images/truck/seeing.png" width="" height="150px"></app-image>
-					</app-col>
+					<lido-col visible="true" bgColor="white" x="630px" y="365px" z="0" width="400px" height="250px">
+						<lido-text visible="true" string="How can you see?" bgColor="transparent" font="Poppins" font-size="30px" onEntry="this.boxShadow='unset';"></lido-text>
+						<lido-image visible="true" src="./build/assets/images/truck/seeing.png" width="" height="150px"></lido-image>
+					</lido-col>
 
-					<app-row id="dropId" visible="true" bgColor="transparent" width="700px" height="150px" x="490px" y="620px">
-						<app-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-						<app-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-						<app-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="see" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-						<app-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="with" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-						<app-text visible="true" tabIndex="5" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="my" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-						<app-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="eyes" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-					</app-row>
-				</app-pos>
+					<lido-row id="lido-dropId" visible="true" bgColor="transparent" width="700px" height="150px" x="490px" y="620px">
+						<lido-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="see" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="with" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true" tabIndex="5" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="my" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="eyes" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+					</lido-row>
+				</lido-pos>
 
-				<app-pos visible="true" bgColor="transparent" width="900px" height="150px" z="1" x="380px" y="700px">
-					<app-row visible="true" bgColor="transparent" width="900px" height="150px" >
-						<app-text visible="true" id="drag" tabIndex="7" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="see" value="see" type="drag" font="Poppins" font-size="25px"></app-text>
-						<app-text visible="true" id="drag" tabIndex="8" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="I" value="I" type="drag" font="Poppins" font-size="25px"></app-text>
-						<app-text visible="true" id="drag" tabIndex="9" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="eyes" value="eyes" type="drag" font="Poppins" font-size="25px"></app-text>
-						<app-text visible="true" id="drag" tabIndex="10" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="my" value="my" type="drag" font="Poppins" font-size="25px"></app-text>
-						<app-text visible="true" id="drag" tabIndex="11" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="with" value="with" type="drag" font="Poppins" font-size="25px"></app-text>
-						<app-text visible="true" id="drag" tabIndex="12" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="can" value="can" type="drag" font="Poppins" font-size="25px"></app-text>
-					</app-row>
-				</app-pos>
+				<lido-pos visible="true" bgColor="transparent" width="900px" height="150px" z="1" x="380px" y="700px">
+					<lido-row visible="true" bgColor="transparent" width="900px" height="150px" >
+						<lido-text visible="true" tabIndex="7" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="see" value="see" type="drag" font="Poppins" font-size="25px"></lido-text>
+						<lido-text visible="true" tabIndex="8" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="I" value="I" type="drag" font="Poppins" font-size="25px"></lido-text>
+						<lido-text visible="true" tabIndex="9" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="eyes" value="eyes" type="drag" font="Poppins" font-size="25px"></lido-text>
+						<lido-text visible="true" tabIndex="10" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="my" value="my" type="drag" font="Poppins" font-size="25px"></lido-text>
+						<lido-text visible="true" tabIndex="11" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="with" value="with" type="drag" font="Poppins" font-size="25px"></lido-text>
+						<lido-text visible="true" tabIndex="12" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="#f7fc6d" string="can" value="can" type="drag" font="Poppins" font-size="25px"></lido-text>
+					</lido-row>
+				</lido-pos>
 					
-				<app-pos visible="true" id="check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
-					<app-text visible="true" id="checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch="this.next='true';"></app-text>
-				</app-pos>
+				<lido-pos visible="true" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
+				</lido-pos>
 			
-	</app-container>
+	</lido-container>
 
-	<app-container id="container" value="mainContainer2" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="true" isContinueOnCorrect="false">
-
-				<!-- Background -->
-				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
-					<app-image visible="true" src="./build/assets/images/twoColorBg.jpg" z="0" width="1600px" height="900px" onEntry=""></app-image>
-				</app-pos>
-
-				<app-col visible="true" width="850px" height="500px" z="1" onEntry="">
-					<app-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string='Which animal is known as the "king of the jungle"?' font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)"></app-text>
-
-					<app-row visible="true" width="800px" height="100px" bgColor="transparent" >
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onCorrect="this.border='2px solid red';">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/giraffe.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="GIRAFFE" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
-						</app-col>
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="leopard" onInCorrect="this.border='2px solid red';">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/leopard.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="LEOPARD" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
-						</app-col>
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="lion" onCorrect="this.border='2px solid green';">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/lion.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="LION" bgColor="transparent" onEntry="this.boxShadow='unset';" ></app-text>
-						</app-col>
-						<app-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onInCorrect="this.border='2px solid red';">
-							<app-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/tiger.png" ></app-image>
-							<app-text visible="true" width="150px" font="Poppins" font-size="20px" string="TIGER" bgColor="transparent" onEntry="this.boxShadow='unset';"></app-text>
-						</app-col>
-						
-						
-					</app-row>
-
-
-				</app-col>
-
-				<app-pos visible="true" id="check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
-					<app-text visible="true" id="checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch="this.next='true';"></app-text>
-				</app-pos>
-
-	</app-container>
-
-	<app-container id="container" value="mainContainer3" objective="I,play,football" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+	<lido-container id="lido-container" value="mainContainer2" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="true" isContinueOnCorrect="false">
 
 				<!-- Background -->
-				<app-pos id="pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
-					<app-image visible="true" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/43792164-c63c-4852-bb4c-98d73eb5830a/dgsd397-3fdeed3a-50e5-4afb-a7c6-9ef653df03ef.png/v1/fit/w_663,h_367,q_70,strp/wiow_wallpaper_purple_stars_by_oryanthetornadobunny_dgsd397-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzY3IiwicGF0aCI6IlwvZlwvNDM3OTIxNjQtYzYzYy00ODUyLWJiNGMtOThkNzNlYjU4MzBhXC9kZ3NkMzk3LTNmZGVlZDNhLTUwZTUtNGFmYi1hN2M2LTllZjY1M2RmMDNlZi5wbmciLCJ3aWR0aCI6Ijw9NjYzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.g-0mvzVssBM9TTLO1xQo9ju5KlEBa4FdDVoGrIutCNg" z="0" height="900px" width="1600px"></app-image>
-				</app-pos>
+				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+					<lido-image visible="true" src="./build/assets/images/twoColorBg.jpg" z="0" width="1600px" height="900px" onEntry=""></lido-image>
+				</lido-pos>
+
+				<lido-col visible="true" width="850px" height="500px" z="1" onEntry="">
+					<lido-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string='Which animal is known as the "king of the jungle"?' font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)"></lido-text>
+
+					<lido-row visible="true" width="800px" height="100px" bgColor="transparent" >
+						<lido-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onCorrect="this.border='2px solid red';">
+							<lido-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/giraffe.png" ></lido-image>
+							<lido-text visible="true" width="150px" font="Poppins" font-size="20px" string="GIRAFFE" bgColor="transparent" onEntry="this.boxShadow='unset';"></lido-text>
+						</lido-col>
+						<lido-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="leopard" onInCorrect="this.border='2px solid red';">
+							<lido-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/leopard.png" ></lido-image>
+							<lido-text visible="true" width="150px" font="Poppins" font-size="20px" string="LEOPARD" bgColor="transparent" onEntry="this.boxShadow='unset';"></lido-text>
+						</lido-col>
+						<lido-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="lion" onCorrect="this.border='2px solid green';">
+							<lido-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/lion.png" ></lido-image>
+							<lido-text visible="true" width="150px" font="Poppins" font-size="20px" string="LION" bgColor="transparent" onEntry="this.boxShadow='unset';" ></lido-text>
+						</lido-col>
+						<lido-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onInCorrect="this.border='2px solid red';">
+							<lido-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/tiger.png" ></lido-image>
+							<lido-text visible="true" width="150px" font="Poppins" font-size="20px" string="TIGER" bgColor="transparent" onEntry="this.boxShadow='unset';"></lido-text>
+						</lido-col>
+						
+						
+					</lido-row>
+
+
+				</lido-col>
+
+				<lido-pos visible="true" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
+				</lido-pos>
+
+	</lido-container>
+
+	<lido-container id="lido-container" value="mainContainer3" objective="I,play,football" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+
+				<!-- Background -->
+				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
+					<lido-image visible="true" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/43792164-c63c-4852-bb4c-98d73eb5830a/dgsd397-3fdeed3a-50e5-4afb-a7c6-9ef653df03ef.png/v1/fit/w_663,h_367,q_70,strp/wiow_wallpaper_purple_stars_by_oryanthetornadobunny_dgsd397-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzY3IiwicGF0aCI6IlwvZlwvNDM3OTIxNjQtYzYzYy00ODUyLWJiNGMtOThkNzNlYjU4MzBhXC9kZ3NkMzk3LTNmZGVlZDNhLTUwZTUtNGFmYi1hN2M2LTllZjY1M2RmMDNlZi5wbmciLCJ3aWR0aCI6Ijw9NjYzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.g-0mvzVssBM9TTLO1xQo9ju5KlEBa4FdDVoGrIutCNg" z="0" height="900px" width="1600px"></lido-image>
+				</lido-pos>
 
 				<!-- Drop Elements -->
 
-				<app-col id="box" visible="true" x="630px" y="365px" z="0" width="700px" height="300px" bgColor="#B9E9FF">
-					<app-text visible="true" string="What do you play?" bgColor="transparent" font="Poppins" font-size="30px" onEntry="this.boxShadow='unset';"></app-text>
-					<app-row id="dropId" visible="true" bgColor="transparent" width="500px" height="">
-						<app-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-						<app-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="play" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-						<app-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="football" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></app-text>
-					</app-row>
-				</app-col>
+				<lido-col id="lido-box" visible="true" x="630px" y="365px" z="0" width="700px" height="300px" bgColor="#B9E9FF">
+					<lido-text visible="true" string="What do you play?" bgColor="transparent" font="Poppins" font-size="30px" onEntry="this.boxShadow='unset';"></lido-text>
+					<lido-row id="lido-dropId" visible="true" bgColor="transparent" width="500px" height="">
+						<lido-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="play" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="football" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+					</lido-row>
+				</lido-col>
 
-				<app-pos visible="true" bgColor="transparent" width="900px" height="150px" z="1" x="350px" y="700px">
-					<app-row visible="true" bgColor="transparent" width="900px" height="150px" >
-						<app-text visible="true" id="drag" tabIndex="4" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="football" value="football" type="drag" font="Poppins" font-size="25px" fontColor="white"></app-text>
-						<app-text visible="true" id="drag" tabIndex="5" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="I" value="I" type="drag" font="Poppins" font-size="25px" fontColor="white"></app-text>
-						<app-text visible="true" id="drag" tabIndex="6" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="play" value="play" type="drag" font="Poppins" font-size="25px" fontColor="white"></app-text>
-					</app-row>
-				</app-pos>
+				<lido-pos visible="true" bgColor="transparent" width="900px" height="150px" z="1" x="350px" y="700px">
+					<lido-row visible="true" bgColor="transparent" width="900px" height="150px" >
+						<lido-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="football" value="football" type="drag" font="Poppins" font-size="25px" fontColor="white"></lido-text>
+						<lido-text visible="true" tabIndex="5" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="I" value="I" type="drag" font="Poppins" font-size="25px" fontColor="white"></lido-text>
+						<lido-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.boxShadow='0 10px 0 0 white';" bgColor="rgba(210, 140, 80, 1)" string="play" value="play" type="drag" font="Poppins" font-size="25px" fontColor="white"></lido-text>
+					</lido-row>
+				</lido-pos>
 					
-				<app-pos visible="true" id="check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
-					<app-text visible="true" id="checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch="this.next='true';"></app-text>
-				</app-pos>
+				<lido-pos visible="true" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
+				</lido-pos>
 			
-	</app-container>
+	</lido-container>
 
 </main>
 

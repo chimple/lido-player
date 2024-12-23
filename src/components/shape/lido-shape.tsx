@@ -9,8 +9,8 @@ import { initEventsForElement } from '../../utils/utils';
  * Additionally, it supports custom events for interaction like touch, match, and entry.
  */
 @Component({
-  tag: 'app-shape',
-  styleUrl: 'app-shape.css',
+  tag: 'lido-shape',
+  styleUrl: 'lido-shape.css',
   shadow: false,
 })
 export class AppShape {
@@ -139,7 +139,7 @@ export class AppShape {
 
     return (
       <Host
-        class={`shape ${this.shapeType}`} // Apply shape-specific class
+        class={`lido-shape ${this.shapeType}`} // Apply shape-specific class
         value={this.value}
         type={this.type}
         tabindex={this.tabIndex}

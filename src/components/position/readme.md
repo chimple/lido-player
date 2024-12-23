@@ -18,7 +18,6 @@
 | `onCorrect`   | `on-correct`    | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`  | `undefined` |
 | `onEntry`     | `on-entry`      | Event handler triggered when the component is entered, often used to trigger animations or custom logic.                | `string`  | `undefined` |
 | `onInCorrect` | `on-in-correct` | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect. | `string`  | `undefined` |
-| `onMatch`     | `on-match`      | Event handler triggered when a matching action occurs (e.g., custom logic for interactions).                            | `string`  | `undefined` |
 | `onTouch`     | `on-touch`      | Event handler triggered when the component is touched or clicked.                                                       | `string`  | `undefined` |
 | `tabIndex`    | `tab-index`     | Tab index to support keyboard navigation within the component.                                                          | `number`  | `undefined` |
 | `type`        | `type`          | The type of the component, used for conditional logic or specific styles.                                               | `string`  | `undefined` |
@@ -34,13 +33,13 @@
 
 ### Used by
 
- - [app-home](../home)
+ - [lido-home](../home)
 
 ### Graph
 ```mermaid
 graph TD;
-  app-home --> app-pos
-  style app-pos fill:#f9f,stroke:#333,stroke-width:4px
+  lido-home --> lido-pos
+  style lido-pos fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

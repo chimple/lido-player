@@ -17,7 +17,6 @@
 | `onCorrect`   | `on-correct`    | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`  | `undefined` |
 | `onEntry`     | `on-entry`      | Event handler triggered when the row is entered, often used for triggering animations or custom logic.                  | `string`  | `undefined` |
 | `onInCorrect` | `on-in-correct` | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect. | `string`  | `undefined` |
-| `onMatch`     | `on-match`      | Event handler triggered when a matching action occurs within the row.                                                   | `string`  | `undefined` |
 | `onTouch`     | `on-touch`      | Event handler triggered when the row is touched or clicked.                                                             | `string`  | `undefined` |
 | `tabIndex`    | `tab-index`     | Tab index for keyboard navigation.                                                                                      | `number`  | `undefined` |
 | `type`        | `type`          | Defines the type of the row, used for conditional logic or specific styling.                                            | `string`  | `undefined` |
@@ -33,13 +32,13 @@
 
 ### Used by
 
- - [app-home](../home)
+ - [lido-home](../home)
 
 ### Graph
 ```mermaid
 graph TD;
-  app-home --> app-row
-  style app-row fill:#f9f,stroke:#333,stroke-width:4px
+  lido-home --> lido-row
+  style lido-row fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

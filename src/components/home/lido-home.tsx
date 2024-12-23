@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Host } from '@stencil/core';
-import { DragSelectedMapKey, SelectedValuesKey } from '../../utils/constants';
+import { DragSelectedMapKey, SelectedValuesKey, NextContainerKey } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
 
 /**
@@ -10,9 +10,9 @@ import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../u
  * and displays progress indicators (dots) for each container.
  */
 @Component({
-  tag: 'app-home',
+  tag: 'lido-home',
   shadow: false,
-  styleUrls: ['./../../index.css', '../../utils/css/animation.css', './app-home.css'],
+  styleUrls: ['./../../index.css', '../../utils/css/animation.css', './lido-home.css'],
 })
 export class AppHome {
   /**
@@ -54,7 +54,7 @@ export class AppHome {
    * Event handler for transitioning to the next container in the sequence.
    * If the last container is reached, it shows a completion message.
    */
-  nextContainer = (index?: number | undefined) => {
+  NextContainerKey = (index?: number | undefined) => {
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
     localStorage.removeItem(SelectedValuesKey);
@@ -93,13 +93,13 @@ export class AppHome {
    * between containers and parses the XML data into containers.
    */
   componentWillLoad() {
-    // Listen for 'nextContainer' event to transition between containers
-    window.addEventListener('nextContainer', () => {
-      this.nextContainer();
+    // Listen for 'NextContainerKey' event to transition between containers
+    window.addEventListener(NextContainerKey, () => {
+      this.NextContainerKey();
     });
 
     window.addEventListener('changeContainer', (e: any) => {
-      this.nextContainer(e.detail.index);
+      this.NextContainerKey(e.detail.index);
     });
 
     // Parse the provided XML data
@@ -116,11 +116,11 @@ export class AppHome {
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
    */
   disconnectedCallback() {
-    window.removeEventListener('nextContainer', () => {
-      this.nextContainer();
+    window.removeEventListener(NextContainerKey, () => {
+      this.NextContainerKey();
     });
     window.removeEventListener('changeContainer', (e: any) => {
-      this.nextContainer(e.detail.index);
+      this.NextContainerKey(e.detail.index);
     });
   }
 
@@ -169,20 +169,20 @@ export class AppHome {
 
     // Map XML tags to Stencil components
     const componentMapping = {
-      'app-container': (
-        <app-container {...props} canplay={this.canplay} baseUrl={this.baseUrl}>
+      'lido-container': (
+        <lido-container {...props} canplay={this.canplay} baseUrl={this.baseUrl}>
           {children}
-        </app-container>
+        </lido-container>
       ),
-      'app-col': <app-col {...props}>{children}</app-col>,
-      'app-trace': <app-trace {...props}>{children}</app-trace>,
-      'app-image': <app-image {...props}>{children}</app-image>,
-      'app-row': <app-row {...props}>{children}</app-row>,
-      'app-text': <app-text {...props}>{children}</app-text>,
-      'app-pos': <app-pos {...props}>{children}</app-pos>,
-      'app-shape': <app-shape {...props}>{children}</app-shape>,
-      'app-wrap': <app-wrap {...props}>{children}</app-wrap>,
-      'app-random': <app-random {...props}>{children}</app-random>,
+      'lido-col': <lido-col {...props}>{children}</lido-col>,
+      'lido-trace': <lido-trace {...props}>{children}</lido-trace>,
+      'lido-image': <lido-image {...props}>{children}</lido-image>,
+      'lido-row': <lido-row {...props}>{children}</lido-row>,
+      'lido-text': <lido-text {...props}>{children}</lido-text>,
+      'lido-pos': <lido-pos {...props}>{children}</lido-pos>,
+      'lido-shape': <lido-shape {...props}>{children}</lido-shape>,
+      'lido-wrap': <lido-wrap {...props}>{children}</lido-wrap>,
+      'lido-random': <lido-random {...props}>{children}</lido-random>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning
@@ -201,7 +201,7 @@ export class AppHome {
    */
   private parseContainers(rootElement: Element) {
     const containers = [];
-    const containerElements = rootElement.querySelectorAll('app-container');
+    const containerElements = rootElement.querySelectorAll('lido-container');
 
     // Parse each container and add it to the array
     containerElements.forEach(container => {
@@ -220,10 +220,10 @@ export class AppHome {
    */
   private renderDots() {
     return (
-      <div id="dot-indicator" class="dot-container">
+      <div id="lido-dot-indicator" class="lido-dot-container">
         {this.containers.map((_, index) => (
           <span
-            class={`dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+            class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
             onClick={() => this.jumpToContainer(index)}
           ></span>
         ))}
@@ -237,7 +237,7 @@ export class AppHome {
    * @param index - The index of the container to jump to.
    */
   private jumpToContainer(index: number) {
-    this.nextContainer(index);
+    this.NextContainerKey(index);
     // this.currentContainerIndex = index;
     // this.containers = [...this.containers]; // Trigger re-render
   }
@@ -257,7 +257,7 @@ export class AppHome {
         {this.renderDots()}
 
         {/* Show completion message if all containers have been displayed */}
-        {this.showCompletionMessage && <div class="snackbar">All containers have been displayed!</div>}
+        {this.showCompletionMessage && <div class="lido-snackbar">All containers have been displayed!</div>}
       </Host>
     );
   }

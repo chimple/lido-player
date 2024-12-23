@@ -38,13 +38,13 @@
 
 ### Used by
 
- - [app-home](../home)
+ - [lido-home](../home)
 
 ### Graph
 ```mermaid
 graph TD;
-  app-home --> app-container
-  style app-container fill:#f9f,stroke:#333,stroke-width:4px
+  lido-home --> lido-container
+  style lido-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

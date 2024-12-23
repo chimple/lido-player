@@ -2,37 +2,35 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppCol
+ * @component AppPos
  *
- * The `AppCol` component is a dynamic column-like UI element that can be
- * customized via various properties such as dimensions, position, visibility,
- * background color, and event handlers. It is designed to work within
- * containers (`app-container`) and can include child components like
- * `app-text`, `app-row`, etc.
+ * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+ * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
+ * events for interaction such as touch, match, and entry events.
  */
 @Component({
-  tag: 'app-col',
-  styleUrl: 'app-col.css',
+  tag: 'lido-pos',
+  styleUrl: 'lido-pos.css',
   shadow: false,
 })
-export class AppCol {
+export class AppPos {
   /**
-   * The unique identifier for the column component.
+   * Unique identifier for the positional element.
    */
   @Prop() id: string;
 
   /**
-   * The value associated with the column component. Typically used for internal logic.
+   * Value assigned to the component, often used for internal logic or data tracking.
    */
   @Prop() value: string;
 
   /**
-   * The height of the column component (CSS value, e.g., '100px', '50%').
+   * The height of the component (CSS value, e.g., '100px', '50%').
    */
   @Prop() height: string;
 
   /**
-   * The width of the column component (CSS value, e.g., '100px', '50%').
+   * The width of the component (CSS value, e.g., '100px', '50%').
    */
   @Prop() width: string;
 
@@ -47,47 +45,47 @@ export class AppCol {
   @Prop() ariaHidden: string;
 
   /**
-   * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+   * X-axis (horizontal) position of the component (CSS value, e.g., '10px', '5vw').
    */
   @Prop() x: string;
 
   /**
-   * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+   * Y-axis (vertical) position of the component (CSS value, e.g., '10px', '5vh').
    */
   @Prop() y: string;
 
   /**
-   * The z-index of the column to control stacking order.
+   * Z-index for stacking order of the element relative to others.
    */
   @Prop() z: string;
 
   /**
-   * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+   * Background color of the component (CSS color value, e.g., '#FFFFFF', 'blue').
    */
   @Prop() bgColor: string;
 
   /**
-   * Defines the type of the column, which can be used for styling or specific logic handling.
+   * The type of the component, used for conditional logic or specific styles.
    */
   @Prop() type: string;
 
   /**
-   * The tab index value, used to set the tab order of the column for keyboard navigation.
+   * Tab index to support keyboard navigation within the component.
    */
   @Prop() tabIndex: number;
 
   /**
-   * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+   * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
    */
   @Prop() visible: boolean;
 
   /**
-   * Audio file URL or identifier for sound that will be associated with the column.
+   * URL or identifier for an audio file associated with the component.
    */
   @Prop() audio: string;
 
   /**
-   * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+   * Event handler triggered when the component is touched or clicked.
    */
   @Prop() onTouch: string;
 
@@ -102,51 +100,52 @@ export class AppCol {
   @Prop() onCorrect: string;
 
   /**
-   * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+   * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
    */
   @Prop() onEntry: string;
 
   /**
-   * Reference to the HTML element that represents this component.
+   * Reference to the HTML element that represents this `app-pos` component.
    */
   @Element() el: HTMLElement;
 
   /**
-   * This lifecycle hook is called after the component is rendered in the DOM.
-   * It initializes events for the column based on the provided type.
+   * Lifecycle hook that is called after the component has been rendered in the DOM.
+   * It initializes custom events based on the `type` of the component.
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
   }
 
   render() {
-    // Inline styles applied to the column, mainly for positioning and background.
+    // Inline styles to position and size the component
     const style = {
       height: this.height,
       width: this.width,
       backgroundColor: this.bgColor,
       top: this.y,
       left: this.x,
-      display: this.visible ? 'flex' : 'none',
       zIndex: this.z,
+      display: this.visible ? 'block' : 'none', // Toggle visibility
     };
 
     return (
       <Host
         id={this.id}
-        class="col"
+        class="lido-pos"
         type={this.type}
         tabindex={this.tabIndex}
-        value={this.value}
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        value={this.value}
         audio={this.audio}
         onTouch={this.onTouch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
       >
+        {/* Slot for child elements */}
         <slot />
       </Host>
     );

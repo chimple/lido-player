@@ -8,8 +8,8 @@ import { initEventsForElement } from '../../utils/utils';
  * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
  */
 @Component({
-  tag: 'app-row',
-  styleUrl: 'app-row.css',
+  tag: 'lido-row',
+  styleUrl: 'lido-row.css',
   shadow: false,
 })
 export class AppRow {
@@ -125,7 +125,7 @@ export class AppRow {
 
     return (
       <Host
-        class="row"
+        class="lido-row"
         type={this.type}
         tabindex={this.tabIndex}
         value={this.value}

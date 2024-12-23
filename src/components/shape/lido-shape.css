@@ -1,4 +1,4 @@
-.shape {
+.lido-shape {
   position: absolute;
   top: var(--y);
   left: var(--x);
@@ -6,18 +6,18 @@
   z-index: var(--z);
 }
 
-.rectangle {
+.lido-rectangle {
   border-radius: 0;
 }
 
-.circle {
+.lido-circle {
   width: var(--width); /* Ensures width is always used for both dimensions */
   height: var(--width); /* Make height equal to width for a perfect circle */
   border-radius: 50%; /* 50% border-radius for a perfect circle */
   background-color: var(--bgColor);
 }
 
-.ellipse {
+.lido-ellipse {
   width: var(--width);
   height: var(--height);
   border-radius: 50%; /* Create an ellipse shape */
@@ -26,69 +26,69 @@
 
 /* other shapes */
 
-.triangle {
+.lido-triangle {
   width: var(--triangleWidth);
   height: var(--triangleHeight);
   background-color: var(--bgColor);
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
 }
 
-.rightTriangle {
+.lido-rightTriangle {
   width: var(--triangleWidth);
   height: var(--triangleHeight);
   background-color: var(--bgColor);
   clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
 }
 
-.leftTriangle {
+.lido-leftTriangle {
   width: var(--triangleWidth);
   height: var(--triangleHeight);
   background-color: var(--triangleBgColor);
   clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
 }
 
-.parallelogram {
+.lido-parallelogram {
   width: var(--paralleWidth);
   height: var(--paralleHeight);
   transform: skew(20deg);
 }
 
-.star {
+.lido-star {
   width: var(--starWidth);
   height: var(--starHeight);
   background-color: var(--starBgColor);
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }
 
-.pentagon {
+.lido-pentagon {
   width: var(--pentagonWidth);
   height: var(--pentagonHeight);
   background-color: var(--pentagonBgColor);
   clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
 }
 
-.heptagon {
+.lido-heptagon {
   width: var(--heptagonWidth);
   height: var(--heptagonHeight);
   background-color: var(--heptagonBgColor);
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
-.octagon {
+.lido-octagon {
   width: var(--octagonWidth);
   height: var(--octagonHeight);
   background-color: var(--octagonBgColor);
   clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
 }
 
-.rhombus {
+.lido-rhombus {
   width: var(--rhombusWidth);
   height: var(--rhombusHeight);
   background-color: var(--rhombusBgColor);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
 
-.heart {
+.lido-heart {
   height: var(--heartHeight);
   width: var(--heartWidth);
   border-image: radial-gradient(var(--heartBgColor) 69%, #0000 70%) 84.5%/50%;

@@ -1,4 +1,4 @@
-.col {
+.lido-col {
   /* position: absolute; */
   top: var(--y, 0);
   left: var(--x, 0);
@@ -14,6 +14,6 @@
   align-items: center;
 }
 
-.col > * {
+.lido-col > * {
   /* position: relative; */
 }

@@ -1,4 +1,4 @@
-.snackbar {
+.lido-snackbar {
   visibility: visible;
   min-width: 250px;
   background-color: #333;
@@ -14,7 +14,7 @@
   font-size: 17px;
 }
 
-.dot-container {
+.lido-dot-container {
   text-align: center;
   position: fixed;
   z-index: 1;
@@ -24,7 +24,7 @@
   transform: translate(-50%);
 }
 
-.dot {
+.lido-dot {
   height: 15px;
   width: 15px;
   margin: 0 4px;
@@ -35,14 +35,14 @@
   cursor: pointer;
 }
 
-.dot.completed {
+.lido-dot.completed {
   background-color: grey;
 }
 
-.dot.current {
+.lido-dot.current {
   background-color: green;
 }
 
-.dot:not(.completed):not(.current) {
+.lido-dot:not(.completed):not(.current) {
   background-color: #bbb;
 }

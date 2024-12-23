@@ -8,7 +8,7 @@ import { Component, h, State, Prop, getAssetPath } from '@stencil/core';
  * The XML path can be configured via a prop.
  */
 @Component({
-  tag: 'app-root',
+  tag: 'lido-root',
   shadow: false,
   assetsDirs: ['assets'], // Specifies the directory for static assets
 })
@@ -83,7 +83,7 @@ export class AppRoot {
       return <div>Error loading XML data. Please check the path or URL.</div>;
     }
 
-    // Once the XML data is loaded, pass it to the `app-home` component
-    return <app-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl}></app-home>;
+    // Once the XML data is loaded, pass it to the `lido-home` component
+    return <lido-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl}></lido-home>;
   }
 }

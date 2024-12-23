@@ -9,8 +9,8 @@ import { initEventsForElement } from '../../utils/utils';
  * positioning and visibility control. The component supports custom events like touch, match, and entry.
  */
 @Component({
-  tag: 'app-text',
-  styleUrl: 'app-text.css',
+  tag: 'lido-text',
+  styleUrl: 'lido-text.css',
   shadow: false,
 })
 export class AppText {
@@ -159,7 +159,7 @@ export class AppText {
 
     return (
       <Host
-        class="text"
+        class="lido-text"
         value={this.value}
         type={this.type}
         tabindex={this.tabIndex}
