@@ -7,7 +7,7 @@ body {
   overflow: hidden;
 }
 
-.disable-check-button {
+.lido-disable-check-button {
   pointer-events: none; 
   background-color: #9393935c !important; 
   color: white;

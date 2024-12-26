@@ -5,8 +5,8 @@ import { TraceMode } from '../../utils/constants';
 // Enum for different tracing modes
 
 @Component({
-  tag: 'app-trace',
-  styleUrl: 'app-trace.css',
+  tag: 'lido-trace',
+  styleUrl: 'lido-trace.css',
   shadow: false,
   assetsDirs: ['svg'],
 })
@@ -196,7 +196,7 @@ export class AppTrace {
       arrowMarker.setAttribute('points', '-5,-5 0,0 -5,5');
       arrowMarker.setAttribute('fill', 'blue');
       arrowMarker.setAttribute('transform', `translate(${point.x},${point.y}) rotate(${(angle * 180) / Math.PI})`);
-      arrowMarker.setAttribute('class', 'flow-indicator');
+      arrowMarker.setAttribute('class', 'lido-flow-indicator');
       markers.push(arrowMarker);
       path.parentNode?.appendChild(arrowMarker); // Append to the same SVG container
     }
@@ -205,7 +205,7 @@ export class AppTrace {
 
   // Show or hide flow indicators based on mode
   updateFlowIndicators(state: any) {
-    const indicators = state.svg.querySelectorAll('.flow-indicator');
+    const indicators = state.svg.querySelectorAll('.lido-flow-indicator');
     indicators.forEach(indicator => {
       if (state.mode === TraceMode.NoFlow) {
         (indicator as HTMLElement).style.display = 'none';
@@ -228,8 +228,8 @@ export class AppTrace {
       greenPath.setAttribute('stroke-dashoffset', pathLength.toString()); // Hidden initially
       path.parentNode.appendChild(greenPath, path);
 
-      path.setAttribute('class', 'trace-path'); // Add class for easier reference
-      greenPath.setAttribute('class', 'trace-path-green'); // Add class for easier reference
+      path.setAttribute('class', 'lido-trace-path'); // Add class for easier reference
+      greenPath.setAttribute('class', 'lido-trace-path-green'); // Add class for easier reference
 
       (path as any).greenPath = greenPath;
       path.classList.add(state.mode);
@@ -260,7 +260,7 @@ export class AppTrace {
   setupDraggableCircle(state: any) {
     const firstPathStart = state.paths[0].getPointAtLength(0);
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('id', 'draggableCircle');
+    circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
     circle.setAttribute('r', '20'); // Radius of the draggable circle
@@ -551,7 +551,7 @@ export class AppTrace {
       state.circle = null;
     }
 
-    const indicators = state.svg?.querySelectorAll('.flow-indicator') as NodeListOf<SVGPolygonElement>;
+    const indicators = state.svg?.querySelectorAll('.lido-flow-indicator') as NodeListOf<SVGPolygonElement>;
     indicators.forEach(indicator => {
       indicator.remove(); // Remove all previous flow indicators
     });
@@ -568,7 +568,7 @@ export class AppTrace {
     state.lastLength = 0;
 
     if (state.currentPathIndex >= state.paths.length) {
-      //   this.loadAnotherSVG(state, true);
+      //  this.loadAnotherSVG(state, true);
       triggerNextContainer();
       return;
     }
@@ -604,8 +604,8 @@ export class AppTrace {
     // const svgFiles = ['A_test.svg', 'B_test.svg', 'C_test.svg', 'D_test.svg', 'अ_test.svg', 'ट_test.svg', 'क_test.svg', 'ख_test.svg', 'ग_test.svg']; // Add more SVG file names as needed
 
     return (
-      <Host class="trace" id={this.id} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} tabindex={this.tabIndex}>
-        <div id="svgContainer"></div>
+      <Host class="lido-trace" id={this.id} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} tabindex={this.tabIndex}>
+        <div id="lido-svgContainer"></div>
       </Host>
     );
   }

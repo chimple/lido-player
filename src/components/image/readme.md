@@ -17,7 +17,6 @@
 | `onCorrect`   | `on-correct`    | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`  | `undefined` |
 | `onEntry`     | `on-entry`      | Event handler triggered when the image is entered (useful for animations or logic on entry).                            | `string`  | `undefined` |
 | `onInCorrect` | `on-in-correct` | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect. | `string`  | `undefined` |
-| `onMatch`     | `on-match`      | Event handler triggered when a matching action occurs.                                                                  | `string`  | `undefined` |
 | `onTouch`     | `on-touch`      | Event handler triggered when the image is touched or clicked.                                                           | `string`  | `undefined` |
 | `src`         | `src`           | The source URL of the image to be displayed.                                                                            | `string`  | `undefined` |
 | `tabIndex`    | `tab-index`     | Tab index for keyboard navigation.                                                                                      | `number`  | `undefined` |
@@ -34,13 +33,13 @@
 
 ### Used by
 
- - [app-home](../home)
+ - [lido-home](../home)
 
 ### Graph
 ```mermaid
 graph TD;
-  app-home --> app-image
-  style app-image fill:#f9f,stroke:#333,stroke-width:4px
+  lido-home --> lido-image
+  style lido-image fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

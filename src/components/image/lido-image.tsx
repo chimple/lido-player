@@ -10,8 +10,8 @@ import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
  * events such as touch, match, and entry events.
  */
 @Component({
-  tag: 'app-image',
-  styleUrl: 'app-image.css',
+  tag: 'lido-image',
+  styleUrl: 'lido-image.css',
   shadow: false,
 })
 export class AppImage {
@@ -146,7 +146,7 @@ export class AppImage {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
       >
-        <img class="image" src={convertUrlToRelative(this.src)} alt="" style={style} />
+        <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" style={style} />
       </Host>
     );
   }

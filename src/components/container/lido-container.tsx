@@ -9,8 +9,8 @@ import { initEventsForElement } from '../../utils/utils';
  * such as dimensions, positioning, visibility, and custom event handlers.
  */
 @Component({
-  tag: 'app-container',
-  styleUrl: 'app-container.css',
+  tag: 'lido-container',
+  styleUrl: 'lido-container.css',
   shadow: false,
 })
 export class AppContainer {
@@ -191,9 +191,9 @@ export class AppContainer {
 
     return (
       <Host
-        id="container"
+        id="lido-container"
         tabindex={0}
-        class="container"
+        class="lido-container"
         objective={this.objective}
         style={style}
         aria-label={this.ariaLabel}

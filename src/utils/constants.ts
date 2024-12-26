@@ -3,7 +3,7 @@ export const SelectedValuesKey = 'lidoSelectedValues';
 export const ActivityScoreKey = 'lidoActivityScore';
 export const ActivityEndKey = 'lidoActivityEnd';
 export const LessonEndKey = 'lidoLessonEnd';
-export const NextContainerKey = 'nextContainer';
+export const NextContainerKey = 'lidoNextContainer';
 export const ActivityChangeKey = 'lidoActivityChange';
 export const GameCompletedKey = 'lidoGameCompleted';
 export const GameExitKey = 'lidoGameExit';
@@ -11,11 +11,11 @@ export const ElementDropKey = 'lidoElementDrop';
 export const ElementClickKey = 'lidoElementClick';
 
 export enum TraceMode {
-  NoFlow = 'noFlow',
-  ShowFlow = 'showFlow',
-  FreeTrace = 'freeTrace',
-  BlindTracing = 'blindTracing',
-  BlindFreeTrace = 'blindFreeTrace',
+  NoFlow = 'lido-noFlow',
+  ShowFlow = 'lido-showFlow',
+  FreeTrace = 'lido-freeTrace',
+  BlindTracing = 'lido-blindTracing',
+  BlindFreeTrace = 'lido-blindFreeTrace',
 }
 
 export default class GameScore{

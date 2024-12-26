@@ -9,8 +9,8 @@ import { initEventsForElement } from '../../utils/utils';
  * It allows for full customization via props like dimensions, background color, visibility, and z-index.
  */
 @Component({
-  tag: 'app-wrap',
-  styleUrl: 'app-wrap.css',
+  tag: 'lido-wrap',
+  styleUrl: 'lido-wrap.css',
   shadow: false,
 })
 export class AppWrap {
@@ -131,7 +131,7 @@ export class AppWrap {
 
     return (
       <Host
-        class="wrap"
+        class="lido-wrap"
         value={this.value}
         type={this.type}
         tabindex={this.tabIndex}

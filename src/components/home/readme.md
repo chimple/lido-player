@@ -19,36 +19,36 @@
 
 ### Used by
 
- - [app-root](../root)
+ - [lido-root](../root)
 
 ### Depends on
 
-- [app-container](../container)
-- [app-col](../column)
-- [app-trace](../trace)
-- [app-image](../image)
-- [app-row](../row)
-- [app-text](../text)
-- [app-pos](../position)
-- [app-shape](../shape)
-- [app-wrap](../wrap)
-- [app-random](../random)
+- [lido-container](../container)
+- [lido-col](../column)
+- [lido-trace](../trace)
+- [lido-image](../image)
+- [lido-row](../row)
+- [lido-text](../text)
+- [lido-pos](../position)
+- [lido-shape](../shape)
+- [lido-wrap](../wrap)
+- [lido-random](../random)
 
 ### Graph
 ```mermaid
 graph TD;
-  app-home --> app-container
-  app-home --> app-col
-  app-home --> app-trace
-  app-home --> app-image
-  app-home --> app-row
-  app-home --> app-text
-  app-home --> app-pos
-  app-home --> app-shape
-  app-home --> app-wrap
-  app-home --> app-random
-  app-root --> app-home
-  style app-home fill:#f9f,stroke:#333,stroke-width:4px
+  lido-home --> lido-container
+  lido-home --> lido-col
+  lido-home --> lido-trace
+  lido-home --> lido-image
+  lido-home --> lido-row
+  lido-home --> lido-text
+  lido-home --> lido-pos
+  lido-home --> lido-shape
+  lido-home --> lido-wrap
+  lido-home --> lido-random
+  lido-root --> lido-home
+  style lido-home fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

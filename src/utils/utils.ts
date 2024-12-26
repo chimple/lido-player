@@ -31,7 +31,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let initialY = 0;
 
   // Fetch the container element
-  const container = document.getElementById('container');
+  const container = document.getElementById('lido-container');
   if (!container) {
     console.error(`Container with ID "container" not found.`);
     return;
@@ -432,7 +432,7 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
-  const container = document.getElementById('container');
+  const container = document.getElementById('lido-container');
   if (!container) return;
 
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
@@ -482,7 +482,7 @@ const calculateScore = () => {
 };
 
 const storeActivityScore = (score: number) => {
-  const appHome = document.querySelector('app-home');
+  const appHome = document.querySelector('lido-home');
   if (!appHome) return;
   const index = Number(appHome.getAttribute('index') ?? 0);
   const totalIndex = Number(appHome.getAttribute('totalIndex') ?? 0);
@@ -508,11 +508,11 @@ const storeActivityScore = (score: number) => {
 };
 
 const handleShowCheck = () => {
-  const container = document.getElementById('container');
+  const container = document.getElementById('lido-container');
   const objectiveString = container['objective'];
   const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
 
-  const checkButton = document.getElementById('checkButton');
+  const checkButton = document.getElementById('lido-checkButton');
 
   if (!selectValues || selectValues.length !== countPatternWords(objectiveString)) {
     executeActions("this.addClass='disable-check-button'", checkButton);
@@ -522,14 +522,14 @@ const handleShowCheck = () => {
   const showCheck = container.getAttribute('showCheck') == 'true';
 
   if (showCheck) {
-    checkButton.classList.remove('disable-check-button');
+    checkButton.classList.remove('lido-disable-check-button');
   } else {
     validateObjectiveStatus();
   }
 };
 
 const validateObjectiveStatus = async () => {
-  const container = document.getElementById('container');
+  const container = document.getElementById('lido-container');
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
@@ -560,7 +560,7 @@ export const triggerNextContainer = () => {
 };
 
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
-  const container = document.getElementById('container');
+  const container = document.getElementById('lido-container');
   if (!container) return;
   const canplay = container.getAttribute('canplay');
   if (canplay != null && canplay === 'false') return;
@@ -608,8 +608,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
-    const container = document.getElementById('container');
-    if (element.getAttribute('id') == 'checkButton') {
+    const container = document.getElementById('lido-container');
+    if (element.getAttribute('id') == 'lido-checkButton') {
       validateObjectiveStatus();
       return;
     }
@@ -742,7 +742,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
 
     // Reset the transform of the drag element before calculating the new position
     (selectedDragElement as HTMLElement).style.transform = '';
-    const container = document.getElementById('container');
+    const container = document.getElementById('lido-container');
 
     const containerScale = getElementScale(container);
     console.log('🚀 ~ onClickDropOrDragElement ~ containerScale:', containerScale);
@@ -833,7 +833,7 @@ export function convertUrlToRelative(url: string): string {
   if (url.startsWith('http')) {
     return url;
   }
-  const container = document.getElementById('container');
+  const container = document.getElementById('lido-container');
   if (!container) return url;
   const baseUrl = container.getAttribute('baseUrl');
   if (!baseUrl) return url;

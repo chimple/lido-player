@@ -8,8 +8,8 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
  * full customization via props such as dimensions, positioning, visibility, and event handling.
  */
 @Component({
-  tag: 'app-random',
-  styleUrl: 'app-random.css',
+  tag: 'lido-random',
+  styleUrl: 'lido-random.css',
   shadow: false,
 })
 export class AppRandom {
@@ -114,7 +114,7 @@ export class AppRandom {
    */
   componentDidLoad() {
     // Select all direct child elements of the component
-    const slotElements = this.el.querySelectorAll('.random > *');
+    const slotElements = this.el.querySelectorAll('.lido-random > *');
 
     // Iterate over each child and apply random positions
     slotElements.forEach((child: HTMLElement) => {
@@ -140,7 +140,7 @@ export class AppRandom {
 
     return (
       <Host
-        class="random"
+        class="lido-random"
         type={this.type}
         tabindex={this.tabIndex}
         value={this.value}

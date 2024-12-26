@@ -11,10 +11,10 @@ export namespace Components {
      * The `AppCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
      * background color, and event handlers. It is designed to work within
-     * containers (`app-container`) and can include child components like
-     * `app-text`, `app-row`, etc.
+     * containers (`lido-container`) and can include child components like
+     * `app-text`, `lido-row`, etc.
      */
-    interface AppCol {
+    interface LidoCol {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -94,7 +94,7 @@ export namespace Components {
      * based on the window size, adjusts background color, and provides various configurable properties
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
-    interface AppContainer {
+    interface LidoContainer {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -194,7 +194,7 @@ export namespace Components {
      * It handles navigation between containers, resets the state on page reloads or container transitions,
      * and displays progress indicators (dots) for each container.
      */
-    interface AppHome {
+    interface LidoHome {
         /**
           * Base URL for the containers.
          */
@@ -219,7 +219,7 @@ export namespace Components {
      * The component is designed to work in different types of environments, supporting custom
      * events such as touch, match, and entry events.
      */
-    interface AppImage {
+    interface LidoImage {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -299,7 +299,7 @@ export namespace Components {
      * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
      * events for interaction such as touch, match, and entry events.
      */
-    interface AppPos {
+    interface LidoPos {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -379,7 +379,7 @@ export namespace Components {
      * This component can be used when a random layout of elements is required. It allows
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
-    interface AppRandom {
+    interface LidoRandom {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -459,7 +459,7 @@ export namespace Components {
      * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
      * The XML path can be configured via a prop.
      */
-    interface AppRoot {
+    interface LidoRoot {
         /**
           * Base URL for the containers.
          */
@@ -482,7 +482,7 @@ export namespace Components {
      * The `AppRow` component is used to create a flexible row element that can contain other elements.
      * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
      */
-    interface AppRow {
+    interface LidoRow {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -558,7 +558,7 @@ export namespace Components {
      * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
-    interface AppShape {
+    interface LidoShape {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -642,7 +642,7 @@ export namespace Components {
      * It allows you to set the font, size, color, and background color, along with
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
-    interface AppText {
+    interface LidoText {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -736,7 +736,7 @@ export namespace Components {
          */
         "z": string;
     }
-    interface AppTrace {
+    interface LidoTrace {
         /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
          */
@@ -792,7 +792,7 @@ export namespace Components {
      * The component can display its content as a grid and supports custom events like touch, match, and entry.
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
-    interface AppWrap {
+    interface LidoWrap {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -873,14 +873,14 @@ declare global {
      * The `AppCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
      * background color, and event handlers. It is designed to work within
-     * containers (`app-container`) and can include child components like
-     * `app-text`, `app-row`, etc.
+     * containers (`lido-container`) and can include child components like
+     * `app-text`, `lido-row`, etc.
      */
-    interface HTMLAppColElement extends Components.AppCol, HTMLStencilElement {
+    interface HTMLLidoColElement extends Components.LidoCol, HTMLStencilElement {
     }
-    var HTMLAppColElement: {
-        prototype: HTMLAppColElement;
-        new (): HTMLAppColElement;
+    var HTMLLidoColElement: {
+        prototype: HTMLLidoColElement;
+        new (): HTMLLidoColElement;
     };
     /**
      * @component AppContainer
@@ -888,11 +888,11 @@ declare global {
      * based on the window size, adjusts background color, and provides various configurable properties
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
-    interface HTMLAppContainerElement extends Components.AppContainer, HTMLStencilElement {
+    interface HTMLLidoContainerElement extends Components.LidoContainer, HTMLStencilElement {
     }
-    var HTMLAppContainerElement: {
-        prototype: HTMLAppContainerElement;
-        new (): HTMLAppContainerElement;
+    var HTMLLidoContainerElement: {
+        prototype: HTMLLidoContainerElement;
+        new (): HTMLLidoContainerElement;
     };
     /**
      * @component AppHome
@@ -900,11 +900,11 @@ declare global {
      * It handles navigation between containers, resets the state on page reloads or container transitions,
      * and displays progress indicators (dots) for each container.
      */
-    interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
+    interface HTMLLidoHomeElement extends Components.LidoHome, HTMLStencilElement {
     }
-    var HTMLAppHomeElement: {
-        prototype: HTMLAppHomeElement;
-        new (): HTMLAppHomeElement;
+    var HTMLLidoHomeElement: {
+        prototype: HTMLLidoHomeElement;
+        new (): HTMLLidoHomeElement;
     };
     /**
      * @component AppImage
@@ -913,11 +913,11 @@ declare global {
      * The component is designed to work in different types of environments, supporting custom
      * events such as touch, match, and entry events.
      */
-    interface HTMLAppImageElement extends Components.AppImage, HTMLStencilElement {
+    interface HTMLLidoImageElement extends Components.LidoImage, HTMLStencilElement {
     }
-    var HTMLAppImageElement: {
-        prototype: HTMLAppImageElement;
-        new (): HTMLAppImageElement;
+    var HTMLLidoImageElement: {
+        prototype: HTMLLidoImageElement;
+        new (): HTMLLidoImageElement;
     };
     /**
      * @component AppPos
@@ -925,11 +925,11 @@ declare global {
      * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
      * events for interaction such as touch, match, and entry events.
      */
-    interface HTMLAppPosElement extends Components.AppPos, HTMLStencilElement {
+    interface HTMLLidoPosElement extends Components.LidoPos, HTMLStencilElement {
     }
-    var HTMLAppPosElement: {
-        prototype: HTMLAppPosElement;
-        new (): HTMLAppPosElement;
+    var HTMLLidoPosElement: {
+        prototype: HTMLLidoPosElement;
+        new (): HTMLLidoPosElement;
     };
     /**
      * @component AppRandom
@@ -937,11 +937,11 @@ declare global {
      * This component can be used when a random layout of elements is required. It allows
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
-    interface HTMLAppRandomElement extends Components.AppRandom, HTMLStencilElement {
+    interface HTMLLidoRandomElement extends Components.LidoRandom, HTMLStencilElement {
     }
-    var HTMLAppRandomElement: {
-        prototype: HTMLAppRandomElement;
-        new (): HTMLAppRandomElement;
+    var HTMLLidoRandomElement: {
+        prototype: HTMLLidoRandomElement;
+        new (): HTMLLidoRandomElement;
     };
     /**
      * @component AppRoot
@@ -949,22 +949,22 @@ declare global {
      * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
      * The XML path can be configured via a prop.
      */
-    interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
+    interface HTMLLidoRootElement extends Components.LidoRoot, HTMLStencilElement {
     }
-    var HTMLAppRootElement: {
-        prototype: HTMLAppRootElement;
-        new (): HTMLAppRootElement;
+    var HTMLLidoRootElement: {
+        prototype: HTMLLidoRootElement;
+        new (): HTMLLidoRootElement;
     };
     /**
      * @component AppRow
      * The `AppRow` component is used to create a flexible row element that can contain other elements.
      * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
      */
-    interface HTMLAppRowElement extends Components.AppRow, HTMLStencilElement {
+    interface HTMLLidoRowElement extends Components.LidoRow, HTMLStencilElement {
     }
-    var HTMLAppRowElement: {
-        prototype: HTMLAppRowElement;
-        new (): HTMLAppRowElement;
+    var HTMLLidoRowElement: {
+        prototype: HTMLLidoRowElement;
+        new (): HTMLLidoRowElement;
     };
     /**
      * @component AppShape
@@ -972,11 +972,11 @@ declare global {
      * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
-    interface HTMLAppShapeElement extends Components.AppShape, HTMLStencilElement {
+    interface HTMLLidoShapeElement extends Components.LidoShape, HTMLStencilElement {
     }
-    var HTMLAppShapeElement: {
-        prototype: HTMLAppShapeElement;
-        new (): HTMLAppShapeElement;
+    var HTMLLidoShapeElement: {
+        prototype: HTMLLidoShapeElement;
+        new (): HTMLLidoShapeElement;
     };
     /**
      * @component AppText
@@ -984,17 +984,17 @@ declare global {
      * It allows you to set the font, size, color, and background color, along with
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
-    interface HTMLAppTextElement extends Components.AppText, HTMLStencilElement {
+    interface HTMLLidoTextElement extends Components.LidoText, HTMLStencilElement {
     }
-    var HTMLAppTextElement: {
-        prototype: HTMLAppTextElement;
-        new (): HTMLAppTextElement;
+    var HTMLLidoTextElement: {
+        prototype: HTMLLidoTextElement;
+        new (): HTMLLidoTextElement;
     };
-    interface HTMLAppTraceElement extends Components.AppTrace, HTMLStencilElement {
+    interface HTMLLidoTraceElement extends Components.LidoTrace, HTMLStencilElement {
     }
-    var HTMLAppTraceElement: {
-        prototype: HTMLAppTraceElement;
-        new (): HTMLAppTraceElement;
+    var HTMLLidoTraceElement: {
+        prototype: HTMLLidoTraceElement;
+        new (): HTMLLidoTraceElement;
     };
     /**
      * @component AppWrap
@@ -1002,25 +1002,25 @@ declare global {
      * The component can display its content as a grid and supports custom events like touch, match, and entry.
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
-    interface HTMLAppWrapElement extends Components.AppWrap, HTMLStencilElement {
+    interface HTMLLidoWrapElement extends Components.LidoWrap, HTMLStencilElement {
     }
-    var HTMLAppWrapElement: {
-        prototype: HTMLAppWrapElement;
-        new (): HTMLAppWrapElement;
+    var HTMLLidoWrapElement: {
+        prototype: HTMLLidoWrapElement;
+        new (): HTMLLidoWrapElement;
     };
     interface HTMLElementTagNameMap {
-        "app-col": HTMLAppColElement;
-        "app-container": HTMLAppContainerElement;
-        "app-home": HTMLAppHomeElement;
-        "app-image": HTMLAppImageElement;
-        "app-pos": HTMLAppPosElement;
-        "app-random": HTMLAppRandomElement;
-        "app-root": HTMLAppRootElement;
-        "app-row": HTMLAppRowElement;
-        "app-shape": HTMLAppShapeElement;
-        "app-text": HTMLAppTextElement;
-        "app-trace": HTMLAppTraceElement;
-        "app-wrap": HTMLAppWrapElement;
+        "lido-col": HTMLLidoColElement;
+        "lido-container": HTMLLidoContainerElement;
+        "lido-home": HTMLLidoHomeElement;
+        "lido-image": HTMLLidoImageElement;
+        "lido-pos": HTMLLidoPosElement;
+        "lido-random": HTMLLidoRandomElement;
+        "lido-root": HTMLLidoRootElement;
+        "lido-row": HTMLLidoRowElement;
+        "lido-shape": HTMLLidoShapeElement;
+        "lido-text": HTMLLidoTextElement;
+        "lido-trace": HTMLLidoTraceElement;
+        "lido-wrap": HTMLLidoWrapElement;
     }
 }
 declare namespace LocalJSX {
@@ -1029,10 +1029,10 @@ declare namespace LocalJSX {
      * The `AppCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
      * background color, and event handlers. It is designed to work within
-     * containers (`app-container`) and can include child components like
-     * `app-text`, `app-row`, etc.
+     * containers (`lido-container`) and can include child components like
+     * `app-text`, `lido-row`, etc.
      */
-    interface AppCol {
+    interface LidoCol {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1112,7 +1112,7 @@ declare namespace LocalJSX {
      * based on the window size, adjusts background color, and provides various configurable properties
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
-    interface AppContainer {
+    interface LidoContainer {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1212,7 +1212,7 @@ declare namespace LocalJSX {
      * It handles navigation between containers, resets the state on page reloads or container transitions,
      * and displays progress indicators (dots) for each container.
      */
-    interface AppHome {
+    interface LidoHome {
         /**
           * Base URL for the containers.
          */
@@ -1237,7 +1237,7 @@ declare namespace LocalJSX {
      * The component is designed to work in different types of environments, supporting custom
      * events such as touch, match, and entry events.
      */
-    interface AppImage {
+    interface LidoImage {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1317,7 +1317,7 @@ declare namespace LocalJSX {
      * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
      * events for interaction such as touch, match, and entry events.
      */
-    interface AppPos {
+    interface LidoPos {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1397,7 +1397,7 @@ declare namespace LocalJSX {
      * This component can be used when a random layout of elements is required. It allows
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
-    interface AppRandom {
+    interface LidoRandom {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1477,7 +1477,7 @@ declare namespace LocalJSX {
      * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
      * The XML path can be configured via a prop.
      */
-    interface AppRoot {
+    interface LidoRoot {
         /**
           * Base URL for the containers.
          */
@@ -1500,7 +1500,7 @@ declare namespace LocalJSX {
      * The `AppRow` component is used to create a flexible row element that can contain other elements.
      * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
      */
-    interface AppRow {
+    interface LidoRow {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1576,7 +1576,7 @@ declare namespace LocalJSX {
      * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
-    interface AppShape {
+    interface LidoShape {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1660,7 +1660,7 @@ declare namespace LocalJSX {
      * It allows you to set the font, size, color, and background color, along with
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
-    interface AppText {
+    interface LidoText {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1754,7 +1754,7 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
-    interface AppTrace {
+    interface LidoTrace {
         /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
          */
@@ -1810,7 +1810,7 @@ declare namespace LocalJSX {
      * The component can display its content as a grid and supports custom events like touch, match, and entry.
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
-    interface AppWrap {
+    interface LidoWrap {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
@@ -1885,18 +1885,18 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     interface IntrinsicElements {
-        "app-col": AppCol;
-        "app-container": AppContainer;
-        "app-home": AppHome;
-        "app-image": AppImage;
-        "app-pos": AppPos;
-        "app-random": AppRandom;
-        "app-root": AppRoot;
-        "app-row": AppRow;
-        "app-shape": AppShape;
-        "app-text": AppText;
-        "app-trace": AppTrace;
-        "app-wrap": AppWrap;
+        "lido-col": LidoCol;
+        "lido-container": LidoContainer;
+        "lido-home": LidoHome;
+        "lido-image": LidoImage;
+        "lido-pos": LidoPos;
+        "lido-random": LidoRandom;
+        "lido-root": LidoRoot;
+        "lido-row": LidoRow;
+        "lido-shape": LidoShape;
+        "lido-text": LidoText;
+        "lido-trace": LidoTrace;
+        "lido-wrap": LidoWrap;
     }
 }
 export { LocalJSX as JSX };
@@ -1908,24 +1908,24 @@ declare module "@stencil/core" {
              * The `AppCol` component is a dynamic column-like UI element that can be
              * customized via various properties such as dimensions, position, visibility,
              * background color, and event handlers. It is designed to work within
-             * containers (`app-container`) and can include child components like
-             * `app-text`, `app-row`, etc.
+             * containers (`lido-container`) and can include child components like
+             * `app-text`, `lido-row`, etc.
              */
-            "app-col": LocalJSX.AppCol & JSXBase.HTMLAttributes<HTMLAppColElement>;
+            "lido-col": LocalJSX.LidoCol & JSXBase.HTMLAttributes<HTMLLidoColElement>;
             /**
              * @component AppContainer
              * The `AppContainer` component acts as a container for other elements. It scales responsively
              * based on the window size, adjusts background color, and provides various configurable properties
              * such as dimensions, positioning, visibility, and custom event handlers.
              */
-            "app-container": LocalJSX.AppContainer & JSXBase.HTMLAttributes<HTMLAppContainerElement>;
+            "lido-container": LocalJSX.LidoContainer & JSXBase.HTMLAttributes<HTMLLidoContainerElement>;
             /**
              * @component AppHome
              * The `AppHome` component renders a series of containers parsed from the provided XML data.
              * It handles navigation between containers, resets the state on page reloads or container transitions,
              * and displays progress indicators (dots) for each container.
              */
-            "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
+            "lido-home": LocalJSX.LidoHome & JSXBase.HTMLAttributes<HTMLLidoHomeElement>;
             /**
              * @component AppImage
              * The `AppImage` component displays an image element within a container. It is a versatile
@@ -1933,56 +1933,56 @@ declare module "@stencil/core" {
              * The component is designed to work in different types of environments, supporting custom
              * events such as touch, match, and entry events.
              */
-            "app-image": LocalJSX.AppImage & JSXBase.HTMLAttributes<HTMLAppImageElement>;
+            "lido-image": LocalJSX.LidoImage & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
             /**
              * @component AppPos
              * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
              * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
              * events for interaction such as touch, match, and entry events.
              */
-            "app-pos": LocalJSX.AppPos & JSXBase.HTMLAttributes<HTMLAppPosElement>;
+            "lido-pos": LocalJSX.LidoPos & JSXBase.HTMLAttributes<HTMLLidoPosElement>;
             /**
              * @component AppRandom
              * The `AppRandom` component randomly positions its child elements within its container.
              * This component can be used when a random layout of elements is required. It allows
              * full customization via props such as dimensions, positioning, visibility, and event handling.
              */
-            "app-random": LocalJSX.AppRandom & JSXBase.HTMLAttributes<HTMLAppRandomElement>;
+            "lido-random": LocalJSX.LidoRandom & JSXBase.HTMLAttributes<HTMLLidoRandomElement>;
             /**
              * @component AppRoot
              * The `AppRoot` component is the main application entry point. It loads an external XML data file
              * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
              * The XML path can be configured via a prop.
              */
-            "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "lido-root": LocalJSX.LidoRoot & JSXBase.HTMLAttributes<HTMLLidoRootElement>;
             /**
              * @component AppRow
              * The `AppRow` component is used to create a flexible row element that can contain other elements.
              * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
              */
-            "app-row": LocalJSX.AppRow & JSXBase.HTMLAttributes<HTMLAppRowElement>;
+            "lido-row": LocalJSX.LidoRow & JSXBase.HTMLAttributes<HTMLLidoRowElement>;
             /**
              * @component AppShape
              * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
              * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
              * Additionally, it supports custom events for interaction like touch, match, and entry.
              */
-            "app-shape": LocalJSX.AppShape & JSXBase.HTMLAttributes<HTMLAppShapeElement>;
+            "lido-shape": LocalJSX.LidoShape & JSXBase.HTMLAttributes<HTMLLidoShapeElement>;
             /**
              * @component AppText
              * The `AppText` component is used to display text with customizable styling.
              * It allows you to set the font, size, color, and background color, along with
              * positioning and visibility control. The component supports custom events like touch, match, and entry.
              */
-            "app-text": LocalJSX.AppText & JSXBase.HTMLAttributes<HTMLAppTextElement>;
-            "app-trace": LocalJSX.AppTrace & JSXBase.HTMLAttributes<HTMLAppTraceElement>;
+            "lido-text": LocalJSX.LidoText & JSXBase.HTMLAttributes<HTMLLidoTextElement>;
+            "lido-trace": LocalJSX.LidoTrace & JSXBase.HTMLAttributes<HTMLLidoTraceElement>;
             /**
              * @component AppWrap
              * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
              * The component can display its content as a grid and supports custom events like touch, match, and entry.
              * It allows for full customization via props like dimensions, background color, visibility, and z-index.
              */
-            "app-wrap": LocalJSX.AppWrap & JSXBase.HTMLAttributes<HTMLAppWrapElement>;
+            "lido-wrap": LocalJSX.LidoWrap & JSXBase.HTMLAttributes<HTMLLidoWrapElement>;
         }
     }
 }

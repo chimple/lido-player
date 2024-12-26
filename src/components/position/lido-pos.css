@@ -1,4 +1,4 @@
-.pos {
+.lido-pos {
   top: var(--y, 0);
   left: var(--x, 0);
   height: var(--height, 100%);
@@ -11,6 +11,6 @@
   
 }
 
-.pos > * {
+.lido-pos > * {
   position: absolute;
 }
