@@ -37,6 +37,9 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     return;
   }
 
+  let verticalDistance;
+  let horizontalDistance;
+
   const onStart = (event: MouseEvent | TouchEvent): void => {
     removeHighlight(element);
     isDragging = true;
@@ -67,17 +70,16 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
+    const rect1 = container.getBoundingClientRect();
+    const rect2 = element.getBoundingClientRect();
+    verticalDistance = rect1.top - rect2.top;
+    horizontalDistance = rect1.left - rect2.left;
+
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove);
     document.addEventListener('touchend', onEnd);
   };
-
-  const rect1 = container.getBoundingClientRect();
-  const rect2 = element.getBoundingClientRect();
-
-  let verticalDistance = rect1.top - rect2.top;
-  let horizontalDistance = rect1.left - rect2.left;
 
   const observer = new MutationObserver(mutationsList => {
     for (const mutation of mutationsList) {
@@ -284,14 +286,18 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const dropElement = targetElement;
           const dragElement = element;
 
-          if (dropElement.childElementCount == 0) {
-            dragElement.style.transform = 'translate(0, 0)';
-            dropElement.appendChild(dragElement);
-          } else {
-            dragElement.style.transform = 'translate(0, 0)';
-            dragElement.parentElement.appendChild(dropElement.firstChild);
-            dropElement.appendChild(dragElement);
-          }
+          const container = document.getElementById('lido-container');
+          const containerScale = getElementScale(container); 
+          const containerRect = container.getBoundingClientRect();
+          const dropRect = dropElement.getBoundingClientRect();
+
+          const scaledLeft = (dropRect.left - containerRect.left) / containerScale;
+          const scaledTop = (dropRect.top - containerRect.top) / containerScale;
+
+          dragElement.style.position = 'fixed'; 
+          dragElement.style.left = `${scaledLeft}px`;
+          dragElement.style.top = `${scaledTop}px`;
+          dragElement.style.transform = `translate(0px, 0px)`;
           break;
         }
         case 'addClass': {
@@ -536,6 +542,7 @@ const validateObjectiveStatus = async () => {
   const res = matchStringPattern(objectiveString, objectiveArray);
 
   if (res) {
+    appendingDragElementsInDrop();
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
@@ -551,6 +558,20 @@ const validateObjectiveStatus = async () => {
   }
   await calculateScore();
 };
+
+const appendingDragElementsInDrop = () => {
+  const dragItems = document.querySelectorAll("[type='drag']");
+    const dropItems = document.querySelectorAll("[type='drop']");
+    dropItems.forEach(drop => {
+      dragItems.forEach(dragElement => {
+        const drag = dragElement as HTMLElement;
+        if(drag['value'] === drop['value']){
+          drag.style.position = "unset";
+          drop.appendChild(drag);
+        }
+      })
+    })
+}
 
 export const triggerNextContainer = () => {
   // const event = new CustomEvent('nextContainer');
@@ -581,7 +602,6 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
       break;
   }
   const onEntry = element.getAttribute('onEntry');
-
   await executeActions(onEntry, element);
 
   onTouchListenerForOnTouch(element);
@@ -590,8 +610,6 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
   const onTouch = element.getAttribute('onTouch');
-  console.log(onTouch);
-
   if (!onTouch) return;
   element.onclick = async () => {
     console.log('🚀 ~ element.onclick= ~ onTouch:', onTouch);
