@@ -1,6 +1,71 @@
 <main>
+	<lido-container id="lido-container" value="mainContainer3" objective="A,B,C,D" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
 
-	<lido-container id="lido-container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-truck.animation='placeToLeft 2s 0.3s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+				<!-- Background -->
+				<lido-pos id="lido-pos1" tabIndex="1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
+					<lido-image visible="true" src="https://live.staticflickr.com/7273/7621965512_7d6cfccf64_b.jpg" z="0" height="900px" width="1600px"></lido-image>
+				</lido-pos>
+
+				<!-- Slide Elements -->
+
+				<lido-row id="lido-box" tabIndex="2" visible="true" x="630px" y="365px" z="0" width="1000px" height="600px" bgColor="#FED8B1" onEntry="this.borderRadius='30px'; this.border='5px solid #993300';">
+					<lido-text visible="true" string="Arrange in the correct order" bgColor="transparent" font="Poppins" font-size="50px" onEntry="this.boxShadow='unset';" width="500px"></lido-text>
+
+					<lido-col id="lido-slide" tabIndex="3" visible="true" bgColor="transparent" width="160px" height="500px">
+
+							<lido-text visible="true"  tabIndex="4" width="100px" height="100px" onEntry="" bgColor="#CD7F32" value="B" type="slide" string="B" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+							<lido-text visible="true"  tabIndex="5" width="100px" height="100px" onEntry="" bgColor="#CD7F32" value="D" type="slide" string="D" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+							<lido-text visible="true"  tabIndex="6" width="100px" height="100px" onEntry="" bgColor="#CD7F32" value="A" type="slide" string="A" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+							<lido-text visible="true"  tabIndex="7" width="100px" height="100px" onEntry="" bgColor="#CD7F32" value="C" type="slide" string="C" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+					</lido-col>
+
+
+				</lido-row>
+					
+				<lido-pos visible="true" tabIndex="8" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
+				</lido-pos>
+			
+	</lido-container>
+
+	<lido-container id="lido-container" value="mainContainer3" objective="A,B,C,D" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+
+				<!-- Background -->
+				<lido-pos id="lido-pos1" tabIndex="1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
+					<lido-image visible="true" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/43792164-c63c-4852-bb4c-98d73eb5830a/dgsd397-3fdeed3a-50e5-4afb-a7c6-9ef653df03ef.png/v1/fit/w_663,h_367,q_70,strp/wiow_wallpaper_purple_stars_by_oryanthetornadobunny_dgsd397-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzY3IiwicGF0aCI6IlwvZlwvNDM3OTIxNjQtYzYzYy00ODUyLWJiNGMtOThkNzNlYjU4MzBhXC9kZ3NkMzk3LTNmZGVlZDNhLTUwZTUtNGFmYi1hN2M2LTllZjY1M2RmMDNlZi5wbmciLCJ3aWR0aCI6Ijw9NjYzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.g-0mvzVssBM9TTLO1xQo9ju5KlEBa4FdDVoGrIutCNg" z="0" height="900px" width="1600px"></lido-image>
+				</lido-pos>
+
+				<!-- Slide Elements -->
+
+				<lido-col id="lido-box" tabIndex="2" visible="true" x="630px" y="365px" z="0" width="1200px" height="600px" bgColor="#B9E9FF">
+					<lido-text visible="true" string="Arrange in the correct order" bgColor="transparent" font="Poppins" font-size="50px" onEntry="this.boxShadow='unset';"></lido-text>
+
+					<lido-row id="lido-slide" tabIndex="3" visible="true" bgColor="transparent" width="900px" height="160px">
+
+							<lido-text visible="true"  tabIndex="4" width="200px" height="160px" onEntry="" bgColor="violet" value="B" type="slide" string="B" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+							<lido-text visible="true"  tabIndex="5" width="200px" height="160px" onEntry="" bgColor="violet" value="D" type="slide" string="D" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+							<lido-text visible="true"  tabIndex="6" width="200px" height="160px" onEntry="" bgColor="violet" value="A" type="slide" string="A" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+							<lido-text visible="true"  tabIndex="7" width="200px" height="160px" onEntry="" bgColor="violet" value="C" type="slide" string="C" font="Poppins" font-size="60px" fontColor="white" onInCorrect=""></lido-text>
+
+					</lido-row>
+
+
+				</lido-col>
+					
+				<lido-pos visible="true" tabIndex="8" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
+				</lido-pos>
+			
+	</lido-container>
+
+	<lido-container id="lido-container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-truck.animation='placeToLeft 2s 0.3s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
 
 				<!-- Background -->
 				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
@@ -39,12 +104,12 @@
 				</lido-pos>
 					
 				<lido-pos visible="true" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
-					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="" onTouch="this.next='true';"></lido-text>
 				</lido-pos>
 			
 	</lido-container>
 
-	<lido-container id="lido-container" value="mainContainer2" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="true" isContinueOnCorrect="false">
+	<lido-container id="lido-container" value="mainContainer2" objective="lion" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="true" isContinueOnCorrect="false">
 
 				<!-- Background -->
 				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
@@ -71,20 +136,16 @@
 							<lido-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/tiger.png" ></lido-image>
 							<lido-text visible="true" width="150px" font="Poppins" font-size="20px" string="TIGER" bgColor="transparent" onEntry="this.boxShadow='unset';"></lido-text>
 						</lido-col>
-						
-						
 					</lido-row>
-
-
 				</lido-col>
 
 				<lido-pos visible="true" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
-					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='disable-check-button';" onTouch=""></lido-text>
 				</lido-pos>
 
 	</lido-container>
 
-	<lido-container id="lido-container" value="mainContainer3" objective="I,play,football" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" type="slide" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+	<lido-container id="lido-container" value="mainContainer3" objective="I,play,football" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="false" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
 
 				<!-- Background -->
 				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >

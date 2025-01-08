@@ -23,6 +23,195 @@ const getElementScale = (el: HTMLElement): number => {
   return 1; // Fallback to no scaling
 };
 
+function slidingWithScaling(element: HTMLElement): void {
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0; // Track the vertical start position
+  let initialX = 0;
+  let initialY = 0; // Track the initial vertical position
+
+  // Fetch the parent element
+  const parentElement = element.parentElement;
+  
+  if (!parentElement) {
+    console.error(`Parent Element Not found!!`);
+    return;
+  }
+
+  const onStart = (event: MouseEvent | TouchEvent): void => {
+    removeHighlight(element);
+    isDragging = true;
+
+    if (event instanceof MouseEvent) {
+      startX = event.clientX;
+      startY = event.clientY; // Track vertical start position
+    } else {
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY; // Track vertical start position
+    }
+
+    // Apply dragging styles to the element
+    element.style.opacity = '0.8';
+    element.style.cursor = 'grabbing';
+
+    // Parse the current transform values at the start of each drag
+    const transform = window.getComputedStyle(element).transform;
+    if (transform !== 'none') {
+      const matrix = transform.match(/matrix\(([^)]+)\)/);
+      if (matrix) {
+        const matrixValues = matrix[1].split(', ');
+        initialX = parseFloat(matrixValues[4]); // Horizontal transform
+        initialY = parseFloat(matrixValues[5]); // Vertical transform
+      }
+    } else {
+      initialX = 0;
+      initialY = 0;
+    }
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchend', onEnd);
+  };
+
+  let overlappedElement;
+
+  const onMove = (event: MouseEvent | TouchEvent): void => {
+    if (!isDragging) return;
+    // const slideContainer = element.parentElement;
+    const parentElementScale = getElementScale(parentElement);
+
+    let dx = 0;
+    let dy = 0; // Track vertical delta
+
+    if (event instanceof MouseEvent) {
+      dx = (event.clientX - startX) / parentElementScale;
+      dy = (event.clientY - startY) / parentElementScale; // Calculate vertical delta
+    } else {
+      dx = (event.touches[0].clientX - startX) / parentElementScale;
+      dy = (event.touches[0].clientY - startY) / parentElementScale; // Calculate vertical delta
+    }
+
+    // Calculate the new position considering scaling
+    const newLeft = initialX + dx;
+    const newTop = initialY + dy; // Add vertical position
+
+    // Get the dimensions and scale-corrected position of the container and element
+    const parentRect = parentElement.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+
+    const numbers = element.style.transform.match(/-?\d+(\.\d+)?/g);
+    const result = numbers ? numbers.map(Number) : [0, 0];
+    const initialElementLeftPx = elementRect.left / parentElementScale - result[0];
+    const initialElementTopPx = elementRect.top / parentElementScale - result[1]; // Vertical
+    const initialElementRightPx = elementRect.right / parentElementScale - result[0];
+    const initialElementBottomPx = elementRect.bottom / parentElementScale - result[1]; // Vertical
+
+    const maxRight = parentRect.right - initialElementRightPx;
+    const maxLeft = parentRect.left - initialElementLeftPx;
+
+    const maxBottom = parentRect.bottom - initialElementBottomPx; // Add vertical boundary
+    const maxTop = parentRect.top - initialElementTopPx; // Add vertical boundary
+
+    // Clamp the new position within adjusted boundaries
+    const newLeftClamp = Math.min(maxRight, Math.max(newLeft, maxLeft));
+    const newTopClamp = Math.min(maxBottom, Math.max(newTop, maxTop)); // Clamp vertical movement
+
+    // Apply transform with translation within boundaries
+    element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
+
+    // Check for overlaps and highlight only the most overlapping element
+    const allElements = document.querySelectorAll<HTMLElement>("[type='slide']");
+    let mostOverlappedElement: HTMLElement | null = null;
+    let maxOverlapArea = 0;
+
+    allElements.forEach(otherElement => {
+      const otherRect = otherElement.getBoundingClientRect();
+
+      // Check if there is overlap
+      const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
+      const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
+      const overlapArea = overlapWidth * overlapHeight;
+
+      // Update the most overlapped element if this one has a larger overlap area
+      if (overlapArea > maxOverlapArea) {
+        maxOverlapArea = overlapArea;
+        mostOverlappedElement = otherElement;
+      }
+    });
+
+    if (mostOverlappedElement) {
+      if (mostOverlappedElement != element) {
+        overlappedElement = mostOverlappedElement;
+        return;
+      }
+    }
+  };
+
+  const onEnd = (endEv): void => {
+    isDragging = false;
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onEnd);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+
+    // Reset styles when dragging ends
+    element.style.opacity = '';
+    element.style.cursor = 'move';
+
+    if (overlappedElement) {
+      const parent1 = element.parentElement;
+      const parent2 = overlappedElement.parentElement;
+
+      if (parent1 && parent2) {
+        // Temporarily detach both elements
+        const elementPlaceholder = document.createComment('element-placeholder');
+        const overlappedPlaceholder = document.createComment('overlapped-placeholder');
+
+        parent1.replaceChild(elementPlaceholder, element);
+        parent2.replaceChild(overlappedPlaceholder, overlappedElement);
+
+        // Swap the elements
+        parent1.replaceChild(overlappedElement, elementPlaceholder);
+        parent2.replaceChild(element, overlappedPlaceholder);
+
+        element.style.transform = 'translate(0, 0)';
+        overlappedElement.style.transform = 'translate(0, 0)';
+
+        // Swap tabindex values
+        const tempTabIndex = element.tabIndex;
+        element.tabIndex = overlappedElement.tabIndex;
+        overlappedElement.tabIndex = tempTabIndex;
+        slideCompleted(element);
+      }
+    }
+  };
+  // Initialize draggable element styles
+  element.style.cursor = 'move';
+  element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
+
+  element.addEventListener('mousedown', onStart);
+  element.addEventListener('touchstart', onStart);
+}
+
+const slideCompleted = (slideElement: HTMLElement) => {
+  const slideArr = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
+  const allSlideElements = document.querySelectorAll("[type='slide']");
+
+  let index = 0;
+  allSlideElements.forEach(item => {
+    slideArr[index++] = item['value'];
+  });
+  localStorage.setItem(SelectedValuesKey, JSON.stringify(slideArr));
+
+  const objectiveString = document.getElementById('lido-container')['objective'];
+  const objectiveArray = objectiveString.split(',');
+  const elementIndex = slideArr.indexOf(slideElement["value"]);
+  const isCorrect = matchStringPattern(slideElement['value'], [objectiveArray[elementIndex].trim()]);
+  storingEachActivityScore(isCorrect);
+  handleShowCheck();
+};
+
 function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
   let startX = 0;
@@ -287,14 +476,14 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const dragElement = element;
 
           const container = document.getElementById('lido-container');
-          const containerScale = getElementScale(container); 
+          const containerScale = getElementScale(container);
           const containerRect = container.getBoundingClientRect();
           const dropRect = dropElement.getBoundingClientRect();
 
           const scaledLeft = (dropRect.left - containerRect.left) / containerScale;
           const scaledTop = (dropRect.top - containerRect.top) / containerScale;
 
-          dragElement.style.position = 'fixed'; 
+          dragElement.style.position = 'fixed';
           dragElement.style.left = `${scaledLeft}px`;
           dragElement.style.top = `${scaledTop}px`;
           dragElement.style.transform = `translate(0px, 0px)`;
@@ -506,7 +695,7 @@ const storeActivityScore = (score: number) => {
     const scoresArray: number[] = Object.values(activityScore);
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
     gameScore.finalScore = Math.floor(finalScore);
-    console.log("Total Score : ",gameScore.finalScore);
+    console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     dispatchLessonEndEvent(finalScore);
     localStorage.removeItem(ActivityScoreKey);
@@ -561,17 +750,18 @@ const validateObjectiveStatus = async () => {
 
 const appendingDragElementsInDrop = () => {
   const dragItems = document.querySelectorAll("[type='drag']");
-    const dropItems = document.querySelectorAll("[type='drop']");
-    dropItems.forEach(drop => {
-      dragItems.forEach(dragElement => {
-        const drag = dragElement as HTMLElement;
-        if(drag['value'] === drop['value']){
-          drag.style.position = "unset";
-          drop.appendChild(drag);
-        }
-      })
-    })
-}
+  const dropItems = document.querySelectorAll("[type='drop']");
+  if (!dragItems || !dropItems) return;
+  dropItems.forEach(drop => {
+    dragItems.forEach(dragElement => {
+      const drag = dragElement as HTMLElement;
+      if (drag['value'] === drop['value']) {
+        drag.style.position = 'unset';
+        drop.appendChild(drag);
+      }
+    });
+  });
+};
 
 export const triggerNextContainer = () => {
   // const event = new CustomEvent('nextContainer');
@@ -596,6 +786,10 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
     }
     case 'drop': {
       handleDropElement(element);
+      break;
+    }
+    case 'slide': {
+      slidingWithScaling(element);
       break;
     }
     default:
