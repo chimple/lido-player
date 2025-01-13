@@ -24,19 +24,22 @@ const getElementScale = (el: HTMLElement): number => {
 };
 
 function slidingWithScaling(element: HTMLElement): void {
+  let overlapElement = false;
   let isDragging = false;
   let startX = 0;
-  let startY = 0; // Track the vertical start position
+  let startY = 0;
   let initialX = 0;
-  let initialY = 0; // Track the initial vertical position
+  let initialY = 0;
 
-  // Fetch the parent element
+  // Fetch the container element
   const parentElement = element.parentElement;
-  
   if (!parentElement) {
-    console.error(`Parent Element Not found!!`);
+    console.error(`Parent element not found.`);
     return;
   }
+
+  let verticalDistance;
+  let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
     removeHighlight(element);
@@ -44,10 +47,10 @@ function slidingWithScaling(element: HTMLElement): void {
 
     if (event instanceof MouseEvent) {
       startX = event.clientX;
-      startY = event.clientY; // Track vertical start position
+      startY = event.clientY;
     } else {
       startX = event.touches[0].clientX;
-      startY = event.touches[0].clientY; // Track vertical start position
+      startY = event.touches[0].clientY;
     }
 
     // Apply dragging styles to the element
@@ -60,13 +63,18 @@ function slidingWithScaling(element: HTMLElement): void {
       const matrix = transform.match(/matrix\(([^)]+)\)/);
       if (matrix) {
         const matrixValues = matrix[1].split(', ');
-        initialX = parseFloat(matrixValues[4]); // Horizontal transform
-        initialY = parseFloat(matrixValues[5]); // Vertical transform
+        initialX = parseFloat(matrixValues[4]);
+        initialY = parseFloat(matrixValues[5]);
       }
     } else {
       initialX = 0;
       initialY = 0;
     }
+
+    const rect1 = parentElement.getBoundingClientRect();
+    const rect2 = element.getBoundingClientRect();
+    verticalDistance = rect1.top - rect2.top;
+    horizontalDistance = rect1.left - rect2.left;
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
@@ -74,48 +82,62 @@ function slidingWithScaling(element: HTMLElement): void {
     document.addEventListener('touchend', onEnd);
   };
 
-  let overlappedElement;
+  const observer = new MutationObserver(mutationsList => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+        const rect1 = parentElement.getBoundingClientRect();
+        const rect2 = element.getBoundingClientRect();
+        verticalDistance = rect1.top - rect2.top;
+        horizontalDistance = rect1.left - rect2.left;
+      }
+    }
+  });
+
+  // Configure the observer to watch for attribute changes
+  const observerConfig = {
+    attributes: true, // Monitor attribute changes
+    attributeFilter: ['style'], // Only observe changes to the 'style' attribute
+  };
+
+  // Start observing the element
+  observer.observe(parentElement, observerConfig);
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
     if (!isDragging) return;
-    // const slideContainer = element.parentElement;
     const parentElementScale = getElementScale(parentElement);
-
     let dx = 0;
-    let dy = 0; // Track vertical delta
+    let dy = 0;
 
     if (event instanceof MouseEvent) {
       dx = (event.clientX - startX) / parentElementScale;
-      dy = (event.clientY - startY) / parentElementScale; // Calculate vertical delta
+      dy = (event.clientY - startY) / parentElementScale;
     } else {
       dx = (event.touches[0].clientX - startX) / parentElementScale;
-      dy = (event.touches[0].clientY - startY) / parentElementScale; // Calculate vertical delta
+      dy = (event.touches[0].clientY - startY) / parentElementScale;
     }
 
     // Calculate the new position considering scaling
     const newLeft = initialX + dx;
-    const newTop = initialY + dy; // Add vertical position
+    const newTop = initialY + dy;
 
     // Get the dimensions and scale-corrected position of the container and element
-    const parentRect = parentElement.getBoundingClientRect();
+    const containerRect = parentElement.getBoundingClientRect();
     const elementRect = element.getBoundingClientRect();
 
     const numbers = element.style.transform.match(/-?\d+(\.\d+)?/g);
-    const result = numbers ? numbers.map(Number) : [0, 0];
+    const result = numbers.map(Number);
     const initialElementLeftPx = elementRect.left / parentElementScale - result[0];
-    const initialElementTopPx = elementRect.top / parentElementScale - result[1]; // Vertical
+    const initialElementTopPx = elementRect.top - result[1];
     const initialElementRightPx = elementRect.right / parentElementScale - result[0];
-    const initialElementBottomPx = elementRect.bottom / parentElementScale - result[1]; // Vertical
+    const initialElementBottomPx = elementRect.bottom - result[1];
 
-    const maxRight = parentRect.right - initialElementRightPx;
-    const maxLeft = parentRect.left - initialElementLeftPx;
+    const maxRight = containerRect.right - initialElementRightPx;
+    const maxLeft = containerRect.left - initialElementLeftPx;
+    const maxTop = containerRect.top - initialElementTopPx;
+    const maxBottom = containerRect.bottom - initialElementBottomPx;
 
-    const maxBottom = parentRect.bottom - initialElementBottomPx; // Add vertical boundary
-    const maxTop = parentRect.top - initialElementTopPx; // Add vertical boundary
-
-    // Clamp the new position within adjusted boundaries
-    const newLeftClamp = Math.min(maxRight, Math.max(newLeft, maxLeft));
-    const newTopClamp = Math.min(maxBottom, Math.max(newTop, maxTop)); // Clamp vertical movement
+    const newLeftClamp = newLeft + initialElementLeftPx <= containerRect.left ? maxLeft : Math.min(newLeft, maxRight);
+    const newTopClamp = newTop + initialElementTopPx <= containerRect.top ? maxTop : Math.min(newTop, maxBottom);
 
     // Apply transform with translation within boundaries
     element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
@@ -126,24 +148,50 @@ function slidingWithScaling(element: HTMLElement): void {
     let maxOverlapArea = 0;
 
     allElements.forEach(otherElement => {
-      const otherRect = otherElement.getBoundingClientRect();
+      if (otherElement === element) return;
 
-      // Check if there is overlap
+      const otherRect = otherElement.getBoundingClientRect();
+      const elementArea = elementRect.width * elementRect.height; // Area of the dragged element
+      const otherArea = otherRect.width * otherRect.height; // Area of the other element
+
       const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
       const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
       const overlapArea = overlapWidth * overlapHeight;
 
-      // Update the most overlapped element if this one has a larger overlap area
-      if (overlapArea > maxOverlapArea) {
+      // Determine the threshold for overlap (at least 80% of the smaller element's area)
+      const overlapThreshold = Math.min(elementArea, otherArea) * 0.8;
+
+      // Check if the overlap area exceeds the threshold
+      if (overlapArea >= overlapThreshold && overlapArea > maxOverlapArea) {
         maxOverlapArea = overlapArea;
         mostOverlappedElement = otherElement;
       }
     });
 
+    // Apply styles only to the most overlapped element
     if (mostOverlappedElement) {
       if (mostOverlappedElement != element) {
-        overlappedElement = mostOverlappedElement;
-        return;
+        const parent1 = element.parentElement;
+        const parent2 = mostOverlappedElement.parentElement;
+
+        if (parent1 && parent2) {
+          // Temporarily detach both elements
+          const elementPlaceholder = document.createComment('element-placeholder');
+          const overlappedPlaceholder = document.createComment('overlapped-placeholder');
+          parent1.replaceChild(elementPlaceholder, element);
+          parent2.replaceChild(overlappedPlaceholder, mostOverlappedElement);
+          // Swap the elements
+          parent1.replaceChild(mostOverlappedElement, elementPlaceholder);
+          parent2.replaceChild(element, overlappedPlaceholder);
+          element.style.transform = 'translate(0, 0)';
+
+          // Recalculate starting points for the swapped element
+          startX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+          startY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+          initialX = 0;
+          initialY = 0;
+          overlapElement = true;
+        }
       }
     }
   };
@@ -158,32 +206,11 @@ function slidingWithScaling(element: HTMLElement): void {
     // Reset styles when dragging ends
     element.style.opacity = '';
     element.style.cursor = 'move';
+    element.style.transform = 'translate(0, 0)';
 
-    if (overlappedElement) {
-      const parent1 = element.parentElement;
-      const parent2 = overlappedElement.parentElement;
-
-      if (parent1 && parent2) {
-        // Temporarily detach both elements
-        const elementPlaceholder = document.createComment('element-placeholder');
-        const overlappedPlaceholder = document.createComment('overlapped-placeholder');
-
-        parent1.replaceChild(elementPlaceholder, element);
-        parent2.replaceChild(overlappedPlaceholder, overlappedElement);
-
-        // Swap the elements
-        parent1.replaceChild(overlappedElement, elementPlaceholder);
-        parent2.replaceChild(element, overlappedPlaceholder);
-
-        element.style.transform = 'translate(0, 0)';
-        overlappedElement.style.transform = 'translate(0, 0)';
-
-        // Swap tabindex values
-        const tempTabIndex = element.tabIndex;
-        element.tabIndex = overlappedElement.tabIndex;
-        overlappedElement.tabIndex = tempTabIndex;
-        slideCompleted(element);
-      }
+    if (overlapElement) {
+      slideCompleted(element);
+      overlapElement = false;
     }
   };
   // Initialize draggable element styles
@@ -192,6 +219,9 @@ function slidingWithScaling(element: HTMLElement): void {
 
   element.addEventListener('mousedown', onStart);
   element.addEventListener('touchstart', onStart);
+  element.addEventListener('click', ev => {
+    onClickDropOrDragElement(element, 'drag');
+  });
 }
 
 const slideCompleted = (slideElement: HTMLElement) => {
@@ -206,7 +236,7 @@ const slideCompleted = (slideElement: HTMLElement) => {
 
   const objectiveString = document.getElementById('lido-container')['objective'];
   const objectiveArray = objectiveString.split(',');
-  const elementIndex = slideArr.indexOf(slideElement["value"]);
+  const elementIndex = slideArr.indexOf(slideElement['value']);
   const isCorrect = matchStringPattern(slideElement['value'], [objectiveArray[elementIndex].trim()]);
   storingEachActivityScore(isCorrect);
   handleShowCheck();
