@@ -204,6 +204,7 @@ export class AppContainer {
         onEntry={this.onEntry}
         showCheck={this.showCheck}
         isContinueOnCorrect={this.isContinueOnCorrect}
+        canplay={`${this.canplay}`}
       >
         <slot />
       </Host>
