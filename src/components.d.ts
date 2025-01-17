@@ -7,12 +7,12 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     /**
-     * @component AppCol
-     * The `AppCol` component is a dynamic column-like UI element that can be
+     * @component LidoCol
+     * The `LidoCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
      * background color, and event handlers. It is designed to work within
      * containers (`lido-container`) and can include child components like
-     * `app-text`, `lido-row`, etc.
+     * `lido-text`, `lido-row`, etc.
      */
     interface LidoCol {
         /**
@@ -89,8 +89,8 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppContainer
-     * The `AppContainer` component acts as a container for other elements. It scales responsively
+     * @component LidoContainer
+     * The `LidoContainer` component acts as a container for other elements. It scales responsively
      * based on the window size, adjusts background color, and provides various configurable properties
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
@@ -189,8 +189,8 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppHome
-     * The `AppHome` component renders a series of containers parsed from the provided XML data.
+     * @component LidoHome
+     * The `LidoHome` component renders a series of containers parsed from the provided XML data.
      * It handles navigation between containers, resets the state on page reloads or container transitions,
      * and displays progress indicators (dots) for each container.
      */
@@ -213,8 +213,8 @@ export namespace Components {
         "xmlData": string;
     }
     /**
-     * @component AppImage
-     * The `AppImage` component displays an image element within a container. It is a versatile
+     * @component LidoImage
+     * The `LidoImage` component displays an image element within a container. It is a versatile
      * component that allows dynamic sizing, positioning, visibility control, and event handling.
      * The component is designed to work in different types of environments, supporting custom
      * events such as touch, match, and entry events.
@@ -294,8 +294,8 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppPos
-     * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+     * @component LidoPos
+     * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
      * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
      * events for interaction such as touch, match, and entry events.
      */
@@ -374,8 +374,8 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppRandom
-     * The `AppRandom` component randomly positions its child elements within its container.
+     * @component LidoRandom
+     * The `LidoRandom` component randomly positions its child elements within its container.
      * This component can be used when a random layout of elements is required. It allows
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
@@ -454,9 +454,9 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppRoot
-     * The `AppRoot` component is the main application entry point. It loads an external XML data file
-     * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+     * @component LidoRoot
+     * The `LidoRoot` component is the main application entry point. It loads an external XML data file
+     * from a specified URL or asset path and passes it down to the `lido-home` component for rendering.
      * The XML path can be configured via a prop.
      */
     interface LidoRoot {
@@ -478,8 +478,8 @@ export namespace Components {
         "xmlPath": string;
     }
     /**
-     * @component AppRow
-     * The `AppRow` component is used to create a flexible row element that can contain other elements.
+     * @component LidoRow
+     * The `LidoRow` component is used to create a flexible row element that can contain other elements.
      * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
      */
     interface LidoRow {
@@ -553,8 +553,8 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppShape
-     * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+     * @component LidoShape
+     * The `LidoShape` component is used to display various types of shapes like rectangles, circles, or polygons.
      * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
@@ -637,8 +637,8 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppText
-     * The `AppText` component is used to display text with customizable styling.
+     * @component LidoText
+     * The `LidoText` component is used to display text with customizable styling.
      * It allows you to set the font, size, color, and background color, along with
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
@@ -750,7 +750,7 @@ export namespace Components {
          */
         "height": string;
         /**
-          * Unique identifier for this `app-trace` component instance.
+          * Unique identifier for this `lido-trace` component instance.
          */
         "id": string;
         /**
@@ -787,8 +787,8 @@ export namespace Components {
         "z": string;
     }
     /**
-     * @component AppWrap
-     * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+     * @component LidoWrap
+     * The `LidoWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
      * The component can display its content as a grid and supports custom events like touch, match, and entry.
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
@@ -869,12 +869,12 @@ export namespace Components {
 }
 declare global {
     /**
-     * @component AppCol
-     * The `AppCol` component is a dynamic column-like UI element that can be
+     * @component LidoCol
+     * The `LidoCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
      * background color, and event handlers. It is designed to work within
      * containers (`lido-container`) and can include child components like
-     * `app-text`, `lido-row`, etc.
+     * `lido-text`, `lido-row`, etc.
      */
     interface HTMLLidoColElement extends Components.LidoCol, HTMLStencilElement {
     }
@@ -883,8 +883,8 @@ declare global {
         new (): HTMLLidoColElement;
     };
     /**
-     * @component AppContainer
-     * The `AppContainer` component acts as a container for other elements. It scales responsively
+     * @component LidoContainer
+     * The `LidoContainer` component acts as a container for other elements. It scales responsively
      * based on the window size, adjusts background color, and provides various configurable properties
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
@@ -895,8 +895,8 @@ declare global {
         new (): HTMLLidoContainerElement;
     };
     /**
-     * @component AppHome
-     * The `AppHome` component renders a series of containers parsed from the provided XML data.
+     * @component LidoHome
+     * The `LidoHome` component renders a series of containers parsed from the provided XML data.
      * It handles navigation between containers, resets the state on page reloads or container transitions,
      * and displays progress indicators (dots) for each container.
      */
@@ -907,8 +907,8 @@ declare global {
         new (): HTMLLidoHomeElement;
     };
     /**
-     * @component AppImage
-     * The `AppImage` component displays an image element within a container. It is a versatile
+     * @component LidoImage
+     * The `LidoImage` component displays an image element within a container. It is a versatile
      * component that allows dynamic sizing, positioning, visibility control, and event handling.
      * The component is designed to work in different types of environments, supporting custom
      * events such as touch, match, and entry events.
@@ -920,8 +920,8 @@ declare global {
         new (): HTMLLidoImageElement;
     };
     /**
-     * @component AppPos
-     * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+     * @component LidoPos
+     * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
      * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
      * events for interaction such as touch, match, and entry events.
      */
@@ -932,8 +932,8 @@ declare global {
         new (): HTMLLidoPosElement;
     };
     /**
-     * @component AppRandom
-     * The `AppRandom` component randomly positions its child elements within its container.
+     * @component LidoRandom
+     * The `LidoRandom` component randomly positions its child elements within its container.
      * This component can be used when a random layout of elements is required. It allows
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
@@ -944,9 +944,9 @@ declare global {
         new (): HTMLLidoRandomElement;
     };
     /**
-     * @component AppRoot
-     * The `AppRoot` component is the main application entry point. It loads an external XML data file
-     * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+     * @component LidoRoot
+     * The `LidoRoot` component is the main application entry point. It loads an external XML data file
+     * from a specified URL or asset path and passes it down to the `lido-home` component for rendering.
      * The XML path can be configured via a prop.
      */
     interface HTMLLidoRootElement extends Components.LidoRoot, HTMLStencilElement {
@@ -956,8 +956,8 @@ declare global {
         new (): HTMLLidoRootElement;
     };
     /**
-     * @component AppRow
-     * The `AppRow` component is used to create a flexible row element that can contain other elements.
+     * @component LidoRow
+     * The `LidoRow` component is used to create a flexible row element that can contain other elements.
      * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
      */
     interface HTMLLidoRowElement extends Components.LidoRow, HTMLStencilElement {
@@ -967,8 +967,8 @@ declare global {
         new (): HTMLLidoRowElement;
     };
     /**
-     * @component AppShape
-     * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+     * @component LidoShape
+     * The `LidoShape` component is used to display various types of shapes like rectangles, circles, or polygons.
      * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
@@ -979,8 +979,8 @@ declare global {
         new (): HTMLLidoShapeElement;
     };
     /**
-     * @component AppText
-     * The `AppText` component is used to display text with customizable styling.
+     * @component LidoText
+     * The `LidoText` component is used to display text with customizable styling.
      * It allows you to set the font, size, color, and background color, along with
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
@@ -997,8 +997,8 @@ declare global {
         new (): HTMLLidoTraceElement;
     };
     /**
-     * @component AppWrap
-     * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+     * @component LidoWrap
+     * The `LidoWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
      * The component can display its content as a grid and supports custom events like touch, match, and entry.
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
@@ -1025,12 +1025,12 @@ declare global {
 }
 declare namespace LocalJSX {
     /**
-     * @component AppCol
-     * The `AppCol` component is a dynamic column-like UI element that can be
+     * @component LidoCol
+     * The `LidoCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
      * background color, and event handlers. It is designed to work within
      * containers (`lido-container`) and can include child components like
-     * `app-text`, `lido-row`, etc.
+     * `lido-text`, `lido-row`, etc.
      */
     interface LidoCol {
         /**
@@ -1107,8 +1107,8 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppContainer
-     * The `AppContainer` component acts as a container for other elements. It scales responsively
+     * @component LidoContainer
+     * The `LidoContainer` component acts as a container for other elements. It scales responsively
      * based on the window size, adjusts background color, and provides various configurable properties
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
@@ -1207,8 +1207,8 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppHome
-     * The `AppHome` component renders a series of containers parsed from the provided XML data.
+     * @component LidoHome
+     * The `LidoHome` component renders a series of containers parsed from the provided XML data.
      * It handles navigation between containers, resets the state on page reloads or container transitions,
      * and displays progress indicators (dots) for each container.
      */
@@ -1231,8 +1231,8 @@ declare namespace LocalJSX {
         "xmlData"?: string;
     }
     /**
-     * @component AppImage
-     * The `AppImage` component displays an image element within a container. It is a versatile
+     * @component LidoImage
+     * The `LidoImage` component displays an image element within a container. It is a versatile
      * component that allows dynamic sizing, positioning, visibility control, and event handling.
      * The component is designed to work in different types of environments, supporting custom
      * events such as touch, match, and entry events.
@@ -1312,8 +1312,8 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppPos
-     * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+     * @component LidoPos
+     * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
      * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
      * events for interaction such as touch, match, and entry events.
      */
@@ -1392,8 +1392,8 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppRandom
-     * The `AppRandom` component randomly positions its child elements within its container.
+     * @component LidoRandom
+     * The `LidoRandom` component randomly positions its child elements within its container.
      * This component can be used when a random layout of elements is required. It allows
      * full customization via props such as dimensions, positioning, visibility, and event handling.
      */
@@ -1472,9 +1472,9 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppRoot
-     * The `AppRoot` component is the main application entry point. It loads an external XML data file
-     * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+     * @component LidoRoot
+     * The `LidoRoot` component is the main application entry point. It loads an external XML data file
+     * from a specified URL or asset path and passes it down to the `lido-home` component for rendering.
      * The XML path can be configured via a prop.
      */
     interface LidoRoot {
@@ -1496,8 +1496,8 @@ declare namespace LocalJSX {
         "xmlPath"?: string;
     }
     /**
-     * @component AppRow
-     * The `AppRow` component is used to create a flexible row element that can contain other elements.
+     * @component LidoRow
+     * The `LidoRow` component is used to create a flexible row element that can contain other elements.
      * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
      */
     interface LidoRow {
@@ -1571,8 +1571,8 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppShape
-     * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+     * @component LidoShape
+     * The `LidoShape` component is used to display various types of shapes like rectangles, circles, or polygons.
      * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
      * Additionally, it supports custom events for interaction like touch, match, and entry.
      */
@@ -1655,8 +1655,8 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppText
-     * The `AppText` component is used to display text with customizable styling.
+     * @component LidoText
+     * The `LidoText` component is used to display text with customizable styling.
      * It allows you to set the font, size, color, and background color, along with
      * positioning and visibility control. The component supports custom events like touch, match, and entry.
      */
@@ -1768,7 +1768,7 @@ declare namespace LocalJSX {
          */
         "height"?: string;
         /**
-          * Unique identifier for this `app-trace` component instance.
+          * Unique identifier for this `lido-trace` component instance.
          */
         "id"?: string;
         /**
@@ -1805,8 +1805,8 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     /**
-     * @component AppWrap
-     * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+     * @component LidoWrap
+     * The `LidoWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
      * The component can display its content as a grid and supports custom events like touch, match, and entry.
      * It allows for full customization via props like dimensions, background color, visibility, and z-index.
      */
@@ -1904,81 +1904,81 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             /**
-             * @component AppCol
-             * The `AppCol` component is a dynamic column-like UI element that can be
+             * @component LidoCol
+             * The `LidoCol` component is a dynamic column-like UI element that can be
              * customized via various properties such as dimensions, position, visibility,
              * background color, and event handlers. It is designed to work within
              * containers (`lido-container`) and can include child components like
-             * `app-text`, `lido-row`, etc.
+             * `lido-text`, `lido-row`, etc.
              */
             "lido-col": LocalJSX.LidoCol & JSXBase.HTMLAttributes<HTMLLidoColElement>;
             /**
-             * @component AppContainer
-             * The `AppContainer` component acts as a container for other elements. It scales responsively
+             * @component LidoContainer
+             * The `LidoContainer` component acts as a container for other elements. It scales responsively
              * based on the window size, adjusts background color, and provides various configurable properties
              * such as dimensions, positioning, visibility, and custom event handlers.
              */
             "lido-container": LocalJSX.LidoContainer & JSXBase.HTMLAttributes<HTMLLidoContainerElement>;
             /**
-             * @component AppHome
-             * The `AppHome` component renders a series of containers parsed from the provided XML data.
+             * @component LidoHome
+             * The `LidoHome` component renders a series of containers parsed from the provided XML data.
              * It handles navigation between containers, resets the state on page reloads or container transitions,
              * and displays progress indicators (dots) for each container.
              */
             "lido-home": LocalJSX.LidoHome & JSXBase.HTMLAttributes<HTMLLidoHomeElement>;
             /**
-             * @component AppImage
-             * The `AppImage` component displays an image element within a container. It is a versatile
+             * @component LidoImage
+             * The `LidoImage` component displays an image element within a container. It is a versatile
              * component that allows dynamic sizing, positioning, visibility control, and event handling.
              * The component is designed to work in different types of environments, supporting custom
              * events such as touch, match, and entry events.
              */
             "lido-image": LocalJSX.LidoImage & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
             /**
-             * @component AppPos
-             * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+             * @component LidoPos
+             * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
              * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
              * events for interaction such as touch, match, and entry events.
              */
             "lido-pos": LocalJSX.LidoPos & JSXBase.HTMLAttributes<HTMLLidoPosElement>;
             /**
-             * @component AppRandom
-             * The `AppRandom` component randomly positions its child elements within its container.
+             * @component LidoRandom
+             * The `LidoRandom` component randomly positions its child elements within its container.
              * This component can be used when a random layout of elements is required. It allows
              * full customization via props such as dimensions, positioning, visibility, and event handling.
              */
             "lido-random": LocalJSX.LidoRandom & JSXBase.HTMLAttributes<HTMLLidoRandomElement>;
             /**
-             * @component AppRoot
-             * The `AppRoot` component is the main application entry point. It loads an external XML data file
-             * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+             * @component LidoRoot
+             * The `LidoRoot` component is the main application entry point. It loads an external XML data file
+             * from a specified URL or asset path and passes it down to the `lido-home` component for rendering.
              * The XML path can be configured via a prop.
              */
             "lido-root": LocalJSX.LidoRoot & JSXBase.HTMLAttributes<HTMLLidoRootElement>;
             /**
-             * @component AppRow
-             * The `AppRow` component is used to create a flexible row element that can contain other elements.
+             * @component LidoRow
+             * The `LidoRow` component is used to create a flexible row element that can contain other elements.
              * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
              */
             "lido-row": LocalJSX.LidoRow & JSXBase.HTMLAttributes<HTMLLidoRowElement>;
             /**
-             * @component AppShape
-             * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+             * @component LidoShape
+             * The `LidoShape` component is used to display various types of shapes like rectangles, circles, or polygons.
              * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
              * Additionally, it supports custom events for interaction like touch, match, and entry.
              */
             "lido-shape": LocalJSX.LidoShape & JSXBase.HTMLAttributes<HTMLLidoShapeElement>;
             /**
-             * @component AppText
-             * The `AppText` component is used to display text with customizable styling.
+             * @component LidoText
+             * The `LidoText` component is used to display text with customizable styling.
              * It allows you to set the font, size, color, and background color, along with
              * positioning and visibility control. The component supports custom events like touch, match, and entry.
              */
             "lido-text": LocalJSX.LidoText & JSXBase.HTMLAttributes<HTMLLidoTextElement>;
             "lido-trace": LocalJSX.LidoTrace & JSXBase.HTMLAttributes<HTMLLidoTraceElement>;
             /**
-             * @component AppWrap
-             * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+             * @component LidoWrap
+             * The `LidoWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
              * The component can display its content as a grid and supports custom events like touch, match, and entry.
              * It allows for full customization via props like dimensions, background color, visibility, and z-index.
              */

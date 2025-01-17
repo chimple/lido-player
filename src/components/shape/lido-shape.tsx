@@ -2,9 +2,9 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppShape
+ * @component LidoShape
  *
- * The `AppShape` component is used to display various types of shapes like rectangles, circles, or polygons.
+ * The `LidoShape` component is used to display various types of shapes like rectangles, circles, or polygons.
  * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
  * Additionally, it supports custom events for interaction like touch, match, and entry.
  */
@@ -13,7 +13,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-shape.css',
   shadow: false,
 })
-export class AppShape {
+export class LidoShape {
   /**
    * Unique identifier for the shape element.
    */
@@ -113,7 +113,7 @@ export class AppShape {
   @Prop() onEntry: string;
 
   /**
-   * Reference to the HTML element representing this `app-shape` component.
+   * Reference to the HTML element representing this `lido-shape` component.
    */
   @Element() el: HTMLElement;
 

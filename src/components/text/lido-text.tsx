@@ -2,9 +2,9 @@ import { Component, Prop, h, Element, Host } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppText
+ * @component LidoText
  *
- * The `AppText` component is used to display text with customizable styling.
+ * The `LidoText` component is used to display text with customizable styling.
  * It allows you to set the font, size, color, and background color, along with
  * positioning and visibility control. The component supports custom events like touch, match, and entry.
  */
@@ -13,7 +13,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-text.css',
   shadow: false,
 })
-export class AppText {
+export class LidoText {
   /**
    * Unique identifier for the text element.
    */
@@ -130,7 +130,7 @@ export class AppText {
   @Prop() onEntry: string;
 
   /**
-   * Reference to the HTML element representing this `app-text` component.
+   * Reference to the HTML element representing this `lido-text` component.
    */
   @Element() el: HTMLElement;
 

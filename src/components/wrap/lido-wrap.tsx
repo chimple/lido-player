@@ -2,9 +2,9 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppWrap
+ * @component LidoWrap
  *
- * The `AppWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
+ * The `LidoWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
  * The component can display its content as a grid and supports custom events like touch, match, and entry.
  * It allows for full customization via props like dimensions, background color, visibility, and z-index.
  */
@@ -13,7 +13,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-wrap.css',
   shadow: false,
 })
-export class AppWrap {
+export class LidoWrap {
   /**
    * Unique identifier for the wrap element.
    */
@@ -105,7 +105,7 @@ export class AppWrap {
   @Prop() onEntry: string;
 
   /**
-   * Reference to the HTML element representing this `app-wrap` component.
+   * Reference to the HTML element representing this `lido-wrap` component.
    */
   @Element() el: HTMLElement;
 

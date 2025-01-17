@@ -1,9 +1,9 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
 
 /**
- * @component AppRandom
+ * @component LidoRandom
  *
- * The `AppRandom` component randomly positions its child elements within its container.
+ * The `LidoRandom` component randomly positions its child elements within its container.
  * This component can be used when a random layout of elements is required. It allows
  * full customization via props such as dimensions, positioning, visibility, and event handling.
  */
@@ -12,7 +12,7 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
   styleUrl: 'lido-random.css',
   shadow: false,
 })
-export class AppRandom {
+export class LidoRandom {
   /**
    * Unique identifier for the random container.
    */

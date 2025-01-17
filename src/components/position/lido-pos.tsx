@@ -2,9 +2,9 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppPos
+ * @component LidoPos
  *
- * The `AppPos` component is used to position a block-level element with dynamic styling and event handling.
+ * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
  * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
  * events for interaction such as touch, match, and entry events.
  */
@@ -13,7 +13,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-pos.css',
   shadow: false,
 })
-export class AppPos {
+export class LidoPos {
   /**
    * Unique identifier for the positional element.
    */
@@ -105,7 +105,7 @@ export class AppPos {
   @Prop() onEntry: string;
 
   /**
-   * Reference to the HTML element that represents this `app-pos` component.
+   * Reference to the HTML element that represents this `lido-pos` component.
    */
   @Element() el: HTMLElement;
 

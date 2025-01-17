@@ -2,20 +2,20 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppCol
+ * @component LidoCol
  *
- * The `AppCol` component is a dynamic column-like UI element that can be
+ * The `LidoCol` component is a dynamic column-like UI element that can be
  * customized via various properties such as dimensions, position, visibility,
  * background color, and event handlers. It is designed to work within
  * containers (`lido-container`) and can include child components like
- * `app-text`, `lido-row`, etc.
+ * `lido-text`, `lido-row`, etc.
  */
 @Component({
   tag: 'lido-col',
   styleUrl: 'lido-col.css',
   shadow: false,
 })
-export class AppCol {
+export class LidoCol {
   /**
    * The unique identifier for the column component.
    */
