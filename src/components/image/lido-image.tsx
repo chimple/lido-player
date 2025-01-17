@@ -2,9 +2,9 @@ import { Component, Prop, h, Element, Host, getAssetPath } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppImage
+ * @component LidoImage
  *
- * The `AppImage` component displays an image element within a container. It is a versatile
+ * The `LidoImage` component displays an image element within a container. It is a versatile
  * component that allows dynamic sizing, positioning, visibility control, and event handling.
  * The component is designed to work in different types of environments, supporting custom
  * events such as touch, match, and entry events.
@@ -14,7 +14,7 @@ import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-image.css',
   shadow: false,
 })
-export class AppImage {
+export class LidoImage {
   /**
    * The value associated with the image. Typically used for internal logic or identification.
    */

@@ -2,9 +2,9 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppContainer
+ * @component LidoContainer
  *
- * The `AppContainer` component acts as a container for other elements. It scales responsively
+ * The `LidoContainer` component acts as a container for other elements. It scales responsively
  * based on the window size, adjusts background color, and provides various configurable properties
  * such as dimensions, positioning, visibility, and custom event handlers.
  */
@@ -13,7 +13,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-container.css',
   shadow: false,
 })
-export class AppContainer {
+export class LidoContainer{
   /**
    * Unique identifier for the container.
    */
@@ -187,7 +187,7 @@ export class AppContainer {
       left: '50%',
       transform: 'translate(-50%, -50%)', // Centering the container
     };
-    console.log('🚀 ~ AppContainer ~ canplay:', this.canplay);
+    console.log('🚀 ~ LidoContainer ~ canplay:', this.canplay);
 
     return (
       <Host
@@ -204,6 +204,7 @@ export class AppContainer {
         onEntry={this.onEntry}
         showCheck={this.showCheck}
         isContinueOnCorrect={this.isContinueOnCorrect}
+        canplay={`${this.canplay}`}
       >
         <slot />
       </Host>

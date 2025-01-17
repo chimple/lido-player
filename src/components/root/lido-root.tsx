@@ -1,10 +1,10 @@
 import { Component, h, State, Prop, getAssetPath } from '@stencil/core';
 
 /**
- * @component AppRoot
+ * @component LidoRoot
  *
- * The `AppRoot` component is the main application entry point. It loads an external XML data file
- * from a specified URL or asset path and passes it down to the `app-home` component for rendering.
+ * The `LidoRoot` component is the main application entry point. It loads an external XML data file
+ * from a specified URL or asset path and passes it down to the `lido-home` component for rendering.
  * The XML path can be configured via a prop.
  */
 @Component({
@@ -12,7 +12,7 @@ import { Component, h, State, Prop, getAssetPath } from '@stencil/core';
   shadow: false,
   assetsDirs: ['assets'], // Specifies the directory for static assets
 })
-export class AppRoot {
+export class LidoRoot {
   /**
    * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
    */
@@ -49,9 +49,9 @@ export class AppRoot {
     //   return;
     // }
     const xmlPath = this.xmlPath ?? this.baseUrl + '/index.xml';
-    console.log('🚀 ~ AppRoot ~ componentWillLoad ~ this.baseUrl:', this.baseUrl);
-    console.log('🚀 ~ AppRoot ~ componentWillLoad ~ this.xmlPath:', this.xmlPath);
-    console.log('🚀 ~ AppRoot ~ componentWillLoad ~ xmlPath:', xmlPath);
+    console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.baseUrl:', this.baseUrl);
+    console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.xmlPath:', this.xmlPath);
+    console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ xmlPath:', xmlPath);
     // Fetch the XML data
     try {
       const resolvedPath = xmlPath.startsWith('http')

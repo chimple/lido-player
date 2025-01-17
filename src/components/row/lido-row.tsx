@@ -2,9 +2,9 @@ import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { initEventsForElement } from '../../utils/utils';
 
 /**
- * @component AppRow
+ * @component LidoRow
  *
- * The `AppRow` component is used to create a flexible row element that can contain other elements.
+ * The `LidoRow` component is used to create a flexible row element that can contain other elements.
  * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
  */
 @Component({
@@ -12,7 +12,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-row.css',
   shadow: false,
 })
-export class AppRow {
+export class LidoRow {
   /**
    * Value associated with the row, typically used for internal logic or data.
    */
@@ -99,7 +99,7 @@ export class AppRow {
   @Prop() onEntry: string;
 
   /**
-   * Reference to the HTML element representing this `app-row` component.
+   * Reference to the HTML element representing this `lido-row` component.
    */
   @Element() el: HTMLElement;
 

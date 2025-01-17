@@ -3,9 +3,9 @@ import { DragSelectedMapKey, SelectedValuesKey, NextContainerKey } from '../../u
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
 
 /**
- * @component AppHome
+ * @component LidoHome
  *
- * The `AppHome` component renders a series of containers parsed from the provided XML data.
+ * The `LidoHome` component renders a series of containers parsed from the provided XML data.
  * It handles navigation between containers, resets the state on page reloads or container transitions,
  * and displays progress indicators (dots) for each container.
  */
@@ -14,7 +14,7 @@ import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../u
   shadow: false,
   styleUrls: ['./../../index.css', '../../utils/css/animation.css', './lido-home.css'],
 })
-export class AppHome {
+export class LidoHome {
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -195,7 +195,7 @@ export class AppHome {
   }
 
   /**
-   * Parses the `app-container` elements from the XML root element and stores them in the `containers` state.
+   * Parses the `lido-container` elements from the XML root element and stores them in the `containers` state.
    *
    * @param rootElement - The root element of the parsed XML document.
    */

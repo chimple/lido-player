@@ -10,12 +10,12 @@ import { TraceMode } from '../../utils/constants';
   shadow: false,
   assetsDirs: ['svg'],
 })
-export class AppTrace {
+export class LidoTrace {
   /**
-   * Various configuration properties for `app-trace`
+   * Various configuration properties for `lido-trace`
    */
   /**
-   * Unique identifier for this `app-trace` component instance.
+   * Unique identifier for this `lido-trace` component instance.
    */
   @Prop() id: string;
 
