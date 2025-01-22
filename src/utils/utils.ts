@@ -288,16 +288,16 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
-    const rect1 = container.getBoundingClientRect();
-    const rect2 = element.getBoundingClientRect();
-    verticalDistance = rect1.top - rect2.top;
-    horizontalDistance = rect1.left - rect2.left;
-
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove);
     document.addEventListener('touchend', onEnd);
   };
+
+  const rect1 = container.getBoundingClientRect();
+  const rect2 = element.getBoundingClientRect();
+  verticalDistance = rect1.top - rect2.top;
+  horizontalDistance = rect1.left - rect2.left;
 
   const observer = new MutationObserver(mutationsList => {
     for (const mutation of mutationsList) {
@@ -533,16 +533,13 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
           const container = document.getElementById('lido-container');
           const containerScale = getElementScale(container);
-          const containerRect = container.getBoundingClientRect();
+          dragElement.style.transform = 'translate(0,0)';
           const dropRect = dropElement.getBoundingClientRect();
+          const dragRect = dragElement.getBoundingClientRect();
 
-          const scaledLeft = (dropRect.left - containerRect.left) / containerScale;
-          const scaledTop = (dropRect.top - containerRect.top) / containerScale;
-
-          dragElement.style.position = 'fixed';
-          dragElement.style.left = `${scaledLeft}px`;
-          dragElement.style.top = `${scaledTop}px`;
-          dragElement.style.transform = `translate(0px, 0px)`;
+          const scaledLeft = (dropRect.left - dragRect.left) / containerScale;
+          const scaledTop = (dropRect.top - dragRect.top) / containerScale;
+          dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           break;
         }
         case 'addClass': {
