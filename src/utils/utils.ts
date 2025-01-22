@@ -248,7 +248,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
-
   // Fetch the container element
   const container = document.getElementById('lido-container');
   if (!container) {
@@ -367,7 +366,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
     allElements.forEach(otherElement => {
       const otherRect = otherElement.getBoundingClientRect();
-
       // Check if there is overlap
       const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
       const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
@@ -445,9 +443,36 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 }
 
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
+  if (dropElement && dropElement.getAttribute('isAllowOnlyOneDrop') === 'true') {
+    // Check for overlaps and highlight only the most overlapping element
+    const allElements = document.querySelectorAll<HTMLElement>("[type='drag']");
+    let mostOverlappedElement: HTMLElement | null = null;
+    let maxOverlapArea = 0;
+    const elementRect = dragElement.getBoundingClientRect();
+    allElements.forEach(otherElement => {
+      if (otherElement === dragElement) return;
+      const otherRect = otherElement.getBoundingClientRect();
+
+      // Check if there is overlap
+      const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
+      const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
+      const overlapArea = overlapWidth * overlapHeight;
+
+      // Update the most overlapped element if this one has a larger overlap area
+      if (overlapArea > maxOverlapArea) {
+        maxOverlapArea = overlapArea;
+        mostOverlappedElement = otherElement;
+      }
+    });
+
+    if (mostOverlappedElement) {
+      dragElement.style.transform = 'translate(0,0)';
+      return;
+    }
+  }
+  const selectedValueData = localStorage.getItem(SelectedValuesKey);
+  const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   if (!dropElement) {
-    const selectedValueData = localStorage.getItem(SelectedValuesKey);
-    const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
     if (selectedValueData) {
       let selectedValue = JSON.parse(selectedValueData);
       selectedValue = selectedValue.filter(value => value != dragElement['value']);
@@ -455,9 +480,10 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     }
     if (dragSelectedData) {
       let dragSelected = JSON.parse(dragSelectedData);
-      const dropIndex = dragElement.parentElement.getAttribute('tabIndex');
-      if (dropIndex && dragSelected.hasOwnProperty(dropIndex)) {
-        delete dragSelected[dropIndex];
+      for (const key in dragSelected) {
+        if (dragSelected[key].includes(dragElement['value'])) {
+          dragSelected[key] = dragSelected[key].filter(val => val !== dragElement['value']);
+        }
       }
       localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
     }

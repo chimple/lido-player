@@ -129,6 +129,8 @@ export class LidoText {
    */
   @Prop() onEntry: string;
 
+  @Prop() isAllowOnlyOneDrop: string;
+
   /**
    * Reference to the HTML element representing this `lido-text` component.
    */
@@ -172,6 +174,7 @@ export class LidoText {
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        isAllowOnlyOneDrop={this.isAllowOnlyOneDrop}
       >
         {this.string}
       </Host>

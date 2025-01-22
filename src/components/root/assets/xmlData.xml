@@ -83,12 +83,12 @@
 					</lido-col>
 
 					<lido-row id="lido-dropId" visible="true" bgColor="transparent" width="700px" height="150px" x="490px" y="620px">
-						<lido-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
-						<lido-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
-						<lido-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="see" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
-						<lido-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="with" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
-						<lido-text visible="true" tabIndex="5" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="my" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
-						<lido-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="eyes" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect=""></lido-text>
+						<lido-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
+						<lido-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
+						<lido-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="see" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
+						<lido-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="with" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
+						<lido-text visible="true" tabIndex="5" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="my" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
+						<lido-text visible="true" tabIndex="6" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="eyes" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
 					</lido-row>
 				</lido-pos>
 
@@ -104,7 +104,7 @@
 				</lido-pos>
 					
 				<lido-pos visible="true" id="lido-check-pos" width="200px" height="60px" x="1300px" y="100px" bgColor="transparent">
-					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="" onTouch="this.next='true';"></lido-text>
+					<lido-text visible="true" id="lido-checkButton" width="200px" height="60px" bgColor="blue" font="Poppins" font-size="30px" fontColor="white" string="Check" type="click" onEntry="this.addClass='lido-disable-check-button';" onTouch="this.next='true';"></lido-text>
 				</lido-pos>
 			
 	</lido-container>
@@ -120,7 +120,7 @@
 					<lido-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string='Which animal is known as the "king of the jungle"?' font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)"></lido-text>
 
 					<lido-row visible="true" width="800px" height="100px" bgColor="transparent" >
-						<lido-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onCorrect="this.border='2px solid red';">
+						<lido-col visible="true" width="150px" height="120px"  type="click" onEntry="" value="giraffe" onInCorrect="this.border='2px solid red';">
 							<lido-image visible="true" width="150px" height="100px" src="./build/assets/images/animals/giraffe.png" ></lido-image>
 							<lido-text visible="true" width="150px" font="Poppins" font-size="20px" string="GIRAFFE" bgColor="transparent" onEntry="this.boxShadow='unset';"></lido-text>
 						</lido-col>
