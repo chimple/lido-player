@@ -459,6 +459,16 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     return;
   }
 
+  if (dragSelectedData) {
+    let dragSelected = JSON.parse(dragSelectedData);
+    for (const key in dragSelected) {
+      if (dragSelected[key].includes(dragElement['value'])) {
+        dragSelected[key] = dragSelected[key].filter(val => val !== dragElement['value']);
+      }
+    }
+    localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+  }
+
   // Add pulse and highlight effect for a successful match
   const isCorrect = matchStringPattern(dropElement['value'], [dragElement['value']]);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
