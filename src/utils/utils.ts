@@ -356,7 +356,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
   const onEnd = (endEv): void => {
     isDragging = false;
-    console.log(element.style.transform);
 
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
@@ -1007,7 +1006,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
       removeHighlight(el as HTMLElement);
     });
 
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
