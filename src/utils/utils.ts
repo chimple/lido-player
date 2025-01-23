@@ -143,30 +143,7 @@ function slidingWithScaling(element: HTMLElement): void {
     element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
 
     // Check for overlaps and highlight only the most overlapping element
-    const allElements = document.querySelectorAll<HTMLElement>("[type='slide']");
-    let mostOverlappedElement: HTMLElement | null = null;
-    let maxOverlapArea = 0;
-
-    allElements.forEach(otherElement => {
-      if (otherElement === element) return;
-
-      const otherRect = otherElement.getBoundingClientRect();
-      const elementArea = elementRect.width * elementRect.height; // Area of the dragged element
-      const otherArea = otherRect.width * otherRect.height; // Area of the other element
-
-      const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
-      const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
-      const overlapArea = overlapWidth * overlapHeight;
-
-      // Determine the threshold for overlap (at least 80% of the smaller element's area)
-      const overlapThreshold = Math.min(elementArea, otherArea) * 0.8;
-
-      // Check if the overlap area exceeds the threshold
-      if (overlapArea >= overlapThreshold && overlapArea > maxOverlapArea) {
-        maxOverlapArea = overlapArea;
-        mostOverlappedElement = otherElement;
-      }
-    });
+    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'slide');
 
     // Apply styles only to the most overlapped element
     if (mostOverlappedElement) {
@@ -248,7 +225,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
-
   // Fetch the container element
   const container = document.getElementById('lido-container');
   if (!container) {
@@ -289,16 +265,16 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
-    const rect1 = container.getBoundingClientRect();
-    const rect2 = element.getBoundingClientRect();
-    verticalDistance = rect1.top - rect2.top;
-    horizontalDistance = rect1.left - rect2.left;
-
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove);
     document.addEventListener('touchend', onEnd);
   };
+
+  const rect1 = container.getBoundingClientRect();
+  const rect2 = element.getBoundingClientRect();
+  verticalDistance = rect1.top - rect2.top;
+  horizontalDistance = rect1.left - rect2.left;
 
   const observer = new MutationObserver(mutationsList => {
     for (const mutation of mutationsList) {
@@ -361,24 +337,9 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
 
     // Check for overlaps and highlight only the most overlapping element
+    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
+
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-    let mostOverlappedElement: HTMLElement | null = null;
-    let maxOverlapArea = 0;
-
-    allElements.forEach(otherElement => {
-      const otherRect = otherElement.getBoundingClientRect();
-
-      // Check if there is overlap
-      const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
-      const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
-      const overlapArea = overlapWidth * overlapHeight;
-
-      // Update the most overlapped element if this one has a larger overlap area
-      if (overlapArea > maxOverlapArea) {
-        maxOverlapArea = overlapArea;
-        mostOverlappedElement = otherElement;
-      }
-    });
 
     // Reset styles for all elements
     allElements.forEach(otherElement => {
@@ -395,6 +356,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
   const onEnd = (endEv): void => {
     isDragging = false;
+    console.log(element.style.transform);
+
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
@@ -412,24 +375,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     });
 
     // Check for overlaps and log the most overlapping element
-    const elementRect = element.getBoundingClientRect();
-    let mostOverlappedElement: HTMLElement | null = null;
-    let maxOverlapArea = 0;
-
-    allElements.forEach(otherElement => {
-      const otherRect = otherElement.getBoundingClientRect();
-
-      // Calculate overlap
-      const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
-      const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
-      const overlapArea = overlapWidth * overlapHeight;
-
-      // Update the most overlapped element if this one has a larger overlap area
-      if (overlapArea > maxOverlapArea) {
-        maxOverlapArea = overlapArea;
-        mostOverlappedElement = otherElement;
-      }
-    });
+    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
 
     onElementDropComplete(element, mostOverlappedElement);
   };
@@ -444,10 +390,57 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
+const findMostoverlappedElement = (element: HTMLElement, type: string) => {
+  const elementRect = element.getBoundingClientRect();
+  const allElements = document.querySelectorAll<HTMLElement>(`[type="${type}"]`);
+
+  let mostOverlappedElement: HTMLElement | null = null;
+  let maxOverlapArea = 0;
+
+  allElements.forEach(otherElement => {
+    if (otherElement === element) return;
+    const otherRect = otherElement.getBoundingClientRect();
+    // Check if there is overlap
+    const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
+    const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
+    const overlapArea = overlapWidth * overlapHeight;
+
+    if (type === 'slide') {
+      const elementArea = elementRect.width * elementRect.height; // Area of the dragged element
+      const otherArea = otherRect.width * otherRect.height; // Area of the other element
+      // Determine the threshold for overlap (at least 80% of the smaller element's area)
+      const minimumArea = Math.min(elementArea, otherArea) * 0.8;
+
+      // Check if the overlap area exceeds the threshold
+      if (overlapArea >= minimumArea && overlapArea > maxOverlapArea) {
+        maxOverlapArea = overlapArea;
+        mostOverlappedElement = otherElement;
+      }
+      return;
+    }
+
+    // Update the most overlapped element if this one has a larger overlap area
+    if (overlapArea > maxOverlapArea) {
+      maxOverlapArea = overlapArea;
+      mostOverlappedElement = otherElement;
+    }
+  });
+  return mostOverlappedElement;
+};
+
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
+  if (dropElement && dropElement.getAttribute('isAllowOnlyOneDrop') === 'true') {
+    // Check for overlaps and highlight only the most overlapping element
+    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
+    if (mostOverlappedElement) {
+      dragElement.style.transform = 'translate(0,0)';
+      return;
+    }
+  }
+
+  const selectedValueData = localStorage.getItem(SelectedValuesKey);
+  const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   if (!dropElement) {
-    const selectedValueData = localStorage.getItem(SelectedValuesKey);
-    const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
     if (selectedValueData) {
       let selectedValue = JSON.parse(selectedValueData);
       selectedValue = selectedValue.filter(value => value != dragElement['value']);
@@ -455,9 +448,10 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     }
     if (dragSelectedData) {
       let dragSelected = JSON.parse(dragSelectedData);
-      const dropIndex = dragElement.parentElement.getAttribute('tabIndex');
-      if (dropIndex && dragSelected.hasOwnProperty(dropIndex)) {
-        delete dragSelected[dropIndex];
+      for (const key in dragSelected) {
+        if (dragSelected[key].includes(dragElement['value'])) {
+          dragSelected[key] = dragSelected[key].filter(val => val !== dragElement['value']);
+        }
       }
       localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
     }
@@ -507,16 +501,13 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
           const container = document.getElementById('lido-container');
           const containerScale = getElementScale(container);
-          const containerRect = container.getBoundingClientRect();
+          dragElement.style.transform = 'translate(0,0)';
           const dropRect = dropElement.getBoundingClientRect();
+          const dragRect = dragElement.getBoundingClientRect();
 
-          const scaledLeft = (dropRect.left - containerRect.left) / containerScale;
-          const scaledTop = (dropRect.top - containerRect.top) / containerScale;
-
-          dragElement.style.position = 'fixed';
-          dragElement.style.left = `${scaledLeft}px`;
-          dragElement.style.top = `${scaledTop}px`;
-          dragElement.style.transform = `translate(0px, 0px)`;
+          const scaledLeft = (dropRect.left - dragRect.left) / containerScale;
+          const scaledTop = (dropRect.top - dragRect.top) / containerScale;
+          dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           break;
         }
         case 'addClass': {
@@ -786,7 +777,7 @@ const appendingDragElementsInDrop = () => {
     dragItems.forEach(dragElement => {
       const drag = dragElement as HTMLElement;
       if (drag['value'] === drop['value']) {
-        drag.style.position = 'unset';
+        drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
       }
     });
