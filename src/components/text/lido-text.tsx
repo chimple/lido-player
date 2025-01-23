@@ -129,6 +129,11 @@ export class LidoText {
    */
   @Prop() onEntry: string;
 
+  /**
+   * Determines whether only a single draggable element is allowed to be dropped.
+   * If set to 'true', only one draggable element can be dropped in the drop zone.
+   * If set to 'false', multiple draggable elements are allowed.
+   */
   @Prop() isAllowOnlyOneDrop: string;
 
   /**
