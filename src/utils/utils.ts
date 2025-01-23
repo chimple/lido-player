@@ -1009,8 +1009,8 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
 
     await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
-    await new Promise(resolve => setTimeout(resolve, 500));
-    selectedDragElement.style.transform = 'translate(0px, 0px)';
+    // await new Promise(resolve => setTimeout(resolve, 500));
+    // selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
 }
 
