@@ -683,6 +683,9 @@ export namespace Components {
           * Unique identifier for the text element.
          */
         "id": string;
+        /**
+          * Determines whether only a single draggable element is allowed to be dropped. If set to 'true', only one draggable element can be dropped in the drop zone. If set to 'false', multiple draggable elements are allowed.
+         */
         "isAllowOnlyOneDrop": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
@@ -1702,6 +1705,9 @@ declare namespace LocalJSX {
           * Unique identifier for the text element.
          */
         "id"?: string;
+        /**
+          * Determines whether only a single draggable element is allowed to be dropped. If set to 'true', only one draggable element can be dropped in the drop zone. If set to 'false', multiple draggable elements are allowed.
+         */
         "isAllowOnlyOneDrop"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
