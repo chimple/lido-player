@@ -469,7 +469,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   }
 
   // Add pulse and highlight effect for a successful match
-  const isCorrect = matchStringPattern(dropElement['value'], [dragElement['value']]);
+  const isCorrect = dropElement['value'].includes(dragElement['value']);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
   if (isCorrect) {
     // Perform actions if onMatch is defined
@@ -662,7 +662,8 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
 
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
   if (isAllowOnlyCorrect) {
-    const isCorrect = matchStringPattern(dropElement['value'], [dragElement['value']]);
+    
+    const isCorrect = dropElement['value'].includes(dragElement['value']);
     if (!isCorrect) {
       dragElement.style.transform = 'translate(0,0)';
       return;
@@ -740,7 +741,7 @@ const handleShowCheck = () => {
   const checkButton = document.getElementById('lido-checkButton');
 
   if (!selectValues || selectValues.length !== countPatternWords(objectiveString)) {
-    executeActions("this.addClass='disable-check-button'", checkButton);
+    executeActions("this.addClass='lido-disable-check-button'", checkButton);
     return;
   }
 
@@ -851,37 +852,111 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
   const onClick = async () => {
     const container = document.getElementById('lido-container');
+    const objective = container['objective'].split(',');
+    let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
+    const checkButton = document.getElementById('lido-checkButton');
+
     if (element.getAttribute('id') == 'lido-checkButton') {
-      validateObjectiveStatus();
+      // validateObjectiveStatus();
+      let allCorrect: boolean = true;
+      selectedValue.forEach(item => {
+        if (!objective.includes(item)) allCorrect = false;
+      });
+
+      if (allCorrect) {
+        const onCorrect = container.getAttribute('onCorrect');
+        if (onCorrect) {
+          await executeActions(onCorrect, container);
+        }
+        triggerNextContainer();
+      } else {
+        const onInCorrect = container.getAttribute('onInCorrect');
+        if (onInCorrect) {
+          await executeActions(onInCorrect, container);
+        }
+        const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
+        if (!isContinueOnCorrect) {
+          triggerNextContainer();
+        }
+      }
+
       return;
     }
 
-    localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
-    element.style.border = '2px solid yellow';
-    element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
+    // element.style.border = '2px solid yellow';
+    // element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
 
-    element.style.transition = 'transform 0.2s ease, border 0.5s ease';
-    element.style.transform = 'scale(1.1)';
+    // element.style.transition = 'transform 0.2s ease, border 0.5s ease';
+    // element.style.transform = 'scale(1.1)';
 
-    element.style.transform = 'scale(1)';
-    element.style.border = '';
-    element.style.boxShadow = '';
+    // element.style.transform = 'scale(1)';
+    // element.style.border = '';
+    // element.style.boxShadow = '';
 
-    const objective = container['objective'];
-
-    const isCorrect = matchStringPattern(objective, [element['value']]);
-    dispatchClickEvent(element, isCorrect);
-    if (isCorrect) {
-      const onCorrect = element.getAttribute('onCorrect');
-      await executeActions(onCorrect, element);
+    if (element.classList.contains('lido-click-activate')) {
+      element.classList.remove('lido-click-activate');
+      executeActions(element.getAttribute("onEntry"), element);
+      selectedValue = selectedValue.filter(item => item != element['value']);
+      localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+      checkButton.classList.add('lido-disable-check-button');
+      return;
     } else {
-      const onInCorrect = element.getAttribute('onInCorrect');
-      await executeActions(onInCorrect, element);
-
-      // showWrongAnswerAnimation([element]);
+      if (objective.length > selectedValue.length){
+        element.classList.add('lido-click-activate');
+        selectedValue.push(element['value']);
+      }
     }
-    storingEachActivityScore(isCorrect);
-    handleShowCheck();
+
+    localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+
+    // const isCorrect = matchStringPattern(objective, [element['value']]);
+    const isCorrect = objective.includes(element['value']);
+
+    dispatchClickEvent(element, isCorrect);
+    if(objective.length > selectedValue.length){
+      if (isCorrect) {
+        const onCorrect = element.getAttribute('onCorrect');
+        await executeActions(onCorrect, element);
+      } else {
+        const onInCorrect = element.getAttribute('onInCorrect');
+        await executeActions(onInCorrect, element);
+        // showWrongAnswerAnimation([element]);
+      }
+      storingEachActivityScore(isCorrect);
+    }
+
+    if (objective.length === selectedValue.length) {
+      const showCheck = container.getAttribute('showCheck') == 'true';
+
+      if (showCheck) {
+        checkButton.classList.remove('lido-disable-check-button');
+      } else {
+        // validateObjectiveStatus();
+        let allCorrect: boolean = true;
+        selectedValue.forEach(item => {
+          if (!objective.includes(item)) allCorrect = false;
+        });
+        if (allCorrect) {
+          const onCorrect = container.getAttribute('onCorrect');
+          if (onCorrect) {
+            await executeActions(onCorrect, container);
+          }
+          triggerNextContainer();
+        } else {
+          const onInCorrect = container.getAttribute('onInCorrect');
+          if (onInCorrect) {
+            await executeActions(onInCorrect, container);
+          }
+          const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
+          if (!isContinueOnCorrect) {
+            triggerNextContainer();
+          }
+        }
+      }
+    } else {
+      checkButton.classList.add('lido-disable-check-button');
+    }
+    // handleShowCheck();
   };
   element.addEventListener('click', onClick);
 }

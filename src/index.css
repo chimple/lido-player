@@ -9,3 +9,8 @@ body {
   background-color: #9393935c !important;
   color: white;
 }
+
+.lido-click-activate{
+  border: 2px solid;
+  background-color: #ffdf7d !important;
+}
