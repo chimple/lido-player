@@ -1,6 +1,7 @@
 import { ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey } from './constants';
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
+import { RiveService } from './rive-service';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -564,6 +565,16 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           break;
         }
 
+        case 'avatarAnimate': {
+          const riveService = RiveService.getInstance();
+          const riveInstance = riveService.getRiveInstance();
+
+          if (riveInstance && action.value) {
+            riveInstance.play(action.value);
+          }
+          break;
+        }
+
         default: {
           targetElement.style[action.action] = action.value;
           break;
@@ -662,7 +673,6 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
 
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
   if (isAllowOnlyCorrect) {
-    
     const isCorrect = dropElement['value'].includes(dragElement['value']);
     if (!isCorrect) {
       dragElement.style.transform = 'translate(0,0)';
@@ -673,16 +683,28 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
-  if (!dragScore[dropElement.getAttribute('tabindex')]) {
-    dragScore[dropElement.getAttribute('tabindex')] = [];
+  const tabindex = dropElement.getAttribute('tabindex');
+
+  if (!dragScore[tabindex]) {
+    dragScore[tabindex] = [];
   }
 
-  // dragScore[mostOverlappedElement.getAttribute('tabindex')].push(element['value']);
-  dragScore[dropElement.getAttribute('tabindex')] = [dragElement['value']];
+  dragScore[tabindex].push(dragElement['value']);
 
   localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
+
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
-  const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(dragScore[key]), []);
+
+  const sortedValues = sortedKeys.reduce((acc, key) => {
+    const values = dragScore[key];
+    if (values.length > 1) {
+      acc.push(`(${values.join(',')})`);
+    } else {
+      acc.push(values[0]);
+    }
+    return acc;
+  }, []);
+
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
 
   handleShowCheck();
@@ -736,11 +758,11 @@ const storeActivityScore = (score: number) => {
 const handleShowCheck = () => {
   const container = document.getElementById('lido-container');
   const objectiveString = container['objective'];
-  const selectValues = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
+  const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
 
   const checkButton = document.getElementById('lido-checkButton');
-
-  if (!selectValues || selectValues.length !== countPatternWords(objectiveString)) {
+  
+  if (!selectValues || countPatternWords(selectValues) !== countPatternWords(objectiveString)) {
     executeActions("this.addClass='lido-disable-check-button'", checkButton);
     return;
   }
@@ -758,7 +780,7 @@ const validateObjectiveStatus = async () => {
   const container = document.getElementById('lido-container');
   if (!container) return;
   const objectiveString = container['objective'];
-  const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) ?? '[]');
+  const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
   const res = matchStringPattern(objectiveString, objectiveArray);
 
   if (res) {
@@ -853,33 +875,11 @@ function addClickListenerForClickType(element: HTMLElement): void {
   const onClick = async () => {
     const container = document.getElementById('lido-container');
     const objective = container['objective'].split(',');
-    let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
     const checkButton = document.getElementById('lido-checkButton');
 
     if (element.getAttribute('id') == 'lido-checkButton') {
-      // validateObjectiveStatus();
-      let allCorrect: boolean = true;
-      selectedValue.forEach(item => {
-        if (!objective.includes(item)) allCorrect = false;
-      });
 
-      if (allCorrect) {
-        const onCorrect = container.getAttribute('onCorrect');
-        if (onCorrect) {
-          await executeActions(onCorrect, container);
-        }
-        triggerNextContainer();
-      } else {
-        const onInCorrect = container.getAttribute('onInCorrect');
-        if (onInCorrect) {
-          await executeActions(onInCorrect, container);
-        }
-        const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
-        if (!isContinueOnCorrect) {
-          triggerNextContainer();
-        }
-      }
-
+      validateObjectiveStatus();
       return;
     }
 
@@ -893,70 +893,68 @@ function addClickListenerForClickType(element: HTMLElement): void {
     // element.style.border = '';
     // element.style.boxShadow = '';
 
-    if (element.classList.contains('lido-click-activate')) {
+    const isActivated = element.classList.contains('lido-click-activate');
+    let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
+
+    if (isActivated) {
       element.classList.remove('lido-click-activate');
-      executeActions(element.getAttribute("onEntry"), element);
+      executeActions(element.getAttribute('onEntry'), element);
+
       selectedValue = selectedValue.filter(item => item != element['value']);
       localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+
+      let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      const valueToRemove = element['value'];
+      const keyToRemove = Object.keys(multiOptionScore).find(key => multiOptionScore[key].includes(valueToRemove));
+
+      if (keyToRemove) {
+        multiOptionScore[keyToRemove] = multiOptionScore[keyToRemove].filter(item => item !== valueToRemove);
+        if (multiOptionScore[keyToRemove].length === 0) {
+          delete multiOptionScore[keyToRemove];
+        }
+        localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+        const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
+        const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
+        localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+      }
       checkButton.classList.add('lido-disable-check-button');
       return;
     } else {
-      if (objective.length > selectedValue.length){
+      if (objective.length > selectedValue.length) {
         element.classList.add('lido-click-activate');
-        selectedValue.push(element['value']);
-      }
-    }
 
-    localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+        const isCorrect = objective.includes(element['value']);
+        dispatchClickEvent(element, isCorrect);
+        if (isCorrect) {
+          console.log(isCorrect);
 
-    // const isCorrect = matchStringPattern(objective, [element['value']]);
-    const isCorrect = objective.includes(element['value']);
-
-    dispatchClickEvent(element, isCorrect);
-    if(objective.length > selectedValue.length){
-      if (isCorrect) {
-        const onCorrect = element.getAttribute('onCorrect');
-        await executeActions(onCorrect, element);
-      } else {
-        const onInCorrect = element.getAttribute('onInCorrect');
-        await executeActions(onInCorrect, element);
-        // showWrongAnswerAnimation([element]);
-      }
-      storingEachActivityScore(isCorrect);
-    }
-
-    if (objective.length === selectedValue.length) {
-      const showCheck = container.getAttribute('showCheck') == 'true';
-
-      if (showCheck) {
-        checkButton.classList.remove('lido-disable-check-button');
-      } else {
-        // validateObjectiveStatus();
-        let allCorrect: boolean = true;
-        selectedValue.forEach(item => {
-          if (!objective.includes(item)) allCorrect = false;
-        });
-        if (allCorrect) {
-          const onCorrect = container.getAttribute('onCorrect');
-          if (onCorrect) {
-            await executeActions(onCorrect, container);
-          }
-          triggerNextContainer();
+          const onCorrect = element.getAttribute('onCorrect');
+          await executeActions(onCorrect, element);
         } else {
-          const onInCorrect = container.getAttribute('onInCorrect');
-          if (onInCorrect) {
-            await executeActions(onInCorrect, container);
-          }
-          const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
-          if (!isContinueOnCorrect) {
-            triggerNextContainer();
-          }
+          const onInCorrect = element.getAttribute('onInCorrect');
+          await executeActions(onInCorrect, element);
+          // showWrongAnswerAnimation([element]);
         }
+        storingEachActivityScore(isCorrect);
+
+        const valueToFind = element['value'];
+        const key = Object.keys(objective).find(key => objective[key] === valueToFind);
+        let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+        if (!key) {
+          multiOptionScore[objective.length + selectedValue.length] = [valueToFind];
+        } else {
+          multiOptionScore[key] = [valueToFind];
+        }
+        localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+        const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
+        const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
+        localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+        // selectedValue.push(element['value']);
       }
-    } else {
-      checkButton.classList.add('lido-disable-check-button');
     }
-    // handleShowCheck();
+
+    // localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+    handleShowCheck();
   };
   element.addEventListener('click', onClick);
 }

@@ -117,12 +117,18 @@ export class LidoContainer{
   /**
    * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
    */
-  @Prop() showCheck: string;
+  @Prop() showCheck: boolean = false;
 
   /**
    * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
    */
-  @Prop() isContinueOnCorrect: string;
+  @Prop() isContinueOnCorrect: boolean = false;
+
+/**
+ * Determines if the activity should proceed automatically only after a correct response. 
+ * Acceptable values: "true" or "false". Defaults to "false".
+ */
+  @Prop() isAllowOnlyCorrect: boolean = false;
 
   /**
    * Base URL for the container.
@@ -202,8 +208,9 @@ export class LidoContainer{
         onInCorrect={this.onInCorrect}
         onCorrect={this.onCorrect}
         onEntry={this.onEntry}
-        showCheck={this.showCheck}
-        isContinueOnCorrect={this.isContinueOnCorrect}
+        showCheck={`${this.showCheck}`}
+        isContinueOnCorrect={`${this.isContinueOnCorrect}`}
+        isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
       >
         <slot />

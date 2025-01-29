@@ -7,6 +7,92 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     /**
+     * @component LidoAvatar
+     * The `LidoAvatar` component is a customizable avatar that integrates with Rive animations.
+     * It allows for configurable properties such as size, position, visibility, background color,
+     * and event handlers. The component supports accessibility attributes and can trigger various
+     * events based on user interactions.
+     * This component initializes and manages a Rive animation inside a canvas element.
+     */
+    interface LidoAvatar {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
+        /**
+          * Audio file URL or identifier for sound that will be associated with the column.
+         */
+        "audio": string;
+        /**
+          * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor": string;
+        /**
+          * The height of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "height": string;
+        /**
+          * The unique identifier for the column component.
+         */
+        "id": string;
+        /**
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect": string;
+        /**
+          * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+         */
+        "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect": string;
+        /**
+          * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+         */
+        "onTouch": string;
+        /**
+          * Source URL of the Rive (.riv) file
+         */
+        "src": string;
+        /**
+          * The tab index value, used to set the tab order of the column for keyboard navigation.
+         */
+        "tabIndex": number;
+        /**
+          * Defines the type of the column, which can be used for styling or specific logic handling.
+         */
+        "type": string;
+        /**
+          * The value associated with the column component. Typically used for internal logic.
+         */
+        "value": string;
+        /**
+          * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+         */
+        "visible": boolean;
+        /**
+          * The width of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "width": string;
+        /**
+          * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+         */
+        "x": string;
+        /**
+          * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+         */
+        "y": string;
+        /**
+          * The z-index of the column to control stacking order.
+         */
+        "z": string;
+    }
+    /**
      * @component LidoCol
      * The `LidoCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
@@ -128,9 +214,13 @@ export namespace Components {
          */
         "id": string;
         /**
+          * Determines if the activity should proceed automatically only after a correct response.  Acceptable values: "true" or "false". Defaults to "false".
+         */
+        "isAllowOnlyCorrect": boolean;
+        /**
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
          */
-        "isContinueOnCorrect": string;
+        "isContinueOnCorrect": boolean;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
          */
@@ -154,7 +244,7 @@ export namespace Components {
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
-        "showCheck": string;
+        "showCheck": boolean;
         /**
           * TabIndex for keyboard navigation.
          */
@@ -686,7 +776,7 @@ export namespace Components {
         /**
           * Determines whether only a single draggable element is allowed to be dropped. If set to 'true', only one draggable element can be dropped in the drop zone. If set to 'false', multiple draggable elements are allowed.
          */
-        "isAllowOnlyOneDrop": string;
+        "isAllowOnlyOneDrop": boolean;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -873,6 +963,20 @@ export namespace Components {
 }
 declare global {
     /**
+     * @component LidoAvatar
+     * The `LidoAvatar` component is a customizable avatar that integrates with Rive animations.
+     * It allows for configurable properties such as size, position, visibility, background color,
+     * and event handlers. The component supports accessibility attributes and can trigger various
+     * events based on user interactions.
+     * This component initializes and manages a Rive animation inside a canvas element.
+     */
+    interface HTMLLidoAvatarElement extends Components.LidoAvatar, HTMLStencilElement {
+    }
+    var HTMLLidoAvatarElement: {
+        prototype: HTMLLidoAvatarElement;
+        new (): HTMLLidoAvatarElement;
+    };
+    /**
      * @component LidoCol
      * The `LidoCol` component is a dynamic column-like UI element that can be
      * customized via various properties such as dimensions, position, visibility,
@@ -1013,6 +1117,7 @@ declare global {
         new (): HTMLLidoWrapElement;
     };
     interface HTMLElementTagNameMap {
+        "lido-avatar": HTMLLidoAvatarElement;
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
         "lido-home": HTMLLidoHomeElement;
@@ -1028,6 +1133,92 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    /**
+     * @component LidoAvatar
+     * The `LidoAvatar` component is a customizable avatar that integrates with Rive animations.
+     * It allows for configurable properties such as size, position, visibility, background color,
+     * and event handlers. The component supports accessibility attributes and can trigger various
+     * events based on user interactions.
+     * This component initializes and manages a Rive animation inside a canvas element.
+     */
+    interface LidoAvatar {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
+        /**
+          * Audio file URL or identifier for sound that will be associated with the column.
+         */
+        "audio"?: string;
+        /**
+          * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor"?: string;
+        /**
+          * The height of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "height"?: string;
+        /**
+          * The unique identifier for the column component.
+         */
+        "id"?: string;
+        /**
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect"?: string;
+        /**
+          * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+         */
+        "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect"?: string;
+        /**
+          * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+         */
+        "onTouch"?: string;
+        /**
+          * Source URL of the Rive (.riv) file
+         */
+        "src"?: string;
+        /**
+          * The tab index value, used to set the tab order of the column for keyboard navigation.
+         */
+        "tabIndex"?: number;
+        /**
+          * Defines the type of the column, which can be used for styling or specific logic handling.
+         */
+        "type"?: string;
+        /**
+          * The value associated with the column component. Typically used for internal logic.
+         */
+        "value"?: string;
+        /**
+          * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+         */
+        "visible"?: boolean;
+        /**
+          * The width of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "width"?: string;
+        /**
+          * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+         */
+        "x"?: string;
+        /**
+          * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+         */
+        "y"?: string;
+        /**
+          * The z-index of the column to control stacking order.
+         */
+        "z"?: string;
+    }
     /**
      * @component LidoCol
      * The `LidoCol` component is a dynamic column-like UI element that can be
@@ -1150,9 +1341,13 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
+          * Determines if the activity should proceed automatically only after a correct response.  Acceptable values: "true" or "false". Defaults to "false".
+         */
+        "isAllowOnlyCorrect"?: boolean;
+        /**
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
          */
-        "isContinueOnCorrect"?: string;
+        "isContinueOnCorrect"?: boolean;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
          */
@@ -1176,7 +1371,7 @@ declare namespace LocalJSX {
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
-        "showCheck"?: string;
+        "showCheck"?: boolean;
         /**
           * TabIndex for keyboard navigation.
          */
@@ -1708,7 +1903,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether only a single draggable element is allowed to be dropped. If set to 'true', only one draggable element can be dropped in the drop zone. If set to 'false', multiple draggable elements are allowed.
          */
-        "isAllowOnlyOneDrop"?: string;
+        "isAllowOnlyOneDrop"?: boolean;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -1893,6 +2088,7 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     interface IntrinsicElements {
+        "lido-avatar": LidoAvatar;
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
         "lido-home": LidoHome;
@@ -1911,6 +2107,15 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * @component LidoAvatar
+             * The `LidoAvatar` component is a customizable avatar that integrates with Rive animations.
+             * It allows for configurable properties such as size, position, visibility, background color,
+             * and event handlers. The component supports accessibility attributes and can trigger various
+             * events based on user interactions.
+             * This component initializes and manages a Rive animation inside a canvas element.
+             */
+            "lido-avatar": LocalJSX.LidoAvatar & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
             /**
              * @component LidoCol
              * The `LidoCol` component is a dynamic column-like UI element that can be

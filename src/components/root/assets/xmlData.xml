@@ -1,6 +1,10 @@
 <main>
-	<lido-container id="lido-container" value="mainContainer2" objective="20,55,50" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="" onEntry="" onInCorrect="" showCheck="true" isContinueOnCorrect="true">
+	<lido-container id="lido-container" value="mainContainer2" objective="20,55,50" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'" showCheck="true" isContinueOnCorrect="true" >
 
+		<lido-pos id="lido-pos1" value="pos1" height="300px" width="300px" ariaHidden="true" x="0" y="200px" z="10000" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+			<lido-avatar id="lido-avatar" visible="true" z="" height="300px" width="300px" src="./build/assets/lido-animation/chimplecharacter.riv"></lido-avatar>
+		</lido-pos>
+		
 				<!-- Background -->
 				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 					<lido-image visible="true" src="https://i0.wp.com/pixahive.com/wp-content/uploads/2021/02/Yellow-pattern-abstract-background-wallpaper-325431-pixahive.jpg?fit=778%2C435ssl=1" z="0" width="1600px" height="900px" onEntry=""></lido-image>
@@ -24,7 +28,7 @@
 
 	</lido-container>
 	
-	<lido-container id="lido-container" value="mainContainer3" objective="A,B,C,D" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="true"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+	<lido-container id="lido-container" value="mainContainer3" objective="A,B,C,D" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
 
 				<!-- Background -->
 				<lido-pos id="lido-pos1" tabIndex="1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
@@ -57,7 +61,7 @@
 			
 	</lido-container>
 
-	<lido-container id="lido-container" value="mainContainer3" objective="A,B,C,D" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+	<lido-container id="lido-container" value="mainContainer3" objective="A,B,C,D" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="box.animation='placeToDown 1s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
 
 				<!-- Background -->
 				<lido-pos id="lido-pos1" tabIndex="1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
@@ -91,6 +95,7 @@
 	</lido-container>
 
 	<lido-container id="lido-container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-truck.animation='placeToLeft 2s 0.3s linear'; this.sleep='1000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="dropId.animation='shake 0.5s linear';">
+				</lido-pos>
 
 				<!-- Background -->
 				<lido-pos id="lido-pos1" value="pos1" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="" >
