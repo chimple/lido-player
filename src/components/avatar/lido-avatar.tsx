@@ -131,7 +131,7 @@ export class LidoAvatar {
    */
   async componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    this.initializeRive();
+    this.initializeRive(this.src)
   }
 
   /**
@@ -139,13 +139,13 @@ export class LidoAvatar {
    * It selects the canvas element, loads the Rive file, and starts the animation.
    * The animation surface is resized to fit the canvas, and the instance is stored in the service.
    */
-  initializeRive = () => {
+  initializeRive = rivSrc => {
     const riveService = RiveService.getInstance();
     const canvas = this.el.querySelector('canvas');
     this.riveInstance = new Rive({
-      src: this.src,
+      src: rivSrc,
       canvas: canvas,
-      animations: 'Idle',
+      stateMachines: 'Idle',
       autoplay: true,
       onLoad: () => {
         this.riveInstance.resizeDrawingSurfaceToCanvas();
