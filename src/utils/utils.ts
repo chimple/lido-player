@@ -797,7 +797,7 @@ const validateObjectiveStatus = async () => {
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
-    // triggerNextContainer();
+    triggerNextContainer();
   } else {
     const onInCorrect = container.getAttribute('onInCorrect');
     await executeActions(onInCorrect, container);
@@ -886,7 +886,6 @@ function addClickListenerForClickType(element: HTMLElement): void {
     const checkButton = document.getElementById('lido-checkButton');
 
     if (element.getAttribute('id') == 'lido-checkButton') {
-
       validateObjectiveStatus();
       return;
     }
