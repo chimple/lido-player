@@ -797,7 +797,7 @@ const validateObjectiveStatus = async () => {
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
-    triggerNextContainer();
+    // triggerNextContainer();
   } else {
     const onInCorrect = container.getAttribute('onInCorrect');
     await executeActions(onInCorrect, container);
@@ -816,7 +816,7 @@ const appendingDragElementsInDrop = () => {
   dropItems.forEach(drop => {
     dragItems.forEach(dragElement => {
       const drag = dragElement as HTMLElement;
-      if (drag['value'] === drop['value']) {
+      if (drop['value'].includes(drag["value"])) {
         drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
       }
