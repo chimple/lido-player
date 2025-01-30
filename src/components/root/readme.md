@@ -35,6 +35,7 @@ graph TD;
   lido-home --> lido-shape
   lido-home --> lido-wrap
   lido-home --> lido-random
+  lido-home --> lido-avatar
   style lido-root fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

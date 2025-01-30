@@ -33,6 +33,7 @@
 - [lido-shape](../shape)
 - [lido-wrap](../wrap)
 - [lido-random](../random)
+- [lido-avatar](../avatar)
 
 ### Graph
 ```mermaid
@@ -47,6 +48,7 @@ graph TD;
   lido-home --> lido-shape
   lido-home --> lido-wrap
   lido-home --> lido-random
+  lido-home --> lido-avatar
   lido-root --> lido-home
   style lido-home fill:#f9f,stroke:#333,stroke-width:4px
 ```
