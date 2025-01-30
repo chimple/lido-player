@@ -619,9 +619,13 @@ const matchStringPattern = (pattern: string, arr: string[]): boolean => {
         .split('|')
         .map(option => option.trim());
 
-      if (arrIndex >= arr.length) return false;
+      const arrChoice = group
+        .slice(1, -1)
+        .split('|')
+        .map(option => option.trim());
 
-      if (!choices.includes(arr[arrIndex])) return false;
+      if (arrIndex >= arrChoice.length) return false;
+      if (!choices.includes(arrChoice[arrIndex])) return false;
 
       arrIndex++;
     } else if (group.includes('|')) {
@@ -658,7 +662,11 @@ const countPatternWords = (pattern: string): number => {
 
   for (const group of patternGroups) {
     if (group.startsWith('(') && group.endsWith(')')) {
-      wordCount += 1;
+      if(group.includes('|')){
+        wordCount += group.split('|').length;
+      }else{
+        wordCount += 1;
+      }
     } else {
       wordCount += group.split('|').length;
     }
@@ -698,7 +706,7 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
   const sortedValues = sortedKeys.reduce((acc, key) => {
     const values = dragScore[key];
     if (values.length > 1) {
-      acc.push(`(${values.join(',')})`);
+      acc.push(`(${values.join('|')})`);
     } else {
       acc.push(values[0]);
     }
