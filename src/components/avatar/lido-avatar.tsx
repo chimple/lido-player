@@ -131,7 +131,12 @@ export class LidoAvatar {
    */
   async componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    this.initializeRive(this.src)
+
+    const resolvedPath = this.src.startsWith('http')
+      ? this.src // Use the provided URL if it's an HTTP/HTTPS link
+      : getAssetPath(this.src); // Otherwise, resolve it as an asset path
+
+    this.initializeRive(resolvedPath);
   }
 
   /**

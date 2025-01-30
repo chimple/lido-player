@@ -901,11 +901,11 @@ function addClickListenerForClickType(element: HTMLElement): void {
     // element.style.border = '';
     // element.style.boxShadow = '';
 
-    const isActivated = element.classList.contains('lido-click-activate');
+    const isActivated = element.classList.contains('lido-element-selected');
     let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
 
     if (isActivated) {
-      element.classList.remove('lido-click-activate');
+      element.classList.remove('lido-element-selected');
       executeActions(element.getAttribute('onEntry'), element);
 
       selectedValue = selectedValue.filter(item => item != element['value']);
@@ -929,13 +929,10 @@ function addClickListenerForClickType(element: HTMLElement): void {
       return;
     } else {
       if (objective.length > selectedValue.length) {
-        element.classList.add('lido-click-activate');
-
+        element.classList.add('lido-element-selected');
         const isCorrect = objective.includes(element['value']);
         dispatchClickEvent(element, isCorrect);
         if (isCorrect) {
-          console.log(isCorrect);
-
           const onCorrect = element.getAttribute('onCorrect');
           await executeActions(onCorrect, element);
         } else {
@@ -957,11 +954,9 @@ function addClickListenerForClickType(element: HTMLElement): void {
         const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
         const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
         localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
-        // selectedValue.push(element['value']);
       }
     }
 
-    // localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
     handleShowCheck();
   };
   element.addEventListener('click', onClick);

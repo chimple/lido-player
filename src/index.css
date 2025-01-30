@@ -10,7 +10,7 @@ body {
   color: white;
 }
 
-.lido-click-activate{
+.lido-element-selected{
   border: 2px solid;
   background-color: #ffdf7d !important;
 }

@@ -2,7 +2,7 @@
 	<lido-container id="lido-container" value="mainContainer2" objective="20,55,50" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'" showCheck="true" isContinueOnCorrect="true" >
 
 		<lido-pos id="lido-pos1" value="pos1" height="300px" width="300px" ariaHidden="true" x="0" y="200px" z="10000" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
-			<lido-avatar id="lido-avatar" visible="true" z="" height="300px" width="300px" src="./build/assets/lido-animation/chimplecharacter.riv"></lido-avatar>
+			<lido-avatar id="lido-avatar" visible="true" z="" height="300px" width="300px" src="./assets/lido-animation/chimplecharacter.riv"></lido-avatar>
 		</lido-pos>
 		
 				<!-- Background -->
@@ -94,10 +94,10 @@
 			
 	</lido-container>
 
-	<lido-container id="lido-container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="true"  onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail';">
+	<lido-container id="lido-container" value="mainContainer1" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false"  onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail';">
 
 				<lido-pos id="lido-pos1" value="pos1" height="300px" width="300px" ariaHidden="true" x="0" y="200px" z="10000" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
-					<lido-avatar id="lido-avatar" visible="true" z="" height="300px" width="300px" src="./build/assets/lido-animation/chimplecharacter.riv"></lido-avatar>
+					<lido-avatar id="lido-avatar" visible="true" z="" height="300px" width="300px" src="./assets/lido-animation/chimplecharacter.riv"></lido-avatar>
 				</lido-pos>
 
 				<!-- Background -->
@@ -116,7 +116,7 @@
 					</lido-col>
 
 					<lido-row id="lido-dropId" visible="true" bgColor="transparent" width="700px" height="150px" x="490px" y="620px">
-						<lido-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" ></lido-text>
+						<lido-text visible="true"  tabIndex="1" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="I" type="drop"  onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
 						<lido-text visible="true" tabIndex="2" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="can" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
 						<lido-text visible="true" tabIndex="3" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="see" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
 						<lido-text visible="true" tabIndex="4" width="100px" height="80px" onEntry="this.border='dashed 2px';" bgColor="transparent" value="with" type="drop" onCorrect="this.boxShadow='unset'; element.animation='unset';" onInCorrect="" isAllowOnlyOneDrop="true"></lido-text>
