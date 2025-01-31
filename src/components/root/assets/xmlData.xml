@@ -1,4 +1,62 @@
 <main>
+	<lido-container id="lido-container" value="mainContainer2" objective="I,can,see,with,my,eyes" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="false" >
+
+		<lido-pos id="lido-pos1" value="pos1" height="350px" width="350px" x="1260px" y="530px" ariaHidden="true"  z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+			<lido-avatar id="lido-avatar" visible="true" height="350px" width="350px" src="./assets/lido-animation/chimplecharacter.riv"></lido-avatar>
+		</lido-pos>
+		
+				<!-- Background -->
+				<lido-pos id="lido-pos2" value="pos2" height="900px" width="1600px" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+					<lido-image visible="true" src="./assets/images/dragAndDrop/bgForDrag.png" z="0" width="1600px" height="900px" onEntry=""></lido-image>
+				</lido-pos>
+
+				<!-- Question -->
+				<lido-pos id="lido-pos3" tabIndex="4" value="pos3" visible="true" bgColor="transparent">
+					<lido-image visible="true" src="./assets/images/dragAndDrop/Vector.png" z="0" width="840px" x="380px" y="-270px"></lido-image>
+					<lido-text visible="true" string="How can you see?" font="'Baloo 2', serif" fontColor="black" font-size="40px" bgColor="transparent" onEntry="this.boxShadow='unset'; this.fontWeight='800';" x="625px" y="120px"></lido-text>
+				</lido-pos>
+
+				<!-- Drop Background -->
+				<lido-row visible="true" width="1500px" onEntry="this.marginBottom='70px';">
+						<lido-image visible="true" height="300px" src="./assets/images/dragAndDrop/dropImages/drop1.png" font="Poppins" font-size="30px" z="0"></lido-image>
+						<lido-image visible="true" height="300px" src="./assets/images/dragAndDrop/dropImages/drop2.png" font="Poppins" font-size="30px" z="0"></lido-image>
+						<lido-image visible="true" height="300px" src="./assets/images/dragAndDrop/dropImages/drop3.png" font="Poppins" font-size="30px" z="0"></lido-image>
+						<lido-image visible="true" height="300px" src="./assets/images/dragAndDrop/dropImages/drop4.png" font="Poppins" font-size="30px" z="0"></lido-image>
+						<lido-image visible="true" height="300px" src="./assets/images/dragAndDrop/dropImages/drop5.png" font="Poppins" font-size="30px" z="0"></lido-image>
+						<lido-image visible="true" height="300px" src="./assets/images/dragAndDrop/dropImages/drop6.png" font="Poppins" font-size="30px" z="0"></lido-image>
+				</lido-row>
+
+				<!-- Drop Elements -->
+				<lido-pos visible="true" width="1400px" height="150px" bgColor="transparent" x="100px" y="400px" z="1">
+					<lido-row visible="true" height="150px" width="100%">
+							<lido-text tabIndex="1" visible="true" width="150px" height="100px" value="I" z="0" type="drop"></lido-text>
+							<lido-text tabIndex="2" visible="true" width="150px" height="100px" value="can" z="0" type="drop"></lido-text>
+							<lido-text tabIndex="3" visible="true" width="150px" height="100px" value="see" z="0" type="drop"></lido-text>
+							<lido-text tabIndex="4" visible="true" width="150px" height="100px" value="with" z="0" type="drop"></lido-text>
+							<lido-text tabIndex="5" visible="true" width="150px" height="100px" value="my" z="0" type="drop"></lido-text>
+							<lido-text tabIndex="6" visible="true" width="150px" height="100px" value="eyes" z="0" type="drop"></lido-text>
+					</lido-row>
+				</lido-pos>
+
+				<!--Drag Background  -->
+				<lido-pos visible="true" width="1532.89px" height="300px" x="60px" y="620px" bgColor="transparent">
+					<lido-image visible="true" width="1532.89px" height="300px" src="./assets/images/dragAndDrop/dragBg.png"></lido-image>
+				</lido-pos>
+
+				<!-- Drag Elements -->
+				<lido-pos visible="true" width="1600px" height="150px" bgColor="transparent" x="300px" y="700px" z="1">
+					<lido-row visible="true" height="150px" width="1000px">
+							<lido-text tabIndex="7" visible="true" bgImage="./assets/images/dragAndDrop/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.fontWeight='800';" width="150px" height="100px" string="I" value="I" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag"></lido-text>
+							<lido-text tabIndex="8" visible="true" bgImage="./assets/images/dragAndDrop/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.fontWeight='800';" width="150px" height="100px" string="see" value="see" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag"></lido-text>
+							<lido-text tabIndex="9" visible="true" bgImage="./assets/images/dragAndDrop/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.fontWeight='800';" width="150px" height="100px" string="eyes" value="eyes" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag"></lido-text>
+							<lido-text tabIndex="10" visible="true" bgImage="./assets/images/dragAndDrop/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.fontWeight='800';" width="150px" height="100px" string="my" value="my" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag"></lido-text>
+							<lido-text tabIndex="11" visible="true" bgImage="./assets/images/dragAndDrop/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.fontWeight='800';" width="150px" height="100px" string="with" value="with" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag"></lido-text>
+							<lido-text tabIndex="12" visible="true" bgImage="./assets/images/dragAndDrop/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.fontWeight='800';" width="150px" height="100px" string="can" value="can" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag"></lido-text>
+					</lido-row>
+				</lido-pos>
+
+	</lido-container>
+
 	<lido-container id="lido-container" value="mainContainer2" objective="20,55,50" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFFFFF" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'" showCheck="true" isContinueOnCorrect="true" >
 
 		<lido-pos id="lido-pos1" value="pos1" height="300px" width="300px" ariaHidden="true" x="0" y="200px" z="10000" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">

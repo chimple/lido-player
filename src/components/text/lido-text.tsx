@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { initEventsForElement, convertUrlToRelative } from '../../utils/utils';
 
 /**
  * @component LidoText
@@ -90,6 +90,11 @@ export class LidoText {
   @Prop() bgColor: string;
 
   /**
+   * Background image of the text component.
+   */
+  @Prop() bgImage: string;
+
+  /**
    * Defines the type of the component, which can be used for conditional logic or specific styling.
    */
   @Prop() type: string;
@@ -150,6 +155,8 @@ export class LidoText {
   }
 
   render() {
+
+    const backgroundImg = this.bgImage ? convertUrlToRelative(this.bgImage) : "";
     // Inline styles to customize the appearance and positioning of the text component
     const style = {
       height: this.height,
@@ -162,6 +169,7 @@ export class LidoText {
       fontFamily: this.font,
       color: this.fontColor,
       display: this.visible ? 'flex' : 'none', // Show or hide based on visibility prop
+      backgroundImage: `url(${backgroundImg})`
     };
 
     return (

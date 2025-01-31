@@ -750,6 +750,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * Background image of the text component.
+         */
+        "bgImage": string;
+        /**
           * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
          */
         "font": string;
@@ -1876,6 +1880,10 @@ declare namespace LocalJSX {
           * Background color of the text component (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor"?: string;
+        /**
+          * Background image of the text component.
+         */
+        "bgImage"?: string;
         /**
           * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
          */

@@ -2,6 +2,7 @@ import { ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey }
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
+import { getAssetPath } from '@stencil/core';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -341,7 +342,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
 
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-
     // Reset styles for all elements
     allElements.forEach(otherElement => {
       otherElement.style.border = ''; // Reset border
@@ -376,7 +376,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
-
     onElementDropComplete(element, mostOverlappedElement);
   };
   // Initialize draggable element styles
@@ -450,11 +449,22 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
       let dragSelected = JSON.parse(dragSelectedData);
       for (const key in dragSelected) {
         if (dragSelected[key].includes(dragElement['value'])) {
-          dragSelected[key] = dragSelected[key].filter(val => val !== dragElement['value']);
+          delete dragSelected[key];
         }
       }
       localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
     }
+
+    const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    allElements.forEach(otherElement => {
+      const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      const storedTabIndexes = Object.keys(dropObject).map(Number);
+      if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+        otherElement.style.border = ''; // Reset border
+        otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      }
+    });
+
     handleShowCheck();
     return;
   }
@@ -463,7 +473,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     let dragSelected = JSON.parse(dragSelectedData);
     for (const key in dragSelected) {
       if (dragSelected[key].includes(dragElement['value'])) {
-        dragSelected[key] = dragSelected[key].filter(val => val !== dragElement['value']);
+        delete dragSelected[key];
       }
     }
     localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
@@ -662,9 +672,9 @@ const countPatternWords = (pattern: string): number => {
 
   for (const group of patternGroups) {
     if (group.startsWith('(') && group.endsWith(')')) {
-      if(group.includes('|')){
+      if (group.includes('|')) {
         wordCount += group.split('|').length;
-      }else{
+      } else {
         wordCount += 1;
       }
     } else {
@@ -715,6 +725,15 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
 
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
 
+  const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+  allElements.forEach(otherElement => {
+    const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+    const storedTabIndexes = Object.keys(dropObject).map(Number);
+    if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+      otherElement.style.border = ''; // Reset border
+      otherElement.style.backgroundColor = 'transparent'; // Reset background color
+    }
+  });
   handleShowCheck();
 }
 
@@ -769,7 +788,7 @@ const handleShowCheck = () => {
   const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
 
   const checkButton = document.getElementById('lido-checkButton');
-  
+
   if (!selectValues || countPatternWords(selectValues) !== countPatternWords(objectiveString)) {
     executeActions("this.addClass='lido-disable-check-button'", checkButton);
     return;
@@ -816,7 +835,7 @@ const appendingDragElementsInDrop = () => {
   dropItems.forEach(drop => {
     dragItems.forEach(dragElement => {
       const drag = dragElement as HTMLElement;
-      if (drop['value'].includes(drag["value"])) {
+      if (drop['value'].includes(drag['value'])) {
         drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
       }
@@ -1149,10 +1168,12 @@ export function convertUrlToRelative(url: string): string {
   //check if url is web
   if (url.startsWith('http')) {
     return url;
+  } else {
+    return getAssetPath(url);
   }
-  const container = document.getElementById('lido-container');
-  if (!container) return url;
-  const baseUrl = container.getAttribute('baseUrl');
-  if (!baseUrl) return url;
-  return baseUrl + url;
+  // const container = document.getElementById('lido-container');
+  // if (!container) return url;
+  // const baseUrl = container.getAttribute('baseUrl');
+  // if (!baseUrl) return url;
+  // return baseUrl + url;
 }
