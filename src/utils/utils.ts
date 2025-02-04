@@ -475,6 +475,9 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
       if (storedTabIndexes.includes(otherElement['tabIndex'])) {
         otherElement.style.border = ''; // Reset border
         otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      } else {
+        otherElement.style.border = '';
+        otherElement.style.backgroundColor = '';
       }
     });
 
