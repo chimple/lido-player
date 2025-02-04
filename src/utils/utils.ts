@@ -1207,15 +1207,14 @@ function stopHighlightForSpeakingElement(element: HTMLElement): void {
 }
 
 export function convertUrlToRelative(url: string): string {
-  //check if url is web
+  const container = document.getElementById('lido-container');
+  const baseUrl = container.getAttribute('baseUrl');
+  
   if (url.startsWith('http')) {
     return url;
+  } else if(baseUrl) {
+    return baseUrl + url;
   } else {
     return getAssetPath(url);
   }
-  // const container = document.getElementById('lido-container');
-  // if (!container) return url;
-  // const baseUrl = container.getAttribute('baseUrl');
-  // if (!baseUrl) return url;
-  // return baseUrl + url;
 }
