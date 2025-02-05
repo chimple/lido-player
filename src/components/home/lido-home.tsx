@@ -220,8 +220,9 @@ export class LidoHome {
    * Clicking on a dot allows the user to jump to a specific container.
    */
   private renderDots() {
+    const style = {pointerEvents: this.canplay ? "none" : ""};
     return (
-      <div id="lido-dot-indicator" class="lido-dot-container">
+      <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
         {this.containers.map((_, index) => (
           <span
             class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}

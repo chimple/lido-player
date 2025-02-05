@@ -2,6 +2,7 @@ import { ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey }
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
+import { getAssetPath } from '@stencil/core';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -341,11 +342,14 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
 
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-
     // Reset styles for all elements
     allElements.forEach(otherElement => {
-      otherElement.style.border = ''; // Reset border
-      otherElement.style.backgroundColor = ''; // Reset background color
+      const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      const storedTabIndexes = Object.keys(dropObject).map(Number);
+      if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+        otherElement.style.border = ''; // Reset border
+        otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      }
     });
 
     // Apply styles only to the most overlapped element
@@ -370,13 +374,21 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     // Reset overlapping styles from all elements
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
     allElements.forEach(otherElement => {
-      otherElement.style.border = ''; // Reset border
-      otherElement.style.backgroundColor = ''; // Reset background color
+      allElements.forEach(otherElement => {
+        const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+        const storedTabIndexes = Object.keys(dropObject).map(Number);
+        if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        } else {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = ''; // Reset background color
+        }
+      });
     });
 
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
-
     onElementDropComplete(element, mostOverlappedElement);
   };
   // Initialize draggable element styles
@@ -450,11 +462,25 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
       let dragSelected = JSON.parse(dragSelectedData);
       for (const key in dragSelected) {
         if (dragSelected[key].includes(dragElement['value'])) {
-          dragSelected[key] = dragSelected[key].filter(val => val !== dragElement['value']);
+          delete dragSelected[key];
         }
       }
       localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
     }
+
+    const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    allElements.forEach(otherElement => {
+      const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      const storedTabIndexes = Object.keys(dropObject).map(Number);
+      if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+        otherElement.style.border = ''; // Reset border
+        otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      } else {
+        otherElement.style.border = '';
+        otherElement.style.backgroundColor = '';
+      }
+    });
+
     handleShowCheck();
     return;
   }
@@ -463,7 +489,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     let dragSelected = JSON.parse(dragSelectedData);
     for (const key in dragSelected) {
       if (dragSelected[key].includes(dragElement['value'])) {
-        dragSelected[key] = dragSelected[key].filter(val => val !== dragElement['value']);
+        delete dragSelected[key];
       }
     }
     localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
@@ -662,9 +688,9 @@ const countPatternWords = (pattern: string): number => {
 
   for (const group of patternGroups) {
     if (group.startsWith('(') && group.endsWith(')')) {
-      if(group.includes('|')){
+      if (group.includes('|')) {
         wordCount += group.split('|').length;
-      }else{
+      } else {
         wordCount += 1;
       }
     } else {
@@ -715,6 +741,15 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
 
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
 
+  const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+  allElements.forEach(otherElement => {
+    const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+    const storedTabIndexes = Object.keys(dropObject).map(Number);
+    if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+      otherElement.style.border = ''; // Reset border
+      otherElement.style.backgroundColor = 'transparent'; // Reset background color
+    }
+  });
   handleShowCheck();
 }
 
@@ -769,7 +804,7 @@ const handleShowCheck = () => {
   const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
 
   const checkButton = document.getElementById('lido-checkButton');
-  
+
   if (!selectValues || countPatternWords(selectValues) !== countPatternWords(objectiveString)) {
     executeActions("this.addClass='lido-disable-check-button'", checkButton);
     return;
@@ -816,7 +851,7 @@ const appendingDragElementsInDrop = () => {
   dropItems.forEach(drop => {
     dragItems.forEach(dragElement => {
       const drag = dragElement as HTMLElement;
-      if (drop['value'].includes(drag["value"])) {
+      if (drop['value'].includes(drag['value'])) {
         drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
       }
@@ -834,6 +869,8 @@ export const triggerNextContainer = () => {
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
   const container = document.getElementById('lido-container');
   if (!container) return;
+  const onEntry = element.getAttribute('onEntry');
+  await executeActions(onEntry, element);
   const canplay = container.getAttribute('canplay');
   if (canplay != null && canplay === 'false') return;
   switch (type) {
@@ -856,8 +893,6 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
     default:
       break;
   }
-  const onEntry = element.getAttribute('onEntry');
-  await executeActions(onEntry, element);
 
   onTouchListenerForOnTouch(element);
 };
@@ -884,9 +919,11 @@ function addClickListenerForClickType(element: HTMLElement): void {
     const container = document.getElementById('lido-container');
     const objective = container['objective'].split(',');
     const checkButton = document.getElementById('lido-checkButton');
+    const showCheck = container.getAttribute('showCheck') === 'true';
 
     if (element.getAttribute('id') == 'lido-checkButton') {
-      validateObjectiveStatus();
+      checkButton.classList.add('lido-disable-check-button');
+      await validateObjectiveStatus();
       return;
     }
 
@@ -902,6 +939,27 @@ function addClickListenerForClickType(element: HTMLElement): void {
 
     const isActivated = element.classList.contains('lido-element-selected');
     let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
+
+    if (objective.length === 1) {
+      localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
+      const isCorrect = objective.includes(element['value']);
+      dispatchClickEvent(element, isCorrect);
+      if (isCorrect) {
+        const onCorrect = element.getAttribute('onCorrect');
+        await executeActions(onCorrect, element);
+      } else {
+        const onInCorrect = element.getAttribute('onInCorrect');
+        await executeActions(onInCorrect, element);
+        // showWrongAnswerAnimation([element]);
+      }
+      storingEachActivityScore(isCorrect);
+      handleShowCheck();
+      return;
+    }
+
+    if (showCheck) {
+      checkButton.classList.remove('lido-disable-check-button');
+    }
 
     if (isActivated) {
       element.classList.remove('lido-element-selected');
@@ -924,39 +982,42 @@ function addClickListenerForClickType(element: HTMLElement): void {
         const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
         localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
       }
-      checkButton.classList.add('lido-disable-check-button');
+
+      if (showCheck && selectedValue.length === 0) {
+        checkButton.classList.add('lido-disable-check-button');
+      }
       return;
     } else {
-      if (objective.length > selectedValue.length) {
-        element.classList.add('lido-element-selected');
-        const isCorrect = objective.includes(element['value']);
-        dispatchClickEvent(element, isCorrect);
-        if (isCorrect) {
-          const onCorrect = element.getAttribute('onCorrect');
-          await executeActions(onCorrect, element);
-        } else {
-          const onInCorrect = element.getAttribute('onInCorrect');
-          await executeActions(onInCorrect, element);
-          // showWrongAnswerAnimation([element]);
-        }
-        storingEachActivityScore(isCorrect);
-
-        const valueToFind = element['value'];
-        const key = Object.keys(objective).find(key => objective[key] === valueToFind);
-        let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-        if (!key) {
-          multiOptionScore[objective.length + selectedValue.length] = [valueToFind];
-        } else {
-          multiOptionScore[key] = [valueToFind];
-        }
-        localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
-        const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
-        const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
-        localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+      element.classList.add('lido-element-selected');
+      const valueToFind = element['value'];
+      const key = Object.keys(objective).find(key => objective[key] === valueToFind);
+      let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      if (!key) {
+        multiOptionScore[objective.length + selectedValue.length] = [valueToFind];
+      } else {
+        multiOptionScore[key] = [valueToFind];
       }
+      localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+      const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
+      const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
+      localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+
+      const isCorrect = objective.includes(element['value']);
+      dispatchClickEvent(element, isCorrect);
+      if (isCorrect) {
+        const onCorrect = element.getAttribute('onCorrect');
+        await executeActions(onCorrect, element);
+      } else {
+        const onInCorrect = element.getAttribute('onInCorrect');
+        await executeActions(onInCorrect, element);
+        // showWrongAnswerAnimation([element]);
+      }
+      storingEachActivityScore(isCorrect);
     }
 
-    handleShowCheck();
+    if (!showCheck && countPatternWords(objective) === countPatternWords(selectedValue)) {
+      validateObjectiveStatus();
+    }
   };
   element.addEventListener('click', onClick);
 }
@@ -1146,13 +1207,14 @@ function stopHighlightForSpeakingElement(element: HTMLElement): void {
 }
 
 export function convertUrlToRelative(url: string): string {
-  //check if url is web
+  const container = document.getElementById('lido-container');
+  const baseUrl = container.getAttribute('baseUrl');
+  
   if (url.startsWith('http')) {
     return url;
+  } else if(baseUrl) {
+    return baseUrl + url;
+  } else {
+    return getAssetPath(url);
   }
-  const container = document.getElementById('lido-container');
-  if (!container) return url;
-  const baseUrl = container.getAttribute('baseUrl');
-  if (!baseUrl) return url;
-  return baseUrl + url;
 }
