@@ -349,6 +349,9 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       if (storedTabIndexes.includes(otherElement['tabIndex'])) {
         otherElement.style.border = ''; // Reset border
         otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      } else {
+        otherElement.style.border = ''; // Reset border
+        otherElement.style.backgroundColor = ''; // Reset background color
       }
     });
 
@@ -441,17 +444,37 @@ const findMostoverlappedElement = (element: HTMLElement, type: string) => {
 };
 
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
+  const selectedValueData = localStorage.getItem(SelectedValuesKey);
+  const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   if (dropElement && dropElement.getAttribute('isAllowOnlyOneDrop') === 'true') {
     // Check for overlaps and highlight only the most overlapping element
     let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
     if (mostOverlappedElement) {
       dragElement.style.transform = 'translate(0,0)';
+      if (dragSelectedData) {
+        let dragSelected = JSON.parse(dragSelectedData);
+        for (const key in dragSelected) {
+          if (dragSelected[key].includes(dragElement['value'])) {
+            delete dragSelected[key];
+          }
+        }
+        localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+      }
+      const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+      allElements.forEach(otherElement => {
+        const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+        const storedTabIndexes = Object.keys(dropObject).map(Number);
+        if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        } else {
+          otherElement.style.border = '';
+          otherElement.style.backgroundColor = '';
+        }
+      });
       return;
     }
   }
-
-  const selectedValueData = localStorage.getItem(SelectedValuesKey);
-  const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   if (!dropElement) {
     if (selectedValueData) {
       let selectedValue = JSON.parse(selectedValueData);
@@ -748,6 +771,9 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
     if (storedTabIndexes.includes(otherElement['tabIndex'])) {
       otherElement.style.border = ''; // Reset border
       otherElement.style.backgroundColor = 'transparent'; // Reset background color
+    } else {
+      otherElement.style.border = ''; // Reset border
+      otherElement.style.backgroundColor = ''; // Reset background color
     }
   });
   handleShowCheck();
@@ -1209,10 +1235,10 @@ function stopHighlightForSpeakingElement(element: HTMLElement): void {
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById('lido-container');
   const baseUrl = container.getAttribute('baseUrl');
-  
+
   if (url.startsWith('http')) {
     return url;
-  } else if(baseUrl) {
+  } else if (baseUrl) {
     return baseUrl + url;
   } else {
     return getAssetPath(url);
