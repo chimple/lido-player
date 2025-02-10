@@ -214,7 +214,7 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Determines if the activity should proceed automatically only after a correct response.  Acceptable values: "true" or "false". Defaults to "false".
+          * Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false".
          */
         "isAllowOnlyCorrect": boolean;
         /**
@@ -293,6 +293,10 @@ export namespace Components {
           * Boolean that controls the playability of the game.
          */
         "canplay": boolean;
+        /**
+          * The height of the container (CSS value).
+         */
+        "height": string;
         /**
           * Initial index of the container being displayed.
          */
@@ -1345,7 +1349,7 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Determines if the activity should proceed automatically only after a correct response.  Acceptable values: "true" or "false". Defaults to "false".
+          * Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false".
          */
         "isAllowOnlyCorrect"?: boolean;
         /**
@@ -1424,6 +1428,10 @@ declare namespace LocalJSX {
           * Boolean that controls the playability of the game.
          */
         "canplay"?: boolean;
+        /**
+          * The height of the container (CSS value).
+         */
+        "height"?: string;
         /**
           * Initial index of the container being displayed.
          */

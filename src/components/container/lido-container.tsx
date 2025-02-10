@@ -13,7 +13,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-container.css',
   shadow: false,
 })
-export class LidoContainer{
+export class LidoContainer {
   /**
    * Unique identifier for the container.
    */
@@ -124,10 +124,10 @@ export class LidoContainer{
    */
   @Prop() isContinueOnCorrect: boolean = false;
 
-/**
- * Determines if the activity should proceed automatically only after a correct response. 
- * Acceptable values: "true" or "false". Defaults to "false".
- */
+  /**
+   * Determines if the activity should proceed automatically only after a correct response.
+   * Acceptable values: "true" or "false". Defaults to "false".
+   */
   @Prop() isAllowOnlyCorrect: boolean = false;
 
   /**
@@ -140,6 +140,27 @@ export class LidoContainer{
    */
   @Element() el: HTMLElement;
 
+  convertToPixels(height: string, parentElement = document.body) {
+    if (!height) return 0; // Handle empty or invalid input
+
+    // Directly return numbers if already in pixels
+    if (height.endsWith('px')) {
+      return parseFloat(height);
+    }
+
+    // Convert relative units
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.style.height = height;
+    parentElement.appendChild(tempElement);
+
+    const computedHeight = tempElement.offsetHeight;
+    parentElement.removeChild(tempElement);
+
+    return computedHeight;
+  }
+
   /**
    * Scales the container based on the window or screen size, maintaining the aspect ratio.
    * The container scales according to the minimum dimension of the screen.
@@ -148,16 +169,15 @@ export class LidoContainer{
    */
   scaleContainer(container: HTMLElement) {
     const widths = [window.innerWidth];
-    const heights = [window.innerHeight];
+    // const heights = [window.innerHeight];
 
     if (window.screen?.width) {
       widths.push(window.screen.width);
-      heights.push(window.screen.height);
+      // heights.push(window.screen.height);
     }
 
     const width = Math.min(...widths);
-    const height = document.documentElement.clientHeight;
-
+    const height = this.height ? this.convertToPixels(this.height) : document.documentElement.clientHeight;
     const scaleX = width / 1600; // Scale based on a reference width of 1600px
     const scaleY = height / 900; // Scale based on a reference height of 900px
     const scale = Math.min(scaleX, scaleY);
