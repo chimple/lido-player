@@ -11,6 +11,7 @@ export function format(first?: string, middle?: string, last?: string): string {
 
 // Function to get the scale of an element
 const getElementScale = (el: HTMLElement): number => {
+  el.style.animation = 'unset';
   const transform = window.getComputedStyle(el).transform;
   if (transform === 'none') {
     return 1; // No scaling
@@ -259,6 +260,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       const matrix = transform.match(/matrix\(([^)]+)\)/);
       if (matrix) {
         const matrixValues = matrix[1].split(', ');
+
         initialX = parseFloat(matrixValues[4]);
         initialY = parseFloat(matrixValues[5]);
       }

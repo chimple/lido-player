@@ -5,7 +5,25 @@
     transform: translateX(2000px);
   }
   to {
-    left: 0;
+    transform: translateX(0);
+  }
+}
+
+@keyframes topToPlace {
+  from {
+    transform: translateY(-1000px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bottomToPlace {
+  from {
+    transform: translateY(1000px);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 
@@ -14,6 +32,15 @@
   }
   to {
     transform: translateX(-2000px);
+  }
+}
+
+@keyframes leftToPlace {
+  from {
+    transform: translateX(-2000px);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 
