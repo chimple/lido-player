@@ -206,6 +206,10 @@ export namespace Components {
          */
         "canplay": boolean;
         /**
+          * Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.
+         */
+        "customStyle": string;
+        /**
           * The height of the container (CSS value).
          */
         "height": string;
@@ -214,7 +218,7 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Determines if the activity should proceed automatically only after a correct response.  Acceptable values: "true" or "false". Defaults to "false".
+          * Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false".
          */
         "isAllowOnlyCorrect": boolean;
         /**
@@ -1337,6 +1341,10 @@ declare namespace LocalJSX {
          */
         "canplay"?: boolean;
         /**
+          * Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.
+         */
+        "customStyle"?: string;
+        /**
           * The height of the container (CSS value).
          */
         "height"?: string;
@@ -1345,7 +1353,7 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Determines if the activity should proceed automatically only after a correct response.  Acceptable values: "true" or "false". Defaults to "false".
+          * Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false".
          */
         "isAllowOnlyCorrect"?: boolean;
         /**

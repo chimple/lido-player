@@ -13,7 +13,7 @@ import { initEventsForElement } from '../../utils/utils';
   styleUrl: 'lido-container.css',
   shadow: false,
 })
-export class LidoContainer{
+export class LidoContainer {
   /**
    * Unique identifier for the container.
    */
@@ -23,6 +23,12 @@ export class LidoContainer{
    * Objective or purpose of the container. Can be used for internal logic or tracking.
    */
   @Prop() objective: string;
+
+  /**
+   * Custom CSS styles to be applied to the container.
+   * Allows for dynamic styling through inline styles or class names.
+   */
+  @Prop() customStyle: string;
 
   /**
    * Value assigned to the container. This can be used for logic related to this component.
@@ -124,10 +130,10 @@ export class LidoContainer{
    */
   @Prop() isContinueOnCorrect: boolean = false;
 
-/**
- * Determines if the activity should proceed automatically only after a correct response. 
- * Acceptable values: "true" or "false". Defaults to "false".
- */
+  /**
+   * Determines if the activity should proceed automatically only after a correct response.
+   * Acceptable values: "true" or "false". Defaults to "false".
+   */
   @Prop() isAllowOnlyCorrect: boolean = false;
 
   /**
@@ -180,6 +186,12 @@ export class LidoContainer{
     window.addEventListener('resize', () => this.scaleContainer(this.el));
     window.addEventListener('load', () => this.scaleContainer(this.el));
     initEventsForElement(this.el, this.type);
+
+    if (this.customStyle) {
+      const styleElement = document.createElement('style');
+      styleElement.innerHTML = this.customStyle;
+      document.head.appendChild(styleElement);
+    }
   }
 
   render() {
