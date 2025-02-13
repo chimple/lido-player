@@ -36,6 +36,11 @@ export class LidoHome {
   @Prop() baseUrl: string = '';
 
   /**
+   * The height of the container (CSS value).
+   */
+  @Prop() height: string = '';
+
+  /**
    * Current index of the container being displayed.
    */
   @State() currentContainerIndex: number = this.initialIndex;
@@ -170,7 +175,7 @@ export class LidoHome {
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
-        <lido-container {...props} canplay={this.canplay} baseUrl={this.baseUrl}>
+        <lido-container {...props} canplay={this.canplay} baseUrl={this.baseUrl} height={this.height}>
           {children}
         </lido-container>
       ),
@@ -220,7 +225,7 @@ export class LidoHome {
    * Clicking on a dot allows the user to jump to a specific container.
    */
   private renderDots() {
-    const style = {pointerEvents: this.canplay ? "none" : ""};
+    const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
         {this.containers.map((_, index) => (

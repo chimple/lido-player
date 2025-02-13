@@ -298,6 +298,10 @@ export namespace Components {
          */
         "canplay": boolean;
         /**
+          * The height of the container (CSS value).
+         */
+        "height": string;
+        /**
           * Initial index of the container being displayed.
          */
         "initialIndex": number;
@@ -1432,6 +1436,10 @@ declare namespace LocalJSX {
           * Boolean that controls the playability of the game.
          */
         "canplay"?: boolean;
+        /**
+          * The height of the container (CSS value).
+         */
+        "height"?: string;
         /**
           * Initial index of the container being displayed.
          */
