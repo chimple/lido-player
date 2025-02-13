@@ -602,6 +602,16 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
                 console.log('🚀 ~ executeActions ~ audioElement.src: error', error);
               }
             }
+            //check if the targetElement has a text property
+            else if (targetElement.textContent) {
+              try {
+                await speakText(targetElement.textContent);
+                highlightSpeakingElement(targetElement);
+                stopHighlightForSpeakingElement(targetElement);
+              } catch (error) {
+                console.log('🚀 ~ executeActions ~ error:', error);
+              }
+            }
             break;
           }
         }
@@ -1243,4 +1253,32 @@ export function convertUrlToRelative(url: string): string {
   } else {
     return getAssetPath(url);
   }
+}
+
+/**
+ * Asynchronously speaks the given text using the browser's text-to-speech API.
+ * Returns true if speech is completed successfully, false otherwise.
+ *
+ * @param text The text to be spoken.
+ * @returns A Promise that resolves to true if speech is successful, or false if an error occurs or speech synthesis is not supported.
+ */
+export async function speakText(text: string): Promise<boolean> {
+  return new Promise<boolean>((resolve, reject) => {
+    if (!('speechSynthesis' in window)) {
+      reject(new Error('Speech synthesis is not supported in this browser.'));
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.onend = () => {
+      resolve(true); // Resolve with true for successful speech
+    };
+
+    utterance.onerror = event => {
+
+      reject(new Error(`Speech synthesis error: ${event.error}`));
+    };
+    window.speechSynthesis.speak(utterance);
+  });
 }
