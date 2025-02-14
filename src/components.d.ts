@@ -206,6 +206,10 @@ export namespace Components {
          */
         "canplay": boolean;
         /**
+          * Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.
+         */
+        "customStyle": string;
+        /**
           * The height of the container (CSS value).
          */
         "height": string;
@@ -1340,6 +1344,10 @@ declare namespace LocalJSX {
           * Boolean that controls the playability of the game.
          */
         "canplay"?: boolean;
+        /**
+          * Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.
+         */
+        "customStyle"?: string;
         /**
           * The height of the container (CSS value).
          */

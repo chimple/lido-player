@@ -11,6 +11,7 @@ export function format(first?: string, middle?: string, last?: string): string {
 
 // Function to get the scale of an element
 const getElementScale = (el: HTMLElement): number => {
+  el.style.animation = 'unset';
   const transform = window.getComputedStyle(el).transform;
   if (transform === 'none') {
     return 1; // No scaling
@@ -213,7 +214,7 @@ const slideCompleted = (slideElement: HTMLElement) => {
   });
   localStorage.setItem(SelectedValuesKey, JSON.stringify(slideArr));
 
-  const objectiveString = document.getElementById('lido-container')['objective'];
+  const objectiveString = document.querySelector('#lido-container')['objective'];
   const objectiveArray = objectiveString.split(',');
   const elementIndex = slideArr.indexOf(slideElement['value']);
   const isCorrect = matchStringPattern(slideElement['value'], [objectiveArray[elementIndex].trim()]);
@@ -228,7 +229,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let initialX = 0;
   let initialY = 0;
   // Fetch the container element
-  const container = document.getElementById('lido-container');
+  const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) {
     console.error(`Container with ID "container" not found.`);
     return;
@@ -259,6 +260,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       const matrix = transform.match(/matrix\(([^)]+)\)/);
       if (matrix) {
         const matrixValues = matrix[1].split(', ');
+
         initialX = parseFloat(matrixValues[4]);
         initialY = parseFloat(matrixValues[5]);
       }
@@ -544,7 +546,9 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
-    const targetElement = action.actor === 'this' ? thisElement : action.actor === 'element' ? element : document.getElementById(action.actor);
+
+    const queriedElement = document.querySelector(action.actor) as HTMLElement | null;
+    const targetElement = action.actor === 'this' ? thisElement : action.actor === 'element' ? element : queriedElement ? queriedElement : document.getElementById(action.actor);
 
     if (targetElement) {
       // Handle the 'transform' property separately
@@ -558,7 +562,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const dropElement = targetElement;
           const dragElement = element;
 
-          const container = document.getElementById('lido-container');
+          const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
           const dropRect = dropElement.getBoundingClientRect();
@@ -578,7 +582,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
             let audioUrl = targetElement.getAttribute('audio');
             if (audioUrl) {
               audioUrl = convertUrlToRelative(audioUrl);
-              let audioElement = document.getElementById('audio') as HTMLAudioElement;
+              let audioElement = document.querySelector('#audio') as HTMLAudioElement;
               if (!audioElement) {
                 const newAudio = document.createElement('audio');
                 newAudio.id = 'audio';
@@ -605,8 +609,8 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
             //check if the targetElement has a text property
             else if (targetElement.textContent) {
               try {
-                await speakText(targetElement.textContent);
                 highlightSpeakingElement(targetElement);
+                await speakText(targetElement.textContent);
                 stopHighlightForSpeakingElement(targetElement);
               } catch (error) {
                 console.log('🚀 ~ executeActions ~ error:', error);
@@ -735,7 +739,7 @@ const countPatternWords = (pattern: string): number => {
 };
 
 async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
-  const container = document.getElementById('lido-container');
+  const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) return;
 
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
@@ -835,11 +839,11 @@ const storeActivityScore = (score: number) => {
 };
 
 const handleShowCheck = () => {
-  const container = document.getElementById('lido-container');
+  const container = document.querySelector('#lido-container') as HTMLElement;
   const objectiveString = container['objective'];
   const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
 
-  const checkButton = document.getElementById('lido-checkButton');
+  const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
 
   if (!selectValues || countPatternWords(selectValues) !== countPatternWords(objectiveString)) {
     executeActions("this.addClass='lido-disable-check-button'", checkButton);
@@ -856,7 +860,7 @@ const handleShowCheck = () => {
 };
 
 const validateObjectiveStatus = async () => {
-  const container = document.getElementById('lido-container');
+  const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
@@ -903,7 +907,7 @@ export const triggerNextContainer = () => {
 };
 
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
-  const container = document.getElementById('lido-container');
+  const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) return;
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
@@ -952,9 +956,9 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
-    const container = document.getElementById('lido-container');
+    const container = document.querySelector('#lido-container') as HTMLElement;
     const objective = container['objective'].split(',');
-    const checkButton = document.getElementById('lido-checkButton');
+    const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
     const showCheck = container.getAttribute('showCheck') === 'true';
 
     if (element.getAttribute('id') == 'lido-checkButton') {
@@ -1059,12 +1063,12 @@ function addClickListenerForClickType(element: HTMLElement): void {
 }
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
-  const styleId = 'wrong-answer-animation-style';
+  const styleId = '#wrong-answer-animation-style';
 
-  executeActions("tryAgain.speak='true'", document.getElementById('tryAgain'));
+  executeActions("tryAgain.speak='true'", document.querySelector('#tryAgain'));
 
   // Check if the style is already added, if not, add it
-  if (!document.getElementById(styleId)) {
+  if (!document.querySelector(styleId)) {
     const style = document.createElement('style');
     style.id = styleId;
     style.innerHTML = `
@@ -1128,7 +1132,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
   });
 
   // Dynamically create the highlight class if it doesn't exist
-  if (!document.getElementById('dynamic-highlight-style')) {
+  if (!document.querySelector('#dynamic-highlight-style')) {
     const style = document.createElement('style');
     style.id = 'dynamic-highlight-style';
     style.innerHTML = `
@@ -1156,7 +1160,7 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
 
     // Reset the transform of the drag element before calculating the new position
     (selectedDragElement as HTMLElement).style.transform = '';
-    const container = document.getElementById('lido-container');
+    const container = document.querySelector('#lido-container') as HTMLElement;
 
     const containerScale = getElementScale(container);
     console.log('🚀 ~ onClickDropOrDragElement ~ containerScale:', containerScale);
@@ -1198,14 +1202,14 @@ function highlightSpeakingElement(element: HTMLElement): void {
   element.classList.add('speaking-highlight');
 
   // Inject keyframe animation and class styles into the document's head if it doesn't already exist
-  const styleId = 'speaking-highlight-style';
-  if (!document.getElementById(styleId)) {
+  const styleId = '#speaking-highlight-style';
+  if (!document.querySelector(styleId)) {
     const style = document.createElement('style');
     style.id = styleId;
     style.innerHTML = `
       .speaking-highlight {
-        box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9); /* Stronger orange glow effect */
-        border: 3px solid orange;
+        box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9) !important; /* Stronger orange glow effect */
+        border: 3px solid green !important;
         transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
         transform: scale(1.05); /* Subtle scale effect to pop the element */
         animation: pulseEffect 1.5s infinite; /* Pulsing animation */
@@ -1238,12 +1242,12 @@ function stopHighlightForSpeakingElement(element: HTMLElement): void {
   element.classList.remove('speaking-highlight');
 
   // Remove inline styles
-  element.style.boxShadow = '';
-  element.style.border = '';
+  // element.style.boxShadow = '';
+  // element.style.border = '';
 }
 
 export function convertUrlToRelative(url: string): string {
-  const container = document.getElementById('lido-container');
+  const container = document.querySelector('#lido-container') as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
   if (url.startsWith('http')) {
@@ -1276,7 +1280,6 @@ export async function speakText(text: string): Promise<boolean> {
     };
 
     utterance.onerror = event => {
-
       reject(new Error(`Speech synthesis error: ${event.error}`));
     };
     window.speechSynthesis.speak(utterance);

@@ -25,6 +25,12 @@ export class LidoContainer {
   @Prop() objective: string;
 
   /**
+   * Custom CSS styles to be applied to the container.
+   * Allows for dynamic styling through inline styles or class names.
+   */
+  @Prop() customStyle: string;
+
+  /**
    * Value assigned to the container. This can be used for logic related to this component.
    */
   @Prop() value: string;
@@ -200,6 +206,12 @@ export class LidoContainer {
     window.addEventListener('resize', () => this.scaleContainer(this.el));
     window.addEventListener('load', () => this.scaleContainer(this.el));
     initEventsForElement(this.el, this.type);
+
+    if (this.customStyle) {
+      const styleElement = document.createElement('style');
+      styleElement.innerHTML = this.customStyle;
+      document.head.appendChild(styleElement);
+    }
   }
 
   render() {
