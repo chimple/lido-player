@@ -1,9 +1,9 @@
 <main>
 	<lido-container id="lido-container" customStyle=".redBg{background-color: red !important;} .greenBg{background-color: green !important; color: white !important;}" tabIndex="1" value="maincontainer" objective="{options[2].id}" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#74AADD" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
 
-		<!-- Audio Image -->
+		<!-- Audio Icon -->
 		<lido-pos id="pos" tabIndex="2" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
-			<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//audioLogo.jpeg" width="100px" height="100px" bgColor="blue" x="1450px" y="100px" onTouch="question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true';">
+			<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true';">
 			</lido-image>
 		</lido-pos>
 
@@ -62,9 +62,9 @@
 		</lido-pos>
 	</lido-container>
 	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="{option[0].id},{option[1].id},{option[2].id},{option[3].id},{option[4].id},{option[5].id}" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
-		<!-- Audio Image -->
+		<!-- Audio Icon -->
 		<lido-pos id="pos" tabIndex="2" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
-			<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//audioLogo.jpeg" width="100px" height="100px" bgColor="blue" x="1450px" y="100px" onTouch="question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true'; option5.speak='true'; option6.speak='true';">
+			<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true';">
 			</lido-image>
 		</lido-pos>
 		<!-- Chimple Avatar -->
