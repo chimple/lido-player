@@ -1209,7 +1209,7 @@ function highlightSpeakingElement(element: HTMLElement): void {
     style.innerHTML = `
       .speaking-highlight {
         box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9) !important; /* Stronger orange glow effect */
-        border: 3px solid green !important;
+        // border: 3px solid green !important;
         transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
         transform: scale(1.05); /* Subtle scale effect to pop the element */
         animation: pulseEffect 1.5s infinite; /* Pulsing animation */

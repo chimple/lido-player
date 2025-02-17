@@ -104,11 +104,45 @@ export class LidoRow {
   @Element() el: HTMLElement;
 
   /**
+   * The number of child elements that should be displayed inside the row.
+   * This value is dynamically adjusted based on `minLength` and `maxLength`.
+   */
+  @Prop() childElementsLength: number;
+
+  /**
+   * The minimum number of child elements that must be displayed inside the row.
+   * If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+   */
+  @Prop() minLength: number;
+
+  /**
+   * The maximum number of child elements that can be displayed inside the row.
+   * If `childElementsLength` exceeds this value, excess elements will be hidden.
+   */
+  @Prop() maxLength: number;
+
+  /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
    * It initializes custom events based on the `type` of the row component.
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
+
+    if (this.childElementsLength === undefined) return;
+
+    const children = Array.from(this.el.children);
+    let allowedLength = this.childElementsLength;
+
+    if (this.minLength && this.childElementsLength < this.minLength) {
+      allowedLength = this.minLength;
+    }
+    if (this.maxLength && this.childElementsLength > this.maxLength) {
+      allowedLength = this.maxLength;
+    }
+
+    children.forEach((child, index) => {
+      (child as HTMLElement).style.display = index < allowedLength ? 'flex' : 'none';
+    });
   }
 
   render() {
