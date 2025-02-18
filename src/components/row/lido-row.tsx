@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { handlingChildElements, initEventsForElement } from '../../utils/utils';
 
 /**
  * @component LidoRow
@@ -127,22 +127,7 @@ export class LidoRow {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-
-    if (this.childElementsLength === undefined) return;
-
-    const children = Array.from(this.el.children);
-    let allowedLength = this.childElementsLength;
-
-    if (this.minLength && this.childElementsLength < this.minLength) {
-      allowedLength = this.minLength;
-    }
-    if (this.maxLength && this.childElementsLength > this.maxLength) {
-      allowedLength = this.maxLength;
-    }
-
-    children.forEach((child, index) => {
-      (child as HTMLElement).style.display = index < allowedLength ? 'flex' : 'none';
-    });
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, "flex");
   }
 
   render() {

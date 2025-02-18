@@ -1285,3 +1285,22 @@ export async function speakText(text: string): Promise<boolean> {
     window.speechSynthesis.speak(utterance);
   });
 }
+
+
+export function handlingChildElements(element: HTMLElement, minLength: number, maxLength: number, currentLength: number, displayStyle: string){
+  if (currentLength === undefined) return;
+
+  const children = Array.from(element.children);
+  let allowedLength = currentLength;
+
+  if (minLength && currentLength < minLength) {
+    allowedLength = minLength;
+  }
+  if (maxLength && currentLength > maxLength) {
+    allowedLength = maxLength;
+  }
+
+  children.forEach((child, index) => {
+    (child as HTMLElement).style.display = index < allowedLength ? displayStyle : 'none';
+  });
+}

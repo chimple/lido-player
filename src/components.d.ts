@@ -118,6 +118,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+         */
+        "childElementsLength": number;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -125,6 +129,14 @@ export namespace Components {
           * The unique identifier for the column component.
          */
         "id": string;
+        /**
+          * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
+         */
+        "maxLength": number;
+        /**
+          * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+         */
+        "minLength": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -928,6 +940,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+         */
+        "childElementsLength": number;
+        /**
           * The height of the wrap container (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -935,6 +951,14 @@ export namespace Components {
           * Unique identifier for the wrap element.
          */
         "id": string;
+        /**
+          * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
+         */
+        "maxLength": number;
+        /**
+          * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+         */
+        "minLength": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -1269,6 +1293,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+         */
+        "childElementsLength"?: number;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1276,6 +1304,14 @@ declare namespace LocalJSX {
           * The unique identifier for the column component.
          */
         "id"?: string;
+        /**
+          * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+         */
+        "minLength"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -2079,6 +2115,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+         */
+        "childElementsLength"?: number;
+        /**
           * The height of the wrap container (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -2086,6 +2126,14 @@ declare namespace LocalJSX {
           * Unique identifier for the wrap element.
          */
         "id"?: string;
+        /**
+          * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+         */
+        "minLength"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
