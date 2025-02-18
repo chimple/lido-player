@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { handlingChildElements, initEventsForElement } from '../../utils/utils';
 
 /**
  * @component LidoWrap
@@ -110,11 +110,30 @@ export class LidoWrap {
   @Element() el: HTMLElement;
 
   /**
+   * The number of child elements that should be displayed inside the row.
+   * This value is dynamically adjusted based on `minLength` and `maxLength`.
+   */
+  @Prop() childElementsLength: number;
+
+  /**
+   * The minimum number of child elements that must be displayed inside the row.
+   * If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+   */
+  @Prop() minLength: number;
+
+  /**
+   * The maximum number of child elements that can be displayed inside the row.
+   * If `childElementsLength` exceeds this value, excess elements will be hidden.
+   */
+  @Prop() maxLength: number;
+
+  /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the wrap container.
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, "grid");
   }
 
   render() {
