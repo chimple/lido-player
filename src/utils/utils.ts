@@ -580,6 +580,16 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
         case 'speak': {
           {
             let audioUrl = targetElement.getAttribute('audio');
+            if(!audioUrl){
+              const childElements = targetElement.children
+              for (let i = 0; i < childElements.length; i++) {
+                const child = childElements[i];            
+                const childAudioUrl = child.getAttribute('audio');
+                if (childAudioUrl) {
+                  audioUrl = childAudioUrl
+                }
+              }
+            }
             if (audioUrl) {
               audioUrl = convertUrlToRelative(audioUrl);
               let audioElement = document.querySelector('#audio') as HTMLAudioElement;
