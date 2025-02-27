@@ -13,7 +13,6 @@ export class AudioPlayer {
     }
     const highlightedElement = document.querySelector(".speaking-highlight") as HTMLElement;
     stopHighlightForSpeakingElement(highlightedElement)
-    speakText("stop")
   }
 
   public static async play(targetElement: HTMLElement) {

@@ -1245,11 +1245,6 @@ export async function speakText(text: string, targetElement?: HTMLElement): Prom
       synth.cancel();
     }
 
-    if (text.toLowerCase() === 'stop') {
-      resolve(true);
-      return;
-    }
-
     setTimeout(() => {
       const utterance = new SpeechSynthesisUtterance(text);
 
