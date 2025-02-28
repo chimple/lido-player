@@ -1,5 +1,5 @@
-import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { handlingChildElements, initEventsForElement } from '../../utils/utils';
+import { Component, Host, Prop, h, Element, State } from '@stencil/core';
+import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
 
 /**
  * @component LidoWrap
@@ -128,33 +128,55 @@ export class LidoWrap {
   @Prop() maxLength: number;
 
   /**
+   * Stores the dynamic style properties for the component, allowing runtime updates to styling.
+   */
+  @State() style: { [key: string]: string };
+
+  /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the wrap container.
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, "grid");
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'grid');
+  }
+
+  /**
+   * Lifecycle method that runs before the component is rendered.
+   * Initializes styles and sets up event listeners for resize and load events.
+   */
+  componentWillLoad() {
+    this.updateStyles();
+    window.addEventListener('resize', this.updateStyles.bind(this)); // Update on screen rotation
+    window.addEventListener('load', this.updateStyles.bind(this)); // Update on screen rotation
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateStyles.bind(this));
+    window.removeEventListener('load', this.updateStyles.bind(this));
+  }
+
+  updateStyles() {
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      height: parseProp(this.height, orientation),
+      width: parseProp(this.width, orientation),
+      backgroundColor: parseProp(this.bgColor, orientation),
+      top: parseProp(this.y, orientation),
+      left: parseProp(this.x, orientation),
+      zIndex: this.z,
+      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'grid' : 'none', // Toggle visibility
+    };
   }
 
   render() {
-    // Inline styles to position and size the wrap container, with grid layout applied
-    const style = {
-      height: this.height,
-      width: this.width,
-      top: this.y,
-      left: this.x,
-      display: this.visible ? 'grid' : 'none', // Use grid layout
-      zIndex: this.z,
-      backgroundColor: this.bgColor,
-    };
-
     return (
       <Host
         class="lido-wrap"
         value={this.value}
         type={this.type}
         tabindex={this.tabIndex}
-        style={style}
+        style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         audio={this.audio}

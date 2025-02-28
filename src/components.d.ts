@@ -122,6 +122,10 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
+          * Specifies the direction of the component, which determines the layout or flow of elements.
+         */
+        "direction": string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -465,7 +469,7 @@ export namespace Components {
         /**
           * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
          */
-        "visible": boolean;
+        "visible": boolean | string;
         /**
           * The width of the component (CSS value, e.g., '100px', '50%').
          */
@@ -613,6 +617,10 @@ export namespace Components {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
+        /**
+          * Specifies the direction of the component, which determines the layout or flow of elements.
+         */
+        "direction": string;
         /**
           * The height of the row (CSS value, e.g., '100px', '50%').
          */
@@ -848,7 +856,7 @@ export namespace Components {
         /**
           * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
          */
-        "visible": boolean;
+        "visible": boolean | string;
         /**
           * Width of the text component (CSS value, e.g., '100px', '50%').
          */
@@ -1297,6 +1305,10 @@ declare namespace LocalJSX {
          */
         "childElementsLength"?: number;
         /**
+          * Specifies the direction of the component, which determines the layout or flow of elements.
+         */
+        "direction"?: string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1640,7 +1652,7 @@ declare namespace LocalJSX {
         /**
           * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
          */
-        "visible"?: boolean;
+        "visible"?: boolean | string;
         /**
           * The width of the component (CSS value, e.g., '100px', '50%').
          */
@@ -1788,6 +1800,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * Specifies the direction of the component, which determines the layout or flow of elements.
+         */
+        "direction"?: string;
         /**
           * The height of the row (CSS value, e.g., '100px', '50%').
          */
@@ -2023,7 +2039,7 @@ declare namespace LocalJSX {
         /**
           * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
          */
-        "visible"?: boolean;
+        "visible"?: boolean | string;
         /**
           * Width of the text component (CSS value, e.g., '100px', '50%').
          */

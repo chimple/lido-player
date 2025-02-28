@@ -3,6 +3,7 @@ import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent,
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
+import { AudioPlayer } from './audioPlayer';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -239,6 +240,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
 
@@ -578,56 +580,8 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           break;
         }
         case 'speak': {
-          {
-            let audioUrl = targetElement.getAttribute('audio');
-            if(!audioUrl){
-              const childElements = targetElement.children
-              for (let i = 0; i < childElements.length; i++) {
-                const child = childElements[i];            
-                const childAudioUrl = child.getAttribute('audio');
-                if (childAudioUrl) {
-                  audioUrl = childAudioUrl
-                }
-              }
-            }
-            if (audioUrl) {
-              audioUrl = convertUrlToRelative(audioUrl);
-              let audioElement = document.querySelector('#audio') as HTMLAudioElement;
-              if (!audioElement) {
-                const newAudio = document.createElement('audio');
-                newAudio.id = 'audio';
-                document.body.appendChild(newAudio);
-                audioElement = newAudio;
-              }
-
-              audioElement.pause();
-              audioElement.currentTime = 0;
-              audioElement.src = audioUrl;
-              console.log('🚀 ~ executeActions ~ audioElement.src:', audioElement.src);
-
-              try {
-                await audioElement.play();
-                highlightSpeakingElement(targetElement);
-                while (!audioElement.ended || audioElement.error) {
-                  await new Promise(resolve => setTimeout(resolve, 100));
-                }
-                stopHighlightForSpeakingElement(targetElement);
-              } catch (error) {
-                console.log('🚀 ~ executeActions ~ audioElement.src: error', error);
-              }
-            }
-            //check if the targetElement has a text property
-            else if (targetElement.textContent) {
-              try {
-                highlightSpeakingElement(targetElement);
-                await speakText(targetElement.textContent);
-                stopHighlightForSpeakingElement(targetElement);
-              } catch (error) {
-                console.log('🚀 ~ executeActions ~ error:', error);
-              }
-            }
-            break;
-          }
+          await AudioPlayer.getI().play(targetElement);
+          break;
         }
 
         case 'sleep': {
@@ -910,6 +864,7 @@ const appendingDragElementsInDrop = () => {
 };
 
 export const triggerNextContainer = () => {
+  AudioPlayer.getI().stop();
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
@@ -966,6 +921,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
+    AudioPlayer.getI().stop();
     const container = document.querySelector('#lido-container') as HTMLElement;
     const objective = container['objective'].split(',');
     const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
@@ -1205,7 +1161,7 @@ function removeHighlight(element: HTMLElement): void {
 }
 
 // Function to highlight the speaking element
-function highlightSpeakingElement(element: HTMLElement): void {
+export function highlightSpeakingElement(element: HTMLElement): void {
   if (!element) return;
 
   // Add a custom class for highlighting
@@ -1245,7 +1201,7 @@ function highlightSpeakingElement(element: HTMLElement): void {
 }
 
 // Function to stop highlighting
-function stopHighlightForSpeakingElement(element: HTMLElement): void {
+export function stopHighlightForSpeakingElement(element: HTMLElement): void {
   if (!element) return;
 
   // Remove the custom class for highlighting
@@ -1276,28 +1232,27 @@ export function convertUrlToRelative(url: string): string {
  * @param text The text to be spoken.
  * @returns A Promise that resolves to true if speech is successful, or false if an error occurs or speech synthesis is not supported.
  */
-export async function speakText(text: string): Promise<boolean> {
+export async function speakText(text: string, targetElement?: HTMLElement): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     if (!('speechSynthesis' in window)) {
       reject(new Error('Speech synthesis is not supported in this browser.'));
       return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    const synth = window.speechSynthesis;
 
-    utterance.onend = () => {
-      resolve(true); // Resolve with true for successful speech
-    };
+    setTimeout(() => {
+      const utterance = new SpeechSynthesisUtterance(text);
 
-    utterance.onerror = event => {
-      reject(new Error(`Speech synthesis error: ${event.error}`));
-    };
-    window.speechSynthesis.speak(utterance);
+      utterance.onend = () => {
+        resolve(true); // Resolve when speech is completed
+      };
+      synth.speak(utterance);
+    }, 50);
   });
 }
 
-
-export function handlingChildElements(element: HTMLElement, minLength: number, maxLength: number, currentLength: number, displayStyle: string){
+export function handlingChildElements(element: HTMLElement, minLength: number, maxLength: number, currentLength: number, displayStyle: string) {
   if (currentLength === undefined) return;
 
   const children = Array.from(element.children);
@@ -1314,3 +1269,17 @@ export function handlingChildElements(element: HTMLElement, minLength: number, m
     (child as HTMLElement).style.display = index < allowedLength ? displayStyle : 'none';
   });
 }
+
+export const parseProp = (propValue: string, orientation: string) => {
+  if (!propValue || !propValue.includes(',')) {
+    return propValue;
+  }
+
+  const parsedValues = propValue.split(',').reduce((acc, pair) => {
+    const [key, value] = pair.split('.');
+    acc[key.trim()] = value.trim();
+    return acc;
+  }, {} as Record<string, string>);
+
+  return parsedValues[orientation] || '';
+};

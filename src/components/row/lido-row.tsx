@@ -1,5 +1,6 @@
-import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { handlingChildElements, initEventsForElement } from '../../utils/utils';
+import { Component, Host, Prop, h, Element, State } from '@stencil/core';
+import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
+import { uptime } from 'process';
 
 /**
  * @component LidoRow
@@ -122,33 +123,61 @@ export class LidoRow {
   @Prop() maxLength: number;
 
   /**
+   * Specifies the direction of the component, which determines the layout or flow of elements.
+   */
+  @Prop() direction: string;
+
+  /**
+   * Stores the dynamic style properties for the component, allowing runtime updates to styling.
+   */
+  @State() style: { [key: string]: string } = {};
+
+  /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
    * It initializes custom events based on the `type` of the row component.
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, "flex");
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'flex');
+  }
+
+  /**
+   * Lifecycle method that runs before the component is rendered.
+   * Initializes styles and sets up event listeners for resize and load events.
+   */
+  componentWillLoad() {
+    this.updateStyles();
+    window.addEventListener('resize', this.updateStyles.bind(this));
+    window.addEventListener('load', this.updateStyles.bind(this));
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateStyles.bind(this));
+    window.removeEventListener('load', this.updateStyles.bind(this));
+  }
+
+  updateStyles() {
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      height: parseProp(this.height, orientation),
+      width: parseProp(this.width, orientation),
+      backgroundColor: parseProp(this.bgColor, orientation),
+      top: parseProp(this.y, orientation),
+      left: parseProp(this.x, orientation),
+      zIndex: this.z,
+      display: this.visible ? 'flex' : 'none', // Toggle visibility
+      flexDirection: !this.direction ? 'row' : parseProp(this.direction, orientation),
+    };
   }
 
   render() {
-    // Inline styles to position and size the row component
-    const style = {
-      height: this.height,
-      width: this.width,
-      top: this.y,
-      left: this.x,
-      display: this.visible ? 'flex' : 'none', // Flexbox for row layout
-      zIndex: this.z,
-      backgroundColor: this.bgColor, // Apply background color if provided
-    };
-
     return (
       <Host
         class="lido-row"
         type={this.type}
         tabindex={this.tabIndex}
         value={this.value}
-        style={style}
+        style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         audio={this.audio}
