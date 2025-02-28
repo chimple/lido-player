@@ -3,7 +3,7 @@ import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent,
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
-import { AudioPlayer } from './audio';
+import { AudioPlayer } from './audioPlayer';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
