@@ -10,7 +10,7 @@ export class AudioPlayer {
     document.body.appendChild(this.audioElement);
   }
 
-  public static getInstance(): AudioPlayer {
+  public static getI(): AudioPlayer {
     if (!AudioPlayer.instance) {
       AudioPlayer.instance = new AudioPlayer();
     }

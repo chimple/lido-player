@@ -1,5 +1,5 @@
-import { Component, Prop, h, Element, Host, getAssetPath } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
+import { Component, Prop, h, Element, Host, getAssetPath, State } from '@stencil/core';
+import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
 
 /**
  * @component LidoImage
@@ -111,6 +111,11 @@ export class LidoImage {
   @Element() el: HTMLElement;
 
   /**
+   * Stores the dynamic style properties for the component, allowing runtime updates to styling.
+   */
+  @State() style: { [key: string]: string };
+
+  /**
    * Lifecycle method that runs after the component has been loaded into the DOM.
    * It initializes custom events based on the `type` of the image component.
    */
@@ -118,25 +123,42 @@ export class LidoImage {
     initEventsForElement(this.el, this.type);
   }
 
-  render() {
-    // Inline styles for the image, including dimensions, positioning, and visibility
-    const style = {
-      height: this.height,
-      width: this.width,
-      backgroundColor: this.bgColor,
-      top: this.y,
-      left: this.x,
+  /**
+   * Lifecycle method that runs before the component is rendered.
+   * Initializes styles and sets up event listeners for resize and load events.
+   */
+  componentWillLoad() {
+    this.updateStyles();
+    window.addEventListener('resize', this.updateStyles.bind(this)); // Update on screen rotation
+    window.addEventListener('load', this.updateStyles.bind(this)); // Update on screen rotation
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateStyles.bind(this));
+    window.removeEventListener('load', this.updateStyles.bind(this));
+  }
+
+  updateStyles() {
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      height: parseProp(this.height, orientation),
+      width: parseProp(this.width, orientation),
+      backgroundColor: parseProp(this.bgColor, orientation),
+      top: parseProp(this.y, orientation),
+      left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: this.visible ? 'flex' : 'none',
+      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'flex' : 'none', // Toggle visibility
       alignItems: 'center', // Vertically center the image
       justifyContent: 'center', // Horizontally center the image
     };
+  }
 
+  render() {
     return (
       <Host
         type={this.type}
         tabindex={this.tabIndex}
-        style={style}
+        style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         value={this.value}
@@ -146,7 +168,7 @@ export class LidoImage {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
       >
-        <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" style={style} />
+        <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" style={this.style} />
       </Host>
     );
   }

@@ -240,7 +240,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
-    AudioPlayer.getInstance().stop();
+    AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
 
@@ -580,7 +580,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           break;
         }
         case 'speak': {
-          await AudioPlayer.getInstance().play(targetElement);
+          await AudioPlayer.getI().play(targetElement);
           break;
         }
 
@@ -864,7 +864,7 @@ const appendingDragElementsInDrop = () => {
 };
 
 export const triggerNextContainer = () => {
-  AudioPlayer.getInstance().stop();
+  AudioPlayer.getI().stop();
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
@@ -921,7 +921,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
-    AudioPlayer.getInstance().stop();
+    AudioPlayer.getI().stop();
     const container = document.querySelector('#lido-container') as HTMLElement;
     const objective = container['objective'].split(',');
     const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
@@ -1247,12 +1247,6 @@ export async function speakText(text: string, targetElement?: HTMLElement): Prom
       utterance.onend = () => {
         resolve(true); // Resolve when speech is completed
       };
-
-      // utterance.onerror = event => {
-      //   reject(new Error(`Speech synthesis error: ${event.error}`));
-      // };
-      console.log("target : ", utterance);
-      
       synth.speak(utterance);
     }, 50);
   });
