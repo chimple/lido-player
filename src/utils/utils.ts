@@ -240,7 +240,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
-    AudioPlayer.stop();
+    AudioPlayer.getInstance().stop();
     removeHighlight(element);
     isDragging = true;
 
@@ -580,7 +580,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           break;
         }
         case 'speak': {
-          await AudioPlayer.play(targetElement);
+          await AudioPlayer.getInstance().play(targetElement);
           break;
         }
 
@@ -864,7 +864,7 @@ const appendingDragElementsInDrop = () => {
 };
 
 export const triggerNextContainer = () => {
-  AudioPlayer.stop();
+  AudioPlayer.getInstance().stop();
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
@@ -921,7 +921,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
-    AudioPlayer.stop();
+    AudioPlayer.getInstance().stop();
     const container = document.querySelector('#lido-container') as HTMLElement;
     const objective = container['objective'].split(',');
     const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
@@ -1241,25 +1241,20 @@ export async function speakText(text: string, targetElement?: HTMLElement): Prom
 
     const synth = window.speechSynthesis;
 
-    if (synth.speaking) {
-      synth.cancel();
-    }
-
     setTimeout(() => {
       const utterance = new SpeechSynthesisUtterance(text);
 
       utterance.onend = () => {
-        stopHighlightForSpeakingElement(targetElement);
         resolve(true); // Resolve when speech is completed
       };
 
-      utterance.onerror = event => {
-        stopHighlightForSpeakingElement(targetElement);
-        reject(new Error(`Speech synthesis error: ${event.error}`));
-      };
-
+      // utterance.onerror = event => {
+      //   reject(new Error(`Speech synthesis error: ${event.error}`));
+      // };
+      console.log("target : ", utterance);
+      
       synth.speak(utterance);
-    }, 50); // Short delay to ensure previous speech is fully canceled
+    }, 50);
   });
 }
 
@@ -1280,3 +1275,17 @@ export function handlingChildElements(element: HTMLElement, minLength: number, m
     (child as HTMLElement).style.display = index < allowedLength ? displayStyle : 'none';
   });
 }
+
+export const parseProp = (propValue: string, orientation: string) => {
+  if (!propValue || !propValue.includes(',')) {
+    return propValue;
+  }
+
+  const parsedValues = propValue.split(',').reduce((acc, pair) => {
+    const [key, value] = pair.split('.');
+    acc[key.trim()] = value.trim();
+    return acc;
+  }, {} as Record<string, string>);
+
+  return parsedValues[orientation] || '';
+};

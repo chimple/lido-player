@@ -1,66 +1,74 @@
 import { convertUrlToRelative, highlightSpeakingElement, stopHighlightForSpeakingElement, speakText } from './utils';
 
 export class AudioPlayer {
-  private static instance: AudioPlayer = new AudioPlayer();
+  private static instance: AudioPlayer;
+  private audioElement: HTMLAudioElement;
 
-  private constructor() {}
-
-  public static stop() {
-    const audioElement = document.querySelector('#audio') as HTMLAudioElement;
-    if (audioElement) {
-      audioElement.pause();
-      audioElement.currentTime = 0;
-    }
-    const highlightedElement = document.querySelector(".speaking-highlight") as HTMLElement;
-    stopHighlightForSpeakingElement(highlightedElement)
+  private constructor() {
+    this.audioElement = document.createElement('audio');
+    this.audioElement.id = 'audio';
+    document.body.appendChild(this.audioElement);
   }
 
-  public static async play(targetElement: HTMLElement) {
-    let audioUrl = targetElement.getAttribute('audio');
+  public static getInstance(): AudioPlayer {
+    if (!AudioPlayer.instance) {
+      AudioPlayer.instance = new AudioPlayer();
+    }
+    return AudioPlayer.instance;
+  }
+
+  public stop() {
+    window.speechSynthesis.cancel();
+    this.audioElement.pause();
+    this.audioElement.currentTime = 0;
+    this.audioElement.src = ''; // Clear source to prevent replaying old audio
+
+    const highlightedElements = document.querySelectorAll('.speaking-highlight');
+    highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));
+  }
+
+  public async play(targetElement: HTMLElement) {
+    this.stop();
+
+    let audioUrl = targetElement.getAttribute('audio') || '';
+
     if (!audioUrl) {
       const childElements = targetElement.children;
       for (let i = 0; i < childElements.length; i++) {
-        const child = childElements[i];
-        const childAudioUrl = child.getAttribute('audio');
+        const childAudioUrl = childElements[i].getAttribute('audio');
         if (childAudioUrl) {
           audioUrl = childAudioUrl;
         }
       }
     }
+
     if (audioUrl) {
       audioUrl = convertUrlToRelative(audioUrl);
-      let audioElement = document.querySelector('#audio') as HTMLAudioElement;
-      if (!audioElement) {
-        const newAudio = document.createElement('audio');
-        newAudio.id = 'audio';
-        document.body.appendChild(newAudio);
-        audioElement = newAudio;
-      }
-
-      audioElement.pause();
-      audioElement.currentTime = 0;
-      audioElement.src = audioUrl;
-      console.log('🚀 ~ executeActions ~ audioElement.src:', audioElement.src);
+      this.audioElement.src = audioUrl;
+      console.log('🚀 Playing audio:', this.audioElement.src);
 
       try {
-        await audioElement.play();
+        await this.audioElement.play();
         highlightSpeakingElement(targetElement);
-        while (!audioElement.ended || audioElement.error) {
-          await new Promise(resolve => setTimeout(resolve, 100));
-        }
-        stopHighlightForSpeakingElement(targetElement);
+
+        await new Promise<void>(resolve => {
+          this.audioElement.onended = () => {
+            stopHighlightForSpeakingElement(targetElement);
+            resolve();
+          };
+        });
       } catch (error) {
-        console.log('🚀 ~ executeActions ~ audioElement.src: error', error);
+        console.log('🚀 Audio play error:', error);
       }
-    }
-    //check if the targetElement has a text property
+    } 
+    // If no audio, use text-to-speech
     else if (targetElement.textContent) {
       try {
         highlightSpeakingElement(targetElement);
         await speakText(targetElement.textContent, targetElement);
-        // stopHighlightForSpeakingElement(targetElement);
+        stopHighlightForSpeakingElement(targetElement);
       } catch (error) {
-        console.log('🚀 ~ executeActions ~ error:', error);
+        console.log('🚀 TTS Error:', error);
       }
     }
   }

@@ -1,5 +1,5 @@
-import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { Component, Host, Prop, h, Element, State } from '@stencil/core';
+import { initEventsForElement, parseProp } from '../../utils/utils';
 
 /**
  * @component LidoPos
@@ -77,7 +77,7 @@ export class LidoPos {
   /**
    * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
    */
-  @Prop() visible: boolean;
+  @Prop() visible: boolean | string;
 
   /**
    * URL or identifier for an audio file associated with the component.
@@ -110,6 +110,11 @@ export class LidoPos {
   @Element() el: HTMLElement;
 
   /**
+   * Stores the dynamic style properties for the component, allowing runtime updates to styling.
+   */
+  @State() style: { [key: string]: string };
+
+  /**
    * Lifecycle hook that is called after the component has been rendered in the DOM.
    * It initializes custom events based on the `type` of the component.
    */
@@ -117,25 +122,42 @@ export class LidoPos {
     initEventsForElement(this.el, this.type);
   }
 
-  render() {
-    // Inline styles to position and size the component
-    const style = {
-      height: this.height,
-      width: this.width,
-      backgroundColor: this.bgColor,
-      top: this.y,
-      left: this.x,
-      zIndex: this.z,
-      display: this.visible ? 'block' : 'none', // Toggle visibility
-    };
+  /**
+   * Lifecycle method that runs before the component is rendered.
+   * Initializes styles and sets up event listeners for resize and load events.
+   */
+  componentWillLoad() {
+    this.updateStyles();
+    window.addEventListener('resize', this.updateStyles.bind(this)); // Update on screen rotation
+    window.addEventListener('load', this.updateStyles.bind(this)); // Update on screen rotation
+  }
 
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateStyles.bind(this));
+    window.removeEventListener('load', this.updateStyles.bind(this));
+  }
+
+  updateStyles() {
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      height: parseProp(this.height, orientation),
+      width: parseProp(this.width, orientation),
+      backgroundColor: parseProp(this.bgColor, orientation),
+      top: parseProp(this.y, orientation),
+      left: parseProp(this.x, orientation),
+      zIndex: this.z,
+      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'block' : 'none', // Toggle visibility
+    };
+  }
+
+  render() {
     return (
       <Host
         id={this.id}
         class="lido-pos"
         type={this.type}
         tabindex={this.tabIndex}
-        style={style}
+        style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         value={this.value}

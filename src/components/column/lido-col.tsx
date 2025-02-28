@@ -1,5 +1,5 @@
-import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { handlingChildElements, initEventsForElement } from '../../utils/utils';
+import { Component, Host, Prop, h, Element, State } from '@stencil/core';
+import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
 
 /**
  * @component LidoCol
@@ -130,26 +130,54 @@ export class LidoCol {
   @Prop() maxLength: number;
 
   /**
+   * Specifies the direction of the component, which determines the layout or flow of elements.
+   */
+  @Prop() direction: string;
+
+  /**
+   * Stores the dynamic style properties for the component, allowing runtime updates to styling.
+   */
+  @State() style: { [key: string]: string } = {};
+
+  /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, "flex");
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'flex');
+  }
+
+  /**
+   * Lifecycle method that runs before the component is rendered.
+   * Initializes styles and sets up event listeners for resize and load events.
+   */
+  componentWillLoad() {
+    this.updateStyles();
+    window.addEventListener('resize', this.updateStyles.bind(this));
+    window.addEventListener('load', this.updateStyles.bind(this));
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateStyles.bind(this));
+    window.removeEventListener('load', this.updateStyles.bind(this));
+  }
+
+  updateStyles() {
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      height: parseProp(this.height, orientation),
+      width: parseProp(this.width, orientation),
+      backgroundColor: parseProp(this.bgColor, orientation),
+      top: parseProp(this.y, orientation),
+      left: parseProp(this.x, orientation),
+      zIndex: this.z,
+      display: this.visible ? 'flex' : 'none', // Toggle visibility
+      flexDirection: !this.direction ? 'column' : parseProp(this.direction, orientation),
+    };
   }
 
   render() {
-    // Inline styles applied to the column, mainly for positioning and background.
-    const style = {
-      height: this.height,
-      width: this.width,
-      backgroundColor: this.bgColor,
-      top: this.y,
-      left: this.x,
-      display: this.visible ? 'flex' : 'none',
-      zIndex: this.z,
-    };
-
     return (
       <Host
         id={this.id}
@@ -157,7 +185,7 @@ export class LidoCol {
         type={this.type}
         tabindex={this.tabIndex}
         value={this.value}
-        style={style}
+        style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         audio={this.audio}
