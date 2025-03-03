@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
 body {
   overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
 }
 
 .lido-disable-check-button {
