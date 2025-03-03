@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 
 /**
  * @component LidoContainer
@@ -74,6 +74,11 @@ export class LidoContainer {
    * Background color of the container (CSS color value).
    */
   @Prop() bgColor: string;
+
+  /**
+   * The background image URL to be applied to the entire body.
+   */
+  @Prop() bgImage: string;
 
   /**
    * Type of the container, which can be used for conditional logic or styling purposes.
@@ -176,20 +181,20 @@ export class LidoContainer {
   scaleContainer(container: HTMLElement) {
     const widths = [window.innerWidth];
     const heights = [window.innerHeight];
-  
+
     if (window.screen?.width) {
       widths.push(window.screen.width);
       heights.push(window.screen.height);
     }
-  
+
     const width = Math.min(...widths);
     const height = Math.min(...heights); // Get the smallest height
-  
+
     const isPortrait = height > width; // Check if the device is in portrait mode
-  
+
     let scaleX: number;
     let scaleY: number;
-  
+
     if (isPortrait) {
       // Portrait Mode: Scale based on portrait reference size (e.g., 900x1600)
       scaleX = width / 900;
@@ -199,25 +204,24 @@ export class LidoContainer {
       scaleX = width / 1600;
       scaleY = height / 900;
     }
-  
+
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
-  
+
     // Center the container and apply scaling
     container.style.transform = `translate(-50%, -50%) scale(${scale})`;
-    container.style.left = "50%";
-    container.style.top = "50%";
-    container.style.position = "absolute"; // Ensure proper positioning
+    container.style.left = '50%';
+    container.style.top = '50%';
+    container.style.position = 'absolute'; // Ensure proper positioning
     this.screenOrientation();
   }
-  
 
-  screenOrientation(){
-    if(window.innerHeight > window.innerWidth){
-      this.el.style.height = "1600px"
-      this.el.style.width = "900px"
+  screenOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+      this.el.style.height = '1600px';
+      this.el.style.width = '900px';
     } else {
-      this.el.style.height = "900px"
-      this.el.style.width = "1600px"
+      this.el.style.height = '900px';
+      this.el.style.width = '1600px';
     }
   }
 
@@ -229,7 +233,9 @@ export class LidoContainer {
    */
   componentDidLoad() {
     this.scaleContainer(this.el);
+    const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
     document.body.style.backgroundColor = this.bgColor;
+    document.body.style.backgroundImage = `url(${backGroundImage})`;
 
     // Re-scale the container on window resize or load events
     window.addEventListener('resize', () => this.scaleContainer(this.el));
@@ -241,6 +247,13 @@ export class LidoContainer {
       styleElement.innerHTML = this.customStyle;
       document.head.appendChild(styleElement);
     }
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('resize', () => this.scaleContainer(this.el));
+    window.removeEventListener('load', () => this.scaleContainer(this.el));
+    document.body.style.backgroundColor = '';
+    document.body.style.backgroundImage = '';
   }
 
   render() {

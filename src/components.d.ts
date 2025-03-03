@@ -218,6 +218,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * The background image URL to be applied to the entire body.
+         */
+        "bgImage": string;
+        /**
           * Boolean that controls the playability of the game.
          */
         "canplay": boolean;
@@ -1400,6 +1404,10 @@ declare namespace LocalJSX {
           * Background color of the container (CSS color value).
          */
         "bgColor"?: string;
+        /**
+          * The background image URL to be applied to the entire body.
+         */
+        "bgImage"?: string;
         /**
           * Boolean that controls the playability of the game.
          */
