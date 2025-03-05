@@ -18,7 +18,10 @@ export class AudioPlayer {
   }
 
   public stop() {
-    window.speechSynthesis.cancel();
+    //check if speechSynthesis is supported
+    if (window?.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
     this.audioElement.src = ''; // Clear source to prevent replaying old audio
@@ -60,7 +63,7 @@ export class AudioPlayer {
       } catch (error) {
         console.log('🚀 Audio play error:', error);
       }
-    } 
+    }
     // If no audio, use text-to-speech
     else if (targetElement.textContent) {
       try {
