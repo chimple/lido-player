@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Element, getAssetPath } from '@stencil/core';
 import { Rive } from '@rive-app/canvas';
 import { RiveService } from '../../utils/rive-service';
-import { initEventsForElement } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 
 /**
  * @component LidoAvatar
@@ -132,11 +132,11 @@ export class LidoAvatar {
   async componentDidLoad() {
     initEventsForElement(this.el, this.type);
 
-    const resolvedPath = this.src.startsWith('http')
-      ? this.src // Use the provided URL if it's an HTTP/HTTPS link
-      : getAssetPath(this.src); // Otherwise, resolve it as an asset path
+    // const resolvedPath = this.src.startsWith('http')
+    //   ? this.src // Use the provided URL if it's an HTTP/HTTPS link
+    //   : getAssetPath(this.src); // Otherwise, resolve it as an asset path
 
-    this.initializeRive(resolvedPath);
+    this.initializeRive(convertUrlToRelative(this.src));
   }
 
   /**
