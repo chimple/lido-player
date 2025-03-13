@@ -273,6 +273,7 @@ export class LidoContainer {
         tabindex={0}
         class="lido-container"
         objective={this.objective}
+        baseUrl= {this.baseUrl}
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
