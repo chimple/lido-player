@@ -24,15 +24,17 @@ export class AudioPlayer {
     }
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
-    this.audioElement.src = ''; // Clear source to prevent replaying old audio
-
+    this.audioElement.src = '';
     const highlightedElements = document.querySelectorAll('.speaking-highlight');
     highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));
+    
+    const playElement = document.querySelector("#play") as HTMLElement;
+    const pauseElement = document.querySelector("#pause") as HTMLElement;
+    playElement.style.visibility = "visible";
+    pauseElement.style.visibility = "hidden";
   }
 
   public async play(targetElement: HTMLElement) {
-    this.stop();
-
     let audioUrl = targetElement.getAttribute('audio') || '';
 
     if (!audioUrl) {

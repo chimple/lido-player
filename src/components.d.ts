@@ -118,6 +118,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
+         */
+        "borderImage": string;
+        /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
@@ -794,9 +798,9 @@ export namespace Components {
          */
         "bgColor": string;
         /**
-          * Background image of the text component.
+          * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
          */
-        "bgImage": string;
+        "borderImage": string;
         /**
           * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
          */
@@ -1304,6 +1308,10 @@ declare namespace LocalJSX {
           * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor"?: string;
+        /**
+          * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
+         */
+        "borderImage"?: string;
         /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
@@ -1981,9 +1989,9 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
-          * Background image of the text component.
+          * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
          */
-        "bgImage"?: string;
+        "borderImage"?: string;
         /**
           * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
          */

@@ -90,9 +90,9 @@ export class LidoText {
   @Prop() bgColor: string;
 
   /**
-   * Background image of the text component.
+   * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
    */
-  @Prop() bgImage: string;
+  @Prop() borderImage: string;
 
   /**
    * Defines the type of the component, which can be used for conditional logic or specific styling.
@@ -175,7 +175,7 @@ export class LidoText {
   }
 
   updateStyles() {
-    const backgroundImg = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
+    const borderImg = this.borderImage ? convertUrlToRelative(this.borderImage) : '';
     const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
     this.style = {
       height: parseProp(this.height, orientation),
@@ -188,7 +188,8 @@ export class LidoText {
       fontFamily: this.font,
       color: parseProp(this.fontColor, orientation),
       display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'flex' : 'none', // Toggle visibility
-      backgroundImage: `url(${parseProp(backgroundImg, orientation)})`,
+      borderImage: `url(${borderImg})`,
+      borderImageSlice: borderImg ? '0 fill' : '',
     };
   }
 
