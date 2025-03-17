@@ -137,7 +137,7 @@ export class LidoCol {
   /**
    * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
    */
-  @Prop() borderImage: string;
+  @Prop() borderImage?: string;
 
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.

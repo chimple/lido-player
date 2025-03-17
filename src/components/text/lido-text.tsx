@@ -92,7 +92,7 @@ export class LidoText {
   /**
    * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
    */
-  @Prop() borderImage: string;
+  @Prop() borderImage?: string;
 
   /**
    * Defines the type of the component, which can be used for conditional logic or specific styling.
