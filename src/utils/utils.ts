@@ -236,6 +236,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     return;
   }
 
+  handlingElementFlexibleWidth(element, 'drag');
+
   let verticalDistance;
   let horizontalDistance;
 
@@ -567,11 +569,18 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
+
           const dropRect = dropElement.getBoundingClientRect();
           const dragRect = dragElement.getBoundingClientRect();
 
-          const scaledLeft = (dropRect.left - dragRect.left) / containerScale;
-          const scaledTop = (dropRect.top - dragRect.top) / containerScale;
+          const dropCenterX = dropRect.left + dropRect.width / 2;
+          const dropCenterY = dropRect.top + dropRect.height / 2;
+          const dragCenterX = dragRect.left + dragRect.width / 2;
+          const dragCenterY = dragRect.top + dragRect.height / 2;
+
+          const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+          const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
           dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           break;
         }
@@ -581,6 +590,10 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
         }
         case 'speak': {
           await AudioPlayer.getI().play(targetElement);
+          break;
+        }
+        case 'stop': {
+          await AudioPlayer.getI().stop();
           break;
         }
 
@@ -914,6 +927,7 @@ function onTouchListenerForOnTouch(element: HTMLElement) {
 }
 
 function addClickListenerForClickType(element: HTMLElement): void {
+  handlingElementFlexibleWidth(element, 'click');
   element.style.cursor = 'pointer';
   if (!element) {
     console.error('No element provided.');
@@ -1087,6 +1101,7 @@ function handleDropElement(element: HTMLElement): void {
   element.onclick = () => {
     onClickDropOrDragElement(element, 'drop');
   };
+  handlingElementFlexibleWidth(element, 'drop');
 }
 
 async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
@@ -1174,6 +1189,7 @@ export function highlightSpeakingElement(element: HTMLElement): void {
     style.id = styleId;
     style.innerHTML = `
       .speaking-highlight {
+        --base-transform: ${element.style.transform};
         box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9) !important; /* Stronger orange glow effect */
         // border: 3px solid green !important;
         transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -1184,15 +1200,15 @@ export function highlightSpeakingElement(element: HTMLElement): void {
       @keyframes pulseEffect {
         0% {
           box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9);
-          transform: scale(1.05);
+          transform: var(--base-transform) scale(1.05);
         }
         50% {
           box-shadow: 0 0 30px 15px rgba(255, 165, 0, 1);
-          transform: scale(1.1);
+          transform: var(--base-transform) scale(1.1);
         }
         100% {
           box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.9);
-          transform: scale(1.05);
+          transform: var(--base-transform) scale(1.05);
         }
       }
     `;
@@ -1282,4 +1298,104 @@ export const parseProp = (propValue: string, orientation: string) => {
   }, {} as Record<string, string>);
 
   return parsedValues[orientation] || '';
+};
+
+const handlingElementFlexibleWidth = (element: HTMLElement, type: string) => {
+  const dragElements = document.querySelectorAll("[type='drag'], [type='drop']");
+  const clickElements = document.querySelectorAll("[type='click']");
+  let maxWidth = 0;
+
+  if (type === 'click') {
+    clickElements.forEach(item => {
+      const clickEl = item as HTMLElement;
+      let targetElement: HTMLElement | null = null;
+
+      if (clickEl.getAttribute('flexibleWidth')) {
+        targetElement = clickEl;
+      } else {
+        // If the parent doesn't have flexibleWidth, check its child elements
+        const childElements = clickEl.children;
+        for (let i = 0; i < childElements.length; i++) {
+          const childEl = childElements[i] as HTMLElement;
+          if (childEl.getAttribute('flexibleWidth')) {
+            targetElement = childEl;
+            break;
+          }
+        }
+      }
+
+      if (targetElement) {
+        // Store original styles before modification
+        const originalWidth = targetElement.style.width;
+        const originalPadding = targetElement.style.padding;
+
+        // Set width to auto and padding to measure actual width
+        targetElement.style.width = 'auto';
+        targetElement.style.padding = '0 20px';
+
+        // Get updated width
+        const tempWidth = targetElement.offsetWidth;
+
+        // Restore original styles
+        targetElement.style.width = originalWidth;
+        targetElement.style.padding = originalPadding;
+
+        // Update max width if the new value is greater
+        if (tempWidth > maxWidth) {
+          maxWidth = tempWidth;
+        }
+      }
+    });
+
+    clickElements.forEach(item => {
+      const clickEl = item as HTMLElement;
+
+      if (clickEl.getAttribute('flexibleWidth')) {
+        if (clickEl.getAttribute('flexibleWidth') === 'true') return;
+        clickEl.style.width = `${maxWidth}px`;
+      } else {
+        const childElements = clickEl.children;
+        for (let i = 0; i < childElements.length; i++) {
+          const childEl = childElements[i] as HTMLElement;
+          if (childEl.getAttribute('flexibleWidth')) {
+            if (childEl.getAttribute('flexibleWidth') === 'true') return;
+            childEl.style.width = `${maxWidth}px`;
+            break;
+          }
+        }
+      }
+    });
+    return;
+  }
+
+  dragElements.forEach(dragItem => {
+    const dragEl = dragItem as HTMLElement;
+
+    const originalWidth = dragEl.style.width;
+    const originalPadding = dragEl.style.padding;
+
+    dragEl.style.width = 'auto';
+    dragEl.style.padding = '0 20px';
+
+    const tempWidth = dragEl.offsetWidth;
+
+    dragEl.style.width = originalWidth;
+    dragEl.style.padding = originalPadding;
+
+    if (tempWidth > maxWidth) {
+      maxWidth = tempWidth;
+    }
+  });
+
+  dragElements.forEach(dragItem => {
+    const dragEl = dragItem as HTMLElement;
+    const isFlexible = dragEl.getAttribute('flexibleWidth');
+
+    if (isFlexible === 'false') {
+      dragEl.style.width = `${maxWidth}px`;
+    } else if (isFlexible === 'true' && type === 'drag') {
+      dragEl.style.width = 'auto';
+      dragEl.style.padding = '0 20px';
+    }
+  });
 };

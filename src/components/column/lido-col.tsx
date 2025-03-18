@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element, State } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
+import { convertUrlToRelative, handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
 
 /**
  * @component LidoCol
@@ -135,6 +135,11 @@ export class LidoCol {
   @Prop() direction: string;
 
   /**
+   * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
+   */
+  @Prop() borderImage?: string;
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string } = {};
@@ -164,6 +169,7 @@ export class LidoCol {
   }
 
   updateStyles() {
+    const borderImg = this.borderImage ? convertUrlToRelative(this.borderImage) : '';
     const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
     this.style = {
       height: parseProp(this.height, orientation),
@@ -174,6 +180,8 @@ export class LidoCol {
       zIndex: this.z,
       display: this.visible ? 'flex' : 'none', // Toggle visibility
       flexDirection: !this.direction ? 'column' : parseProp(this.direction, orientation),
+      borderImage: `url(${borderImg})`,
+      borderImageSlice: borderImg ? '0 fill' : '',
     };
   }
 
