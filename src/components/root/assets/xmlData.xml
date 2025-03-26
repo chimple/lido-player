@@ -15,10 +15,11 @@
 			</lido-image>
 		</lido-pos> -->
 		<!-- Chimple Avatar -->
-		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="-10px" y="507px" ariaHidden="true" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="this.animation='leftToPlace 1.5s linear';">
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="landscape.-10px, portrait.100px
+		" y="507px" ariaHidden="true" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="this.animation='leftToPlace 1.5s linear';">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" altText="{chimpleCharacterRive}">
 			</lido-avatar>
-			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bgColor="transparent" width="186px" x="77px" y="226px" altText="{shadowImgae}">
+			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bgColor="transparent" width="186px" height="40px" x="77px" y="302px" altText="{shadowImgae}">
 			</lido-image>
 		</lido-pos>
 		<!-- Question -->
@@ -62,7 +63,7 @@
 				</lido-row>
 		</lido-pos>
 	</lido-container>
-	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="{option[0].id},{option[1].id},{option[2].id},{option[3].id},{option[4].id},{option[5].id}" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
+	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
 			<lido-image id="play" disableEdit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="this.visibilty='hidden'; pause.visibility='visible'; question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true'; option5.speak='true'; option6.speak='true'; this.visibilty='visible'; pause.visibility='hidden';">
@@ -71,10 +72,10 @@
 			</lido-image>
 		</lido-pos>
 		<!-- Chimple Avatar -->
-		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="1260px" y="530px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="this.animation='rightToPlace 2.5s linear';">
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="landscape.1260px, portrait.265px" y="landscape.530px, portrait.835px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
 			</lido-avatar>
-			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bgColor="transparent" width="186px" x="77px" y="226px" altText="{shadowImage}">
+			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bgColor="transparent" width="186px" height="20px" x="77px" y="305px" altText="{shadowImage}">
 			</lido-image>
 		</lido-pos>
 		<!-- Background -->
@@ -83,90 +84,54 @@
 			</lido-image>
 		</lido-pos>
 		<!-- Question -->
-		<lido-pos id="question" value="pos3" visible="true" width="840px" height="135px" x="370px" y="100px"  bgColor="transparent" onEntry="this.animation='topToPlace 0.5s linear';">
+		<lido-pos id="question" value="pos3" visible="true" width="840px" height="135px" x="landscape.370px, portrait.30px" y="100px"  bgColor="transparent" onEntry="this.animation='topToPlace 0.5s linear';">
 			<lido-image id="image3" disableEdit="true" value="image3" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Vector.png" z="0" width="840px" height="100%" altText="{question.image}">
 			</lido-image>
-			<lido-text id="textA" width="800px" height="100px" tabIndex="2" value="{question.id}" visible="true" string="How can you see?" font="'Baloo 2', serif" fontColor="black" font-size="40px" bgColor="transparent" onEntry="this.boxShadow='unset'; this.fontWeight='800';" y="20px" x="25px">
+			<lido-text id="textA" width="800px" height="100px" tabIndex="2" value="{question.id}" visible="true" string="Make it Alphabetical Order" font="'Baloo 2', serif" fontColor="black" font-size="40px" bgColor="transparent" onEntry="this.boxShadow='unset'; this.fontWeight='800';" y="20px" x="25px">
 			</lido-text>
 		</lido-pos>
 		<!-- Drop Elements -->
-		<lido-pos id="pos4" disableEdit="true" value="pos4" visible="true" width="1400px" height="300px" bgColor="transparent" x="100px" y="375px" z="1" onEntry="this.visibility='hidden'; this.sleep='1500'; this.visibility='visible'; this.animation='leftToPlace 0.5s linear';">
+		<lido-pos id="pos4" disableEdit="true" value="pos4" visible="true" width="landscape.1400px, portrait.600px" height="landscape.300px, portrait.500px" bgColor="transparent" x="landscape.45px, portrait.140px" y="landscape.280px, portrait.340px" z="1" onEntry="this.visibility='hidden'; this.sleep='1500'; this.visibility='visible'; this.animation='leftToPlace 0.5s linear';">
 			<!-- Drop Background -->
-			<lido-row id="row" disableEdit="true" value="row" visible="true" width="1500px" minLength="2" maxLength="6" childElementsLength="3" height="300px" onEntry="this.marginBottom='70px';" x="-50px" y="-125px" >
-				<lido-col id="col" disableEdit="true" visible="true" height="300px" width="260px"  bgColor="transparent" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop6.png">
-					<!-- <lido-image id="image4" disableEdit="true" value="image5" visible="true" height="300px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop6.png" font="Poppins" font-size="30px" z="0" altText="{drop1Image}">
-					</lido-image> -->
-					<lido-text id="textA1" disableEdit="true" tabIndex="3" visible="true" width="150px" flexibleWidth="false" height="100px" value="{option[0].id}" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; this.marginTop='110px';" >
-					</lido-text>
-					<lido-text id="textA2" disableEdit="true" value="textA2" visible="true" tabIndex="26" width="160px" height="110px" z="0" y="143px" onEntry="this.border='1px dotted #FFB742'; this.boxShadow='unset'; this.borderRadius='15px'; this.position='absolute';" bgColor="transparent">
-					</lido-text>
-				</lido-col>
-				<lido-col id="col2" disableEdit="true" visible="true" height="300px" width="260px" bgColor="transparent" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop6.png">
-					<!-- <lido-image id="image5" disableEdit="true" value="image5" visible="true" height="300px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop2.png" font="Poppins" font-size="30px" z="0" altText="{drop2Image}">
-					</lido-image> -->
-					<lido-text id="textA3" disableEdit="true" tabIndex="4" visible="true" width="150px" flexibleWidth="false" height="100px" value="{option[1].id}" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; this.marginTop='110px';">
-					</lido-text>
-					<lido-text id="textA4" disableEdit="true" value="textA4" visible="true" tabIndex="26" width="160px" height="110px" z="0" y="143px" onEntry="this.border='1px dotted #FFB742'; this.boxShadow='unset'; this.borderRadius='15px'; this.position='absolute';" bgColor="transparent">
-					</lido-text>
-				</lido-col>
-				<lido-col id="col3" disableEdit="true" visible="true" height="300px" width="260px"  bgColor="transparent" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop6.png">
-					<!-- <lido-image id="image6" value="image6" visible="true" height="300px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop3.png" font="Poppins" font-size="30px" z="0" altText="{drop1Image}">
-					</lido-image> -->
-					<lido-text id="textA5" disableEdit="true" tabIndex="5" visible="true" width="150px" flexibleWidth="false" height="100px" value="{option[2].id}" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; this.marginTop='110px';">
-					</lido-text>
-					<lido-text id="textA6" disableEdit="true" value="text6" visible="true" tabIndex="26" width="160px" height="110px" z="0" y="143px" onEntry="this.border='1px dotted #FFB742'; this.boxShadow='unset'; this.borderRadius='15px'; this.position='absolute';" bgColor="transparent">
-					</lido-text>
-				</lido-col>
-				<lido-col id="col4" disableEdit="true" visible="true" height="300px" width="300px" bgColor="transparent">
-					<lido-image id="image7" disableEdit="true" value="image7" visible="true" height="300px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop4.png" font="Poppins" font-size="30px" z="0" altText="{drop1Image}">
+			<lido-row id="row" disableEdit="true" display="landscape.flex, portrait.grid" value="row" visible="true" width="landscape.1500px, portrait.597px" minLength="2" maxLength="6" childElementsLength="4" height="landscape.300px, portrait.500px" onEntry="this.marginBottom='70px';" >
+				<lido-col id="col" disableEdit="true" visible="true" height="150px" width="auto"  bgColor="transparent" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropBackground.png" imageSlice="30 fill">
+					<lido-image id="image4" disableEdit="true" tabIndex="3" visible="true" width="150px" imageSlice="30 fill" flexibleWidth="false" height="100px" value="apple" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; " >
 					</lido-image>
-					<lido-text id="textA7" disableEdit="true" tabIndex="6" visible="true" width="150px" height="100px" value="{option[3].id}" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; this.position='absolute';">
-					</lido-text>
-					<lido-text id="textA8" disableEdit="true" value="textA8" visible="true" tabIndex="26" width="160px" height="110px" z="0" y="143px" onEntry="this.border='1px dotted #FFB742'; this.boxShadow='unset'; this.borderRadius='15px'; this.position='absolute';" bgColor="transparent">
-					</lido-text>
 				</lido-col>
-				<lido-col id="col5" disableEdit="true" visible="true" height="300px" width="300px" bgColor="transparent">
-					<lido-image id="image8" disableEdit="true" value="image8" visible="true" height="300px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop5.png" font="Poppins" font-size="30px" z="0" altText="{drop1Image}">
+				<lido-col id="col2" disableEdit="true" visible="true" height="150px" width="auto" bgColor="transparent" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropBackground.png" imageSlice="30 fill">
+					<lido-image id="image5" disableEdit="true" tabIndex="4" visible="true" width="150px" imageSlice="30 fill" flexibleWidth="false" height="100px" value="basket" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; " >
 					</lido-image>
-					<lido-text id="textA9" disableEdit="true" tabIndex="7" visible="true" width="150px" height="100px" value="{option[4].id}" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; this.position='absolute';">
-					</lido-text>
-					<lido-text id="textA10" disableEdit="true" value="textA10" visible="true" tabIndex="26" width="160px" height="110px" z="0" y="143px" onEntry="this.border='1px dotted #FFB742'; this.boxShadow='unset'; this.borderRadius='15px'; this.position='absolute';" bgColor="transparent">
-					</lido-text>
 				</lido-col>
-				<lido-col id="col6" disableEdit="true" visible="true" height="300px" width="300px" bgColor="transparent">
-					<lido-image id="image9" disableEdit="true" value="image9" visible="true" height="300px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropImages/drop6.png" font="Poppins" font-size="30px" z="0" altText="{drop1Image}">
+				<lido-col id="col3" disableEdit="true" visible="true" height="150px" width="auto"  bgColor="transparent" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropBackground.png" imageSlice="30 fill">
+					<lido-image id="image6" disableEdit="true" tabIndex="5" visible="true" width="150px" imageSlice="30 fill" flexibleWidth="false" height="100px" value="character" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; " >
 					</lido-image>
-					<lido-text id="textA11" disableEdit="true" tabIndex="8" visible="true" width="150px" height="100px" value="{option[5].id}" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; this.position='absolute';">
-					</lido-text>
-					<lido-text id="textA12" disableEdit="true" value="textA12" visible="true" width="160px" height="110px" z="0" y="143px" onEntry="this.border='1px dotted #FFB742'; this.boxShadow='unset'; this.borderRadius='15px'; this.position='absolute';" bgColor="transparent">
-					</lido-text>
+				</lido-col>
+				<lido-col id="col3" disableEdit="true" visible="true" height="150px" width="auto"  bgColor="transparent" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropBackground.png" imageSlice="30 fill">
+					<lido-image id="image7" disableEdit="true" tabIndex="6" visible="true" width="150px" imageSlice="30 fill" flexibleWidth="false" height="100px" value="dance" z="1" y="149px" type="drop" isAllowOnlyOneDrop="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png" onEntry="this.borderRadius='15px'; this.boxShadow='unset'; " >
+					</lido-image>
 				</lido-col>
 			</lido-row>
 		</lido-pos>
 		<!-- Drag Background -->
-		<lido-pos id="pos5" disableEdit="true" value="pos5" visible="true" width="1532.89px" height="300px" x="60px" y="620px" bgColor="transparent" onEntry="this.animation='bottomToPlace 1s linear';">
-			<lido-image id="image10" disableEdit="true" value="image10" visible="true" width="1532.89px" height="300px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragGroupBg.png" altText="{dragGroupBackgroundImage}">
+		<lido-pos id="pos5" disableEdit="true" value="pos5" visible="true" width="1532.89px" height="300px" x="landscape.60px, portrait.-160px" y="landscape.620px, portrait.1100px" bgColor="transparent" onEntry="this.animation='bottomToPlace 1s linear';">
+			<lido-image id="image10" disableEdit="true" value="image10" visible="true" width="landscape.1532px, portrait.1600px" height="landscape.300px, portrait.550px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragGroupBg.png" altText="{dragGroupBackgroundImage}">
 			</lido-image>
 		</lido-pos>
 		<!-- Drag Elements -->
-		<lido-pos id="pos6" value="pos6" visible="true" width="1600px" height="150px" bgColor="transparent" x="300px" y="700px" z="1" onEntry="this.animation='bottomToPlace 1s linear';">
-			<lido-row id="row2" value="row2" visible="true" height="150px" width="1000px" minLength="2" maxLength="6" childElementsLength="3" onEntry="">
-				<lido-text id="option1" value="{option[0].id}" tabIndex="9" flexibleWidth="false" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="something" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
+		<lido-pos id="pos6" value="pos6" visible="true" width="1600px" height="150px" bgColor="transparent" x="landscape.300px, portrait.160px" y="landscape.700px, portrait.1260px" z="1" onEntry="this.animation='bottomToPlace 1s linear';">
+			<lido-row id="row2" value="row2" display="grid" visible="true" height="landscape.150px, portrait.240px" width="landscape.1000px, portrait.597px" minLength="2" maxLength="6" childElementsLength="4" onEntry="">
+				<lido-text id="option1" value="basket" tabIndex="6" flexibleWidth="false" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="Basket Ball" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
 				</lido-text>
-				<lido-text id="option2" value="{option[1].id}" tabIndex="10" flexibleWidth="false" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="see" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
+				<lido-text id="option2" value="character" tabIndex="7" flexibleWidth="false" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="Character" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
 				</lido-text>
-				<lido-text id="option3" value="{option[2].id}" tabIndex="11" flexibleWidth="false" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="eyes" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
+				<lido-text id="option3" value="dance" tabIndex="8" flexibleWidth="false" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="Dance" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
 				</lido-text>
-				<lido-text id="option4" value="{option[3].id}" tabIndex="12" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="auto" height="100px" string="my" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
-				</lido-text>
-				<lido-text id="option5" value="{option[4].id}" tabIndex="13" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="auto" height="100px" string="with" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
-				</lido-text>
-				<lido-text id="option6" value="{option[5].id}" tabIndex="14" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="auto" height="100px" string="." fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
+				<lido-text id="option3" value="apple" tabIndex="9" flexibleWidth="false" visible="true" borderImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="Apple" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
 				</lido-text>
 			</lido-row>
 		</lido-pos>
 	</lido-container>
-	<!-- <lido-container id="lido-container" value="mainContainer2" objective="(apple|ant|arrow),(ball|bat),(cat|camel|cow)" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="green" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" isAllowOnlyCorrect="true"> -->
+	<!-- <lido-container id="lido-container" value="mainContainer2" objective="(apple|ant|arrow),(ball|bat),(cat|camel|cow)" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="green" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" > -->
 		<!-- Chimple Avatar -->
 		<lido-pos id="lido-pos1" value="pos1" height="350px" width="350px" x="1260px" y="530px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 			<lido-avatar id="lido-avatar" visible="true" height="350px" width="350px" src="./assets/lido-animation/chimplecharacter.riv">
@@ -183,11 +148,11 @@
 		<!-- Drop Elements -->
 		<lido-pos visible="true" width="1000px" height="150px" bgColor="transparent" x="300px" y="300px" z="1">
 			<lido-row visible="true" height="150px" width="100%">
-				<lido-text tabIndex="1" visible="true" width="150px" height="100px" value="apple,ant,arrow" z="0" type="drop" onEntry="this.borderRadius='15px'; this.boxShadow='unset';">
+				<lido-text tabIndex="1" visible="true" width="150px" height="100px" isAllowOnlyOneDrop="false" value="apple,ant,arrow" z="0" type="drop" onEntry="this.borderRadius='15px'; this.boxShadow='unset';">
 				</lido-text>
-				<lido-text tabIndex="2" visible="true" width="150px" height="100px" value="ball,bat" z="0" type="drop" onEntry="this.borderRadius='15px'; this.boxShadow='unset';">
+				<lido-text tabIndex="2" visible="true" width="150px" height="100px" isAllowOnlyOneDrop="false" value="ball,bat" z="0" type="drop" onEntry="this.borderRadius='15px'; this.boxShadow='unset';">
 				</lido-text>
-				<lido-text tabIndex="3" visible="true" width="150px" height="100px" value="cat,camel,cow" z="0" type="drop" onEntry="this.borderRadius='15px'; this.boxShadow='unset';">
+				<lido-text tabIndex="3" visible="true" width="150px" height="100px" isAllowOnlyOneDrop="false" value="cat,camel,cow" z="0" type="drop" onEntry="this.borderRadius='15px'; this.boxShadow='unset';">
 				</lido-text>
 			</lido-row>
 		</lido-pos>
@@ -216,7 +181,7 @@
 		</lido-pos>
 		<lido-pos visible="true" width="1600px" height="150px" bgColor="transparent" x="300px" y="750px" z="1">
 			<lido-row visible="true" height="150px" width="1000px">
-				<lido-text tabIndex="11" visible="true" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="BALL" value="bal" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
+				<lido-text tabIndex="11" visible="true" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="BALL" value="ball" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
 				</lido-text>
 				<lido-text tabIndex="12" visible="true" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dragElementBg.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="150px" height="100px" string="ANT" value="ant" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0" type="drag">
 				</lido-text>

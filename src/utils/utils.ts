@@ -410,7 +410,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.backgroundColor = 'transparent'; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
-            otherElement.style.visibility = 'hidden';
+            otherElement.style.opacity = '0';
           }
         } else {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -418,7 +418,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.backgroundColor = ''; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
-            otherElement.style.visibility = 'visible';
             otherElement.style.opacity = '1';
           }
         }
@@ -511,7 +510,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
               otherElement.style.backgroundColor = 'transparent'; // Reset background color
             }
             if (otherElement.tagName.toLowerCase() === 'lido-image') {
-              otherElement.style.visibility = 'hidden';
+              otherElement.style.opacity = '0';
             }
           } else {
             if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -519,7 +518,6 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
               otherElement.style.backgroundColor = ''; // Reset background color
             }
             if (otherElement.tagName.toLowerCase() === 'lido-image') {
-              otherElement.style.visibility = 'visible';
               otherElement.style.opacity = '1';
             }
           }
@@ -563,7 +561,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.visibility = 'hidden';
+          otherElement.style.opacity = '0';
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -571,7 +569,6 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
           otherElement.style.backgroundColor = ''; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.visibility = 'visible';
           otherElement.style.opacity = '1';
         }
       }
@@ -854,7 +851,7 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
         otherElement.style.backgroundColor = 'transparent'; // Reset background color
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
-        otherElement.style.visibility = 'hidden';
+        otherElement.style.opacity = '0';
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -862,7 +859,6 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
         otherElement.style.backgroundColor = ''; // Reset background color
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
-        otherElement.style.visibility = 'visible';
         otherElement.style.opacity = '1';
       }
     }
@@ -966,6 +962,8 @@ const appendingDragElementsInDrop = () => {
   const dropItems = document.querySelectorAll("[type='drop']");
   if (!dragItems || !dropItems) return;
   dropItems.forEach(drop => {
+    const dropElement = drop as HTMLElement;
+    dropElement.style.opacity = "1"
     dragItems.forEach(dragElement => {
       const drag = dragElement as HTMLElement;
       if (drop['value'].includes(drag['value'])) {
