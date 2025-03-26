@@ -431,12 +431,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   // Initialize draggable element styles
   element.style.cursor = 'move';
   element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
-  element.addEventListener('mousedown', ev => {
-    onStart(ev);
-  });
-  element.addEventListener('touchstart', ev => {
-    onStart(ev);
-  });
+  element.addEventListener('mousedown', onStart);
+  element.addEventListener('touchstart', onStart);
   element.addEventListener('click', ev => {
     onClickDropOrDragElement(element, 'drag');
   });
