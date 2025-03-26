@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, LessonEndKey, SelectedValuesKey } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DropHasDrag, DropLength, LessonEndKey, SelectedValuesKey } from './constants';
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -225,10 +225,12 @@ const slideCompleted = (slideElement: HTMLElement) => {
 
 function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
+  let isClicked = true;
   let startX = 0;
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
+
   // Fetch the container element
   const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) {
@@ -306,7 +308,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
     if (!isDragging) return;
-
+    isClicked = false;
+    element.style.transition = 'none';
     const containerScale = getElementScale(container);
 
     let dx = 0;
@@ -353,24 +356,39 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-        otherElement.style.border = ''; // Reset border
-        otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        if (otherElement.tagName.toLowerCase() === 'lido-text') {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        }
+        if (otherElement.tagName.toLowerCase() === 'lido-image') {
+          otherElement.style.visibility = 'hidden';
+        }
       } else {
-        otherElement.style.border = ''; // Reset border
-        otherElement.style.backgroundColor = ''; // Reset background color
+        if (otherElement.tagName.toLowerCase() === 'lido-text') {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = ''; // Reset background color
+        }
+        if (otherElement.tagName.toLowerCase() === 'lido-image') {
+          otherElement.style.visibility = 'visible';
+          otherElement.style.opacity = '1';
+        }
       }
     });
-
     // Apply styles only to the most overlapped element
     if (mostOverlappedElement) {
-      mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
-      mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
+      if (mostOverlappedElement.tagName.toLowerCase() === 'lido-text') {
+        mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
+        mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
+      } else {
+        mostOverlappedElement.style.opacity = '0.3';
+      }
     }
   };
 
   const onEnd = (endEv): void => {
     isDragging = false;
-
+    if (isClicked) return;
+    isClicked = true;
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
@@ -387,11 +405,22 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const storedTabIndexes = Object.keys(dropObject).map(Number);
         if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          if (otherElement.tagName.toLowerCase() === 'lido-text') {
+            otherElement.style.border = ''; // Reset border
+            otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          }
+          if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            otherElement.style.visibility = 'hidden';
+          }
         } else {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = ''; // Reset background color
+          if (otherElement.tagName.toLowerCase() === 'lido-text') {
+            otherElement.style.border = ''; // Reset border
+            otherElement.style.backgroundColor = ''; // Reset background color
+          }
+          if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            otherElement.style.visibility = 'visible';
+            otherElement.style.opacity = '1';
+          }
         }
       });
     });
@@ -403,9 +432,12 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   // Initialize draggable element styles
   element.style.cursor = 'move';
   element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
-
-  element.addEventListener('mousedown', onStart);
-  element.addEventListener('touchstart', onStart);
+  element.addEventListener('mousedown', ev => {
+    onStart(ev);
+  });
+  element.addEventListener('touchstart', ev => {
+    onStart(ev);
+  });
   element.addEventListener('click', ev => {
     onClickDropOrDragElement(element, 'drag');
   });
@@ -421,67 +453,91 @@ const findMostoverlappedElement = (element: HTMLElement, type: string) => {
   allElements.forEach(otherElement => {
     if (otherElement === element) return;
     const otherRect = otherElement.getBoundingClientRect();
-    // Check if there is overlap
+
     const overlapWidth = Math.max(0, Math.min(elementRect.right, otherRect.right) - Math.max(elementRect.left, otherRect.left));
     const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
     const overlapArea = overlapWidth * overlapHeight;
 
-    if (type === 'slide') {
-      const elementArea = elementRect.width * elementRect.height; // Area of the dragged element
-      const otherArea = otherRect.width * otherRect.height; // Area of the other element
-      // Determine the threshold for overlap (at least 80% of the smaller element's area)
-      const minimumArea = Math.min(elementArea, otherArea) * 0.8;
+    if (overlapArea === 0) return; 
 
-      // Check if the overlap area exceeds the threshold
-      if (overlapArea >= minimumArea && overlapArea > maxOverlapArea) {
+    if (type === 'slide') {
+      const elementArea = elementRect.width * elementRect.height;
+      const otherArea = otherRect.width * otherRect.height;
+      const minRequiredOverlap = Math.min(elementArea, otherArea) * 0.8;
+
+      if (overlapArea >= minRequiredOverlap && overlapArea > maxOverlapArea) {
         maxOverlapArea = overlapArea;
         mostOverlappedElement = otherElement;
       }
-      return;
-    }
-
-    // Update the most overlapped element if this one has a larger overlap area
-    if (overlapArea > maxOverlapArea) {
+    } else if (overlapArea > maxOverlapArea) {
       maxOverlapArea = overlapArea;
       mostOverlappedElement = otherElement;
     }
   });
+
   return mostOverlappedElement;
 };
 
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
-  const selectedValueData = localStorage.getItem(SelectedValuesKey);
+  const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
-  if (dropElement && dropElement.getAttribute('isAllowOnlyOneDrop') === 'true') {
-    // Check for overlaps and highlight only the most overlapping element
-    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-    if (mostOverlappedElement) {
-      dragElement.style.transform = 'translate(0,0)';
-      if (dragSelectedData) {
-        let dragSelected = JSON.parse(dragSelectedData);
-        for (const key in dragSelected) {
-          if (dragSelected[key].includes(dragElement['value'])) {
-            delete dragSelected[key];
+  let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  if (dropElement) {
+
+    if (dropElement.getAttribute('isAllowOnlyOneDrop') === 'true' || !dropElement.getAttribute('isAllowOnlyOneDrop')) {
+      const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
+      isisFull.isFull = true;
+      localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+      // Check for overlaps and highlight only the most overlapping element
+      let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
+      if (mostOverlappedElement) {
+        dragElement.style.transform = 'translate(0,0)';
+        if (dragSelectedData) {
+          let dragSelected = JSON.parse(dragSelectedData);
+          for (const key in dragSelected) {
+            if (dragSelected[key].includes(dragElement['value'])) {
+              delete dragSelected[key];
+            }
           }
+          localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
         }
-        localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+        const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+        allElements.forEach(otherElement => {
+          const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+          const storedTabIndexes = Object.keys(dropObject).map(Number);
+          if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+            if (otherElement.tagName.toLowerCase() === 'lido-text') {
+              otherElement.style.border = ''; // Reset border
+              otherElement.style.backgroundColor = 'transparent'; // Reset background color
+            }
+            if (otherElement.tagName.toLowerCase() === 'lido-image') {
+              otherElement.style.visibility = 'hidden';
+            }
+          } else {
+            if (otherElement.tagName.toLowerCase() === 'lido-text') {
+              otherElement.style.border = ''; // Reset border
+              otherElement.style.backgroundColor = ''; // Reset background color
+            }
+            if (otherElement.tagName.toLowerCase() === 'lido-image') {
+              otherElement.style.visibility = 'visible';
+              otherElement.style.opacity = '1';
+            }
+          }
+        });
+        return;
       }
-      const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-      allElements.forEach(otherElement => {
-        const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-        const storedTabIndexes = Object.keys(dropObject).map(Number);
-        if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
-        } else {
-          otherElement.style.border = '';
-          otherElement.style.backgroundColor = '';
-        }
-      });
-      return;
     }
   }
   if (!dropElement) {
+    let currentDrop = dragToDropMap.get(dragElement);
+    if (currentDrop) {
+      let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
+      if (prevDropItem) {
+        prevDropItem.isFull = false;
+        localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+      }
+    }
+
     if (selectedValueData) {
       let selectedValue = JSON.parse(selectedValueData);
       selectedValue = selectedValue.filter(value => value != dragElement['value']);
@@ -502,11 +558,22 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
       const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-        otherElement.style.border = ''; // Reset border
-        otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        if (otherElement.tagName.toLowerCase() === 'lido-text') {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        }
+        if (otherElement.tagName.toLowerCase() === 'lido-image') {
+          otherElement.style.visibility = 'hidden';
+        }
       } else {
-        otherElement.style.border = '';
-        otherElement.style.backgroundColor = '';
+        if (otherElement.tagName.toLowerCase() === 'lido-text') {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = ''; // Reset background color
+        }
+        if (otherElement.tagName.toLowerCase() === 'lido-image') {
+          otherElement.style.visibility = 'visible';
+          otherElement.style.opacity = '1';
+        }
       }
     });
 
@@ -515,6 +582,14 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   }
 
   if (dragSelectedData) {
+    let currentDrop = dragToDropMap.get(dragElement);
+    if (currentDrop) {
+      let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
+      if (prevDropItem) {
+        prevDropItem.isFull = false;
+        localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+      }
+    }
     let dragSelected = JSON.parse(dragSelectedData);
     for (const key in dragSelected) {
       if (dragSelected[key].includes(dragElement['value'])) {
@@ -523,6 +598,19 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     }
     localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
   }
+  let dropLength = JSON.parse(localStorage.getItem(DropLength)) || 0;
+  dropLength += 1;
+  localStorage.setItem(DropLength, JSON.stringify(dropLength));
+
+  if (dropLength === countPatternWords(dropElement['value'])) {
+    const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
+    isisFull.isFull = true;
+    localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+    dropLength = 0;
+    localStorage.setItem(DropLength, JSON.stringify(dropLength));
+  }
+
+  dragToDropMap.set(dragElement, dropElement);
 
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].includes(dragElement['value']);
@@ -659,14 +747,15 @@ const matchStringPattern = (pattern: string, arr: string[]): boolean => {
         .split('|')
         .map(option => option.trim());
 
-      const arrChoice = group
+      const arrChoice = arr[arrIndex]
         .slice(1, -1)
         .split('|')
         .map(option => option.trim());
 
       if (arrIndex >= arrChoice.length) return false;
-      if (!choices.includes(arrChoice[arrIndex])) return false;
-
+      for (let i = 0; i < choices.length; i++) {
+        if (!choices.includes(arrChoice[i])) return false;
+      }
       arrIndex++;
     } else if (group.includes('|')) {
       // Outside parentheses: '|' acts as optional order
@@ -760,11 +849,22 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
     const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
     const storedTabIndexes = Object.keys(dropObject).map(Number);
     if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-      otherElement.style.border = ''; // Reset border
-      otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      if (otherElement.tagName.toLowerCase() === 'lido-text') {
+        otherElement.style.border = ''; // Reset border
+        otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      }
+      if (otherElement.tagName.toLowerCase() === 'lido-image') {
+        otherElement.style.visibility = 'hidden';
+      }
     } else {
-      otherElement.style.border = ''; // Reset border
-      otherElement.style.backgroundColor = ''; // Reset background color
+      if (otherElement.tagName.toLowerCase() === 'lido-text') {
+        otherElement.style.border = ''; // Reset border
+        otherElement.style.backgroundColor = ''; // Reset background color
+      }
+      if (otherElement.tagName.toLowerCase() === 'lido-image') {
+        otherElement.style.visibility = 'visible';
+        otherElement.style.opacity = '1';
+      }
     }
   });
   handleShowCheck();
@@ -1098,6 +1198,20 @@ export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
 }
 
 function handleDropElement(element: HTMLElement): void {
+  // let nextIndex = Object.keys(dropHas).length; // Get next index
+  // dropHas[nextIndex] = { drop: element, isFull: false };
+  let dropHas = JSON.parse(localStorage.getItem(DropHasDrag) || '{}');
+  const tabIndex = element.getAttribute('tabIndex');
+
+  if (typeof dropHas !== 'object' || dropHas === null) {
+    dropHas = {};
+  }
+
+  if (!dropHas[tabIndex]) {
+    dropHas[tabIndex] = { drop: element.id, isFull: false };
+    localStorage.setItem(DropHasDrag, JSON.stringify(dropHas));
+  }
+
   element.onclick = () => {
     onClickDropOrDragElement(element, 'drop');
   };
@@ -1118,8 +1232,8 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
     style.id = 'dynamic-highlight-style';
     style.innerHTML = `
       .highlight {
-        border: 4px solid #e74c3c; /* Thicker red border for more visibility */
-        border-radius: 12px; /* Larger rounded corners */
+        // border: 4px solid #e74c3c; /* Thicker red border for more visibility */
+        // border-radius: 12px; /* Larger rounded corners */
         background-color: rgba(231, 76, 60, 0.3); /* Stronger, more noticeable background */
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); /* Stronger shadow */
         outline: 4px solid rgba(231, 76, 60, 0.6); /* Glow effect */
@@ -1134,6 +1248,10 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
 
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight");
+
+  if (!selectedDropElement) {
+    onClickDragElement(element);
+  }
 
   if (selectedDropElement && selectedDragElement) {
     // Add a transition for a smooth, slower movement
@@ -1167,6 +1285,31 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
     await onElementDropComplete(selectedDragElement, selectedDropElement);
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
+  }
+}
+const dragToDropMap = new Map<HTMLElement, HTMLElement | null>();
+async function onClickDragElement(element) {
+  const dropElements = JSON.parse(localStorage.getItem(DropHasDrag) || '{}') as Record<string, { drop: string; isFull: boolean }>;
+  const dragEl = element;
+  if (!dragEl) {
+    console.error('Element not found');
+    return;
+  }
+  const currentTransform = getComputedStyle(dragEl).transform;
+  removeHighlight(element);
+
+  if (currentTransform && currentTransform !== 'none' && currentTransform !== 'matrix(1, 0, 0, 1, 0, 0)') {
+    dragEl.style.transition = 'transform 0.5s ease';
+    dragEl.style.transform = 'translate(0px, 0px)';
+    onElementDropComplete(dragEl, null);
+    return;
+  }
+
+  let firstFalse = Object.values(dropElements).find(item => !item.isFull);
+  if (firstFalse) {
+    const dropEl = document.querySelector(`#${firstFalse.drop}`) as HTMLElement;
+    dragEl.style.transition = 'transform 0.5s ease';
+    onElementDropComplete(dragEl, dropEl);
   }
 }
 
@@ -1301,7 +1444,8 @@ export const parseProp = (propValue: string, orientation: string) => {
 };
 
 const handlingElementFlexibleWidth = (element: HTMLElement, type: string) => {
-  const dragElements = document.querySelectorAll("[type='drag'], [type='drop']");
+  const dragElements = document.querySelectorAll("[type='drag']");
+  const dropElements = document.querySelectorAll("[type='drop']");
   const clickElements = document.querySelectorAll("[type='click']");
   let maxWidth = 0;
 
@@ -1396,6 +1540,26 @@ const handlingElementFlexibleWidth = (element: HTMLElement, type: string) => {
     } else if (isFlexible === 'true' && type === 'drag') {
       dragEl.style.width = 'auto';
       dragEl.style.padding = '0 20px';
+    }
+  });
+
+  dropElements.forEach(dropItem => {
+    const dropEl = dropItem as HTMLElement;
+    const isFlexible = dropEl.getAttribute('flexibleWidth');
+
+    if (isFlexible === 'false') {
+      const borderWidth = parseFloat(getComputedStyle(dropEl).borderWidth);
+
+      if (typeof borderWidth === 'number') {
+        const currentWidth = maxWidth - borderWidth * 2;
+        const currentHeight = parseFloat(dropEl.style.height) - borderWidth * 2;
+        dropEl.style.height = `${currentHeight}px`;
+        dropEl.style.width = `${currentWidth}px`;
+        return;
+      }
+    } else if (isFlexible === 'true' && type === 'drag') {
+      dropEl.style.width = 'auto';
+      dropEl.style.padding = '0 20px';
     }
   });
 };

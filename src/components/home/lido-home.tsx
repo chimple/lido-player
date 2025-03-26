@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Host } from '@stencil/core';
-import { DragSelectedMapKey, SelectedValuesKey, NextContainerKey } from '../../utils/constants';
+import { DragSelectedMapKey, SelectedValuesKey, NextContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
 
 /**
@@ -64,6 +64,8 @@ export class LidoHome {
     // Clear selected values from localStorage on container transition
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
+    localStorage.removeItem("dropLength")
+    localStorage.removeItem("dropHasDrag")
 
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
@@ -114,6 +116,8 @@ export class LidoHome {
     window.addEventListener('beforeunload', () => {
       localStorage.removeItem(SelectedValuesKey);
       localStorage.removeItem(DragSelectedMapKey);
+      localStorage.removeItem(DropLength);
+      localStorage.removeItem(DropHasDrag);
     });
   }
 
