@@ -133,6 +133,12 @@ export class LidoRow {
   @State() style: { [key: string]: string } = {};
 
   /**
+   * Sets the CSS display property for the component.
+   * Accepts any valid CSS display value (e.g., 'block', 'flex', 'grid', 'none').
+   */
+  @Prop() display?: string;
+
+  /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
    * It initializes custom events based on the `type` of the row component.
    */
@@ -165,8 +171,10 @@ export class LidoRow {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: this.visible ? 'flex' : 'none', // Toggle visibility
+      display: this.visible ? (this.display ? parseProp(this.display, orientation) : 'flex') : 'none', // Toggle visibility
       flexDirection: !this.direction ? 'row' : parseProp(this.direction, orientation),
+      gridTemplateColumns: this.display && parseProp(this.display, orientation) === 'grid' ? 'repeat(auto-fill, minmax(186px, auto))' : undefined,
+      gap: this.display && parseProp(this.display, orientation) === 'grid' ? '20px' : undefined,
     };
   }
 
