@@ -64,8 +64,8 @@ export class LidoHome {
     // Clear selected values from localStorage on container transition
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
-    localStorage.removeItem("dropLength")
-    localStorage.removeItem("dropHasDrag")
+    localStorage.removeItem(DropLength)
+    localStorage.removeItem(DropHasDrag)
 
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
