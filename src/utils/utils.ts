@@ -277,7 +277,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove);
     document.addEventListener('touchend', onEnd);
-  };
+};
 
   const rect1 = container.getBoundingClientRect();
   const rect2 = element.getBoundingClientRect();
@@ -368,9 +368,10 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     }
   };
 
+  let lastOverlappedElement: HTMLElement | null = null;
   const onEnd = (endEv): void => {
     isDragging = false;
-
+    
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
@@ -383,33 +384,51 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     // Reset overlapping styles from all elements
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
     allElements.forEach(otherElement => {
-      allElements.forEach(otherElement => {
         const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const storedTabIndexes = Object.keys(dropObject).map(Number);
         if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+            otherElement.style.border = ''; // Reset border
+            otherElement.style.backgroundColor = 'transparent'; // Reset background color
         } else {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = ''; // Reset background color
+            otherElement.style.border = ''; // Reset border
+            otherElement.style.backgroundColor = ''; // Reset background color
         }
-      });
     });
+ 
+    let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
 
-    // Check for overlaps and log the most overlapping element
-    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
+    const containerElement = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
+    if (containerElement) {
+      if (mostOverlappedElement) {
+          
+          if (element) {
+              element.classList.add('diagonally-pair');
+              mostOverlappedElement.classList.add('diagonally-pair');
+              lastOverlappedElement = mostOverlappedElement;
+          }
+      } else {
+          console.log('Resetting last overlapped element:', lastOverlappedElement);
+  
+          if (lastOverlappedElement) {
+              lastOverlappedElement.classList.remove('diagonally-pair');
+              lastOverlappedElement = null;
+          }
+  
+          element?.classList.remove('diagonally-pair');
+      }
+    }
   };
-  // Initialize draggable element styles
-  element.style.cursor = 'move';
-  element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
+    // Initialize draggable element styles
+    element.style.cursor = 'move';
+    element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
 
-  element.addEventListener('mousedown', onStart);
-  element.addEventListener('touchstart', onStart);
-  element.addEventListener('click', ev => {
-    onClickDropOrDragElement(element, 'drag');
-  });
-}
+    element.addEventListener('mousedown', onStart);
+    element.addEventListener('touchstart', onStart);
+    element.addEventListener('click', ev => {
+        onClickDropOrDragElement(element, 'drag');
+    });
+  }
 
 const findMostoverlappedElement = (element: HTMLElement, type: string) => {
   const elementRect = element.getBoundingClientRect();
@@ -565,6 +584,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
+          const diagonalDropping = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
 
           const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
@@ -581,7 +601,11 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
-          dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+          if (diagonalDropping) {
+            dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
+          } else {
+            dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+          }
           break;
         }
         case 'addClass': {

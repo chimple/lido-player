@@ -18,3 +18,8 @@ body {
   border: 2px solid;
   background-color: #ffdf7d !important;
 }
+
+.diagonally-pair {
+  width: 180px !important;
+  height: 180px !important;
+}

@@ -36,6 +36,10 @@ export class LidoCol {
    */
   @Prop() width: string;
 
+  @Prop() maxWidth: string;
+
+  @Prop() maxHeight: string;
+
   /**
    * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
    */
@@ -182,6 +186,8 @@ export class LidoCol {
       flexDirection: !this.direction ? 'column' : parseProp(this.direction, orientation),
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
+      maxWidth: parseProp(this.maxWidth, orientation),
+      maxHeight: parseProp(this.maxHeight, orientation),
     };
   }
 

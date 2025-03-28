@@ -120,7 +120,7 @@ export namespace Components {
         /**
           * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
          */
-        "borderImage": string;
+        "borderImage"?: string;
         /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
@@ -137,10 +137,12 @@ export namespace Components {
           * The unique identifier for the column component.
          */
         "id": string;
+        "maxHeight": string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength": number;
+        "maxWidth": string;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -362,6 +364,8 @@ export namespace Components {
           * The height of the image component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
+        "maxHeight": string;
+        "maxWidth": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -397,7 +401,7 @@ export namespace Components {
         /**
           * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
          */
-        "visible": boolean;
+        "visible": boolean | string;
         /**
           * The width of the image component (CSS value, e.g., '100px', '50%').
          */
@@ -800,7 +804,7 @@ export namespace Components {
         /**
           * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
          */
-        "borderImage": string;
+        "borderImage"?: string;
         /**
           * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
          */
@@ -1328,10 +1332,12 @@ declare namespace LocalJSX {
           * The unique identifier for the column component.
          */
         "id"?: string;
+        "maxHeight"?: string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength"?: number;
+        "maxWidth"?: string;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -1553,6 +1559,8 @@ declare namespace LocalJSX {
           * The height of the image component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
+        "maxHeight"?: string;
+        "maxWidth"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -1588,7 +1596,7 @@ declare namespace LocalJSX {
         /**
           * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
          */
-        "visible"?: boolean;
+        "visible"?: boolean | string;
         /**
           * The width of the image component (CSS value, e.g., '100px', '50%').
          */

@@ -12,6 +12,8 @@
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
+  max-width: var(--maxWidth, 100%);
+  max-height: var(--maxHeight, 100%);
 }
 
 .lido-col > * {

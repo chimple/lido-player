@@ -30,8 +30,12 @@ export class AudioPlayer {
     
     const playElement = document.querySelector("#play") as HTMLElement;
     const pauseElement = document.querySelector("#pause") as HTMLElement;
-    playElement.style.visibility = "visible";
-    pauseElement.style.visibility = "hidden";
+
+    if(playElement) {
+      playElement.style.visibility = "visible";
+    } else if(pauseElement) {
+      pauseElement.style.visibility = "hidden";
+    }
   }
 
   public async play(targetElement: HTMLElement) {

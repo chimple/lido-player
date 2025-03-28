@@ -30,6 +30,10 @@ export class LidoImage {
    */
   @Prop() width: string;
 
+  @Prop() maxWidth: string;
+  
+  @Prop() maxHeight: string;
+
   /**
    * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
    */
@@ -73,7 +77,7 @@ export class LidoImage {
   /**
    * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
    */
-  @Prop() visible: boolean;
+  @Prop() visible: boolean | string;
 
   /**
    * URL or identifier of an audio file associated with the image.
@@ -139,10 +143,13 @@ export class LidoImage {
   }
 
   updateStyles() {
+    console.log('updateStyles', this.maxHeight, this.maxWidth);
     const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
     this.style = {
       height: parseProp(this.height, orientation),
       width: parseProp(this.width, orientation),
+      maxWidth: parseProp(this.maxWidth, orientation),
+      maxHeight: parseProp(this.maxHeight, orientation),
       backgroundColor: parseProp(this.bgColor, orientation),
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
@@ -151,6 +158,7 @@ export class LidoImage {
       alignItems: 'center', // Vertically center the image
       justifyContent: 'center', // Horizontally center the image
     };
+    console.log('style', this.style);
   }
 
   render() {
@@ -168,7 +176,7 @@ export class LidoImage {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
       >
-        <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" style={this.style} />
+        <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" />
       </Host>
     );
   }
