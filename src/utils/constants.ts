@@ -9,6 +9,8 @@ export const GameCompletedKey = 'lidoGameCompleted';
 export const GameExitKey = 'lidoGameExit';
 export const ElementDropKey = 'lidoElementDrop';
 export const ElementClickKey = 'lidoElementClick';
+export const DropLength = 'dropLength';
+export const DropHasDrag = 'dropHasDrag';
 
 export enum TraceMode {
   NoFlow = 'lido-noFlow',
