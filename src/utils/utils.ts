@@ -229,6 +229,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
+  let originalTransform = '';
+  let clone: HTMLElement | null = null;
   // Fetch the container element
   const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) {
@@ -245,6 +247,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
+    originalTransform = element.style.transform;
 
     if (event instanceof MouseEvent) {
       startX = event.clientX;
@@ -257,6 +260,20 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     // Apply dragging styles to the element
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
+
+    const computedStyle = window.getComputedStyle(element);
+    // Get the original element's position
+    const rect = element.getBoundingClientRect();
+    if (!clone) {
+      clone = element.cloneNode(true) as HTMLElement;
+      clone.style.left = `${rect.left}px`;
+      clone.style.top = `${rect.top}px`;
+      clone.style.width = `${rect.width}px`;
+      clone.style.height = `${rect.height}px`;
+      clone.style.transform = computedStyle.transform;
+      clone.classList.add('drag-clone');
+      document.body.appendChild(clone);
+    }
 
     // Parse the current transform values at the start of each drag
     const transform = window.getComputedStyle(element).transform;
@@ -343,6 +360,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
     // Apply transform with translation within boundaries
     element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
+    element.style.border = '5px solid blue';
+    element.style.borderRadius = '24px';
 
     // Check for overlaps and highlight only the most overlapping element
     let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
@@ -363,8 +382,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
     // Apply styles only to the most overlapped element
     if (mostOverlappedElement) {
-      mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
-      mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
+      mostOverlappedElement.style.border = '2px dashed blue'; // blue dashed border
+      mostOverlappedElement.style.backgroundColor = 'rgba(0, 255, 0, 0.3)'; // Light red background
     }
   };
 
@@ -380,6 +399,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     // Reset styles when dragging ends
     element.style.opacity = '';
     element.style.cursor = 'move';
+    element.style.border = '';
+    element.style.borderRadius = '';
 
     // Reset overlapping styles from all elements
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
@@ -416,6 +437,13 @@ function enableDraggingWithScaling(element: HTMLElement): void {
           }
   
           element?.classList.remove('diagonally-pair');
+
+          element.style.transform = `translate(0, 0)`; // drop to original position
+          if (clone) {
+            clone.remove();
+            clone = null;
+          }
+
       }
     }
   };
