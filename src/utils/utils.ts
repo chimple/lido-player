@@ -46,6 +46,8 @@ function slidingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    console.log('above 1onstart running');
+
     removeHighlight(element);
     isDragging = true;
 
@@ -245,6 +247,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    console.log('onstart running');
+    
     AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
@@ -523,6 +527,8 @@ const findMostoverlappedElement = (element: HTMLElement, type: string) => {
 async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
+  await onActivityComplete(dragElement, dropElement);
+
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   if (dropElement) {
 
@@ -1081,6 +1087,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
+    console.log('onclick start');
+    
     AudioPlayer.getI().stop();
     const container = document.querySelector('#lido-container') as HTMLElement;
     const objective = container['objective'].split(',');
@@ -1092,6 +1100,12 @@ function addClickListenerForClickType(element: HTMLElement): void {
       await validateObjectiveStatus();
       return;
     }
+    
+    // if (element.getAttribute('animation')=='clickable') {
+    //   element.classList.add('removeShadow')
+    // }
+    
+    
 
     // element.style.border = '2px solid yellow';
     // element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
@@ -1185,8 +1199,28 @@ function addClickListenerForClickType(element: HTMLElement): void {
     if (!showCheck && countPatternWords(objective) === countPatternWords(selectedValue)) {
       validateObjectiveStatus();
     }
+    
   };
   element.addEventListener('click', onClick);
+  element.addEventListener('mouseup', () => {
+    if (element.getAttribute('animation')=='clickable') {
+    setTimeout(()=>{
+      element.classList.remove('removeShadow');
+      console.log('mouse up'); 
+      element.style.top="0px";
+      element.style.position="relative";
+
+    },50)}
+    
+});
+  element.addEventListener('mousedown', () => {
+  if (element.getAttribute('animation')=='clickable') {
+    element.classList.add('removeShadow')
+    element.style.top="25px";
+    element.style.position="relative";
+  }
+  console.log('mouse down');
+  });
 }
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {

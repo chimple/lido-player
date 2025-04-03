@@ -143,11 +143,14 @@ export class LidoCol {
    */
   @Prop() borderImage?: string;
 
+  @Prop() boxShadow?: string;
+
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string } = {};
 
+  
   /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
@@ -188,6 +191,7 @@ export class LidoCol {
       borderImageSlice: borderImg ? '0 fill' : '',
       maxWidth: parseProp(this.maxWidth, orientation),
       maxHeight: parseProp(this.maxHeight, orientation),
+      boxShadow: this.boxShadow
     };
   }
 

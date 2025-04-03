@@ -29,6 +29,9 @@ body {
   filter: grayscale(100%);
   /* opacity: 0.5; */
   pointer-events: none;
-  z-index: 1000;
+  /* z-index: 1000; */
   
+}
+.removeShadow {
+  box-shadow:0px 0px 0px 0px #FF8900 !important; 
 }

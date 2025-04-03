@@ -108,7 +108,8 @@ export class LidoImage {
    * The source URL of the image to be displayed.
    */
   @Prop() src: string;
-
+   
+  @Prop() display: string;
   /**
    * Reference to the HTML element that represents this image component.
    */
@@ -154,8 +155,7 @@ export class LidoImage {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'flex' : 'none', // Toggle visibility
-      alignItems: 'center', // Vertically center the image
+      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? this.display ? `${this.display}` : 'flex' : 'none', // Toggle visibility      alignItems: 'center', // Vertically center the image
       justifyContent: 'center', // Horizontally center the image
     };
     console.log('style', this.style);
