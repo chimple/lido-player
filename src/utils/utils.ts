@@ -1216,7 +1216,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
   element.addEventListener('mousedown', () => {
   if (element.getAttribute('animation')=='clickable') {
     element.classList.add('removeShadow')
-    element.style.top="25px";
+    element.style.top="40px";
     element.style.position="relative";
   }
   console.log('mouse down');
