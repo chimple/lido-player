@@ -130,10 +130,6 @@ export namespace Components {
          */
         "direction": string;
         /**
-          * Sets the CSS display property for the component. Accepts any valid CSS display value (e.g., 'block', 'flex', 'grid', 'none').
-         */
-        "display"?: string;
-        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -141,10 +137,6 @@ export namespace Components {
           * The unique identifier for the column component.
          */
         "id": string;
-        /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
-         */
-        "imageSlice"?: string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
@@ -371,9 +363,10 @@ export namespace Components {
          */
         "height": string;
         /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
+          * Unique identifier for the text element.
          */
-        "imageSlice"?: string;
+        "id": string;
+        "isSlice": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -1333,10 +1326,6 @@ declare namespace LocalJSX {
          */
         "direction"?: string;
         /**
-          * Sets the CSS display property for the component. Accepts any valid CSS display value (e.g., 'block', 'flex', 'grid', 'none').
-         */
-        "display"?: string;
-        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1344,10 +1333,6 @@ declare namespace LocalJSX {
           * The unique identifier for the column component.
          */
         "id"?: string;
-        /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
-         */
-        "imageSlice"?: string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
@@ -1574,9 +1559,10 @@ declare namespace LocalJSX {
          */
         "height"?: string;
         /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
+          * Unique identifier for the text element.
          */
-        "imageSlice"?: string;
+        "id"?: string;
+        "isSlice"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */

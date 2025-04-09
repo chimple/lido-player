@@ -16,6 +16,11 @@ import { convertUrlToRelative, initEventsForElement, parseProp } from '../../uti
 })
 export class LidoImage {
   /**
+   * Unique identifier for the text element.
+   */
+  @Prop() id: string;
+
+  /**
    * The value associated with the image. Typically used for internal logic or identification.
    */
   @Prop() value: string;
@@ -105,6 +110,9 @@ export class LidoImage {
    */
   @Prop() src: string;
 
+  // Enables border-image slice support when true; otherwise, behaves as a regular image component
+  @Prop() isSlice: string;
+
   /**
    * Reference to the HTML element that represents this image component.
    */
@@ -150,26 +158,37 @@ export class LidoImage {
       display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'flex' : 'none', // Toggle visibility
       alignItems: 'center', // Vertically center the image
       justifyContent: 'center', // Horizontally center the image
+
+      // Slice Style
+      borderImageSource: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
+      borderImageSlice: this.isSlice === 'true' ? `30 fill` : 'unset',
+      borderImageRepeat: this.isSlice === 'true' ? 'round' : 'unset',
+      borderImageWidth: this.isSlice === 'true' ? '30px' : 'unset',
+      backgroundImage: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
     };
   }
 
   render() {
-    return (
-      <Host
-        type={this.type}
-        tabindex={this.tabIndex}
-        style={this.style}
-        aria-label={this.ariaLabel}
-        aria-hidden={this.ariaHidden}
-        value={this.value}
-        audio={this.audio}
-        onTouch={this.onTouch}
-        onCorrect={this.onCorrect}
-        onInCorrect={this.onInCorrect}
-        onEntry={this.onEntry}
-      >
-        <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" style={this.style} />
-      </Host>
-    );
+    if (this.isSlice === 'true') {
+      return <Host class="slice" id={this.id} type={this.type} tabIndex={this.tabIndex} onEntry={this.onEntry} style={this.style}></Host>;
+    } else {
+      return (
+        <Host
+          type={this.type}
+          tabindex={this.tabIndex}
+          style={this.style}
+          aria-label={this.ariaLabel}
+          aria-hidden={this.ariaHidden}
+          value={this.value}
+          audio={this.audio}
+          onTouch={this.onTouch}
+          onCorrect={this.onCorrect}
+          onInCorrect={this.onInCorrect}
+          onEntry={this.onEntry}
+        >
+          <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" style={this.style} />
+        </Host>
+      );
+    }
   }
 }
