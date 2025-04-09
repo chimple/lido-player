@@ -14,6 +14,8 @@
 | `audio`       | `audio`         | URL or identifier of an audio file associated with the image.                                                           | `string`  | `undefined` |
 | `bgColor`     | `bg-color`      | Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').                             | `string`  | `undefined` |
 | `height`      | `height`        | The height of the image component (CSS value, e.g., '100px', '50%').                                                    | `string`  | `undefined` |
+| `id`          | `id`            | Unique identifier for the text element.                                                                                 | `string`  | `undefined` |
+| `isSlice`     | `is-slice`      |                                                                                                                         | `string`  | `undefined` |
 | `onCorrect`   | `on-correct`    | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`  | `undefined` |
 | `onEntry`     | `on-entry`      | Event handler triggered when the image is entered (useful for animations or logic on entry).                            | `string`  | `undefined` |
 | `onInCorrect` | `on-in-correct` | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect. | `string`  | `undefined` |
