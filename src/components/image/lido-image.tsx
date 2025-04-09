@@ -110,8 +110,16 @@ export class LidoImage {
    */
   @Prop() src: string;
 
-  // Enables border-image slice support when true; otherwise, behaves as a regular image component
+  /**
+   * Enables border-image slice support when true; otherwise, behaves as a regular image component
+   */
   @Prop() isSlice: string;
+  
+  /**
+   * Specifies the width for border-image slice (e.g., "30px", "2em").
+   * Only used when `isSlice` is enabled.
+   */
+  @Prop() sliceWidth: string = '30px';
 
   /**
    * Reference to the HTML element that represents this image component.
@@ -161,9 +169,9 @@ export class LidoImage {
 
       // Slice Style
       borderImageSource: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
-      borderImageSlice: this.isSlice === 'true' ? `30 fill` : 'unset',
+      borderImageSlice: this.isSlice === 'true' ? `${parseInt(this.sliceWidth)} fill` : 'unset',
       borderImageRepeat: this.isSlice === 'true' ? 'round' : 'unset',
-      borderImageWidth: this.isSlice === 'true' ? '30px' : 'unset',
+      borderImageWidth: this.isSlice === 'true' ? `${this.sliceWidth}` : 'unset',
       backgroundImage: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
     };
   }
