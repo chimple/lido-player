@@ -471,7 +471,7 @@
 			</lido-image>
 		</lido-pos>
 		<lido-col visible="true" width="850px" height="500px" z="1" onEntry="">
-			<lido-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string="Which animal is known as the "king of the jungle"?" font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)">
+			<lido-text visible="true" width="600px" height="100px" onEntry="this.boxShadow='unset';" string="Which animal is known as the 'king of the jungle'?" font="Poppins" font-size="25px" value="lion" bgColor="rgba(210, 140, 80, 1)">
 			</lido-text>
 			<lido-row visible="true" width="800px" height="100px" bgColor="transparent">
 				<lido-col visible="true" width="150px" height="120px" type="click" onEntry="" value="giraffe" onCorrect="this.border='2px solid green';" onInCorrect="this.border='2px solid red';">
