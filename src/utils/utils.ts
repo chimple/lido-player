@@ -227,7 +227,7 @@ const slideCompleted = (slideElement: HTMLElement) => {
 
 function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
-  let isClicked = true;
+  let isClicked = false;
   let startX = 0;
   let startY = 0;
   let initialX = 0;
@@ -253,6 +253,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     removeHighlight(element);
     isDragging = true;
     originalTransform = element.style.transform;
+    isClicked = true;
 
     if (event instanceof MouseEvent) {
       startX = event.clientX;
@@ -383,7 +384,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.visibility = 'hidden';
+          otherElement.style.opacity = '0';
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -391,7 +392,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
           otherElement.style.backgroundColor = ''; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.visibility = 'visible';
           otherElement.style.opacity = '1';
         }
       }
@@ -411,7 +411,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   const onEnd = (endEv): void => {
     isDragging = false;
     if (isClicked) return;
-    isClicked = true;
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
@@ -478,16 +477,17 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       }
     }
   };
-    // Initialize draggable element styles
-    element.style.cursor = 'move';
-    element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
-
-    element.addEventListener('mousedown', onStart);
-    element.addEventListener('touchstart', onStart);
-    element.addEventListener('click', ev => {
-        onClickDropOrDragElement(element, 'drag');
-    });
-  }
+  // Initialize draggable element styles
+  element.style.cursor = 'move';
+  element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
+  element.addEventListener('mousedown', onStart);
+  element.addEventListener('touchstart', onStart);
+  element.addEventListener('click', ev => {
+    if(isClicked){
+      onClickDropOrDragElement(element, 'drag');
+    }
+  });
+}
 
 const findMostoverlappedElement = (element: HTMLElement, type: string) => {
   const elementRect = element.getBoundingClientRect();
@@ -540,6 +540,8 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
       if (mostOverlappedElement) {
         dragElement.style.transform = 'translate(0,0)';
+        dragElement.style.transition = 'transform 0.5s ease';
+
         if (dragSelectedData) {
           let dragSelected = JSON.parse(dragSelectedData);
           for (const key in dragSelected) {
@@ -570,9 +572,10 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
               otherElement.style.opacity = '1';
             }
           }
-        });
+        }); 
         return;
       }
+      
     }
   }
   if (!dropElement) {
@@ -648,7 +651,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   dropLength += 1;
   localStorage.setItem(DropLength, JSON.stringify(dropLength));
 
-  if (dropLength === countPatternWords(dropElement['value'])) {
+  if (dropLength === countPatternWords(dropElement["value"])) {
     const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
     isisFull.isFull = true;
     localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
@@ -675,6 +678,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     // showWrongAnswerAnimation([dropElement, dragElement]);
   }
   storingEachActivityScore(isCorrect);
+  dragElement.style.opacity = '1';
   await onActivityComplete(dragElement, dropElement);
 }
 
@@ -994,7 +998,7 @@ const validateObjectiveStatus = async () => {
   const res = matchStringPattern(objectiveString, objectiveArray);
 
   if (res) {
-    appendingDragElementsInDrop();
+    // appendingDragElementsInDrop();
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
@@ -1015,11 +1019,10 @@ const appendingDragElementsInDrop = () => {
   const dragItems = document.querySelectorAll("[type='drag']");
   const dropItems = document.querySelectorAll("[type='drop']");
   if (!dragItems || !dropItems) return;
-  dropItems.forEach(drop => {
-    const dropElement = drop as HTMLElement;
-    dropElement.style.opacity = "1"
+  dropItems.forEach(dropElement => {
     dragItems.forEach(dragElement => {
       const drag = dragElement as HTMLElement;
+      const drop = dropElement as HTMLElement;
       if (drop['value'].includes(drag['value'])) {
         drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);

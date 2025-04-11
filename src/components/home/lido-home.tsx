@@ -64,8 +64,8 @@ export class LidoHome {
     // Clear selected values from localStorage on container transition
     localStorage.removeItem(SelectedValuesKey);
     localStorage.removeItem(DragSelectedMapKey);
-    localStorage.removeItem(DropLength)
-    localStorage.removeItem(DropHasDrag)
+    localStorage.removeItem(DropLength);
+    localStorage.removeItem(DropHasDrag);
 
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
@@ -254,6 +254,7 @@ export class LidoHome {
   }
 
   render() {
+    console.log('🚀 ~ LidoHome ~ render ~ this.containers:', this);
     if (!this.xmlData) {
       // If no XML data is provided, prompt the user to provide it
       return <div>Please provide XML data.</div>;

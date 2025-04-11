@@ -130,10 +130,6 @@ export namespace Components {
          */
         "direction": string;
         /**
-          * Sets the CSS display property for the component. Accepts any valid CSS display value (e.g., 'block', 'flex', 'grid', 'none').
-         */
-        "display"?: string;
-        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -142,10 +138,6 @@ export namespace Components {
          */
         "id": string;
         "maxHeight": string;
-        /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
-         */
-        "imageSlice"?: string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
@@ -375,9 +367,13 @@ export namespace Components {
         "maxHeight": string;
         "maxWidth": string;
         /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
+          * Unique identifier for the text element.
          */
-        "imageSlice"?: string;
+        "id": string;
+        /**
+          * Enables border-image slice support when true; otherwise, behaves as a regular image component
+         */
+        "isSlice": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -394,6 +390,10 @@ export namespace Components {
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch": string;
+        /**
+          * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
+         */
+        "sliceWidth": string;
         /**
           * The source URL of the image to be displayed.
          */
@@ -1337,10 +1337,6 @@ declare namespace LocalJSX {
          */
         "direction"?: string;
         /**
-          * Sets the CSS display property for the component. Accepts any valid CSS display value (e.g., 'block', 'flex', 'grid', 'none').
-         */
-        "display"?: string;
-        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1349,10 +1345,6 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         "maxHeight"?: string;
-        /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
-         */
-        "imageSlice"?: string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
@@ -1582,9 +1574,13 @@ declare namespace LocalJSX {
         "maxHeight"?: string;
         "maxWidth"?: string;
         /**
-          * Defines the border-image-slice property for styling the component. Accepts values like '30 fill' to control how the border image is sliced.
+          * Unique identifier for the text element.
          */
-        "imageSlice"?: string;
+        "id"?: string;
+        /**
+          * Enables border-image slice support when true; otherwise, behaves as a regular image component
+         */
+        "isSlice"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -1601,6 +1597,10 @@ declare namespace LocalJSX {
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
+         */
+        "sliceWidth"?: string;
         /**
           * The source URL of the image to be displayed.
          */
