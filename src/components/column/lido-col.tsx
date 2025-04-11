@@ -36,6 +36,10 @@ export class LidoCol {
    */
   @Prop() width: string;
 
+  @Prop() maxWidth: string;
+
+  @Prop() maxHeight: string;
+
   /**
    * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
    */
@@ -139,11 +143,14 @@ export class LidoCol {
    */
   @Prop() borderImage?: string;
 
+  @Prop() boxShadow?: string;
+
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string } = {};
 
+  
   /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
@@ -182,6 +189,9 @@ export class LidoCol {
       flexDirection: !this.direction ? 'column' : parseProp(this.direction, orientation),
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
+      maxWidth: parseProp(this.maxWidth, orientation),
+      maxHeight: parseProp(this.maxHeight, orientation),
+      boxShadow: this.boxShadow
     };
   }
 
