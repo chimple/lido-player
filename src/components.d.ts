@@ -1600,8 +1600,7 @@ declare namespace LocalJSX {
         /**
           * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
          */
-        "sliceWidth"?: string;
-        /**
+        "sliceWidth"?: string;        /**
           * The source URL of the image to be displayed.
          */
         "src"?: string;

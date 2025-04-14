@@ -35,10 +35,6 @@ export class LidoImage {
    */
   @Prop() width: string;
 
-  @Prop() maxWidth: string;
-  
-  @Prop() maxHeight: string;
-
   /**
    * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
    */

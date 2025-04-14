@@ -2,8 +2,6 @@
   user-select: none;
   -webkit-user-drag: none;
   object-fit: contain;
-  max-width: var(--maxWidth, 100%);
-  max-height: var(--maxHeight, 100%);
   aspect-ratio: 1 / 1; /* Ensures the image retains a 1:1 aspect ratio
   /* The image will scale to fit within its container, keeping the aspect ratio */
 }

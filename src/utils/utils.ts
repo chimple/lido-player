@@ -247,7 +247,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
-    console.log('onstart running');
     
     AudioPlayer.getI().stop();
     removeHighlight(element);

@@ -139,8 +139,6 @@ export class LidoCol {
    */
   @Prop() borderImage?: string;
 
-  @Prop() boxShadow?: string;
-
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -185,7 +183,6 @@ export class LidoCol {
       flexDirection: !this.direction ? 'column' : parseProp(this.direction, orientation),
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
-      boxShadow: this.boxShadow
     };
   }
 
