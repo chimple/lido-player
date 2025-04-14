@@ -144,7 +144,6 @@ export class LidoCol {
    */
   @State() style: { [key: string]: string } = {};
 
-  
   /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
