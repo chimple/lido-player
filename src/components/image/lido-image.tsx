@@ -157,13 +157,10 @@ export class LidoImage {
   }
 
   updateStyles() {
-    console.log('updateStyles', this.maxHeight, this.maxWidth);
     const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
     this.style = {
       height: parseProp(this.height, orientation),
       width: parseProp(this.width, orientation),
-      maxWidth: parseProp(this.maxWidth, orientation),
-      maxHeight: parseProp(this.maxHeight, orientation),
       backgroundColor: parseProp(this.bgColor, orientation),
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
