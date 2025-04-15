@@ -230,6 +230,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
+  let originalTransform = '';
+  let clone: HTMLElement | null = null;
 
   // Fetch the container element
   const container = document.querySelector('#lido-container') as HTMLElement;
@@ -260,6 +262,21 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     // Apply dragging styles to the element
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
+
+    const computedStyle = window.getComputedStyle(element);
+    // Get the original element's position
+    const rect = element.getBoundingClientRect();
+    if (!clone) {
+      clone = element.cloneNode(true) as HTMLElement;
+      clone.style.left = `${rect.left}px`;
+      clone.style.top = `${rect.top}px`;
+      clone.style.width = `${rect.width}px`;
+      clone.style.height = `${rect.height}px`;
+      clone.style.transform = computedStyle.transform;
+      clone.classList.add('drag-clone');
+      document.body.appendChild(clone);
+    }
+
 
     // Parse the current transform values at the start of each drag
     const transform = window.getComputedStyle(element).transform;
@@ -385,6 +402,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     }
   };
 
+  let lastOverlappedElement: HTMLElement | null = null;
   const onEnd = (endEv): void => {
     isDragging = false;
     if (isClicked) return;
@@ -424,8 +442,32 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     });
 
     // Check for overlaps and log the most overlapping element
-    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
+    let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
+
+    const containerElement = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
+    if (containerElement) {
+      if (mostOverlappedElement) {
+          if (element) {
+              element.classList.add('diagonally-pair');
+              mostOverlappedElement.classList.add('diagonally-pair');
+              lastOverlappedElement = mostOverlappedElement;
+          }
+      } else {
+          if (lastOverlappedElement) {
+              lastOverlappedElement.classList.remove('diagonally-pair');
+              lastOverlappedElement = null;
+          }
+  
+          element?.classList.remove('diagonally-pair');
+
+          element.style.transform = `translate(0, 0)`; // drop to original position
+          if (clone) {
+            clone.remove();
+            clone = null;
+          }
+      }
+    }
   };
   // Initialize draggable element styles
   element.style.cursor = 'move';
@@ -651,6 +693,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
+          const diagonalDropping = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
 
           const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
@@ -668,6 +711,12 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
           dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+
+          if (diagonalDropping) {
+            dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
+          } else {
+            dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+          }
           break;
         }
         case 'addClass': {

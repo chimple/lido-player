@@ -18,3 +18,15 @@ body {
   border: 2px solid;
   background-color: #ffdf7d !important;
 }
+
+.diagonally-pair {
+  width: 180px !important;
+  height: 180px !important;
+}
+
+.drag-clone {
+  display: flex !important;
+  position: absolute !important;
+  filter: grayscale(100%);
+  pointer-events: none;
+}
