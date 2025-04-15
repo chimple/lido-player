@@ -137,12 +137,10 @@ export namespace Components {
           * The unique identifier for the column component.
          */
         "id": string;
-        "maxHeight": string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength": number;
-        "maxWidth": string;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -360,12 +358,11 @@ export namespace Components {
           * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor": string;
+        "display": string;
         /**
           * The height of the image component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
-        "maxHeight": string;
-        "maxWidth": string;
         /**
           * Unique identifier for the text element.
          */
@@ -1344,12 +1341,10 @@ declare namespace LocalJSX {
           * The unique identifier for the column component.
          */
         "id"?: string;
-        "maxHeight"?: string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength"?: number;
-        "maxWidth"?: string;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -1567,12 +1562,11 @@ declare namespace LocalJSX {
           * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor"?: string;
+        "display"?: string;
         /**
           * The height of the image component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
-        "maxHeight"?: string;
-        "maxWidth"?: string;
         /**
           * Unique identifier for the text element.
          */
@@ -1600,7 +1594,8 @@ declare namespace LocalJSX {
         /**
           * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
          */
-        "sliceWidth"?: string;        /**
+        "sliceWidth"?: string;
+        /**
           * The source URL of the image to be displayed.
          */
         "src"?: string;
