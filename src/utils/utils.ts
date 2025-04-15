@@ -46,7 +46,6 @@ function slidingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
-    console.log('above 1onstart running');
 
     removeHighlight(element);
     isDragging = true;
