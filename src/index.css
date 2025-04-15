@@ -35,3 +35,17 @@ body {
 .removeShadow {
   box-shadow:0px 0px 0px 0px #FF8900 !important; 
 }
+
+lido-image[dropAttr="diagonal"] {
+  max-width: 242px !important;
+  max-height: 242px !important;
+}
+
+lido-col[dropAttr="diagonal"] {
+  max-width: 300px !important;
+  max-height: 140px !important;
+}
+
+lido-col[animation='clickable'] {
+  box-shadow: 0px 40px 0px 0px #FF8900;
+}
