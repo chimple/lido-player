@@ -263,30 +263,32 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
 
-    const computedStyle = window.getComputedStyle(element);
-    // Get the original element's position
-    const rect = element.getBoundingClientRect();
-    if (!clone) {
-      clone = element.cloneNode(true) as HTMLElement;
-      // clone.style.left = `${rect.left - 230}px`; for appending into parent (landscape)
-      // clone.style.top = `${rect.top}px`;
-      clone.style.left = `${rect.left}px`;
-      clone.style.top = `${rect.top}px`;
-      clone.style.width = `${rect.width}px`;
-      clone.style.height = `${rect.height}px`;
-      clone.style.transform = computedStyle.transform;
-      clone.setAttribute('visible', 'true');
-      clone.classList.add('drag-clone');
-      document.body.appendChild(clone);
-
-      // for appending into parent
-      // const parent = element.parentElement;
-      // if (parent) {
-      //   parent.style.position = parent.style.position || 'relative';
-      //   parent.appendChild(clone);
-      // }
+    const diagonalDropEffect = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
+    if(diagonalDropEffect) {
+      const computedStyle = window.getComputedStyle(element);
+      // Get the original element's position
+      const rect = element.getBoundingClientRect();
+      if (!clone) {
+        clone = element.cloneNode(true) as HTMLElement;
+        // clone.style.left = `${rect.left - 230}px`; for appending into parent (landscape)
+        // clone.style.top = `${rect.top}px`;
+        clone.style.left = `${rect.left}px`;
+        clone.style.top = `${rect.top}px`;
+        clone.style.width = `${rect.width}px`;
+        clone.style.height = `${rect.height}px`;
+        clone.style.transform = computedStyle.transform;
+        clone.setAttribute('visible', 'true');
+        clone.classList.add('drag-clone');
+        document.body.appendChild(clone);
+  
+        // for appending into parent
+        // const parent = element.parentElement;
+        // if (parent) {
+        //   parent.style.position = parent.style.position || 'relative';
+        //   parent.appendChild(clone);
+        // }
+      }
     }
-
 
     // Parse the current transform values at the start of each drag
     const transform = window.getComputedStyle(element).transform;
