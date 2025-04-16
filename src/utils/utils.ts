@@ -263,10 +263,9 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
 
-    const diagonalDropEffect = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
+    const diagonalDropEffect = element.getAttribute('dropAttr')?.toLowerCase() === 'diagonal';
     if(diagonalDropEffect) {
       const computedStyle = window.getComputedStyle(element);
-      // Get the original element's position
       const rect = element.getBoundingClientRect();
       if (!clone) {
         clone = element.cloneNode(true) as HTMLElement;
@@ -278,7 +277,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         clone.style.height = `${rect.height}px`;
         clone.style.transform = computedStyle.transform;
         clone.setAttribute('visible', 'true');
-        clone.classList.add('drag-clone');
+        clone.classList.add('cloned-element');
         document.body.appendChild(clone);
   
         // for appending into parent
@@ -457,21 +456,21 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
 
-    const containerElement = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
+    const containerElement = element.getAttribute('dropAttr')?.toLowerCase() === 'diagonal';
     if (containerElement) {
       if (mostOverlappedElement) {
           if (element) {
-              element.classList.add('diagonally-pair');
-              mostOverlappedElement.classList.add('diagonally-pair');
+              element.classList.add('diagonal-drop');
+              mostOverlappedElement.classList.add('diagonal-target');
               lastOverlappedElement = mostOverlappedElement;
           }
       } else {
           if (lastOverlappedElement) {
-              lastOverlappedElement.classList.remove('diagonally-pair');
+              lastOverlappedElement.classList.remove('diagonal-target');
               lastOverlappedElement = null;
           }
   
-          element?.classList.remove('diagonally-pair');
+          element?.classList.remove('diagonal-drop');
 
           element.style.transform = `translate(0, 0)`; // drop to original position
           if (clone) {
@@ -713,7 +712,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
-          const diagonalDropping = document.querySelector<HTMLElement>('[dropAttr="diagonal"]')
+          const diagonalDropping = element.getAttribute('dropAttr')?.toLowerCase() === 'diagonal';
 
           const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
@@ -729,13 +728,17 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
           const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
-          console.log('diagonalDropping',diagonalDropping);
+          
           if (diagonalDropping) {
-            console.log(dragElement.style.transform)
             dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           }
+          break;
+        }
+        case 'removeClone': {
+          const clonedElements = document.querySelectorAll(action.value);
+          clonedElements.forEach(el => el.remove());
           break;
         }
         case 'addClass': {
