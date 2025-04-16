@@ -32,7 +32,7 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build && npm run build-storybook",
     "start": "stencil build --dev --watch --serve",
     "dev": "npm run start",
     "test": "stencil test --spec --e2e",
