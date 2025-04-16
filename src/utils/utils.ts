@@ -268,13 +268,23 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     const rect = element.getBoundingClientRect();
     if (!clone) {
       clone = element.cloneNode(true) as HTMLElement;
+      // clone.style.left = `${rect.left - 230}px`; for appending into parent (landscape)
+      // clone.style.top = `${rect.top}px`;
       clone.style.left = `${rect.left}px`;
       clone.style.top = `${rect.top}px`;
       clone.style.width = `${rect.width}px`;
       clone.style.height = `${rect.height}px`;
       clone.style.transform = computedStyle.transform;
+      clone.setAttribute('visible', 'true');
       clone.classList.add('drag-clone');
       document.body.appendChild(clone);
+
+      // for appending into parent
+      // const parent = element.parentElement;
+      // if (parent) {
+      //   parent.style.position = parent.style.position || 'relative';
+      //   parent.appendChild(clone);
+      // }
     }
 
 
@@ -524,7 +534,11 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
     if (dropElement.getAttribute('isAllowOnlyOneDrop') === 'true' || !dropElement.getAttribute('isAllowOnlyOneDrop')) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
-      isisFull.isFull = true;
+      if (isisFull) {
+        isisFull.isFull = true;
+      } else {
+        console.warn('No matching drop item found for', dropElement);
+      }
       localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
       // Check for overlaps and highlight only the most overlapping element
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
@@ -643,7 +657,11 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
   if (dropLength === countPatternWords(dropElement["value"])) {
     const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
-    isisFull.isFull = true;
+    if (isisFull) {
+      isisFull.isFull = true;
+    } else {
+      console.warn('No matching drop item found for', dropElement);
+    }
     localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
     dropLength = 0;
     localStorage.setItem(DropLength, JSON.stringify(dropLength));
@@ -709,10 +727,9 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
           const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
-
-          dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-
+          console.log('diagonalDropping',diagonalDropping);
           if (diagonalDropping) {
+            console.log(dragElement.style.transform)
             dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
@@ -1423,7 +1440,7 @@ export function convertUrlToRelative(url: string): string {
   const container = document.querySelector('#lido-container') as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
-  if (url.startsWith('http')) {
+  if (url?.startsWith('http')) {
     return url;
   } else if (baseUrl) {
     return baseUrl + url;
