@@ -527,6 +527,8 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
     }
   }
   if (!dropElement) {
+    dragElement.style.transform = 'translate(0,0)';
+    dragElement.style.transition = "transform 0.5s ease";
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
@@ -534,6 +536,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
         prevDropItem.isFull = false;
         localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
       }
+      dragToDropMap.delete(dragElement);
     }
 
     if (selectedValueData) {
