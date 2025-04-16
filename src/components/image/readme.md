@@ -15,11 +15,12 @@
 | `bgColor`     | `bg-color`      | Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').                             | `string`  | `undefined` |
 | `height`      | `height`        | The height of the image component (CSS value, e.g., '100px', '50%').                                                    | `string`  | `undefined` |
 | `id`          | `id`            | Unique identifier for the text element.                                                                                 | `string`  | `undefined` |
-| `isSlice`     | `is-slice`      |                                                                                                                         | `string`  | `undefined` |
+| `isSlice`     | `is-slice`      | Enables border-image slice support when true; otherwise, behaves as a regular image component                           | `string`  | `undefined` |
 | `onCorrect`   | `on-correct`    | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`  | `undefined` |
 | `onEntry`     | `on-entry`      | Event handler triggered when the image is entered (useful for animations or logic on entry).                            | `string`  | `undefined` |
 | `onInCorrect` | `on-in-correct` | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect. | `string`  | `undefined` |
 | `onTouch`     | `on-touch`      | Event handler triggered when the image is touched or clicked.                                                           | `string`  | `undefined` |
+| `sliceWidth`  | `slice-width`   | Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.                  | `string`  | `'30px'`    |
 | `src`         | `src`           | The source URL of the image to be displayed.                                                                            | `string`  | `undefined` |
 | `tabIndex`    | `tab-index`     | Tab index for keyboard navigation.                                                                                      | `number`  | `undefined` |
 | `type`        | `type`          | Defines the type of the image component, which can be used for conditional logic or styling purposes.                   | `string`  | `undefined` |
