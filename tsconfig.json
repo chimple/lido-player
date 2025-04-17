@@ -14,7 +14,8 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "jsx": "react",
-    "jsxFactory": "h"
+    "jsxFactory": "h",
+    "types": ["@stencil/core", "node", "jest", "react"]
   },
   "skipLibCheck": true,
   "include": [
