@@ -202,7 +202,7 @@
 		<!-- Chimple Avatar -->
 		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="landscape.-10px, portrait.100px
 		" y="507px" ariaHidden="true" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="this.animation='leftToPlace 1.5s linear';">
-			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" altText="{chimpleCharacterRive}" bgColor="transparent">
 			</lido-avatar>
 			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bgColor="transparent" width="186px" height="40px" x="77px" y="302px" altText="{shadowImgae}">
 			</lido-image>
@@ -216,7 +216,7 @@
 		</lido-pos>
 		<!-- Options -->
 		<lido-pos id="pos3" disableEdit="true" value="pos3" visible="true" height="0" width="" bgColor="transparent" x="" y="" z="1" onEntry="this.animation='bottomToPlace 1s linear'; this.display='grid'; this.placeItems='center';">
-			<lido-image id="image3" disableEdit="true" value="image3" visible="true" height="515px" width="1300px" z='-1' y="300px" bgColor="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/optionsBg.png">
+			<lido-image isSlice="true" id="image3" disableEdit="true" value="image3" visible="true" height="515px" width="1300px" z='-1' y="300px" bgColor="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/optionsBg.png">
 			</lido-image>
 			<lido-row id="row" value="row" visible="true" width="auto" height="260px" bgColor="transparent" y="425px" onEntry="this.gap='20px';">
 					<lido-col id="option1" value="{options[0].id}" visible="true" width="auto" height="230px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px'; " onInCorrect="this.border='8px solid red';" onCorrect=" this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46'; this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out'; this.transform= 'scale(1.05)';" bgColor="transparent">
