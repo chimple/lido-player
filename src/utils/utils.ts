@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DropHasDrag, DropLength, LessonEndKey, SelectedValuesKey } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DropHasDrag, DropLength, LessonEndKey, SelectedValuesKey, Diagonal } from './constants';
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -263,8 +263,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
 
-    const diagonalDropEffect = element.getAttribute('dropAttr')?.toLowerCase() === 'diagonal';
-    if(diagonalDropEffect) {
+    if(element.getAttribute('dropAttr')?.toLowerCase() === Diagonal) {
       const computedStyle = window.getComputedStyle(element);
       const rect = element.getBoundingClientRect();
       if (!clone) {
@@ -456,8 +455,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
 
-    const containerElement = element.getAttribute('dropAttr')?.toLowerCase() === 'diagonal';
-    if (containerElement) {
+    if (element.getAttribute('dropAttr')?.toLowerCase() === Diagonal) {
       if (mostOverlappedElement) {
           if (element) {
               element.classList.add('diagonal-drop');
@@ -715,7 +713,6 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
-          const diagonalDropping = element.getAttribute('dropAttr')?.toLowerCase() === 'diagonal';
 
           const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
@@ -732,7 +729,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
           
-          if (diagonalDropping) {
+          if (element.getAttribute('dropAttr')?.toLowerCase() === Diagonal) {
             dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
