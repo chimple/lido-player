@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DropHasDrag, DropLength, LessonEndKey, SelectedValuesKey } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DropHasDrag, DropLength, LessonEndKey, SelectedValuesKey, DropMode } from './constants';
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -230,6 +230,8 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
+  let originalTransform = '';
+  let clone: HTMLElement | null = null;
 
   // Fetch the container element
   const container = document.querySelector('#lido-container') as HTMLElement;
@@ -260,6 +262,31 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     // Apply dragging styles to the element
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
+
+    if(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
+      const computedStyle = window.getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      if (!clone) {
+        clone = element.cloneNode(true) as HTMLElement;
+        // clone.style.left = `${rect.left - 230}px`; for appending into parent (landscape)
+        // clone.style.top = `${rect.top}px`;
+        clone.style.left = `${rect.left}px`;
+        clone.style.top = `${rect.top}px`;
+        clone.style.width = `${rect.width}px`;
+        clone.style.height = `${rect.height}px`;
+        clone.style.transform = computedStyle.transform;
+        clone.setAttribute('visible', 'true');
+        clone.classList.add('cloned-element');
+        document.body.appendChild(clone);
+  
+        // for appending into parent
+        // const parent = element.parentElement;
+        // if (parent) {
+        //   parent.style.position = parent.style.position || 'relative';
+        //   parent.appendChild(clone);
+        // }
+      }
+    }
 
     // Parse the current transform values at the start of each drag
     const transform = window.getComputedStyle(element).transform;
@@ -385,6 +412,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     }
   };
 
+  let lastOverlappedElement: HTMLElement | null = null;
   const onEnd = (endEv): void => {
     isDragging = false;
     if (isClicked) return;
@@ -424,8 +452,31 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     });
 
     // Check for overlaps and log the most overlapping element
-    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
+    let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
+
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
+      if (mostOverlappedElement) {
+          if (element) {
+              element.classList.add('diagonal-drop');
+              mostOverlappedElement.classList.add('diagonal-target');
+              lastOverlappedElement = mostOverlappedElement;
+          }
+      } else {
+          if (lastOverlappedElement) {
+              lastOverlappedElement.classList.remove('diagonal-target');
+              lastOverlappedElement = null;
+          }
+  
+          element?.classList.remove('diagonal-drop');
+
+          element.style.transform = `translate(0, 0)`; // drop to original position
+          if (clone) {
+            clone.remove();
+            clone = null;
+          }
+      }
+    }
   };
   // Initialize draggable element styles
   element.style.cursor = 'move';
@@ -482,7 +533,11 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
     if (dropElement.getAttribute('isAllowOnlyOneDrop') === 'true' || !dropElement.getAttribute('isAllowOnlyOneDrop')) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
-      isisFull.isFull = true;
+      if (isisFull) {
+        isisFull.isFull = true;
+      } else {
+        console.warn('No matching drop item found for', dropElement);
+      }
       localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
       // Check for overlaps and highlight only the most overlapping element
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
@@ -604,7 +659,11 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 
   if (dropLength === countPatternWords(dropElement["value"])) {
     const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
-    isisFull.isFull = true;
+    if (isisFull) {
+      isisFull.isFull = true;
+    } else {
+      console.warn('No matching drop item found for', dropElement);
+    }
     localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
     dropLength = 0;
     localStorage.setItem(DropLength, JSON.stringify(dropLength));
@@ -669,8 +728,17 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
           const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
-
-          dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+          
+          if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
+            dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
+          } else {
+            dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+          }
+          break;
+        }
+        case 'removeClone': {
+          const clonedElements = document.querySelectorAll(action.value);
+          clonedElements.forEach(el => el.remove());
           break;
         }
         case 'addClass': {
@@ -1377,7 +1445,7 @@ export function convertUrlToRelative(url: string): string {
   const container = document.querySelector('#lido-container') as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
-  if (url.startsWith('http')) {
+  if (url?.startsWith('http')) {
     return url;
   } else if (baseUrl) {
     return baseUrl + url;

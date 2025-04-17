@@ -25,3 +25,7 @@ export default class GameScore{
   wrongMoves: number = 0;
   finalScore: number = 0;
 }
+
+export enum DropMode {
+  Diagonal = 'diagonal'
+}

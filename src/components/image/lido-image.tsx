@@ -78,7 +78,7 @@ export class LidoImage {
   /**
    * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
    */
-  @Prop() visible: boolean;
+  @Prop() visible: boolean | string;
 
   /**
    * URL or identifier of an audio file associated with the image.
