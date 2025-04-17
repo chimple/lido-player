@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DropHasDrag, DropLength, LessonEndKey, SelectedValuesKey, Diagonal } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DropHasDrag, DropLength, LessonEndKey, SelectedValuesKey, DropMode } from './constants';
 import { dispatchActivityEndEvent, dispatchClickEvent, dispatchElementDropEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -263,7 +263,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
 
-    if(element.getAttribute('dropAttr')?.toLowerCase() === Diagonal) {
+    if(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       const computedStyle = window.getComputedStyle(element);
       const rect = element.getBoundingClientRect();
       if (!clone) {
@@ -455,7 +455,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
 
-    if (element.getAttribute('dropAttr')?.toLowerCase() === Diagonal) {
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
           if (element) {
               element.classList.add('diagonal-drop');
@@ -729,7 +729,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
           const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
           
-          if (element.getAttribute('dropAttr')?.toLowerCase() === Diagonal) {
+          if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
             dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;

@@ -11,7 +11,6 @@ export const ElementDropKey = 'lidoElementDrop';
 export const ElementClickKey = 'lidoElementClick';
 export const DropLength = 'dropLength';
 export const DropHasDrag = 'dropHasDrag';
-export const Diagonal = 'diagonal';
 
 export enum TraceMode {
   NoFlow = 'lido-noFlow',
@@ -25,4 +24,8 @@ export default class GameScore{
   rightMoves: number = 0;
   wrongMoves: number = 0;
   finalScore: number = 0;
+}
+
+export enum DropMode {
+  Diagonal = 'diagonal'
 }
