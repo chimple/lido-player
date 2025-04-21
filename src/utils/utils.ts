@@ -1210,6 +1210,23 @@ function addClickListenerForClickType(element: HTMLElement): void {
     }
   };
   element.addEventListener('click', onClick);
+
+  element.addEventListener('mouseup', () => {
+    if (element.getAttribute('animation')=='clickable') {
+    setTimeout(()=>{
+      element.classList.remove('removeShadow');
+      element.style.top="0px";
+      element.style.position="relative";
+    },50)}
+  });
+
+  element.addEventListener('mousedown', () => {
+    if (element.getAttribute('animation')=='clickable') {
+      element.classList.add('removeShadow')
+      element.style.top="40px";
+      element.style.position="relative";
+    }
+  });
 }
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {

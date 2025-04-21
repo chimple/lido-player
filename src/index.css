@@ -31,3 +31,19 @@ body {
   filter: grayscale(100%);
   pointer-events: none;
 }
+
+.removeShadow {
+  box-shadow:0px 0px 0px 0px #FF8900 !important; 
+}
+
+lido-col[animation='clickable'] {
+  box-shadow: 0px 40px 0px 0px #FF8900;
+}
+
+lido-row[gap='80px'] {
+  gap: 80px !important;
+}
+
+lido-text[custom='white'] {
+  background: transparent !important;
+}
