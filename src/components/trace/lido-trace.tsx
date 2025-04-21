@@ -73,7 +73,7 @@ export class LidoTrace {
    * Mode for the tracing interaction, defining how users interact with the SVG paths.
    * Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`.
    */
-  @Prop() mode: string;
+  @Prop() mode: string = TraceMode.ShowFlow;
 
   //   @Element() el!: HTMLElement;
 
@@ -147,7 +147,7 @@ export class LidoTrace {
 
   // Insert the fetched SVG into the container and adjust viewBox
   insertSVG(svgText: string) {
-    const svgContainer = document.getElementById('svgContainer') as HTMLElement;
+    const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
     svgContainer.innerHTML = svgText;
 
     // After inserting, get the SVG element
@@ -171,7 +171,7 @@ export class LidoTrace {
 
   // Retrieve the SVG element from the container
   getSVGElement() {
-    const svgContainer = document.getElementById('svgContainer') as HTMLElement;
+    const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
     return svgContainer.querySelector('svg');
   }
 
@@ -185,7 +185,6 @@ export class LidoTrace {
     const totalLength = path.getTotalLength();
     const interval = totalLength / (markerCount + 1); // Space markers evenly
     const markers: SVGPolygonElement[] = [];
-
     for (let i = 1; i <= markerCount; i++) {
       const point = path.getPointAtLength(i * interval);
       const nextPoint = path.getPointAtLength((i + 0.5) * interval); // Slightly ahead point for direction
@@ -222,7 +221,9 @@ export class LidoTrace {
 
       // Create green path for tracing effect
       const greenPath = path.cloneNode() as SVGPathElement;
-      greenPath.setAttribute('stroke', 'green');
+      greenPath.style.opacity = '100';
+      greenPath.style['stroke-opacity'] = '100';
+      // greenPath.setAttribute('stroke', 'green');
       greenPath.setAttribute('stroke-width', '13');
       greenPath.setAttribute('stroke-dasharray', pathLength.toString());
       greenPath.setAttribute('stroke-dashoffset', pathLength.toString()); // Hidden initially
@@ -263,7 +264,7 @@ export class LidoTrace {
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
-    circle.setAttribute('r', '20'); // Radius of the draggable circle
+    circle.setAttribute('r', `calc(${state.paths[0].style['stroke-width'] ?? 10} / 2)`); // Radius of the draggable circle
     circle.setAttribute('fill', 'red');
     state.svg?.appendChild(circle);
     state.circle = circle;
@@ -377,10 +378,11 @@ export class LidoTrace {
       // Create a new path element if it's the first trace for the current path index
       if (!state.currentFreePath[state.currentPathIndex]) {
         const newPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        newPath.setAttribute('stroke', 'green');
-        newPath.setAttribute('stroke-width', '8');
+        // newPath.setAttribute('stroke', 'green');
+        newPath.setAttribute('stroke-width', state.paths[0].style['stroke-width']);
         newPath.setAttribute('fill', 'none');
-
+        newPath.setAttribute('stroke-linecap', 'round');
+        newPath.setAttribute('stroke', 'lightgreen');
         // Start the new path at the current pointer position
         newPath.setAttribute('d', `M${pointerPos.x},${pointerPos.y}`);
         state.svg?.appendChild(newPath);
@@ -534,6 +536,12 @@ export class LidoTrace {
       this.insertSVG(svgText);
 
       state.svg = this.getSVGElement();
+      if (this.mode === TraceMode.BlindTracing || this.mode === TraceMode.BlindFreeTrace) {
+        //make image in the svg style as display none
+        state.svg.querySelectorAll('image').forEach(img => {
+          img.style.display = 'none';
+        });
+      }
       state.paths = this.getPaths(state.svg);
 
       this.setupDrawingPath(state);
