@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Host } from '@stencil/core';
+import { Component, Prop, h, State, Host, Watch } from '@stencil/core';
 import { DragSelectedMapKey, SelectedValuesKey, NextContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
 
@@ -147,6 +147,11 @@ export class LidoHome {
       // Parse containers from the root XML element
       this.parseContainers(rootElement);
     }
+  }
+
+  @Watch('xmlData')
+  onXmlDataChange(newValue: string) {
+    this.parseXMLData(newValue);
   }
 
   /**

@@ -363,6 +363,14 @@ export namespace Components {
          */
         "height": string;
         /**
+          * Unique identifier for the text element.
+         */
+        "id": string;
+        /**
+          * Enables border-image slice support when true; otherwise, behaves as a regular image component
+         */
+        "isSlice": string;
+        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
@@ -378,6 +386,10 @@ export namespace Components {
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch": string;
+        /**
+          * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
+         */
+        "sliceWidth": string;
         /**
           * The source URL of the image to be displayed.
          */
@@ -1554,6 +1566,14 @@ declare namespace LocalJSX {
          */
         "height"?: string;
         /**
+          * Unique identifier for the text element.
+         */
+        "id"?: string;
+        /**
+          * Enables border-image slice support when true; otherwise, behaves as a regular image component
+         */
+        "isSlice"?: string;
+        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
@@ -1569,6 +1589,10 @@ declare namespace LocalJSX {
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
+         */
+        "sliceWidth"?: string;
         /**
           * The source URL of the image to be displayed.
          */

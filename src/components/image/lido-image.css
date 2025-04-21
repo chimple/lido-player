@@ -7,3 +7,9 @@
   aspect-ratio: 1 / 1; /* Ensures the image retains a 1:1 aspect ratio
   /* The image will scale to fit within its container, keeping the aspect ratio */
 }
+
+.slice {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
