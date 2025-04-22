@@ -8,7 +8,7 @@ import { TraceMode } from '../../utils/constants';
   tag: 'lido-trace',
   styleUrl: 'lido-trace.css',
   shadow: false,
-  assetsDirs: ['svg'],
+  assetsDirs: ['svg', 'images'], //  ← added “images” so finger.png is bundled
 })
 export class LidoTrace {
   /**
@@ -81,6 +81,12 @@ export class LidoTrace {
   @State() isDragging: boolean = false;
   @State() activePointerId: number | null = null;
 
+  /** ───────────────────────────────────────────────────────────
+   *  NEW: idle‑timer + finger‑hint state
+   *  ─────────────────────────────────────────────────────────── */
+  @State() idleTimer: number | null = null;
+  @State() fingerImg: SVGImageElement | null = null;
+
   // MODES = ['noFlow', 'showFlow', 'freeTrace', 'blindTracing', 'blindFreeTrace'];
 
   // Handle the pointermove event with optimizations
@@ -103,6 +109,8 @@ export class LidoTrace {
       mode: this.mode,
       flowMarkers: [] as SVGPolygonElement[],
       freeTraceLines: [] as SVGPathElement[],
+      currentFreePath: [] as (SVGPathElement | null)[],
+      lastPointerPos: null as { x: number; y: number } | null,
     };
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
@@ -111,6 +119,64 @@ export class LidoTrace {
   componentWillLoad() {
     this.initializeSVG();
   }
+
+  /** ───────────────────────────────────────────────────────────
+   *  Idle‑timer helpers
+   *  ─────────────────────────────────────────────────────────── */
+  private resetIdleTimer(state: any) {
+    console.log('🚀 ~ LidoTrace ~ resetIdleTimer ~ state:', state);
+    if (this.idleTimer !== null) {
+      clearTimeout(this.idleTimer);
+      this.idleTimer = null;
+    }
+    this.idleTimer = window.setTimeout(() => {
+      this.showFingerHint(state);
+    }, 3000);
+  }
+
+  private showFingerHint(state: any) {
+    if (this.fingerImg) return; // already showing
+
+    const currentPath = state.paths[state.currentPathIndex];
+    if (!currentPath) return;
+
+    /**  FIX: centre the image on the path (was offset down‑right)  **/
+    const IMG_SIZE = 40; // width & height of finger.png
+
+    const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'build/assets/images/trace/finger.png');
+    img.setAttribute('width', `${IMG_SIZE}`);
+    img.setAttribute('height', `${IMG_SIZE}`);
+    img.setAttribute('id', 'lido-finger-hint');
+    img.style.pointerEvents = 'none';
+    img.style.opacity = '0.8';
+
+    // place the image so its centre aligns with the path’s start point
+    // const start = currentPath.getPointAtLength(0);
+    img.setAttribute('x', '0');
+    img.setAttribute('y', '0');
+
+    // animateMotion
+    const motion = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+    motion.setAttribute('dur', '2s');
+    motion.setAttribute('repeatCount', 'indefinite');
+
+    const mpath = document.createElementNS('http://www.w3.org/2000/svg', 'mpath');
+    mpath.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#${currentPath.id}`);
+    motion.appendChild(mpath);
+    img.appendChild(motion);
+
+    state.svg?.appendChild(img);
+    this.fingerImg = img;
+  }
+
+  private hideFingerHint() {
+    if (this.fingerImg && this.fingerImg.parentNode) {
+      this.fingerImg.parentNode.removeChild(this.fingerImg);
+    }
+    this.fingerImg = null;
+  }
+
   // Fetch the SVG file asynchronously
   async fetchSVG(url: string): Promise<string> {
     const response = await fetch(url);
@@ -219,6 +285,9 @@ export class LidoTrace {
     state.paths.forEach((path: any, index: number) => {
       const pathLength = path.getTotalLength();
 
+      /** give every path an id so <mpath> can follow it */
+      path.setAttribute('id', 'lido-path-' + index); //  ← NEW
+
       // Create green path for tracing effect
       const greenPath = path.cloneNode() as SVGPathElement;
       greenPath.style.opacity = '100';
@@ -268,6 +337,8 @@ export class LidoTrace {
     circle.setAttribute('fill', 'red');
     state.svg?.appendChild(circle);
     state.circle = circle;
+
+    this.resetIdleTimer(state); // ← start idle timer once the SVG is ready
   }
 
   // Add necessary event listeners using Pointer Events
@@ -287,9 +358,10 @@ export class LidoTrace {
       if (distance <= state.proximityThreshold * state.proximityThreshold) {
         state.isDragging = true;
         state.activePointerId = evt.pointerId;
-        // Capture the pointer to continue receiving events even if it leaves the element
         state.circle.setPointerCapture(evt.pointerId);
       }
+      this.hideFingerHint(); // ← NEW
+      this.resetIdleTimer(state); // ← NEW
     });
 
     // Handle pointermove on the SVG to update the circle position
@@ -306,19 +378,16 @@ export class LidoTrace {
     });
 
     // Handle pointerup and pointercancel on the SVG to stop dragging
-    state.svg?.addEventListener('pointerup', (evt: PointerEvent) => {
+    const endDrag = (evt: PointerEvent) => {
       if (evt.pointerId === state.activePointerId) {
         state.isDragging = false;
         state.activePointerId = null;
+        this.hideFingerHint(); // ← NEW
+        this.resetIdleTimer(state); // ← NEW
       }
-    });
-
-    state.svg?.addEventListener('pointercancel', (evt: PointerEvent) => {
-      if (evt.pointerId === state.activePointerId) {
-        state.isDragging = false;
-        state.activePointerId = null;
-      }
-    });
+    };
+    state.svg?.addEventListener('pointerup', endDrag);
+    state.svg?.addEventListener('pointercancel', endDrag);
 
     // Optional: Prevent context menu on long press
     state.svg?.addEventListener('contextmenu', (evt: MouseEvent) => {
@@ -330,6 +399,8 @@ export class LidoTrace {
   handlePointerMove(state: any) {
     if (!state.isDragging) return;
     if (!state.circle || !state.paths || state.paths.length === 0) return;
+
+    this.hideFingerHint(); // user is active, remove hint
 
     const evt = state.pointerMoveEvent as PointerEvent;
     const pointerPos = this.getPointerPosition(evt, state.svg!);
@@ -423,6 +494,7 @@ export class LidoTrace {
         state.currentFreePath[state.currentPathIndex] = null; // Reset free path for next path
       }
 
+      // this.resetIdleTimer(state); // ← keep timer alive
       return; // Exit early since we're in free trace or blind free trace mode
     }
 
@@ -445,6 +517,8 @@ export class LidoTrace {
       //   this.loadAnotherSVG(state, true);
       triggerNextContainer();
     }
+
+    // this.resetIdleTimer(state); // ← keep timer alive
   }
 
   // Get the pointer position relative to the SVG
@@ -510,27 +584,11 @@ export class LidoTrace {
   async loadAnotherSVG(state: any, isNext: boolean) {
     state.isDragging = false;
 
-    // Update fileIndex based on whether isNext is true or false
-    // if (isNext) {
-    //   state.fileIndex++;
-    //   if (state.fileIndex >= this.svgFiles.length) {
-    //     state.fileIndex = this.svgFiles.length - 1; // Stay at the last file
-    //     return;
-    //   }
-    // } else {
-    //   state.fileIndex--;
-    //   if (state.fileIndex < 0) {
-    //     state.fileIndex = 0; // Stay at the first file
-    //     return;
-    //   }
-    // }
-
     try {
       if (state.svg) {
         this.cleanupPreviousSVG(state);
       }
 
-      //   const svgText = await this.fetchSVG(this.svgSource ?? this.svgFiles[state.fileIndex]);
       const svgText = await this.fetchSVG(this.svgSource);
 
       this.insertSVG(svgText);
@@ -567,6 +625,9 @@ export class LidoTrace {
     state.currentPathIndex = 0;
     state.lastLength = 0;
     state.totalPathLength = state.paths[0].getTotalLength();
+
+    this.hideFingerHint();
+    this.resetIdleTimer(state);
   }
 
   // Move to the next path in the SVG
@@ -575,8 +636,9 @@ export class LidoTrace {
     state.currentPathIndex++;
     state.lastLength = 0;
 
+    this.hideFingerHint(); // remove hint when changing path
+
     if (state.currentPathIndex >= state.paths.length) {
-      //  this.loadAnotherSVG(state, true);
       triggerNextContainer();
       return;
     }
@@ -596,6 +658,8 @@ export class LidoTrace {
     if (state.mode === TraceMode.ShowFlow) {
       state.flowMarkers = this.createFlowMarkersForPath(nextPath);
     }
+
+    this.resetIdleTimer(state);
   }
 
   render() {
@@ -607,9 +671,6 @@ export class LidoTrace {
       zIndex: this.z,
       position: 'absolute' as const,
     };
-
-    // List of SVG file names to process sequentially
-    // const svgFiles = ['A_test.svg', 'B_test.svg', 'C_test.svg', 'D_test.svg', 'अ_test.svg', 'ट_test.svg', 'क_test.svg', 'ख_test.svg', 'ग_test.svg']; // Add more SVG file names as needed
 
     return (
       <Host class="lido-trace" id={this.id} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} tabindex={this.tabIndex}>
