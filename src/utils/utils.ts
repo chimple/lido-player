@@ -230,7 +230,6 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
-  let originalTransform = '';
   let clone: HTMLElement | null = null;
 
   // Fetch the container element
@@ -275,6 +274,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         clone.style.width = `${rect.width}px`;
         clone.style.height = `${rect.height}px`;
         clone.style.transform = computedStyle.transform;
+        clone.style.zIndex = '0';
         clone.setAttribute('visible', 'true');
         clone.classList.add('cloned-element');
         document.body.appendChild(clone);
@@ -1227,6 +1227,25 @@ function addClickListenerForClickType(element: HTMLElement): void {
       element.style.position="relative";
     }
   });
+
+  // Touch events
+  element.addEventListener('touchstart', () => {
+    if (element.getAttribute('animation') === 'clickable') {
+      element.classList.add('removeShadow');
+      element.style.top = "40px";
+      element.style.position = "relative";
+    }
+  }, { passive: true });
+
+  element.addEventListener('touchend', () => {
+    if (element.getAttribute('animation') === 'clickable') {
+      setTimeout(() => {
+        element.classList.remove('removeShadow');
+        element.style.top = "0px";
+        element.style.position = "relative";
+      }, 50);
+    }
+  }, { passive: true });
 }
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
@@ -1321,9 +1340,9 @@ async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'dr
       .highlight {
         // border: 4px solid #e74c3c; /* Thicker red border for more visibility */
         // border-radius: 12px; /* Larger rounded corners */
-        background-color: rgba(231, 76, 60, 0.3); /* Stronger, more noticeable background */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); /* Stronger shadow */
-        outline: 4px solid rgba(231, 76, 60, 0.6); /* Glow effect */
+        // background-color: rgba(231, 76, 60, 0.3); /* Stronger, more noticeable background */
+        // box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+        // outline: 4px solid rgba(231, 76, 60, 0.6); /* Glow effect */
       }
     `;
 

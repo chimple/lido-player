@@ -140,6 +140,13 @@ export class LidoCol {
   @Prop() borderImage?: string;
 
   /**
+   * Applies a CSS box-shadow to the component.
+   * Accepts any valid CSS box-shadow value.
+   * Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+  */
+  @Prop() boxShadow?: string;
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string } = {};
@@ -182,7 +189,9 @@ export class LidoCol {
       flexDirection: !this.direction ? 'column' : parseProp(this.direction, orientation),
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
+      boxShadow: this.boxShadow ? this.boxShadow : 'unset'
     };
+    console.log(this.style)
   }
 
   render() {

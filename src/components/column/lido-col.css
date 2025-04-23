@@ -12,6 +12,7 @@
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
+  box-shadow: var(--boxShadow, unset);
 }
 
 .lido-col > * {
