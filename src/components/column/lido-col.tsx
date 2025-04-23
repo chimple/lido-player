@@ -191,7 +191,6 @@ export class LidoCol {
       borderImageSlice: borderImg ? '0 fill' : '',
       boxShadow: this.boxShadow ? this.boxShadow : 'unset'
     };
-    console.log(this.style)
   }
 
   render() {
