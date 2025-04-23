@@ -124,7 +124,6 @@ export class LidoTrace {
    *  Idle‑timer helpers
    *  ─────────────────────────────────────────────────────────── */
   private resetIdleTimer(state: any) {
-    console.log('🚀 ~ LidoTrace ~ resetIdleTimer ~ state:', state);
     if (this.idleTimer !== null) {
       clearTimeout(this.idleTimer);
       this.idleTimer = null;
@@ -285,7 +284,7 @@ export class LidoTrace {
     state.paths.forEach((path: any, index: number) => {
       const pathLength = path.getTotalLength();
 
-      /** give every path an id so <mpath> can follow it */
+      // /** give every path an id so <mpath> can follow it */
       path.setAttribute('id', 'lido-path-' + index); //  ← NEW
 
       // Create green path for tracing effect
@@ -293,7 +292,8 @@ export class LidoTrace {
       greenPath.style.opacity = '100';
       greenPath.style['stroke-opacity'] = '100';
       // greenPath.setAttribute('stroke', 'green');
-      greenPath.setAttribute('stroke-width', '13');
+      const strokeWidth = path.style['stroke-width'] || path.getAttribute('stroke-width');
+      greenPath.setAttribute('stroke-width', strokeWidth);
       greenPath.setAttribute('stroke-dasharray', pathLength.toString());
       greenPath.setAttribute('stroke-dashoffset', pathLength.toString()); // Hidden initially
       path.parentNode.appendChild(greenPath, path);
@@ -311,7 +311,7 @@ export class LidoTrace {
       } else {
         // In other modes, show the black path
         path.setAttribute('stroke', '#000');
-        path.setAttribute('stroke-width', '10');
+        path.setAttribute('stroke-width', strokeWidth);
         path.setAttribute('fill', 'none');
         path.setAttribute('stroke-dasharray', pathLength.toString());
         path.setAttribute('stroke-dashoffset', '0'); // Fully visible initially
@@ -330,10 +330,11 @@ export class LidoTrace {
   setupDraggableCircle(state: any) {
     const firstPathStart = state.paths[0].getPointAtLength(0);
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
-    circle.setAttribute('r', `calc(${state.paths[0].style['stroke-width'] ?? 10} / 2)`); // Radius of the draggable circle
+    circle.setAttribute('r', `calc(${strokeWidth || 10} / 2)`); // Radius of the draggable circle
     circle.setAttribute('fill', 'red');
     state.svg?.appendChild(circle);
     state.circle = circle;
@@ -450,7 +451,8 @@ export class LidoTrace {
       if (!state.currentFreePath[state.currentPathIndex]) {
         const newPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         // newPath.setAttribute('stroke', 'green');
-        newPath.setAttribute('stroke-width', state.paths[0].style['stroke-width']);
+        const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');
+        newPath.setAttribute('stroke-width', strokeWidth);
         newPath.setAttribute('fill', 'none');
         newPath.setAttribute('stroke-linecap', 'round');
         newPath.setAttribute('stroke', 'lightgreen');
