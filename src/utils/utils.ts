@@ -1211,33 +1211,16 @@ function addClickListenerForClickType(element: HTMLElement): void {
   };
   element.addEventListener('click', onClick);
 
-  element.addEventListener('mouseup', () => {
-    if (element.getAttribute('animation')=='clickable') {
-    setTimeout(()=>{
-      element.classList.remove('removeShadow');
-      element.style.top="0px";
-      element.style.position="relative";
-    },50)}
-  });
-
-  element.addEventListener('mousedown', () => {
-    if (element.getAttribute('animation')=='clickable') {
-      element.classList.add('removeShadow')
-      element.style.top="40px";
-      element.style.position="relative";
-    }
-  });
-
-  // Touch events
-  element.addEventListener('touchstart', () => {
+  // using pointerup and pointerdown - for handling mouse and touch events combined
+  element.addEventListener('pointerdown', () => {
     if (element.getAttribute('animation') === 'clickable') {
       element.classList.add('removeShadow');
       element.style.top = "40px";
       element.style.position = "relative";
     }
-  }, { passive: true });
-
-  element.addEventListener('touchend', () => {
+  });
+  
+  element.addEventListener('pointerup', () => {
     if (element.getAttribute('animation') === 'clickable') {
       setTimeout(() => {
         element.classList.remove('removeShadow');
@@ -1245,7 +1228,8 @@ function addClickListenerForClickType(element: HTMLElement): void {
         element.style.position = "relative";
       }, 50);
     }
-  }, { passive: true });
+  });
+  
 }
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
