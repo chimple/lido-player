@@ -409,7 +409,7 @@ export namespace Components {
         /**
           * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
          */
-        "visible": boolean;
+        "visible": boolean | string;
         /**
           * The width of the image component (CSS value, e.g., '100px', '50%').
          */
@@ -912,7 +912,7 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`.
+          * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`
          */
         "mode": string;
         /**
@@ -1612,7 +1612,7 @@ declare namespace LocalJSX {
         /**
           * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
          */
-        "visible"?: boolean;
+        "visible"?: boolean | string;
         /**
           * The width of the image component (CSS value, e.g., '100px', '50%').
          */
@@ -2115,7 +2115,7 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`.
+          * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`
          */
         "mode"?: string;
         /**

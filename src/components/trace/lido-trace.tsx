@@ -1,5 +1,5 @@
-import { Component, Prop, h, Host, State } from '@stencil/core';
-import { triggerNextContainer } from '../../utils/utils';
+import { Component, Prop, h, Host, State, Watch } from '@stencil/core';
+import { convertUrlToRelative, triggerNextContainer } from '../../utils/utils';
 import { TraceMode } from '../../utils/constants';
 
 // Enum for different tracing modes
@@ -71,7 +71,7 @@ export class LidoTrace {
 
   /**
    * Mode for the tracing interaction, defining how users interact with the SVG paths.
-   * Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`.
+   * Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`
    */
   @Prop() mode: string = TraceMode.ShowFlow;
 
@@ -91,6 +91,8 @@ export class LidoTrace {
 
   // Handle the pointermove event with optimizations
   // Update the path trace as the red circle moves
+  @Watch('svgSource')
+  @Watch('mode')
   async initializeSVG() {
     let state = {
       fileIndex: -1,
@@ -143,7 +145,7 @@ export class LidoTrace {
     const IMG_SIZE = 40; // width & height of finger.png
 
     const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'build/assets/images/trace/finger.png');
+    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative('assets/images/trace/finger.png'));
     img.setAttribute('width', `${IMG_SIZE}`);
     img.setAttribute('height', `${IMG_SIZE}`);
     img.setAttribute('id', 'lido-finger-hint');
@@ -591,7 +593,7 @@ export class LidoTrace {
         this.cleanupPreviousSVG(state);
       }
 
-      const svgText = await this.fetchSVG(this.svgSource);
+      const svgText = await this.fetchSVG(convertUrlToRelative(this.svgSource));
 
       this.insertSVG(svgText);
 

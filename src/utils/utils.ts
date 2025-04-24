@@ -263,7 +263,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     element.style.opacity = '0.8';
     element.style.cursor = 'grabbing';
 
-    if(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       const computedStyle = window.getComputedStyle(element);
       const rect = element.getBoundingClientRect();
       if (!clone) {
@@ -278,7 +278,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         clone.setAttribute('visible', 'true');
         clone.classList.add('cloned-element');
         document.body.appendChild(clone);
-  
+
         // for appending into parent
         // const parent = element.parentElement;
         // if (parent) {
@@ -457,24 +457,24 @@ function enableDraggingWithScaling(element: HTMLElement): void {
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
-          if (element) {
-              element.classList.add('diagonal-drop');
-              mostOverlappedElement.classList.add('diagonal-target');
-              lastOverlappedElement = mostOverlappedElement;
-          }
+        if (element) {
+          element.classList.add('diagonal-drop');
+          mostOverlappedElement.classList.add('diagonal-target');
+          lastOverlappedElement = mostOverlappedElement;
+        }
       } else {
-          if (lastOverlappedElement) {
-              lastOverlappedElement.classList.remove('diagonal-target');
-              lastOverlappedElement = null;
-          }
-  
-          element?.classList.remove('diagonal-drop');
+        if (lastOverlappedElement) {
+          lastOverlappedElement.classList.remove('diagonal-target');
+          lastOverlappedElement = null;
+        }
 
-          element.style.transform = `translate(0, 0)`; // drop to original position
-          if (clone) {
-            clone.remove();
-            clone = null;
-          }
+        element?.classList.remove('diagonal-drop');
+
+        element.style.transform = `translate(0, 0)`; // drop to original position
+        if (clone) {
+          clone.remove();
+          clone = null;
+        }
       }
     }
   };
@@ -484,7 +484,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   element.addEventListener('mousedown', onStart);
   element.addEventListener('touchstart', onStart);
   element.addEventListener('click', ev => {
-    if(isClicked){
+    if (isClicked) {
       onClickDropOrDragElement(element, 'drag');
     }
   });
@@ -505,7 +505,7 @@ const findMostoverlappedElement = (element: HTMLElement, type: string) => {
     const overlapHeight = Math.max(0, Math.min(elementRect.bottom, otherRect.bottom) - Math.max(elementRect.top, otherRect.top));
     const overlapArea = overlapWidth * overlapHeight;
 
-    if (overlapArea === 0) return; 
+    if (overlapArea === 0) return;
 
     if (type === 'slide') {
       const elementArea = elementRect.width * elementRect.height;
@@ -530,7 +530,6 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   if (dropElement) {
-
     if (dropElement.getAttribute('isAllowOnlyOneDrop') === 'true' || !dropElement.getAttribute('isAllowOnlyOneDrop')) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
       if (isisFull) {
@@ -575,15 +574,14 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
               otherElement.style.opacity = '1';
             }
           }
-        }); 
+        });
         return;
       }
-      
     }
   }
   if (!dropElement) {
     dragElement.style.transform = 'translate(0,0)';
-    dragElement.style.transition = "transform 0.5s ease";
+    dragElement.style.transition = 'transform 0.5s ease';
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
@@ -657,7 +655,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
   dropLength += 1;
   localStorage.setItem(DropLength, JSON.stringify(dropLength));
 
-  if (dropLength === countPatternWords(dropElement["value"])) {
+  if (dropLength === countPatternWords(dropElement['value'])) {
     const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
     if (isisFull) {
       isisFull.isFull = true;
@@ -728,7 +726,7 @@ const executeActions = async (actionsString: string, thisElement: HTMLElement, e
 
           const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
           const scaledTop = (dropCenterY - dragCenterY) / containerScale;
-          
+
           if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
             dragElement.style.transform = `translate(${scaledLeft - 90}px, ${scaledTop - 90}px)`;
           } else {
@@ -1135,7 +1133,7 @@ function addClickListenerForClickType(element: HTMLElement): void {
       dispatchClickEvent(element, isCorrect);
       if (isCorrect) {
         const onCorrect = element.getAttribute('onCorrect');
-        element.style.pointerEvents = "none";
+        element.style.pointerEvents = 'none';
         await executeActions(onCorrect, element);
       } else {
         const onInCorrect = element.getAttribute('onInCorrect');
@@ -1445,7 +1443,7 @@ export function convertUrlToRelative(url: string): string {
   const container = document.querySelector('#lido-container') as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
-  if (url?.startsWith('http')) {
+  if (url?.startsWith('http') || url?.startsWith('blob')) {
     return url;
   } else if (baseUrl) {
     return baseUrl + url;
