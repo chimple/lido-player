@@ -31,3 +31,7 @@ body {
   filter: grayscale(100%);
   pointer-events: none;
 }
+
+.removeShadow {
+  box-shadow:0px 0px 0px 0px #FF8900 !important; 
+}
