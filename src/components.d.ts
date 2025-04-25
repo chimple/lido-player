@@ -122,6 +122,10 @@ export namespace Components {
          */
         "borderImage"?: string;
         /**
+          * Applies a CSS box-shadow to the component. Accepts any valid CSS box-shadow value. Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+         */
+        "boxShadow"?: string;
+        /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
@@ -904,6 +908,10 @@ export namespace Components {
          */
         "ariaLabel": string;
         /**
+          * URL for the finger hint image
+         */
+        "fingerHintUrl": string;
+        /**
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */
         "height": string;
@@ -1324,6 +1332,10 @@ declare namespace LocalJSX {
           * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
          */
         "borderImage"?: string;
+        /**
+          * Applies a CSS box-shadow to the component. Accepts any valid CSS box-shadow value. Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+         */
+        "boxShadow"?: string;
         /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
@@ -2106,6 +2118,10 @@ declare namespace LocalJSX {
           * Accessible label for screen readers, providing a textual description of the component's purpose.
          */
         "ariaLabel"?: string;
+        /**
+          * URL for the finger hint image
+         */
+        "fingerHintUrl"?: string;
         /**
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */

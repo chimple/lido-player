@@ -12,7 +12,7 @@ export default meta;
 
 export const QuestionAndOptions: StoryObj = {
   args: {
-    svgFile: ['assets/images/trace/उ (1).svg'],
+    svgFile: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg'],
     mode: 'showFlow',
   },
 
