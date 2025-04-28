@@ -21,7 +21,7 @@ body {
 
 .diagonal-target,
 .diagonal-drop lido-image {
-  transform: scale(0.7) !important;
+  transform: scale(0.8) !important;
   opacity: 1 !important;
 }
 
@@ -30,6 +30,10 @@ body {
   position: absolute !important;
   filter: grayscale(100%);
   pointer-events: none;
+}
+
+.cloned-element lido-text {
+  top: 42px !important;
 }
 
 .removeShadow {
