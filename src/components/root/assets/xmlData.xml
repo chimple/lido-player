@@ -91,8 +91,7 @@
             bgColor="transparent" onEntry="this.position='relative';" y="landscape.300px, portrait.-22px" x="landscape.120px,portrait.-235px">
             <lido-col id="col5" disableEdit="true" visible="true" width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px"
 			    bgColor="transparent" type="drag" tabIndex="6" dropAttr="diagonal" value="cat" onEntry="this.position='relative';" y="landscape.-50px,portrait." >
-                <lido-image src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="landscape.true, portrait.false" width="288px" height="122px"/>
-				<lido-image src="./assets/images/TextBoxImagePortrait.png" onEntry="this.position='absolute'"  visible="landscape.false, portrait.true" width="288px" height="180px"/>
+                <lido-image isSlice="true" src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="landscape.122px, portrait.180px"/>
                 <lido-text display="flex"
                     onEntry="this.position='absolute'; this.fontWeight='600'; this.boxShadow = 'unset'"  
                     font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
@@ -102,8 +101,7 @@
             </lido-col>
 			<lido-col id="col5" disableEdit="true" visible="true" width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px"
 			    bgColor="transparent" type="drag" tabIndex="7" dropAttr="diagonal" value="cow" onEntry="this.position='relative'"  x="landscape., portrait.50px">
-                <lido-image src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="140px"/>
-                <lido-image src="./assets/images/TextBoxImagePortrait.png" onEntry="this.position='absolute'"  visible="landscape.false, portrait.true" width="288px" height="180px"/>
+                <lido-image isSlice="true"  src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="landscape.122px, portrait.180px"/>
 				<lido-text display="flex"
                     onEntry="this.position='absolute'; this.fontWeight='600'; this.boxShadow = 'unset'"  
                     font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
@@ -113,8 +111,7 @@
             </lido-col>
             <lido-col id="col5" disableEdit="true" tabIndex="8" visible="true"  width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px"
 			    bgColor="transparent" type="drag" dropAttr="diagonal" value="lion" onEntry="this.position='relative'; " y="landscape.-50px,portrait." >
-                <lido-image src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'" visible="true" width="288px" height="140px"/>
-                <lido-image src="./assets/images/TextBoxImagePortrait.png" onEntry="this.position='absolute'"  visible="landscape.false, portrait.true" width="288px" height="180px"/>
+                <lido-image isSlice="true" src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'" visible="true" width="288px" height="landscape.122px, portrait.180px"/>
                 <lido-text display="flex"
                     onEntry="this.position='absolute';this.fontWeight='600';this.boxShadow = 'unset'"  
                     font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
@@ -124,8 +121,7 @@
             </lido-col>
             <lido-col id="col5" disableEdit="true" tabIndex="9" visible="true"  width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px" 
 			     bgColor="transparent" type="drag" dropAttr="diagonal" value="crocodile" onEntry="this.position='relative' "  x="landscape., portrait.50px">
-                <lido-image src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="140px"/>
-                <lido-image src="./assets/images/TextBoxImagePortrait.png" onEntry="this.position='absolute'"  visible="landscape.false, portrait.true" width="288px" height="180px"/>
+                <lido-image isSlice="true"  src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="landscape.122px, portrait.180px"/>
                 <lido-text display="flex"
                     onEntry="this.position='absolute'; this.fontWeight='600'; this.boxShadow = 'unset'" 
                     font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
