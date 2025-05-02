@@ -76,14 +76,14 @@
         <!-- Drop Elements  -->
         <lido-row visible="true" width="landscape., portrait.338px"
             onEntry="this.position='absolute'; this.gap='37px';" height="landscape.238px, portrait." y="landscape.340px, portrait.300px" x="landscape.,portrait.520px"
-            direction="landscape.row, portrait.column" >
-            <lido-image id="img1" src="./assets/images/cow.png" tabIndex="2" width="landscape.350px, portrait.338px" visible="true"
+            direction="landscape.row, portrait.column">
+            <lido-image  isSlice="true" id="image1" src="./assets/images/cow.png" tabIndex="2" width="landscape.350px, portrait.338px" visible="true"
                 height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal" isAllowOnlyOneDrop="true" string="lion" value="lion"/>
-            <lido-image id="img2" src="./assets/images/crocodile.png"  tabIndex="3" width="landscape.350px, portrait.338px" visible="true"
+            <lido-image isSlice="true" id="image2" src="./assets/images/crocodile.png"  tabIndex="3" width="landscape.350px, portrait.338px" visible="true"
                 height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="crocodile" value="crocodile" y="landscape.-50px, portrait." x="landscape., portrait.-75px" onEntry="this.position='relative'"/>
-            <lido-image id="img3" src="./assets/images/lion.png" tabIndex="4" width="landscape.350px, portrait.338px" visible="true"
+            <lido-image isSlice="true" id="image3" src="./assets/images/lion.png" tabIndex="4" width="landscape.350px, portrait.338px" visible="true"
                 height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="cow" value="cow"/>
-			<lido-image id="img4" src="./assets/images/cat.png" tabIndex="5" width="landscape.350px, portrait.338px" visible="true"
+			<lido-image isSlice="true" id="image4" src="./assets/images/cat.png" tabIndex="5" width="landscape.350px, portrait.338px" visible="true"
                 height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="cat" value="cat" y="landscape.-50px, portrait."  x="landscape., portrait.-75px" onEntry="this.position='relative'"/>	
         </lido-row>
         <!-- Drag Elements -->
