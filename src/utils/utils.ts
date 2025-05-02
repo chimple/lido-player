@@ -375,12 +375,14 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-        if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
-        }
-        if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.opacity = '0';
+        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+          if (otherElement.tagName.toLowerCase() === 'lido-text') {
+            otherElement.style.border = ''; // Reset border
+            otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          }
+          if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            otherElement.style.opacity = '0';
+          }
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -430,11 +432,11 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const storedTabIndexes = Object.keys(dropObject).map(Number);
         if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-          if (otherElement.tagName.toLowerCase() === 'lido-text') {
-            otherElement.style.border = ''; // Reset border
-            otherElement.style.backgroundColor = 'transparent'; // Reset background color
-          }
           if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+            if (otherElement.tagName.toLowerCase() === 'lido-text') {
+              otherElement.style.border = ''; // Reset border
+              otherElement.style.backgroundColor = 'transparent'; // Reset background color
+            }
             if (otherElement.tagName.toLowerCase() === 'lido-image') {
               otherElement.style.opacity = '0';
             }
@@ -558,11 +560,11 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
           const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
           const storedTabIndexes = Object.keys(dropObject).map(Number);
           if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-            if (otherElement.tagName.toLowerCase() === 'lido-text') {
-              otherElement.style.border = ''; // Reset border
-              otherElement.style.backgroundColor = 'transparent'; // Reset background color
-            }
             if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+              if (otherElement.tagName.toLowerCase() === 'lido-text') {
+                otherElement.style.border = ''; // Reset border
+                otherElement.style.backgroundColor = 'transparent'; // Reset background color
+              }
               if (otherElement.tagName.toLowerCase() === 'lido-image') {
                 otherElement.style.opacity = '0';
               }
@@ -614,11 +616,11 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
       const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-        if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
-        }
         if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+          if (otherElement.tagName.toLowerCase() === 'lido-text') {
+            otherElement.style.border = ''; // Reset border
+            otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
             otherElement.style.opacity = '0';
           }
@@ -920,11 +922,11 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
     const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
     const storedTabIndexes = Object.keys(dropObject).map(Number);
     if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-      if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.border = ''; // Reset border
-        otherElement.style.backgroundColor = 'transparent'; // Reset background color
-      }
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+        if (otherElement.tagName.toLowerCase() === 'lido-text') {
+          otherElement.style.border = ''; // Reset border
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
         }
