@@ -14,7 +14,3 @@
 .lido-text:hover {
   background-color: #f0f0f0;
 }
-
-.cloned-element lido-text {
-  top: 42px !important;
-}

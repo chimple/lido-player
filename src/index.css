@@ -19,6 +19,12 @@ body {
   background-color: #ffdf7d !important;
 }
 
+.diagonal-target,
+.diagonal-drop * {
+  transform: scale(0.8) !important;
+  opacity: 1 !important;
+}
+
 .cloned-element {
   display: flex !important;
   position: absolute !important;
