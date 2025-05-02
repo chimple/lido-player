@@ -20,8 +20,8 @@ body {
 }
 
 .diagonal-target,
-.diagonal-drop lido-image {
-  transform: scale(0.7) !important;
+.diagonal-drop * {
+  transform: scale(0.8) !important;
   opacity: 1 !important;
 }
 
