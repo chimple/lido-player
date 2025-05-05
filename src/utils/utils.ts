@@ -4,6 +4,7 @@ import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
+import { enableReorderDrag } from './reorder';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -492,7 +493,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   });
 }
 
-const findMostoverlappedElement = (element: HTMLElement, type: string) => {
+export const findMostoverlappedElement = (element: HTMLElement, type: string) => {
   const elementRect = element.getBoundingClientRect();
   const allElements = document.querySelectorAll<HTMLElement>(`[type="${type}"]`);
 
@@ -697,7 +698,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
 }
 
 // Function to execute actions parsed from the onMatch string
-const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
+export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
   const actions = parseActions(actionsString);
 
   for (let i = 0; i < actions.length; i++) {
@@ -806,7 +807,7 @@ const parseActions = (input: string): Array<{ actor: string; action: string; val
   return actions;
 };
 
-const matchStringPattern = (pattern: string, arr: string[]): boolean => {
+export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   const patternGroups = pattern.split(',').map(group => group.trim());
 
   let arrIndex = 0;
@@ -944,7 +945,7 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
   handleShowCheck();
 }
 
-const storingEachActivityScore = (flag: boolean) => {
+export const storingEachActivityScore = (flag: boolean) => {
   if (flag) {
     gameScore.rightMoves += 1;
   } else {
@@ -989,7 +990,7 @@ const storeActivityScore = (score: number) => {
   }
 };
 
-const handleShowCheck = () => {
+export const handleShowCheck = () => {
   const container = document.querySelector('#lido-container') as HTMLElement;
   const objectiveString = container['objective'];
   const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
@@ -1081,6 +1082,10 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
     }
     case 'slide': {
       slidingWithScaling(element);
+      break;
+    }
+    case 'word': {
+      enableReorderDrag(element);
       break;
     }
     default:
@@ -1221,21 +1226,20 @@ function addClickListenerForClickType(element: HTMLElement): void {
   element.addEventListener('pointerdown', () => {
     if (element.getAttribute('animation') === 'clickable') {
       element.classList.add('removeShadow');
-      element.style.top = "40px";
-      element.style.position = "relative";
+      element.style.top = '40px';
+      element.style.position = 'relative';
     }
   });
-  
+
   element.addEventListener('pointerup', () => {
     if (element.getAttribute('animation') === 'clickable') {
       setTimeout(() => {
         element.classList.remove('removeShadow');
-        element.style.top = "0px";
-        element.style.position = "relative";
+        element.style.top = '0px';
+        element.style.position = 'relative';
       }, 50);
     }
   });
-  
 }
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {

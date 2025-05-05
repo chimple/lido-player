@@ -180,7 +180,7 @@ export class LidoText {
       fontSize: parseProp(this.fontSize, orientation),
       fontFamily: this.font,
       color: parseProp(this.fontColor, orientation),
-      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'flex' : 'none', // Toggle visibility
+      display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none', // Toggle visibility
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
     };

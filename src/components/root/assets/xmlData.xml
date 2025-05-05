@@ -1,5 +1,38 @@
 <main>
 
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
+		<!-- Chimple Avatar -->
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="1170px" y="105px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+			</lido-avatar>
+			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bgColor="transparent" width="186px" height="20px" x="77px" y="305px" altText="{shadowImage}">
+			</lido-image>
+		</lido-pos>
+
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="70px" width="150px" x="1500px" y="105px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+			<lido-text id="lido-checkButton" bgColor="#5b5bd3" width="150px" height="70px" string="Check" type="click" font="'Baloo 2', serif" font-size="30px" fontColor="white" onEntry="this.fontWeight='800';"></lido-text>
+		</lido-pos>
+
+		<lido-text visible="true" string="The game has been indefinitely postponed." value="The game has been indefinitely postponed" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.boxShadow='unset';" bgColor="transparent" font="'Baloo 2', serif" font-size="40px"></lido-text>
+		<lido-col visible="true" bgColor="white" height="750px" width="1300px" onEntry="this.gap='30px';">
+			<lido-wrap visible="true" height="280px" width="800px" type="blank" bgColor="#efbbef" flex="true" onEntry="this.padding='30px'; this.borderRadius='20px';">
+			</lido-wrap>
+			<lido-col visible="true" height="400px" width="1000px" bgColor="grey">
+				<lido-row visible="true" width="800px" >
+					<lido-text visible="true" type="word" string="indefinitely" value="indefinitely" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="game" value="game" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="postponed" value="postponed" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					
+				</lido-row>
+				<lido-row visible="true" width="800px">
+					<lido-text visible="true" type="word" string="been" value="been" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="has" value="has" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="The" value="The" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+				</lido-row>
+			</lido-col>
+		</lido-col>
+
+	</lido-container>
 	<lido-container id="lido-container" tabIndex="1" value="mainContainer3"
         objective="cow,crocodile,lion,cat"
         bgColor="#B1BEFD" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" visible="true"
@@ -17,8 +50,8 @@
 		</lido-pos>
 
         <!-- Chimple logo character -->
-        <lido-pos id="lido-pos1" value="pos1" x="landscape., portrait.280px" y="landscape.570px, portrait.1220px"
-            ariaHidden="true" bgColor="transparent" type="" visible="true" audio="col1.mp3"
+        <lido-pos id="lido-pos1" value="pos1" x="landscape.1260px, portrait.280px" y="landscape., portrait.1127px"
+            ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3"
             onTouch="" onCorrect="" onEntry="">
             <lido-avatar id="lido-avatar" visible="true" height="350px" width="350px"
                 src="./assets/lido-animation/chimplecharacter.riv">
@@ -52,7 +85,7 @@
         </lido-pos>
         <lido-pos
             id="title" value="title" display="flex" justifyContent="center" alignItems="center"
-            y="landscape.84px,portrait.70px" x="landscape.640px,portrait.263px"  width="landscape.1111px, portrait.374px" height="landscape.64px, portrait.76px" visible="true"
+            y="landscape.84px,portrait.70px" x="landscape.640px,portrait.263px" z="2" width="landscape.1111px, portrait.374px" height="landscape.64px, portrait.76px" visible="true"
             bgColor="transparent" fontFamily="Baloo2">
             <lido-text value="Animal Match-Up" display="flex" onEntry="this.fontWeight='800';this.boxShadow = 'unset'"
                 font="'Baloo 2', serif" fontSize="48px" fontWeight="bold" color="#000000"
@@ -60,7 +93,7 @@
         </lido-pos>
         <lido-pos
             id="subtitle" value="subtitle" display="flex" justifyContent="center"
-            alignItems="center" x="landscape.447px,portrait.89px" y="landscape.189px,portrait.185px"  width="1111px" height="landscape.64px,portrait.70px"
+            alignItems="center" x="landscape.447px,portrait.89px" y="landscape.189px,portrait.185px" z="2" width="1111px" height="landscape.64px,portrait.70px"
             visible="true" bgColor="transparent" font="'Baloo 2', serif">
             <lido-text value="Match the animal names to their pictures" display="flex"
                 onEntry="this.position='absolute';this.fontWeight='600';this.boxShadow = 'unset'" font="'Baloo 2', serif"
@@ -74,17 +107,15 @@
             <lido-image src="./assets/images/dashline.png"/>
         </lido-pos>
         <!-- Drop Elements  -->
-        <lido-row visible="true" width="landscape., portrait.338px"
-            onEntry="this.position='absolute'; this.gap='37px';" height="landscape.238px, portrait." y="landscape.340px, portrait.300px" x="landscape.,portrait.520px"
+        <lido-row visible="true" width="landscape.1200px, portrait.242px"
+            onEntry="this.position='absolute';" height="landscape.238px, portrait.900px" y="landscape.340px, portrait.285px" x="landscape.,portrait.580px"
             direction="landscape.row, portrait.column">
-            <lido-image  isSlice="true" id="image1" src="./assets/images/cow.png" tabIndex="2" width="landscape.350px, portrait.338px" visible="true"
-                height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal" isAllowOnlyOneDrop="true" string="lion" value="lion"/>
-            <lido-image isSlice="true" id="image2" src="./assets/images/crocodile.png"  tabIndex="3" width="landscape.350px, portrait.338px" visible="true"
-                height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="crocodile" value="crocodile" y="landscape.-50px, portrait." x="landscape., portrait.-75px" onEntry="this.position='relative'"/>
-            <lido-image isSlice="true" id="image3" src="./assets/images/lion.png" tabIndex="4" width="landscape.350px, portrait.338px" visible="true"
-                height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="cow" value="cow"/>
-			<lido-image isSlice="true" id="image4" src="./assets/images/cat.png" tabIndex="5" width="landscape.350px, portrait.338px" visible="true"
-                height="landscape.211px, portrait.204px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="cat" value="cat" y="landscape.-50px, portrait."  x="landscape., portrait.-75px" onEntry="this.position='relative'"/>	
+            <lido-image src="./assets/images/LionImg.png" tabIndex="2" width="landscape.240px, portrait.242px" visible="true"
+                height="landscape.242px, portrait.242px" type="drop" dropAttr="diagonal" isAllowOnlyOneDrop="true" string="lion" value="lion"/>
+            <lido-image src="./assets/images/CrocodileImg.png"  tabIndex="3" width="landscape.240px, portrait.242px" visible="true"
+                height="landscape.242px, portrait.242px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="crocodile" value="crocodile"/>
+            <lido-image src="./assets/images/CowImg.png" tabIndex="4" width="landscape.240px, portrait.242px" visible="true"
+                height="landscape.242px, portrait.242px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="cow" value="cow"/>
         </lido-row>
         <!-- Drag Elements -->
         <lido-row visible="true" width="landscape.1200px,portrait.320px" height="landscape.,portrait.970px" direction="landscape.row, portrait.column"
@@ -130,9 +161,7 @@
                 </lido-text>
             </lido-col>
         </lido-row>
-    </lido-container>
-
-
+  </lido-container>
 	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
@@ -210,63 +239,56 @@
 			<lido-image id="pause" disableEdit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//pause.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="this.stop='true'; this.visibility='hidden'; play.visibility='visible';" onEntry="this.visibility='hidden';">
 			</lido-image>
 		</lido-pos>
-		 <lido-pos id="lido-pos1" value="pos1" height="1600px" width="900px" ariaHidden="true" x=""
-            y="" z="-1" type="" visible="landscape.false, portrait.true" audio="col1.mp3" onTouch=""
-            onCorrect="" onEntry="">
-            <lido-image visible="landscape.false, portrait.true" src="./assets/images/potraitscreen1.png" z="0" height="1600px"
-                width="900px" display= "block">
-            </lido-image>
-        </lido-pos>
 
 		<!-- Chimple Avatar -->
-		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="landscape.-10px, portrait.300px" y="landscape.570px, portrait.1200px" ariaHidden="true" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="this.animation='leftToPlace 1.5s linear';">
-			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="landscape.-10px, portrait.100px
+		" y="507px" ariaHidden="true" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="this.animation='leftToPlace 1.5s linear';">
+			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" altText="{chimpleCharacterRive}" bgColor="transparent">
 			</lido-avatar>
-			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bgColor="transparent" width="landscape.186px, portrait." height="200px" x="70px" y="218px" altText="{shadowImgae}">
+			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bgColor="transparent" width="186px" height="40px" x="77px" y="302px" altText="{shadowImgae}">
 			</lido-image>
 		</lido-pos>
 		<!-- Question -->
 		<lido-pos id="question" value="pos2" visible="true" height="150px" width="1050px" bgColor="transparent" z="0" x="260px" y="80px" onEntry="this.animation='topToPlace 0.5s linear';">
-			<lido-image id="image2" disableEdit="true" value="image2" height="150px" width="1050px" bgColor="transparent" display="block" visible= "landscape.true, portrait.false" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/questionBg.png" z="0" >
+			<lido-image id="image2" disableEdit="true" value="image2" visible="true" height="150px" width="1050px" bgColor="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/questionBg.png" z="0" >
 			</lido-image>
-			<lido-image id="image2" disableEdit="true" value="image2" bgColor="transparent" x="-200px" y="-285px" visible= "landscape.false, portrait.true"  src="./assets/images/potraitheader1.png" z="0" display= "block" >
-			</lido-image>  
-			<lido-text id="textA" tabIndex="2" value="{question.id}" visible="true" width="landscape.1000px, portrait.663px" height="100px" onEntry="this.boxShadow='unset'; this.fontWeight='800'; this.marginBottom='50px';" string="Which animal is known as “the king of the jungle”?" font="'Baloo 2', serif" font-size="landscape.40px, portrait.48px" fontColor="black" bgColor="transparent" z="0" x="landscape.25px, portrait.-125px" y="landscape.20px, portrait.57px">
+			<lido-text id="textA" tabIndex="2" value="{question.id}" visible="true" width="1000px" height="100px" onEntry="this.boxShadow='unset'; this.fontWeight='800'; this.marginBottom='50px';" string="Which animal is known as “the king of the jungle”?" font="'Baloo 2', serif" font-size="40px" fontColor="black" bgColor="transparent" z="0" x="25px" y="20px">
 			</lido-text>
 		</lido-pos>
 		<!-- Options -->
 		<lido-pos id="pos3" disableEdit="true" value="pos3" visible="true" height="0" width="" bgColor="transparent" x="" y="" z="1" onEntry="this.animation='bottomToPlace 1s linear'; this.display='grid'; this.placeItems='center';">
-			<lido-row id="row" value="row" display="landscape.flex, portrait.grid"  visible="true" width="landscape.auto, portrait.675px" height="260px" bgColor="transparent" y="landscape.300px, portrait.425px" x="landscape.171px, portrait.115px" onEntry="this.gap='80px';">
-					<lido-col id="option1" value="{options[0].id}" visible="true" width="landscape.auto, portrait.300px" height="landscape.auto, portrait.316px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px'; "  onCorrect=" this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46'; this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out'; this.transform= 'scale(1.05)';" bgColor="#FFAC4C"  boxShadow="0px 40px 0px 0px #FF8900" animation="clickable">
-						<lido-image id="{options[0].id}" tabIndex="3" value="image4" visible="true" width="landscape.170px, portrait.280px" height="landscape.170px, portrait.270px" src="./assets/images/giraffe1.png" bgColor="transparent" onEntry="this.marginTop='-13px';" altText="{option[0].image}">
+			<lido-image isSlice="true" id="image3" disableEdit="true" value="image3" visible="true" height="515px" width="1300px" z='-1' y="300px" bgColor="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/optionsBg.png">
+			</lido-image>
+			<lido-row id="row" value="row" visible="true" width="auto" height="260px" bgColor="transparent" y="425px" onEntry="this.gap='20px';">
+					<lido-col id="option1" value="{options[0].id}" visible="true" width="auto" height="230px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px'; " onInCorrect="this.border='8px solid red';" onCorrect=" this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46'; this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out'; this.transform= 'scale(1.05)';" bgColor="transparent">
+						<lido-image id="{options[0].id}" tabIndex="3" value="image4" visible="true" width="170px" height="170px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/giraffe.png" bgColor="transparent" onEntry="this.marginTop='5px';" altText="{option[0].image}">
 						</lido-image>
-						<lido-text id="{options[0].id}" tabIndex="4" value="{options[0].id}" visible="true" width="220px" flexibleWidth="false" font="'Baloo 2', serif"  font-size="48px" fontColor="black" string="Giraffe"  onEntry="this.boxShadow='unset'; this.fontWeight='750'; this.borderRadius='20px'; this.marginTop='-5px';" bgColor='transparent'>
+						<lido-text id="{options[0].id}" tabIndex="4" value="{options[0].id}" visible="true" width="220px" flexibleWidth="false" font="'Baloo 2', serif"  font-size="36px" fontColor="black" string="GIRAFFE" bgColor="white" onEntry="this.boxShadow='unset'; this.fontWeight='800'; this.borderRadius='20px'; this.marginTop='10px';">
 						</lido-text>
 					</lido-col>
-					<lido-col id="option2" value="{options[1].id}" visible="true" width="landscape.auto, portrait.300px" height="landscape.auto, portrait.316px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px'; " onInCorrect="" onCorrect="this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46'; this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out';
-					this.transform= 'scale(1.05)';" bgColor="#FFAC4C"  boxShadow="0px 40px 0px 0px #FF8900" animation="clickable">
-						<lido-image id="{options[1].id}" tabIndex="5" value="image5" visible="true" width="landscape.170px, portrait.280px" height="landscape.170px, portrait.270px" src="./assets/images/tiger1.png" bgColor="transparent" onEntry="this.marginTop='-13px';" altText="{options[1].image}">
+					<lido-col id="option2" value="{options[1].id}" visible="true" width="auto" height="230px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px';" onInCorrect="this.border='8px solid red';" onCorrect="this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46'; this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out';
+					this.transform= 'scale(1.05)';" bgColor="transparent">
+						<lido-image id="{options[1].id}" tabIndex="5" value="image5" visible="true" width="170px" height="170px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/leopard.png" bgColor="transparent" onEntry="this.marginTop='5px';" altText="{options[1].image}">
 						</lido-image>
-						<lido-text id="{options[1].id}" tabIndex="6" value="{options[1].id}" visible="true" width="220px" flexibleWidth="false" font="'Baloo 2', serif" font-size="48px" fontColor="black" string="Tiger"  onEntry="this.boxShadow='unset'; this.fontWeight='750'; this.borderRadius='20px'; this.marginTop='-5px';" bgColor='transparent'>
+						<lido-text id="{options[1].id}" tabIndex="6" value="{options[1].id}" visible="true" width="220px" flexibleWidth="false" font="'Baloo 2', serif" font-size="36px" fontColor="black" string="LEOPARD" bgColor="white" onEntry="this.boxShadow='unset'; this.fontWeight='800'; this.borderRadius='20px'; this.marginTop='10px';">
 						</lido-text>
 					</lido-col>
-					<lido-col id="option3" value="{options[2].id}" visible="true" width="landscape.auto, portrait.300px" height="landscape.auto, portrait.316px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px'; " onCorrect="this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46'; this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out';
-					this.transform= 'scale(1.05)';" onInCorrect="this.border='8px solid red';" bgColor="#FFAC4C" boxShadow="0px 40px 0px 0px #FF8900" animation="clickable">
-						<lido-image id="{options[2].id}" tabIndex="7" value="image5" visible="true" width="landscape.170px, portrait.280px" height="landscape.170px, portrait.270px" src="./assets/images/lion1.png" bgColor="transparent" onEntry="this.marginTop='-13px';" altText="{options[2].image}">
+					<lido-col id="option3" value="{options[2].id}" visible="true" width="auto" height="230px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px';" onCorrect="this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46'; this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out';
+					this.transform= 'scale(1.05)';" onInCorrect="this.border='8px solid red';" bgColor="transparent">
+						<lido-image id="{options[2].id}" tabIndex="7" value="image5" visible="true" width="170px" height="170px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/lion.png" bgColor="transparent" onEntry="this.marginTop='5px';" altText="{options[2].image}">
 						</lido-image>
-						<lido-text id="{options[2].id}" tabIndex="8" value="{options[2].id}" visible="true" width="220px" flexibleWidth="false" font="'Baloo 2', serif" font-size="48px" fontColor="black" string="Lion" onEntry="this.boxShadow='unset'; this.fontWeight='750'; this.borderRadius='20px'; this.marginTop='-5px';" bgColor='transparent'>
+						<lido-text id="{options[2].id}" tabIndex="8" value="{options[2].id}" visible="true" width="220px" flexibleWidth="false" font="'Baloo 2', serif" font-size="36px" fontColor="black" string="LION" bgColor="white" onEntry="this.boxShadow='unset'; this.fontWeight='800'; this.borderRadius='20px'; this.marginTop='10px';">
 						</lido-text>
 					</lido-col>
-					<lido-col id="option4" value="{options[3].id}" visible="true" width="landscape.auto, portrait.300px" height="landscape.auto, portrait.316px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px'; " onInCorrect="" onCorrect="this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46';  this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out'; this.transform= 'scale(1.05)';" bgColor="#FFAC4C"  boxShadow="0px 40px 0px 0px #FF8900" animation="clickable">
-						<lido-image id="{options[3].id}" tabIndex="9" value="image6" visible="true" width="landscape.170px, portrait.280px" height="landscape.170px, portrait.270px" src="./assets/images/leopard1.png" bgColor="transparent" onEntry="this.marginTop='-13px';" altText="{options[3].image}">
+					<lido-col id="option4" value="{options[3].id}" visible="true" width="auto" height="230px" type="click" onEntry="this.border='3px solid #F3A040'; this.borderRadius='24px';" onInCorrect="this.border='8px solid red';" onCorrect="this.border='8px solid #65BC46'; this.boxShadow='0 0 30px #65BC46';  this.transition='box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out'; this.transform= 'scale(1.05)';" bgColor="transparent">
+						<lido-image id="{options[3].id}" tabIndex="9" value="image6" visible="true" width="170px" height="170px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/tiger.png" bgColor="transparent" onEntry="this.marginTop='5px';" altText="{options[3].image}">
 						</lido-image>
-						<lido-text id="{options[3].id}" tabIndex="10" value="{options[3].id}" visible="true" width="239px" flexibleWidth="false" font="'Baloo 2', serif" font-size="48px" fontColor="black" string="Leopard" onEntry="this.boxShadow='unset'; this.fontWeight='750'; this.borderRadius='20px'; this.marginTop='-5px';" bgColor='transparent'>
+						<lido-text id="{options[3].id}" tabIndex="10" value="{options[3].id}" visible="true" width="220px" flexibleWidth="false" font="'Baloo 2', serif" font-size="36px" fontColor="black" string="TIGER" bgColor="white" onEntry="this.boxShadow='unset'; this.fontWeight='800'; this.borderRadius='20px'; this.marginTop='10px';">
 						</lido-text>
 					</lido-col>
 				</lido-row>
 		</lido-pos>
 	</lido-container>
-
 	<!-- <lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">

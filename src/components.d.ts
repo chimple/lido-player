@@ -980,6 +980,10 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
+          * Enables flex layout mode for the container. If set to `"true"`, the component will use a flex layout (`display: flex`) instead of the default grid layout (`display: grid`). Additionally, the `lido-wrap` class will be replaced with `lido-flex` to allow custom flex-specific styling.
+         */
+        "flex": string;
+        /**
           * The height of the wrap container (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -2190,6 +2194,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * Enables flex layout mode for the container. If set to `"true"`, the component will use a flex layout (`display: flex`) instead of the default grid layout (`display: grid`). Additionally, the `lido-wrap` class will be replaced with `lido-flex` to allow custom flex-specific styling.
+         */
+        "flex"?: string;
         /**
           * The height of the wrap container (CSS value, e.g., '100px', '50%').
          */
