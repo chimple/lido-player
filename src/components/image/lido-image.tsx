@@ -163,9 +163,9 @@ export class LidoImage {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'flex' : 'none', // Toggle visibility
-      alignItems: 'center', // Vertically center the image
-      justifyContent: 'center', // Horizontally center the image
+      display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none', 
+      alignItems: 'center', 
+      justifyContent: 'center',
 
       // Slice Style
       borderImageSource: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',

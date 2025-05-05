@@ -128,6 +128,13 @@ export class LidoWrap {
   @Prop() maxLength: number;
 
   /**
+   * Enables flex layout mode for the container.
+   * If set to `"true"`, the component will use a flex layout (`display: flex`) instead of the default grid layout (`display: grid`).
+   * Additionally, the `lido-wrap` class will be replaced with `lido-flex` to allow custom flex-specific styling.
+   */
+  @Prop() flex: string;
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string };
@@ -139,6 +146,10 @@ export class LidoWrap {
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'grid');
+    if (this.flex === 'true') {
+      this.el.classList.remove('lido-wrap');
+      this.el.classList.add('lido-flex');
+    }
   }
 
   /**
@@ -165,7 +176,7 @@ export class LidoWrap {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'grid' : 'none', // Toggle visibility
+      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? (this.flex === 'true' ? 'flex' : 'grid') : 'none', // Toggle visibility
     };
   }
 
