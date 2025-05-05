@@ -26,6 +26,7 @@
 graph TD;
   lido-root --> lido-home
   lido-home --> lido-container
+  lido-home --> lido-flash-card
   lido-home --> lido-col
   lido-home --> lido-trace
   lido-home --> lido-image

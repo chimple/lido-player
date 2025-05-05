@@ -188,6 +188,7 @@ export class LidoHome {
           {children}
         </lido-container>
       ),
+      'lido-flash-card': <lido-flash-card {...props}>{children}</lido-flash-card>,
       'lido-col': <lido-col {...props}>{children}</lido-col>,
       'lido-trace': <lido-trace {...props}>{children}</lido-trace>,
       'lido-image': <lido-image {...props}>{children}</lido-image>,

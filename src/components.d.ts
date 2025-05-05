@@ -310,6 +310,96 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoFlashCard {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden": string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel": string;
+        /**
+          * Audio file URL or identifier for sound that will be associated with the column.
+         */
+        "audio": string;
+        /**
+          * Content (any markup) shown on the back face.
+         */
+        "back": any;
+        /**
+          * Background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor": string;
+        /**
+          * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+         */
+        "direction": string;
+        /**
+          * The Display CSS property.
+         */
+        "display"?: string;
+        /**
+          * Whether the card is flipped (back side visible). `mutable` lets the component toggle itself on click; `reflect` keeps the `<lido-flash-card flipped>` attribute in sync.
+         */
+        "flipped": boolean;
+        /**
+          * Content (any markup) shown on the front face.
+         */
+        "front": any;
+        /**
+          * The height of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "height": string;
+        /**
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect": string;
+        /**
+          * Event handler triggered when the column is entered, useful for triggering animations or logic.
+         */
+        "onEntry": string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect": string;
+        /**
+          * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+         */
+        "onTouch": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
+        "tabIndex": number;
+        /**
+          * Defines the type of the column, which can be used for styling or specific logic handling.
+         */
+        "type": string;
+        /**
+          * The value associated with the column component. Typically used for internal logic.
+         */
+        "value": string;
+        /**
+          * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+         */
+        "visible": boolean;
+        /**
+          * The width of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "width": string;
+        /**
+          * X-axis (horizontal) position of the column within its container (CSS value, e.g., '10px', '5%').
+         */
+        "x": string;
+        /**
+          * Y-axis (vertical) position of the column within its container (CSS value, e.g., '10px', '5%').
+         */
+        "y": string;
+        /**
+          * Z-index for stacking order of the column relative to other elements.
+         */
+        "z": string;
+    }
     /**
      * @component LidoHome
      * The `LidoHome` component renders a series of containers parsed from the provided XML data.
@@ -1090,6 +1180,12 @@ declare global {
         prototype: HTMLLidoContainerElement;
         new (): HTMLLidoContainerElement;
     };
+    interface HTMLLidoFlashCardElement extends Components.LidoFlashCard, HTMLStencilElement {
+    }
+    var HTMLLidoFlashCardElement: {
+        prototype: HTMLLidoFlashCardElement;
+        new (): HTMLLidoFlashCardElement;
+    };
     /**
      * @component LidoHome
      * The `LidoHome` component renders a series of containers parsed from the provided XML data.
@@ -1208,6 +1304,7 @@ declare global {
         "lido-avatar": HTMLLidoAvatarElement;
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
+        "lido-flash-card": HTMLLidoFlashCardElement;
         "lido-home": HTMLLidoHomeElement;
         "lido-image": HTMLLidoImageElement;
         "lido-pos": HTMLLidoPosElement;
@@ -1522,6 +1619,96 @@ declare namespace LocalJSX {
         "y"?: string;
         /**
           * Z-index to control the stacking order of the container.
+         */
+        "z"?: string;
+    }
+    interface LidoFlashCard {
+        /**
+          * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+         */
+        "ariaHidden"?: string;
+        /**
+          * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+         */
+        "ariaLabel"?: string;
+        /**
+          * Audio file URL or identifier for sound that will be associated with the column.
+         */
+        "audio"?: string;
+        /**
+          * Content (any markup) shown on the back face.
+         */
+        "back"?: any;
+        /**
+          * Background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor"?: string;
+        /**
+          * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+         */
+        "direction"?: string;
+        /**
+          * The Display CSS property.
+         */
+        "display"?: string;
+        /**
+          * Whether the card is flipped (back side visible). `mutable` lets the component toggle itself on click; `reflect` keeps the `<lido-flash-card flipped>` attribute in sync.
+         */
+        "flipped"?: boolean;
+        /**
+          * Content (any markup) shown on the front face.
+         */
+        "front"?: any;
+        /**
+          * The height of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "height"?: string;
+        /**
+          * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect"?: string;
+        /**
+          * Event handler triggered when the column is entered, useful for triggering animations or logic.
+         */
+        "onEntry"?: string;
+        /**
+          * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect"?: string;
+        /**
+          * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+         */
+        "onTouch"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
+        "tabIndex"?: number;
+        /**
+          * Defines the type of the column, which can be used for styling or specific logic handling.
+         */
+        "type"?: string;
+        /**
+          * The value associated with the column component. Typically used for internal logic.
+         */
+        "value"?: string;
+        /**
+          * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+         */
+        "visible"?: boolean;
+        /**
+          * The width of the column component (CSS value, e.g., '100px', '50%').
+         */
+        "width"?: string;
+        /**
+          * X-axis (horizontal) position of the column within its container (CSS value, e.g., '10px', '5%').
+         */
+        "x"?: string;
+        /**
+          * Y-axis (vertical) position of the column within its container (CSS value, e.g., '10px', '5%').
+         */
+        "y"?: string;
+        /**
+          * Z-index for stacking order of the column relative to other elements.
          */
         "z"?: string;
     }
@@ -2267,6 +2454,7 @@ declare namespace LocalJSX {
         "lido-avatar": LidoAvatar;
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
+        "lido-flash-card": LidoFlashCard;
         "lido-home": LidoHome;
         "lido-image": LidoImage;
         "lido-pos": LidoPos;
@@ -2308,6 +2496,7 @@ declare module "@stencil/core" {
              * such as dimensions, positioning, visibility, and custom event handlers.
              */
             "lido-container": LocalJSX.LidoContainer & JSXBase.HTMLAttributes<HTMLLidoContainerElement>;
+            "lido-flash-card": LocalJSX.LidoFlashCard & JSXBase.HTMLAttributes<HTMLLidoFlashCardElement>;
             /**
              * @component LidoHome
              * The `LidoHome` component renders a series of containers parsed from the provided XML data.

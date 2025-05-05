@@ -25,6 +25,7 @@
 ### Depends on
 
 - [lido-container](../container)
+- [lido-flash-card](../flashCard)
 - [lido-col](../column)
 - [lido-trace](../trace)
 - [lido-image](../image)
@@ -40,6 +41,7 @@
 ```mermaid
 graph TD;
   lido-home --> lido-container
+  lido-home --> lido-flash-card
   lido-home --> lido-col
   lido-home --> lido-trace
   lido-home --> lido-image
