@@ -4,7 +4,7 @@ import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
-import { enableReorderDrag } from './makeSentence';
+import { enableReorderDrag } from './reorder';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {

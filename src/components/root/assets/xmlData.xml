@@ -1,12 +1,16 @@
 <main>
 
-	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="true">
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
 		<!-- Chimple Avatar -->
 		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="1170px" y="105px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
 			</lido-avatar>
 			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bgColor="transparent" width="186px" height="20px" x="77px" y="305px" altText="{shadowImage}">
 			</lido-image>
+		</lido-pos>
+
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="70px" width="150px" x="1500px" y="105px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+			<lido-text id="lido-checkButton" bgColor="#5b5bd3" width="150px" height="70px" string="Check" type="click" font="'Baloo 2', serif" font-size="30px" fontColor="white" onEntry="this.fontWeight='800';"></lido-text>
 		</lido-pos>
 
 		<lido-text visible="true" string="The game has been indefinitely postponed." value="The game has been indefinitely postponed" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.boxShadow='unset';" bgColor="transparent" font="'Baloo 2', serif" font-size="40px"></lido-text>
@@ -29,7 +33,6 @@
 		</lido-col>
 
 	</lido-container>
-
 	<lido-container id="lido-container" tabIndex="1" value="mainContainer3"
         objective="lion,crocodile,cow"
         bgColor="#B1BEFD" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" visible="true"

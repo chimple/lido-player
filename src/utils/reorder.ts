@@ -181,15 +181,16 @@ export function enableReorderDrag(element: HTMLElement): void {
     if (wordParent) {
       const childs = Array.from(wordParent.children);
       const overlap = isOverlappingArea(element, wordParent);
-
-      if (overlap) {
+      console.log("overlap : ", overlap);
+      
+      if (overlap || element.parentElement === wordParent) {
         childs.forEach(item => {
           if (item === element) return;
           if (item.getAttribute('value') === element.getAttribute('value')) {
             item.replaceWith(element);
           }
         });
-      }
+      } 
     }
 
     element.style.opacity = '';
