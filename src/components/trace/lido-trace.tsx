@@ -75,6 +75,11 @@ export class LidoTrace {
    */
   @Prop() mode: string = TraceMode.ShowFlow;
 
+  /**
+   * URL for the finger hint image
+   */
+  @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/finger.png';
+
   //   @Element() el!: HTMLElement;
 
   @State() fileIndex: number = -1;
@@ -145,7 +150,7 @@ export class LidoTrace {
     const IMG_SIZE = 40; // width & height of finger.png
 
     const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative('assets/images/trace/finger.png'));
+    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(this.fingerHintUrl));
     img.setAttribute('width', `${IMG_SIZE}`);
     img.setAttribute('height', `${IMG_SIZE}`);
     img.setAttribute('id', 'lido-finger-hint');

@@ -34,7 +34,7 @@
 
 	</lido-container>
 	<lido-container id="lido-container" tabIndex="1" value="mainContainer3"
-        objective="lion,crocodile,cow"
+        objective="cow,crocodile,lion,cat"
         bgColor="#B1BEFD" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" visible="true"
         audio="background1.mp3" onTouch=""
         onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; this.removeClone='.cloned-element'" onEntry=""
@@ -118,36 +118,46 @@
                 height="landscape.242px, portrait.242px" type="drop" dropAttr="diagonal"  isAllowOnlyOneDrop="true" string="cow" value="cow"/>
         </lido-row>
         <!-- Drag Elements -->
-        <lido-row visible="true" width="landscape.1200px,portrait.320px" height="landscape.,portrait.900px" direction="landscape.row, portrait.column"
-            bgColor="transparent" onEntry="this.position='relative';" y="landscape.300px, portrait.-70px" x="landscape.,portrait.-240px">
+        <lido-row visible="true" width="landscape.1200px,portrait.320px" height="landscape.,portrait.970px" direction="landscape.row, portrait.column"
+            bgColor="transparent" onEntry="this.position='relative';" y="landscape.300px, portrait.-22px" x="landscape.120px,portrait.-235px">
             <lido-col id="col5" disableEdit="true" visible="true" width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px"
-			    bgColor="transparent" type="drag" tabIndex="5" dropAttr="diagonal" value="cow" onEntry="this.position='relative'">
-                <lido-image src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true"/>
+			    bgColor="transparent" type="drag" tabIndex="6" dropAttr="diagonal" value="cat" onEntry="this.position='relative';" y="landscape.-50px,portrait." >
+                <lido-image isSlice="true" src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="landscape.122px, portrait.180px"/>
                 <lido-text display="flex"
                     onEntry="this.position='absolute'; this.fontWeight='600'; this.boxShadow = 'unset'"  
                     font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
-                    fontWeight="bold" color="#000000" string="cow" visible="true" left="-150px"
+                    fontWeight="bold" color="#000000" string="cat" visible="true" y="landscape.35px, portrait.15px"
                     bgColor="transparent">
                 </lido-text>
             </lido-col>
-            <lido-col id="col5" disableEdit="true" tabIndex="6" visible="true"  width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px"
-			    bgColor="transparent" type="drag" dropAttr="diagonal" value="lion" onEntry="this.position='relative' ">
-                <lido-image src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'" visible="true"/>
+			<lido-col id="col5" disableEdit="true" visible="true" width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px"
+			    bgColor="transparent" type="drag" tabIndex="7" dropAttr="diagonal" value="cow" onEntry="this.position='relative'"  x="landscape., portrait.50px">
+                <lido-image isSlice="true"  src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="landscape.122px, portrait.180px"/>
+				<lido-text display="flex"
+                    onEntry="this.position='absolute'; this.fontWeight='600'; this.boxShadow = 'unset'"  
+                    font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
+                    fontWeight="bold" color="#000000" string="cow" visible="true" y="landscape.35px, portrait.15px"
+                    bgColor="transparent">
+                </lido-text>
+            </lido-col>
+            <lido-col id="col5" disableEdit="true" tabIndex="8" visible="true"  width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px"
+			    bgColor="transparent" type="drag" dropAttr="diagonal" value="lion" onEntry="this.position='relative'; " y="landscape.-50px,portrait." >
+                <lido-image isSlice="true" src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'" visible="true" width="288px" height="landscape.122px, portrait.180px"/>
                 <lido-text display="flex"
                     onEntry="this.position='absolute';this.fontWeight='600';this.boxShadow = 'unset'"  
                     font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
-                    fontWeight="bold" color="#000000" string="lion" visible="true" left="-150px"
+                    fontWeight="bold" color="#000000" string="lion" visible="true" y="landscape.35px, portrait.15px"
                     bgColor="transparent">
                 </lido-text>
             </lido-col>
-            <lido-col id="col5" disableEdit="true" tabIndex="7" visible="true"  width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px" 
-			     bgColor="transparent" type="drag" dropAttr="diagonal" value="crocodile" onEntry="this.position='relative' ">
-                <lido-image src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true"/>
+            <lido-col id="col5" disableEdit="true" tabIndex="9" visible="true"  width="landscape.300px, portrait.320px" height="landscape.140px, portrait.100px" 
+			     bgColor="transparent" type="drag" dropAttr="diagonal" value="crocodile" onEntry="this.position='relative' "  x="landscape., portrait.50px">
+                <lido-image isSlice="true"  src="./assets/images/TextBoxImage.png" onEntry="this.position='absolute'"  visible="true" width="288px" height="landscape.122px, portrait.180px"/>
                 <lido-text display="flex"
                     onEntry="this.position='absolute'; this.fontWeight='600'; this.boxShadow = 'unset'" 
                     font="'Baloo 2', serif" fontSize="48px" z="1" fontColor="black"
-                    fontWeight="bold" color="#000000" string="crocodile" visible="true"
-                    left="-150px" bgColor="transparent">
+                    fontWeight="bold" color="#000000" string="crocodile" visible="true" y="landscape.35px, portrait.15px"
+					bgColor="transparent">
                 </lido-text>
             </lido-col>
         </lido-row>

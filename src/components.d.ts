@@ -908,6 +908,10 @@ export namespace Components {
          */
         "ariaLabel": string;
         /**
+          * URL for the finger hint image
+         */
+        "fingerHintUrl": string;
+        /**
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */
         "height": string;
@@ -2118,6 +2122,10 @@ declare namespace LocalJSX {
           * Accessible label for screen readers, providing a textual description of the component's purpose.
          */
         "ariaLabel"?: string;
+        /**
+          * URL for the finger hint image
+         */
+        "fingerHintUrl"?: string;
         /**
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */
