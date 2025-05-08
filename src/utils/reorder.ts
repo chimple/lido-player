@@ -290,17 +290,20 @@ export function enableReorderDrag(element: HTMLElement): void {
         const blankElement = createDummyElement(element);
         element.parentElement.insertBefore(blankElement, element.nextElementSibling);
         placeholder.replaceWith(element);
+        element.style.transform = 'translate(0,0)';
         wordDropComplete(blankArea as HTMLElement, element);
       }, 500);
+      return
     } else {
       const wordArray = Array.from(wordParent.children);
       const prePlace = wordArray.find(el => el.getAttribute('value') === element.getAttribute('value')) as HTMLElement;
       executeActions('this.alignMatch=true', prePlace, element);
       setTimeout(() => {
         prePlace.replaceWith(element);
+        element.style.transform = 'translate(0,0)';
       }, 500);
     }
-    element.style.transform = 'translate(0,0)';
+    
     return;
   };
 
