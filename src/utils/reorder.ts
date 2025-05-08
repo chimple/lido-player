@@ -1,5 +1,5 @@
-import { SelectedValuesKey } from './constants';
-import { executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore } from './utils';
+import { DragSelectedMapKey, SelectedValuesKey } from './constants';
+import { executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from './utils';
 let preOverlap: HTMLElement;
 
 function getElementScale(element: HTMLElement): number {
@@ -25,6 +25,17 @@ export function enableReorderDrag(element: HTMLElement): void {
   const container = document.querySelector('#lido-container') as HTMLElement;
   const blankArea = document.querySelector('[type="blank"]') as HTMLElement;
   const wordParent = element.parentElement !== blankArea ? element.parentElement : null;
+  const elementType = element.getAttribute('type');
+  const optionArea = container.querySelector('[type="optionArea"]') as HTMLElement;
+  if (optionArea) {
+    optionArea.style.display = 'block';
+    optionArea.style.overflowY = 'auto';
+    Array.from(optionArea.children).forEach(el => {
+      const item = el as HTMLElement;
+      item.style.marginBottom = '20px';
+    });
+  }
+
   if (!container) {
     console.error(`Container with ID "lido-container" not found.`);
     return;
@@ -32,7 +43,7 @@ export function enableReorderDrag(element: HTMLElement): void {
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
     isClicked = true;
-    isDragging = false; // Don't set this yet
+    isDragging = false;
 
     const point = getPoint(event);
     startX = point.clientX;
@@ -53,9 +64,8 @@ export function enableReorderDrag(element: HTMLElement): void {
     // Only activate dragging if movement is significant
     if (!isDragging && (dx > 5 || dy > 5)) {
       isDragging = true;
-      isClicked = false;
 
-      if (element.parentElement !== blankArea) {
+      if (element.parentElement !== blankArea && elementType === 'word') {
         const originalWidth = element.style.width;
         const originalPadding = element.style.padding;
         const dummy = document.createElement('div');
@@ -69,6 +79,16 @@ export function enableReorderDrag(element: HTMLElement): void {
         element.style.width = originalWidth;
         element.style.padding = originalPadding;
         dummy.setAttribute('value', `${element.getAttribute('value')}`);
+        element.parentElement.insertBefore(dummy, element.nextElementSibling);
+      }
+
+      if (element.parentElement.getAttribute('type') !== 'category' && elementType === 'option') {
+        const dummy = document.createElement('div');
+        dummy.style.width = element.style.width;
+        dummy.style.height = element.style.height;
+        dummy.style.marginBottom = '10px';
+        dummy.setAttribute('value', `${element.getAttribute('value')}`);
+        dummy.style.visibility = 'hidden';
         element.parentElement.insertBefore(dummy, element.nextElementSibling);
       }
 
@@ -94,6 +114,7 @@ export function enableReorderDrag(element: HTMLElement): void {
     }
 
     if (!isDragging) return;
+    isClicked = false;
     event.preventDefault();
 
     const containerRect = container.getBoundingClientRect();
@@ -105,6 +126,15 @@ export function enableReorderDrag(element: HTMLElement): void {
     element.style.left = `${newLeft}px`;
     element.style.top = `${newTop}px`;
 
+    if (elementType === 'option') {
+      const overlap = findMostoverlappedElement(element, 'option') || findMostoverlappedElement(element, 'dummy');
+      if (overlap && overlap.getAttribute('type') === 'dummy') return;
+      if (preOverlap !== null && preOverlap === overlap) return;
+      moveWithAnimation(element, overlap);
+      preOverlap = overlap;
+      return;
+    }
+
     const overlapped = findMostoverlappedElement(element, 'word') || findMostoverlappedElement(element, 'dummy');
     if (overlapped && overlapped.parentElement !== document.querySelector('[type="blank"]')) return;
     if (overlapped && overlapped.getAttribute('type') === 'dummy') return;
@@ -115,74 +145,96 @@ export function enableReorderDrag(element: HTMLElement): void {
 
   const onEnd = (): void => {
     isDragging = false;
-
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
     document.removeEventListener('touchend', onEnd);
 
     if (isClicked) {
-      isClicked = false;
-
-      if (element.parentElement === wordParent) {
-        const divEl = document.createElement('div');
-        const originalWidth = element.style.width;
-        const originalPadding = element.style.padding;
-        element.style.width = 'auto';
-        element.style.padding = '0 20px';
-        divEl.style.width = `${element.offsetWidth + 20}px`;
-        divEl.style.height = `${element.offsetHeight + 20}px`;
-        element.style.width = originalWidth;
-        element.style.padding = originalPadding;
-        blankArea.appendChild(divEl);
-
-        element.style.transition = 'transform 0.5s ease';
-        executeActions('this.alignMatch=true', divEl, element);
-        setTimeout(() => {
-          const dummy = document.createElement('div');
-
-          element.style.width = 'auto';
-          element.style.padding = '0 20px';
-          dummy.style.width = `${element.offsetWidth + 20}px`;
-          dummy.style.height = `${element.offsetHeight + 20}px`;
-          dummy.style.border = '1px solid';
-          dummy.style.backgroundColor = '#00000021';
-          dummy.style.borderRadius = '10px';
-          element.style.width = originalWidth;
-          element.style.padding = originalPadding;
-          dummy.setAttribute('value', `${element.getAttribute('value')}`);
-
-          element.parentElement.insertBefore(dummy, element.nextElementSibling);
-
-          element.style.transform = 'translate(0,0)';
-          divEl.replaceWith(element);
-          wordDropComplete(blankArea as HTMLElement, element);
-        }, 500);
-
-      } else {
-        const wordArray = Array.from(wordParent.children);
-        const prePlace = wordArray.find(el => el.getAttribute('value') === element.getAttribute('value')) as HTMLElement;
-        element.style.transition = 'transform 0.5s ease';
-        executeActions('this.alignMatch=true', prePlace, element);
-        setTimeout(() => {
-          element.style.transform = 'translate(0,0)';
-          prePlace.replaceWith(element);
-        }, 500);
-      }
-
+      onClickElement(element);
       return;
     }
 
-    const dummy = document.querySelector('[type="dummy"]') as HTMLElement;
-    if (dummy) {
-      dummy.replaceWith(element);
+    if (elementType === 'option') {
+      const category = findMostoverlappedElement(element, 'category');
+      if (category) {
+        const dummy = document.querySelector('[type="dummy"]') as HTMLElement;
+        if (dummy) {
+          resetElementStyles(element);
+          element.style.marginBottom = '10px';
+
+          dummy.replaceWith(element);
+          category.parentElement.classList.add('highlight-element');
+          const categoryArr = container.querySelectorAll('[type="category"]');
+          categoryArr.forEach(el => {
+            if (el === category) return;
+            el.parentElement.classList.remove('highlight-element');
+          });
+          onDropToCategory(element, category);
+          element.style.transform = 'translate(0,0)';
+        }
+        const sameElArr = Array.from(container.querySelectorAll(`[value="${element.getAttribute('value')}"]`));
+        const divEl = sameElArr.find(el => el !== element) as HTMLElement;
+        if (divEl) {
+          const keyframes = `
+            @keyframes widthDecrease {
+              0% { width: ${divEl.offsetWidth}px; height: ${divEl.offsetHeight}px; }
+              100% { width: 0px; height: 0px;}
+            }
+          `;
+          const styleSheet = document.styleSheets[0];
+          styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+          divEl.style.animation = `widthDecrease 0.3s`;
+          divEl.addEventListener('animationend', () => {
+            divEl.remove();
+          });
+        }
+      } else {
+        const sameElArr = Array.from(container.querySelectorAll(`[value="${element.getAttribute('value')}"]`));
+        const divEl = sameElArr.find(el => el !== element) as HTMLElement;
+        if (element.parentElement['type'] !== 'category') {
+          element.style.transition = 'transform 0.5s ease';
+          executeActions('this.alignMatch=true', divEl, element);
+          setTimeout(() => {
+            resetElementStyles(element);
+            divEl.replaceWith(element);
+          }, 500);
+        } else {
+          const optionArea = container.querySelector('[type="optionArea"]') as HTMLElement;
+          const categoryElement = element.parentElement;
+          const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+          const tabKey = categoryElement['tabIndex'];
+          const targetValue = element['value'];
+          if (dragValues[tabKey]) {
+            dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
+            localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
+          }
+          resetElementStyles(element);
+          element.style.marginBottom = "20px";
+          optionArea.appendChild(element);
+          optionArea.scrollTo({
+            top: optionArea.scrollHeight,
+            behavior: 'smooth' 
+          });
+          const dummyEl = container.querySelector('[type="dummy"]') as HTMLElement;
+          if (dummyEl) {
+            dummyEl.remove();
+          }
+        }
+      }
+      return;
+    }
+
+    if (findMostoverlappedElement(element, 'blank')) {
+      const dummy = document.querySelector('[type="dummy"]') as HTMLElement;
+      if (dummy) {
+        dummy.replaceWith(element);
+      }
     }
 
     if (wordParent) {
       const childs = Array.from(wordParent.children);
       const overlap = isOverlappingArea(element, wordParent);
-      console.log("overlap : ", overlap);
-      
       if (overlap || element.parentElement === wordParent) {
         childs.forEach(item => {
           if (item === element) return;
@@ -190,26 +242,128 @@ export function enableReorderDrag(element: HTMLElement): void {
             item.replaceWith(element);
           }
         });
-      } 
+      }
     }
 
-    element.style.opacity = '';
-    element.style.cursor = 'move';
-    element.style.zIndex = '';
-    element.style.transform = '';
-    element.style.transition = '';
-    element.style.position = '';
-    element.style.left = '';
-    element.style.top = '';
+    resetElementStyles(element);
 
     preOverlap = null;
     wordDropComplete(blankArea as HTMLElement, element);
   };
 
+  const onClickElement = (element: HTMLElement) => {
+    if (elementType === 'option') {
+      const categoryArr = container.querySelectorAll('[type="category"]');
+      const category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
+      if (element.parentElement.getAttribute('type') === 'category') {
+        const optionArea = container.querySelector('[type="optionArea"]') as HTMLElement;
+        const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+        const tabKey = category['tabIndex'];
+        const targetValue = element['value'];
+        if (dragValues[tabKey]) {
+          dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
+          localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
+        }
+
+        const dummy = document.createElement('div');
+        dummy.style.width = element.style.width;
+        dummy.style.height = element.style.height;
+        optionArea.appendChild(dummy);
+        element.style.transition = 'transform 0.5s ease';
+        element.style.position = 'absolute';
+        optionArea.scrollTo({
+          top: optionArea.scrollHeight,
+          behavior: 'smooth' 
+        });
+        executeActions("this.alignMatch='true'", dummy, element);
+        setTimeout(() => {
+          resetElementStyles(element);
+          element.style.marginBottom = "20px";
+          dummy.replaceWith(element);
+        }, 500);
+        return;
+      } else {
+        if (!category) return;
+        const divEl = document.createElement('div');
+        divEl.style.width = element.style.width;
+        divEl.style.height = element.style.height;
+        category.appendChild(divEl);
+        element.style.position = "absolute";
+        element.style.transition = 'transform 0.5s ease';
+        executeActions('this.alignMatch=true', divEl, element);
+        setTimeout(() => {
+          divEl.replaceWith(element);
+          resetElementStyles(element);
+          onDropToCategory(element, category);
+          element.style.transform = 'translate(0,0)';
+          element.style.marginBottom = '10px';
+        }, 500);
+
+        return;
+      }
+    }
+    if (elementType === 'word' && element.parentElement === wordParent) {
+      const divEl = document.createElement('div');
+      const originalWidth = element.style.width;
+      const originalPadding = element.style.padding;
+      element.style.width = 'auto';
+      element.style.padding = '0 20px';
+      divEl.style.width = `${element.offsetWidth + 20}px`;
+      divEl.style.height = `${element.offsetHeight + 20}px`;
+      element.style.width = originalWidth;
+      element.style.padding = originalPadding;
+      blankArea.appendChild(divEl);
+
+      element.style.transition = 'transform 0.5s ease';
+      executeActions('this.alignMatch=true', divEl, element);
+      setTimeout(() => {
+        const dummy = document.createElement('div');
+
+        element.style.width = 'auto';
+        element.style.padding = '0 20px';
+        dummy.style.width = `${element.offsetWidth + 20}px`;
+        dummy.style.height = `${element.offsetHeight + 20}px`;
+        dummy.style.border = '1px solid';
+        dummy.style.backgroundColor = '#00000021';
+        dummy.style.borderRadius = '10px';
+        element.style.width = originalWidth;
+        element.style.padding = originalPadding;
+        dummy.setAttribute('value', `${element.getAttribute('value')}`);
+
+        element.parentElement.insertBefore(dummy, element.nextElementSibling);
+
+        element.style.transform = 'translate(0,0)';
+        divEl.replaceWith(element);
+        wordDropComplete(blankArea as HTMLElement, element);
+      }, 500);
+    } else {
+      const wordArray = Array.from(wordParent.children);
+      const prePlace = wordArray.find(el => el.getAttribute('value') === element.getAttribute('value')) as HTMLElement;
+      element.style.transition = 'transform 0.5s ease';
+      executeActions('this.alignMatch=true', prePlace, element);
+      setTimeout(() => {
+        element.style.transform = 'translate(0,0)';
+        prePlace.replaceWith(element);
+      }, 500);
+    }
+    return;
+  };
+
   element.style.cursor = 'move';
-  element.addEventListener('mousedown', onStart);
-  element.addEventListener('touchstart', onStart);
+  element.addEventListener('pointerdown', onStart);
 }
+
+const resetElementStyles = (el: HTMLElement): void => {
+  el.style.opacity = '';
+  el.style.cursor = 'move';
+  el.style.zIndex = '';
+  el.style.transform = '';
+  el.style.transition = '';
+  el.style.position = '';
+  el.style.left = '';
+  el.style.top = '';
+  el.style.margin = '';
+};
 
 //find target element
 function isOverlappingArea(dragEl, targetEl) {
@@ -248,11 +402,11 @@ function getOverlapArea(r1: DOMRect, r2: DOMRect): number {
   const y_overlap = Math.max(0, Math.min(r1.bottom, r2.bottom) - Math.max(r1.top, r2.top));
   return x_overlap * y_overlap;
 }
-let animtionTrack = false;
 function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
   if (target === overlapped) return;
-  if (!findMostoverlappedElement(target, 'blank')) return;
-
+  if (overlapped && overlapped.getAttribute('type') === 'option' && overlapped.parentElement.getAttribute('type') !== 'category') return;
+  if (target.getAttribute('type') === 'word' && !findMostoverlappedElement(target, 'blank')) return;
+  if (target.getAttribute('type') === 'option' && !findMostoverlappedElement(target, 'category')) return;
   const blankArea = document.querySelector('[type="blank"]') as HTMLElement;
   const cloneDummy = document.querySelector('[type="dummy"]') as HTMLElement;
 
@@ -260,7 +414,12 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
     if (overlapped) {
       overlapped.parentNode?.insertBefore(cloneDummy, overlapped);
     } else {
-      blankArea.appendChild(cloneDummy);
+      const overlapCategory = findMostoverlappedElement(target, 'category');
+      if (overlapCategory) {
+        overlapCategory.appendChild(cloneDummy);
+      } else {
+        blankArea.appendChild(cloneDummy);
+      }
     }
   } else {
     const originalWidth = target.style.width;
@@ -280,7 +439,12 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
       }
     `;
     if (!overlapped) {
-      blankArea.appendChild(dummy);
+      const overlapCategory = findMostoverlappedElement(target, 'category');
+      if (overlapCategory) {
+        overlapCategory.appendChild(dummy);
+      } else {
+        blankArea.appendChild(dummy);
+      }
     } else {
       overlapped.parentNode?.insertBefore(dummy, overlapped);
     }
@@ -309,7 +473,32 @@ const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
   const elementIndex = wordArray.indexOf(element['value']);
   if (elementIndex >= 0) {
     const res = matchStringPattern(element['value'], [objectiveArray[elementIndex].trim()]);
+
+    if (!res && container['isAllowOnlyCorrect']) {
+      const childs = Array.from(container.querySelectorAll(`[value="${element['value']}"]`));
+      const dubEl = childs.find(el => el !== element);
+      dubEl.replaceWith(element);
+    }
     storingEachActivityScore(res);
     handleShowCheck();
   }
 };
+
+async function onDropToCategory(dragElement: HTMLElement, categoryElement: HTMLElement) {
+  let dragSelected = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+  let elementArr = dragSelected[categoryElement['tabIndex']];
+
+  if (Array.isArray(elementArr)) {
+    if (elementArr.includes(dragElement['value'])) return;
+  }
+
+  for (const key in dragSelected) {
+    const index = dragSelected[key].indexOf(dragElement['value']);
+    if (index !== -1) {
+      dragSelected[key].splice(index, 1);
+    }
+  }
+
+  localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+  await onActivityComplete(dragElement, categoryElement);
+}
