@@ -14,6 +14,29 @@ function getElementScale(element: HTMLElement): number {
   return 1;
 }
 
+const createDummyElement = (element: HTMLElement) => {
+
+  const dummy = document.createElement('div');
+  if(element.getAttribute("type") === "option"){
+    dummy.style.width = element.style.width;
+    dummy.style.height = element.style.height;
+    return dummy;
+  }
+  const originalWidth = element.style.width;
+  const originalPadding = element.style.padding;
+  element.style.width = 'auto';
+  element.style.padding = '0 20px';
+  dummy.style.width = `${element.offsetWidth + 20}px`;
+  dummy.style.height = `${element.offsetHeight + 20}px`;
+  dummy.style.border = '1px solid';
+  dummy.style.backgroundColor = '#00000021';
+  dummy.style.borderRadius = '10px';
+  element.style.width = originalWidth;
+  element.style.padding = originalPadding;
+  dummy.setAttribute('value', `${element.getAttribute('value')}`);
+  return dummy;
+}
+
 export function enableReorderDrag(element: HTMLElement): void {
   let isDragging = false;
   let isClicked = false;
@@ -30,10 +53,6 @@ export function enableReorderDrag(element: HTMLElement): void {
   if (optionArea) {
     optionArea.style.display = 'block';
     optionArea.style.overflowY = 'auto';
-    Array.from(optionArea.children).forEach(el => {
-      const item = el as HTMLElement;
-      item.style.marginBottom = '20px';
-    });
   }
 
   if (!container) {
@@ -66,27 +85,12 @@ export function enableReorderDrag(element: HTMLElement): void {
       isDragging = true;
 
       if (element.parentElement !== blankArea && elementType === 'word') {
-        const originalWidth = element.style.width;
-        const originalPadding = element.style.padding;
-        const dummy = document.createElement('div');
-        element.style.width = 'auto';
-        element.style.padding = '0 20px';
-        dummy.style.width = `${element.offsetWidth + 20}px`;
-        dummy.style.height = `${element.offsetHeight + 20}px`;
-        dummy.style.border = '1px solid';
-        dummy.style.backgroundColor = '#00000021';
-        dummy.style.borderRadius = '10px';
-        element.style.width = originalWidth;
-        element.style.padding = originalPadding;
-        dummy.setAttribute('value', `${element.getAttribute('value')}`);
-        element.parentElement.insertBefore(dummy, element.nextElementSibling);
+        const blankSpace = createDummyElement(element);
+        element.parentElement.insertBefore(blankSpace, element.nextElementSibling);
       }
 
       if (element.parentElement.getAttribute('type') !== 'category' && elementType === 'option') {
-        const dummy = document.createElement('div');
-        dummy.style.width = element.style.width;
-        dummy.style.height = element.style.height;
-        dummy.style.marginBottom = '10px';
+        const dummy = createDummyElement(element);
         dummy.setAttribute('value', `${element.getAttribute('value')}`);
         dummy.style.visibility = 'hidden';
         element.parentElement.insertBefore(dummy, element.nextElementSibling);
@@ -126,21 +130,18 @@ export function enableReorderDrag(element: HTMLElement): void {
     element.style.left = `${newLeft}px`;
     element.style.top = `${newTop}px`;
 
+    let overlap: HTMLElement;
     if (elementType === 'option') {
-      const overlap = findMostoverlappedElement(element, 'option') || findMostoverlappedElement(element, 'dummy');
-      if (overlap && overlap.getAttribute('type') === 'dummy') return;
-      if (preOverlap !== null && preOverlap === overlap) return;
-      moveWithAnimation(element, overlap);
-      preOverlap = overlap;
-      return;
+      overlap = findMostoverlappedElement(element, 'option') || findMostoverlappedElement(element, 'dummy');
+    } else {
+      overlap = findMostoverlappedElement(element, 'word') || findMostoverlappedElement(element, 'dummy');
+      if (overlap && overlap.parentElement !== document.querySelector('[type="blank"]')) return;
     }
 
-    const overlapped = findMostoverlappedElement(element, 'word') || findMostoverlappedElement(element, 'dummy');
-    if (overlapped && overlapped.parentElement !== document.querySelector('[type="blank"]')) return;
-    if (overlapped && overlapped.getAttribute('type') === 'dummy') return;
-    if (preOverlap !== null && preOverlap === overlapped) return;
-    moveWithAnimation(element, overlapped);
-    preOverlap = overlapped;
+    if (overlap && overlap.getAttribute('type') === 'dummy') return;
+    if (preOverlap !== null && preOverlap === overlap) return;
+    moveWithAnimation(element, overlap);
+    preOverlap = overlap;
   };
 
   const onEnd = (): void => {
@@ -149,7 +150,7 @@ export function enableReorderDrag(element: HTMLElement): void {
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
     document.removeEventListener('touchend', onEnd);
-
+    const dummy = document.querySelector('[type="dummy"]') as HTMLElement;
     if (isClicked) {
       onClickElement(element);
       return;
@@ -157,12 +158,11 @@ export function enableReorderDrag(element: HTMLElement): void {
 
     if (elementType === 'option') {
       const category = findMostoverlappedElement(element, 'category');
+      const sameElArr = Array.from(container.querySelectorAll(`[value="${element.getAttribute('value')}"]`));
+      const divEl = sameElArr.find(el => el !== element) as HTMLElement;
+      
       if (category) {
-        const dummy = document.querySelector('[type="dummy"]') as HTMLElement;
         if (dummy) {
-          resetElementStyles(element);
-          element.style.marginBottom = '10px';
-
           dummy.replaceWith(element);
           category.parentElement.classList.add('highlight-element');
           const categoryArr = container.querySelectorAll('[type="category"]');
@@ -171,10 +171,7 @@ export function enableReorderDrag(element: HTMLElement): void {
             el.parentElement.classList.remove('highlight-element');
           });
           onDropToCategory(element, category);
-          element.style.transform = 'translate(0,0)';
         }
-        const sameElArr = Array.from(container.querySelectorAll(`[value="${element.getAttribute('value')}"]`));
-        const divEl = sameElArr.find(el => el !== element) as HTMLElement;
         if (divEl) {
           const keyframes = `
             @keyframes widthDecrease {
@@ -184,23 +181,18 @@ export function enableReorderDrag(element: HTMLElement): void {
           `;
           const styleSheet = document.styleSheets[0];
           styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-          divEl.style.animation = `widthDecrease 0.3s`;
+          divEl.style.animation = `widthDecrease 0.5s`;
           divEl.addEventListener('animationend', () => {
             divEl.remove();
           });
         }
       } else {
-        const sameElArr = Array.from(container.querySelectorAll(`[value="${element.getAttribute('value')}"]`));
-        const divEl = sameElArr.find(el => el !== element) as HTMLElement;
         if (element.parentElement['type'] !== 'category') {
-          element.style.transition = 'transform 0.5s ease';
           executeActions('this.alignMatch=true', divEl, element);
           setTimeout(() => {
-            resetElementStyles(element);
             divEl.replaceWith(element);
           }, 500);
         } else {
-          const optionArea = container.querySelector('[type="optionArea"]') as HTMLElement;
           const categoryElement = element.parentElement;
           const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
           const tabKey = categoryElement['tabIndex'];
@@ -209,24 +201,22 @@ export function enableReorderDrag(element: HTMLElement): void {
             dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
             localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
           }
-          resetElementStyles(element);
-          element.style.marginBottom = "20px";
-          optionArea.appendChild(element);
           optionArea.scrollTo({
             top: optionArea.scrollHeight,
             behavior: 'smooth' 
           });
-          const dummyEl = container.querySelector('[type="dummy"]') as HTMLElement;
-          if (dummyEl) {
-            dummyEl.remove();
+          
+          optionArea.appendChild(element);
+          if (dummy) {
+            dummy.remove();
           }
         }
       }
+      resetElementStyles(element);
       return;
     }
 
     if (findMostoverlappedElement(element, 'blank')) {
-      const dummy = document.querySelector('[type="dummy"]') as HTMLElement;
       if (dummy) {
         dummy.replaceWith(element);
       }
@@ -244,9 +234,7 @@ export function enableReorderDrag(element: HTMLElement): void {
         });
       }
     }
-
     resetElementStyles(element);
-
     preOverlap = null;
     wordDropComplete(blankArea as HTMLElement, element);
   };
@@ -256,7 +244,6 @@ export function enableReorderDrag(element: HTMLElement): void {
       const categoryArr = container.querySelectorAll('[type="category"]');
       const category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
       if (element.parentElement.getAttribute('type') === 'category') {
-        const optionArea = container.querySelector('[type="optionArea"]') as HTMLElement;
         const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const tabKey = category['tabIndex'];
         const targetValue = element['value'];
@@ -265,31 +252,24 @@ export function enableReorderDrag(element: HTMLElement): void {
           localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
         }
 
-        const dummy = document.createElement('div');
-        dummy.style.width = element.style.width;
-        dummy.style.height = element.style.height;
+        const dummy = createDummyElement(element);
         optionArea.appendChild(dummy);
-        element.style.transition = 'transform 0.5s ease';
-        element.style.position = 'absolute';
         optionArea.scrollTo({
           top: optionArea.scrollHeight,
           behavior: 'smooth' 
         });
+        element.style.position = 'absolute';
         executeActions("this.alignMatch='true'", dummy, element);
         setTimeout(() => {
           resetElementStyles(element);
-          element.style.marginBottom = "20px";
           dummy.replaceWith(element);
         }, 500);
         return;
       } else {
         if (!category) return;
-        const divEl = document.createElement('div');
-        divEl.style.width = element.style.width;
-        divEl.style.height = element.style.height;
+        const divEl = createDummyElement(element)
         category.appendChild(divEl);
         element.style.position = "absolute";
-        element.style.transition = 'transform 0.5s ease';
         executeActions('this.alignMatch=true', divEl, element);
         setTimeout(() => {
           divEl.replaceWith(element);
@@ -298,54 +278,29 @@ export function enableReorderDrag(element: HTMLElement): void {
           element.style.transform = 'translate(0,0)';
           element.style.marginBottom = '10px';
         }, 500);
-
         return;
       }
     }
     if (elementType === 'word' && element.parentElement === wordParent) {
-      const divEl = document.createElement('div');
-      const originalWidth = element.style.width;
-      const originalPadding = element.style.padding;
-      element.style.width = 'auto';
-      element.style.padding = '0 20px';
-      divEl.style.width = `${element.offsetWidth + 20}px`;
-      divEl.style.height = `${element.offsetHeight + 20}px`;
-      element.style.width = originalWidth;
-      element.style.padding = originalPadding;
-      blankArea.appendChild(divEl);
-
-      element.style.transition = 'transform 0.5s ease';
-      executeActions('this.alignMatch=true', divEl, element);
+      const placeholder = createDummyElement(element);
+      placeholder.style.visibility = "hidden";
+      blankArea.appendChild(placeholder);
+      executeActions('this.alignMatch=true', placeholder, element);
       setTimeout(() => {
-        const dummy = document.createElement('div');
-
-        element.style.width = 'auto';
-        element.style.padding = '0 20px';
-        dummy.style.width = `${element.offsetWidth + 20}px`;
-        dummy.style.height = `${element.offsetHeight + 20}px`;
-        dummy.style.border = '1px solid';
-        dummy.style.backgroundColor = '#00000021';
-        dummy.style.borderRadius = '10px';
-        element.style.width = originalWidth;
-        element.style.padding = originalPadding;
-        dummy.setAttribute('value', `${element.getAttribute('value')}`);
-
-        element.parentElement.insertBefore(dummy, element.nextElementSibling);
-
-        element.style.transform = 'translate(0,0)';
-        divEl.replaceWith(element);
+        const blankElement = createDummyElement(element);
+        element.parentElement.insertBefore(blankElement, element.nextElementSibling);
+        placeholder.replaceWith(element);
         wordDropComplete(blankArea as HTMLElement, element);
       }, 500);
     } else {
       const wordArray = Array.from(wordParent.children);
       const prePlace = wordArray.find(el => el.getAttribute('value') === element.getAttribute('value')) as HTMLElement;
-      element.style.transition = 'transform 0.5s ease';
       executeActions('this.alignMatch=true', prePlace, element);
       setTimeout(() => {
-        element.style.transform = 'translate(0,0)';
         prePlace.replaceWith(element);
       }, 500);
     }
+    element.style.transform = 'translate(0,0)';
     return;
   };
 
@@ -362,7 +317,6 @@ const resetElementStyles = (el: HTMLElement): void => {
   el.style.position = '';
   el.style.left = '';
   el.style.top = '';
-  el.style.margin = '';
 };
 
 //find target element
@@ -422,15 +376,8 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
       }
     }
   } else {
-    const originalWidth = target.style.width;
-    const originalPadding = target.style.padding;
-    const dummy = document.createElement('div');
-    target.style.width = 'auto';
-    target.style.padding = '0 20px';
-    dummy.style.width = '0px';
-    dummy.style.height = '0px';
-    target.style.width = originalWidth;
-    target.style.padding = originalPadding;
+    const dummy = createDummyElement(target);
+    dummy.style.visibility = "hidden";
     dummy.setAttribute('type', 'dummy');
     const keyframes = `
       @keyframes widthIncrease {
@@ -451,7 +398,7 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
 
     const styleSheet = document.styleSheets[0];
     styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-    dummy.style.animation = `widthIncrease 0.3s`;
+    dummy.style.animation = `widthIncrease 0.5s`;
     dummy.addEventListener('animationend', () => {
       dummy.style.width = `${target.offsetWidth}px`;
       dummy.style.height = `${target.offsetHeight}px`;

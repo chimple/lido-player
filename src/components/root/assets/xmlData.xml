@@ -14,14 +14,14 @@
 		</lido-pos>
 		<lido-row visible="true" bgColor="transparent" width="1500px" height="850px">
 			<lido-col visible="true" type="optionArea" bgColor="transparent" width="300px" height="840px">
-				<lido-text visible="true" bgColor="white" value="apple" string="Apple" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
-				<lido-text visible="true" bgColor="white" value="lion" string="Lion" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
-				<lido-text visible="true" bgColor="white" value="tiger" string="Tiger" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
-				<lido-text visible="true" bgColor="white" value="3" string="3" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
-				<lido-text visible="true" bgColor="white" value="strawberry" string="Strawberry" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
-				<lido-text visible="true" bgColor="white" value="7" string="7" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
-				<lido-text visible="true" bgColor="white" value="mango" string="Mango" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
-				<lido-text visible="true" bgColor="white" value="10" string="10" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="apple" string="Apple" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="lion" string="Lion" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="tiger" string="Tiger" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="3" string="3" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="strawberry" string="Strawberry" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="7" string="7" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="mango" string="Mango" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
+				<lido-text visible="true" bgColor="white" value="10" string="10" width="200px" height="80px" font="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>
 			</lido-col>
 			<lido-row visible="true" bgColor="transparent" width="1150px" height="840px">
 				<lido-col id="cate1" visible="true" width="200px" height="700px" onEntry="this.border='2px solid';" bgColor="#0000005e" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate3.removeClass='highlight-element';">

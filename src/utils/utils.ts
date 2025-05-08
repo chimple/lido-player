@@ -718,10 +718,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
-
           const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
+          dragElement.style.transition = 'transform 0.5s ease';
 
           const dropRect = dropElement.getBoundingClientRect();
           const dragRect = dragElement.getBoundingClientRect();
