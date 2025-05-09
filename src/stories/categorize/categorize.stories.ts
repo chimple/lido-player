@@ -5,6 +5,9 @@ const meta: Meta = {
   title: 'Templates/Categorize',
   argTypes: {
     options:  {control: 'object'},
+    category1: {control: "text"},
+    category2: {control: "text"},
+    category3: {control: "text"},
     correct1: { control: 'text' },
     correct2: { control: 'text' },
     correct3: { control: 'text' },
@@ -15,8 +18,11 @@ export default meta;
 export const QuestionAndOptions: StoryObj = {
   args: {
     options: ["Apple", "Lion", "Tiger", "3", "Strawberry", "7", "Mango", "10"],
+    category1: 'Fruits',
+    category2: 'Numbers',
+    category3: 'Animals',
     correct1: 'Apple,Strawberry,Mango',
-  correct2: '3,7,10',
+    correct2: '3,7,10',
     correct3: 'Lion,Tiger',
   },
 
@@ -50,16 +56,16 @@ function getContainerXml(args) {
         </lido-col>
         <lido-row visible="true" bgColor="transparent" width="1150px" height="840px">
           <lido-col id="cate1" visible="true" width="200px" height="700px" onEntry="this.border='2px solid';" bgColor="#0000005e" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
-            <lido-text visible="true" width="200px" bgColor="black" fontColor="white" string="FRUITS" font-size="30px" font="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
+            <lido-text visible="true" width="200px" bgColor="black" fontColor="white" string="${args.category1}" font-size="30px" font="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
             <lido-col visible="true" id="category1" tabIndex="1" width="200px" height="100%" onEntry="this.display='block'; this.overflow='auto'; this.scrollbarWidth='none';" value="${args.correct1}" bgColor="transparent" type="category">
             </lido-col>
           </lido-col>
           <lido-col id="cate2" visible="true" width="200px" height="700px" onEntry="this.border='2px solid';" bgColor="#0000005e" onTouch="this.addClass='highlight-element'; cate1.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
-            <lido-text visible="true" width="200px" bgColor="black" fontColor="white" string="NUMBERS" font-size="30px" font="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
+            <lido-text visible="true" width="200px" bgColor="black" fontColor="white" string="${args.category2}" font-size="30px" font="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
             <lido-col visible="true" id="category2" tabIndex="2" width="200px" height="100%" onEntry="this.display='block'; this.overflow='auto'; this.scrollbarWidth='none';" value="${args.correct2}" bgColor="transparent" type="category"></lido-col>
           </lido-col>
           <lido-col id="cate3" visible="true" width="200px" height="700px" onEntry="this.border='2px solid';" bgColor="#0000005e" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate1.removeClass='highlight-element';">
-            <lido-text visible="true" width="200px" bgColor="black" fontColor="white" string="ANIMALS" font-size="30px" font="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
+            <lido-text visible="true" width="200px" bgColor="black" fontColor="white" string="${args.category3}" font-size="30px" font="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
             <lido-col visible="true" id="category3" tabIndex="3" width="200px" height="100%" onEntry="this.display='block'; this.overflow='auto'; this.scrollbarWidth='none';" value="${args.correct3}" bgColor="transparent" type="category"></lido-col>
           </lido-col>
         </lido-row>
