@@ -1,5 +1,213 @@
 <main>
 
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
+		<lido-row visible="true" width="100%" font-size="60px" y="70px" onEntry="this.position='absolute'; this.display='block'; this.lineHeight='1.4';">
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string="Last summer, my family and I went on a trip to the "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop1" isSlice="true" disableEdit="true" tabIndex="1" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
+			</lido-image>
+
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string=". We started our journey early in the morning, packing our bags with essentials like "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
+			</lido-image>
+
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string=", "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop3" isSlice="true" disableEdit="true" tabIndex="3" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
+			</lido-image>
+
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string=", and plenty "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop4" isSlice="true" disableEdit="true" tabIndex="4" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1" 
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
+			</lido-image>
+		</lido-row>
+
+		<!-- OPTIONS -->
+
+		<lido-row visible="true" onEntry="this.position='absolute';" width="100%" y="400px">
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Mountains" x="100px" dropAttr="stretch"></lido-text>
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Sunscreen" x="300px" dropAttr="stretch"></lido-text>
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Snacks" x="500px" dropAttr="stretch"></lido-text>
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Water Bottles" x="700px" dropAttr="stretch"></lido-text>
+		</lido-row>
+	</lido-container>
+
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
+		<!-- Chimple Avatar -->
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="1170px" y="105px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+			</lido-avatar>
+			<lido-image id="image1" disableEdit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bgColor="transparent" width="186px" height="20px" x="77px" y="305px" altText="{shadowImage}">
+			</lido-image>
+		</lido-pos>
+
+		<lido-pos id="pos1" disableEdit="true" value="pos1" height="70px" width="150px" x="1500px" y="105px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+			<lido-text id="lido-checkButton" bgColor="#5b5bd3" width="150px" height="70px" string="Check" type="click" font="'Baloo 2', serif" font-size="30px" fontColor="white" onEntry="this.fontWeight='800';"></lido-text>
+		</lido-pos>
+
+		<lido-text visible="true" string="The game has been indefinitely postponed." value="The game has been indefinitely postponed" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.boxShadow='unset';" bgColor="transparent" font="'Baloo 2', serif" font-size="40px"></lido-text>
+		<lido-col visible="true" bgColor="white" height="750px" width="1300px" onEntry="this.gap='30px';">
+			<lido-wrap visible="true" height="280px" width="800px" type="blank" bgColor="#efbbef" flex="true" onEntry="this.padding='30px'; this.borderRadius='20px';">
+			</lido-wrap>
+			<lido-col visible="true" height="400px" width="1000px" bgColor="grey">
+				<lido-row visible="true" width="800px" >
+					<lido-text visible="true" type="word" string="indefinitely" value="indefinitely" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="game" value="game" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="postponed" value="postponed" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					
+				</lido-row>
+				<lido-row visible="true" width="800px">
+					<lido-text visible="true" type="word" string="been" value="been" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="has" value="has" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+					<lido-text visible="true" type="word" string="The" value="The" onEntry="this.padding='10px 30px'; this.fontWeight='800';" font="'Baloo 2', serif" font-size="30px"></lido-text>
+				</lido-row>
+			</lido-col>
+		</lido-col>
+
+	</lido-container>
+
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true" fillInTheBlanks="true">
+		<lido-row
+			visible="true"
+			width="100%"
+			font-size="60px"
+			y="70px"
+			onEntry="
+				this.position='absolute';
+				this.display='block';
+				this.lineHeight='1.4';
+				"
+			>
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string="Last summer, my family and I went on a trip to the "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+			</lido-image>
+
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string=". We started our journey early in the morning, packing our bags with essentials like "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+			</lido-image>
+
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string=", "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+			</lido-image>
+
+			<lido-text 
+				visible="true" 
+				font-size="36px"
+				onEntry="this.display='inline';"
+				string=", and plenty "
+				bgColor="transparent"
+			></lido-text>
+
+			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+				type="drop" isAllowOnlyOneDrop="true" 
+				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+			</lido-image>
+		</lido-row>
+
+		<lido-row visible="true" onEntry="this.position='absolute';" width="100%" y="400px">
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Mountains" x="100px"></lido-text>
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Sunscreen" x="300px"></lido-text>
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Snacks" x="500px"></lido-text>
+			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
+			fontWeight="bold" color="#000000"  visible="true"
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Water Bottles" x="700px"></lido-text>
+		</lido-row>
+	</lido-container>
+
 	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="(apple|strawberry|mango),(3|7|10),(lion|tiger)" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false">
 		<!-- Chimple Avatar -->
 		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="1430px" y="500px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">

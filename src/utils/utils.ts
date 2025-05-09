@@ -480,6 +480,12 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         }
       }
     }
+
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
+        const computedStyle = window.getComputedStyle(element);
+        mostOverlappedElement.style.width = computedStyle.width;
+    }
+
   };
   // Initialize draggable element styles
   element.style.cursor = 'move';
@@ -1642,8 +1648,10 @@ const handlingElementFlexibleWidth = (element: HTMLElement, type: string) => {
     dragEl.style.width = originalWidth;
     dragEl.style.padding = originalPadding;
 
-    if (tempWidth > maxWidth) {
-      maxWidth = tempWidth;
+    if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch)) {
+      if (tempWidth > maxWidth) {
+        maxWidth = tempWidth;
+      }
     }
   });
 
