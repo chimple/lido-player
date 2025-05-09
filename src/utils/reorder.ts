@@ -316,7 +316,6 @@ const resetElementStyles = (el: HTMLElement): void => {
   el.style.cursor = 'move';
   el.style.zIndex = '';
   el.style.transform = '';
-  el.style.transition = '';
   el.style.position = '';
   el.style.left = '';
   el.style.top = '';
