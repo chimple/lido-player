@@ -1,6 +1,6 @@
 <main>
 
-	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true" dropAttr="stretch">
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
 		<lido-row visible="true" width="100%" font-size="60px" y="70px" onEntry="this.position='absolute'; this.display='block'; this.lineHeight='1.4';">
 			<lido-text 
 				visible="true" 
@@ -14,7 +14,8 @@
 				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
 				type="drop" isAllowOnlyOneDrop="true" 
 				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
-				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
 			</lido-image>
 
 			<lido-text 
@@ -29,7 +30,8 @@
 				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
 				type="drop" isAllowOnlyOneDrop="true" 
 				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
-				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
 			</lido-image>
 
 			<lido-text 
@@ -44,7 +46,8 @@
 				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
 				type="drop" isAllowOnlyOneDrop="true" 
 				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
-				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
 			</lido-image>
 
 			<lido-text 
@@ -59,7 +62,8 @@
 				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1" 
 				type="drop" isAllowOnlyOneDrop="true" 
 				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
-				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
+				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png"
+			>
 			</lido-image>
 		</lido-row>
 
@@ -68,16 +72,16 @@
 		<lido-row visible="true" onEntry="this.position='absolute';" width="100%" y="400px">
 			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
 			fontWeight="bold" color="#000000"  visible="true"
-			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Mountains" x="100px"></lido-text>
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Mountains" x="100px" dropAttr="stretch"></lido-text>
 			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
 			fontWeight="bold" color="#000000"  visible="true"
-			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Sunscreen" x="300px"></lido-text>
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Sunscreen" x="300px" dropAttr="stretch"></lido-text>
 			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
 			fontWeight="bold" color="#000000"  visible="true"
-			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Snacks" x="500px"></lido-text>
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Snacks" x="500px" dropAttr="stretch"></lido-text>
 			<lido-text font="'Baloo 2', serif" fontSize="36px" z="1" fontColor="black"
 			fontWeight="bold" color="#000000"  visible="true"
-			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Water Bottles" x="700px"></lido-text>
+			bgColor="transparent" onEntry="this.position='absolute';"  type="drag" string="Water Bottles" x="700px" dropAttr="stretch"></lido-text>
 		</lido-row>
 	</lido-container>
 

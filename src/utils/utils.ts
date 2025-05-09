@@ -481,8 +481,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
       }
     }
 
-    const containerEle = document.querySelector('#lido-container');
-    if (containerEle.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
         const computedStyle = window.getComputedStyle(element);
         if(parseFloat(computedStyle.width) > 150){
           mostOverlappedElement.style.width = computedStyle.width;
@@ -1651,8 +1650,7 @@ const handlingElementFlexibleWidth = (element: HTMLElement, type: string) => {
     dragEl.style.width = originalWidth;
     dragEl.style.padding = originalPadding;
 
-    const containerEle = document.querySelector('#lido-container');
-    if (containerEle.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
       maxWidth = 150;
     } else{
       if (tempWidth > maxWidth) {
