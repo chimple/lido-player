@@ -382,12 +382,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.backgroundColor = 'transparent'; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
-            const containerEle = document.querySelector('#lido-container');
-            if(containerEle.getAttribute('fillInTheBlanks')) {
-              otherElement.style.opacity = '1';
-            } else {
               otherElement.style.opacity = '0';
-            }
           }
         }
       } else {
@@ -444,12 +439,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
               otherElement.style.backgroundColor = 'transparent'; // Reset background color
             }
             if (otherElement.tagName.toLowerCase() === 'lido-image') {
-              const containerEle = document.querySelector('#lido-container');
-              if(containerEle.getAttribute('fillInTheBlanks')) {
-                otherElement.style.opacity = '1';
-              } else {
                 otherElement.style.opacity = '0';
-              }
             }
           }
         } else {
@@ -587,12 +577,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
                 otherElement.style.backgroundColor = 'transparent'; // Reset background color
               }
               if (otherElement.tagName.toLowerCase() === 'lido-image') {
-                const containerEle = document.querySelector('#lido-container');
-                if(containerEle.getAttribute('fillInTheBlanks')) {
-                  otherElement.style.opacity = '1';
-                } else {
                   otherElement.style.opacity = '0';
-                }
               }
             }
           } else {
@@ -649,11 +634,7 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
             const containerEle = document.querySelector('#lido-container');
-            if(containerEle.getAttribute('fillInTheBlanks')) {
-              otherElement.style.opacity = '1';
-            } else {
               otherElement.style.opacity = '0';
-            }
           }
         }
       } else {
@@ -959,12 +940,7 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          const containerEle = document.querySelector('#lido-container');
-          if(containerEle.getAttribute('fillInTheBlanks')) {
-            otherElement.style.opacity = '1';
-          } else {
             otherElement.style.opacity = '0';
-          }
         }
       }
     } else {

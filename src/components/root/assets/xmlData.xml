@@ -10,7 +10,7 @@
 				bgColor="transparent"
 			></lido-text>
 
-			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
+			<lido-image id="drop1" isSlice="true" disableEdit="true" tabIndex="1" visible="true"
 				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
 				type="drop" isAllowOnlyOneDrop="true" 
 				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
@@ -40,7 +40,7 @@
 				bgColor="transparent"
 			></lido-text>
 
-			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
+			<lido-image id="drop3" isSlice="true" disableEdit="true" tabIndex="3" visible="true"
 				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
 				type="drop" isAllowOnlyOneDrop="true" 
 				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
@@ -55,8 +55,8 @@
 				bgColor="transparent"
 			></lido-text>
 
-			<lido-image id="drop2" isSlice="true" disableEdit="true" tabIndex="2" visible="true"
-				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1"
+			<lido-image id="drop4" isSlice="true" disableEdit="true" tabIndex="4" visible="true"
+				width="140px" imageSlice="30 fill" height="60px" value="sunscreen" z="1" 
 				type="drop" isAllowOnlyOneDrop="true" 
 				onEntry="this.display='inline-block'; this.verticalAlign='middle'; this.minWidth='80px'; this.marginRight='4px';"
 				src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/dropCard.png">
