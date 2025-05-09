@@ -382,7 +382,12 @@ function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.backgroundColor = 'transparent'; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
-            otherElement.style.opacity = '0';
+            const containerEle = document.querySelector('#lido-container');
+            if(containerEle.getAttribute('fillInTheBlanks')) {
+              otherElement.style.opacity = '1';
+            } else {
+              otherElement.style.opacity = '0';
+            }
           }
         }
       } else {
@@ -439,7 +444,12 @@ function enableDraggingWithScaling(element: HTMLElement): void {
               otherElement.style.backgroundColor = 'transparent'; // Reset background color
             }
             if (otherElement.tagName.toLowerCase() === 'lido-image') {
-              otherElement.style.opacity = '0';
+              const containerEle = document.querySelector('#lido-container');
+              if(containerEle.getAttribute('fillInTheBlanks')) {
+                otherElement.style.opacity = '1';
+              } else {
+                otherElement.style.opacity = '0';
+              }
             }
           }
         } else {
@@ -480,6 +490,16 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         }
       }
     }
+
+    const containerEle = document.querySelector('#lido-container');
+    // changing the width only for fillInTheBlanks after dropping assigning option with to drop element
+    if(containerEle.getAttribute('fillInTheBlanks')) {
+      const computedStyle = window.getComputedStyle(element);
+      if(parseFloat(computedStyle.width) > 150){
+        mostOverlappedElement.style.width = computedStyle.width;
+      }
+    }
+
   };
   // Initialize draggable element styles
   element.style.cursor = 'move';
@@ -567,7 +587,12 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
                 otherElement.style.backgroundColor = 'transparent'; // Reset background color
               }
               if (otherElement.tagName.toLowerCase() === 'lido-image') {
-                otherElement.style.opacity = '0';
+                const containerEle = document.querySelector('#lido-container');
+                if(containerEle.getAttribute('fillInTheBlanks')) {
+                  otherElement.style.opacity = '1';
+                } else {
+                  otherElement.style.opacity = '0';
+                }
               }
             }
           } else {
@@ -623,7 +648,12 @@ async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTML
             otherElement.style.backgroundColor = 'transparent'; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
-            otherElement.style.opacity = '0';
+            const containerEle = document.querySelector('#lido-container');
+            if(containerEle.getAttribute('fillInTheBlanks')) {
+              otherElement.style.opacity = '1';
+            } else {
+              otherElement.style.opacity = '0';
+            }
           }
         }
       } else {
@@ -929,7 +959,12 @@ async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLE
           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.opacity = '0';
+          const containerEle = document.querySelector('#lido-container');
+          if(containerEle.getAttribute('fillInTheBlanks')) {
+            otherElement.style.opacity = '1';
+          } else {
+            otherElement.style.opacity = '0';
+          }
         }
       }
     } else {
@@ -1626,8 +1661,14 @@ const handlingElementFlexibleWidth = (element: HTMLElement, type: string) => {
     dragEl.style.width = originalWidth;
     dragEl.style.padding = originalPadding;
 
-    if (tempWidth > maxWidth) {
-      maxWidth = tempWidth;
+    const containerEle = document.querySelector('#lido-container');
+    // checking if container is having attribute fillInTheBlanks, setting 150px by default
+    if(containerEle.getAttribute('fillInTheBlanks')) {
+      maxWidth = 150;
+    } else{
+      if (tempWidth > maxWidth) {
+        maxWidth = tempWidth;
+      }
     }
   });
 
