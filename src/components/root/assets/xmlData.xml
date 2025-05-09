@@ -1,6 +1,6 @@
 <main>
 
-	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true" fillInTheBlanks="true">
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true" dropAttr="stretch">
 		<lido-row visible="true" width="100%" font-size="60px" y="70px" onEntry="this.position='absolute'; this.display='block'; this.lineHeight='1.4';">
 			<lido-text 
 				visible="true" 

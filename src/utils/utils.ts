@@ -482,12 +482,11 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     }
 
     const containerEle = document.querySelector('#lido-container');
-    // changing the width only for fillInTheBlanks after dropping assigning option with to drop element
-    if(containerEle.getAttribute('fillInTheBlanks')) {
-      const computedStyle = window.getComputedStyle(element);
-      if(parseFloat(computedStyle.width) > 150){
-        mostOverlappedElement.style.width = computedStyle.width;
-      }
+    if (containerEle.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
+        const computedStyle = window.getComputedStyle(element);
+        if(parseFloat(computedStyle.width) > 150){
+          mostOverlappedElement.style.width = computedStyle.width;
+        }
     }
 
   };
@@ -1653,8 +1652,7 @@ const handlingElementFlexibleWidth = (element: HTMLElement, type: string) => {
     dragEl.style.padding = originalPadding;
 
     const containerEle = document.querySelector('#lido-container');
-    // checking if container is having attribute fillInTheBlanks, setting 150px by default
-    if(containerEle.getAttribute('fillInTheBlanks')) {
+    if (containerEle.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
       maxWidth = 150;
     } else{
       if (tempWidth > maxWidth) {
