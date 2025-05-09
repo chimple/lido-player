@@ -728,7 +728,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
-
           const container = document.querySelector('#lido-container') as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
@@ -758,6 +757,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
         case 'addClass': {
           targetElement.classList.add(action.value);
+          break;
+        }
+        case 'removeClass': {
+          targetElement.classList.remove(action.value);
           break;
         }
         case 'speak': {
@@ -819,7 +822,6 @@ const parseActions = (input: string): Array<{ actor: string; action: string; val
 
 export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   const patternGroups = pattern.split(',').map(group => group.trim());
-
   let arrIndex = 0;
   let options = new Set<string>();
 
@@ -836,7 +838,7 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
         .split('|')
         .map(option => option.trim());
 
-      if (arrIndex >= arrChoice.length) return false;
+      if (arrIndex > arrChoice.length) return false;
       for (let i = 0; i < choices.length; i++) {
         if (!choices.includes(arrChoice[i])) return false;
       }
@@ -888,15 +890,25 @@ const countPatternWords = (pattern: string): number => {
   return wordCount;
 };
 
-async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
+export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
   const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) return;
 
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
   if (isAllowOnlyCorrect) {
     const isCorrect = dropElement['value'].includes(dragElement['value']);
+    
     if (!isCorrect) {
       dragElement.style.transform = 'translate(0,0)';
+      if(dragElement["type"] === "option"){
+        const childs = Array.from(container.querySelectorAll(`[value="${dragElement["value"]}"]`));
+        childs.forEach(item => {
+          if (item === dragElement) return;
+          if (item.getAttribute('value') === dragElement.getAttribute('value')) {
+            item.replaceWith(dragElement);
+          }
+        });
+      }
       return;
     }
   }
@@ -1095,6 +1107,10 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
       break;
     }
     case 'word': {
+      enableReorderDrag(element);
+      break;
+    }
+    case 'option': {
       enableReorderDrag(element);
       break;
     }

@@ -35,3 +35,8 @@ body {
 .removeShadow {
   box-shadow:0px 0px 0px 0px #FF8900 !important; 
 }
+
+.highlight-element {
+  border: 2px solid white !important;
+  box-shadow: 0 2px 4px rgba(151, 150, 150, 0.1) !important;
+}
