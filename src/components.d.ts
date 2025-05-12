@@ -124,10 +124,6 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
-          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
-         */
-        "flow": string;
-        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -135,6 +131,10 @@ export namespace Components {
           * The unique identifier for the column component.
          */
         "id": string;
+        /**
+          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
+         */
+        "layout": string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
@@ -1549,10 +1549,6 @@ declare namespace LocalJSX {
          */
         "childElementsLength"?: number;
         /**
-          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
-         */
-        "flow"?: string;
-        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1560,6 +1556,10 @@ declare namespace LocalJSX {
           * The unique identifier for the column component.
          */
         "id"?: string;
+        /**
+          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
+         */
+        "layout"?: string;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */

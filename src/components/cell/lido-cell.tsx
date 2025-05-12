@@ -137,7 +137,7 @@ export class LidoCell {
    *
    * Default: `'wrap'`
    */
-  @Prop() flow: string = 'wrap';
+  @Prop() layout: string = 'wrap';
 
   /**
    * Applies a CSS box-shadow to the component.
@@ -184,9 +184,9 @@ export class LidoCell {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? (parseProp(this.flow, orientation) === 'wrap' ? 'grid' : 'flex') : 'none',
+      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? (parseProp(this.layout, orientation) === 'wrap' ? 'grid' : 'flex') : 'none',
     };
-    this.el.className = `lido-${parseProp(this.flow, orientation)}`;
+    this.el.className = `lido-${parseProp(this.layout, orientation)}`;
   }
   render() {
     return (

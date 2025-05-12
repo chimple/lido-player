@@ -1,7 +1,7 @@
 <main>
 
 	<lido-container id="lido-container" objective="" tabIndex="1" visible="true" bgColor="#B1BEFD" >
-		<lido-cell visible="true" bgColor="red" width="80%" height="90%"  onEntry="this.padding='50px';">
+		<lido-cell visible="true" bgColor="red" width="80%" height="90%" layout="wrap" onEntry="this.padding='50px';">
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="been" value="been" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="has" value="has" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="The" value="The" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
