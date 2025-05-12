@@ -128,11 +128,6 @@ export class LidoCell {
   @Prop() maxLength: number;
 
   /**
-   * Specifies the direction of the component, which determines the layout or flow of elements.
-   */
-  @Prop() direction: string;
-
-  /**
    * Determines the layout behavior of the component's children.
    *
    * - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format.
@@ -143,11 +138,6 @@ export class LidoCell {
    * Default: `'wrap'`
    */
   @Prop() flow: string = 'wrap';
-
-  /**
-   * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
-   */
-  @Prop() borderImage?: string;
 
   /**
    * Applies a CSS box-shadow to the component.

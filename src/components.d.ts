@@ -116,10 +116,6 @@ export namespace Components {
          */
         "bgColor": string;
         /**
-          * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
-         */
-        "borderImage"?: string;
-        /**
           * Applies a CSS box-shadow to the component. Accepts any valid CSS box-shadow value. Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
          */
         "boxShadow"?: string;
@@ -127,10 +123,6 @@ export namespace Components {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
-        /**
-          * Specifies the direction of the component, which determines the layout or flow of elements.
-         */
-        "direction": string;
         /**
           * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
          */
@@ -1549,10 +1541,6 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
-          * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
-         */
-        "borderImage"?: string;
-        /**
           * Applies a CSS box-shadow to the component. Accepts any valid CSS box-shadow value. Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
          */
         "boxShadow"?: string;
@@ -1560,10 +1548,6 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
-        /**
-          * Specifies the direction of the component, which determines the layout or flow of elements.
-         */
-        "direction"?: string;
         /**
           * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
          */
