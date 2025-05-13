@@ -47,3 +47,30 @@
   align-content: flex-start;
   gap: 10px;
 }
+
+.lido-pos {
+  top: var(--y, 0);
+  left: var(--x, 0);
+  height: var(--height, 100%);
+  width: var(--width, 100%);
+  background-color: var(--bgColor, #eeeeee);
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  position: fixed;
+}
+
+.lido-pos > * {
+  position: absolute;
+}
+
+.lido-random {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute; /* Container is now relative */
+}
+
+.lido-random > * {
+  position: absolute;
+}

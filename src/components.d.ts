@@ -95,7 +95,7 @@ export namespace Components {
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
-     * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`), accessibility,
+     * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`, `pos`, `random`), accessibility,
      * audio, and dynamic child management for rich interactive content.
      */
     interface LidoCell {
@@ -132,7 +132,7 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
+          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction. - `pos`: Applies absolute positioning to children, allowing manual placement using `x` and `y` values. - `random`: Positions child elements randomly within the container using absolute positioning.  Default: `'wrap'`
          */
         "layout": string;
         /**
@@ -1257,7 +1257,7 @@ declare global {
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
-     * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`), accessibility,
+     * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`, `pos`, `random`), accessibility,
      * audio, and dynamic child management for rich interactive content.
      */
     interface HTMLLidoCellElement extends Components.LidoCell, HTMLStencilElement {
@@ -1520,7 +1520,7 @@ declare namespace LocalJSX {
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
-     * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`), accessibility,
+     * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`, `pos`, `random`), accessibility,
      * audio, and dynamic child management for rich interactive content.
      */
     interface LidoCell {
@@ -1557,7 +1557,7 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
-          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction.  Default: `'wrap'`
+          * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction. - `pos`: Applies absolute positioning to children, allowing manual placement using `x` and `y` values. - `random`: Positions child elements randomly within the container using absolute positioning.  Default: `'wrap'`
          */
         "layout"?: string;
         /**
@@ -2697,7 +2697,7 @@ declare module "@stencil/core" {
             /**
              * @component LidoCell
              * A flexible UI cell component configurable via props like size, position, visibility,
-             * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`), accessibility,
+             * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`, `pos`, `random`), accessibility,
              * audio, and dynamic child management for rich interactive content.
              */
             "lido-cell": LocalJSX.LidoCell & JSXBase.HTMLAttributes<HTMLLidoCellElement>;

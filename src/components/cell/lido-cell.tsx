@@ -5,7 +5,7 @@ import { handlingChildElements, initEventsForElement, parseProp } from '../../ut
  * @component LidoCell
  *
  * A flexible UI cell component configurable via props like size, position, visibility,
- * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`), accessibility,
+ * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`, `pos`, `random`), accessibility,
  * audio, and dynamic child management for rich interactive content.
  */
 @Component({
@@ -134,6 +134,8 @@ export class LidoCell {
    * - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`).
    * - `col`: Arranges children in a single column using a vertical flex direction.
    * - `row`: Arranges children in a single row using a horizontal flex direction.
+   * - `pos`: Applies absolute positioning to children, allowing manual placement using `x` and `y` values.
+   * - `random`: Positions child elements randomly within the container using absolute positioning.
    *
    * Default: `'wrap'`
    */
@@ -158,6 +160,17 @@ export class LidoCell {
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'flex');
+    // Select all direct child elements of the component
+    const slotElements = this.el.querySelectorAll('.lido-random > *');
+    if (!slotElements) return;
+    // Iterate over each child and apply random positions
+    slotElements.forEach((child: HTMLElement) => {
+      const randomTop = Math.random() * 100; // Random value between 0 and 100 for vertical position
+      const randomLeft = Math.random() * 100; // Random value between 0 and 100 for horizontal position
+
+      child.style.top = `${randomTop}%`;
+      child.style.left = `${randomLeft}%`;
+    });
   }
 
   /**
@@ -184,13 +197,20 @@ export class LidoCell {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? (parseProp(this.layout, orientation) === 'wrap' ? 'grid' : 'flex') : 'none',
+      display: JSON.parse(parseProp(`${this.visible}`, orientation))
+        ? parseProp(this.layout, orientation) === 'wrap'
+          ? 'grid'
+          : parseProp(this.layout, orientation) === 'pos' || 'random'
+          ? 'block'
+          : 'flex'
+        : 'none',
     };
     this.el.className = `lido-${parseProp(this.layout, orientation)}`;
   }
   render() {
     return (
       <Host
+        id={this.id}
         value={this.value}
         type={this.type}
         tabindex={this.tabIndex}
