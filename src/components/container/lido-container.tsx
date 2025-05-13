@@ -235,7 +235,8 @@ export class LidoContainer {
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
     document.body.style.backgroundColor = this.bgColor;
-    document.body.style.backgroundImage = `url(${backGroundImage})`;
+    this.el.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
+    this.el.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
 
     // Re-scale the container on window resize or load events
     window.addEventListener('resize', () => this.scaleContainer(this.el));

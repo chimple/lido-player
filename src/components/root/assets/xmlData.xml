@@ -1,7 +1,8 @@
 <main>
 
-	<lido-container id="lido-container" objective="" tabIndex="1" visible="true" bgColor="#B1BEFD" >
-		<lido-cell visible="true" bgColor="red" width="80%" height="90%" layout="wrap" onEntry="this.padding='50px';">
+	<lido-container id="lido-container" objective="" tabIndex="1" visible="true" bgImage="./assets/images/Waves.png" bgColor="black">
+
+		<lido-cell visible="true" bgColor="transparent" width="80%" height="90%" layout="wrap" onEntry="this.padding='50px';">
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="been" value="been" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="has" value="has" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="The" value="The" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
@@ -12,6 +13,7 @@
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="post" value="postponed" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
 			<lido-text visible="true" type="word" width="fit-content" height="fit-content" string="visited" value="postponed" onEntry="this.padding='10px 30px'; this.fontWeight='800'; this.transition = 'transform 0.5s ease';" font="'Baloo 2', serif" font-size="30px"></lido-text>
 		</lido-cell>
+
 	</lido-container>
 
 	<!-- <lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true"> -->
@@ -223,7 +225,7 @@
 	<!-- </lido-container> -->
 
 	
-	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
+	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.backgroundColor='30px';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="false" afterDrop="true">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
 			<lido-image id="play" disableEdit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="this.visibilty='hidden'; pause.visibility='visible'; question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true'; option5.speak='true'; option6.speak='true'; this.visibilty='visible'; pause.visibility='hidden';">
