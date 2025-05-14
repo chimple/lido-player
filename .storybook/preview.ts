@@ -1,4 +1,4 @@
-import "../src/index.css";
+import "../src/css/index.css";
 
 import {defineCustomElements} from '../loader';
 defineCustomElements();

@@ -1,4 +1,5 @@
-import { convertUrlToRelative, highlightSpeakingElement, stopHighlightForSpeakingElement, speakText } from './utils';
+import { convertUrlToRelative, speakText } from './utils';
+import { highlightSpeakingElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 
 export class AudioPlayer {
   private static instance: AudioPlayer;
@@ -27,14 +28,13 @@ export class AudioPlayer {
     this.audioElement.src = '';
     const highlightedElements = document.querySelectorAll('.speaking-highlight');
     highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));
-    
-    const playElement = document.querySelector("#play") as HTMLElement;
-    const pauseElement = document.querySelector("#pause") as HTMLElement;
-    if(playElement && pauseElement){
-      playElement.style.visibility = "visible";
-      pauseElement.style.visibility = "hidden";
-    }
 
+    const playElement = document.querySelector('#play') as HTMLElement;
+    const pauseElement = document.querySelector('#pause') as HTMLElement;
+    if (playElement && pauseElement) {
+      playElement.style.visibility = 'visible';
+      pauseElement.style.visibility = 'hidden';
+    }
   }
 
   public async play(targetElement: HTMLElement) {

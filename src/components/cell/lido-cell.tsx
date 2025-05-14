@@ -17,92 +17,92 @@ export class LidoCell {
   /**
    * The unique identifier for the column component.
    */
-  @Prop() id: string;
+  @Prop() id: string = '';
 
   /**
    * The value associated with the column component. Typically used for internal logic.
    */
-  @Prop() value: string;
+  @Prop() value: string = '';
 
   /**
    * The height of the column component (CSS value, e.g., '100px', '50%').
    */
-  @Prop() height: string;
+  @Prop() height: string = 'auto';
 
   /**
    * The width of the column component (CSS value, e.g., '100px', '50%').
    */
-  @Prop() width: string;
+  @Prop() width: string = 'auto';
 
   /**
    * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
    */
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel: string = '';
 
   /**
    * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
    */
-  @Prop() ariaHidden: string;
+  @Prop() ariaHidden: string = '';
 
   /**
    * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
    */
-  @Prop() x: string;
+  @Prop() x: string = '0px';
 
   /**
    * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
    */
-  @Prop() y: string;
+  @Prop() y: string = '0px';
 
   /**
    * The z-index of the column to control stacking order.
    */
-  @Prop() z: string;
+  @Prop() z: string = '0';
 
   /**
    * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
    */
-  @Prop() bgColor: string;
+  @Prop() bgColor: string = '';
 
   /**
    * Defines the type of the column, which can be used for styling or specific logic handling.
    */
-  @Prop() type: string;
+  @Prop() type: string = '';
 
   /**
    * The tab index value, used to set the tab order of the column for keyboard navigation.
    */
-  @Prop() tabIndex: number;
+  @Prop() tabIndex: number =  0;
 
   /**
    * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
    */
-  @Prop() visible: boolean;
+  @Prop() visible: boolean = false;
 
   /**
    * Audio file URL or identifier for sound that will be associated with the column.
    */
-  @Prop() audio: string;
+  @Prop() audio: string = '';
 
   /**
    * Event handler for a touch event, where a custom function can be triggered when the column is touched.
    */
-  @Prop() onTouch: string;
+  @Prop() onTouch: string = '';
 
   /**
    * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
    */
-  @Prop() onInCorrect: string;
+  @Prop() onInCorrect: string = '';
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
-  @Prop() onCorrect: string;
+  @Prop() onCorrect: string = '';
 
   /**
    * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
    */
-  @Prop() onEntry: string;
+  @Prop() onEntry: string = '';
 
   /**
    * Reference to the HTML element that represents this component.
@@ -113,19 +113,19 @@ export class LidoCell {
    * The number of child elements that should be displayed inside the row.
    * This value is dynamically adjusted based on `minLength` and `maxLength`.
    */
-  @Prop() childElementsLength: number;
+  @Prop() childElementsLength: number = 9999;
 
   /**
    * The minimum number of child elements that must be displayed inside the row.
    * If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
    */
-  @Prop() minLength: number;
+  @Prop() minLength: number = 0;
 
   /**
    * The maximum number of child elements that can be displayed inside the row.
    * If `childElementsLength` exceeds this value, excess elements will be hidden.
    */
-  @Prop() maxLength: number;
+  @Prop() maxLength: number = 9999;
 
   /**
    * Determines the layout behavior of the component's children.
@@ -140,13 +140,6 @@ export class LidoCell {
    * Default: `'wrap'`
    */
   @Prop() layout: string = 'wrap';
-
-  /**
-   * Applies a CSS box-shadow to the component.
-   * Accepts any valid CSS box-shadow value.
-   * Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
-   */
-  @Prop() boxShadow?: string;
 
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.

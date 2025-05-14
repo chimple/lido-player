@@ -116,10 +116,6 @@ export namespace Components {
          */
         "bgColor": string;
         /**
-          * Applies a CSS box-shadow to the component. Accepts any valid CSS box-shadow value. Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
-         */
-        "boxShadow"?: string;
-        /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
@@ -1540,10 +1536,6 @@ declare namespace LocalJSX {
           * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor"?: string;
-        /**
-          * Applies a CSS box-shadow to the component. Accepts any valid CSS box-shadow value. Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
-         */
-        "boxShadow"?: string;
         /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */

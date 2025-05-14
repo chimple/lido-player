@@ -12,13 +12,13 @@ import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../u
 @Component({
   tag: 'lido-home',
   shadow: false,
-  styleUrls: ['./../../index.css', '../../utils/css/animation.css', './lido-home.css'],
+  styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
-  @Prop() xmlData: string;
+  @Prop() xmlData: string = '';
 
   /**
    * Initial index of the container being displayed.

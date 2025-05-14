@@ -17,108 +17,108 @@ export class LidoContainer {
   /**
    * Unique identifier for the container.
    */
-  @Prop() id: string;
+  @Prop() id: string = '';
 
   /**
    * Objective or purpose of the container. Can be used for internal logic or tracking.
    */
-  @Prop() objective: string;
+  @Prop() objective: string = '';
 
   /**
    * Custom CSS styles to be applied to the container.
    * Allows for dynamic styling through inline styles or class names.
    */
-  @Prop() customStyle: string;
+  @Prop() customStyle: string = '';
 
   /**
    * Value assigned to the container. This can be used for logic related to this component.
    */
-  @Prop() value: string;
+  @Prop() value: string = '';
 
   /**
    * The height of the container (CSS value).
    */
-  @Prop() height: string;
+  @Prop() height: string = 'auto';
 
   /**
    * The width of the container (CSS value).
    */
-  @Prop() width: string;
+  @Prop() width: string = 'auto';
 
   /**
    * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
    */
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel: string = 'auto';
 
   /**
    * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
    */
-  @Prop() ariaHidden: string;
+  @Prop() ariaHidden: string = '';
 
   /**
    * X-axis (horizontal) position of the container.
    */
-  @Prop() x: string;
+  @Prop() x: string = '0px';
 
   /**
    * Y-axis (vertical) position of the container.
    */
-  @Prop() y: string;
+  @Prop() y: string = '0px';
 
   /**
    * Z-index to control the stacking order of the container.
    */
-  @Prop() z: string;
+  @Prop() z: string = '0';
 
   /**
    * Background color of the container (CSS color value).
    */
-  @Prop() bgColor: string;
+  @Prop() bgColor: string = '';
 
   /**
    * The background image URL to be applied to the entire body.
    */
-  @Prop() bgImage: string;
+  @Prop() bgImage: string = '';
 
   /**
    * Type of the container, which can be used for conditional logic or styling purposes.
    */
-  @Prop() type: string;
+  @Prop() type: string = '';
 
   /**
    * TabIndex for keyboard navigation.
    */
-  @Prop() tabIndex: number;
+  @Prop() tabIndex: number  = 0;
 
   /**
    * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
    */
-  @Prop() visible: boolean;
+  @Prop() visible: boolean = false;
 
   /**
    * URL or identifier of an audio file associated with the container.
    */
-  @Prop() audio: string;
+  @Prop() audio: string = '';
 
   /**
    * Event handler triggered when the container is touched or clicked.
    */
-  @Prop() onTouch: string;
+  @Prop() onTouch: string = '';
 
   /**
    * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
    */
-  @Prop() onInCorrect: string;
+  @Prop() onInCorrect: string = '';
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
-  @Prop() onCorrect: string;
+  @Prop() onCorrect: string = '';
 
   /**
    * Event handler triggered when the container is entered, useful for triggering animations or logic.
    */
-  @Prop() onEntry: string;
+  @Prop() onEntry: string = '';
 
   /**
    * Boolean that controls the playability of the game.
