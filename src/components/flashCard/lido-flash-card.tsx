@@ -17,57 +17,57 @@ export class LidoFlash {
   /**
    * The value associated with the column component. Typically used for internal logic.
    */
-  @Prop() value: string;
+  @Prop() value: string = '';
 
   /**
    * The height of the column component (CSS value, e.g., '100px', '50%').
    */
-  @Prop() height: string;
+  @Prop() height: string = 'auto';
 
   /**
    * The width of the column component (CSS value, e.g., '100px', '50%').
    */
-  @Prop() width: string;
+  @Prop() width: string = 'auto';
 
   /**
    * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
    */
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel: string = '';
 
   /**
    * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
    */
-  @Prop() ariaHidden: string;
+  @Prop() ariaHidden: string = '';
 
   /**
    * X-axis (horizontal) position of the column within its container (CSS value, e.g., '10px', '5%').
    */
-  @Prop() x: string;
+  @Prop() x: string = '0px';
 
   /**
    * Y-axis (vertical) position of the column within its container (CSS value, e.g., '10px', '5%').
    */
-  @Prop() y: string;
+  @Prop() y: string = '0px';
 
   /**
    * Z-index for stacking order of the column relative to other elements.
    */
-  @Prop() z: string;
+  @Prop() z: string = '0';
 
   /**
    * Background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
    */
-  @Prop() bgColor: string;
+  @Prop() bgColor: string = '';
 
   /**
    * Defines the type of the column, which can be used for styling or specific logic handling.
    */
-  @Prop() type: string;
+  @Prop() type: string = '';
 
   /**
    * Tab index for keyboard navigation.
    */
-  @Prop() tabIndex: number;
+  @Prop() tabIndex: number = 0;
 
   /**
    * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
@@ -77,27 +77,27 @@ export class LidoFlash {
   /**
    * Audio file URL or identifier for sound that will be associated with the column.
    */
-  @Prop() audio: string;
+  @Prop() audio: string = '';
 
   /**
    * Event handler for a touch event, where a custom function can be triggered when the column is touched.
    */
-  @Prop() onTouch: string;
+  @Prop() onTouch: string = '';
 
   /**
    * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
    */
-  @Prop() onInCorrect: string;
+  @Prop() onInCorrect: string = '';
 
   /**
    * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
    */
-  @Prop() onCorrect: string;
+  @Prop() onCorrect: string = '';
 
   /**
    * Event handler triggered when the column is entered, useful for triggering animations or logic.
    */
-  @Prop() onEntry: string;
+  @Prop() onEntry: string = '';
 
   /**
    * The number of child elements that should be displayed inside the row.

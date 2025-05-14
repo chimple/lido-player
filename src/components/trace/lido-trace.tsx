@@ -17,57 +17,57 @@ export class LidoTrace {
   /**
    * Unique identifier for this `lido-trace` component instance.
    */
-  @Prop() id: string;
+  @Prop() id: string = '';
 
   /**
    * Source URL or path for the SVG file used in this component.
    */
-  @Prop() svgSource: string;
+  @Prop() svgSource: string = '';
 
   /**
    * A custom string value associated with the component for additional data or identification.
    */
-  @Prop() value: string;
+  @Prop() value: string = '';
 
   /**
    * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
    */
-  @Prop() height: string;
+  @Prop() height: string = 'auto';
 
   /**
    * Specifies the width of the component container, accepts any valid CSS width value (e.g., `"100px"`, `"50%"`).
    */
-  @Prop() width: string;
+  @Prop() width: string = 'auto';
 
   /**
    * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
    */
-  @Prop() x: string;
+  @Prop() x: string = '0px';
 
   /**
    * Defines the y-coordinate position (top offset) of the component container, using any valid CSS `top` value (e.g., `"10px"`, `"5%"`).
    */
-  @Prop() y: string;
+  @Prop() y: string = '0px';
 
   /**
    * Sets the z-index of the component, controlling its stacking order on the page.
    */
-  @Prop() z: string;
+  @Prop() z: string = '0';
 
   /**
    * Accessible label for screen readers, providing a textual description of the component's purpose.
    */
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel: string = '';
 
   /**
    * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
    */
-  @Prop() ariaHidden: string;
+  @Prop() ariaHidden: string = '';
 
   /**
    * Sets the tab order of the component within the page, enabling keyboard navigation.
    */
-  @Prop() tabIndex: number;
+  @Prop() tabIndex: number = 0;
 
   /**
    * Mode for the tracing interaction, defining how users interact with the SVG paths.

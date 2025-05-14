@@ -1,5 +1,5 @@
-import { DragSelectedMapKey, SelectedValuesKey } from './constants';
-import { executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from './utils';
+import { DragSelectedMapKey, SelectedValuesKey } from '../constants';
+import { executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
 let preOverlap: HTMLElement;
 
 function getElementScale(element: HTMLElement): number {
@@ -7,7 +7,7 @@ function getElementScale(element: HTMLElement): number {
   if (transform && transform !== 'none') {
     const match = transform.match(/matrix\(([^)]+)\)/);
     if (match) {
-      const values = match[1].split(',').map(v => parseFloat(v.trim()));
+      const values = match[1].split(',').map(v => parseFloat(v.trim()))
       return values[0];
     }
   }
@@ -15,9 +15,8 @@ function getElementScale(element: HTMLElement): number {
 }
 
 const createDummyElement = (element: HTMLElement) => {
-
   const dummy = document.createElement('div');
-  if(element.getAttribute("type") === "option"){
+  if (element.getAttribute('type') === 'option') {
     dummy.style.width = element.style.width;
     dummy.style.height = element.style.height;
     return dummy;
@@ -35,7 +34,7 @@ const createDummyElement = (element: HTMLElement) => {
   element.style.padding = originalPadding;
   dummy.setAttribute('value', `${element.getAttribute('value')}`);
   return dummy;
-}
+};
 
 export function enableReorderDrag(element: HTMLElement): void {
   let isDragging = false;
@@ -160,7 +159,7 @@ export function enableReorderDrag(element: HTMLElement): void {
       const category = findMostoverlappedElement(element, 'category');
       const sameElArr = Array.from(container.querySelectorAll(`[value="${element.getAttribute('value')}"]`));
       const divEl = sameElArr.find(el => el !== element) as HTMLElement;
-      
+
       if (category) {
         if (dummy) {
           dummy.replaceWith(element);
@@ -203,9 +202,9 @@ export function enableReorderDrag(element: HTMLElement): void {
           }
           optionArea.scrollTo({
             top: optionArea.scrollHeight,
-            behavior: 'smooth' 
+            behavior: 'smooth',
           });
-          
+
           optionArea.appendChild(element);
           if (dummy) {
             dummy.remove();
@@ -256,7 +255,7 @@ export function enableReorderDrag(element: HTMLElement): void {
         optionArea.appendChild(dummy);
         optionArea.scrollTo({
           top: optionArea.scrollHeight,
-          behavior: 'smooth' 
+          behavior: 'smooth',
         });
         element.style.position = 'absolute';
         executeActions("this.alignMatch='true'", dummy, element);
@@ -267,9 +266,9 @@ export function enableReorderDrag(element: HTMLElement): void {
         return;
       } else {
         if (!category) return;
-        const divEl = createDummyElement(element)
+        const divEl = createDummyElement(element);
         category.appendChild(divEl);
-        element.style.position = "absolute";
+        element.style.position = 'absolute';
         executeActions('this.alignMatch=true', divEl, element);
         setTimeout(() => {
           divEl.replaceWith(element);
@@ -283,7 +282,7 @@ export function enableReorderDrag(element: HTMLElement): void {
     }
     if (elementType === 'word' && element.parentElement === wordParent) {
       const placeholder = createDummyElement(element);
-      placeholder.style.visibility = "hidden";
+      placeholder.style.visibility = 'hidden';
       blankArea.appendChild(placeholder);
       executeActions('this.alignMatch=true', placeholder, element);
       setTimeout(() => {
@@ -293,7 +292,7 @@ export function enableReorderDrag(element: HTMLElement): void {
         element.style.transform = 'translate(0,0)';
         wordDropComplete(blankArea as HTMLElement, element);
       }, 500);
-      return
+      return;
     } else {
       const wordArray = Array.from(wordParent.children);
       const prePlace = wordArray.find(el => el.getAttribute('value') === element.getAttribute('value')) as HTMLElement;
@@ -303,7 +302,7 @@ export function enableReorderDrag(element: HTMLElement): void {
         element.style.transform = 'translate(0,0)';
       }, 500);
     }
-    
+
     return;
   };
 
@@ -379,7 +378,7 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
     }
   } else {
     const dummy = createDummyElement(target);
-    dummy.style.visibility = "hidden";
+    dummy.style.visibility = 'hidden';
     dummy.setAttribute('type', 'dummy');
     const keyframes = `
       @keyframes widthIncrease {

@@ -16,7 +16,7 @@ export class LidoRoot {
   /**
    * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
    */
-  @Prop() xmlPath: string;
+  @Prop() xmlPath: string = '';
 
   /**
    * Initial index of the container being displayed.
