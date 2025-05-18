@@ -6,6 +6,7 @@ import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './reorder';
 const gameScore = new GameScore();
+let count = 0;
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -232,6 +233,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
   let initialX = 0;
   let initialY = 0;
   let clone: HTMLElement | null = null;
+  let duplicateElement : HTMLElement = null;
 
   // Fetch the container element
   const container = document.querySelector('#lido-container') as HTMLElement;
@@ -260,7 +262,7 @@ function enableDraggingWithScaling(element: HTMLElement): void {
     }
 
     // Apply dragging styles to the element
-    element.style.opacity = '0.8';
+    element.style.opacity = '1';
     element.style.cursor = 'grabbing';
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
@@ -278,6 +280,36 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         clone.classList.add('cloned-element');
         document.body.appendChild(clone);
       }
+    }
+
+    // for infinite drop functionality
+    if(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
+      const imgElement = element.querySelector('img');
+      const src = imgElement?.getAttribute('src');
+      const computedStyle = window.getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      if (!duplicateElement) {
+        duplicateElement = element.cloneNode(false) as HTMLElement;
+        duplicateElement.setAttribute('src', src);
+        duplicateElement.setAttribute('value', element.getAttribute('value'));
+        duplicateElement.setAttribute('visible', 'true');
+        duplicateElement.style.left = `${rect.left}px`;
+        duplicateElement.style.top = `${rect.top}px`;
+        duplicateElement.style.width = `${rect.width}px`;
+        duplicateElement.style.height = `${rect.height}px`;
+        duplicateElement.style.transform = computedStyle.transform;
+        duplicateElement.style.position = 'absolute'
+        duplicateElement.style.zIndex = '0';
+        element.style.zIndex = '100';
+        document.body.appendChild(duplicateElement);
+      }
+    }
+
+    // remove all dropped element with same value at click start
+    if(element.getAttribute('droppedelement')){
+      const dropAttrValue = element.getAttribute('droppedelement');
+      const elementsToRemove = document.querySelectorAll(`body > [droppedelement="${dropAttrValue}"]`);
+      elementsToRemove.forEach(el => el.remove());
     }
 
     // Parse the current transform values at the start of each drag
@@ -486,6 +518,14 @@ function enableDraggingWithScaling(element: HTMLElement): void {
         mostOverlappedElement.style.width = computedStyle.width;
     }
 
+    if(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
+      mostOverlappedElement.style.opacity = '0';
+      if(element.getAttribute('value')) {
+        element.setAttribute('droppedElement',`${element.getAttribute('value')}-dropped`);
+      }
+      console.log('element',element);
+      console.log(mostOverlappedElement);
+    }
   };
   // Initialize draggable element styles
   element.style.cursor = 'move';

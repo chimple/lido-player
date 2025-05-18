@@ -29,5 +29,6 @@ export default class GameScore {
 export enum DropMode {
   Diagonal = 'diagonal',
   Stretch = 'stretch',
-  Puzzle = 'puzzle'
+  Puzzle = 'puzzle',
+  InfiniteDrop = 'infinite-drop'
 }

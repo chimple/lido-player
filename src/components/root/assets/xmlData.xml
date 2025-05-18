@@ -1,4 +1,113 @@
 <main>
+	<lido-container id="lido-container" tabIndex="1" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="true" showCheck="true">
+		<lido-cell  visible="true" onEntry="this.gap='100px'; this.justifyContent='space-between'; this.position='absolute'" layout="row" bgColor="lightblue" width="100%" y="100px"> 
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/empty_circle.png"
+				y="100px"
+				type="drop"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="empty"
+				tabIndex="1"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/plus.png"
+				y="100px"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="plus"
+				tabIndex="2"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/empty_circle.png"
+				y="100px"
+				type="drop"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="emptyCircle"
+				tabIndex="3"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/equal_sign.png"
+				y="100px"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="equal"
+				tabIndex="4"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/12.png"
+				y="100px"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="12"
+				tabIndex="5"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+		</lido-cell>
+
+		<lido-cell  visible="true" onEntry="this.gap='100px'; this.justifyContent='space-evenly'; this.position='absolute'" layout="row" bgColor="pink" width="100%" y="550px"> 
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/5.png"
+				y="100px"
+				type="drag"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="5"
+				tabIndex="6"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/6.png"
+				y="100px"
+				type="drag"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="6"
+				tabIndex="7"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+			<lido-image 
+				visible="true"
+				src="./assets/images/infinite-scroll/3.png"
+				y="100px"
+				type="drag"
+				isAllowOnlyOneDrop="false"
+				dropAttr="infinite-drop"
+				id="dropImage"
+				value="3"
+				tabIndex="8"
+				width = "300px"
+				height = "300px"
+			></lido-image>
+		</lido-cell>
+		
+	</lido-container>
 
 	<lido-container id="lido-container" tabIndex="1" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
 		<lido-image 
