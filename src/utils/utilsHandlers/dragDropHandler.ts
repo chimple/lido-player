@@ -99,13 +99,13 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         element.style.zIndex = '100';
         document.body.appendChild(duplicateElement);
       }
-    }
 
-    // remove all dropped element with same value at click start
-    if(element.getAttribute('droppedelement')){
-      const dropAttrValue = element.getAttribute('droppedelement');
-      const elementsToRemove = document.querySelectorAll(`body > [droppedelement="${dropAttrValue}"]`);
-      elementsToRemove.forEach(el => el.remove());
+      // remove all dropped element with same value at click start
+      if(element.getAttribute('droppedelement')){
+        const dropAttrValue = element.getAttribute('droppedelement');
+        const elementsToRemove = document.querySelectorAll(`body > [droppedelement="${dropAttrValue}"]`);
+        elementsToRemove.forEach(el => el.remove());
+      }
     }
 
     // Parse the current transform values at the start of each drag
