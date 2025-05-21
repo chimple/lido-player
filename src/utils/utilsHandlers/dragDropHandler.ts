@@ -495,7 +495,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
     let dragSelected = JSON.parse(dragSelectedData);
     for (const key in dragSelected) {
-      if (dragSelected[key].includes(dragElement['value'])) {
+      if (dragSelected[key].includes(dragElement.id)) {
         delete dragSelected[key];
       }
     }
