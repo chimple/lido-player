@@ -8,7 +8,7 @@ import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
-const gameScore = new GameScore();
+const gameScore = new GameScore()
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
