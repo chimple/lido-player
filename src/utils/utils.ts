@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, SelectedValuesKey, DropMode } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey,DragMapKey, SelectedValuesKey, DropMode } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -290,6 +290,16 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   dragScore[tabindex].push(dragElement['value']);
 
   localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
+
+//localStorage 
+  let drag=JSON.parse(localStorage.getItem(DragMapKey)?? '{}');
+  const index=dropElement.getAttribute('tabindex');
+  if(!drag[index]){
+    drag[index]=[];
+  }
+  drag[index].push(dragElement.id);
+  localStorage.setItem(DragMapKey, JSON.stringify(drag));
+
 
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
 

@@ -1,6 +1,6 @@
 import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode } from '../constants';
+import { DragSelectedMapKey,DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -371,6 +371,8 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
 export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
+  const dropSelectedData = localStorage.getItem(DragMapKey);
+
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   if (dropElement) {
     if (
@@ -445,14 +447,24 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       selectedValue = selectedValue.filter(value => value != dragElement['value']);
       localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
     }
-    if (dragSelectedData) {
-      let dragSelected = JSON.parse(dragSelectedData);
+    if (dragSelectedData ) {
+      let dragSelected=JSON.parse(dragSelectedData);
+      let dropSelected = JSON.parse(dropSelectedData);
       for (const key in dragSelected) {
         if (dragSelected[key].includes(dragElement['value'])) {
+
+          for (const key in dropSelected) {
+        if (dropSelected[key].includes(dragElement.id)) {
+          delete dropSelected[key];
           delete dragSelected[key];
         }
       }
+          
+        }
+      }
+      
       localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+      localStorage.setItem(DragMapKey, JSON.stringify(dropSelected));
     }
 
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
@@ -493,13 +505,14 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
       }
     }
-    let dragSelected = JSON.parse(dragSelectedData);
-    for (const key in dragSelected) {
-      if (dragSelected[key].includes(dragElement['value'])) {
-        delete dragSelected[key];
-      }
-    }
-    localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+    //accepting identical
+    // let dragSelected = JSON.parse(dragSelectedData);
+    // for (const key in dragSelected) {
+    //   if (dragSelected[key].includes(dragElement.id)) {
+    //     delete dragSelected[key];
+    //   }
+    // }
+    // localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
   }
   let dropLength = JSON.parse(localStorage.getItem(DropLength)) || 0;
   dropLength += 1;
