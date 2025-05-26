@@ -1,4 +1,5 @@
 export const DragSelectedMapKey = 'lidoDragSelectedMap';
+export const DragMapKey = 'lidoDragMap';
 export const SelectedValuesKey = 'lidoSelectedValues';
 export const ActivityScoreKey = 'lidoActivityScore';
 export const ActivityEndKey = 'lidoActivityEnd';
