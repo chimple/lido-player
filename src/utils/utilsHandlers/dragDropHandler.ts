@@ -1,6 +1,6 @@
 import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode } from '../constants';
+import { DragSelectedMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -29,7 +29,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let initialX = 0;
   let initialY = 0;
   let clone: HTMLElement | null = null;
-  let duplicateElement : HTMLElement = null;
+  let duplicateElement: HTMLElement = null;
 
   // Fetch the container element
   const container = document.querySelector('#lido-container') as HTMLElement;
@@ -79,7 +79,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }
 
     // for infinite drop functionality
-    if(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
       const imgElement = element.querySelector('img');
       const src = imgElement?.getAttribute('src');
       const computedStyle = window.getComputedStyle(element);
@@ -94,14 +94,14 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         duplicateElement.style.width = `${rect.width}px`;
         duplicateElement.style.height = `${rect.height}px`;
         duplicateElement.style.transform = computedStyle.transform;
-        duplicateElement.style.position = 'absolute'
+        duplicateElement.style.position = 'absolute';
         duplicateElement.style.zIndex = '0';
         element.style.zIndex = '100';
         document.body.appendChild(duplicateElement);
       }
 
       // remove all dropped element with same value at click start
-      if(element.getAttribute('droppedelement')){
+      if (element.getAttribute('droppedelement')) {
         const dropAttrValue = element.getAttribute('droppedelement');
         const elementsToRemove = document.querySelectorAll(`body > [droppedelement="${dropAttrValue}"]`);
         elementsToRemove.forEach(el => el.remove());
@@ -314,10 +314,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       mostOverlappedElement.style.width = computedStyle.width;
     }
 
-    if(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
+    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
       mostOverlappedElement.style.opacity = '0';
-      if(element.getAttribute('value')) {
-        element.setAttribute('droppedElement',`${element.getAttribute('value')}-dropped`);
+      if (element.getAttribute('value')) {
+        element.setAttribute('droppedElement', `${element.getAttribute('value')}-dropped`);
       }
     }
   };
@@ -372,6 +372,14 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  if (dragElement) {
+    if (dropElement) {
+      dragElement.setAttribute(DropToAttr, dropElement?.id);
+    } else {
+      dragElement.removeAttribute(DropToAttr);
+    }
+    dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
+  }
   if (dropElement) {
     if (
       !(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) &&
