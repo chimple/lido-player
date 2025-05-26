@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, SelectedValuesKey, DropMode } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey,DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -8,6 +8,7 @@ import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
+import { evaluate } from 'mathjs';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -406,6 +407,16 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
   localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
 
+//localStorage 
+  let drag=JSON.parse(localStorage.getItem(DragMapKey)?? '{}');
+  const index=dropElement.getAttribute('tabindex');
+  if(!drag[index]){
+    drag[index]=[];
+  }
+  drag[index].push(dragElement.id);
+  localStorage.setItem(DragMapKey, JSON.stringify(drag));
+
+
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
 
   const sortedValues = sortedKeys.reduce((acc, key) => {
@@ -488,7 +499,7 @@ export const handleShowCheck = () => {
   const showCheck = container.getAttribute('showCheck') == 'true';
 
   if (showCheck) {
-    checkButton.classList.remove('lido-disable-check-button');
+    checkButton?.classList?.remove('lido-disable-check-button');
   } else {
     validateObjectiveStatus();
   }
@@ -720,4 +731,38 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
       dropEl.style.padding = '0 20px';
     }
   });
+};
+
+export const checkAdditionalCheck = (additionalCheck: string): boolean => {
+  if (!additionalCheck) {
+    console.log('Input string is empty.');
+    return undefined;
+  }
+
+  // 1. Split the string by the comma to get an array of individual parts
+  const parts: string[] = additionalCheck.split(',');
+  // 2. Map through the parts, replacing those that start with '#'
+  const modifiedParts: string[] = parts.map(part => {
+    if (part.startsWith('$')) {
+      const cleanWord = part.substring(1);
+      const dragSelectedElements = getDraggedElementsForDropElement(cleanWord);
+      const randomReplacement = dragSelectedElements[0]?.getAttribute('value') || document.getElementById(cleanWord)?.['value'];
+
+      return randomReplacement;
+    } else {
+      return part;
+    }
+  });
+
+  // 3. Join the modified parts back into one string
+  const resultString = modifiedParts.join('');
+  const finalRes = evaluate(resultString);
+  console.log('🚀 ~ checkAdditionalCheck ~ finalRes:', finalRes);
+  return finalRes;
+};
+
+const getDraggedElementsForDropElement = (dropElementId: string) => {
+  const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropElementId}"]`);
+  const sortedDragSelectedElements = Array.from(dragSelectedElements).sort((a, b) => parseInt(a.getAttribute(DropTimeAttr)) - parseInt(b.getAttribute(DropTimeAttr)));
+  return sortedDragSelectedElements;
 };
