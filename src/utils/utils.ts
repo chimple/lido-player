@@ -14,6 +14,117 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
+const MAX_BALLOONS = 10;
+const ALPHABETS = ['A', 'B', 'C', 'D', 'E'];
+
+export function initBalloonsWithClass() {
+  const container = document.querySelector<HTMLElement>('#lido-container');
+  if (!container) return;
+
+  const isBalloonGame = container.getAttribute('game')?.toLowerCase() === 'balloon';
+  if (!isBalloonGame) return;
+
+  const currentCount = container.querySelectorAll('.balloon-float').length;
+  const balloonsToAdd = Math.min(1, MAX_BALLOONS - currentCount);
+
+  for (let i = 0; i < balloonsToAdd; i++) {
+    appendBalloonWithClass(container, i);
+  }
+}
+
+async function appendBalloonWithClass(container: HTMLElement, index: number) {
+  const svgText = await fetch('./assets/images/balloon.svg').then(res => res.text());
+  const coloredSVG = applyRandomColorToSVG(svgText);
+  const dataUri = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(coloredSVG)));
+
+  const balloon = document.createElement('lido-image');
+  balloon.setAttribute('src', dataUri);
+  balloon.setAttribute('width', '400px');
+  balloon.setAttribute('height', '400px');
+  balloon.setAttribute('visible', 'true');
+
+  const left = Math.random() * (window.innerWidth - 300);
+  balloon.style.left = `${left}px`;
+  balloon.style.top = '100vh';
+  balloon.style.position = 'absolute';
+
+  const duration = 5 + Math.random() * 5;
+  const delay = Math.random() * 3;
+  balloon.style.animationDuration = `${duration}s`;
+  balloon.style.animationDelay = `${delay}s`;
+
+  balloon.classList.add('balloon-float');
+
+  const letter = ALPHABETS[Math.floor(Math.random() * ALPHABETS.length)];
+
+  const letterDiv = document.createElement('div');
+  letterDiv.textContent = letter;
+  letterDiv.style.position = 'absolute';
+  letterDiv.style.left = balloon.style.left;
+  letterDiv.style.top = '90vh';
+  letterDiv.style.width = balloon.style.width || '400px';
+  letterDiv.style.height = balloon.style.height || '400px';
+  letterDiv.style.pointerEvents = 'none'; // to prevent blocking balloon clicks
+  letterDiv.style.color = '#000';
+  letterDiv.style.fontSize = '120px';
+  letterDiv.style.fontWeight = 'bold';
+  letterDiv.style.userSelect = 'none';
+  letterDiv.style.display = 'flex';
+  letterDiv.style.alignItems = 'center';
+  letterDiv.style.justifyContent = 'center';
+  letterDiv.style.fontFamily = 'sans-serif';
+
+  // Sync animations
+  letterDiv.style.animationDuration = balloon.style.animationDuration;
+  letterDiv.style.animationDelay = balloon.style.animationDelay;
+  letterDiv.classList.add('balloon-float');
+
+  // Store both elements for removal
+  const removeBalloonAndLetter = () => {
+    if (container.contains(balloon)) container.removeChild(balloon);
+    if (container.contains(letterDiv)) container.removeChild(letterDiv);
+  
+    // Re-add 1 new balloon to keep total at 10
+    const current = container.querySelectorAll('.balloon-float').length / 2;
+    if (current < MAX_BALLOONS) {
+      appendBalloonWithClass(container, index); // spawn a new one
+    }
+  };
+
+  // Click to hide and store in localStorage
+  balloon.addEventListener('click', () => {
+    // Increment count for the letter in localStorage
+    const storageKey = `balloon-count-${letter}`;
+    const currentCount = parseInt(localStorage.getItem(storageKey) || '0', 10);
+    localStorage.setItem(storageKey, (currentCount + 1).toString());
+
+    removeBalloonAndLetter();
+  });
+
+  // Remove when animation ends
+  balloon.addEventListener('animationend', removeBalloonAndLetter);
+  letterDiv.addEventListener('animationend', () => {
+    if (container.contains(letterDiv)) container.removeChild(letterDiv);
+  });
+
+  container.appendChild(balloon);
+  container.appendChild(letterDiv);
+}
+
+function applyRandomColorToSVG(svg: string): string {
+  const color = getRandomColor();
+
+  return svg.replace(/<svg([^>]*)>/, `<svg$1>`)
+            .replace(/fill="[^"]*"/g, `fill="${color}"`)
+            .replace(/(<(path|circle|ellipse|polygon|rect)\b(?![^>]*fill=))/g, `$1 fill="${color}"`);
+}
+
+function getRandomColor(): string {
+  const colors = ['#FF4C4C', '#4CFF4C', '#4C4CFF', '#FFAA00', '#AA00FF', '#00AAAA'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
   const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) return;
@@ -48,9 +159,13 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
     }
     default:
       break;
-  }
-
-  onTouchListenerForOnTouch(element);
+    }
+    
+    onTouchListenerForOnTouch(element);
+    
+    if(container.getAttribute('game')?.toLowerCase() === 'balloon') {
+      initBalloonsWithClass(); 
+    }
 };
 
 // Function to execute actions parsed from the onMatch string

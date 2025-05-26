@@ -1,4 +1,6 @@
 <main>
+
+	<lido-container id="lido-container" tabIndex="1" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="true" showCheck="true" game="balloon"></lido-container>
 	<lido-container id="lido-container" tabIndex="1" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="true" showCheck="true">
 		<lido-cell  visible="true" onEntry="this.gap='100px'; this.justifyContent='space-between'; this.position='absolute';this.display='flex'" layout="row" bgColor="lightblue" width="100%" y="100px"> 
 			<lido-image 

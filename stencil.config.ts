@@ -22,6 +22,12 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
+      copy: [
+        {
+          src: 'components/root/assets/images',
+          dest: 'assets/images'
+        }
+      ]
     },
   ],
   sourceMap: false,

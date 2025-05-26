@@ -40,3 +40,22 @@ body {
   border: 2px solid white !important;
   box-shadow: 0 2px 4px rgba(151, 150, 150, 0.1) !important;
 }
+
+
+@keyframes floatUpLoop {
+  0% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-120vh);
+    opacity: 1;
+  }
+}
+
+.balloon-float {
+  animation-name: floatUpLoop;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  position: absolute;
+}
