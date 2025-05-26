@@ -15,8 +15,6 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
-const MAX_BALLOONS = 10;
-const ALPHABETS = ['A', 'B', 'C', 'D', 'E'];
 
 export function initBalloonsWithClass() {
   const container = document.querySelector<HTMLElement>('#lido-container');
@@ -26,7 +24,7 @@ export function initBalloonsWithClass() {
   if (!isBalloonGame) return;
 
   const currentCount = container.querySelectorAll('.balloon-float').length;
-  const balloonsToAdd = Math.min(1, MAX_BALLOONS - currentCount);
+  const balloonsToAdd = Math.min(1, 10 - currentCount);
 
   for (let i = 0; i < balloonsToAdd; i++) {
     appendBalloonWithClass(container, i);
@@ -55,7 +53,8 @@ async function appendBalloonWithClass(container: HTMLElement, index: number) {
   balloon.style.animationDelay = `${delay}s`;
 
   balloon.classList.add('balloon-float');
-
+  const aplhaAttr = container.getAttribute('alphabets');
+  const ALPHABETS = JSON.parse(aplhaAttr.replace(/'/g, '"'));
   const letter = ALPHABETS[Math.floor(Math.random() * ALPHABETS.length)];
 
   const letterDiv = document.createElement('div');
@@ -85,20 +84,20 @@ async function appendBalloonWithClass(container: HTMLElement, index: number) {
     if (container.contains(balloon)) container.removeChild(balloon);
     if (container.contains(letterDiv)) container.removeChild(letterDiv);
   
-    // Re-add 1 new balloon to keep total at 10
     const current = container.querySelectorAll('.balloon-float').length / 2;
-    if (current < MAX_BALLOONS) {
+    if (current < 10) {
       appendBalloonWithClass(container, index); // spawn a new one
     }
   };
 
-  // Click to hide and store in localStorage
+  const correctAnswer = container.getAttribute('correctAnswer');
   balloon.addEventListener('click', () => {
-    // Increment count for the letter in localStorage
-    const storageKey = `balloon-count-${letter}`;
-    const currentCount = parseInt(localStorage.getItem(storageKey) || '0', 10);
-    localStorage.setItem(storageKey, (currentCount + 1).toString());
 
+    if(correctAnswer == letter){
+      storingEachActivityScore(true);
+    } else {
+      storingEachActivityScore(false);
+    }
     removeBalloonAndLetter();
   });
 
