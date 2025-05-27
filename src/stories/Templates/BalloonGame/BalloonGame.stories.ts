@@ -1,53 +1,39 @@
-import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import type { Meta, StoryObj } from '@storybook/web-components';
 
 const meta: Meta = {
   title: 'Templates/BalloonGame',
-  argTypes: {
-    alphabets: {
-      control: 'object',
-      description: 'List of letters to display on balloons',
-    },
-    correctAnswer: {
-      control: 'text',
-      description: 'The correct balloon letter to score',
-    },
+  tags: ['autodocs'],
+  render: (args) => html`
+    <lido-balloon
+      id="${args.id}"
+      .letters=${JSON.stringify(args.letters)}
+      correctAnswer="${args.correctAnswer}"
+      width="${args.width}"
+      height="${args.height}"
+      x="${args.x}"
+      y="${args.y}"
+      visible="${args.visible}"
+      svgPath="${args.svgPath}"
+      balloonsCount="${args.balloonsCount}"
+    ></lido-balloon>
+  `,
+  args: {
+    id: 'balloon-test',
+    letters: ['A', 'B', 'C'],
+    correctAnswer: 'B',
+    width: '400px',
+    height: '400px',
+    x: '0px',
+    y: '100vh',
+    visible: true,
+    svgPath: './assets/images/balloon.svg',
+    balloonsCount: '3',
   },
 };
 
 export default meta;
 
-export const BalloonGame: StoryObj = {
-  args: {
-    alphabets: ['A', 'B', 'C', 'D', 'A'],
-    correctAnswer: "B",
-  },
-  render: ({ alphabets, correctAnswer }) => {
-    const alphaAttr = JSON.stringify(alphabets).replace(/"/g, "'");
-    
-    // Lit Template HTML for the component
-    const template = html`
-      <lido-container
-        id="lido-container"
-        tabIndex="1"
-        visible="true"
-        game="balloon"
-        isContinueOnCorrect="true"
-        showCheck="true"
-        onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
-        onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
-        alphabets="${alphaAttr}"
-        correctAnswer="${correctAnswer}"
-      ></lido-container>
-    `;
+type Story = StoryObj<typeof meta>;
 
-    // Defer JS logic until after render
-    setTimeout(() => {
-      import('../../../utils/utils').then(({ initBalloonsWithClass }) => {
-        initBalloonsWithClass();
-      });
-    }, 0);
-
-    return template;
-  },
-};
+export const Default: Story = {};

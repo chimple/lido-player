@@ -1,0 +1,31 @@
+.balloon-float {
+    position: absolute;
+    animation-name: float-up;
+    animation-timing-function: linear;
+}
+  
+.balloon-float-letter {
+    position: absolute;
+    font-size: 120px;
+    font-weight: bold;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    user-select: none;
+    width: 400px;
+    height: 400px;
+    font-family: sans-serif;
+    animation-name: float-up;
+    animation-timing-function: linear;
+}
+
+@keyframes float-up {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-120vh);
+    }
+}
