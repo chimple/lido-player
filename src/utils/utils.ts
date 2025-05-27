@@ -15,6 +15,7 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
+
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
   const container = document.querySelector('#lido-container') as HTMLElement;
   if (!container) return;
@@ -49,9 +50,10 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
     }
     default:
       break;
-  }
-
-  onTouchListenerForOnTouch(element);
+    }
+    
+    onTouchListenerForOnTouch(element);
+    
 };
 
 // Function to execute actions parsed from the onMatch string
