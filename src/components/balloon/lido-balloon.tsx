@@ -2,6 +2,14 @@ import { Component, Prop, h, Element, State } from '@stencil/core';
 import { generateBalloonData } from '../../utils/utilsHandlers/balloonHandler';
 import { storingEachActivityScore } from '../../utils/utils';
 
+/**
+ * @component LidoBalloon
+ *
+ * The `LidoBalloon` component displays a speech or thought balloon typically used for character dialogue,
+ * instructions, or feedback in interactive content. It supports customizable text, styles, position, 
+ * and animation effects. It can be triggered based on specific events or shown conditionally to guide users.
+ */
+
 @Component({
     tag: 'lido-balloon',
     styleUrl: 'lido-balloon.css',
