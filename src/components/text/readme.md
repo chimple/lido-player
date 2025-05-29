@@ -20,6 +20,8 @@
 | `height`                 | `height`                   | Height of the text component (CSS value, e.g., '100px', '50%').                                                         | `string`            | `'auto'` |
 | `highlightWhileSpeaking` | `highlight-while-speaking` | When set to `true`, the text will highlight while being spoken, typically used for accessibility.                       | `boolean`           | `false`  |
 | `id`                     | `id`                       | Unique identifier for the text element.                                                                                 | `string`            | `''`     |
+| `maxDrops`               | `max-drops`                | The Maximum number of drag elements that can be dropped inside the Drop element.                                        | `number`            | `1`      |
+| `minDrops`               | `min-drops`                | The minimum number of drag elements that must be dropped inside the Drop element.                                       | `number`            | `1`      |
 | `onCorrect`              | `on-correct`               | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`            | `''`     |
 | `onEntry`                | `on-entry`                 | Event handler triggered when the text component is entered (useful for animations or logic on entry).                   | `string`            | `''`     |
 | `onInCorrect`            | `on-in-correct`            | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect. | `string`            | `''`     |

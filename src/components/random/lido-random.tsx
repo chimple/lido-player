@@ -104,6 +104,16 @@ export class LidoRandom {
   @Prop() onEntry: string = '';
 
   /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
+
+  /**
    * Reference to the HTML element representing this component.
    */
   @Element() el: HTMLElement;
@@ -150,6 +160,8 @@ export class LidoRandom {
         audio={this.audio}
         onTouch={this.onTouch}
         onCorrect={this.onCorrect}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
       >

@@ -130,6 +130,16 @@ export class LidoText {
   @Prop() onCorrect: string = '';
 
   /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
+
+  /**
    * Event handler triggered when the text component is entered (useful for animations or logic on entry).
    */
   @Prop() onEntry: string = '';
@@ -198,6 +208,8 @@ export class LidoText {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         id={this.id}
         style={this.style}
         aria-label={this.ariaLabel}
@@ -205,6 +217,6 @@ export class LidoText {
       >
         {this.string}
       </Host>
-    )
+    );
   }
 }

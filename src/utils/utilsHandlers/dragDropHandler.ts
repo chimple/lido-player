@@ -1,6 +1,6 @@
 import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey,DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from '../constants';
+import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -383,10 +383,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
   }
   if (dropElement) {
-    if (
-      !(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) &&
-      (dropElement.getAttribute('isAllowOnlyOneDrop') === 'true' || !dropElement.getAttribute('isAllowOnlyOneDrop'))
-    ) {
+    if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
       if (isisFull) {
         isisFull.isFull = true;
@@ -455,22 +452,20 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       selectedValue = selectedValue.filter(value => value != dragElement['value']);
       localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
     }
-    if (dragSelectedData ) {
-      let dragSelected=JSON.parse(dragSelectedData);
+    if (dragSelectedData) {
+      let dragSelected = JSON.parse(dragSelectedData);
       let dropSelected = JSON.parse(dropSelectedData);
       for (const key in dragSelected) {
         if (dragSelected[key].includes(dragElement['value'])) {
-
           for (const key in dropSelected) {
-        if (dropSelected[key].includes(dragElement.id)) {
-          delete dropSelected[key];
-          delete dragSelected[key];
+            if (dropSelected[key].includes(dragElement.id)) {
+              delete dropSelected[key];
+              delete dragSelected[key];
+            }
+          }
         }
       }
-          
-        }
-      }
-      
+
       localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
       localStorage.setItem(DragMapKey, JSON.stringify(dropSelected));
     }

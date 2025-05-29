@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey,DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -8,7 +8,7 @@ import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
-import { evaluate } from 'mathjs';
+import { evaluate, isArray } from 'mathjs';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -292,15 +292,14 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
   localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
 
-//localStorage 
-  let drag=JSON.parse(localStorage.getItem(DragMapKey)?? '{}');
-  const index=dropElement.getAttribute('tabindex');
-  if(!drag[index]){
-    drag[index]=[];
+  //localStorage
+  let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');
+  const index = dropElement.getAttribute('tabindex');
+  if (!drag[index]) {
+    drag[index] = [];
   }
   drag[index].push(dragElement.id);
   localStorage.setItem(DragMapKey, JSON.stringify(drag));
-
 
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
 
@@ -395,8 +394,15 @@ export const validateObjectiveStatus = async () => {
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
-  const res = matchStringPattern(objectiveString, objectiveArray);
-
+  let res;
+  const additionalCheck = container.getAttribute('equationCheck');
+  console.log("🚀 ~ validateObjectiveStatus ~ additionalCheck:", additionalCheck)
+  if (!!additionalCheck) {
+    res = equationCheck(additionalCheck);
+    console.log('🚀 ~ handleShowCheck ~ res:', res);
+  } else {
+    res = matchStringPattern(objectiveString, objectiveArray);
+  }
   if (res) {
     // appendingDragElementsInDrop();
     const onCorrect = container.getAttribute('onCorrect');
@@ -618,7 +624,7 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
   });
 };
 
-export const checkAdditionalCheck = (additionalCheck: string): boolean => {
+export const equationCheck = (additionalCheck: string): boolean => {
   if (!additionalCheck) {
     console.log('Input string is empty.');
     return undefined;
@@ -630,8 +636,10 @@ export const checkAdditionalCheck = (additionalCheck: string): boolean => {
   const modifiedParts: string[] = parts.map(part => {
     if (part.startsWith('$')) {
       const cleanWord = part.substring(1);
-      const dragSelectedElements = getDraggedElementsForDropElement(cleanWord);
-      const randomReplacement = dragSelectedElements[0]?.getAttribute('value') || document.getElementById(cleanWord)?.['value'];
+      const dragSelectedElements = getElementsForQueries(cleanWord);
+      const randomReplacement = isArray(dragSelectedElements)
+        ? dragSelectedElements?.map(val => val.getAttribute('value'))
+        : dragSelectedElements.getAttribute('value') || document.getElementById(cleanWord)?.['value'];
 
       return randomReplacement;
     } else {
@@ -642,12 +650,21 @@ export const checkAdditionalCheck = (additionalCheck: string): boolean => {
   // 3. Join the modified parts back into one string
   const resultString = modifiedParts.join('');
   const finalRes = evaluate(resultString);
-  console.log('🚀 ~ checkAdditionalCheck ~ finalRes:', finalRes);
+  console.log("🚀 ~ equationCheck ~ finalRes:", finalRes)
   return finalRes;
 };
 
-const getDraggedElementsForDropElement = (dropElementId: string) => {
-  const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropElementId}"]`);
+const getElementsForQueries = (query: string) => {
+  if (query.startsWith('#')) {
+    const elementIdWithoutHash = query.substring(1);
+    const ele = document.getElementById(elementIdWithoutHash);
+    if (ele.getAttribute('type') === 'drop') {
+      const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${elementIdWithoutHash}"]`);
+      return dragSelectedElements.length > 0 ? dragSelectedElements[0] : [];
+    }
+    return ele;
+  }
+  const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${query}"]`);
   const sortedDragSelectedElements = Array.from(dragSelectedElements).sort((a, b) => parseInt(a.getAttribute(DropTimeAttr)) - parseInt(b.getAttribute(DropTimeAttr)));
   return sortedDragSelectedElements;
 };

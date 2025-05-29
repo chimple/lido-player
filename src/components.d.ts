@@ -132,9 +132,17 @@ export namespace Components {
          */
         "layout": string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -238,9 +246,17 @@ export namespace Components {
          */
         "id": string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -561,6 +577,14 @@ export namespace Components {
          */
         "isSlice": string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
+        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
@@ -649,6 +673,14 @@ export namespace Components {
          */
         "id": string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
+        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
@@ -728,6 +760,14 @@ export namespace Components {
           * Unique identifier for the random container.
          */
         "id": string;
+        /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -840,9 +880,17 @@ export namespace Components {
          */
         "height": string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -927,6 +975,14 @@ export namespace Components {
           * Unique identifier for the shape element.
          */
         "id": string;
+        /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -1031,6 +1087,14 @@ export namespace Components {
           * Unique identifier for the text element.
          */
         "id": string;
+        /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -1178,9 +1242,17 @@ export namespace Components {
          */
         "id": string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops": number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength": number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops": number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -1553,9 +1625,17 @@ declare namespace LocalJSX {
          */
         "layout"?: string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -1659,9 +1739,17 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -1982,6 +2070,14 @@ declare namespace LocalJSX {
          */
         "isSlice"?: string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
+        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
@@ -2070,6 +2166,14 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
+        /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect"?: string;
@@ -2149,6 +2253,14 @@ declare namespace LocalJSX {
           * Unique identifier for the random container.
          */
         "id"?: string;
+        /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -2261,9 +2373,17 @@ declare namespace LocalJSX {
          */
         "height"?: string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */
@@ -2348,6 +2468,14 @@ declare namespace LocalJSX {
           * Unique identifier for the shape element.
          */
         "id"?: string;
+        /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -2452,6 +2580,14 @@ declare namespace LocalJSX {
           * Unique identifier for the text element.
          */
         "id"?: string;
+        /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
          */
@@ -2599,9 +2735,17 @@ declare namespace LocalJSX {
          */
         "id"?: string;
         /**
+          * The Maximum number of drag elements that can be dropped inside the Drop element.
+         */
+        "maxDrops"?: number;
+        /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
          */
         "maxLength"?: number;
+        /**
+          * The minimum number of drag elements that must be dropped inside the Drop element.
+         */
+        "minDrops"?: number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
          */

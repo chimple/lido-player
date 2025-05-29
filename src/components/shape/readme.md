@@ -15,6 +15,8 @@
 | `bgColor`     | `bg-color`      | Background color of the shape (CSS color value, e.g., '#FFFFFF', 'blue'). This is ignored for polygons.                 | `string`  | `''`       |
 | `height`      | `height`        | The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.                                | `string`  | `'auto'`   |
 | `id`          | `id`            | Unique identifier for the shape element.                                                                                | `string`  | `''`       |
+| `maxDrops`    | `max-drops`     | The Maximum number of drag elements that can be dropped inside the Drop element.                                        | `number`  | `1`        |
+| `minDrops`    | `min-drops`     | The minimum number of drag elements that must be dropped inside the Drop element.                                       | `number`  | `1`        |
 | `onCorrect`   | `on-correct`    | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`  | `''`       |
 | `onEntry`     | `on-entry`      | Event handler triggered when the shape is entered (useful for animations or logic on entry).                            | `string`  | `''`       |
 | `onInCorrect` | `on-in-correct` | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect. | `string`  | `''`       |
