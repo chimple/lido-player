@@ -16,6 +16,8 @@
         var base = document.createElement('base');
         document.body?.appendChild(base);
         base.href = baseURL;
+        const lidoRoot = document.querySelector('lido-root');
+        lidoRoot.xmlPath = baseURL + 'assets/xmlData.xml';
       });
     </script>
   </head>
