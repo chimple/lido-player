@@ -7,5 +7,7 @@
         var base = document.createElement('base');
         document.body?.appendChild(base);
         base.href = baseURL;
+        const lidoRoot = document.querySelector('lido-root');
+        lidoRoot.xmlPath = baseURL + 'assets/xmlData.xml';
       });
     </script> </head> <body> <!-- <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component> --> <!-- <app-root base-url="http://localhost:8000/Downloads/test_lido_1%20%281%29/"></app-root> --> <lido-root xml-path="/assets/xmlData.xml" canplay="true"></lido-root> </body></html>
