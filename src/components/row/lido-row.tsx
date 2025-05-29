@@ -128,6 +128,16 @@ export class LidoRow {
   @Prop() direction: string;
 
   /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string } = {};
@@ -188,6 +198,8 @@ export class LidoRow {
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         audio={this.audio}
         onTouch={this.onTouch}
         onCorrect={this.onCorrect}

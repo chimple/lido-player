@@ -114,12 +114,22 @@ export class LidoImage {
    * Enables border-image slice support when true; otherwise, behaves as a regular image component
    */
   @Prop() isSlice: string;
-  
+
   /**
    * Specifies the width for border-image slice (e.g., "30px", "2em").
    * Only used when `isSlice` is enabled.
    */
   @Prop() sliceWidth: string = '30px';
+
+  /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
 
   /**
    * Reference to the HTML element that represents this image component.
@@ -163,8 +173,8 @@ export class LidoImage {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none', 
-      alignItems: 'center', 
+      display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none',
+      alignItems: 'center',
       justifyContent: 'center',
 
       // Slice Style
@@ -188,6 +198,8 @@ export class LidoImage {
           aria-label={this.ariaLabel}
           aria-hidden={this.ariaHidden}
           value={this.value}
+          minDrops={this.minDrops}
+          maxDrops={this.maxDrops}
           audio={this.audio}
           onTouch={this.onTouch}
           onCorrect={this.onCorrect}

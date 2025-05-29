@@ -105,6 +105,16 @@ export class LidoPos {
   @Prop() onEntry: string = '';
 
   /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
+
+  /**
    * Reference to the HTML element that represents this `lido-pos` component.
    */
   @Element() el: HTMLElement;
@@ -160,6 +170,8 @@ export class LidoPos {
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         value={this.value}
         audio={this.audio}
         onTouch={this.onTouch}

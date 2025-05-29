@@ -135,6 +135,16 @@ export class LidoWrap {
   @Prop() flex: string;
 
   /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string };
@@ -191,6 +201,8 @@ export class LidoWrap {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         audio={this.audio}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         onTouch={this.onTouch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}

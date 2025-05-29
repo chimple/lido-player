@@ -110,7 +110,17 @@ export class LidoShape {
   /**
    * Event handler triggered when the shape is entered (useful for animations or logic on entry).
    */
-  @Prop() onEntry: string= '';
+  @Prop() onEntry: string = '';
+
+  /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
 
   /**
    * Reference to the HTML element representing this `lido-shape` component.
@@ -147,6 +157,8 @@ export class LidoShape {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         audio={this.audio}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         onTouch={this.onTouch}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}

@@ -143,8 +143,18 @@ export class LidoCol {
    * Applies a CSS box-shadow to the component.
    * Accepts any valid CSS box-shadow value.
    * Example: "0px 4px 10px rgba(0, 0, 0, 0.1)"
-  */
+   */
   @Prop() boxShadow?: string;
+
+  /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
 
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
@@ -189,7 +199,7 @@ export class LidoCol {
       flexDirection: !this.direction ? 'column' : parseProp(this.direction, orientation),
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
-      boxShadow: this.boxShadow ? this.boxShadow : 'unset'
+      boxShadow: this.boxShadow ? this.boxShadow : 'unset',
     };
   }
 
@@ -202,6 +212,8 @@ export class LidoCol {
         tabindex={this.tabIndex}
         value={this.value}
         style={this.style}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         audio={this.audio}

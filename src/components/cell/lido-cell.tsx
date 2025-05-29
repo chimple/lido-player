@@ -72,7 +72,7 @@ export class LidoCell {
   /**
    * The tab index value, used to set the tab order of the column for keyboard navigation.
    */
-  @Prop() tabIndex: number =  0;
+  @Prop() tabIndex: number = 0;
 
   /**
    * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
@@ -142,6 +142,16 @@ export class LidoCell {
   @Prop() layout: string = 'wrap';
 
   /**
+   * The minimum number of drag elements that must be dropped inside the Drop element.
+   */
+  @Prop() minDrops: number = 1;
+
+  /**
+   * The Maximum number of drag elements that can be dropped inside the Drop element.
+   */
+  @Prop() maxDrops: number = 1;
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string } = {};
@@ -208,6 +218,8 @@ export class LidoCell {
         type={this.type}
         tabindex={this.tabIndex}
         style={this.style}
+        minDrops={this.minDrops}
+        maxDrops={this.maxDrops}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         audio={this.audio}
