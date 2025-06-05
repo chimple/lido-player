@@ -307,6 +307,7 @@ export function enableReorderDrag(element: HTMLElement): void {
   };
 
   element.style.cursor = 'move';
+  element.classList.add('drag-element');
   element.addEventListener('pointerdown', onStart);
 }
 

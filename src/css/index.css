@@ -15,7 +15,7 @@ body {
   color: white;
 }
 
-.lido-element-selected{
+.lido-element-selected {
   border: 2px solid;
   background-color: #ffdf7d !important;
 }
@@ -34,10 +34,33 @@ body {
 }
 
 .removeShadow {
-  box-shadow:0px 0px 0px 0px #FF8900 !important; 
+  box-shadow: 0px 0px 0px 0px #ff8900 !important;
 }
 
 .highlight-element {
   border: 2px solid white !important;
   box-shadow: 0 2px 4px rgba(151, 150, 150, 0.1) !important;
+}
+
+.drag-element {
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3) !important;
+}
+
+.click-element {
+  background-color: var(--btn-bg-color, rgba(255, 172, 76, 1)) !important;
+  box-shadow: 0px 31px 0px var(--btn-shadow-color, rgba(225, 121, 76, 1)) !important;
+  cursor: pointer; /* Important for mouse, good practice */
+  transition: box-shadow 0.1s ease-out, transform 0.1s ease-out;
+  /* border: none !important; */
+  padding-right: 20px;
+}
+
+.click-element:active {
+  box-shadow: 0px 5px 0px var(--btn-shadow-color, rgba(225, 121, 76, 1)) !important;
+  transform: translateY(26px); /* 31px (original shadow) - 5px (new shadow) = 26px */
+}
+
+.click-element:focus {
+  outline: 2px solid dodgerblue; /* Or your preferred focus style */
+  outline-offset: 3px;
 }
