@@ -1,5 +1,5 @@
 <main>
- <lido-container id="lido-container" tabIndex="1" flex="true" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/Sky.png" objective="quick,lazy,quick,lazy"   height="100%" width="100vw"  bgColor="#74AADD" visible="true" audio="background1.mp3"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
+ <lido-container id="lido-container" tabIndex="1" flex="true" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/Sky.png" objective="quick,lazy,quick,lazy"   height="100%" width="100%"  bgColor="#74AADD" visible="true" audio="background1.mp3"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
 
 
 <!-- Chimple Avatar -->
