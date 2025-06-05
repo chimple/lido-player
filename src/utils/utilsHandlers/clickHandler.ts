@@ -2,6 +2,7 @@ import { countPatternWords, executeActions, handleShowCheck, handlingElementFlex
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, SelectedValuesKey } from '../constants';
 import { dispatchClickEvent } from '../customEvents';
+import tinycolor from 'tinycolor2';
 
 export function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
@@ -148,4 +149,8 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }, 50);
     }
   });
+  const backGroundColor = element.style?.backgroundColor || '#FFB742';
+  element.style.setProperty('--btn-bg-color', backGroundColor);
+  element.style.setProperty('--btn-shadow-color', tinycolor(backGroundColor).darken(17).toString());
+  element.classList.add('click-element');
 }

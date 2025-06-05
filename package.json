@@ -62,6 +62,7 @@
   "license": "MIT",
   "dependencies": {
     "@rive-app/canvas": "^2.25.7",
-    "mathjs": "^14.4.0"
+    "mathjs": "^14.4.0",
+    "tinycolor2": "^1.6.0"
   }
 }

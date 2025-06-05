@@ -21,6 +21,13 @@ export const getElementScale = (el: HTMLElement): number => {
   return 1; // Fallback to no scaling
 };
 
+export function enableOptionArea(element: HTMLElement) {
+  const children = Array.from(element.children);
+  children.forEach(child => {
+    child.classList.add('drag-element');
+  });
+}
+
 export function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
   let isClicked = false;
@@ -324,6 +331,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   // Initialize draggable element styles
   element.style.cursor = 'move';
   element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
+  element.classList.add('drag-element');
   element.addEventListener('mousedown', onStart);
   element.addEventListener('touchstart', onStart);
   element.addEventListener('click', ev => {
