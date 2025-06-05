@@ -6,7 +6,7 @@ import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 const gameScore = new GameScore();
@@ -45,6 +45,10 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
     }
     case 'option': {
       enableReorderDrag(element);
+      break;
+    }
+    case 'optionArea': {
+      enableOptionArea(element);
       break;
     }
     default:
@@ -396,7 +400,6 @@ export const validateObjectiveStatus = async () => {
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
   let res;
   const additionalCheck = container.getAttribute('equationCheck');
-  console.log("🚀 ~ validateObjectiveStatus ~ additionalCheck:", additionalCheck)
   if (!!additionalCheck) {
     res = equationCheck(additionalCheck);
     console.log('🚀 ~ handleShowCheck ~ res:', res);
@@ -650,7 +653,6 @@ export const equationCheck = (additionalCheck: string): boolean => {
   // 3. Join the modified parts back into one string
   const resultString = modifiedParts.join('');
   const finalRes = evaluate(resultString);
-  console.log("🚀 ~ equationCheck ~ finalRes:", finalRes)
   return finalRes;
 };
 
