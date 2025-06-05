@@ -1,5 +1,5 @@
 <main>
-<lido-container id="lido-container" tabIndex="1" flex="true" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/Sky.png" objective="quick,lazy,quick,lazy"   height="100vh" width="100vw"  bgColor="#74AADD" visible="true" audio="background1.mp3"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
+ <lido-container id="lido-container" tabIndex="1" flex="true" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/Sky.png" objective="quick,lazy,quick,lazy"   height="100%" width="100vw"  bgColor="#74AADD" visible="true" audio="background1.mp3"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="true">
 
 
 <!-- Chimple Avatar -->
@@ -55,41 +55,7 @@
 
 
 
-<lido-container id="lido-container" objective="e,e" tabIndex="1" isContinueOnCorrect="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"  equationCheck="$#pos12,$#textA,$#pos3,$#textB" showCheck="false" visible="true" bgColor="black">
-	<!-- Background -->
-	<lido-cell id="pos2" disableEdit="true" layout="pos" height="100%" width="100%"  ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
-		<lido-image id="image2" disableEdit="true" value="image2" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/backgroundImage.png" z="0" width="1600px" height="900px" onEntry="" altText="{backgroundImage}">
-		</lido-image>
-	</lido-cell>
-	<lido-cell visible="true" layout="col" bgColor="transparent" height="100%" width="100%" onEntry="">
-		<lido-cell visible="true" width="60%" height="10%" layout="wrap" onEntry="this.justify-self=center;">
-			<lido-cell id="pos12"  tabIndex="2" type="drop" minDrops="1" maxDrops="1" height="80%" width="70%" bgColor="red">
-			</lido-cell>
-			<lido-text id="textA" value="+" height="80%" width="70%" string="+">
-			</lido-text>
-			<lido-cell id="pos3" tabIndex="3" type="drop" minDrops="1" maxDrops="1" height="80%" width="70%" bgColor="red">
-			</lido-cell>
-			<lido-text id="textB" value="==10" height="80%" width="70%" string="  =  10">
-			</lido-text>
-		</lido-cell>
-		<lido-cell visible="true" bgColor="transparent" x="20%" y="40%" width="60%" height="20%" layout="pos" onEntry="">
-			<lido-cell visible="true" width="100%" height="100%" layout="wrap" onEntry="">
-				<lido-text id="text5" type="drag" value="5" height="80%" width="30%" string="5">
-				</lido-text>
-				<lido-text id="text6" type="drag" value="6" height="80%" width="30%" string="6">
-				</lido-text>
-				<lido-text id="text9" type="drag" value="9" height="80%" width="30%" string="9">
-				</lido-text>
-				<lido-text id="text10" type="drag" value="10" height="80%" width="30%" string="10">
-				</lido-text>
-				<lido-text id="text1" type="drag" value="1" height="80%" width="30%" string="1">
-				</lido-text>
-				<lido-text id="text4" type="drag" value="4" height="80%" width="30%" string="4">
-				</lido-text>
-			</lido-cell>
-		</lido-cell>
-	</lido-cell>
-</lido-container>
+
 
 
 <lido-container id="lido-container" objective="e,e" tabIndex="1" isContinueOnCorrect="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"  equationCheck="$#pos12,$#textA,$#pos3,$#textB" showCheck="false" visible="true" bgColor="black">
