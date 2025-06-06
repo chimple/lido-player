@@ -167,7 +167,7 @@ export class LidoCol {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'flex');
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
   }
 
   /**
