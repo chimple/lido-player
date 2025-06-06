@@ -155,7 +155,7 @@ export class LidoWrap {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'grid');
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     if (this.flex === 'true') {
       this.el.classList.remove('lido-wrap');
       this.el.classList.add('lido-flex');

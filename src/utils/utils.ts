@@ -472,10 +472,11 @@ export async function speakText(text: string, targetElement?: HTMLElement): Prom
   });
 }
 
-export function handlingChildElements(element: HTMLElement, minLength: number, maxLength: number, currentLength: number, displayStyle: string) {
+export function handlingChildElements(element: HTMLElement, minLength: number, maxLength: number, currentLength: number) {
   if (currentLength === undefined) return;
 
   const children = Array.from(element.children);
+  
   let allowedLength = currentLength;
 
   if (minLength && currentLength < minLength) {
@@ -484,9 +485,11 @@ export function handlingChildElements(element: HTMLElement, minLength: number, m
   if (maxLength && currentLength > maxLength) {
     allowedLength = maxLength;
   }
-
+  
   children.forEach((child, index) => {
-    (child as HTMLElement).style.display = index < allowedLength ? displayStyle : 'none';
+    if(index > allowedLength-1) {
+      (child as HTMLElement).style.display = 'none';
+    }
   });
 }
 
