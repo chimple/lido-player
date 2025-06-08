@@ -21,6 +21,7 @@
 | `id`                  | `id`                     | Unique identifier for the container.                                                                                                              | `string`  | `''`     |
 | `isAllowOnlyCorrect`  | `is-allow-only-correct`  | Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false". | `boolean` | `false`  |
 | `isContinueOnCorrect` | `is-continue-on-correct` | Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".                         | `boolean` | `false`  |
+| `margin`              | `margin`                 |                                                                                                                                                   | `string`  | `''`     |
 | `objective`           | `objective`              | Objective or purpose of the container. Can be used for internal logic or tracking.                                                                | `string`  | `''`     |
 | `onCorrect`           | `on-correct`             | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.                                  | `string`  | `''`     |
 | `onEntry`             | `on-entry`               | Event handler triggered when the container is entered, useful for triggering animations or logic.                                                 | `string`  | `''`     |

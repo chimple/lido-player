@@ -127,6 +127,8 @@ export class LidoShape {
    */
   @Element() el: HTMLElement;
 
+   @Prop() margin:string='';
+
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
    * It initializes custom events based on the `type` of the shape component.
@@ -145,6 +147,7 @@ export class LidoShape {
       display: this.visible ? 'block' : 'none', // Toggle visibility
       zIndex: this.z,
       backgroundColor: this.shapeType !== 'polygon' ? this.bgColor : 'transparent', // Apply background only if not a polygon
+      margin: this.margin,
     };
 
     return (

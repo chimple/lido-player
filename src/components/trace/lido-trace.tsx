@@ -80,6 +80,8 @@ export class LidoTrace {
    */
   @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/finger.png';
 
+
+  
   //   @Element() el!: HTMLElement;
 
   @State() fileIndex: number = -1;
@@ -118,6 +120,7 @@ export class LidoTrace {
       freeTraceLines: [] as SVGPathElement[],
       currentFreePath: [] as (SVGPathElement | null)[],
       lastPointerPos: null as { x: number; y: number } | null,
+      
     };
 
     await this.loadAnotherSVG(state, true); // Load the first SVG

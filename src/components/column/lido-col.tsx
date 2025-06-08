@@ -156,6 +156,8 @@ export class LidoCol {
    */
   @Prop() maxDrops: number = 1;
 
+
+   @Prop() margin:string='';
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -200,6 +202,7 @@ export class LidoCol {
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
       boxShadow: this.boxShadow ? this.boxShadow : 'unset',
+       margin: parseProp(this.margin, orientation),
     };
   }
 

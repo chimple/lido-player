@@ -22,7 +22,7 @@ export class LidoRoot {
    * Initial index of the container being displayed.
    */
   @Prop() initialIndex: number = 0;
-
+   @Prop() margin:string='';
   /**
    * Boolean that controls the playability of the game.
    */

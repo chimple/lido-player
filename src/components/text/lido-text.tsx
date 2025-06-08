@@ -144,6 +144,7 @@ export class LidoText {
    */
   @Prop() onEntry: string = '';
 
+  @Prop() margin:string='';
   /**
    * Reference to the HTML element representing this `lido-text` component.
    */
@@ -154,6 +155,7 @@ export class LidoText {
    */
   @State() style: { [key: string]: string } = {};
 
+  
   /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the text component.
@@ -193,6 +195,7 @@ export class LidoText {
       display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none', // Toggle visibility
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
+      margin: parseProp(this.margin, orientation),
     };
   }
 

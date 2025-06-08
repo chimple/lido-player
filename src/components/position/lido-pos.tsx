@@ -113,7 +113,7 @@ export class LidoPos {
    * The Maximum number of drag elements that can be dropped inside the Drop element.
    */
   @Prop() maxDrops: number = 1;
-
+  @Prop() margin:string='';
   /**
    * Reference to the HTML element that represents this `lido-pos` component.
    */
@@ -157,6 +157,7 @@ export class LidoPos {
       left: parseProp(this.x, orientation),
       zIndex: this.z,
       display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? 'block' : 'none', // Toggle visibility
+      margin: parseProp(this.margin, orientation),
     };
   }
 

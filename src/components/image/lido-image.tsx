@@ -130,6 +130,9 @@ export class LidoImage {
    * The Maximum number of drag elements that can be dropped inside the Drop element.
    */
   @Prop() maxDrops: number = 1;
+  
+// margin to adjust the position of element
+  @Prop() margin:string="";
 
   /**
    * Reference to the HTML element that represents this image component.
@@ -176,6 +179,7 @@ export class LidoImage {
       display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none',
       alignItems: 'center',
       justifyContent: 'center',
+      margin: parseProp(this.margin, orientation),
 
       // Slice Style
       borderImageSource: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
@@ -183,6 +187,7 @@ export class LidoImage {
       borderImageRepeat: this.isSlice === 'true' ? 'round' : 'unset',
       borderImageWidth: this.isSlice === 'true' ? `${this.sliceWidth}` : 'unset',
       backgroundImage: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
+    
     };
   }
 
