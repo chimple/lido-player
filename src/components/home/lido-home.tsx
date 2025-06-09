@@ -202,6 +202,7 @@ export class LidoHome {
       'lido-random': <lido-random {...props}>{children}</lido-random>,
       'lido-avatar': <lido-avatar {...props}>{children}</lido-avatar>,
       'lido-cell': <lido-cell {...props}>{children}</lido-cell>,
+      'lido-slider': <lido-slider {...props}>{children}</lido-slider>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning

@@ -38,6 +38,7 @@ graph TD;
   lido-home --> lido-random
   lido-home --> lido-avatar
   lido-home --> lido-cell
+  lido-home --> lido-slider
   style lido-root fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
