@@ -146,6 +146,7 @@ export class LidoContainer {
    */
   @Prop() baseUrl: string = '';
 
+  @Prop() margin:string='';
   /**
    * Reference to the HTML element that represents this container component.
    */
@@ -265,6 +266,7 @@ export class LidoContainer {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)', // Centering the container
+      margin: this.margin,
     };
     console.log('🚀 ~ LidoContainer ~ canplay:', this.canplay);
 

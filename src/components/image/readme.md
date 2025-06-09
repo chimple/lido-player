@@ -16,6 +16,7 @@
 | `height`      | `height`        | The height of the image component (CSS value, e.g., '100px', '50%').                                                    | `string`            | `undefined` |
 | `id`          | `id`            | Unique identifier for the text element.                                                                                 | `string`            | `undefined` |
 | `isSlice`     | `is-slice`      | Enables border-image slice support when true; otherwise, behaves as a regular image component                           | `string`            | `undefined` |
+| `margin`      | `margin`        |                                                                                                                         | `string`            | `""`        |
 | `maxDrops`    | `max-drops`     | The Maximum number of drag elements that can be dropped inside the Drop element.                                        | `number`            | `1`         |
 | `minDrops`    | `min-drops`     | The minimum number of drag elements that must be dropped inside the Drop element.                                       | `number`            | `1`         |
 | `onCorrect`   | `on-correct`    | Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.        | `string`            | `undefined` |

@@ -151,6 +151,7 @@ export class LidoCell {
    */
   @Prop() maxDrops: number = 1;
 
+   @Prop() margin:string='';
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -200,6 +201,7 @@ export class LidoCell {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
+      margin: parseProp(this.margin, orientation),
       display: JSON.parse(parseProp(`${this.visible}`, orientation))
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'
