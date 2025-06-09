@@ -3,15 +3,15 @@ import { convertUrlToRelative } from '../../utils/utils';
 import * as math from 'mathjs';
 
 @Component({
-  tag: 'lido-slider',
-  styleUrl: 'lido-slider.css',
+  tag: 'lido-slide-fill',
+  styleUrl: 'lido-slide-fill.css',
   shadow: false,
 })
-export class SlideMeasurementGame {
+export class LidoSlideFill {
   /**
    * Unique identifier for the component instance
    */
-  @Prop() id: string = 'lido-slider';
+  @Prop() id: string = 'lido-slide-fill';
 
   /**
    * CSS width of the component (e.g., "300px", "100%")
@@ -130,14 +130,13 @@ export class SlideMeasurementGame {
   }
 
   updateFill() {
-    const svgEl = this.el.querySelector('.svg-el')?.querySelector('svg');
+    const svgEl = this.el.querySelector('.svg-element')?.querySelector('svg');
     if (!svgEl) return;
 
     const rect = svgEl.querySelector('#fillArea') as SVGRectElement;
     if (!rect) return;
 
     const fillDirection = this.fillDirection;
-    console.log(`Fill direction: ${fillDirection}`);
 
     let originalSize: number;
     let originalOffset: number;
@@ -188,7 +187,7 @@ export class SlideMeasurementGame {
   }
 
   addRulerNumbers() {
-    const svgEl = this.el.querySelector('.svg-el')?.querySelector('svg') as SVGSVGElement;
+    const svgEl = this.el.querySelector('.svg-element')?.querySelector('svg') as SVGSVGElement;
     if (!svgEl) return;
 
     const rulerPath = svgEl.querySelector('#rulerPath') as SVGPathElement;
@@ -232,7 +231,7 @@ export class SlideMeasurementGame {
     return (
       <Host
         id={this.id}
-        class="lido-slide"
+        class="lido-slide-fill"
         src={this.src}
         fill={this.fill}
         fillDirection={this.fillDirection}
@@ -243,7 +242,7 @@ export class SlideMeasurementGame {
         division={this.division}
         numberType={this.numberType}
       >
-        <div innerHTML={this.svgContent} class="svg-el"></div>
+        <div innerHTML={this.svgContent} class="svg-element"></div>
       </Host>
     );
   }

@@ -1036,7 +1036,7 @@ export namespace Components {
          */
         "z": string;
     }
-    interface LidoSlider {
+    interface LidoSlideFill {
         /**
           * Number of divisions or segments to split the ruler path into
          */
@@ -1492,11 +1492,11 @@ declare global {
         prototype: HTMLLidoShapeElement;
         new (): HTMLLidoShapeElement;
     };
-    interface HTMLLidoSliderElement extends Components.LidoSlider, HTMLStencilElement {
+    interface HTMLLidoSlideFillElement extends Components.LidoSlideFill, HTMLStencilElement {
     }
-    var HTMLLidoSliderElement: {
-        prototype: HTMLLidoSliderElement;
-        new (): HTMLLidoSliderElement;
+    var HTMLLidoSlideFillElement: {
+        prototype: HTMLLidoSlideFillElement;
+        new (): HTMLLidoSlideFillElement;
     };
     /**
      * @component LidoText
@@ -1541,7 +1541,7 @@ declare global {
         "lido-root": HTMLLidoRootElement;
         "lido-row": HTMLLidoRowElement;
         "lido-shape": HTMLLidoShapeElement;
-        "lido-slider": HTMLLidoSliderElement;
+        "lido-slide-fill": HTMLLidoSlideFillElement;
         "lido-text": HTMLLidoTextElement;
         "lido-trace": HTMLLidoTraceElement;
         "lido-wrap": HTMLLidoWrapElement;
@@ -2578,7 +2578,7 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
-    interface LidoSlider {
+    interface LidoSlideFill {
         /**
           * Number of divisions or segments to split the ruler path into
          */
@@ -2903,7 +2903,7 @@ declare namespace LocalJSX {
         "lido-root": LidoRoot;
         "lido-row": LidoRow;
         "lido-shape": LidoShape;
-        "lido-slider": LidoSlider;
+        "lido-slide-fill": LidoSlideFill;
         "lido-text": LidoText;
         "lido-trace": LidoTrace;
         "lido-wrap": LidoWrap;
@@ -2995,7 +2995,7 @@ declare module "@stencil/core" {
              * Additionally, it supports custom events for interaction like touch, match, and entry.
              */
             "lido-shape": LocalJSX.LidoShape & JSXBase.HTMLAttributes<HTMLLidoShapeElement>;
-            "lido-slider": LocalJSX.LidoSlider & JSXBase.HTMLAttributes<HTMLLidoSliderElement>;
+            "lido-slide-fill": LocalJSX.LidoSlideFill & JSXBase.HTMLAttributes<HTMLLidoSlideFillElement>;
             /**
              * @component LidoText
              * The `LidoText` component is used to display text with customizable styling.

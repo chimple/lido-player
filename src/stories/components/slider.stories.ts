@@ -40,7 +40,7 @@ function getContainerXml(args) {
 
   return `<main>
     <lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="..." ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="black" visible="true">
-      <lido-slider fill="${fillPercentage}" width="500px" src="${src}" fillDirection="${fillDirection}" numberType="${numberType}" min="${min}" max="${max}" division="${division}" ></lido-slider>
+      <lido-slide-fill fill="${fillPercentage}" width="500px" src="${src}" fillDirection="${fillDirection}" numberType="${numberType}" min="${min}" max="${max}" division="${division}" ></lido-slider-fill>
     </lido-container>
   </main>`;
 }
