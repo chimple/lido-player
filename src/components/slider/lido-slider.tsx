@@ -1,7 +1,6 @@
 import { Component, h, Host, Prop, State, Element, Watch } from '@stencil/core';
 import { convertUrlToRelative } from '../../utils/utils';
 import * as math from 'mathjs';
-import { on } from 'events';
 
 @Component({
   tag: 'lido-slider',
