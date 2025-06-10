@@ -1046,6 +1046,48 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoSlideFill {
+        /**
+          * Number of divisions or segments to split the ruler path into
+         */
+        "division": number;
+        /**
+          * Fill amount to display inside the SVG rect. Accepts values like "30%" or "30" (treated as percentage of fill)
+         */
+        "fill": string;
+        /**
+          * Determines the direction in which the rect fill should grow: - 'vertical': from bottom to top - 'horizontal': from left to right
+         */
+        "fillDirection": string;
+        /**
+          * Unique identifier for the component instance
+         */
+        "id": string;
+        /**
+          * Maximum value shown on the ruler (used for number generation)
+         */
+        "max": number;
+        /**
+          * Minimum value shown on the ruler (used for number generation)
+         */
+        "min": number;
+        /**
+          * Type of number to be displayed on the ruler. Can be 'integer', 'decimal', or 'fraction'.
+         */
+        "numberType": string;
+        /**
+          * Enables slider interaction (currently unused in logic, can be used to toggle slider UI)
+         */
+        "slider": boolean;
+        /**
+          * URL or relative path to the external SVG file to be fetched and rendered
+         */
+        "src": string;
+        /**
+          * CSS width of the component (e.g., "300px", "100%")
+         */
+        "width": string;
+    }
     /**
      * @component LidoText
      * The `LidoText` component is used to display text with customizable styling.
@@ -1462,6 +1504,12 @@ declare global {
         prototype: HTMLLidoShapeElement;
         new (): HTMLLidoShapeElement;
     };
+    interface HTMLLidoSlideFillElement extends Components.LidoSlideFill, HTMLStencilElement {
+    }
+    var HTMLLidoSlideFillElement: {
+        prototype: HTMLLidoSlideFillElement;
+        new (): HTMLLidoSlideFillElement;
+    };
     /**
      * @component LidoText
      * The `LidoText` component is used to display text with customizable styling.
@@ -1505,6 +1553,7 @@ declare global {
         "lido-root": HTMLLidoRootElement;
         "lido-row": HTMLLidoRowElement;
         "lido-shape": HTMLLidoShapeElement;
+        "lido-slide-fill": HTMLLidoSlideFillElement;
         "lido-text": HTMLLidoTextElement;
         "lido-trace": HTMLLidoTraceElement;
         "lido-wrap": HTMLLidoWrapElement;
@@ -2551,6 +2600,48 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
+    interface LidoSlideFill {
+        /**
+          * Number of divisions or segments to split the ruler path into
+         */
+        "division"?: number;
+        /**
+          * Fill amount to display inside the SVG rect. Accepts values like "30%" or "30" (treated as percentage of fill)
+         */
+        "fill"?: string;
+        /**
+          * Determines the direction in which the rect fill should grow: - 'vertical': from bottom to top - 'horizontal': from left to right
+         */
+        "fillDirection"?: string;
+        /**
+          * Unique identifier for the component instance
+         */
+        "id"?: string;
+        /**
+          * Maximum value shown on the ruler (used for number generation)
+         */
+        "max"?: number;
+        /**
+          * Minimum value shown on the ruler (used for number generation)
+         */
+        "min"?: number;
+        /**
+          * Type of number to be displayed on the ruler. Can be 'integer', 'decimal', or 'fraction'.
+         */
+        "numberType"?: string;
+        /**
+          * Enables slider interaction (currently unused in logic, can be used to toggle slider UI)
+         */
+        "slider"?: boolean;
+        /**
+          * URL or relative path to the external SVG file to be fetched and rendered
+         */
+        "src"?: string;
+        /**
+          * CSS width of the component (e.g., "300px", "100%")
+         */
+        "width"?: string;
+    }
     /**
      * @component LidoText
      * The `LidoText` component is used to display text with customizable styling.
@@ -2836,6 +2927,7 @@ declare namespace LocalJSX {
         "lido-root": LidoRoot;
         "lido-row": LidoRow;
         "lido-shape": LidoShape;
+        "lido-slide-fill": LidoSlideFill;
         "lido-text": LidoText;
         "lido-trace": LidoTrace;
         "lido-wrap": LidoWrap;
@@ -2927,6 +3019,7 @@ declare module "@stencil/core" {
              * Additionally, it supports custom events for interaction like touch, match, and entry.
              */
             "lido-shape": LocalJSX.LidoShape & JSXBase.HTMLAttributes<HTMLLidoShapeElement>;
+            "lido-slide-fill": LocalJSX.LidoSlideFill & JSXBase.HTMLAttributes<HTMLLidoSlideFillElement>;
             /**
              * @component LidoText
              * The `LidoText` component is used to display text with customizable styling.
