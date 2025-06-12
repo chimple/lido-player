@@ -681,7 +681,7 @@ async function onClickDragElement(element) {
   }
 }
 
-const appendingDragElementsInDrop = () => {
+export const appendingDragElementsInDrop = () => {
   const dragItems = document.querySelectorAll("[type='drag']");
   const dropItems = document.querySelectorAll("[type='drop']");
   if (!dragItems || !dropItems) return;

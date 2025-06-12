@@ -389,6 +389,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * to append the drag elements to drop elements
+         */
+        "shouldAppend": boolean;
+        /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck": boolean;
@@ -1942,6 +1946,10 @@ declare namespace LocalJSX {
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * to append the drag elements to drop elements
+         */
+        "shouldAppend"?: boolean;
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
