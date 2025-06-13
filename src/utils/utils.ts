@@ -303,7 +303,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     drag[index] = [];
   }
   drag[index].push(dragElement.id);
-  localStorage.setItem(DragMapKey, JSON.stringify(drag));
+  // localStorage.setItem(DragMapKey, JSON.stringify(drag));
 
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
 

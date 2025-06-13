@@ -399,21 +399,23 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         console.warn('No matching drop item found for', dropElement);
       }
       localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+
+      if (dragSelectedData) {
+        let dragSelected = JSON.parse(dragSelectedData);
+        for (const key in dragSelected) {
+          if (dragSelected[key].includes(dragElement['value'])) {
+            delete dragSelected[key];
+          }
+        }
+        localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+      }
+
       // Check for overlaps and highlight only the most overlapping element
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
       if (mostOverlappedElement) {
         dragElement.style.transform = 'translate(0,0)';
         dragElement.style.transition = 'transform 0.5s ease';
 
-        if (dragSelectedData) {
-          let dragSelected = JSON.parse(dragSelectedData);
-          for (const key in dragSelected) {
-            if (dragSelected[key].includes(dragElement['value'])) {
-              delete dragSelected[key];
-            }
-          }
-          localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
-        }
         const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
         allElements.forEach(otherElement => {
           const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
@@ -468,14 +470,15 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           for (const key in dropSelected) {
             if (dropSelected[key].includes(dragElement.id)) {
               delete dropSelected[key];
-              delete dragSelected[key];
             }
           }
+
+          delete dragSelected[key];
         }
       }
 
       localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
-      localStorage.setItem(DragMapKey, JSON.stringify(dropSelected));
+      // localStorage.setItem(DragMapKey, JSON.stringify(dropSelected));
     }
 
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
