@@ -15,21 +15,18 @@
 }
 
 .lido-dot-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
-  /* position: fixed; */
+  position: fixed;
   z-index: 1;
   width: fit-content;
-  top: 3%;
+  top: 1%;
   left: 50%;
-  /* transform: translate(-50%); */
+  transform: translate(-50%);
 }
 
 .lido-dot {
-  height: 18px;
-  width: 18px;
+  height: 15px;
+  width: 15px;
   margin: 0 4px;
   background-color: #bbb;
   border-radius: 50%;
@@ -48,17 +45,4 @@
 
 .lido-dot:not(.completed):not(.current) {
   background-color: #bbb;
-}
-.lido-arrow {
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  margin: 0 30px 0px 30px;
-}
-.navbar{
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-top:15px;
-
 }

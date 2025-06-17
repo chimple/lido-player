@@ -40,7 +40,6 @@ export class LidoHome {
    */
   @Prop() height: string = '';
 
-
   /**
    * Current index of the container being displayed.
    */
@@ -95,7 +94,6 @@ export class LidoHome {
 
     // Reset the containers array to trigger a re-render
     this.containers = [...this.containers];
-    this.updateArrowVisibility();
   };
 
   /**
@@ -124,10 +122,6 @@ export class LidoHome {
       localStorage.removeItem(DragMapKey);
     });
   }
-
-  componentDidLoad() {
-   this.updateArrowVisibility();
-}
 
   /**
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
@@ -239,35 +233,6 @@ export class LidoHome {
     this.containers = containers;
   }
 
-// update arrow visibility
-
-  private updateArrowVisibility = () => {
-  const prevBtn = document.querySelector('.lido-arrow.left') as HTMLElement;
-  const nextBtn = document.querySelector('.lido-arrow.right') as HTMLElement;
-
-  if (prevBtn) {
-    prevBtn.style.visibility = this.currentContainerIndex === 0 ? 'hidden' : 'visible';
-  }
-
-  if (nextBtn) {
-    nextBtn.style.visibility = this.currentContainerIndex === this.containers.length - 1 ? 'hidden' : 'visible';
-  }
-};
-
-private clickprev = () => {
-  if (this.currentContainerIndex > 0) {
-    this.NextContainerKey(this.currentContainerIndex - 1);
-  }
-};
-
-private clicknext = () => {
-  if (this.currentContainerIndex < this.containers.length - 1) {
-    this.NextContainerKey(this.currentContainerIndex + 1);
-  }
-};
-
-  
-
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
    * Clicking on a dot allows the user to jump to a specific container.
@@ -275,18 +240,13 @@ private clicknext = () => {
   private renderDots() {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
-      <div class="navbar">
-        <lido-image src='/assets/images/story/Back_button.png' type="click" class="lido-arrow left" onEntry="this.padding='0px 0px 0px 0px';" onClick={() => this.clickprev()} />
       <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
-        {/* Navigation arrows and dots for container navigation */}
         {this.containers.map((_, index) => (
           <span
             class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
             onClick={() => this.jumpToContainer(index)}
           ></span>
         ))}
-      </div>
-      <lido-image src='/assets/images/story/Next_button.png' type="click" class="lido-arrow right" onEntry="this.padding='0px 0px 0px 0px';" onClick={() => this.clicknext()} />
       </div>
     );
   }
