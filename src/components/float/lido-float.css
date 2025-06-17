@@ -1,0 +1,19 @@
+.lido-float {
+  position: relative;
+}
+
+.lido-float > * {
+  position: absolute;
+  background-color: aquamarine;
+  cursor: pointer;
+}
+
+@keyframes float-up {
+    from {
+        top: 900px;
+    }
+    to {
+        top: -400px;
+        /* transform: translateY(-120vh); */
+    }
+}
