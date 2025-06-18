@@ -14,6 +14,7 @@ export const DropLength = 'dropLength';
 export const DropHasDrag = 'dropHasDrag';
 export const DropToAttr = 'drop-to';
 export const DropTimeAttr = 'drop-time';
+export const LidoContainer = 'lido-container';
 
 export enum TraceMode {
   NoFlow = 'noFlow',
