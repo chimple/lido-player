@@ -70,6 +70,7 @@ export class LidoFloat {
    * Initializes styles and sets up event listeners for resize and load events.
    */
   componentWillLoad() {
+    this.updateStyles();
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
   }
@@ -80,7 +81,6 @@ export class LidoFloat {
   }
 
   initializeFloatElement() {
-    this.updateStyles();
     const floatElements = this.el.children as HTMLCollection;
 
     Array.from(floatElements).forEach((el: Element) => {

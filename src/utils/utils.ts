@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -9,6 +9,7 @@ import { slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
+import { fillSlideHandle } from './utilsHandlers/floatHandler';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -16,7 +17,7 @@ export function format(first?: string, middle?: string, last?: string): string {
 }
 
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
@@ -60,7 +61,7 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
-  const actions = parseActions(actionsString);
+  const actions = parseActions(actionsString);  
 
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
@@ -79,7 +80,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
-          const container = document.querySelector('#lido-container') as HTMLElement;
+          const container = document.getElementById(LidoContainer) as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
 
@@ -116,6 +117,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
         case 'speak': {
           await AudioPlayer.getI().play(targetElement);
+          break;
+        }
+        case 'fill-slide':{
+          fillSlideHandle(action.value);
           break;
         }
         case 'stop': {
@@ -261,7 +266,7 @@ const calculateScore = () => {
 };
 
 export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
 
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
@@ -373,7 +378,7 @@ const storeActivityScore = (score: number) => {
 };
 
 export const handleShowCheck = () => {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   const objectiveString = container['objective'];
   const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
 
@@ -394,7 +399,7 @@ export const handleShowCheck = () => {
 };
 
 export const validateObjectiveStatus = async () => {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
@@ -433,7 +438,7 @@ export const triggerNextContainer = () => {
 };
 
 export function convertUrlToRelative(url: string): string {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
   if (url?.startsWith('http') || url?.startsWith('blob')) {
