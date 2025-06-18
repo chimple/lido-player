@@ -388,6 +388,7 @@ export namespace Components {
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch": string;
+        "shouldAppend": boolean;
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
@@ -1994,6 +1995,7 @@ declare namespace LocalJSX {
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch"?: string;
+        "shouldAppend"?: boolean;
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */

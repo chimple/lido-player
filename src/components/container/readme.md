@@ -27,6 +27,7 @@
 | `onEntry`             | `on-entry`               | Event handler triggered when the container is entered, useful for triggering animations or logic.                                                 | `string`  | `''`     |
 | `onInCorrect`         | `on-in-correct`          | Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.                           | `string`  | `''`     |
 | `onTouch`             | `on-touch`               | Event handler triggered when the container is touched or clicked.                                                                                 | `string`  | `''`     |
+| `shouldAppend`        | `should-append`          |                                                                                                                                                   | `boolean` | `false`  |
 | `showCheck`           | `show-check`             | Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".                                                | `boolean` | `false`  |
 | `tabIndex`            | `tab-index`              | TabIndex for keyboard navigation.                                                                                                                 | `number`  | `0`      |
 | `type`                | `type`                   | Type of the container, which can be used for conditional logic or styling purposes.                                                               | `string`  | `''`     |

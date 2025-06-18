@@ -13,7 +13,7 @@
 | `ariaLabel`   | `aria-label`    | The ARIA label of the container. Used for accessibility to indicate the purpose of the element.                                      | `string`            | `undefined` |
 | `audio`       | `audio`         | URL or identifier of an audio file associated with the image.                                                                        | `string`            | `undefined` |
 | `bgColor`     | `bg-color`      | Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').                                          | `string`            | `undefined` |
-| `filter`      | `filter`        | CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)' | `string`            | `undefined` |
+| `filter`      | `filter`        | CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)' | `string`            | `''`        |
 | `height`      | `height`        | The height of the image component (CSS value, e.g., '100px', '50%').                                                                 | `string`            | `undefined` |
 | `id`          | `id`            | Unique identifier for the text element.                                                                                              | `string`            | `undefined` |
 | `isSlice`     | `is-slice`      | Enables border-image slice support when true; otherwise, behaves as a regular image component                                        | `string`            | `undefined` |
