@@ -332,7 +332,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
           otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color**
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
@@ -340,8 +340,8 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.border = ''; // Reset border
-        otherElement.style.backgroundColor = ''; // Reset background color
+        otherElement.style.border = '5px dashed #f34d08'; // Reset border
+        otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
         otherElement.style.opacity = '1';
@@ -412,7 +412,7 @@ export const validateObjectiveStatus = async () => {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
   if (res) {
-    const attach=container.getAttribute('shouldAppend');
+    const attach=container.getAttribute('appendOnDrop');
     if(attach === 'true') {
     appendingDragElementsInDrop();
     }

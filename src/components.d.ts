@@ -320,6 +320,10 @@ export namespace Components {
      */
     interface LidoContainer {
         /**
+          * Enables appending the dragged element into the drop target on successful drop.
+         */
+        "appendOnDrop": boolean;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden": string;
@@ -388,7 +392,6 @@ export namespace Components {
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch": string;
-        "shouldAppend": boolean;
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
@@ -1927,6 +1930,10 @@ declare namespace LocalJSX {
      */
     interface LidoContainer {
         /**
+          * Enables appending the dragged element into the drop target on successful drop.
+         */
+        "appendOnDrop"?: boolean;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden"?: string;
@@ -1995,7 +2002,6 @@ declare namespace LocalJSX {
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch"?: string;
-        "shouldAppend"?: boolean;
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
