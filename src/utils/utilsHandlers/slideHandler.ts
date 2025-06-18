@@ -1,4 +1,4 @@
-import { SelectedValuesKey } from '../constants';
+import { LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
 import { handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
@@ -192,7 +192,7 @@ const slideCompleted = (slideElement: HTMLElement) => {
   });
   localStorage.setItem(SelectedValuesKey, JSON.stringify(slideArr));
 
-  const objectiveString = document.querySelector('#lido-container')['objective'];
+  const objectiveString = document.getElementById(LidoContainer)['objective'];
   const objectiveArray = objectiveString.split(',');
   const elementIndex = slideArr.indexOf(slideElement['value']);
   const isCorrect = matchStringPattern(slideElement['value'], [objectiveArray[elementIndex].trim()]);

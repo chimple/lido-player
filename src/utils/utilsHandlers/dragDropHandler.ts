@@ -1,6 +1,6 @@
 import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from '../constants';
+import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -39,7 +39,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let duplicateElement: HTMLElement = null;
 
   // Fetch the container element
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) {
     console.error(`Container with ID "container" not found.`);
     return;
@@ -629,7 +629,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // Reset the transform of the drag element before calculating the new position
     (selectedDragElement as HTMLElement).style.transform = '';
-    const container = document.querySelector('#lido-container') as HTMLElement;
+    const container = document.getElementById(LidoContainer) as HTMLElement;
 
     const containerScale = getElementScale(container);
     console.log('🚀 ~ onClickDropOrDragElement ~ containerScale:', containerScale);

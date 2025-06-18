@@ -56,12 +56,13 @@
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
     "lit": "^3.2.1",
-    "puppeteer": "^21.9.0",
+    "puppeteer": "^21.11.0",
     "storybook": "^8.6.12"
   },
   "license": "MIT",
   "dependencies": {
     "@rive-app/canvas": "^2.25.7",
+    "css-filter-converter": "^1.0.110",
     "mathjs": "^14.4.0",
     "tinycolor2": "^1.6.0"
   }

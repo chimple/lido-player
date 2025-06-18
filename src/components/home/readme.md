@@ -38,6 +38,7 @@
 - [lido-avatar](../avatar)
 - [lido-cell](../cell)
 - [lido-slide-fill](../slideFill)
+- [lido-float](../float)
 
 ### Graph
 ```mermaid
@@ -56,6 +57,7 @@ graph TD;
   lido-home --> lido-avatar
   lido-home --> lido-cell
   lido-home --> lido-slide-fill
+  lido-home --> lido-float
   lido-root --> lido-home
   style lido-home fill:#f9f,stroke:#333,stroke-width:4px
 ```

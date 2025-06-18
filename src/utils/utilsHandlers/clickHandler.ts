@@ -1,6 +1,6 @@
 import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, SelectedValuesKey } from '../constants';
+import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
 import { dispatchClickEvent } from '../customEvents';
 import tinycolor from 'tinycolor2';
 
@@ -25,7 +25,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
 
   const onClick = async () => {
     AudioPlayer.getI().stop();
-    const container = document.querySelector('#lido-container') as HTMLElement;
+    const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');
     const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
     const showCheck = container.getAttribute('showCheck') === 'true';

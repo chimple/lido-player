@@ -1,4 +1,4 @@
-import { DragSelectedMapKey, SelectedValuesKey } from '../constants';
+import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
 import { executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
 let preOverlap: HTMLElement;
 
@@ -44,7 +44,7 @@ export function enableReorderDrag(element: HTMLElement): void {
   let startX = 0;
   let startY = 0;
 
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   const blankArea = document.querySelector('[type="blank"]') as HTMLElement;
   const wordParent = element.parentElement !== blankArea ? element.parentElement : null;
   const elementType = element.getAttribute('type');
@@ -410,7 +410,7 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
 
 // Drop Completed
 const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
-  const container = document.querySelector('#lido-container');
+  const container = document.getElementById(LidoContainer);
   const objective = container.getAttribute('objective');
   const objectiveArray = objective.split(',');
 
