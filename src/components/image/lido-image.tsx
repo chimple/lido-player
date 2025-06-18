@@ -141,7 +141,7 @@ export class LidoImage {
    * CSS filter to apply visual effects (e.g., blur, brightness) to the image.
    * Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
    */
-  @Prop() filter: string;
+  @Prop() filter: string = '';
 
   /**
    * Reference to the HTML element that represents this image component.
@@ -159,10 +159,13 @@ export class LidoImage {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    const img = this.el.getElementsByTagName('img')[0] as HTMLImageElement;
-    if(!img)return;
-    if(this.filter === '')return;
-    img.style.filter = `${CssFilter.hexToFilter(tinyColor(this.filter).toHexString()).color}`;
+
+    if (this.filter !== '') {
+      const img = this.el.getElementsByTagName('img')[0] as HTMLImageElement;
+      if (img) {
+        img.style.filter = `${CssFilter.hexToFilter(tinyColor(this.filter).toHexString()).color}`;
+      }
+    }
   }
 
   /**
