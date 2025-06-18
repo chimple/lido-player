@@ -141,7 +141,7 @@ export class LidoImage {
    * CSS filter to apply visual effects (e.g., blur, brightness) to the image.
    * Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
    */
-  @Prop() filter: string;
+  @Prop() filter: string = '';
 
   /**
    * Reference to the HTML element that represents this image component.
