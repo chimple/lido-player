@@ -159,10 +159,13 @@ export class LidoImage {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    const img = this.el.getElementsByTagName('img')[0] as HTMLImageElement;
-    if(!img)return;
-    if(this.filter === '')return;
-    img.style.filter = `${CssFilter.hexToFilter(tinyColor(this.filter).toHexString()).color}`;
+
+    if (this.filter !== '') {
+      const img = this.el.getElementsByTagName('img')[0] as HTMLImageElement;
+      if (img) {
+        img.style.filter = `${CssFilter.hexToFilter(tinyColor(this.filter).toHexString()).color}`;
+      }
+    }
   }
 
   /**
