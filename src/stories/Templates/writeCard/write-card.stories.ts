@@ -3,12 +3,11 @@ import { html } from 'lit';
 
 
 type WriteCardArgs = {
-    svgFile: string[];
+    traceImgFile: string[];
     mode: 'noFlow' | 'showFlow' | 'freeTrace' | 'blindTracing' | 'blindFreeTrace';
     avtarImgFile: string;
     backgroundImage: string;
-
-    flashCardBackImage: string;
+    flashCardImage: string[];
 };
 
 const defaultBackground = "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//SkyBg.png";
@@ -18,16 +17,16 @@ const meta: Meta<WriteCardArgs> = {
     argTypes: {
         backgroundImage: { control: 'text', name: 'Background Image URL'},
         avtarImgFile: { control: 'file' },
-        svgFile: { control: 'file' },
+        traceImgFile: { control: 'file' },
         mode: { control: 'select', options: ['noFlow', 'showFlow', 'freeTrace', 'blindTracing', 'blindFreeTrace'] },
-        flashCardBackImage: { control: 'text', name: 'Flash Card Image URL' },
+        flashCardImage: { control: 'file'},
     },
     args: {
         backgroundImage: defaultBackground,
         avtarImgFile: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv',
-        svgFile: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg'],
+        traceImgFile: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg'],
         mode: 'showFlow',
-        flashCardBackImage: 'https://i0.wp.com/pixahive.com/wp-content/uploads/2021/02/Yellow-pattern-abstract-background-wallpaper-325431-pixahive.jpg?fit=778%2C435ssl=1',
+        flashCardImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/flash-card/unicorn.png'],
     },
 };
 
@@ -42,12 +41,13 @@ export const WriteCard: StoryObj = {
 }
 
 function getContainerXml(args: WriteCardArgs){
-    const svgText = args.svgFile[0];
+    const traceSrc = args.traceImgFile[0];
     const mode = args.mode;
     const avatarSrc = args.avtarImgFile;
-    const flashCardBackImage = args.flashCardBackImage;
+    const flashCardImage = args.flashCardImage[0];
     return `
         <main>
+            
             <lido-container id="lido-container" tabIndex="1"  value="mainContainer1" bgImage="${args.backgroundImage}" objective="" height="100%" width="100%" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
 
                 <!-- Chimple Avatar -->
@@ -56,10 +56,10 @@ function getContainerXml(args: WriteCardArgs){
                     </lido-avatar>
                 </lido-cell>
 
-                <!-- Trace Cell -->
-                <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="700px" width="1000px" x="landscape.320px, portrait.541px" y="landscape.100px, portrait.1274px" ariaHidden="true" z="1" bgColor="white" visible="true"  onEntry="">
+                <!-- parent cell -->
+                <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="750px" width="900px" x="landscape.350px, portrait.541px" y="landscape.100px, portrait.1274px" ariaHidden="true" z="1" bgColor="white" visible="true"  onEntry="">
 
-                    <lido-trace id="image" tabIndex="2" value="image1" visible="true" svgSource="${svgText}" mode="${mode}" z="1" x="-20px" y="-20px" width="1100px" height="850px" onEntry="" altText="{backgroundImage}">
+                    <lido-trace id="image" tabIndex="2" value="image1" visible="true" svgSource='${traceSrc}' mode='${mode}' z="1" x="-20px" y="-20px" width="1000px" height="900px" onEntry="" altText="{backgroundImage}">
                     </lido-trace>
                 </lido-cell>
 
@@ -74,18 +74,16 @@ function getContainerXml(args: WriteCardArgs){
                 </lido-cell>
 
                 <!-- row element -->
-                <lido-row visible="true" width="landscape.65%, portrait.338px" onEntry="" height="landscape.80%, portrait." y="landscape.340px, portrait.300px" x="landscape.,portrait.500px" direction="landscape.row, portrait.column" bgColor="white">
-
-                    <!-- Flash Card Element -->
-                    <lido-flash-card x="50" y="240" width="520px" height="500px" bgColor="transparent">
-                        <lido-text slot="front" width="325px" height="425px" display="flex" onEntry="" font="" fontSize="48px" z="1" fontColor="black" fontWeight="bold" color="#000000" string="lion" visible="true" y="landscape.35px, portrait.15px" bgColor="red">
-                        </lido-text>
-                        <lido-col id="col5" slot="back" disableEdit="true" visible="true" width="300px" height="400px" bgColor="orange" type="" tabIndex="6" dropAttr="diagonal" value="cat" onEntry="this.position='relative';" y="landscape.,portrait.">
-                            <lido-image visible="true" src="${flashCardBackImage}" z="0" width="200px" height="300px" onEntry="">
+                <lido-row visible="true" width="landscape.65%, portrait.338px" onEntry="" height="landscape.80%, portrait." y="landscape.340px, portrait.300px" x="landscape.,portrait.500px" direction="landscape.row, portrait.column" bgColor="transparent">
+                    <lido-flash-card x="50" y="240" width="635px" height="735px" bgColor="transparent">
+                        <lido-col id="col1" slot="front" disableEdit="true" visible="true" width="610px" height="680px" bgColor="white" type="" tabIndex="6" dropAttr="diagonal" value="cat" onEntry="this.position='relative'; this.border-radius=30px" y="landscape.,portrait.">
+                            <lido-image visible="true" src="${flashCardImage}" z="0" width="800px" height="600px" onEntry=""  altText="{image1}">
                             </lido-image>
-                            <lido-text width="300px" height="200px" display="flex" onEntry="" font="" fontSize="48px" z="1" fontColor="black" fontWeight="bold" color="#000000" string="tiger" visible="true" y="landscape.35px, portrait.15px" bgColor="yellow">
+                            <lido-text width="600px" height="200px" display="flex" onEntry="" font="'Baloo Bhai 2'" fontSize="54px" z="1" fontColor="black" fontWeight="bold" color="#000000" string="Unicorn" visible="true" y="landscape.35px, portrait.15px" bgColor="white">
                             </lido-text>
                         </lido-col>
+                        <lido-text slot="back" width="630px" height="700px" display="flex" onEntry="" font="'Baloo Bhai 2'" fontSize="72px" z="1" fontColor="black" fontWeight="bold" color="#000000" string="Unicorn" visible="true" y="landscape.35px, portrait.15px" bgColor="white" >
+                        </lido-text>
                     </lido-flash-card>
                 </lido-row>
 
