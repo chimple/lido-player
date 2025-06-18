@@ -26,21 +26,21 @@ export const Options: StoryObj = {
 
 function getContainerXml(args){
 	return `<main>
-	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/spelldoor/Background_Spring.png" objective="${args.correct1},${args.correct2},${args.correct3}" height="100%" width="100%" bgColor="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
+    	<lido-container id="lido-container" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/spelldoor/Background_Spring.png" objective="s,e,a" height="100%" width="100%" bgColor="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
 		<!-- Chimple Avatar -->
-		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="305px" width="227px" x="landscape.1400px, portrait.575px" y="landscape.591px, portrait.1498px" ariaHidden="true" z="1" bgColor="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
-			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+		<lido-cell layout="pos" id="pos1" value="pos2" height="305px" width="227px" x="landscape.1400px, portrait.575px" y="landscape.591px, portrait.0px" ariaHidden="true" z="1" bgColor="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
+			<lido-avatar id="lido-avatar" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
 			</lido-avatar>
 		</lido-cell>
-		<lido-cell layout="landscape.row, portrait.col" visible="true" width="landscape.75%, portrait.76%" height="landscape.57%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent';">
+		<lido-cell layout="landscape.row, portrait.col" visible="true" width="landscape.75%, portrait.76%" margin="landscape.0%, portrait.71% 0 0 0" height="landscape.57%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent';">
 			<!-- image -->
-			<lido-image id="image0" disableEdit="true" visible="true" z="100" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/hut1_image_spelling.png" width="landscape.80%, portrait.100%" height="landscape.80%, portrait.62%" >
+			<lido-image id="image0" visible="true" z="100" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/hut1_image_spelling.png" width="landscape.80%, portrait.100%" height="landscape.80%, portrait.62%" >
 			</lido-image>
-			<lido-cell layout="pos" id="pos3" visible="true" width="landscape.60%, portrait.76%" x="landscape.31%, portrait.31%" height="landscape.54%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent'" >
+			<lido-cell layout="pos" id="pos3" visible="true" width="landscape.60%, portrait.76%" x="landscape.31%, portrait.31%" y="landscape.0%, portrait.35%" height="landscape.54%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent'" >
 				<!-- image -->
-				<lido-image id="image01" disableEdit="true" visible="true"  x="landscape.6%, portrait.-3%" y="landscape.25%, portrait.21%" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/shutter1_image_spelling.png" width="landscape.50%, portrait.56%" height="landscape.69%, portrait.62%" >
+				<lido-image id="image01" visible="true"  x="landscape.6%, portrait.-3%" y="landscape.25%, portrait.29%" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/shutter1_image_spelling.png" width="landscape.50%, portrait.56%" height="landscape.69%, portrait.36%" >
 				</lido-image>
-				<lido-image id="image02" disableEdit="true" visible="true" x="landscape.12%, portrait.-5%" y="landscape.2%, portrait.16%" src="https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg" width="landscape.39%, portrait.60%" height="landscape.100%, portrait.62%" >
+				<lido-image id="image02" visible="true" x="landscape.12%, portrait.-5%" y="landscape.2%, portrait.20%" src="https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg" width="landscape.39%, portrait.60%" height="landscape.100%, portrait.50%" >
 				</lido-image>
 			</lido-cell>
 		</lido-cell>
@@ -55,20 +55,20 @@ function getContainerXml(args){
 				</lido-image>
 			</lido-cell>
 			<lido-cell layout="landscape.row, portrait.row" width="landscape.95%, portrait.95%" height="landscape.43%, portrait.22%" childElementsLength="7" onEntry="this.gap='28px ';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true">
-				<lido-image id="option1" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="${args.option1}"  tabIndex="6" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 21px 0px 0px , portrait. 0">
-					<lido-text  string='${args.option1}' font="'Baloo Bhai 2'" fontSize='80px' bgColor='transparent' onEntry='this.color="white"'></lido-text>
+				<lido-image id="option1" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="f"  tabIndex="4" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.150%" margin="landscape.0px 21px 0px 0px , portrait. 0">
+					<lido-text  string='f' font="'Baloo Bhai 2'" fontSize='80px' onTouch="this.speak='true';" bgColor='transparent' onEntry='this.color="white"'></lido-text>
 				</lido-image>
-				<lido-image id="option2" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="${args.option2}" tabIndex="7" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 21px 0px 0px , portrait. 0">
-					<lido-text  string='${args.option2}' font="'Baloo Bhai 2'" fontSize='80px' bgColor='transparent' onEntry='this.color="white"'></lido-text>
+				<lido-image id="option2" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="s" tabIndex="5" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.150%" margin="landscape.0px 21px 0px 0px , portrait. 0">
+					<lido-text  string='s' font="'Baloo Bhai 2'" fontSize='80px' onTouch="this.speak='true';" bgColor='transparent' onEntry='this.color="white"'></lido-text>
 				</lido-image>
-				<lido-image id="option3" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="${args.option3}"  tabIndex="8" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 21px 0px 0px , portrait. 0">
-					<lido-text string='${args.option3}' font="'Baloo Bhai 2'" fontSize='80px' bgColor='transparent' onEntry='this.color="white"'></lido-text>
+				<lido-image id="option3" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="a"  tabIndex="6" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.150%" margin="landscape.0px 21px 0px 0px , portrait. 0">
+					<lido-text string='a' font="'Baloo Bhai 2'" fontSize='80px' onTouch="this.speak='true';" bgColor='transparent' onEntry='this.color="white"'></lido-text>
 				</lido-image>
-				<lido-image id="option4" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="${args.option4}" tabIndex="9" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 21px 0px 0px , portrait. 0">
-					<lido-text  string='${args.option4}' font="'Baloo Bhai 2'" fontSize='80px' bgColor='transparent' onEntry='this.color="white"'></lido-text>
+				<lido-image id="option4" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="m" tabIndex="7" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.150%" margin="landscape.0px 21px 0px 0px , portrait. 0">
+					<lido-text  string='m' font="'Baloo Bhai 2'" fontSize='80px' onTouch="this.speak='true';" bgColor='transparent' onEntry='this.color="white"'></lido-text>
 				</lido-image>
-				<lido-image id="option5" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="${args.option5}" tabIndex="10" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 21px 0px 0px , portrait. 0">
-					<lido-text string='${args.option5}' font="'Baloo Bhai 2'" fontSize='80px' bgColor='transparent' onEntry='this.color="white"'></lido-text>
+				<lido-image id="option5" isSlice="true" font="'Baloo Bhai 2'" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/box_alphabet_spelling.png" value="e" tabIndex="8	" visible="true" type="drag" onEntry="this.boxShadow='0 5px 3px'; this.color='white'; this.fontSize='80px'; this.fontWeight='600';" width="landscape.100%, portrait.100%" height="landscape.100%, portrait.150%" margin="landscape.0px 21px 0px 0px , portrait. 0">
+					<lido-text string='e' font="'Baloo Bhai 2'" fontSize='80px' onTouch="this.speak='true';" bgColor='transparent' onEntry='this.color="white"'></lido-text>
 				</lido-image>
 			</lido-cell>
 		</lido-cell>
