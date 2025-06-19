@@ -24,7 +24,7 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
   ],
-  sourceMap: false,
+  sourceMap: true,
   testing: {
     browserHeadless: 'new',
   },
