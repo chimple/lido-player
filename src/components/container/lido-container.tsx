@@ -15,9 +15,9 @@ import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 })
 export class LidoContainer {
   /**
-   * Enables appending the dragged element into the drop target on successful drop.
+   * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
-  @Prop() appendOnDrop:boolean=false;
+  @Prop() appendToDropOnCompletion:boolean=false;
 
   /**
    * Unique identifier for the container.
@@ -293,7 +293,7 @@ export class LidoContainer {
         isContinueOnCorrect={`${this.isContinueOnCorrect}`}
         isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
-        appendOnDrop={`${this.appendOnDrop}`}
+        appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
       >
         <slot />
       </Host>

@@ -412,7 +412,7 @@ export const validateObjectiveStatus = async () => {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
   if (res) {
-    const attach=container.getAttribute('appendOnDrop');
+    const attach=container.getAttribute('appendToDropOnCompletion');
     if(attach === 'true') {
     appendingDragElementsInDrop();
     }
