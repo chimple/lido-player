@@ -11,7 +11,7 @@ const meta: Meta<letterBoard> = {
 
 export default meta;
 
-export const PuzzleGame: StoryObj<letterBoard> = {
+export const letterBoard: StoryObj<letterBoard> = {
   render: (args) => {
     const xml = getContainerXml(args);
     return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
