@@ -47,47 +47,53 @@ function getContainerXml(args: WriteCardArgs){
     const flashCardImage = args.flashCardImage[0];
     return `
         <main>
-            
-            <lido-container id="lido-container" tabIndex="1"  value="mainContainer1" bgImage="${args.backgroundImage}" objective="" height="100%" width="100%" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
 
-                <!-- Chimple Avatar -->
-                <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="227px" x="landscape.-150px, portrait.541px" y="landscape.225px, portrait.1274px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="">
-                    <lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="900px"  width="400px" src="${avatarSrc}" altText="">
-                    </lido-avatar>
-                </lido-cell>
+            <lido-container id="lido-container" tabIndex="1"  value="mainContainer1" bgImage="${args.backgroundImage}" objective="" height="1600px" width="900px" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
 
-                <!-- parent cell -->
-                <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="750px" width="900px" x="landscape.350px, portrait.541px" y="landscape.100px, portrait.1274px" ariaHidden="true" z="1" bgColor="white" visible="true"  onEntry="">
+                    <!-- Chimple Avatar -->
+                    <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="393px" width="292px" x="landscape.-152px, portrait.600px" y="landscape.475px, portrait.1200px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="">
+                        <lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="393px"  width="292px" src="${avatarSrc}" altText="">
+                        </lido-avatar>
+                    </lido-cell>
 
-                    <lido-trace id="image" tabIndex="2" value="image1" visible="true" svgSource='${traceSrc}' mode='${mode}' z="1" x="-20px" y="-20px" width="1000px" height="900px" onEntry="" altText="{backgroundImage}">
-                    </lido-trace>
-                </lido-cell>
+                    <!-- parent cell -->
 
+                    <lido-cell layout="landscape.row, portrait.col"  visible="true"  width="landscape.725px, portrait.725px"  height="landscape.725px, portrait.725px"   bgColor="white"  onEntry="this.border-radius='6px';">
+
+                        <lido-trace id="image" tabIndex="2" value="image1" visible="true" svgSource='${traceSrc}' mode='${mode}' z="1" x="landscape.15px portrait." y="landscape.20px portrait." width="725px" height="500px" onEntry="" altText="{backgroundImage}">
+                        </lido-trace>
+
+                    </lido-cell>
             </lido-container>
 
-            <lido-container id="lido-container" tabIndex="1"  value="mainContainer1" bgImage="${args.backgroundImage}" objective="" height="100%" width="100%" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
+
+
+            <lido-container id="lido-container" tabIndex="1"  value="mainContainer1" bgImage="${args.backgroundImage}" objective="" height="1600px" width="900px" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
 
                 <!-- Chimple Avatar -->
-                <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="227px" x="landscape.-150px, portrait.541px" y="landscape.225px, portrait.1274px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="">
-                    <lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="900px"  width="400px" src="${avatarSrc}" altText="">
+                <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="393px" width="292px" x="landscape.-152px, portrait.500px" y="landscape.475px, portrait.1200px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="">
+                    <lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="393px"  width="292px" src="${avatarSrc}" altText="">
                     </lido-avatar>
                 </lido-cell>
 
-                <!-- row element -->
-                <lido-row visible="true" width="landscape.65%, portrait.338px" onEntry="" height="landscape.80%, portrait." y="landscape.340px, portrait.300px" x="landscape.,portrait.500px" direction="landscape.row, portrait.column" bgColor="transparent">
-                    <lido-flash-card x="50" y="240" width="635px" height="735px" bgColor="transparent">
-                        <lido-col id="col1" slot="front" disableEdit="true" visible="true" width="610px" height="680px" bgColor="white" type="" tabIndex="6" dropAttr="diagonal" value="cat" onEntry="this.position='relative'; this.border-radius=30px" y="landscape.,portrait.">
-                            <lido-image visible="true" src="${flashCardImage}" z="0" width="800px" height="600px" onEntry=""  altText="{image1}">
+                <!-- flash-card element -->
+                <lido-row visible="true" width="landscape.594px, portrait.338px" onEntry="" height="landscape.725px, portrait." y="landscape.340px, portrait.300px" x="landscape.,portrait.520px" direction="landscape.row, portrait.column">
+                    <lido-flash-card x="50" y="240" width="594px" height="725px" bgColor="transparent">
+                        <lido-col id="col1" slot="front" disableEdit="true" visible="true" width="landscape.594px portrait.754px" height="landscape.725px portrait.925px" bgColor="white" type="" tabIndex="6" dropAttr="diagonal" value="cat" onEntry="this.position='relative'; this.border-radius=32px;" y="landscape.,portrait.">
+                            <lido-image visible="true" src="${flashCardImage}" z="1" width="landscape.578px portrait.738px" height="landscape.578px portrait.738px" onEntry="this.border-radius='24px 24px 6px 6px';"  altText="{image1}">
                             </lido-image>
-                            <lido-text width="600px" height="200px" display="flex" onEntry="" font="'Baloo Bhai 2'" fontSize="54px" z="1" fontColor="black" fontWeight="bold" color="#000000" string="Unicorn" visible="true" y="landscape.35px, portrait.15px" bgColor="white">
+                            <lido-text width="371px" height="80px" display="flex" onEntry="this.text-align='center';" font-family="'Baloo Bhai 2'" fontSize="64px" z="1" fontColor="black" fontWeight="500" color="#303030" string="Unicorn" visible="true" y="landscape.35px, portrait.15px" bgColor="white">
                             </lido-text>
                         </lido-col>
-                        <lido-text slot="back" width="630px" height="700px" display="flex" onEntry="" font="'Baloo Bhai 2'" fontSize="72px" z="1" fontColor="black" fontWeight="bold" color="#000000" string="Unicorn" visible="true" y="landscape.35px, portrait.15px" bgColor="white" >
-                        </lido-text>
+                        <lido-col id="col2" slot="back" disableEdit="true" visible="true"  width="landscape.594px portrait.754px" height="landscape.725px portrait.925px" bgColor="white" type="" tabIndex="6" dropAttr="diagonal" value="cat" onEntry="this.position='relative' this.flex-shrink='0'; this.border-radius=32px" y="landscape.,portrait.">
+                            <lido-text height="371px" width="80px" display="flex" onEntry="this.text-align='center';" font-family="'Baloo Bhai 2'" fontSize="84px" z="1" fontColor="black" fontWeight="500" color="#000000" string="Unicorn" visible="true" y="landscape.35px, portrait.15px" bgColor="white" >
+                            </lido-text>
+                        </lido-col>
                     </lido-flash-card>
                 </lido-row>
 
             </lido-container>
+
         </main>
     `
 }
