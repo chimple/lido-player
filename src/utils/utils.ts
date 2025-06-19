@@ -6,7 +6,7 @@ import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement,appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
@@ -332,7 +332,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
           otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color**
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
@@ -340,8 +340,8 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.border = ''; // Reset border
-        otherElement.style.backgroundColor = ''; // Reset background color
+        otherElement.style.border = '5px dashed #f34d08'; // Reset border
+        otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
         otherElement.style.opacity = '1';
@@ -412,7 +412,10 @@ export const validateObjectiveStatus = async () => {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
   if (res) {
-    // appendingDragElementsInDrop();
+    const attach=container.getAttribute('appendToDropOnCompletion');
+    if(attach === 'true') {
+    appendingDragElementsInDrop();
+    }
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
