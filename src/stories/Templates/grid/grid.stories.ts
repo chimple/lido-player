@@ -45,11 +45,11 @@ function getContainerXml(args){
 
 		<!-- drop container -->
 		<lido-cell layout="col" visible="true" width="landscape.63%, portrait.96%" height="landscape.100%, portrait.57%" bgColor='transparent'>
-			<lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/ground.png" isSlice="true" disableEdit="true" tabIndex="1" visible="true" width="90%" height="90%" imageSlice="30 fill" flexibleWidth="false" value="dropContainer" z="0">
+			<lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/ground.png" isSlice="true" disableEdit="true" tabIndex="111" visible="true" width="90%" height="90%" imageSlice="30 fill" flexibleWidth="false" value="dropContainer" z="0">
 				<lido-cell layout="landscape.row, portrait.col" bgColor="transparent" visible="true" width="100%" height="100%">
 					<!-- child drops -->
 					<lido-cell layout="col" bgColor="transparent" visible="true" width="100%" height="100%">
-						<lido-cell layout="row" visible="true" width="75%" height="100%" bgColor="transparent" position="absolute" x="0px" y="0px" margin="landscape.0px 0px 0px 25%, portrait.0px 0px 0px 25%" z="1">
+						<lido-cell layout="row" visible="true" width="75%" height="100%" bgColor="transparent" x="0px" y="0px" margin="landscape.0px 0px 0px 25%, portrait.0px 0px 0px 25%" z="1">
 
 							<lido-image isSlice="true" id="option1" value="op" tabIndex="1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/grass_question_wordmatrix.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.25%, portrait.22%" height="landscape.70%, portrait.75%" font-size="36px" z="0">
 								<lido-text visible="true" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="100px" height="100px" string="op" fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0">
@@ -107,7 +107,7 @@ function getContainerXml(args){
 
 					</lido-cell>
 					<!-- drag container -->
-					<lido-cell layout="landscape.col, portrait.row" visible="true" onEntry="this.gap = '90px';" width="landscape.25%, portrait.75%"  height="landscape.73%, portrait.30%" bgColor="transparent" position="absolute" x="0px" y="0px" margin="landscape.30% 0px 0px 0px, portrait.0px 0px 0px 35%" z="1">
+					<lido-cell layout="landscape.col, portrait.row" visible="true" onEntry="this.gap = '90px';" width="landscape.25%, portrait.75%"  height="landscape.73%, portrait.30%" bgColor="transparent" x="0px" y="0px" margin="landscape.30% 0px 0px 0px, portrait.0px 0px 0px 35%" z="1">
 						<lido-image isSlice="true" type="drag" id="option16" value='${args.option1}' tabIndex="16" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70%, portrait.30%" height="landscape.20%, portrait.65%" font-size="36px" z="0">
 							<lido-text visible="true"  bgColor="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option1}' fontColor="black" font="'Baloo 2', serif" font-size="36px" z="0">
 							</lido-text>
