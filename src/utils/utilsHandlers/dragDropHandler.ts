@@ -292,7 +292,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
-
+    
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
         if (element) {
@@ -380,7 +380,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-
+  
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   if (dragElement) {
     if (dropElement) {
@@ -449,6 +449,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     dragElement.style.transition = 'transform 0.5s ease';
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
+       updateDropBorder(currentDrop);
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
       if (prevDropItem) {
         prevDropItem.isFull = false;
@@ -545,7 +546,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   }
 
   dragToDropMap.set(dragElement, dropElement);
-
+  
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].includes(dragElement['value']);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
@@ -565,11 +566,31 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
   await onActivityComplete(dragElement, dropElement);
+  const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
+allDropElements.forEach(el => updateDropBorder(el));
+   
 }
+
+export function updateDropBorder(element: HTMLElement): void {
+  if (!element.classList.contains('drop-element')) return;
+
+  const dropId = element.id;
+  const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
+
+  if (dragSelectedElements.length > 0) {
+    element.classList.add('filled');
+    element.classList.remove('empty');
+  } else {
+    element.classList.add('empty');
+    element.classList.remove('filled');
+  }
+}
+
 
 export function handleDropElement(element: HTMLElement): void {
   // let nextIndex = Object.keys(dropHas).length; // Get next index
   // dropHas[nextIndex] = { drop: element, isFull: false };
+   element.classList.add('drop-element');
   let dropHas = JSON.parse(localStorage.getItem(DropHasDrag) || '{}');
   const tabIndex = element.getAttribute('tabIndex');
 
@@ -586,6 +607,7 @@ export function handleDropElement(element: HTMLElement): void {
     onClickDropOrDragElement(element, 'drop');
   };
   handlingElementFlexibleWidth(element, 'drop');
+  updateDropBorder(element);
 }
 
 export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
