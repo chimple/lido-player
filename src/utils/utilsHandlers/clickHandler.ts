@@ -23,7 +23,15 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     return;
   }
 
+  
+  
+
   const onClick = async () => {
+    const getbtntype=element.getAttribute("type");
+    if(getbtntype=="click"){
+      return;
+    }
+
     AudioPlayer.getI().stop();
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');
@@ -52,6 +60,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     if (objective.length === 1) {
       localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
       const isCorrect = objective.includes(element['value']);
+      
       dispatchClickEvent(element, isCorrect);
       if (isCorrect) {
         const onCorrect = element.getAttribute('onCorrect');
@@ -154,3 +163,6 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   element.style.setProperty('--btn-shadow-color', tinycolor(backGroundColor).darken(17).toString());
   element.classList.add('click-element');
 }
+
+
+//function to handle click events for elements with the 'click' type

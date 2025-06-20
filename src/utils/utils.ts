@@ -1,5 +1,5 @@
 import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from './constants';
-import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
+import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
@@ -10,6 +10,7 @@ import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDro
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
+import { log } from 'util';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -122,6 +123,16 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'fill-slide':{
           fillSlideHandle(action.value);
           break;
+        }
+        case 'nextBtn': {
+          storeActivityScore(100);
+          triggerNextContainer();
+          break;
+        }
+        case 'prevBtn':{
+          triggerPrevcontainer();
+          break;
+          
         }
         case 'stop': {
           await AudioPlayer.getI().stop();
@@ -261,6 +272,8 @@ const calculateScore = () => {
   const wrongMoves = gameScore.wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
   storeActivityScore(finalScore);
+  console.log(storeActivityScore(finalScore));
+  
   gameScore.rightMoves = 0;
   gameScore.wrongMoves = 0;
 };
@@ -351,7 +364,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   handleShowCheck();
 }
 
-const storeActivityScore = (score: number) => {
+export const storeActivityScore = (score: number) => {
   const appHome = document.querySelector('lido-home');
   if (!appHome) return;
   const index = Number(appHome.getAttribute('index') ?? 0);
@@ -436,6 +449,12 @@ export const triggerNextContainer = () => {
   // window.dispatchEvent(event);
   dispatchNextContainerEvent();
 };
+
+export const triggerPrevcontainer=()=>{
+    AudioPlayer.getI().stop(); 
+  console.log('⬅️ ~ triggerPrevContainer triggered');
+  dispatchPrevContainerEvent();
+}
 
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;

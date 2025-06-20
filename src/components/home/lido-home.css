@@ -49,7 +49,7 @@
 .lido-dot:not(.completed):not(.current) {
   background-color: #bbb;
 }
-.lido-arrow {
+.lido-arrow-left,.lido-arrow-right {
   cursor: pointer;
   width: 60px;
   height: 60px;

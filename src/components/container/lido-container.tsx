@@ -1,4 +1,4 @@
-import { Component, Host, Prop, h, Element } from '@stencil/core';
+import { Component, Host, Prop, h, Element,State } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 
 /**
@@ -148,6 +148,14 @@ export class LidoContainer {
 
   @Prop() margin:string='';
   /**
+   * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
+   */
+  @Prop() showPrevButton:boolean=false;
+  /**
+   * Indicates whether the next button should be displayed. Expected values: "true" or "false".
+   */
+  @Prop() showNextButton:boolean=false;
+  /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;
@@ -225,14 +233,17 @@ export class LidoContainer {
       this.el.style.width = '1600px';
     }
   }
-
-  /**
+      /**
    * Lifecycle hook that runs after the component is loaded.
    * - It scales the container.
    * - It sets the background color of the body.
    * - Adds event listeners for `resize` and `load` to rescale the container on window size changes.
    */
+
+  
   componentDidLoad() {
+    // console.log("eleement : ", this.el);
+    
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
     document.body.style.backgroundColor = this.bgColor;
@@ -250,6 +261,7 @@ export class LidoContainer {
       document.head.appendChild(styleElement);
     }
   }
+
 
   disconnectedCallback() {
     window.removeEventListener('resize', () => this.scaleContainer(this.el));
@@ -288,6 +300,8 @@ export class LidoContainer {
         isContinueOnCorrect={`${this.isContinueOnCorrect}`}
         isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
+        showPrevButton={`${this.showPrevButton}`}
+        showNextButton={`${this.showNextButton}`}
       >
         <slot />
       </Host>

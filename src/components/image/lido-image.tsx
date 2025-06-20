@@ -210,6 +210,7 @@ export class LidoImage {
     } else {
       return (
         <Host
+          id={this.id}
           type={this.type}
           tabindex={this.tabIndex}
           style={this.style}
