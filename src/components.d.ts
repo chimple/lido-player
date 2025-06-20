@@ -320,6 +320,10 @@ export namespace Components {
      */
     interface LidoContainer {
         /**
+          * Enables appending the dragged element to the drop target after all correct drops are completed.
+         */
+        "appendToDropOnCompletion": boolean;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden": string;
@@ -1925,6 +1929,10 @@ declare namespace LocalJSX {
      * such as dimensions, positioning, visibility, and custom event handlers.
      */
     interface LidoContainer {
+        /**
+          * Enables appending the dragged element to the drop target after all correct drops are completed.
+         */
+        "appendToDropOnCompletion"?: boolean;
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
