@@ -170,7 +170,7 @@
 	<lido-container id="lido-container" tabIndex="1" visible="true" objective="A" onCorrect="lido-slide-fill.fill-slide='+10'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-slide-fill.fill-slide='-10%'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="true" showCheck="true" bgColor="black">
 
 		<!-- Chimple Avatar -->
-		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="305px" width="landscape.227px, portrait.30%" x="-50px" y="landscape.500px, portrait.10%" ariaHidden="true" z="1" bgColor="transparent" visible="true" onEntry="">
+		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="305px" width="227px" x="-50px" y="500px" ariaHidden="true" z="1" bgColor="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
 			</lido-avatar>
 		</lido-cell>
