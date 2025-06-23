@@ -2,8 +2,9 @@ import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 type RocketArgs = {
-  objective: string;
-  correct: string[];
+  correct1: string;
+  correct2: string;
+  correct3: string;
   options: string[];
   TextBackgroundImage: string;
   letterBoardText: string;
@@ -16,15 +17,20 @@ type RocketArgs = {
 const meta: Meta<RocketArgs> = {
   title: 'Templates/Rocket',
   argTypes: {
-    objective: {
-      control: 'text',
-      description: 'Comma-separated letters to match (e.g. "h,i,t")',
-      defaultValue: 'h,i,t'
-    },
-    correct: {
+    correct1: {
       control: 'object',
-      description: 'Array of correct letters',
-      defaultValue: ['h', 'i', 't']
+      description: 'correct letter',
+      defaultValue: 'h'
+    },
+	correct2: {
+      control: 'object',
+      description: 'correct letter',
+      defaultValue: 'i'
+    },
+	correct3: {
+      control: 'object',
+      description: 'correct letter',
+      defaultValue: 't'
     },
     options: {
       control: 'object',
@@ -63,8 +69,9 @@ const meta: Meta<RocketArgs> = {
     }
   },
   args: {
-    objective: 'h,i,t',
-    correct: ['h', 'i', 't'],
+    correct1: 'h',
+	correct2: 'i',
+	correct3: 't',
     options: ['k', 'q', 'd', 'x', 'a', 'p', 'g', 'l', 'w', 'i', 'f', 'm', 'e', 'z', 'j', 'o', 'b', 'n', 'h', 't', 's', 'v', 'r', 'c', 'y', 'u'],
     TextBackgroundImage: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/hit_img_1.png',
     letterBoardText: 'HIT',
@@ -87,11 +94,10 @@ export const Rocket: StoryObj<RocketArgs> = {
 function getContainerXml(args: RocketArgs) {
 	
   // Extract letters from correct array
-  const [letter1, letter2, letter3] = args.correct;
   const firstRowLetters = args.options.slice(0, 13);
   const secondRowLetters = args.options.slice(13);
-  const firstRowStart = 16;
-  const secondRowStart = firstRowStart + firstRowLetters.length + 1;
+	const firstRowStart = 16;
+	const secondRowStart = firstRowStart + firstRowLetters.length + 1;
   
   // Create drag elements for first row
   const firstRowElements = firstRowLetters.map((letter, index) => {
@@ -138,7 +144,7 @@ function getContainerXml(args: RocketArgs) {
   }).join('');
 
   return `<main> 
-    <lido-container id="lido-container" objective="${args.objective}" tabIndex="1" isContinueOnCorrect="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s linear'; this.sleep='2000';" showCheck="false" bgImage="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';">
+    <lido-container id="lido-container" objective="${args.correct1}, ${args.correct2}, ${args.correct3}" tabIndex="1" isContinueOnCorrect="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s linear'; this.sleep='2000';" showCheck="false" bgImage="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';">
     
       <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disableEdit="true" tabIndex="2" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.-60px, portrait.250px" ariaHidden="true" z="1" bgColor="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
@@ -166,17 +172,17 @@ function getContainerXml(args: RocketArgs) {
             >
           </lido-image>
           
-        <lido-image value="${letter1}" string="${letter1}" onEntry="this.padding='0px'; this.margin-left='-21px'; this.margin-top='24px';" bgColor="transparent" id="drop-image1" disableEdit="true" type='drop' tabIndex='9' visible="true"  
+        <lido-image value="${args.correct1}" string="${args.correct1}" onEntry="this.padding='0px'; this.margin-left='-21px'; this.margin-top='24px';" bgColor="transparent" id="drop-image1" disableEdit="true" type='drop' tabIndex='9' visible="true"  
             src="${args.dropImage1}" height="landscape.158px, portrait.180px" width="landscape.9%, portrait.11%" 
             margin="0">
           </lido-image>
 
-        <lido-image value="${letter2}" string="${letter2}" onEntry="this.padding='0px'; this.margin-top='24px';" tabIndex='10' bgColor="transparent" id="drop-image2" disableEdit="true" type='drop' visible="true"  
+        <lido-image value="${args.correct2}" string="${args.correct2}" onEntry="this.padding='0px'; this.margin-top='24px';" tabIndex='10' bgColor="transparent" id="drop-image2" disableEdit="true" type='drop' visible="true"  
             src="${args.dropImage2}" height="landscape.158px, portrait.180px" width="landscape.9%, portrait.11%"
             >
           </lido-image>
 
-        <lido-image value="${letter3}" string="${letter3}" onEntry="this.padding='0px'; this.margin-top='24px';" tabIndex='11' bgColor="transparent" id="drop-image3" disableEdit="true" type='drop' visible="true"  
+        <lido-image value="${args.correct3}" string="${args.correct3}" onEntry="this.padding='0px'; this.margin-top='24px';" tabIndex='11' bgColor="transparent" id="drop-image3" disableEdit="true" type='drop' visible="true"  
             src="${args.dropImage3}" height="landscape.158px, portrait.180px" width="landscape.9%, portrait.11%"
             >
           </lido-image>
@@ -205,7 +211,7 @@ function getContainerXml(args: RocketArgs) {
       </lido-cell>
 
       <!-- First Row (Letters 1-13) -->
-      <lido-cell disableEdit="true" layout="row" ariaHidden="true" visible="true" height='landscape.130px, portrait.0px' margin="landscape.35% 0px 0px 0px, portrait.145% 0px 0px 0px" onEntry="this.z-index='9px'; this.justify-content='center'; this.padding='10px';" bgColor="transparent"  justifyContent="space-evenly" width="100%" tabIndex="29" id="first_alphabetRow">
+      <lido-cell disableEdit="true" layout="row" ariaHidden="true" visible="true" height='landscape.130px, portrait.0px' margin="landscape.35% 0px 0px 0px, portrait.145% 0px 0px 0px" onEntry="this.z-index='9px'; this.justify-content='center'; this.padding='10px';" bgColor="transparent"  justifyContent="space-evenly" width="100%" ttabIndex="29" id="first_alphabetRow">
         ${firstRowElements}
       </lido-cell>
 
