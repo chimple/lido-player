@@ -39,7 +39,7 @@
 		</lido-pos>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" tabIndex="1" appendToDropOnCompletion="true" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bgImage.png"  bgColor="transparent" objective="f,o,x" height="100%" width="100%" visible="true" showCheck="false" isContinueOnCorrect="true" afterDrop="false" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000'; img1.speak='true'; b1.animation='placeToLeft 2s linear' ;  this.sleep='2000';" onEntry="this.justifyContent='space-around';"  onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"   > 
+	<lido-container id="lido-container" tabIndex="1" appendToDropOnCompletion="true" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bgImage.png"  bgColor="transparent" objective="f,o,x" height="100%" width="100%" visible="true" showCheck="false" isContinueOnCorrect="true" afterDrop="false" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000'; img1.speak='true'; b1.animation='placeToLeft 2s linear' ;  this.sleep='2000';" onEntry="this.justifyContent='space-around';"  onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"   > 
 	    <!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.576px" y="landscape.591px, portrait.236px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="462px"  width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
@@ -99,7 +99,7 @@
 			</lido-cell>	
 		</lido-cell>		
 	</lido-container>
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" value="maincontainer" objective="Girl,sits,under,streetlight" x="0" y="0" z="0" bgColor="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="background1.mp3" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="this.sleep='1000';speak-con.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="false" isAllowOnlyCorrect="true">
+	<lido-container id="lido-container" value="maincontainer" objective="Girl,sits,under,streetlight" x="0" y="0" z="0" bgColor="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="background1.mp3" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="this.sleep='1000';speak-con.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="false" isAllowOnlyCorrect="true">
 		<lido-cell visible="false" id="speak-con">
 			<lido-text id="sentenceText" value="Girl sits under streetlight" string="Girl sits under streetlight" />
 		</lido-cell>
@@ -137,7 +137,7 @@
 			</lido-cell>
 		</lido-cell>
 	</lido-container>
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" customStyle="" tabIndex="1" value="maincontainer" objective="Face,Forehead,chin,cheek" ariaLabel="This is a multiple-option question. Select one option from the list." 	 x="0" y="0" z="0" bgColor="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/tag/Spring.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000;pos1.animation='placeToLeft 2.5s linear';this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" isAllowOnlyCorrect="true">
+	<lido-container id="lido-container" customStyle="" tabIndex="1" value="maincontainer" objective="Face,Forehead,chin,cheek" ariaLabel="This is a multiple-option question. Select one option from the list." 	 x="0" y="0" z="0" bgColor="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/tag/Spring.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000;pos1.animation='placeToLeft 2.5s linear';this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" isAllowOnlyCorrect="true">
 	<lido-cell id="pos1" tabIndex="2" layout="landscape.row, portrait.col" height="100%" width="100%" visible="true" bgColor="transparent">
  		<lido-cell layout="landscape.col, portrait.row" id="pos2"  tabIndex="3" disableEdit="true" value="pos2" margin="landscape.0% 4% 41% -3%, portrait.2% 69% 0% 0%" height="landscape.56%, portrait.28%" width="landscape.28%, portrait.38%" x="landscape.-11%, portrait.-5%" y="landscape.-6%, portrait.-39%" ariaHidden="true" z="5" bgColor="transparent" visible="true"  onEntry="this.animation='leftToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" tabIndex="4" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
@@ -166,7 +166,7 @@
 	</lido-cell>	
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.backgroundColor='30px';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
+	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.backgroundColor='30px';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
 			<lido-image id="play" disableEdit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="this.visibilty='hidden'; pause.visibility='visible'; question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true'; option5.speak='true'; option6.speak='true'; this.visibilty='visible'; pause.visibility='hidden';">
@@ -235,7 +235,7 @@
 		</lido-pos>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" tabIndex="1" visible="true" objective="A" onCorrect="lido-slide-fill.fill-slide='+10'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-slide-fill.fill-slide='-10%'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="true" showCheck="true" bgColor="black">
+	<lido-container id="lido-container" tabIndex="1" visible="true" objective="A" onCorrect="lido-slide-fill.fill-slide='+10'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-slide-fill.fill-slide='-10%'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="true" showCheck="true" bgColor="black">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="305px" width="227px" x="-50px" y="500px" ariaHidden="true" z="1" bgColor="transparent" visible="true" onEntry="">
@@ -283,7 +283,7 @@
 
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" tabIndex="1" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/Sky.png" objective="quick,lazy,quick,lazy" height="100%" width="100%" bgColor="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
+	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/Sky.png" objective="quick,lazy,quick,lazy" height="100%" width="100%" bgColor="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.591px, portrait.1274px" ariaHidden="true" z="1" bgColor="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
@@ -342,7 +342,7 @@
 		</lido-cell>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true"  objective="e,e" tabIndex="1" isContinueOnCorrect="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" equationCheck="$#pos12,$#textA,$#pos3,$#textB" showCheck="false" visible="true" bgColor="black">
+	<lido-container id="lido-container" objective="e,e" tabIndex="1" isContinueOnCorrect="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" equationCheck="$#pos12,$#textA,$#pos3,$#textB" showCheck="false" visible="true" bgColor="black">
 		<!-- Background -->
 		<lido-cell id="pos2" disableEdit="true" layout="pos" height="100%" width="100%" ariaHidden="true" x="0" y="0" z="0" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 			<lido-image id="image2" disableEdit="true" value="image2" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/backgroundImage.png" z="0" width="1600px" height="900px" onEntry="" altText="{backgroundImage}">
@@ -378,7 +378,7 @@
 		</lido-cell>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.backgroundColor='30px';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="false" afterDrop="true">
+	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.backgroundColor='30px';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="false" afterDrop="true">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
 			<lido-image id="play" disableEdit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="this.visibilty='hidden'; pause.visibility='visible'; question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true'; option5.speak='true'; option6.speak='true'; this.visibilty='visible'; pause.visibility='hidden';">
@@ -447,7 +447,7 @@
 		</lido-pos>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" tabIndex="1" value="mainContainer1" objective="(apple|strawberry|mango),(3|7|10),(lion|tiger)" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false">
+	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="(apple|strawberry|mango),(3|7|10),(lion|tiger)" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="true" isContinueOnCorrect="true" isAllowOnlyCorrect="false">
 		<!-- Chimple Avatar -->
 		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="1430px" y="500px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
@@ -502,7 +502,7 @@
 		</lido-row>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
+	<lido-container id="lido-container" objective="The,game,has,been,indefinitely,postponed" tabIndex="1" visible="true" bgColor="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" isContinueOnCorrect="false" showCheck="true">
 		<!-- Chimple Avatar -->
 		<lido-pos id="pos1" disableEdit="true" value="pos1" height="350px" width="350px" x="1170px" y="105px" ariaHidden="true" z="1" bgColor="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
@@ -537,7 +537,7 @@
 		</lido-col>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true" tabIndex="1" value="mainContainer3" objective="lion,crocodile,cow" bgColor="#B1BEFD" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; this.removeClone='.cloned-element'" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" dropAttr="diagonal">
+	<lido-container id="lido-container" tabIndex="1" value="mainContainer3" objective="lion,crocodile,cow" bgColor="#B1BEFD" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; this.removeClone='.cloned-element'" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" dropAttr="diagonal">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
 			<lido-image id="play" disableEdit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="this.visibilty='hidden'; pause.visibility='visible'; question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true'; option5.speak='true'; option6.speak='true'; this.visibilty='visible'; pause.visibility='hidden';">
@@ -601,7 +601,7 @@
 		</lido-row>
 	</lido-container>
 
-	<lido-container id="lido-container" showPrevButton="true" showNextButton="true"  customStyle=".redBg{background-color: red !important;} .greenBg{background-color: green !important; color: white !important;}" tabIndex="1" value="maincontainer" objective="{options[2].id}" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/MultipleOptionBg.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
+	<lido-container id="lido-container" customStyle=".redBg{background-color: red !important;} .greenBg{background-color: green !important; color: white !important;}" tabIndex="1" value="maincontainer" objective="{options[2].id}" ariaLabel="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bgColor="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/MultipleOptionBg.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
 		<!-- Audio Icon -->
 		<lido-pos id="pos" disableEdit="true" value="pos" height="100px" width="100px" ariaHidden="true" x="0" y="0" z="2" bgColor="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="">
 			<lido-image id="play" disableEdit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon.png" width="100px" height="100px" bgColor="transparent" x="35px" y="50px" onTouch="this.visibilty='hidden'; pause.visibility='visible'; question.speak='true'; option1.speak='true'; option2.speak='true'; option3.speak='true'; option4.speak='true'; option5.speak='true'; option6.speak='true'; this.visibilty='visible'; pause.visibility='hidden';">
