@@ -3,6 +3,7 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
+import { forEach } from 'mathjs';
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
@@ -130,16 +131,16 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
+    const rect1 = container.getBoundingClientRect();
+    const rect2 = element.getBoundingClientRect();
+    verticalDistance = rect1.top - rect2.top;
+    horizontalDistance = rect1.left - rect2.left;
+
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove);
     document.addEventListener('touchend', onEnd);
   };
-
-  const rect1 = container.getBoundingClientRect();
-  const rect2 = element.getBoundingClientRect();
-  verticalDistance = rect1.top - rect2.top;
-  horizontalDistance = rect1.left - rect2.left;
 
   const observer = new MutationObserver(mutationsList => {
     for (const mutation of mutationsList) {
@@ -445,8 +446,38 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
   }
   if (!dropElement) {
-    dragElement.style.transform = 'translate(0,0)';
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
+    const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
     dragElement.style.transition = 'transform 0.5s ease';
+    if (cloneDragElement) {
+      const containerScale = getElementScale(container);
+      const dropRect = cloneDragElement.getBoundingClientRect();
+      const dragRect = dragElement.getBoundingClientRect();
+
+      const dropCenterX = dropRect.left + dropRect.width / 2;
+      const dropCenterY = dropRect.top + dropRect.height / 2;
+      const dragCenterX = dragRect.left + dragRect.width / 2;
+      const dragCenterY = dragRect.top + dragRect.height / 2;
+
+      let scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+      let scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+      dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+      setTimeout(() => {
+        cloneDragElement.style.width = dragElement.style.width;
+        cloneDragElement.style.height = dragElement.style.height;
+        dragElement.style.transform = 'translate(0,0)';
+        dragElement.style.position = 'unset';
+        cloneDragElement.replaceWith(dragElement);
+      }, 250);
+
+      // dragElement.style.position = 'unset';
+      // cloneDragElement.replaceWith(dragElement);
+    } else {
+      dragElement.style.transform = 'translate(0,0)';
+    }
+
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);

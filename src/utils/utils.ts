@@ -61,7 +61,7 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
-  const actions = parseActions(actionsString);  
+  const actions = parseActions(actionsString);
 
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
@@ -83,6 +83,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const container = document.getElementById(LidoContainer) as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
+          // dropElement.parentElement.append(dragElement)
 
           const dropRect = dropElement.getBoundingClientRect();
           const dragRect = dragElement.getBoundingClientRect();
@@ -92,13 +93,39 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const dragCenterX = dragRect.left + dragRect.width / 2;
           const dragCenterY = dragRect.top + dragRect.height / 2;
 
-          const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-          const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+          let scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+          let scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
           if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
             dragElement.style.transform = `translate(${scaledLeft - 70}px, ${scaledTop - 70}px)`;
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+            const isAppend = container.getAttribute('afterDrop') === 'append';
+            if (!isAppend) return;
+            setTimeout(() => {
+              dragElement.style.transform = 'translate(0,0)';
+              dragElement.style.transition = 'none';
+
+              const dummyElement = document.createElement('div');
+              dummyElement.setAttribute('id', dragElement.getAttribute('id'));
+              dragElement.replaceWith(dummyElement);
+              dropElement.parentElement.append(element);
+              dragElement.style.position = 'absolute';
+              dragElement.style.zIndex = '1';
+
+              const dropRect = dropElement.getBoundingClientRect();
+              const dragRect = dragElement.getBoundingClientRect();
+
+              const dropCenterX = dropRect.left + dropRect.width / 2;
+              const dropCenterY = dropRect.top + dropRect.height / 2;
+              const dragCenterX = dragRect.left + dragRect.width / 2;
+              const dragCenterY = dragRect.top + dragRect.height / 2;
+
+              scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+              scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+              dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+            }, 500);
           }
           break;
         }
@@ -119,7 +146,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           await AudioPlayer.getI().play(targetElement);
           break;
         }
-        case 'fill-slide':{
+        case 'fill-slide': {
           fillSlideHandle(action.value);
           break;
         }
@@ -481,7 +508,7 @@ export function handlingChildElements(element: HTMLElement, minLength: number, m
   if (currentLength === undefined) return;
 
   const children = Array.from(element.children);
-  
+
   let allowedLength = currentLength;
 
   if (minLength && currentLength < minLength) {
@@ -490,9 +517,9 @@ export function handlingChildElements(element: HTMLElement, minLength: number, m
   if (maxLength && currentLength > maxLength) {
     allowedLength = maxLength;
   }
-  
+
   children.forEach((child, index) => {
-    if(index > allowedLength-1) {
+    if (index > allowedLength - 1) {
       (child as HTMLElement).style.display = 'none';
     }
   });
