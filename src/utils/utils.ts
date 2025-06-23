@@ -1,5 +1,5 @@
 import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from './constants';
-import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
+import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent,dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
@@ -122,6 +122,17 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'fill-slide':{
           fillSlideHandle(action.value);
           break;
+        }
+        case 'nextBtn': {
+          storeActivityScore(100);
+          storingEachActivityScore(true);
+          triggerNextContainer();
+          break;
+        }
+        case 'prevBtn':{
+          triggerPrevcontainer();
+          break;
+          
         }
         case 'stop': {
           await AudioPlayer.getI().stop();
@@ -441,6 +452,12 @@ export const triggerNextContainer = () => {
   // window.dispatchEvent(event);
   dispatchNextContainerEvent();
 };
+
+export const triggerPrevcontainer=()=>{
+    AudioPlayer.getI().stop(); 
+  console.log('⬅️ ~ triggerPrevContainer triggered');
+  dispatchPrevContainerEvent();
+}
 
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
