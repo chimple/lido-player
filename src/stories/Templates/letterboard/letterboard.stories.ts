@@ -34,7 +34,10 @@ function getContainerXml() {
 		bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png">
 
 		<lido-cell id="cell1" tabIndex="2" disableEdit="true" layout="row" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
-			<lido-cell id="cell2" tabIndex="3" disableEdit="true" layout="col" height="landscape.85%, portrait.50%" width="landscape.60%, portrait.90%" ariaHidden="true" x="landscape.20%, portrait.5%" y="landscape.5%, portrait.20%" z="1" bgColor="#F57C00" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
+			<lido-image id="image1" z="3" disableEdit="true" value="image1" visible="landscape.true, portrait.false" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/truck.png" bgColor="transparent" onEntry="this.animation='rightToPlace 2.5s linear';" width="landscape.10%, portrait.0px">
+			</lido-image>
+      <lido-cell id="cell2" tabIndex="3" disableEdit="true" layout="col" height="landscape.85%, portrait.50%" width="landscape.60%, portrait.90%" ariaHidden="true"
+       z="1" bgColor="#F57C00" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
 				<lido-cell id="cell3" disableEdit="true" layout="row"  ariaHidden="true" visible="true">
 					<lido-image id="A" value="A" tabIndex="4" type="drop" disableEdit="true" visible="true"
 						src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/A.svg"
