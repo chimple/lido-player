@@ -5,6 +5,7 @@ export const ActivityScoreKey = 'lidoActivityScore';
 export const ActivityEndKey = 'lidoActivityEnd';
 export const LessonEndKey = 'lidoLessonEnd';
 export const NextContainerKey = 'lidoNextContainer';
+export const PrevContainerKey='lidoPrevContainer'
 export const ActivityChangeKey = 'lidoActivityChange';
 export const GameCompletedKey = 'lidoGameCompleted';
 export const GameExitKey = 'lidoGameExit';

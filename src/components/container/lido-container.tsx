@@ -157,6 +157,15 @@ export class LidoContainer {
    */
   @Element() el: HTMLElement;
 
+    /**
+   * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
+   */
+  @Prop() showPrevButton:boolean=false;
+  /**
+   * Indicates whether the next button should be displayed. Expected values: "true" or "false".
+   */
+  @Prop() showNextButton:boolean=false;
+
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
 
@@ -294,6 +303,8 @@ export class LidoContainer {
         isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
         appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
+        showPrevButton={`${this.showPrevButton}`}
+        showNextButton={`${this.showNextButton}`}
       >
         <slot />
       </Host>
