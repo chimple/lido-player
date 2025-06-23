@@ -489,20 +489,20 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       if (storedTabIndexes.includes(otherElement['tabIndex'])) {
         if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
-            otherElement.style.border = ''; // Reset border
             otherElement.style.backgroundColor = 'transparent'; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
             otherElement.style.opacity = '0';
+             otherElement.style.backgroundColor = 'transparent'; 
           }
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = ''; // Reset border*********
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
+           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '1';
+          otherElement.style.backgroundColor = 'transparent';
         }
       }
     });
@@ -566,8 +566,9 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
   await onActivityComplete(dragElement, dropElement);
+
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
-allDropElements.forEach(el => updateDropBorder(el));
+  allDropElements.forEach(el => updateDropBorder(el));
    
 }
 
@@ -651,8 +652,6 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // Reset the transform of the drag element before calculating the new position
     (selectedDragElement as HTMLElement).style.transform = '';
-    selectedDragElement.getBoundingClientRect();
-  
     const container = document.getElementById(LidoContainer) as HTMLElement;
 
     const containerScale = getElementScale(container);
@@ -661,18 +660,10 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
     // Get the positions of the drop and drag elements
     const dropRect = selectedDropElement.getBoundingClientRect();
     const dragRect = selectedDragElement.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect(); 
-    const dragX = dragRect.left - containerRect.left;
-    const dragY = dragRect.top - containerRect.top;
-    const dropX = dropRect.left - containerRect.left;
-    const dropY = dropRect.top - containerRect.top;
-    const translateX = (dropX - dragX) / containerScale;
-    const translateY = (dropY - dragY) / containerScale;
-
 
     // Calculate the difference in positions
-    // const translateX = (dropRect.left - dragRect.left) / containerScale;
-    // const translateY = (dropRect.top - dragRect.top) / containerScale;
+    const translateX = (dropRect.left - dragRect.left) / containerScale;
+    const translateY = (dropRect.top - dragRect.top) / containerScale;
 
     // Move the drag element to the drop position
     selectedDragElement.style.transform = `translate(${translateX}px, ${translateY}px)`;

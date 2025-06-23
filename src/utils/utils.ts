@@ -331,20 +331,22 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (storedTabIndexes.includes(otherElement['tabIndex'])) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = ''; // Reset border
+          
           otherElement.style.backgroundColor = 'transparent'; // Reset background color**
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
+          otherElement.style.backgroundColor = 'transparent';
         }
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.border = ''; // Reset border
+        
         otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
         otherElement.style.opacity = '1';
+        otherElement.style.backgroundColor = 'transparent';
       }
     }
   });
