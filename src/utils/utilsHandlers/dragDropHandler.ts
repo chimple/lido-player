@@ -528,8 +528,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = ''; // Reset background color
+          otherElement.style.border = '5px dashed #f34d08'; // Reset border*********
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '1';
@@ -715,7 +715,7 @@ async function onClickDragElement(element) {
   }
 }
 
-const appendingDragElementsInDrop = () => {
+ export const appendingDragElementsInDrop = () => {
   const dragItems = document.querySelectorAll("[type='drag']");
   const dropItems = document.querySelectorAll("[type='drop']");
   if (!dragItems || !dropItems) return;
