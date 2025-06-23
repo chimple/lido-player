@@ -340,7 +340,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.border = '5px dashed #f34d08'; // Reset border
+        otherElement.style.border = ''; // Reset border
         otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {

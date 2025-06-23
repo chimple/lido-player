@@ -498,7 +498,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = '5px dashed #f34d08'; // Reset border*********
+          otherElement.style.border = ''; // Reset border*********
           otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
@@ -546,7 +546,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   }
 
   dragToDropMap.set(dragElement, dropElement);
-  
+   
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].includes(dragElement['value']);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
@@ -651,6 +651,8 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // Reset the transform of the drag element before calculating the new position
     (selectedDragElement as HTMLElement).style.transform = '';
+    selectedDragElement.getBoundingClientRect();
+  
     const container = document.getElementById(LidoContainer) as HTMLElement;
 
     const containerScale = getElementScale(container);
@@ -659,10 +661,18 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
     // Get the positions of the drop and drag elements
     const dropRect = selectedDropElement.getBoundingClientRect();
     const dragRect = selectedDragElement.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect(); 
+    const dragX = dragRect.left - containerRect.left;
+    const dragY = dragRect.top - containerRect.top;
+    const dropX = dropRect.left - containerRect.left;
+    const dropY = dropRect.top - containerRect.top;
+    const translateX = (dropX - dragX) / containerScale;
+    const translateY = (dropY - dragY) / containerScale;
+
 
     // Calculate the difference in positions
-    const translateX = (dropRect.left - dragRect.left) / containerScale;
-    const translateY = (dropRect.top - dragRect.top) / containerScale;
+    // const translateX = (dropRect.left - dragRect.left) / containerScale;
+    // const translateY = (dropRect.top - dragRect.top) / containerScale;
 
     // Move the drag element to the drop position
     selectedDragElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
