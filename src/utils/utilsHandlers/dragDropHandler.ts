@@ -86,36 +86,6 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       }
     }
 
-    // for infinite drop functionality
-    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
-      const imgElement = element.querySelector('img');
-      const src = imgElement?.getAttribute('src');
-      const computedStyle = window.getComputedStyle(element);
-      const rect = element.getBoundingClientRect();
-      if (!duplicateElement) {
-        duplicateElement = element.cloneNode(false) as HTMLElement;
-        duplicateElement.setAttribute('src', src);
-        duplicateElement.setAttribute('value', element.getAttribute('value'));
-        duplicateElement.setAttribute('visible', 'true');
-        duplicateElement.style.left = `${rect.left}px`;
-        duplicateElement.style.top = `${rect.top}px`;
-        duplicateElement.style.width = `${rect.width}px`;
-        duplicateElement.style.height = `${rect.height}px`;
-        duplicateElement.style.transform = computedStyle.transform;
-        duplicateElement.style.position = 'absolute';
-        duplicateElement.style.zIndex = '0';
-        element.style.zIndex = '100';
-        document.body.appendChild(duplicateElement);
-      }
-
-      // remove all dropped element with same value at click start
-      if (element.getAttribute('droppedelement')) {
-        const dropAttrValue = element.getAttribute('droppedelement');
-        const elementsToRemove = document.querySelectorAll(`body > [droppedelement="${dropAttrValue}"]`);
-        elementsToRemove.forEach(el => el.remove());
-      }
-    }
-
     // Parse the current transform values at the start of each drag
     const transform = window.getComputedStyle(element).transform;
     if (transform !== 'none') {
@@ -323,6 +293,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
+      if(!mostOverlappedElement)return;
       mostOverlappedElement.style.opacity = '0';
       if (element.getAttribute('value')) {
         element.setAttribute('droppedElement', `${element.getAttribute('value')}-dropped`);

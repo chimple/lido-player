@@ -6,9 +6,9 @@ import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement,appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
-import { evaluate, isArray } from 'mathjs';
+import { clone, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 const gameScore = new GameScore();
 
@@ -100,33 +100,8 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             dragElement.style.transform = `translate(${scaledLeft - 70}px, ${scaledTop - 70}px)`;
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-            const isAppend = container.getAttribute('afterDrop') === 'append';
-            if (!isAppend) return;
-            setTimeout(() => {
-              dragElement.style.transform = 'translate(0,0)';
-              dragElement.style.transition = 'none';
-
-              const dummyElement = document.createElement('div');
-              dummyElement.setAttribute('id', dragElement.getAttribute('id'));
-              dragElement.replaceWith(dummyElement);
-              dropElement.parentElement.append(element);
-              dragElement.style.position = 'absolute';
-              dragElement.style.zIndex = '1';
-
-              const dropRect = dropElement.getBoundingClientRect();
-              const dragRect = dragElement.getBoundingClientRect();
-
-              const dropCenterX = dropRect.left + dropRect.width / 2;
-              const dropCenterY = dropRect.top + dropRect.height / 2;
-              const dragCenterX = dragRect.left + dragRect.width / 2;
-              const dragCenterY = dragRect.top + dragRect.height / 2;
-
-              scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-              scaledTop = (dropCenterY - dragCenterY) / containerScale;
-
-              dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-            }, 500);
           }
+          await afterDropDragHandling(dragElement, dropElement);
           break;
         }
         case 'removeClone': {
@@ -181,6 +156,77 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
     }
   }
 };
+
+const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElement) => {
+  const container = document.getElementById(LidoContainer);
+  const containerScale = getElementScale(container);
+  const element = dragElement;
+  const isAppend = container.getAttribute('afterDrop') === 'append';
+  const isInfinite = container.getAttribute('afterDrop') === 'infinite-drop';
+
+  if (isAppend) {
+    setTimeout(() => {
+      dragElement.style.transform = 'translate(0,0)';
+      dragElement.style.transition = 'none';
+
+      const dummyElement = document.createElement('div');
+      dummyElement.setAttribute('id', dragElement.getAttribute('id'));
+      dragElement.replaceWith(dummyElement);
+      dropElement.parentElement.append(element);
+      dragElement.style.position = 'absolute';
+      dragElement.style.zIndex = '1';
+
+      const dropRect = dropElement.getBoundingClientRect();
+      const dragRect = dragElement.getBoundingClientRect();
+
+      const dropCenterX = dropRect.left + dropRect.width / 2;
+      const dropCenterY = dropRect.top + dropRect.height / 2;
+      const dragCenterX = dragRect.left + dragRect.width / 2;
+      const dragCenterY = dragRect.top + dragRect.height / 2;
+
+      const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+      const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+      dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+    }, 500);
+  }
+
+  if (isInfinite) {
+    const clone = cloneElementWithComputedStyles(dragElement);
+    dragElement.replaceWith(clone);
+    element.style.transform = `translate(0px, 0px)`;
+    element.style.position = 'absolute';
+    element.style.zIndex = '1';
+
+    dropElement.parentElement?.append(element);
+    const dropRect = dropElement.getBoundingClientRect();
+    const dragRect = dragElement.getBoundingClientRect();
+
+    const dropCenterX = dropRect.left + dropRect.width / 2;
+    const dropCenterY = dropRect.top + dropRect.height / 2;
+    const dragCenterX = dragRect.left + dragRect.width / 2;
+    const dragCenterY = dragRect.top + dragRect.height / 2;
+
+    const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+    const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+    dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+
+    clone.style.transform = 'translate(0,0)';
+    clone.style.position = 'unset';
+  }
+};
+
+function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
+  const computedStyle = getComputedStyle(originalEl);
+  const clone = originalEl.cloneNode(true) as HTMLElement;
+
+  Array.from(computedStyle).forEach(key => {
+    clone.style.setProperty(key, computedStyle.getPropertyValue(key));
+  });
+
+  return clone;
+}
 
 // Function to parse actions string
 const parseActions = (input: string): Array<{ actor: string; action: string; value: string }> => {
@@ -439,9 +485,9 @@ export const validateObjectiveStatus = async () => {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
   if (res) {
-    const attach=container.getAttribute('appendToDropOnCompletion');
-    if(attach === 'true') {
-    appendingDragElementsInDrop();
+    const attach = container.getAttribute('appendToDropOnCompletion');
+    if (attach === 'true') {
+      appendingDragElementsInDrop();
     }
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
