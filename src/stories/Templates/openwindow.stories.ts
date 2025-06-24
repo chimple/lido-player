@@ -83,13 +83,15 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
     <lido-container id="lido-container" tabIndex="1" 
       bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/Spring.png" 
       height="100%" width="100%" visible="true"
-	  isContinueOnCorrect="true"
+	    isContinueOnCorrect="true"
       onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" 
       onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" 
       onEntry="${speakSequence}"
       objective="${args.objective}" >
        	<lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bgColor="transparent" margin="5%" onEntry="this.gap='45px';">
-        	<lido-text id="heading0" string="${args.objective}" x="-100px" y="-100px" onEntry="this.position='absolute';"></lido-text>
+        	<lido-cell layout="row" visible="false">
+            <lido-text id="heading0" string="${args.objective}"></lido-text>
+          </lido-cell>
 			${headingLettersXml}
 		</lido-cell>
 		<lido-cell layout="row" visible="true" width="75%" height="25%" bgColor="transparent" margin="5%">
