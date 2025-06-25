@@ -4,11 +4,11 @@
 }
 
 #lido-svgContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 50px; /* Leave space for controls */
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* right: 0; */
+  /* bottom: 50px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +65,17 @@ button {
     font-size: 14px;
   }
 }
+
 .lido-trace-path-green {
   /* stroke: green !important; */
 }
 
+.lido-trace {
+  height: 700px;
+  width: 700px;
+  z-index: 1;
+  /* position: absolute; */
+  justify-items: center;
+  /* align-items: center; */
+  align-content: center;
+}
