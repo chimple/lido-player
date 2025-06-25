@@ -422,6 +422,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
     dragElement.style.transition = 'transform 0.5s ease';
     if (cloneDragElement) {
+      dragElement.style.transform = 'translate(0,0)';
       const containerScale = getElementScale(container);
       const dropRect = cloneDragElement.getBoundingClientRect();
       const dragRect = dragElement.getBoundingClientRect();

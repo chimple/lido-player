@@ -32,7 +32,7 @@ export class LidoText {
   /**
    * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
    */
-  @Prop() font: string = '';
+  @Prop() fontFamily: string = '';
 
   /**
    * Font size for the text (CSS value, e.g., '16px', '1.5em').
@@ -190,7 +190,7 @@ export class LidoText {
       left: parseProp(this.x, orientation),
       zIndex: this.z,
       fontSize: parseProp(this.fontSize, orientation),
-      fontFamily: this.font,
+      fontFamily: this.fontFamily,
       color: parseProp(this.fontColor, orientation),
       display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none', // Toggle visibility
       borderImage: `url(${borderImg})`,

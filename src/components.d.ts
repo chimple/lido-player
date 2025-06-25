@@ -356,6 +356,10 @@ export namespace Components {
          */
         "customStyle": string;
         /**
+          * Defines the action to take after an element is dropped. - `"move"`: Removes the element from its original position and places it in the new location. - `"clone"`: Keeps the original element (hidden) and creates a new one in the drop location. - `"hide"` (default): Hides the original element without moving or cloning.
+         */
+        "dropAction": string;
+        /**
           * The height of the container (CSS value).
          */
         "height": string;
@@ -1165,13 +1169,13 @@ export namespace Components {
          */
         "borderImage"?: string;
         /**
-          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
-         */
-        "font": string;
-        /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
         "fontColor": string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
+        "fontFamily": string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
          */
@@ -1965,6 +1969,10 @@ declare namespace LocalJSX {
           * Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.
          */
         "customStyle"?: string;
+        /**
+          * Defines the action to take after an element is dropped. - `"move"`: Removes the element from its original position and places it in the new location. - `"clone"`: Keeps the original element (hidden) and creates a new one in the drop location. - `"hide"` (default): Hides the original element without moving or cloning.
+         */
+        "dropAction"?: string;
         /**
           * The height of the container (CSS value).
          */
@@ -2775,13 +2783,13 @@ declare namespace LocalJSX {
          */
         "borderImage"?: string;
         /**
-          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
-         */
-        "font"?: string;
-        /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
         "fontColor"?: string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
+        "fontFamily"?: string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
          */

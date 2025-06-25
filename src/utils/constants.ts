@@ -35,3 +35,9 @@ export enum DropMode {
   Stretch = 'stretch',
   InfiniteDrop = 'infinite-drop',
 }
+
+export enum DropAction {
+  InfiniteDrop = 'infinite-drop',
+  Move = 'move',
+  Hide = 'hide'
+}

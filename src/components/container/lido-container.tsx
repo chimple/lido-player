@@ -17,7 +17,7 @@ export class LidoContainer {
   /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
-  @Prop() appendToDropOnCompletion:boolean=false;
+  @Prop() appendToDropOnCompletion: boolean = false;
 
   /**
    * Unique identifier for the container.
@@ -76,6 +76,14 @@ export class LidoContainer {
   @Prop() z: string = '0';
 
   /**
+   * Defines the action to take after an element is dropped.
+   * - `"move"`: Removes the element from its original position and places it in the new location.
+   * - `"clone"`: Keeps the original element (hidden) and creates a new one in the drop location.
+   * - `"hide"` (default): Hides the original element without moving or cloning.
+   */
+  @Prop() dropAction: string = '';
+
+  /**
    * Background color of the container (CSS color value).
    */
   @Prop() bgColor: string = '';
@@ -93,7 +101,7 @@ export class LidoContainer {
   /**
    * TabIndex for keyboard navigation.
    */
-  @Prop() tabIndex: number  = 0;
+  @Prop() tabIndex: number = 0;
 
   /**
    * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
@@ -151,7 +159,7 @@ export class LidoContainer {
    */
   @Prop() baseUrl: string = '';
 
-  @Prop() margin:string='';
+  @Prop() margin: string = '';
   /**
    * Reference to the HTML element that represents this container component.
    */
@@ -280,8 +288,9 @@ export class LidoContainer {
         id="lido-container"
         tabindex={0}
         class="lido-container"
+        dropAction={this.dropAction}
         objective={this.objective}
-        baseUrl= {this.baseUrl}
+        baseUrl={this.baseUrl}
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}

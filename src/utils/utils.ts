@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -8,7 +8,7 @@ import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
-import { clone, evaluate, isArray } from 'mathjs';
+import { clone, evaluate, isArray, typeOf } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 const gameScore = new GameScore();
 
@@ -101,7 +101,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           }
-          await afterDropDragHandling(dragElement, dropElement);
+          afterDropDragHandling(dragElement, dropElement);
           break;
         }
         case 'removeClone': {
@@ -161,18 +161,23 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
   const container = document.getElementById(LidoContainer);
   const containerScale = getElementScale(container);
   const element = dragElement;
-  const isAppend = container.getAttribute('afterDrop') === 'append';
-  const isInfinite = container.getAttribute('afterDrop') === 'infinite-drop';
+  const isAppend = container.getAttribute('dropAction') === DropAction.Move;
+  const isInfinite = container.getAttribute('dropAction') === DropAction.InfiniteDrop;
 
-  if (isAppend) {
+  if (isAppend || isInfinite) {
     setTimeout(() => {
       dragElement.style.transform = 'translate(0,0)';
       dragElement.style.transition = 'none';
 
-      const dummyElement = document.createElement('div');
+      let dummyElement = document.createElement('div') as HTMLElement;
+      if(isInfinite){
+        dummyElement = cloneElementWithComputedStyles(dragElement);
+      }
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
       dropElement.parentElement.append(element);
+      console.log(dropElement, dropElement.parentElement);
+      // dropElement.style.position = 'relative';
       dragElement.style.position = 'absolute';
       dragElement.style.zIndex = '1';
 
@@ -191,40 +196,45 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
     }, 500);
   }
 
-  if (isInfinite) {
-    const clone = cloneElementWithComputedStyles(dragElement);
-    dragElement.replaceWith(clone);
-    element.style.transform = `translate(0px, 0px)`;
-    element.style.position = 'absolute';
-    element.style.zIndex = '1';
+  // if (isInfinite) {
+  //   const clone = cloneElementWithComputedStyles(dragElement);
 
-    dropElement.parentElement?.append(element);
-    const dropRect = dropElement.getBoundingClientRect();
-    const dragRect = dragElement.getBoundingClientRect();
+  //   element.style.transform = `translate(0px, 0px)`;
+  //   element.style.position = 'absolute';
+  //   element.style.zIndex = '1';
 
-    const dropCenterX = dropRect.left + dropRect.width / 2;
-    const dropCenterY = dropRect.top + dropRect.height / 2;
-    const dragCenterX = dragRect.left + dragRect.width / 2;
-    const dragCenterY = dragRect.top + dragRect.height / 2;
+  //   dragElement.replaceWith(clone);
+  //   clone.style.transform = 'translate(0,0)';
+  //   clone.style.position = 'unset';
 
-    const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-    const scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
-    dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+  //   const dropRect = dropElement.getBoundingClientRect();
+  //   const dragRect = element.getBoundingClientRect();
 
-    clone.style.transform = 'translate(0,0)';
-    clone.style.position = 'unset';
-  }
+  //   const dropCenterX = dropRect.left + dropRect.width / 2;
+  //   const dropCenterY = dropRect.top + dropRect.height / 2;
+  //   const dragCenterX = dragRect.left + dragRect.width / 2;
+  //   const dragCenterY = dragRect.top + dragRect.height / 2;
+
+  //   const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+  //   const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+  //   dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+  //       dropElement.parentElement?.append(element);
+  // }
 };
 
 function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
-  const computedStyle = getComputedStyle(originalEl);
-  const clone = originalEl.cloneNode(true) as HTMLElement;
+  console.log(originalEl.outerHTML);
 
-  Array.from(computedStyle).forEach(key => {
-    clone.style.setProperty(key, computedStyle.getPropertyValue(key));
-  });
+  let clone = document.createElement('div') as HTMLElement;
 
+  clone.innerHTML = originalEl.outerHTML;
+  clone = clone.firstChild as HTMLElement;
+  clone.setAttribute('height', originalEl.style.height);
+  clone.setAttribute('width', originalEl.style.width);
+  console.log("src : ", originalEl.getAttribute('src'));
+  
   return clone;
 }
 
