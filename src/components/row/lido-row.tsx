@@ -148,13 +148,17 @@ export class LidoRow {
    */
   @Prop() display?: string;
 
+   @Prop() margin:string='';
+
+   
+
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
    * It initializes custom events based on the `type` of the row component.
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'flex');
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
   }
 
   /**
@@ -185,6 +189,7 @@ export class LidoRow {
       flexDirection: !this.direction ? 'row' : parseProp(this.direction, orientation),
       gridTemplateColumns: this.display && parseProp(this.display, orientation) === 'grid' ? 'repeat(auto-fill, minmax(186px, auto))' : undefined,
       gap: this.display && parseProp(this.display, orientation) === 'grid' ? '20px' : undefined,
+       margin: parseProp(this.margin, orientation),
     };
   }
 

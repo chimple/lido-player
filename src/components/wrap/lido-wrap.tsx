@@ -143,7 +143,8 @@ export class LidoWrap {
    * The Maximum number of drag elements that can be dropped inside the Drop element.
    */
   @Prop() maxDrops: number = 1;
-
+  
+  @Prop() margin:string='';
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -155,7 +156,7 @@ export class LidoWrap {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'grid');
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     if (this.flex === 'true') {
       this.el.classList.remove('lido-wrap');
       this.el.classList.add('lido-flex');
@@ -187,6 +188,7 @@ export class LidoWrap {
       left: parseProp(this.x, orientation),
       zIndex: this.z,
       display: JSON.parse(parseProp(`${this.visible}`, orientation)) ? (this.flex === 'true' ? 'flex' : 'grid') : 'none', // Toggle visibility
+      margin: parseProp(this.margin, orientation),
     };
   }
 

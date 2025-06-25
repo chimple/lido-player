@@ -15,6 +15,11 @@ import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 })
 export class LidoContainer {
   /**
+   * Enables appending the dragged element to the drop target after all correct drops are completed.
+   */
+  @Prop() appendToDropOnCompletion:boolean=false;
+
+  /**
    * Unique identifier for the container.
    */
   @Prop() id: string = '';
@@ -146,10 +151,20 @@ export class LidoContainer {
    */
   @Prop() baseUrl: string = '';
 
+  @Prop() margin:string='';
   /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;
+
+    /**
+   * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
+   */
+  @Prop() showPrevButton:boolean=false;
+  /**
+   * Indicates whether the next button should be displayed. Expected values: "true" or "false".
+   */
+  @Prop() showNextButton:boolean=false;
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -235,8 +250,8 @@ export class LidoContainer {
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
     document.body.style.backgroundColor = this.bgColor;
-    this.el.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
-    this.el.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
+    document.body.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
+    document.body.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
 
     // Re-scale the container on window resize or load events
     window.addEventListener('resize', () => this.scaleContainer(this.el));
@@ -265,6 +280,7 @@ export class LidoContainer {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)', // Centering the container
+      margin: this.margin,
     };
     console.log('🚀 ~ LidoContainer ~ canplay:', this.canplay);
 
@@ -286,6 +302,9 @@ export class LidoContainer {
         isContinueOnCorrect={`${this.isContinueOnCorrect}`}
         isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
+        appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
+        showPrevButton={`${this.showPrevButton}`}
+        showNextButton={`${this.showNextButton}`}
       >
         <slot />
       </Host>

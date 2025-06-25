@@ -1,6 +1,7 @@
 import { Component, Prop, h, Element, Host, getAssetPath, State } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
-
+import CssFilter from 'css-filter-converter';
+import tinyColor from 'tinycolor2';
 /**
  * @component LidoImage
  *
@@ -132,6 +133,17 @@ export class LidoImage {
   @Prop() maxDrops: number = 1;
 
   /**
+   * margin to adjust the position of element
+   */
+  @Prop() margin: string = '';
+
+  /**
+   * CSS filter to apply visual effects (e.g., blur, brightness) to the image.
+   * Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
+   */
+  @Prop() filter: string = '';
+
+  /**
    * Reference to the HTML element that represents this image component.
    */
   @Element() el: HTMLElement;
@@ -147,6 +159,13 @@ export class LidoImage {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
+
+    if (this.filter !== '') {
+      const img = this.el.getElementsByTagName('img')[0] as HTMLImageElement;
+      if (img) {
+        img.style.filter = `${CssFilter.hexToFilter(tinyColor(this.filter).toHexString()).color}`;
+      }
+    }
   }
 
   /**
@@ -155,6 +174,7 @@ export class LidoImage {
    */
   componentWillLoad() {
     this.updateStyles();
+
     window.addEventListener('resize', this.updateStyles.bind(this)); // Update on screen rotation
     window.addEventListener('load', this.updateStyles.bind(this)); // Update on screen rotation
   }
@@ -176,6 +196,7 @@ export class LidoImage {
       display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none',
       alignItems: 'center',
       justifyContent: 'center',
+      margin: parseProp(this.margin, orientation),
 
       // Slice Style
       borderImageSource: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
@@ -192,6 +213,7 @@ export class LidoImage {
     } else {
       return (
         <Host
+          id={this.id}
           type={this.type}
           tabindex={this.tabIndex}
           style={this.style}

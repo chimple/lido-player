@@ -151,6 +151,7 @@ export class LidoCell {
    */
   @Prop() maxDrops: number = 1;
 
+   @Prop() margin:string='';
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -162,7 +163,7 @@ export class LidoCell {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
-    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'flex');
+    handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     // Select all direct child elements of the component
     const slotElements = this.el.querySelectorAll('.lido-random > *');
     if (!slotElements) return;
@@ -200,10 +201,11 @@ export class LidoCell {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
+      margin: parseProp(this.margin, orientation),
       display: JSON.parse(parseProp(`${this.visible}`, orientation))
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'
-          : parseProp(this.layout, orientation) === 'pos' || 'random'
+          : parseProp(this.layout, orientation) === 'pos' || parseProp(this.layout, orientation) === 'random'
           ? 'block'
           : 'flex'
         : 'none',

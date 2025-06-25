@@ -12,6 +12,7 @@
 | `baseUrl`      | `base-url`      | Base URL for the containers.                                                           | `string`  | `''`    |
 | `canplay`      | `canplay`       | Boolean that controls the playability of the game.                                     | `boolean` | `true`  |
 | `initialIndex` | `initial-index` | Initial index of the container being displayed.                                        | `number`  | `0`     |
+| `margin`       | `margin`        |                                                                                        | `string`  | `''`    |
 | `xmlPath`      | `xml-path`      | Prop to hold the XML file path or URL. This can be a relative path or an external URL. | `string`  | `''`    |
 
 
@@ -38,6 +39,8 @@ graph TD;
   lido-home --> lido-random
   lido-home --> lido-avatar
   lido-home --> lido-cell
+  lido-home --> lido-slide-fill
+  lido-home --> lido-float
   style lido-root fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

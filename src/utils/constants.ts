@@ -5,6 +5,7 @@ export const ActivityScoreKey = 'lidoActivityScore';
 export const ActivityEndKey = 'lidoActivityEnd';
 export const LessonEndKey = 'lidoLessonEnd';
 export const NextContainerKey = 'lidoNextContainer';
+export const PrevContainerKey='lidoPrevContainer'
 export const ActivityChangeKey = 'lidoActivityChange';
 export const GameCompletedKey = 'lidoGameCompleted';
 export const GameExitKey = 'lidoGameExit';
@@ -14,6 +15,7 @@ export const DropLength = 'dropLength';
 export const DropHasDrag = 'dropHasDrag';
 export const DropToAttr = 'drop-to';
 export const DropTimeAttr = 'drop-time';
+export const LidoContainer = 'lido-container';
 
 export enum TraceMode {
   NoFlow = 'noFlow',

@@ -123,6 +123,7 @@ export class LidoFlash {
    */
   @Prop({ mutable: true, reflect: true }) flipped: boolean = false;
 
+  @Prop() margin:string='';
   /* ---------  Element & internal state --------- */
   @Element() el: HTMLElement;
   @State() style: { [key: string]: string } = {};
@@ -168,6 +169,7 @@ export class LidoFlash {
       zIndex: this.z,
       display: this.visible ? (this.display ? parseProp(this.display, o) : 'inline-block') : 'none',
       flexDirection: this.direction ? parseProp(this.direction, o) : undefined,
+      margin: parseProp(this.margin, o),
     };
   };
 
