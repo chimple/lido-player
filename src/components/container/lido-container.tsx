@@ -17,7 +17,7 @@ export class LidoContainer {
   /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
-  @Prop() appendToDropOnCompletion:boolean=false;
+  @Prop() appendToDropOnCompletion: boolean = false;
 
   /**
    * Unique identifier for the container.
@@ -93,7 +93,7 @@ export class LidoContainer {
   /**
    * TabIndex for keyboard navigation.
    */
-  @Prop() tabIndex: number  = 0;
+  @Prop() tabIndex: number = 0;
 
   /**
    * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
@@ -151,20 +151,20 @@ export class LidoContainer {
    */
   @Prop() baseUrl: string = '';
 
-  @Prop() margin:string='';
+  @Prop() margin: string = '';
   /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;
 
-    /**
+  /**
    * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showPrevButton:boolean=false;
+  @Prop() showPrevButton: boolean = false;
   /**
    * Indicates whether the next button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showNextButton:boolean=false;
+  @Prop() showNextButton: boolean = false;
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -194,6 +194,7 @@ export class LidoContainer {
    * @param container The container element to be scaled.
    */
   scaleContainer(container: HTMLElement) {
+    
     const widths = [window.innerWidth];
     const heights = [window.innerHeight];
 
@@ -221,7 +222,19 @@ export class LidoContainer {
     }
 
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
+    console.log("scale is",scale);
+    setTimeout(() => {
+      const navBar = document.querySelector('.navbar') as HTMLElement;
+     console.log("navBar", navBar);
+     
+      if (navBar) { 
+      navBar.style.scale = `${scale}`;
+      navBar.style.visibility = 'visible';
 
+    }
+    }, 100);
+     
+    
     // Center the container and apply scaling
     container.style.transform = `translate(-50%, -50%) scale(${scale})`;
     container.style.left = '50%';
@@ -290,7 +303,7 @@ export class LidoContainer {
         tabindex={0}
         class="lido-container"
         objective={this.objective}
-        baseUrl= {this.baseUrl}
+        baseUrl={this.baseUrl}
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}

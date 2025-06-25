@@ -73,3 +73,15 @@ body {
   outline: 2px solid dodgerblue; /* Or your preferred focus style */
   outline-offset: 3px;
 }
+#lido-arrow-left,#lido-arrow-right {
+  cursor: pointer;
+  width: 92px;
+  height: 92px;
+  margin: 0 30px 0px 30px;
+}
+/* .navbar{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top:0px;
+} */
