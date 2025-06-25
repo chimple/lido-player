@@ -24,6 +24,11 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
+    const lido_buttons= element.getAttribute('id');
+    if(lido_buttons==='lido-arrow-left' || lido_buttons==='lido-arrow-right')
+    {
+      return;
+    }
     AudioPlayer.getI().stop();
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');
