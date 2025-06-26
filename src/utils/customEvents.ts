@@ -1,4 +1,4 @@
-import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, NextContainerKey } from './constants';
+import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, NextContainerKey,PrevContainerKey } from './constants';
 
 function dispatchCustomEvent(eventName: string, detail: any) {
   const event = new CustomEvent(eventName, { detail });
@@ -15,6 +15,10 @@ export function dispatchLessonEndEvent(score: number) {
 
 export function dispatchNextContainerEvent() {
   dispatchCustomEvent(NextContainerKey, {});
+}
+
+export function dispatchPrevContainerEvent(){
+  dispatchCustomEvent(PrevContainerKey,{});
 }
 
 export function dispatchGameCompletedEvent() {

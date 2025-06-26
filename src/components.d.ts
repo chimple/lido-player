@@ -320,6 +320,10 @@ export namespace Components {
      */
     interface LidoContainer {
         /**
+          * Enables appending the dragged element to the drop target after all correct drops are completed.
+         */
+        "appendToDropOnCompletion": boolean;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden": string;
@@ -392,6 +396,14 @@ export namespace Components {
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck": boolean;
+        /**
+          * Indicates whether the next button should be displayed. Expected values: "true" or "false".
+         */
+        "showNextButton": boolean;
+        /**
+          * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
+         */
+        "showPrevButton": boolean;
         /**
           * TabIndex for keyboard navigation.
          */
@@ -516,6 +528,44 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoFloat {
+        /**
+          * The background color of the float element (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor": string;
+        /**
+          * The height of the float element (CSS value, e.g., '100px', '50%').
+         */
+        "height": string;
+        /**
+          * Unique identifier for the text element.
+         */
+        "id": string;
+        /**
+          * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+         */
+        "onEntry": string;
+        /**
+          * Tab index for keyboard navigation.
+         */
+        "tabIndex": number;
+        /**
+          * Value associated with the text element, typically used for internal logic or tracking.
+         */
+        "value": string;
+        /**
+          * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+         */
+        "visible": boolean;
+        /**
+          * The width of the float element (CSS value, e.g., '100px', '50%').
+         */
+        "width": string;
+        /**
+          * Z-index for stacking order of the text component relative to other elements.
+         */
+        "z": string;
+    }
     /**
      * @component LidoHome
      * The `LidoHome` component renders a series of containers parsed from the provided XML data.
@@ -569,6 +619,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
+         */
+        "filter": string;
+        /**
           * The height of the image component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -580,6 +634,9 @@ export namespace Components {
           * Enables border-image slice support when true; otherwise, behaves as a regular image component
          */
         "isSlice": string;
+        /**
+          * margin to adjust the position of element
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -1420,6 +1477,12 @@ declare global {
         prototype: HTMLLidoFlashCardElement;
         new (): HTMLLidoFlashCardElement;
     };
+    interface HTMLLidoFloatElement extends Components.LidoFloat, HTMLStencilElement {
+    }
+    var HTMLLidoFloatElement: {
+        prototype: HTMLLidoFloatElement;
+        new (): HTMLLidoFloatElement;
+    };
     /**
      * @component LidoHome
      * The `LidoHome` component renders a series of containers parsed from the provided XML data.
@@ -1546,6 +1609,7 @@ declare global {
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
         "lido-flash-card": HTMLLidoFlashCardElement;
+        "lido-float": HTMLLidoFloatElement;
         "lido-home": HTMLLidoHomeElement;
         "lido-image": HTMLLidoImageElement;
         "lido-pos": HTMLLidoPosElement;
@@ -1874,6 +1938,10 @@ declare namespace LocalJSX {
      */
     interface LidoContainer {
         /**
+          * Enables appending the dragged element to the drop target after all correct drops are completed.
+         */
+        "appendToDropOnCompletion"?: boolean;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden"?: string;
@@ -1946,6 +2014,14 @@ declare namespace LocalJSX {
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck"?: boolean;
+        /**
+          * Indicates whether the next button should be displayed. Expected values: "true" or "false".
+         */
+        "showNextButton"?: boolean;
+        /**
+          * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
+         */
+        "showPrevButton"?: boolean;
         /**
           * TabIndex for keyboard navigation.
          */
@@ -2070,6 +2146,44 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
+    interface LidoFloat {
+        /**
+          * The background color of the float element (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor"?: string;
+        /**
+          * The height of the float element (CSS value, e.g., '100px', '50%').
+         */
+        "height"?: string;
+        /**
+          * Unique identifier for the text element.
+         */
+        "id"?: string;
+        /**
+          * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+         */
+        "onEntry"?: string;
+        /**
+          * Tab index for keyboard navigation.
+         */
+        "tabIndex"?: number;
+        /**
+          * Value associated with the text element, typically used for internal logic or tracking.
+         */
+        "value"?: string;
+        /**
+          * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+         */
+        "visible"?: boolean;
+        /**
+          * The width of the float element (CSS value, e.g., '100px', '50%').
+         */
+        "width"?: string;
+        /**
+          * Z-index for stacking order of the text component relative to other elements.
+         */
+        "z"?: string;
+    }
     /**
      * @component LidoHome
      * The `LidoHome` component renders a series of containers parsed from the provided XML data.
@@ -2123,6 +2237,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
+         */
+        "filter"?: string;
+        /**
           * The height of the image component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -2134,6 +2252,9 @@ declare namespace LocalJSX {
           * Enables border-image slice support when true; otherwise, behaves as a regular image component
          */
         "isSlice"?: string;
+        /**
+          * margin to adjust the position of element
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -2920,6 +3041,7 @@ declare namespace LocalJSX {
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
         "lido-flash-card": LidoFlashCard;
+        "lido-float": LidoFloat;
         "lido-home": LidoHome;
         "lido-image": LidoImage;
         "lido-pos": LidoPos;
@@ -2970,6 +3092,7 @@ declare module "@stencil/core" {
              */
             "lido-container": LocalJSX.LidoContainer & JSXBase.HTMLAttributes<HTMLLidoContainerElement>;
             "lido-flash-card": LocalJSX.LidoFlashCard & JSXBase.HTMLAttributes<HTMLLidoFlashCardElement>;
+            "lido-float": LocalJSX.LidoFloat & JSXBase.HTMLAttributes<HTMLLidoFloatElement>;
             /**
              * @component LidoHome
              * The `LidoHome` component renders a series of containers parsed from the provided XML data.

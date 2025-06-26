@@ -1,6 +1,7 @@
-import { Component, Prop, h, State, Host, Watch } from '@stencil/core';
-import { DragSelectedMapKey,DragMapKey, SelectedValuesKey, NextContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
+import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
+import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey,PrevContainerKey,DropLength, DropHasDrag } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
+
 
 /**
  * @component LidoHome
@@ -40,6 +41,8 @@ export class LidoHome {
    */
   @Prop() height: string = '';
 
+  @Element() el: HTMLElement;
+
   /**
    * Current index of the container being displayed.
    */
@@ -51,15 +54,16 @@ export class LidoHome {
   @State() showCompletionMessage: boolean = false;
 
   /**
-   * Array that stores the parsed containers from the XML data.
+   * Stores the list of container-rendering functions parsed from XML.
    */
-  @State() containers: any[] = [];
+  @State() containers: (() => any)[] = [];
 
   /**
    * Event handler for transitioning to the next container in the sequence.
    * If the last container is reached, it shows a completion message.
    */
   NextContainerKey = (index?: number | undefined) => {
+    // console.log("👉 NextContainerKey CALLED with index:", index);
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
     localStorage.removeItem(SelectedValuesKey);
@@ -91,10 +95,33 @@ export class LidoHome {
         this.showCompletionMessage = false;
       }, 3000);
     }
-
     // Reset the containers array to trigger a re-render
-    this.containers = [...this.containers];
+      this.containers = [...this.containers];
+      this.updateArrowVisibility();
   };
+
+  PrevContainerKey = (index?: number | undefined) => {
+     console.log("👉 PrevContainerKey CALLED with index:", index);
+     if (this.currentContainerIndex <= 0) return;
+
+    // Clear selected values from localStorage on container transition
+    localStorage.removeItem(SelectedValuesKey);
+    localStorage.removeItem(DragSelectedMapKey);
+    localStorage.removeItem(DropLength);
+    localStorage.removeItem(DropHasDrag);
+    localStorage.removeItem(DragMapKey);
+
+    // Move to the previous container
+    this.currentContainerIndex--;
+
+    // Dispatch event to update the UI or state
+    dispatchActivityChangeEvent(this.currentContainerIndex);
+
+    // Refresh container array and update button visibility
+    this.containers = [...this.containers];
+    this.updateArrowVisibility();    
+  };
+
 
   /**
    * Lifecycle method that runs before the component is loaded. It sets up event listeners for transitioning
@@ -104,6 +131,10 @@ export class LidoHome {
     // Listen for 'NextContainerKey' event to transition between containers
     window.addEventListener(NextContainerKey, () => {
       this.NextContainerKey();
+    });
+
+      window.addEventListener(PrevContainerKey, () => {
+      this.PrevContainerKey();
     });
 
     window.addEventListener('changeContainer', (e: any) => {
@@ -122,6 +153,13 @@ export class LidoHome {
       localStorage.removeItem(DragMapKey);
     });
   }
+  @State() showDotsandbtn: boolean = false;
+  componentDidLoad() {
+    setTimeout(() => {
+      this.showDotsandbtn = true;
+    }, 10);
+    this.updateArrowVisibility();
+  }
 
   /**
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
@@ -133,6 +171,9 @@ export class LidoHome {
     window.removeEventListener('changeContainer', (e: any) => {
       this.NextContainerKey(e.detail.index);
     });
+    window.removeEventListener(PrevContainerKey, () => {
+    this.PrevContainerKey();
+  });
   }
 
   /**
@@ -203,6 +244,7 @@ export class LidoHome {
       'lido-avatar': <lido-avatar {...props}>{children}</lido-avatar>,
       'lido-cell': <lido-cell {...props}>{children}</lido-cell>,
       'lido-slide-fill': <lido-slide-fill {...props}>{children}</lido-slide-fill>,
+      'lido-float': <lido-float {...props}>{children}</lido-float>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning
@@ -220,34 +262,71 @@ export class LidoHome {
    * @param rootElement - The root element of the parsed XML document.
    */
   private parseContainers(rootElement: Element) {
-    const containers = [];
-    const containerElements = rootElement.querySelectorAll('lido-container');
+  const containerElements = rootElement.querySelectorAll('lido-container');
 
-    // Parse each container and add it to the array
-    containerElements.forEach(container => {
-      const parsedElement = this.parseElement(container);
-      if (parsedElement) {
-        containers.push(parsedElement);
-      }
-    });
+  const containers = Array.from(containerElements).map(container => {
+    // Return a factory function that generates a fresh JSX node each time
+    return () => this.parseElement(container);
+  });
 
-    this.containers = containers;
+  this.containers = containers;
   }
+
+  // update arrow visibility
+
+  private updateArrowVisibility = () => {
+    // const activecontainer=containerElement[this.currentContainerIndex];
+    // console.log("actttive",activecontainer);
+    // if (!activecontainer) return;
+
+    
+    setTimeout(() => {
+      const containerElement = this.el.querySelector('lido-container');
+      const prevbtn = containerElement.getAttribute('showPrevButton');
+      const nextbtn = containerElement.getAttribute('showNextButton');
+      const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
+      const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
+      // console.log("prev btn",prevbtn);
+      // console.log("next btn",nextbtn);
+      
+      
+      if(prevbtn !== 'true') {
+        leftbtn.style.visibility = 'hidden';
+      }
+      else{
+        leftbtn.style.visibility = 'visible';
+      }
+      
+      if(nextbtn!=='true'){
+        rightbtn.style.visibility='hidden';
+      }
+      else{
+        rightbtn.style.visibility='visible';
+      }
+    }, 100);
+  };
 
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
    * Clicking on a dot allows the user to jump to a specific container.
    */
+
   private renderDots() {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
-      <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
-        {this.containers.map((_, index) => (
-          <span
-            class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-            onClick={() => this.jumpToContainer(index)}
-          ></span>
-        ))}
+      <div class="navbar">
+        <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png" type="click" onTouch="this.prevBtn='true';" id="lido-arrow-left" onEntry="this.padding='0px 0px 0px 0px';" />
+        {/* <img id="firstimg" src="/assets/images/story/BackButton.png"></img> */}
+        <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
+          {/* Navigation arrows and dots for container navigation */}
+          {this.containers.map((_, index) => (
+            <span
+              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+              onClick={() => this.jumpToContainer(index)}
+            ></span>
+          ))}
+        </div>
+        <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/NextButton.png" type="click" onTouch="this.nextBtn='true';" id="lido-arrow-right" onEntry="this.padding='0px 0px 0px 0px';" />
       </div>
     );
   }
@@ -273,13 +352,15 @@ export class LidoHome {
     return (
       <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
-        <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]}</div>
+              <div key={this.currentContainerIndex}>
+        {this.containers[this.currentContainerIndex]?.()}
+      </div>
 
         {/* Render navigation dots below the container */}
-        {this.renderDots()}
+        {this.showDotsandbtn&&this.renderDots()}
 
         {/* Show completion message if all containers have been displayed */}
-        {this.showCompletionMessage && <div class="lido-snackbar">All containers have been displayed!</div>}
+        {this.showCompletionMessage && (<div class="lido-snackbar">All containers have been displayed!</div>)}
       </Host>
     );
   }

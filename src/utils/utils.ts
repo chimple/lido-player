@@ -1,14 +1,15 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr } from './constants';
-import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent } from './customEvents';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from './constants';
+import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent,dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement,appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
+import { fillSlideHandle } from './utilsHandlers/floatHandler';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -16,7 +17,7 @@ export function format(first?: string, middle?: string, last?: string): string {
 }
 
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
@@ -60,7 +61,7 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
-  const actions = parseActions(actionsString);
+  const actions = parseActions(actionsString);  
 
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
@@ -79,7 +80,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
-          const container = document.querySelector('#lido-container') as HTMLElement;
+          const container = document.getElementById(LidoContainer) as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
 
@@ -117,6 +118,21 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'speak': {
           await AudioPlayer.getI().play(targetElement);
           break;
+        }
+        case 'fill-slide':{
+          fillSlideHandle(action.value);
+          break;
+        }
+        case 'nextBtn': {
+          storeActivityScore(100);
+          storingEachActivityScore(true);
+          triggerNextContainer();
+          break;
+        }
+        case 'prevBtn':{
+          triggerPrevcontainer();
+          break;
+          
         }
         case 'stop': {
           await AudioPlayer.getI().stop();
@@ -261,7 +277,7 @@ const calculateScore = () => {
 };
 
 export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
 
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
@@ -303,7 +319,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     drag[index] = [];
   }
   drag[index].push(dragElement.id);
-  localStorage.setItem(DragMapKey, JSON.stringify(drag));
+  // localStorage.setItem(DragMapKey, JSON.stringify(drag));
 
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
 
@@ -326,20 +342,22 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (storedTabIndexes.includes(otherElement['tabIndex'])) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color**
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
+          otherElement.style.backgroundColor = 'transparent';
         }
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.border = ''; // Reset border
-        otherElement.style.backgroundColor = ''; // Reset background color
+        
+        otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
         otherElement.style.opacity = '1';
+        otherElement.style.backgroundColor = 'transparent';
       }
     }
   });
@@ -373,7 +391,7 @@ const storeActivityScore = (score: number) => {
 };
 
 export const handleShowCheck = () => {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   const objectiveString = container['objective'];
   const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
 
@@ -394,7 +412,7 @@ export const handleShowCheck = () => {
 };
 
 export const validateObjectiveStatus = async () => {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const objectiveString = container['objective'];
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
@@ -407,7 +425,10 @@ export const validateObjectiveStatus = async () => {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
   if (res) {
-    // appendingDragElementsInDrop();
+    const attach=container.getAttribute('appendToDropOnCompletion');
+    if(attach === 'true') {
+    appendingDragElementsInDrop();
+    }
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
@@ -432,8 +453,14 @@ export const triggerNextContainer = () => {
   dispatchNextContainerEvent();
 };
 
+export const triggerPrevcontainer=()=>{
+    AudioPlayer.getI().stop(); 
+  console.log('⬅️ ~ triggerPrevContainer triggered');
+  dispatchPrevContainerEvent();
+}
+
 export function convertUrlToRelative(url: string): string {
-  const container = document.querySelector('#lido-container') as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
   if (url?.startsWith('http') || url?.startsWith('blob')) {
