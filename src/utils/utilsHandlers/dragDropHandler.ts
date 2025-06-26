@@ -589,10 +589,11 @@ export function updateDropBorder(element: HTMLElement): void {
   if (!element.classList.contains('drop-element')) return;
   const container = document.getElementById(LidoContainer) as HTMLElement;
  if (!container) return;
-  const showBorder = container.getAttribute('showDropBorder'); 
+  const showBorder = container.getAttribute('show-drop-border'); 
 
 
-  if (showBorder!== 'true' ) {
+  
+if (showBorder!== 'true' ) {
     return; 
   }
   const dropId = element.id;

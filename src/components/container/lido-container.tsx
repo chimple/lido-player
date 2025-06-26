@@ -304,7 +304,7 @@ export class LidoContainer {
         isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
         appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
-        showDropBorder={`${this.showDropBorder}`}
+        show-drop-border={`${this.showDropBorder}`}
         showPrevButton={`${this.showPrevButton}`}
         showNextButton={`${this.showNextButton}`}
       >

@@ -61,7 +61,7 @@
 				</lido-image>
 				<!-- drop and 1st trolley -->
 				<lido-cell height="237px" width="200px" visible="true" bgColor="transparent" layout="col" margin="landscape.68px 97px 0px -41px, portrait.0px -142px 0px 151px">
-					<lido-text id="t1" type="drop" tabIndex="1" bgColor="transparent" height="132px" width="132px" value="f" isAllowOnlyOneDrop="true" margin="-25px 0px 16px 0px" onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';"></lido-text>
+					<lido-text id="t1" type="drop" tabIndex="1" bgColor="transparent" height="132px" width="132px" value="f" isAllowOnlyOneDrop="true" margin="-25px 0px 16px 0px" onEntry=" this.borderRadius='6px';"></lido-text>
 					<lido-image id="img4" visible="true"  disableEdit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 0px" >
 					</lido-image>
 					
@@ -71,7 +71,7 @@
 				
 				<!-- drop and trolley -->
 					<lido-cell height="237px" width="200px" visible="true" bgColor="transparent" layout="col" margin="landscape.68px 171px 0px -171px, portrait.0px 0px 0px 0px">
-						<lido-text id="t2" type="drop" bgColor="transparent" tabIndex="2" height="132px" width="132px" value="o" isAllowOnlyOneDrop="true"  margin="landscape.-25px 0px 16px 0px, portrait.-25px 0px 16px 180px"  onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';"></lido-text>
+						<lido-text id="t2" type="drop" bgColor="transparent" tabIndex="2" height="132px" width="132px" value="o" isAllowOnlyOneDrop="true"  margin="landscape.-25px 0px 16px 0px, portrait.-25px 0px 16px 180px"  onEntry=" this.borderRadius='6px';"></lido-text>
 						<lido-image id="img6" visible="true"  disableEdit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px -89px 0px 0px" >
 						</lido-image>
 					</lido-cell>
@@ -79,7 +79,7 @@
 				<!-- 3rd trolley -->
 				<!-- drop and trolley -->
 					<lido-cell height="237px" width="200px" visible="true" bgColor="transparent" layout="col" margin="landscape.68px 254px 0px -245px, portrait.0px -41px 0px 36px">
-						<lido-text id="t3" type="drop" bgColor="transparent" tabIndex="3" height="132px" width="132px" value="x" isAllowOnlyOneDrop="true"  margin="-25px 0px 16px 0px"  onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';"></lido-text>
+						<lido-text id="t3" type="drop" bgColor="transparent" tabIndex="3" height="132px" width="132px" value="x" isAllowOnlyOneDrop="true"  margin="-25px 0px 16px 0px"  onEntry=" this.borderRadius='6px';"></lido-text>
 						<lido-image id="img8" visible="true"  disableEdit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 0px" >
 						</lido-image>
 					</lido-cell>
@@ -138,7 +138,7 @@
 		</lido-cell>
 	</lido-container>
 	<lido-container id="lido-container" customStyle="" tabIndex="1" value="maincontainer" objective="Face,Forehead,chin,cheek" ariaLabel="This is a multiple-option question. Select one option from the list." 	 x="0" y="0" z="0" bgColor="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/tag/Spring.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000;pos1.animation='placeToLeft 2.5s linear';this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" isAllowOnlyCorrect="true">
-	<lido-cell id="pos1" tabIndex="2" layout="landscape.row, portrait.col" height="100%" width="100%" visible="true" bgColor="transparent">
+		<lido-cell id="pos1" tabIndex="2" layout="landscape.row, portrait.col" height="100%" width="100%" visible="true" bgColor="transparent">
  		<lido-cell layout="landscape.col, portrait.row" id="pos2"  tabIndex="3" disableEdit="true" value="pos2" margin="landscape.0% 4% 41% -3%, portrait.2% 69% 0% 0%" height="landscape.56%, portrait.28%" width="landscape.28%, portrait.38%" x="landscape.-11%, portrait.-5%" y="landscape.-6%, portrait.-39%" ariaHidden="true" z="5" bgColor="transparent" visible="true"  onEntry="this.animation='leftToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" tabIndex="4" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
 			</lido-avatar>
@@ -162,8 +162,8 @@
 	        <lido-text id="text7" tabIndex="17" height="landscape.16%, portrait.98%" width="landscape.76%, portrait.27%" type="drag" font="'Baloo Bhai 2'" visible="true"  font-size="50px" value="Forehead" string="Forehead" onTouch="this.speak='true'" bgColor="#DFF2F2" onEntry=" this.fontWeight='400'; this.boaderRadius='2px'"></lido-text>
 			<lido-text id="text8" tabIndex="18" height="landscape.16%, portrait.98%" width="landscape.76%, portrait.27%" type="drag" font="'Baloo Bhai 2'" visible="true"  font-size="50px" value="cheek" string="cheek" onTouch="this.speak='true'"  bgColor="#DFF2F2" onEntry=" this.fontWeight='400'; this.boaderRadius='2px'"></lido-text>
  		</lido-cell>
-	</lido-cell>
-	</lido-cell>	
+		</lido-cell>
+		</lido-cell>	
 	</lido-container>
 
 	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="apple,basket,character,dance" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.backgroundColor='30px';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true" afterDrop="false">
