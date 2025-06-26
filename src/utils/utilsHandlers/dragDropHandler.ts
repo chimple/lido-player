@@ -3,6 +3,8 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
+import { re } from 'mathjs';
+
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
@@ -286,11 +288,11 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.opacity = '1';
           }
         }
+         });
       });
-    });
-
+   
     // Check for overlaps and log the most overlapping element
-    let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
+     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
     
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
@@ -361,7 +363,7 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
     if (type === 'slide') {
       const elementArea = elementRect.width * elementRect.height;
       const otherArea = otherRect.width * otherRect.height;
-      const minRequiredOverlap = Math.min(elementArea, otherArea) * 0.8;
+      const minRequiredOverlap = Math.min(elementArea, otherArea) * 0.1;
 
       if (overlapArea >= minRequiredOverlap && overlapArea > maxOverlapArea) {
         maxOverlapArea = overlapArea;
@@ -382,6 +384,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const dropSelectedData = localStorage.getItem(DragMapKey);
   
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement); 
+  if (dropElement && dropInfo?.isFull) {
+      dragElement.style.transform = 'translate(0,0)';
+      dragElement.style.transition = 'transform 0.3s ease';
+      const allDropElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    allDropElements.forEach(el => {
+      el.style.border = '';
+      el.style.backgroundColor = 'transparent';
+     
+    });
+    return;
+     }
   if (dragElement) {
     if (dropElement) {
       dragElement.setAttribute(DropToAttr, dropElement?.id);
@@ -411,6 +425,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
 
       // Check for overlaps and highlight only the most overlapping element
+        
+  if (dropElement && !dropInfo?.isFull) {
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
       if (mostOverlappedElement) {
         dragElement.style.transform = 'translate(0,0)';
@@ -442,6 +458,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         });
         return;
       }
+    }
     }
   }
   if (!dropElement) {

@@ -76,13 +76,20 @@ function getContainerXml(args: PuzzleArgs) {
     .join('\n');
 
   return `<main>
-  <lido-container id="lido-container" tabIndex="1" isContinueOnCorrect="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="false" visible="true">
-    <lido-image id="mainImage" disableEdit="true" value="background-image" visible="true" src="${args.backgroundImage}" z="0" onEntry="" altText="{backgroundImage}"></lido-image>
-    <lido-cell layout="random" visible="true" width="1200px" height="100px" y="65%">
-      ${draggableImagesXml}
-    </lido-cell>
-
-    ${dropCellsXml}
-  </lido-container>
+   <lido-container id="lido-container" tabIndex="1" isContinueOnCorrect="true" objective="i1,i2" bgImage="" bgColor="grey" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="false" visible="true">
+    	<lido-image id="image1" isSlice="true" disableEdit="true" value="image1" visible="true" width="55%" margin="-5px 0px 188px" height="59%" src="${args.backgroundImage}" z="0"  onEntry="" > -->
+			 <!-- drop elements -->
+			  <lido-text id="t1" type="drop" tabIndex="1" value="i1"  bgColor="transparent" z="5" height="132px" width="132px" isAllowOnlyOneDrop="true" x="43px" y="-123px"  onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';this.position='relative';"></lido-text>
+			<lido-text id="t2" type="drop" bgColor="transparent" value="i2" tabIndex="2" z="10" height="132px" width="132px"  isAllowOnlyOneDrop="true" x="-139px" y="143px"   onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';this.position='relative';"></lido-text>
+		</lido-image>  
+		
+		<!-- draggabel images -->
+		 <lido-cell layout="row" width="80%" height="34%" bgColor="transparent" visible="true" margin="-158px 0px -31px 0px" > 
+			<lido-image id="image1"  width="433px" height="321px" disableEdit="true" value="i1"  bgColor="transparent" visible="true"  type="drag"  margin="0px 0px 0px 0px"  src="${args.draggables[0].src}" z="1"  onEntry="" >
+			</lido-image>
+			<lido-image id="image2"  disableEdit="true" value="i2" bgColor="transparent" visible="true" width="360px" height="310px" type="drag"  margin="0px 0px 0px 0px"  src="${args.draggables[1].src}" z="1" onEntry="" >
+			</lido-image>
+		</lido-cell>
+	</lido-container> 
 </main>`;
 }
