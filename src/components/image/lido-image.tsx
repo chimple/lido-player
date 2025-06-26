@@ -143,6 +143,13 @@ export class LidoImage {
    */
   @Prop() filter: string = '';
 
+
+   /**
+   * CSS filter to apply border radius to the image.
+   * Example: '10px' for  images.
+   */
+  @Prop() borderRadius: string = '0px';
+
   /**
    * Reference to the HTML element that represents this image component.
    */
@@ -197,6 +204,7 @@ export class LidoImage {
       alignItems: 'center',
       justifyContent: 'center',
       margin: parseProp(this.margin, orientation),
+      borderRadius: this.borderRadius,
 
       // Slice Style
       borderImageSource: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
