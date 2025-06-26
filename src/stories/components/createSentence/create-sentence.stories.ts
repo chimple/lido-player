@@ -36,7 +36,7 @@ export const CreateSentence: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-	<lido-container id="lido-container" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" x="0" y="0" z="0" bg-color="transparent" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="background1.mp3" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="this.sleep='1000';speak-con.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false" is-allow-only-correct="true">
+	<lido-container id="lido-container" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="background1.mp3" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="this.sleep='1000';speak-con.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false" is-allow-only-correct="true">
 		<lido-cell visible="false" id="speak-con">
 			<lido-text id="sentenceText" value="Girl sits under streetlight" string="Girl sits under streetlight" />
 		</lido-cell>

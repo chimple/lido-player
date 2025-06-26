@@ -35,7 +35,7 @@ function getContainerXml() {
 		audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/sounds/letterboard.mp3"  
 		onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" 
 		onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" bg-color="transparent" show-check="false" is-continue-on-correct="true"
-		bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png">
+		bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png">
 
 		<lido-cell id="cell1" tab-index="2" disable-edit="true" layout="row" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-image id="image1" z="3" disable-edit="true" value="image1" visible="landscape.true, portrait.false" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/truck.png" bg-color="transparent" onEntry="this.animation='rightToPlace 2.5s linear';" width="landscape.10%, portrait.0px">

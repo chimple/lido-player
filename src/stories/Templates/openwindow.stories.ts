@@ -81,7 +81,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
 
   return `<main>
     <lido-container id="lido-container" tab-index="1" 
-      bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/Spring.png" 
+      bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/Spring.png" 
       height="100%" width="100%" visible="true"
 	    is-continue-on-correct="true"
       onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" 

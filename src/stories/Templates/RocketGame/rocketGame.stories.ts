@@ -147,7 +147,7 @@ function getContainerXml(args: RocketArgs) {
     .join('');
 
   return `<main> 
-    <lido-container id="lido-container" objective="${args.correct1}, ${args.correct2}, ${args.correct3}" tab-index="1" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s linear'; this.sleep='2000';" show-check="false" bgImage="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';">
+    <lido-container id="lido-container" objective="${args.correct1}, ${args.correct2}, ${args.correct3}" tab-index="1" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s linear'; this.sleep='2000';" show-check="false" bg-image="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';">
     
       <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disable-edit="true" tab-index="2" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.-60px, portrait.250px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
