@@ -17,11 +17,12 @@ export const QuestionAndOptions: StoryObj = {
   },
 
   render: args => {
-    const xml = getContainerXml(args);
+    const xml = getContainerXml(args);  // Function to generate XML based on args
     console.log('🚀 ~ xml:', xml);
     return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
   },
 };
+
 
 function getContainerXml(args) {
   let svgText = args.svgFile[0];

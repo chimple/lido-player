@@ -623,6 +623,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius": string;
+        /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
          */
         "filter": string;
@@ -2244,6 +2248,10 @@ declare namespace LocalJSX {
           * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor"?: string;
+        /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius"?: string;
         /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
          */

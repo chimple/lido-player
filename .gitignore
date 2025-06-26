@@ -26,3 +26,7 @@ UserInterfaceState.xcuserstate
 .env
 
 *storybook.log
+
+# Ignore Storybook build artifacts
+# This is a comment
+z-story.txt
