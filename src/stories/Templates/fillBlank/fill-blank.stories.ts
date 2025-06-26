@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components';
+import { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 const meta: Meta = {
@@ -9,10 +9,7 @@ const meta: Meta = {
     option2: { control: "text" },
     option3: { control: "text" },
     option4: { control: "text" },
-    correct1: { control: "text" },
-    correct2: { control: "text" },
-    correct3: { control: "text" },
-    correct4: { control: "text" },
+    correctAns: { control: "text" },
   }
 };
 export default meta;
@@ -32,230 +29,285 @@ export const QuestionAndOptions: StoryObj = {
     return html`<lido-home .xmlData="${xml}"></lido-home>`
   },
 };
-
-function getContainerXml(args) {
+function getContainerXml(args: Args) {
   const [beforeBlank, afterBlank] = args.question.split('_');
+  const boxHeight = "landscape.10vw, portrait.20vw";
+  const fontSize = "landscape.48px, portrait.40px";
 
   return `<main>
-    <lido-container
-      id="lido-container"
-      tabIndex="1"
-      value="mainContainer1"
-      objective="${args.correctAns}"
-      ariaLabel=""
-      height="100vh"
-      width="100vw"
-      x="0"
-      y="0"
-      z="0"
-      bgColor="#74aadd"
-      visible="true"
-      audio="background1.mp3"
-      showCheck="false"
-      isContinueOnCorrect="true"
-      afterDrop="true"
-      onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
-      onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
-      onEntry="this.animation='fadeIn 1s ease-in';"
-    >
-
-      <!-- Avatar and Background -->
-      <!-- Avatar and Background -->
-
-<!-- Background should come first to render behind -->
-<lido-pos
-  id="background"
-  value="pos2"
-  width="1600px"
-  height="100%"
-  x="0"
-  y="0"
-  z="0"
-  visible="true"
-  bgColor="transparent"
-
->
-  <lido-image
-    id="bgImage"
-    visible="true"
-    width="100%"
-    height="100%"
-    src="/src/assets/images/background_Sky_Landscape.png"
-  ></lido-image>
-</lido-pos>
-
-<!-- Avatar Layer (on top of background) -->
-<lido-pos
-  id="pos1"
-  value="pos1"
-  height="350px"
-  width="350px"
-  x="0px"
-  y="400px"
-  z="1"
-  visible="true"
-  bgColor="transparent"
-  onEntry="this.animation='rightToPlace 1s ease-out';"
->
-  <lido-avatar
-    id="lido-avatar"
-    visible="true"
-    height="350px"
-    width="350px"
-    src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv"
-  ></lido-avatar>
-
-  <lido-image
-    id="shadow"
-    visible="true"
-    src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png"
-    width="186px"
-    height="20px"
-    x="77px"
-    y="305px"
-    bgColor="transparent"
-  ></lido-image>
-</lido-pos>
-
-      <!-- Question with Drop Slot -->
-    <lido-pos
-  id="question"
-  value="pos3"
-  visible="true"
-  width="1000px"
-  height="150px"
-  x="50%"
-  y="100px"
-  bgColor="transparent"
-  onEntry="this.transform='translate(-50%, 0)';"
-  
->
-  <!-- Question Background Board -->
-<lido-pos
-  id="question"
-  value="pos3"
-  visible="true"
-  width="1600px"
-  height="200px"
-  x="50%"
-  y="20%"
-  bgColor="transparent"
-  onEntry="this.transform='translate(-50%, 0)';"
->
-  <!-- Board Background -->
-  <lido-image
-    id="image3"
-    visible="true"
-    src="src/assets/images/board_question_wordkicker.png"
-    width="1600px"
-    height="200px"
+  <lido-container
+    id="main-container"
+    value="mainContainer1"
+    objective="${args.correctAns}"
+    x="0"
+    y="0"
     z="0"
-    altText="Question background"
-  ></lido-image>
-
-  <!-- Centered Inline Text + Drop -->
-  <lido-row
-    id="questionRow"
-    visible="true"
-    direction="row"
-    spacing="20px"
-    width="auto"
-    height="auto"
-    x="50%"
-    y="50%"
-    z="1"
-    onEntry="this.transform='translate(-50%, -50%)';"
-  >
-    <lido-text
-      id="textBefore"
-      visible="true"
-      string="${beforeBlank.trim()}"
-      font="'Baloo 2', serif"
-      fontColor="white"
-      font-size="48px"
-      fontWeight="800"
-      bgColor="transparent"
-      width="auto"
-      flexibleWidth="true"
-    ></lido-text>
-
-    <lido-text
-      id="dropSlot"
-      isSlice="true"
-      visible="true"
-      width="200px"
-      height="100px"
-      imageSlice="30 fill"
-      value="${args.correctAns}"
-      type="drop"
-      isAllowOnlyOneDrop="true"
-      bgColor="#FFFFFF"
-       borderRadius="12px"
-      onEntry="this.boxShadow='0px 4px 6px rgba(0,0,0,0.1)'; this.marginLeft='20px'; this.marginRight='30px';"
-    ></lido-text>
-
-    <lido-text
-      id="textAfter"
-      visible="true"
-      string="${afterBlank.trim()}"
-      font="'Baloo 2', serif"
-      fontColor="white"
-      font-size="48px"
-      bgColor="transparent"
-      width="auto"
-      flexibleWidth="true"
-    ></lido-text>
-  </lido-row>
-</lido-pos>
-
-<!-- Drag Options -->
-<lido-pos
-  id="dragZone"
-  value="dragZone"
-  visible="true"
-  width="1400px"
-  height="150px"
-  x="15%"
-  y="500px"
-  z="1"
-  bgColor="transparent"
->
-  <lido-row
-    id="optionsRow"
-    value="optionsRow"
-    visible="true"
-    direction="row"
-    display="flex"
-    justifyContent="space-between"
-    alignItems="center"
-    spacing="30px"
-    width="60%"
     height="100%"
-    x="25%"
-    y="0%"
-    onEntry="this.transform='translate(-50%, -50%)';"
+    width="100%"
+    bgColor="transparent"
+    bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//Sky.png"
+    visible="true"
+    showCheck="false"
+    isContinueOnCorrect="true"
+    isAllowOnlyCorrect="true"
+    afterDrop="true"
+    onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
+    onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
   >
-    ${[1, 2, 3, 4].map(i => `
-      <lido-text
-        id="option${i}"
-        value="${args[`option${i}`]}"
-        visible="true"
-        type="drag"
-        width="200px"
-        height="100px"
-        string="${args[`option${i}`]}"
-        font="'Baloo 2', serif"
-        fontColor="#FFFFFF"
-        font-size="48px"
-        fontWeight="800"
-        bgColor="#A97345"
-        borderRadius="12px"
-        onEntry="this.boxShadow='0px 4px 8px rgba(0, 0, 0, 0.2)';"
-      ></lido-text>
-    `).join('')}
-  </lido-row>
-</lido-pos>
 
-    </lido-container>
-  </main>`;
+    <!-- Decorative Wood Row -->
+    <lido-row
+      id="row-wood"
+      visible="true"
+      direction="row"
+      width="100%"
+      height="landscape.10%, portrait.10%"
+    >
+      <lido-image
+        id="wood-image-1"
+        visible="true"
+        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
+        width="100%"
+        height="100%"
+        z="1"
+        altText="ground"
+      ></lido-image>
+      <lido-image
+        id="wood-image-2"
+        visible="true"
+        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
+        width="100%"
+        height="100%"
+        z="1"
+        altText="ground"
+      ></lido-image>
+    </lido-row>
+
+    <!-- Question Board Row -->
+    <lido-row
+      id="row-question"
+      visible="true"
+      direction="row"
+      spacing="landscape.2vw, portrait.3vw"
+      width="landscape.90%, portrait.95%"
+      height="landscape.40%, portrait.10%"
+      x="50%"
+      y="5%"
+    >
+      <lido-image
+        id="question-board-image"
+        visible="true"
+        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//board_question_wordkicker.png"
+        width="landscape.100%, portrait.100%"
+        height="landscape.100%, portrait.100%"
+        z="0"
+        isSlice="true"
+        altText="Question background"
+      >
+        <lido-row
+          id="row-question-inline"
+          visible="true"
+          direction="row"
+          width="landscape.80%, portrait.95%"
+          height="50%"
+          spacing="landscape.20px, portrait.2vw"
+          x="50%"
+          y="50%"
+        >
+          <lido-text
+            id="question-text-before"
+            visible="true"
+            string="${beforeBlank.trim()}"
+            font="'Baloo 2', serif"
+            fontColor="white"
+            font-size="${fontSize}"
+            fontWeight="800"
+            bgColor="transparent"
+            width="auto"
+          ></lido-text>
+          <lido-text
+            id="question-drop-slot"
+            visible="true"
+            width="25%"
+            height="${boxHeight}"
+            value="${args.correctAns}"
+            type="drop"
+            isAllowOnlyOneDrop="true"
+            bgColor="transparent"
+            font="'Baloo 2', serif" 
+            fontColor="#000"
+            font-size="${fontSize}"
+            fontWeight="800"
+            borderRadius="1vw"
+          ></lido-text>
+          <lido-text
+            id="question-text-after"
+            visible="true"
+            string="${afterBlank.trim()}"
+            font="'Baloo 2', serif"
+            fontColor="white"
+            font-size="${fontSize}"
+            bgColor="transparent"
+            width="auto"
+          ></lido-text>
+        </lido-row>
+      </lido-image>
+    </lido-row>
+
+    <!-- Top Spacer Row -->
+    <lido-row
+      id="row-spacer-top"
+      visible="true"
+      direction="row"
+      spacing="20px"
+      width="100%"
+      height="landscape.30%, portrait.15%"
+    ></lido-row>
+
+    <!-- Options Grid (2x2) -->
+    <lido-row
+      id="row-options-outer"
+      visible="true"
+      direction="column"
+      spacing="landscape.1vw, portrait.2vw"
+      width="landscape.60%, portrait.92%"
+      height="landscape.70%, portrait.20%"
+      x="50%"
+      y="42%"
+    >
+      <lido-row
+        id="row-options-1"
+        visible="true"
+        direction="row"
+        spacing="20px"
+        width="100%"
+        height="landscape.40%, portrait.10%"
+      >
+        <lido-text
+          id="option-1"
+          value="${args.option1}"
+          visible="true"
+          type="drag"
+          width="30%"
+          height="${boxHeight}"
+          string="${args.option1}"
+          font="'Baloo 2', serif"
+          fontColor="#FFFFFF"
+          font-size="${fontSize}"
+          fontWeight="800"
+          bgColor="#A97345"
+          borderRadius="1vw"
+        ></lido-text>
+        <lido-text
+          id="option-2"
+          value="${args.option2}"
+          visible="true"
+          type="drag"
+          width="30%"
+          height="${boxHeight}"
+          string="${args.option2}"
+          font="'Baloo 2', serif"
+          fontColor="#FFFFFF"
+          font-size="${fontSize}"
+          fontWeight="800"
+          bgColor="#A97345"
+          borderRadius="1vw"
+        ></lido-text>
+      </lido-row>
+      <lido-row
+        id="row-options-2"
+        visible="true"
+        direction="row"
+        spacing="landscape.4vw, portrait.3vw"
+        width="100%"
+        height="landscape.40%, portrait.10%"
+      >
+        <lido-text
+          id="option-3"
+          value="${args.option3}"
+          visible="true"
+          type="drag"
+          width="30%"
+          height="${boxHeight}"
+          string="${args.option3}"
+          font="'Baloo 2', serif"
+          fontColor="#FFFFFF"
+          font-size="${fontSize}"
+          fontWeight="800"
+          bgColor="#A97345"
+          borderRadius="1vw"
+        ></lido-text>
+        <lido-text
+          id="option-4"
+          value="${args.option4}"
+          visible="true"
+          type="drag"
+          width="30%"
+          height="${boxHeight}"
+          string="${args.option4}"
+          font="'Baloo 2', serif"
+          fontColor="#FFFFFF"
+          font-size="${fontSize}"
+          fontWeight="800"
+          bgColor="#A97345"
+          borderRadius="1vw"
+        ></lido-text>
+      </lido-row>
+    </lido-row>
+
+    <!-- Bottom Spacer Row -->
+    <lido-row
+      id="row-spacer-bottom"
+      visible="true"
+      direction="row"
+      spacing="20px"
+      width="100%"
+      height="landscape.30%, portrait.50%"
+    ></lido-row>
+
+    <!-- Avatar and Shadow -->
+    <lido-pos
+      id="pos-avatar"
+      disableEdit="true"
+      value="pos1"
+      height="350px"
+      width="350px"
+      x="landscape.80%, portrait.60%"
+      y="landscape.60%, portrait.60%"
+      ariaHidden="true"
+      z="2"
+      bgColor="transparent"
+      type=""
+      visible="true"
+      audio=""
+      onTouch=""
+      onCorrect=""
+      onEntry="this.animation='leftToPlace 1.5s linear';"
+    >
+      <lido-avatar
+        id="lido-avatar"
+        disableEdit="true"
+        visible="true"
+        height="350px"
+        width="350px"
+        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv"
+        altText="chimpleCharacterRive"
+        bgColor="transparent"
+      ></lido-avatar>
+      <lido-image
+        id="shadow-image"
+        disableEdit="true"
+        value="image1"
+        visible="true"
+        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png"
+        bgColor="transparent"
+        width="186px"
+        height="40px"
+        x="77px"
+        y="302px"
+        altText="shadowImage"
+      ></lido-image>
+    </lido-pos>
+  </lido-container>
+</main>`;
 }
