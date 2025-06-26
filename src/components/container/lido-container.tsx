@@ -14,6 +14,7 @@ import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
   shadow: false,
 })
 export class LidoContainer {
+  @Prop() showDropBorder:boolean=true;
   /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
@@ -303,6 +304,7 @@ export class LidoContainer {
         isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
         appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
+        showDropBorder={`${this.showDropBorder}`}
         showPrevButton={`${this.showPrevButton}`}
         showNextButton={`${this.showNextButton}`}
       >

@@ -3,8 +3,6 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
-import { re } from 'mathjs';
-
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
@@ -288,13 +286,13 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.opacity = '1';
           }
         }
-         });
       });
-   
+    });
+
     // Check for overlaps and log the most overlapping element
-     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
+    let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
-    
+
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
         if (element) {
@@ -382,20 +380,19 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-  
+
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
-  const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement); 
+  const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
   if (dropElement && dropInfo?.isFull) {
-      dragElement.style.transform = 'translate(0,0)';
-      dragElement.style.transition = 'transform 0.3s ease';
-      const allDropElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    dragElement.style.transform = 'translate(0,0)';
+    dragElement.style.transition = 'transform 0.3s ease';
+    const allDropElements = document.querySelectorAll<HTMLElement>("[type='drop']");
     allDropElements.forEach(el => {
-      el.style.border = '';
+
       el.style.backgroundColor = 'transparent';
-     
     });
     return;
-     }
+  }
   if (dragElement) {
     if (dropElement) {
       dragElement.setAttribute(DropToAttr, dropElement?.id);
@@ -425,40 +422,40 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
 
       // Check for overlaps and highlight only the most overlapping element
-        
-  if (dropElement && !dropInfo?.isFull) {
-      let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-      if (mostOverlappedElement) {
-        dragElement.style.transform = 'translate(0,0)';
-        dragElement.style.transition = 'transform 0.5s ease';
 
-        const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-        allElements.forEach(otherElement => {
-          const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-          const storedTabIndexes = Object.keys(dropObject).map(Number);
-          if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-            if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+      if (dropElement && !dropInfo?.isFull) {
+        let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
+        if (mostOverlappedElement) {
+          dragElement.style.transform = 'translate(0,0)';
+          dragElement.style.transition = 'transform 0.5s ease';
+
+          const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+          allElements.forEach(otherElement => {
+            const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+            const storedTabIndexes = Object.keys(dropObject).map(Number);
+            if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+              if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+                if (otherElement.tagName.toLowerCase() === 'lido-text') {
+                  otherElement.style.border = ''; // Reset border
+                  otherElement.style.backgroundColor = 'transparent'; // Reset background color
+                }
+                if (otherElement.tagName.toLowerCase() === 'lido-image') {
+                  otherElement.style.opacity = '0';
+                }
+              }
+            } else {
               if (otherElement.tagName.toLowerCase() === 'lido-text') {
                 otherElement.style.border = ''; // Reset border
-                otherElement.style.backgroundColor = 'transparent'; // Reset background color
+                otherElement.style.backgroundColor = ''; // Reset background color
               }
               if (otherElement.tagName.toLowerCase() === 'lido-image') {
-                otherElement.style.opacity = '0';
+                otherElement.style.opacity = '1';
               }
             }
-          } else {
-            if (otherElement.tagName.toLowerCase() === 'lido-text') {
-              otherElement.style.border = ''; // Reset border
-              otherElement.style.backgroundColor = ''; // Reset background color
-            }
-            if (otherElement.tagName.toLowerCase() === 'lido-image') {
-              otherElement.style.opacity = '1';
-            }
-          }
-        });
-        return;
+          });
+          return;
+        }
       }
-    }
     }
   }
   if (!dropElement) {
@@ -466,7 +463,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     dragElement.style.transition = 'transform 0.5s ease';
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
-       updateDropBorder(currentDrop);
+      updateDropBorder(currentDrop);
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
       if (prevDropItem) {
         prevDropItem.isFull = false;
@@ -510,12 +507,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
             otherElement.style.opacity = '0';
-             otherElement.style.backgroundColor = 'transparent'; 
+            otherElement.style.backgroundColor = 'transparent';
           }
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-           otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '1';
@@ -563,7 +560,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   }
 
   dragToDropMap.set(dragElement, dropElement);
-   
+
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].includes(dragElement['value']);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
@@ -586,12 +583,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
-   
 }
 
 export function updateDropBorder(element: HTMLElement): void {
   if (!element.classList.contains('drop-element')) return;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+ if (!container) return;
+  const showBorder = container.getAttribute('showDropBorder'); 
 
+
+  if (showBorder!== 'true' ) {
+    return; 
+  }
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
 
@@ -603,12 +606,10 @@ export function updateDropBorder(element: HTMLElement): void {
     element.classList.remove('filled');
   }
 }
-
-
 export function handleDropElement(element: HTMLElement): void {
   // let nextIndex = Object.keys(dropHas).length; // Get next index
   // dropHas[nextIndex] = { drop: element, isFull: false };
-   element.classList.add('drop-element');
+  element.classList.add('drop-element');
   let dropHas = JSON.parse(localStorage.getItem(DropHasDrag) || '{}');
   const tabIndex = element.getAttribute('tabIndex');
 
@@ -724,7 +725,7 @@ async function onClickDragElement(element) {
   }
 }
 
- export const appendingDragElementsInDrop = () => {
+export const appendingDragElementsInDrop = () => {
   const dragItems = document.querySelectorAll("[type='drag']");
   const dropItems = document.querySelectorAll("[type='drop']");
   if (!dragItems || !dropItems) return;

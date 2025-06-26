@@ -43,11 +43,11 @@ body {
 }
 
 .drop-element.empty {
-  border: 5px dashed #f34d08 !important;
+  border: 5px dashed #f34d08;
 }
 
 .drop-element.filled {
-  border: none !important;
+  border: none ;
 }
 
 
