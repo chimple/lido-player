@@ -194,7 +194,6 @@ export class LidoContainer {
    * @param container The container element to be scaled.
    */
   scaleContainer(container: HTMLElement) {
-    
     const widths = [window.innerWidth];
     const heights = [window.innerHeight];
 
@@ -222,19 +221,17 @@ export class LidoContainer {
     }
 
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
-    console.log("scale is",scale);
+    console.log('scale is', scale);
     setTimeout(() => {
       const navBar = document.querySelector('.navbar') as HTMLElement;
-     console.log("navBar", navBar);
-     
-      if (navBar) { 
-      navBar.style.scale = `${scale}`;
-      navBar.style.visibility = 'visible';
+      console.log('navBar', navBar);
 
-    }
+      if (navBar) {
+        navBar.style.scale = `${scale}`;
+        navBar.style.visibility = 'visible';
+      }
     }, 100);
-     
-    
+
     // Center the container and apply scaling
     container.style.transform = `translate(-50%, -50%) scale(${scale})`;
     container.style.left = '50%';
