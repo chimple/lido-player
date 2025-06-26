@@ -113,7 +113,13 @@ export class LidoPos {
    * The Maximum number of drag elements that can be dropped inside the Drop element.
    */
   @Prop() maxDrops: number = 1;
+
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
   @Prop() margin: string = '';
+
   /**
    * Reference to the HTML element that represents this `lido-pos` component.
    */

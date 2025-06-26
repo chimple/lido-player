@@ -92,8 +92,8 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const dragCenterX = dragRect.left + dragRect.width / 2;
           const dragCenterY = dragRect.top + dragRect.height / 2;
 
-          let scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-          let scaledTop = (dropCenterY - dragCenterY) / containerScale;
+          const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+          const scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
           if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
             dragElement.style.transform = `translate(${scaledLeft - 70}px, ${scaledTop - 70}px)`;

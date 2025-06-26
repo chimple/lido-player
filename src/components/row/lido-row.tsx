@@ -148,6 +148,10 @@ export class LidoRow {
    */
   @Prop() display?: string;
 
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
   @Prop() margin: string = '';
 
   /**

@@ -144,7 +144,12 @@ export class LidoWrap {
    */
   @Prop() maxDrops: number = 1;
 
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
   @Prop() margin: string = '';
+
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */

@@ -113,7 +113,12 @@ export class LidoRandom {
    */
   @Prop() maxDrops: number = 1;
 
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
   @Prop() margin: string = '';
+
   /**
    * Reference to the HTML element representing this component.
    */

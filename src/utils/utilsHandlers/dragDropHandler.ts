@@ -415,7 +415,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
       // Check for overlaps and highlight only the most overlapping element
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === "true";
+      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === "true" || "";
       
       if (mostOverlappedElement && isAllowOnlyOneDrop) {
         dragElement.style.transform = 'translate(0,0)';

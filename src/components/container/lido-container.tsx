@@ -151,7 +151,12 @@ export class LidoContainer {
    */
   @Prop() baseUrl: string = '';
 
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
   @Prop() margin: string = '';
+  
   /**
    * Reference to the HTML element that represents this container component.
    */
