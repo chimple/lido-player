@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { mod } from 'mathjs';
 
 const meta: Meta = {
   title: 'Component/Trace',
