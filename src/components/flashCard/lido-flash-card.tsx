@@ -123,7 +123,7 @@ export class LidoFlash {
    */
   @Prop({ mutable: true, reflect: true }) flipped: boolean = false;
 
-  @Prop() margin:string='';
+  @Prop() margin: string = '';
   /* ---------  Element & internal state --------- */
   @Element() el: HTMLElement;
   @State() style: { [key: string]: string } = {};
@@ -184,7 +184,7 @@ export class LidoFlash {
     return (
       <Host
         value={this.value}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}

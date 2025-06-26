@@ -105,7 +105,7 @@ export class LidoFloat {
 
   render() {
     return (
-      <Host class="lido-float" id={this.id} tabIndex={this.tabIndex} style={this.style}>
+      <Host class="lido-float" id={this.id} tab-index={this.tabIndex} style={this.style}>
         <slot></slot>
       </Host>
     );

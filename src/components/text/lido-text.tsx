@@ -32,7 +32,7 @@ export class LidoText {
   /**
    * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
    */
-  @Prop() font: string = '';
+  @Prop() fontFamily: string = '';
 
   /**
    * Font size for the text (CSS value, e.g., '16px', '1.5em').
@@ -144,7 +144,7 @@ export class LidoText {
    */
   @Prop() onEntry: string = '';
 
-  @Prop() margin:string='';
+  @Prop() margin: string = '';
   /**
    * Reference to the HTML element representing this `lido-text` component.
    */
@@ -155,7 +155,6 @@ export class LidoText {
    */
   @State() style: { [key: string]: string } = {};
 
-  
   /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the text component.
@@ -190,7 +189,7 @@ export class LidoText {
       left: parseProp(this.x, orientation),
       zIndex: this.z,
       fontSize: parseProp(this.fontSize, orientation),
-      fontFamily: this.font,
+      fontFamily: this.fontFamily,
       color: parseProp(this.fontColor, orientation),
       display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none', // Toggle visibility
       borderImage: `url(${borderImg})`,
@@ -205,7 +204,7 @@ export class LidoText {
         class="lido-text"
         value={this.value}
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         audio={this.audio}
         onTouch={this.onTouch}
         onCorrect={this.onCorrect}

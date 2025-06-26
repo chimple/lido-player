@@ -113,7 +113,7 @@ export class LidoPos {
    * The Maximum number of drag elements that can be dropped inside the Drop element.
    */
   @Prop() maxDrops: number = 1;
-  @Prop() margin:string='';
+  @Prop() margin: string = '';
   /**
    * Reference to the HTML element that represents this `lido-pos` component.
    */
@@ -167,7 +167,7 @@ export class LidoPos {
         id={this.id}
         class="lido-pos"
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}

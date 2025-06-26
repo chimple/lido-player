@@ -209,13 +209,13 @@ export class LidoImage {
 
   render() {
     if (this.isSlice === 'true') {
-      return <Host class="slice" id={this.id} type={this.type} tabIndex={this.tabIndex} onEntry={this.onEntry} style={this.style}></Host>;
+      return <Host class="slice" id={this.id} type={this.type} tab-index={this.tabIndex} onEntry={this.onEntry} style={this.style}></Host>;
     } else {
       return (
         <Host
           id={this.id}
           type={this.type}
-          tabindex={this.tabIndex}
+          tab-index={this.tabIndex}
           style={this.style}
           aria-label={this.ariaLabel}
           aria-hidden={this.ariaHidden}

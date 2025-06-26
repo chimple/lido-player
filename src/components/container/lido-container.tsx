@@ -17,7 +17,7 @@ export class LidoContainer {
   /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
-  @Prop() appendToDropOnCompletion:boolean=false;
+  @Prop() appendToDropOnCompletion: boolean = false;
 
   /**
    * Unique identifier for the container.
@@ -93,7 +93,7 @@ export class LidoContainer {
   /**
    * TabIndex for keyboard navigation.
    */
-  @Prop() tabIndex: number  = 0;
+  @Prop() tabIndex: number = 0;
 
   /**
    * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
@@ -151,20 +151,20 @@ export class LidoContainer {
    */
   @Prop() baseUrl: string = '';
 
-  @Prop() margin:string='';
+  @Prop() margin: string = '';
   /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;
 
-    /**
+  /**
    * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showPrevButton:boolean=false;
+  @Prop() showPrevButton: boolean = false;
   /**
    * Indicates whether the next button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showNextButton:boolean=false;
+  @Prop() showNextButton: boolean = false;
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -287,10 +287,10 @@ export class LidoContainer {
     return (
       <Host
         id="lido-container"
-        tabindex={0}
+        tab-index={0}
         class="lido-container"
         objective={this.objective}
-        baseUrl= {this.baseUrl}
+        baseUrl={this.baseUrl}
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
@@ -298,13 +298,13 @@ export class LidoContainer {
         onInCorrect={this.onInCorrect}
         onCorrect={this.onCorrect}
         onEntry={this.onEntry}
-        showCheck={`${this.showCheck}`}
-        isContinueOnCorrect={`${this.isContinueOnCorrect}`}
-        isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
+        show-check={`${this.showCheck}`}
+        is-continue-on-correct={`${this.isContinueOnCorrect}`}
+        is-allow-only-correct={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
         appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
-        showPrevButton={`${this.showPrevButton}`}
-        showNextButton={`${this.showNextButton}`}
+        show-prev-button={`${this.showPrevButton}`}
+        show-next-button={`${this.showNextButton}`}
       >
         <slot />
       </Host>

@@ -127,7 +127,7 @@ export class LidoShape {
    */
   @Element() el: HTMLElement;
 
-   @Prop() margin:string='';
+  @Prop() margin: string = '';
 
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
@@ -155,7 +155,7 @@ export class LidoShape {
         class={`lido-shape ${this.shapeType}`} // Apply shape-specific class
         value={this.value}
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}

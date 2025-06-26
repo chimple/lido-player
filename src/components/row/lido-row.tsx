@@ -148,9 +148,7 @@ export class LidoRow {
    */
   @Prop() display?: string;
 
-   @Prop() margin:string='';
-
-   
+  @Prop() margin: string = '';
 
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
@@ -189,7 +187,7 @@ export class LidoRow {
       flexDirection: !this.direction ? 'row' : parseProp(this.direction, orientation),
       gridTemplateColumns: this.display && parseProp(this.display, orientation) === 'grid' ? 'repeat(auto-fill, minmax(186px, auto))' : undefined,
       gap: this.display && parseProp(this.display, orientation) === 'grid' ? '20px' : undefined,
-       margin: parseProp(this.margin, orientation),
+      margin: parseProp(this.margin, orientation),
     };
   }
 
@@ -198,7 +196,7 @@ export class LidoRow {
       <Host
         class="lido-row"
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         value={this.value}
         style={this.style}
         aria-label={this.ariaLabel}

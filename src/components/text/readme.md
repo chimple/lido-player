@@ -14,8 +14,8 @@
 | `audio`                  | `audio`                    | URL or identifier for an audio file associated with the text component.                                                 | `string`            | `''`     |
 | `bgColor`                | `bg-color`                 | Background color of the text component (CSS color value, e.g., '#FFFFFF', 'blue').                                      | `string`            | `''`     |
 | `borderImage`            | `border-image`             | The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').         | `string`            | `''`     |
-| `font`                   | `font`                     | Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').                                                 | `string`            | `''`     |
 | `fontColor`              | `font-color`               | Font color for the text (CSS color value, e.g., '#000000', 'red').                                                      | `string`            | `''`     |
+| `fontFamily`             | `font-family`              | Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').                                                 | `string`            | `''`     |
 | `fontSize`               | `font-size`                | Font size for the text (CSS value, e.g., '16px', '1.5em').                                                              | `string`            | `'20px'` |
 | `height`                 | `height`                   | Height of the text component (CSS value, e.g., '100px', '50%').                                                         | `string`            | `'auto'` |
 | `highlightWhileSpeaking` | `highlight-while-speaking` | When set to `true`, the text will highlight while being spoken, typically used for accessibility.                       | `boolean`           | `false`  |

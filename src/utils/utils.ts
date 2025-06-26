@@ -1,12 +1,12 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from './constants';
-import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent,dispatchPrevContainerEvent } from './customEvents';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from './constants';
+import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement,appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
@@ -61,7 +61,7 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
-  const actions = parseActions(actionsString);  
+  const actions = parseActions(actionsString);
 
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
@@ -92,14 +92,15 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const dragCenterX = dragRect.left + dragRect.width / 2;
           const dragCenterY = dragRect.top + dragRect.height / 2;
 
-          const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-          const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+          let scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+          let scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
           if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
             dragElement.style.transform = `translate(${scaledLeft - 70}px, ${scaledTop - 70}px)`;
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           }
+          afterDropDragHandling(dragElement, dropElement);
           break;
         }
         case 'removeClone': {
@@ -119,7 +120,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           await AudioPlayer.getI().play(targetElement);
           break;
         }
-        case 'fill-slide':{
+        case 'fill-slide': {
           fillSlideHandle(action.value);
           break;
         }
@@ -129,10 +130,9 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           triggerNextContainer();
           break;
         }
-        case 'prevBtn':{
+        case 'prevBtn': {
           triggerPrevcontainer();
           break;
-          
         }
         case 'stop': {
           await AudioPlayer.getI().stop();
@@ -165,6 +165,61 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
     }
   }
 };
+
+const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElement) => {
+  const container = document.getElementById(LidoContainer);
+  const containerScale = getElementScale(container);
+  const element = dragElement;
+  const isAppend = container.getAttribute('drop-action') === DropAction.Move;
+  const isInfinite = container.getAttribute('drop-action') === DropAction.InfiniteDrop;
+
+  if (isAppend || isInfinite) {
+    setTimeout(() => {
+      dragElement.style.transform = 'translate(0,0)';
+      dragElement.style.transition = 'none';
+
+      let dummyElement = document.createElement('div') as HTMLElement;
+      if(isInfinite){
+        dummyElement = cloneElementWithComputedStyles(dragElement);
+      }
+      dummyElement.setAttribute('id', dragElement.getAttribute('id'));
+      dragElement.replaceWith(dummyElement);
+      dropElement.parentElement.append(element);
+      console.log(dropElement, dropElement.parentElement);
+      // dropElement.style.position = 'relative';
+      dragElement.style.position = 'absolute';
+      dragElement.style.zIndex = '1';
+
+      const dropRect = dropElement.getBoundingClientRect();
+      const dragRect = dragElement.getBoundingClientRect();
+
+      const dropCenterX = dropRect.left + dropRect.width / 2;
+      const dropCenterY = dropRect.top + dropRect.height / 2;
+      const dragCenterX = dragRect.left + dragRect.width / 2;
+      const dragCenterY = dragRect.top + dragRect.height / 2;
+
+      const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+      const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+      dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+    }, 500);
+  }
+
+};
+
+function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
+  console.log(originalEl.outerHTML);
+
+  let clone = document.createElement('div') as HTMLElement;
+
+  clone.innerHTML = originalEl.outerHTML;
+  clone = clone.firstChild as HTMLElement;
+  clone.setAttribute('height', originalEl.style.height);
+  clone.setAttribute('width', originalEl.style.width);
+  console.log("src : ", originalEl.getAttribute('src'));
+
+  return clone;
+}
 
 // Function to parse actions string
 const parseActions = (input: string): Array<{ actor: string; action: string; value: string }> => {
@@ -280,7 +335,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
 
-  const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true';
+  const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
   if (isAllowOnlyCorrect) {
     const isCorrect = dropElement['value'].includes(dragElement['value']);
 
@@ -302,7 +357,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
-  const tabindex = dropElement.getAttribute('tabindex');
+  const tabindex = dropElement.getAttribute('tab-index');
 
   if (!dragScore[tabindex]) {
     dragScore[tabindex] = [];
@@ -314,7 +369,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
   //localStorage
   let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');
-  const index = dropElement.getAttribute('tabindex');
+  const index = dropElement.getAttribute('tab-index');
   if (!drag[index]) {
     drag[index] = [];
   }
@@ -339,10 +394,9 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   allElements.forEach(otherElement => {
     const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
     const storedTabIndexes = Object.keys(dropObject).map(Number);
-    if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+    if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          
           otherElement.style.backgroundColor = 'transparent'; // Reset background color**
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
@@ -352,7 +406,6 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        
         otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
@@ -402,7 +455,7 @@ export const handleShowCheck = () => {
     return;
   }
 
-  const showCheck = container.getAttribute('showCheck') == 'true';
+  const showCheck = container.getAttribute('show-check') == 'true';
 
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
@@ -425,9 +478,9 @@ export const validateObjectiveStatus = async () => {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
   if (res) {
-    const attach=container.getAttribute('appendToDropOnCompletion');
-    if(attach === 'true') {
-    appendingDragElementsInDrop();
+    const attach = container.getAttribute('appendToDropOnCompletion');
+    if (attach === 'true') {
+      appendingDragElementsInDrop();
     }
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
@@ -437,7 +490,7 @@ export const validateObjectiveStatus = async () => {
   } else {
     const onInCorrect = container.getAttribute('onInCorrect');
     await executeActions(onInCorrect, container);
-    const isContinueOnCorrect = container.getAttribute('isContinueOnCorrect') === 'true';
+    const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     if (!isContinueOnCorrect) {
       triggerNextContainer();
     }
@@ -453,11 +506,11 @@ export const triggerNextContainer = () => {
   dispatchNextContainerEvent();
 };
 
-export const triggerPrevcontainer=()=>{
-    AudioPlayer.getI().stop(); 
+export const triggerPrevcontainer = () => {
+  AudioPlayer.getI().stop();
   console.log('⬅️ ~ triggerPrevContainer triggered');
   dispatchPrevContainerEvent();
-}
+};
 
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
@@ -503,7 +556,7 @@ export function handlingChildElements(element: HTMLElement, minLength: number, m
   if (currentLength === undefined) return;
 
   const children = Array.from(element.children);
-  
+
   let allowedLength = currentLength;
 
   if (minLength && currentLength < minLength) {
@@ -512,9 +565,9 @@ export function handlingChildElements(element: HTMLElement, minLength: number, m
   if (maxLength && currentLength > maxLength) {
     allowedLength = maxLength;
   }
-  
+
   children.forEach((child, index) => {
-    if(index > allowedLength-1) {
+    if (index > allowedLength - 1) {
       (child as HTMLElement).style.display = 'none';
     }
   });
@@ -545,14 +598,14 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
       const clickEl = item as HTMLElement;
       let targetElement: HTMLElement | null = null;
 
-      if (clickEl.getAttribute('flexibleWidth')) {
+      if (clickEl.getAttribute('flexible-width')) {
         targetElement = clickEl;
       } else {
-        // If the parent doesn't have flexibleWidth, check its child elements
+        // If the parent doesn't have flexible-width, check its child elements
         const childElements = clickEl.children;
         for (let i = 0; i < childElements.length; i++) {
           const childEl = childElements[i] as HTMLElement;
-          if (childEl.getAttribute('flexibleWidth')) {
+          if (childEl.getAttribute('flexible-width')) {
             targetElement = childEl;
             break;
           }
@@ -585,15 +638,15 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
     clickElements.forEach(item => {
       const clickEl = item as HTMLElement;
 
-      if (clickEl.getAttribute('flexibleWidth')) {
-        if (clickEl.getAttribute('flexibleWidth') === 'true') return;
+      if (clickEl.getAttribute('flexible-width')) {
+        if (clickEl.getAttribute('flexible-width') === 'true') return;
         clickEl.style.width = `${maxWidth}px`;
       } else {
         const childElements = clickEl.children;
         for (let i = 0; i < childElements.length; i++) {
           const childEl = childElements[i] as HTMLElement;
-          if (childEl.getAttribute('flexibleWidth')) {
-            if (childEl.getAttribute('flexibleWidth') === 'true') return;
+          if (childEl.getAttribute('flexible-width')) {
+            if (childEl.getAttribute('flexible-width') === 'true') return;
             childEl.style.width = `${maxWidth}px`;
             break;
           }
@@ -626,7 +679,7 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
 
   dragElements.forEach(dragItem => {
     const dragEl = dragItem as HTMLElement;
-    const isFlexible = dragEl.getAttribute('flexibleWidth');
+    const isFlexible = dragEl.getAttribute('flexible-width');
 
     if (isFlexible === 'false') {
       dragEl.style.width = `${maxWidth}px`;
@@ -638,7 +691,7 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
 
   dropElements.forEach(dropItem => {
     const dropEl = dropItem as HTMLElement;
-    const isFlexible = dropEl.getAttribute('flexibleWidth');
+    const isFlexible = dropEl.getAttribute('flexible-width');
 
     if (isFlexible === 'false') {
       const borderWidth = parseFloat(getComputedStyle(dropEl).borderWidth);

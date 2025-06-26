@@ -5,7 +5,7 @@ export const ActivityScoreKey = 'lidoActivityScore';
 export const ActivityEndKey = 'lidoActivityEnd';
 export const LessonEndKey = 'lidoLessonEnd';
 export const NextContainerKey = 'lidoNextContainer';
-export const PrevContainerKey='lidoPrevContainer'
+export const PrevContainerKey = 'lidoPrevContainer';
 export const ActivityChangeKey = 'lidoActivityChange';
 export const GameCompletedKey = 'lidoGameCompleted';
 export const GameExitKey = 'lidoGameExit';
@@ -35,4 +35,10 @@ export enum DropMode {
   Diagonal = 'diagonal',
   Stretch = 'stretch',
   InfiniteDrop = 'infinite-drop',
+}
+
+export enum DropAction {
+  InfiniteDrop = 'infinite-drop',
+  Move = 'move',
+  Hide = 'hide',
 }

@@ -685,7 +685,7 @@ export class LidoTrace {
     };
 
     return (
-      <Host class="lido-trace" id={this.id} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} tabindex={this.tabIndex}>
+      <Host class="lido-trace" id={this.id} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} tab-index={this.tabIndex}>
         <div id="lido-svgContainer"></div>
       </Host>
     );

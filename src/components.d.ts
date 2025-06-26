@@ -1173,13 +1173,13 @@ export namespace Components {
          */
         "borderImage"?: string;
         /**
-          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
-         */
-        "font": string;
-        /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
         "fontColor": string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
+        "fontFamily": string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
          */
@@ -2791,13 +2791,13 @@ declare namespace LocalJSX {
          */
         "borderImage"?: string;
         /**
-          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
-         */
-        "font"?: string;
-        /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
         "fontColor"?: string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
+        "fontFamily"?: string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
          */

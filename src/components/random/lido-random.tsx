@@ -112,8 +112,8 @@ export class LidoRandom {
    * The Maximum number of drag elements that can be dropped inside the Drop element.
    */
   @Prop() maxDrops: number = 1;
-  
-  @Prop() margin:string='';
+
+  @Prop() margin: string = '';
   /**
    * Reference to the HTML element representing this component.
    */
@@ -148,14 +148,13 @@ export class LidoRandom {
       zIndex: this.z,
       backgroundColor: this.bgColor,
       margin: this.margin,
-
     };
 
     return (
       <Host
         class="lido-random"
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         value={this.value}
         style={style}
         aria-label={this.ariaLabel}
@@ -167,7 +166,6 @@ export class LidoRandom {
         maxDrops={this.maxDrops}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
-       
       >
         {/* Slot to render child elements that will be randomly positioned */}
         <slot />
