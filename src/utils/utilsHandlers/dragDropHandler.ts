@@ -380,17 +380,13 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-
+  
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
-  const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
+  
+const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
   if (dropElement && dropInfo?.isFull) {
     dragElement.style.transform = 'translate(0,0)';
     dragElement.style.transition = 'transform 0.3s ease';
-    const allDropElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-    allDropElements.forEach(el => {
-
-      el.style.backgroundColor = 'transparent';
-    });
     return;
   }
   if (dragElement) {
@@ -422,40 +418,39 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
 
       // Check for overlaps and highlight only the most overlapping element
+       if (dropElement && !dropInfo?.isFull) {
+      let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
+      if (mostOverlappedElement) {
+        dragElement.style.transform = 'translate(0,0)';
+        dragElement.style.transition = 'transform 0.5s ease';
 
-      if (dropElement && !dropInfo?.isFull) {
-        let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-        if (mostOverlappedElement) {
-          dragElement.style.transform = 'translate(0,0)';
-          dragElement.style.transition = 'transform 0.5s ease';
-
-          const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-          allElements.forEach(otherElement => {
-            const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-            const storedTabIndexes = Object.keys(dropObject).map(Number);
-            if (storedTabIndexes.includes(otherElement['tabIndex'])) {
-              if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
-                if (otherElement.tagName.toLowerCase() === 'lido-text') {
-                  otherElement.style.border = ''; // Reset border
-                  otherElement.style.backgroundColor = 'transparent'; // Reset background color
-                }
-                if (otherElement.tagName.toLowerCase() === 'lido-image') {
-                  otherElement.style.opacity = '0';
-                }
-              }
-            } else {
+        const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+        allElements.forEach(otherElement => {
+          const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+          const storedTabIndexes = Object.keys(dropObject).map(Number);
+          if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+            if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
               if (otherElement.tagName.toLowerCase() === 'lido-text') {
                 otherElement.style.border = ''; // Reset border
-                otherElement.style.backgroundColor = ''; // Reset background color
+                otherElement.style.backgroundColor = 'transparent'; // Reset background color
               }
               if (otherElement.tagName.toLowerCase() === 'lido-image') {
-                otherElement.style.opacity = '1';
+                otherElement.style.opacity = '0';
               }
             }
-          });
-          return;
-        }
+          } else {
+            if (otherElement.tagName.toLowerCase() === 'lido-text') {
+              otherElement.style.border = ''; // Reset border
+              otherElement.style.backgroundColor = ''; // Reset background color
+            }
+            if (otherElement.tagName.toLowerCase() === 'lido-image') {
+              otherElement.style.opacity = '1';
+            }
+          }
+        });
+        return;
       }
+    }
     }
   }
   if (!dropElement) {
@@ -463,7 +458,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     dragElement.style.transition = 'transform 0.5s ease';
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
-      updateDropBorder(currentDrop);
+       updateDropBorder(currentDrop);
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
       if (prevDropItem) {
         prevDropItem.isFull = false;
@@ -507,12 +502,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
             otherElement.style.opacity = '0';
-            otherElement.style.backgroundColor = 'transparent';
+             otherElement.style.backgroundColor = 'transparent'; 
           }
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '1';
@@ -560,7 +555,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   }
 
   dragToDropMap.set(dragElement, dropElement);
-
+   
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].includes(dragElement['value']);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
@@ -583,6 +578,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
+   
 }
 
 export function updateDropBorder(element: HTMLElement): void {

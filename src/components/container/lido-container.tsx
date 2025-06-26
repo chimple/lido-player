@@ -14,6 +14,9 @@ import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
   shadow: false,
 })
 export class LidoContainer {
+  /**
+   * Controls whether the drop zone displays a border; true shows the border, false hides it.
+   */
   @Prop() showDropBorder:boolean=true;
   /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
