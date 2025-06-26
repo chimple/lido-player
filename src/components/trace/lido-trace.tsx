@@ -81,7 +81,7 @@ export class LidoTrace {
   @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/finger.png';
 
 
-  
+
   //   @Element() el!: HTMLElement;
 
   @State() fileIndex: number = -1;
@@ -120,7 +120,7 @@ export class LidoTrace {
       freeTraceLines: [] as SVGPathElement[],
       currentFreePath: [] as (SVGPathElement | null)[],
       lastPointerPos: null as { x: number; y: number } | null,
-      
+
     };
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
@@ -681,12 +681,12 @@ export class LidoTrace {
       top: this.y,
       left: this.x,
       zIndex: this.z,
-      position: 'absolute' as const,
+      // position: 'absolute' as const,
     };
 
     return (
       <Host class="lido-trace" id={this.id} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} tab-index={this.tabIndex}>
-        <div id="lido-svgContainer"></div>
+        <div style={{ height: this.height, width: this.width }} id="lido-svgContainer"></div>
       </Host>
     );
   }

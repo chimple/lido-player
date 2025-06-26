@@ -89,3 +89,4 @@ export const FrontImageBackText: StoryObj = {
     return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
   },
 };
+
