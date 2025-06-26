@@ -34,7 +34,7 @@ function getContainerXml(args: Args) {
   const boxHeight = "landscape.10vw, portrait.20vw";
   const fontSize = "landscape.48px, portrait.40px";
 
-  return `<main>
+  let xml = `<main>
   <lido-container
     id="main-container"
     value="mainContainer1"
@@ -56,7 +56,7 @@ function getContainerXml(args: Args) {
   >
 
     <!-- Decorative Wood Row -->
-    <lido-row
+    <lido-cell layout="row"
       id="row-wood"
       visible="true"
       direction="row"
@@ -81,10 +81,10 @@ function getContainerXml(args: Args) {
         z="1"
         altText="ground"
       ></lido-image>
-    </lido-row>
+    </lido-cell>
 
     <!-- Question Board Row -->
-    <lido-row
+    <lido-cell layout="row"
       id="row-question"
       visible="true"
       direction="row"
@@ -104,7 +104,7 @@ function getContainerXml(args: Args) {
         isSlice="true"
         altText="Question background"
       >
-        <lido-row
+        <lido-cell layout="row"
           id="row-question-inline"
           visible="true"
           direction="row"
@@ -150,32 +150,33 @@ function getContainerXml(args: Args) {
             bgColor="transparent"
             width="auto"
           ></lido-text>
-        </lido-row>
+        </lido-cell>
       </lido-image>
-    </lido-row>
+    </lido-cell>
 
     <!-- Top Spacer Row -->
-    <lido-row
+    <lido-cell layout="row"
       id="row-spacer-top"
       visible="true"
       direction="row"
       spacing="20px"
       width="100%"
       height="landscape.30%, portrait.15%"
-    ></lido-row>
+    ></lido-cell>
 
     <!-- Options Grid (2x2) -->
-    <lido-row
+    <lido-cell layout="col"
       id="row-options-outer"
       visible="true"
       direction="column"
+      bgColor = "transparent"
       spacing="landscape.1vw, portrait.2vw"
       width="landscape.60%, portrait.92%"
       height="landscape.70%, portrait.20%"
       x="50%"
       y="42%"
     >
-      <lido-row
+      <lido-cell layout="row"
         id="row-options-1"
         visible="true"
         direction="row"
@@ -213,8 +214,8 @@ function getContainerXml(args: Args) {
           bgColor="#A97345"
           borderRadius="1vw"
         ></lido-text>
-      </lido-row>
-      <lido-row
+      </lido-cell>
+      <lido-cell layout="row"
         id="row-options-2"
         visible="true"
         direction="row"
@@ -252,21 +253,22 @@ function getContainerXml(args: Args) {
           bgColor="#A97345"
           borderRadius="1vw"
         ></lido-text>
-      </lido-row>
-    </lido-row>
+      </lido-cell>
+    </lido-cell>
 
     <!-- Bottom Spacer Row -->
-    <lido-row
+    <lido-cell layout="row"
       id="row-spacer-bottom"
       visible="true"
       direction="row"
       spacing="20px"
       width="100%"
       height="landscape.30%, portrait.50%"
-    ></lido-row>
+    ></lido-cell>
 
     <!-- Avatar and Shadow -->
-    <lido-pos
+    <lido-cell
+      layout = "pos"
       id="pos-avatar"
       disableEdit="true"
       value="pos1"
@@ -307,7 +309,9 @@ function getContainerXml(args: Args) {
         y="302px"
         altText="shadowImage"
       ></lido-image>
-    </lido-pos>
+    </lido-cell>
   </lido-container>
 </main>`;
+
+  return xml;
 }

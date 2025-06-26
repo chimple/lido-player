@@ -39,7 +39,7 @@
 		</lido-pos>
 	</lido-container>
 
-	<lido-container
+<lido-container
     id="main-container"
     value="mainContainer1"
     objective="on"
@@ -60,10 +60,10 @@
   >
 
     <!-- Decorative Wood Row -->
-    <lido-row
+    <lido-cell
       id="row-wood"
+      layout="row"
       visible="true"
-      direction="row"
       width="100%"
       height="landscape.10%, portrait.10%"
     >
@@ -85,13 +85,13 @@
         z="1"
         altText="ground"
       ></lido-image>
-    </lido-row>
+    </lido-cell>
 
     <!-- Question Board Row -->
-    <lido-row
+    <lido-cell
       id="row-question"
+      layout="row"
       visible="true"
-      direction="row"
       spacing="landscape.2vw, portrait.3vw"
       width="landscape.90%, portrait.95%"
       height="landscape.40%, portrait.10%"
@@ -108,10 +108,10 @@
         isSlice="true"
         altText="Question background"
       >
-        <lido-row
+        <lido-cell
           id="row-question-inline"
+          layout="row"
           visible="true"
-          direction="row"
           width="landscape.80%, portrait.95%"
           height="50%"
           spacing="landscape.20px, portrait.2vw"
@@ -154,35 +154,36 @@
             bgColor="transparent"
             width="auto"
           ></lido-text>
-        </lido-row>
+        </lido-cell>
       </lido-image>
-    </lido-row>
+    </lido-cell>
 
     <!-- Top Spacer Row -->
-    <lido-row
+    <lido-cell
       id="row-spacer-top"
+      layout="row"
       visible="true"
-      direction="row"
       spacing="20px"
       width="100%"
       height="landscape.30%, portrait.15%"
-    ></lido-row>
+    ></lido-cell>
 
     <!-- Options Grid (2x2) -->
-    <lido-row
+    <lido-cell
       id="row-options-outer"
+	  bgColor = "transparent"
+      layout="col"
       visible="true"
-      direction="column"
       spacing="landscape.1vw, portrait.2vw"
       width="landscape.60%, portrait.92%"
       height="landscape.70%, portrait.20%"
       x="50%"
       y="42%"
     >
-      <lido-row
+      <lido-cell
         id="row-options-1"
+        layout="row"
         visible="true"
-        direction="row"
         spacing="20px"
         width="100%"
         height="landscape.40%, portrait.10%"
@@ -217,11 +218,11 @@
           bgColor="#A97345"
           borderRadius="1vw"
         ></lido-text>
-      </lido-row>
-      <lido-row
+      </lido-cell>
+      <lido-cell
         id="row-options-2"
+        layout="row"
         visible="true"
-        direction="row"
         spacing="landscape.4vw, portrait.3vw"
         width="100%"
         height="landscape.40%, portrait.10%"
@@ -256,21 +257,22 @@
           bgColor="#A97345"
           borderRadius="1vw"
         ></lido-text>
-      </lido-row>
-    </lido-row>
+      </lido-cell>
+    </lido-cell>
 
     <!-- Bottom Spacer Row -->
-    <lido-row
+    <lido-cell
       id="row-spacer-bottom"
+      layout="row"
       visible="true"
-      direction="row"
       spacing="20px"
       width="100%"
       height="landscape.30%, portrait.50%"
-    ></lido-row>
+    ></lido-cell>
 
     <!-- Avatar and Shadow -->
-    <lido-pos
+    <lido-cell
+	  layout = "pos"
       id="pos-avatar"
       disableEdit="true"
       value="pos1"
@@ -311,8 +313,9 @@
         y="302px"
         altText="shadowImage"
       ></lido-image>
-    </lido-pos>
+    </lido-cell>
   </lido-container>
+
 
 
 
