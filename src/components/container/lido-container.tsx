@@ -1,5 +1,6 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
+import { string } from 'mathjs';
 
 /**
  * @component LidoContainer
@@ -165,11 +166,13 @@ export class LidoContainer {
   /**
    * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showPrevButton: boolean = false;
+  @Prop() showPrevButton: string="false";
+  
   /**
    * Indicates whether the next button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showNextButton: boolean = false;
+  @Prop() showNextButton: string="false";
+
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -224,15 +227,14 @@ export class LidoContainer {
       scaleX = width / 1600;
       scaleY = height / 900;
     }
-
-    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
-    console.log('scale is', scale);
+    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling    
+  
     setTimeout(() => {
-      const navBar = document.querySelector('.navbar') as HTMLElement;
+      const navBar = document.querySelector('.navbar') as HTMLElement;  
       console.log('navBar', navBar);
 
       if (navBar) {
-        navBar.style.scale = `${scale}`;
+        navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;//ensure proper scaling
         navBar.style.visibility = 'visible';
       }
     }, 100);
