@@ -286,8 +286,6 @@ export class LidoHome {
       const nextbtn = containerElement.getAttribute('showNextButton');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
-      // console.log("prev btn",prevbtn);
-      // console.log("next btn",nextbtn);
       
       
       if(prevbtn !== 'true') {

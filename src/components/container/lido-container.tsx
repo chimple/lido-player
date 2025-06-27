@@ -161,11 +161,12 @@ export class LidoContainer {
   /**
    * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showPrevButton: boolean = false;
+  @Prop() showPrevButton: string="false";
+  
   /**
    * Indicates whether the next button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showNextButton: boolean = false;
+  @Prop() showNextButton: string="false";
 
 
   convertToPixels(height: string, parentElement = document.body) {
