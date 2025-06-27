@@ -1,6 +1,6 @@
 import { Component, Prop, h, Host, State, Watch } from '@stencil/core';
-import { convertUrlToRelative, triggerNextContainer } from '../../utils/utils';
-import { TraceMode } from '../../utils/constants';
+import { convertUrlToRelative, executeActions, triggerNextContainer } from '../../utils/utils';
+import { LidoContainer, TraceMode } from '../../utils/constants';
 
 // Enum for different tracing modes
 
@@ -80,7 +80,15 @@ export class LidoTrace {
    */
   @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/finger.png';
 
+  /**
+   * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
+   */
+  @Prop() onInCorrect: string;
 
+  /**
+   * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
+   */
+  @Prop() onCorrect: string;
 
   //   @Element() el!: HTMLElement;
 
@@ -120,7 +128,6 @@ export class LidoTrace {
       freeTraceLines: [] as SVGPathElement[],
       currentFreePath: [] as (SVGPathElement | null)[],
       lastPointerPos: null as { x: number; y: number } | null,
-
     };
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
@@ -527,10 +534,22 @@ export class LidoTrace {
       this.moveToNextPath(state);
     } else if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex === state.paths.length - 1) {
       //   this.loadAnotherSVG(state, true);
-      triggerNextContainer();
+      this.moveToNextContainer();
     }
 
     // this.resetIdleTimer(state); // ← keep timer alive
+  }
+
+  moving = false;
+  // Move to the next container after completing the current SVG
+  async moveToNextContainer() {
+    if (this.moving) return; // Prevent multiple calls
+    this.moving = true; // Set moving to true to prevent re-entrance
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    if (container && this.onCorrect) {
+      await executeActions(this.onCorrect, container);
+    }
+    triggerNextContainer();
   }
 
   // Get the pointer position relative to the SVG
@@ -643,7 +662,7 @@ export class LidoTrace {
   }
 
   // Move to the next path in the SVG
-  moveToNextPath(state: any) {
+  async moveToNextPath(state: any) {
     state.isDragging = false;
     state.currentPathIndex++;
     state.lastLength = 0;
@@ -651,7 +670,7 @@ export class LidoTrace {
     this.hideFingerHint(); // remove hint when changing path
 
     if (state.currentPathIndex >= state.paths.length) {
-      triggerNextContainer();
+      this.moveToNextContainer();
       return;
     }
 
@@ -685,7 +704,16 @@ export class LidoTrace {
     };
 
     return (
-      <Host class="lido-trace" id={this.id} style={style} aria-label={this.ariaLabel} aria-hidden={this.ariaHidden} tabindex={this.tabIndex}>
+      <Host
+        class="lido-trace"
+        id={this.id}
+        onCorrect={this.onCorrect}
+        onInCorrect={this.onInCorrect}
+        style={style}
+        aria-label={this.ariaLabel}
+        aria-hidden={this.ariaHidden}
+        tabindex={this.tabIndex}
+      >
         <div style={{ height: this.height, width: this.width }} id="lido-svgContainer"></div>
       </Host>
     );
