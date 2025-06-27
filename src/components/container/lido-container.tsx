@@ -234,7 +234,7 @@ export class LidoContainer {
       console.log('navBar', navBar);
 
       if (navBar) {
-        navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;//ensure proper scaling
         navBar.style.visibility = 'visible';
       }
     }, 100);
