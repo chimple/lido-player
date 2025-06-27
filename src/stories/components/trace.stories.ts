@@ -17,18 +17,19 @@ export const QuestionAndOptions: StoryObj = {
   },
 
   render: args => {
-    const xml = getContainerXml(args);
+    const xml = getContainerXml(args);  // Function to generate XML based on args
     console.log('🚀 ~ xml:', xml);
     return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
   },
 };
 
+
 function getContainerXml(args) {
   let svgText = args.svgFile[0];
   let mode = args.mode;
   return `<main>
-	<lido-container id="lido-container" tabIndex="1" value="mainContainer1" objective="D-6ba518e3,D-5a192ba3,D-b686f882,D-9095b74f,D-e0a32c78,D-1e4e88f1" ariaLabel="" height="100vh" width="100vw" x="0" y="0" z="0" bgColor="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
-		<lido-trace id="image1" tabIndex="2" value="image1" visible="true" svgSource="${svgText}" mode="${mode}" z="0" width="1600px" height="900px" onEntry="" altText="{backgroundImage}">
+	<lido-container id="lido-container" tab-index="1" value="mainContainer1" objective="D-6ba518e3,D-5a192ba3,D-b686f882,D-9095b74f,D-e0a32c78,D-1e4e88f1" aria-label="" height="100vh" width="100vw" x="0" y="0" z="0" bg-color="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true">
+		<lido-trace id="image1" tab-index="2" value="image1" visible="true" svgSource="${svgText}" mode="${mode}" z="0" width="1600px" height="900px" onEntry="" alt-text="{backgroundImage}">
 		</lido-trace>
 	</lido-container>
 	</main>`;

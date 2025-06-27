@@ -151,7 +151,12 @@ export class LidoCell {
    */
   @Prop() maxDrops: number = 1;
 
-   @Prop() margin:string='';
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() margin: string = '';
+  
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -218,7 +223,7 @@ export class LidoCell {
         id={this.id}
         value={this.value}
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         style={this.style}
         minDrops={this.minDrops}
         maxDrops={this.maxDrops}

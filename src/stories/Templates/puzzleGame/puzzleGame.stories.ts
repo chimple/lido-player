@@ -65,19 +65,19 @@ export const PuzzleGame: StoryObj<PuzzleArgs> = {
 function getContainerXml(args: PuzzleArgs) {
   const draggableImagesXml = args.draggables
     .map((img) => {
-      return `<lido-image id="${img.id}" width="${img.width || '250px'}" disableEdit="true" value="${img.value}" visible="true" type="drag" src="${img.src}" z="0" altText="{${img.id}}"></lido-image>`;
+      return `<lido-image id="${img.id}" width="${img.width || '250px'}" disable-edit="true" value="${img.value}" visible="true" type="drag" src="${img.src}" z="0" alt-text="{${img.id}}"></lido-image>`;
     })
     .join('\n');
 
   const dropCellsXml = args.dropCells
     .map((cell, index) => {
-      return `<lido-cell id="${cell.id}" value="${cell.value}" tabIndex="${index + 2}" height="10%" width="10%" layout="pos" y="${cell.y}" x="${cell.x}" visible="true" type="drop" bgColor="transparent"></lido-cell>`;
+      return `<lido-cell id="${cell.id}" value="${cell.value}" tab-index="${index + 2}" height="10%" width="10%" layout="pos" y="${cell.y}" x="${cell.x}" visible="true" type="drop" bg-color="transparent"></lido-cell>`;
     })
     .join('\n');
 
   return `<main>
-  <lido-container id="lido-container" tabIndex="1" isContinueOnCorrect="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="false" visible="true">
-    <lido-image id="mainImage" disableEdit="true" value="background-image" visible="true" src="${args.backgroundImage}" z="0" onEntry="" altText="{backgroundImage}"></lido-image>
+  <lido-container id="lido-container" tab-index="1" is-continue-on-correct="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" show-check="false" visible="true">
+    <lido-image id="mainImage" disable-edit="true" value="background-image" visible="true" src="${args.backgroundImage}" z="0" onEntry="" alt-text="{backgroundImage}"></lido-image>
     <lido-cell layout="random" visible="true" width="1200px" height="100px" y="65%">
       ${draggableImagesXml}
     </lido-cell>

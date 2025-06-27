@@ -37,29 +37,29 @@ export const QuestionAndOptions: StoryObj = {
 
 function getContainerXml(args) {
   const floatCellsXml = args.cells.map(cell => `
-    <lido-cell visible="true" layout="col" width="10%" height="10%" bgColor="transparent" value="${cell.value}">
+    <lido-cell visible="true" layout="col" width="10%" height="10%" bg-color="transparent" value="${cell.value}">
       <lido-image visible="true"
         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/float/balloon.png"
         width="200px" filter="${cell.filter}">
       </lido-image>
       <lido-text visible="true"
-        string="${cell.value}" bgColor="transparent" font="'Baloo Bhai 2'" font-size="40px"
+        string="${cell.value}" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="40px"
         x="80px" y="50px" onEntry="this.position='absolute';">
       </lido-text>
     </lido-cell>
   `).join('');
 
   return `<main>
-    <lido-container id="lido-container" tabIndex="1" visible="true" objective="A"
+    <lido-container id="lido-container" tab-index="1" visible="true" objective="A"
       onCorrect="lido-slide-fill.fill-slide='${args.Increment}'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
       onInCorrect="lido-slide-fill.fill-slide='${args.Decrement}'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
-      isContinueOnCorrect="true" showCheck="true" bgColor="black">
+      is-continue-on-correct="true" show-check="true" bg-color="black">
 
       <!-- Chimple Avatar -->
-      <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="305px" width="227px" x="-50px" y="500px" ariaHidden="true" z="1" bgColor="transparent" visible="true">
-        <lido-avatar id="lido-avatar" disableEdit="true" visible="true" height="462px" width="356px"
+      <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="-50px" y="500px" aria-hidden="true" z="1" bg-color="transparent" visible="true">
+        <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px"
           src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv"
-          altText="{chimpleCharacterRive}">
+          alt-text="{chimpleCharacterRive}">
         </lido-avatar>
       </lido-cell>
 
@@ -71,7 +71,7 @@ function getContainerXml(args) {
       </lido-cell>
 
       <!-- Float Area -->
-      <lido-float visible="true" width="100%" height="100%" bgColor="transparent">
+      <lido-float visible="true" width="100%" height="100%" bg-color="transparent">
         ${floatCellsXml}
       </lido-float>
 
