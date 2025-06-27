@@ -188,281 +188,250 @@
 	</lido-container>
 
 <lido-container
-    id="main-container"
-    value="mainContainer1"
-    objective="on"
-    x="0"
-    y="0"
-    z="0"
-    height="100%"
-    width="100%"
-    bgColor="transparent"
-    bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//Sky.png"
-    visible="true"
-    showCheck="false"
-    isContinueOnCorrect="true"
-    isAllowOnlyCorrect="true"
-    afterDrop="true"
-    onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
-    onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
-  >
+  id="main-container"
+  value="mainContainer1"
+  objective="on"
+  x="0"
+  y="0"
+  z="0"
+  height="100%"
+  width="100%"
+  bgColor="transparent"
+  bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//Sky.png"
+  visible="true"
+  showCheck="false"
+  isContinueOnCorrect="true"
+  isAllowOnlyCorrect="true"
+  afterDrop="true"
+  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
+  onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
+>
 
-    <!-- Decorative Wood Row -->
-    <lido-cell
-      id="row-wood"
-      layout="row"
+  <!-- Decorative Wood Row -->
+  <lido-cell id="row-wood" layout="row" visible="true" width="100%" height="landscape.10%, portrait.10%">
+    <lido-image
+      id="wood-image-1"
+      tab-index="1"
       visible="true"
+      src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
       width="100%"
-      height="landscape.10%, portrait.10%"
-    >
-      <lido-image
-        id="wood-image-1"
-        visible="true"
-        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
-        width="100%"
-        height="100%"
-        z="1"
-        altText="ground"
-      ></lido-image>
-      <lido-image
-        id="wood-image-2"
-        visible="true"
-        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
-        width="100%"
-        height="100%"
-        z="1"
-        altText="ground"
-      ></lido-image>
-    </lido-cell>
-
-    <!-- Question Board Row -->
-    <lido-cell
-      id="row-question"
-      layout="row"
+      height="100%"
+      z="1"
+      altText="ground"
+    ></lido-image>
+    <lido-image
+      id="wood-image-2"
+      tab-index="2"
       visible="true"
-      spacing="landscape.2vw, portrait.3vw"
-      width="landscape.90%, portrait.95%"
-      height="landscape.40%, portrait.10%"
-      x="50%"
-      y="5%"
-    >
-      <lido-image
-        id="question-board-image"
-        visible="true"
-        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//board_question_wordkicker.png"
-        width="landscape.100%, portrait.100%"
-        height="landscape.100%, portrait.100%"
-        z="0"
-        isSlice="true"
-        altText="Question background"
-      >
-        <lido-cell
-          id="row-question-inline"
-          layout="row"
-          visible="true"
-          width="landscape.80%, portrait.95%"
-          height="50%"
-          spacing="landscape.20px, portrait.2vw"
-          x="50%"
-          y="50%"
-        >
-          <lido-text
-            id="question-text-before"
-            visible="true"
-            string="Many Books are"
-            font="'Baloo 2', serif"
-            fontColor="white"
-            font-size="landscape.48px, portrait.40px"
-            fontWeight="800"
-            bgColor="transparent"
-            width="auto"
-          ></lido-text>
-          <lido-text
-            id="question-drop-slot"
-            visible="true"
-            width="25%"
-            height="landscape.10vw, portrait.20vw"
-            value="on"
-            type="drop"
-            isAllowOnlyOneDrop="true"
-            bgColor="transparent"
-            font="'Baloo 2', serif" 
-            fontColor="#000"
-            font-size="landscape.48px, portrait.40px"
-            fontWeight="800"
-            borderRadius="1vw"
-          ></lido-text>
-          <lido-text
-            id="question-text-after"
-            visible="true"
-            string="the desk”"
-            font="'Baloo 2', serif"
-            fontColor="white"
-            font-size="landscape.48px, portrait.40px"
-            bgColor="transparent"
-            width="auto"
-          ></lido-text>
-        </lido-cell>
-      </lido-image>
-    </lido-cell>
-
-    <!-- Top Spacer Row -->
-    <lido-cell
-      id="row-spacer-top"
-      layout="row"
-      visible="true"
-      spacing="20px"
+      src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
       width="100%"
-      height="landscape.30%, portrait.15%"
-    ></lido-cell>
+      height="100%"
+      z="1"
+      altText="ground"
+    ></lido-image>
+  </lido-cell>
 
-    <!-- Options Grid (2x2) -->
-    <lido-cell
-      id="row-options-outer"
-	  bgColor = "transparent"
-      layout="col"
+  <!-- Question Board Row -->
+  <lido-cell id="row-question" layout="row" visible="true" spacing="landscape.2vw, portrait.3vw" width="landscape.90%, portrait.95%" height="landscape.40%, portrait.10%" x="50%" y="5%">
+    <lido-image
+      id="question-board-image"
+      tab-index="3"
       visible="true"
-      spacing="landscape.1vw, portrait.2vw"
-      width="landscape.60%, portrait.92%"
-      height="landscape.70%, portrait.20%"
-      x="50%"
-      y="42%"
+      src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//board_question_wordkicker.png"
+      width="landscape.100%, portrait.100%"
+      height="landscape.100%, portrait.100%"
+      z="0"
+      isSlice="true"
+      altText="Question background"
     >
       <lido-cell
-        id="row-options-1"
+        id="row-question-inline"
         layout="row"
         visible="true"
-        spacing="20px"
-        width="100%"
-        height="landscape.40%, portrait.10%"
+        width="landscape.80%, portrait.95%"
+        height="50%"
+        spacing="landscape.20px, portrait.2vw"
+        x="50%"
+        y="50%"
       >
         <lido-text
-          id="option-1"
-          value="next to"
+          id="question-text-before"
+          tab-index="4"
           visible="true"
-          type="drag"
-          width="30%"
-          height="landscape.10vw, portrait.20vw"
-          string="next to"
+          string="Many Books are"
           font="'Baloo 2', serif"
-          fontColor="#FFFFFF"
+          fontColor="white"
           font-size="landscape.48px, portrait.40px"
           fontWeight="800"
-          bgColor="#A97345"
-          borderRadius="1vw"
+          bgColor="transparent"
+          width="auto"
         ></lido-text>
         <lido-text
-          id="option-2"
+          id="question-drop-slot"
+          tab-index="5"
+          visible="true"
+          width="25%"
+          height="landscape.10vw, portrait.20vw"
           value="on"
-          visible="true"
-          type="drag"
-          width="30%"
-          height="landscape.10vw, portrait.20vw"
-          string="on"
+          type="drop"
+          isAllowOnlyOneDrop="true"
+          bgColor="transparent"
           font="'Baloo 2', serif"
-          fontColor="#FFFFFF"
+          fontColor="#000"
           font-size="landscape.48px, portrait.40px"
           fontWeight="800"
-          bgColor="#A97345"
           borderRadius="1vw"
         ></lido-text>
+        <lido-text
+          id="question-text-after"
+          tab-index="6"
+          visible="true"
+          string="the desk”"
+          font="'Baloo 2', serif"
+          fontColor="white"
+          font-size="landscape.48px, portrait.40px"
+          bgColor="transparent"
+          width="auto"
+        ></lido-text>
       </lido-cell>
-      <lido-cell
-        id="row-options-2"
-        layout="row"
+    </lido-image>
+  </lido-cell>
+
+  <!-- Top Spacer Row -->
+  <lido-cell id="row-spacer-top" layout="row" visible="true" spacing="20px" width="100%" height="landscape.30%, portrait.15%"></lido-cell>
+
+  <!-- Options Grid (2x2) -->
+  <lido-cell
+    id="row-options-outer"
+    bgColor="transparent"
+    layout="col"
+    visible="true"
+    spacing="landscape.1vw, portrait.2vw"
+    width="landscape.60%, portrait.92%"
+    height="landscape.70%, portrait.20%"
+    x="50%"
+    y="42%"
+  >
+    <lido-cell id="row-options-1" layout="row" visible="true" spacing="20px" width="100%" height="landscape.40%, portrait.10%">
+      <lido-text
+        id="option-1"
+        tab-index="7"
+        value="next to"
         visible="true"
-        spacing="landscape.4vw, portrait.3vw"
-        width="100%"
-        height="landscape.40%, portrait.10%"
-      >
-        <lido-text
-          id="option-3"
-          value="in"
-          visible="true"
-          type="drag"
-          width="30%"
-          height="landscape.10vw, portrait.20vw"
-          string="in"
-          font="'Baloo 2', serif"
-          fontColor="#FFFFFF"
-          font-size="landscape.48px, portrait.40px"
-          fontWeight="800"
-          bgColor="#A97345"
-          borderRadius="1vw"
-        ></lido-text>
-        <lido-text
-          id="option-4"
-          value="under"
-          visible="true"
-          type="drag"
-          width="30%"
-          height="landscape.10vw, portrait.20vw"
-          string="under"
-          font="'Baloo 2', serif"
-          fontColor="#FFFFFF"
-          font-size="landscape.48px, portrait.40px"
-          fontWeight="800"
-          bgColor="#A97345"
-          borderRadius="1vw"
-        ></lido-text>
-      </lido-cell>
+        type="drag"
+        width="30%"
+        height="landscape.10vw, portrait.20vw"
+        string="next to"
+        font="'Baloo 2', serif"
+        fontColor="#FFFFFF"
+        font-size="landscape.48px, portrait.40px"
+        fontWeight="800"
+        bgColor="#A97345"
+        borderRadius="1vw"
+      ></lido-text>
+      <lido-text
+        id="option-2"
+        tab-index="8"
+        value="on"
+        visible="true"
+        type="drag"
+        width="30%"
+        height="landscape.10vw, portrait.20vw"
+        string="on"
+        font="'Baloo 2', serif"
+        fontColor="#FFFFFF"
+        font-size="landscape.48px, portrait.40px"
+        fontWeight="800"
+        bgColor="#A97345"
+        borderRadius="1vw"
+      ></lido-text>
     </lido-cell>
+    <lido-cell id="row-options-2" layout="row" visible="true" spacing="landscape.4vw, portrait.3vw" width="100%" height="landscape.40%, portrait.10%">
+      <lido-text
+        id="option-3"
+        tab-index="9"
+        value="in"
+        visible="true"
+        type="drag"
+        width="30%"
+        height="landscape.10vw, portrait.20vw"
+        string="in"
+        font="'Baloo 2', serif"
+        fontColor="#FFFFFF"
+        font-size="landscape.48px, portrait.40px"
+        fontWeight="800"
+        bgColor="#A97345"
+        borderRadius="1vw"
+      ></lido-text>
+      <lido-text
+        id="option-4"
+        tab-index="10"
+        value="under"
+        visible="true"
+        type="drag"
+        width="30%"
+        height="landscape.10vw, portrait.20vw"
+        string="under"
+        font="'Baloo 2', serif"
+        fontColor="#FFFFFF"
+        font-size="landscape.48px, portrait.40px"
+        fontWeight="800"
+        bgColor="#A97345"
+        borderRadius="1vw"
+      ></lido-text>
+    </lido-cell>
+  </lido-cell>
 
-    <!-- Bottom Spacer Row -->
-    <lido-cell
-      id="row-spacer-bottom"
-      layout="row"
-      visible="true"
-      spacing="20px"
-      width="100%"
-      height="landscape.30%, portrait.50%"
-    ></lido-cell>
+  <!-- Bottom Spacer Row -->
+  <lido-cell id="row-spacer-bottom" layout="row" visible="true" spacing="20px" width="100%" height="landscape.30%, portrait.50%"></lido-cell>
 
-    <!-- Avatar and Shadow -->
-    <lido-cell
-	  layout = "pos"
-      id="pos-avatar"
+  <!-- Avatar and Shadow -->
+  <lido-cell
+    layout="pos"
+    id="pos-avatar"
+    disableEdit="true"
+    value="pos1"
+    height="350px"
+    width="350px"
+    x="landscape.80%, portrait.60%"
+    y="landscape.60%, portrait.80%"
+    ariaHidden="true"
+    z="2"
+    bgColor="transparent"
+    type=""
+    visible="true"
+    audio=""
+    onTouch=""
+    onCorrect=""
+    onEntry="this.animation='leftToPlace 1.5s linear';"
+  >
+    <lido-avatar
+      id="lido-avatar"
+      tab-index="11"
       disableEdit="true"
-      value="pos1"
+      visible="true"
       height="350px"
       width="350px"
-      x="landscape.80%, portrait.60%"
-      y="landscape.60%, portrait.80%"
-      ariaHidden="true"
-      z="2"
+      src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv"
+      altText="chimpleCharacterRive"
       bgColor="transparent"
-      type=""
+    ></lido-avatar>
+    <lido-image
+      id="shadow-image"
+      tab-index="12"
+      disableEdit="true"
+      value="image1"
       visible="true"
-      audio=""
-      onTouch=""
-      onCorrect=""
-      onEntry="this.animation='leftToPlace 1.5s linear';"
-    >
-      <lido-avatar
-        id="lido-avatar"
-        disableEdit="true"
-        visible="true"
-        height="350px"
-        width="350px"
-        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv"
-        altText="chimpleCharacterRive"
-        bgColor="transparent"
-      ></lido-avatar>
-      <lido-image
-        id="shadow-image"
-        disableEdit="true"
-        value="image1"
-        visible="true"
-        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png"
-        bgColor="transparent"
-        width="186px"
-        height="40px"
-        x="77px"
-        y="302px"
-        altText="shadowImage"
-      ></lido-image>
-    </lido-cell>
-  </lido-container>
+      src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png"
+      bgColor="transparent"
+      width="186px"
+      height="40px"
+      x="77px"
+      y="302px"
+      altText="shadowImage"
+    ></lido-image>
+  </lido-cell>
+</lido-container>
 
 
 
