@@ -704,6 +704,7 @@ export class LidoTrace {
     };
 
     return (
+
       <Host
         class="lido-trace"
         id={this.id}
