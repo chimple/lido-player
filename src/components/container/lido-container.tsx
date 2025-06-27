@@ -15,6 +15,10 @@ import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
 })
 export class LidoContainer {
   /**
+   * Controls whether the drop zone displays a border; true shows the border, false hides it.
+   */
+  @Prop() showDropBorder:boolean=true;
+  /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
   @Prop() appendToDropOnCompletion: boolean = false;
@@ -318,8 +322,9 @@ export class LidoContainer {
         is-allow-only-correct={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
         appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
-        show-prev-button={`${this.showPrevButton}`}
-        show-next-button={`${this.showNextButton}`}
+        show-drop-border={`${this.showDropBorder}`}
+        showPrevButton={`${this.showPrevButton}`}
+        showNextButton={`${this.showNextButton}`}
       >
         <slot />
       </Host>

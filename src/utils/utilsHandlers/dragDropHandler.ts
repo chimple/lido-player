@@ -364,7 +364,7 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
     if (type === 'slide') {
       const elementArea = elementRect.width * elementRect.height;
       const otherArea = otherRect.width * otherRect.height;
-      const minRequiredOverlap = Math.min(elementArea, otherArea) * 0.8;
+      const minRequiredOverlap = Math.min(elementArea, otherArea) * 0.1;
 
       if (overlapArea >= minRequiredOverlap && overlapArea > maxOverlapArea) {
         maxOverlapArea = overlapArea;
@@ -385,6 +385,13 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const dropSelectedData = localStorage.getItem(DragMapKey);
 
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  
+const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
+  if (dropElement && dropInfo?.isFull) {
+    dragElement.style.transform = 'translate(0,0)';
+    dragElement.style.transition = 'transform 0.3s ease';
+    return;
+  }
   if (dragElement) {
     if (dropElement) {
       dragElement.setAttribute(DropToAttr, dropElement?.id);
@@ -414,6 +421,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
 
       // Check for overlaps and highlight only the most overlapping element
+       if (dropElement && !dropInfo?.isFull) {
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
       const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === "true" || "";
       
@@ -447,6 +455,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         });
         return;
       }
+    }
     }
   }
   if (!dropElement) {
@@ -608,7 +617,15 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
 export function updateDropBorder(element: HTMLElement): void {
   if (!element.classList.contains('drop-element')) return;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+ if (!container) return;
+  const showBorder = container.getAttribute('show-drop-border'); 
 
+
+  
+if (showBorder!== 'true' ) {
+    return; 
+  }
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
 
@@ -620,7 +637,6 @@ export function updateDropBorder(element: HTMLElement): void {
     element.classList.remove('filled');
   }
 }
-
 export function handleDropElement(element: HTMLElement): void {
   // let nextIndex = Object.keys(dropHas).length; // Get next index
   // dropHas[nextIndex] = { drop: element, isFull: false };
