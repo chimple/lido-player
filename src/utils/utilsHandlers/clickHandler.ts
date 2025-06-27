@@ -33,7 +33,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');
     const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
-    const showCheck = container.getAttribute('showCheck') === 'true';
+    const showCheck = container.getAttribute('show-check') === 'true';
 
     if (element.getAttribute('id') == 'lido-checkButton') {
       checkButton.classList.add('lido-disable-check-button');

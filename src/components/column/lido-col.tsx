@@ -156,8 +156,12 @@ export class LidoCol {
    */
   @Prop() maxDrops: number = 1;
 
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() margin: string = '';
 
-   @Prop() margin:string='';
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -202,7 +206,7 @@ export class LidoCol {
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
       boxShadow: this.boxShadow ? this.boxShadow : 'unset',
-       margin: parseProp(this.margin, orientation),
+      margin: parseProp(this.margin, orientation),
     };
   }
 
@@ -212,7 +216,7 @@ export class LidoCol {
         id={this.id}
         class="lido-col"
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         value={this.value}
         style={this.style}
         minDrops={this.minDrops}

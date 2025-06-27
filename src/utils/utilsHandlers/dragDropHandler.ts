@@ -130,16 +130,16 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
+    const rect1 = container.getBoundingClientRect();
+    const rect2 = element.getBoundingClientRect();
+    verticalDistance = rect1.top - rect2.top;
+    horizontalDistance = rect1.left - rect2.left;
+
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove);
     document.addEventListener('touchend', onEnd);
   };
-
-  const rect1 = container.getBoundingClientRect();
-  const rect2 = element.getBoundingClientRect();
-  verticalDistance = rect1.top - rect2.top;
-  horizontalDistance = rect1.left - rect2.left;
 
   const observer = new MutationObserver(mutationsList => {
     for (const mutation of mutationsList) {
@@ -210,7 +210,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     allElements.forEach(otherElement => {
       const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
       const storedTabIndexes = Object.keys(dropObject).map(Number);
-      if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+      if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
         if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
             otherElement.style.border = ''; // Reset border
@@ -267,7 +267,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       allElements.forEach(otherElement => {
         const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const storedTabIndexes = Object.keys(dropObject).map(Number);
-        if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+        if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
           if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
             if (otherElement.tagName.toLowerCase() === 'lido-text') {
               otherElement.style.border = ''; // Reset border
@@ -322,7 +322,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
-      mostOverlappedElement.style.opacity = '0';
+      if (mostOverlappedElement) {
+        mostOverlappedElement.style.opacity = '0';
+      }
+
       if (element.getAttribute('value')) {
         element.setAttribute('droppedElement', `${element.getAttribute('value')}-dropped`);
       }
@@ -380,7 +383,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-  
+
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   
 const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
@@ -420,7 +423,9 @@ const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById
       // Check for overlaps and highlight only the most overlapping element
        if (dropElement && !dropInfo?.isFull) {
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-      if (mostOverlappedElement) {
+      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === "true" || "";
+      
+      if (mostOverlappedElement && isAllowOnlyOneDrop) {
         dragElement.style.transform = 'translate(0,0)';
         dragElement.style.transition = 'transform 0.5s ease';
 
@@ -428,7 +433,7 @@ const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById
         allElements.forEach(otherElement => {
           const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
           const storedTabIndexes = Object.keys(dropObject).map(Number);
-          if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+          if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
             if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
               if (otherElement.tagName.toLowerCase() === 'lido-text') {
                 otherElement.style.border = ''; // Reset border
@@ -454,11 +459,41 @@ const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById
     }
   }
   if (!dropElement) {
-    dragElement.style.transform = 'translate(0,0)';
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
+    const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
     dragElement.style.transition = 'transform 0.5s ease';
+    if (cloneDragElement) {
+      dragElement.style.transform = 'translate(0,0)';
+      const containerScale = getElementScale(container);
+      const dropRect = cloneDragElement.getBoundingClientRect();
+      const dragRect = dragElement.getBoundingClientRect();
+
+      const dropCenterX = dropRect.left + dropRect.width / 2;
+      const dropCenterY = dropRect.top + dropRect.height / 2;
+      const dragCenterX = dragRect.left + dragRect.width / 2;
+      const dragCenterY = dragRect.top + dragRect.height / 2;
+
+      let scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+      let scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+      dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+      setTimeout(() => {
+        cloneDragElement.style.width = dragElement.style.width;
+        cloneDragElement.style.height = dragElement.style.height;
+        dragElement.style.transform = 'translate(0,0)';
+        dragElement.style.position = 'unset';
+        cloneDragElement.replaceWith(dragElement);
+      }, 250);
+
+      // dragElement.style.position = 'unset';
+      // cloneDragElement.replaceWith(dragElement);
+    } else {
+      dragElement.style.transform = 'translate(0,0)';
+    }
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
-       updateDropBorder(currentDrop);
+      updateDropBorder(currentDrop);
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
       if (prevDropItem) {
         prevDropItem.isFull = false;
@@ -495,19 +530,19 @@ const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById
     allElements.forEach(otherElement => {
       const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
       const storedTabIndexes = Object.keys(dropObject).map(Number);
-      if (storedTabIndexes.includes(otherElement['tabIndex'])) {
+      if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
         if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
             otherElement.style.backgroundColor = 'transparent'; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
             otherElement.style.opacity = '0';
-             otherElement.style.backgroundColor = 'transparent'; 
+            otherElement.style.backgroundColor = 'transparent';
           }
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-           otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '1';
@@ -555,7 +590,7 @@ const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById
   }
 
   dragToDropMap.set(dragElement, dropElement);
-   
+
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].includes(dragElement['value']);
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
@@ -578,7 +613,6 @@ const dropInfo = Object.values(dropHasDrag).find(item => document.getElementById
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
-   
 }
 
 export function updateDropBorder(element: HTMLElement): void {
@@ -608,7 +642,7 @@ export function handleDropElement(element: HTMLElement): void {
   // dropHas[nextIndex] = { drop: element, isFull: false };
   element.classList.add('drop-element');
   let dropHas = JSON.parse(localStorage.getItem(DropHasDrag) || '{}');
-  const tabIndex = element.getAttribute('tabIndex');
+  const tabIndex = element.getAttribute('tab-index');
 
   if (typeof dropHas !== 'object' || dropHas === null) {
     dropHas = {};

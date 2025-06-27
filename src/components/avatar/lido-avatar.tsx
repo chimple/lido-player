@@ -175,7 +175,7 @@ export class LidoAvatar {
       <Host
         id={this.id}
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         value={this.value}
         style={style}
         aria-label={this.ariaLabel}
