@@ -152,7 +152,12 @@ export class LidoContainer {
    */
   @Prop() baseUrl: string = '';
 
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
   @Prop() margin: string = '';
+  
   /**
    * Reference to the HTML element that represents this container component.
    */
@@ -299,7 +304,7 @@ export class LidoContainer {
     return (
       <Host
         id="lido-container"
-        tabindex={0}
+        tab-index={0}
         class="lido-container"
         objective={this.objective}
         baseUrl={this.baseUrl}
@@ -310,13 +315,13 @@ export class LidoContainer {
         onInCorrect={this.onInCorrect}
         onCorrect={this.onCorrect}
         onEntry={this.onEntry}
-        showCheck={`${this.showCheck}`}
-        isContinueOnCorrect={`${this.isContinueOnCorrect}`}
-        isAllowOnlyCorrect={`${this.isAllowOnlyCorrect}`}
+        show-check={`${this.showCheck}`}
+        is-continue-on-correct={`${this.isContinueOnCorrect}`}
+        is-allow-only-correct={`${this.isAllowOnlyCorrect}`}
         canplay={`${this.canplay}`}
         appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
-        showPrevButton={`${this.showPrevButton}`}
-        showNextButton={`${this.showNextButton}`}
+        show-prev-button={`${this.showPrevButton}`}
+        show-next-button={`${this.showNextButton}`}
       >
         <slot />
       </Host>

@@ -131,6 +131,9 @@ export namespace Components {
           * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction. - `pos`: Applies absolute positioning to children, allowing manual placement using `x` and `y` values. - `random`: Positions child elements randomly within the container using absolute positioning.  Default: `'wrap'`
          */
         "layout": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -246,6 +249,9 @@ export namespace Components {
           * The unique identifier for the column component.
          */
         "id": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -371,6 +377,9 @@ export namespace Components {
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
          */
         "isContinueOnCorrect": boolean;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
@@ -478,6 +487,9 @@ export namespace Components {
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
@@ -619,6 +631,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius": string;
+        /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
          */
         "filter": string;
@@ -635,7 +651,7 @@ export namespace Components {
          */
         "isSlice": string;
         /**
-          * margin to adjust the position of element
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
         "margin": string;
         /**
@@ -734,6 +750,9 @@ export namespace Components {
           * Unique identifier for the positional element.
          */
         "id": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -823,6 +842,9 @@ export namespace Components {
           * Unique identifier for the random container.
          */
         "id": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -900,6 +922,9 @@ export namespace Components {
           * Initial index of the container being displayed.
          */
         "initialIndex": number;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
@@ -944,6 +969,9 @@ export namespace Components {
           * The height of the row (CSS value, e.g., '100px', '50%').
          */
         "height": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -1041,6 +1069,9 @@ export namespace Components {
           * Unique identifier for the shape element.
          */
         "id": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -1173,13 +1204,13 @@ export namespace Components {
          */
         "borderImage"?: string;
         /**
-          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
-         */
-        "font": string;
-        /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
         "fontColor": string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
+        "fontFamily": string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
          */
@@ -1196,6 +1227,9 @@ export namespace Components {
           * Unique identifier for the text element.
          */
         "id": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -1351,6 +1385,9 @@ export namespace Components {
           * Unique identifier for the wrap element.
          */
         "id": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -1749,6 +1786,9 @@ declare namespace LocalJSX {
           * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction. - `pos`: Applies absolute positioning to children, allowing manual placement using `x` and `y` values. - `random`: Positions child elements randomly within the container using absolute positioning.  Default: `'wrap'`
          */
         "layout"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -1864,6 +1904,9 @@ declare namespace LocalJSX {
           * The unique identifier for the column component.
          */
         "id"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -1989,6 +2032,9 @@ declare namespace LocalJSX {
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
          */
         "isContinueOnCorrect"?: boolean;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
@@ -2096,6 +2142,9 @@ declare namespace LocalJSX {
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
@@ -2237,6 +2286,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius"?: string;
+        /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
          */
         "filter"?: string;
@@ -2253,7 +2306,7 @@ declare namespace LocalJSX {
          */
         "isSlice"?: string;
         /**
-          * margin to adjust the position of element
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
         "margin"?: string;
         /**
@@ -2352,6 +2405,9 @@ declare namespace LocalJSX {
           * Unique identifier for the positional element.
          */
         "id"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -2441,6 +2497,9 @@ declare namespace LocalJSX {
           * Unique identifier for the random container.
          */
         "id"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -2518,6 +2577,9 @@ declare namespace LocalJSX {
           * Initial index of the container being displayed.
          */
         "initialIndex"?: number;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
@@ -2562,6 +2624,9 @@ declare namespace LocalJSX {
           * The height of the row (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -2659,6 +2724,9 @@ declare namespace LocalJSX {
           * Unique identifier for the shape element.
          */
         "id"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -2791,13 +2859,13 @@ declare namespace LocalJSX {
          */
         "borderImage"?: string;
         /**
-          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
-         */
-        "font"?: string;
-        /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
         "fontColor"?: string;
+        /**
+          * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+         */
+        "fontFamily"?: string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
          */
@@ -2814,6 +2882,9 @@ declare namespace LocalJSX {
           * Unique identifier for the text element.
          */
         "id"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
@@ -2969,6 +3040,9 @@ declare namespace LocalJSX {
           * Unique identifier for the wrap element.
          */
         "id"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.

@@ -1,7 +1,6 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
-import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey,PrevContainerKey,DropLength, DropHasDrag } from '../../utils/constants';
+import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
-
 
 /**
  * @component LidoHome
@@ -96,13 +95,13 @@ export class LidoHome {
       }, 3000);
     }
     // Reset the containers array to trigger a re-render
-      this.containers = [...this.containers];
-      this.updateArrowVisibility();
+    this.containers = [...this.containers];
+    this.updateArrowVisibility();
   };
 
   PrevContainerKey = (index?: number | undefined) => {
-     console.log("👉 PrevContainerKey CALLED with index:", index);
-     if (this.currentContainerIndex <= 0) return;
+    console.log('👉 PrevContainerKey CALLED with index:', index);
+    if (this.currentContainerIndex <= 0) return;
 
     // Clear selected values from localStorage on container transition
     localStorage.removeItem(SelectedValuesKey);
@@ -119,9 +118,8 @@ export class LidoHome {
 
     // Refresh container array and update button visibility
     this.containers = [...this.containers];
-    this.updateArrowVisibility();    
+    this.updateArrowVisibility();
   };
-
 
   /**
    * Lifecycle method that runs before the component is loaded. It sets up event listeners for transitioning
@@ -133,7 +131,7 @@ export class LidoHome {
       this.NextContainerKey();
     });
 
-      window.addEventListener(PrevContainerKey, () => {
+    window.addEventListener(PrevContainerKey, () => {
       this.PrevContainerKey();
     });
 
@@ -172,8 +170,8 @@ export class LidoHome {
       this.NextContainerKey(e.detail.index);
     });
     window.removeEventListener(PrevContainerKey, () => {
-    this.PrevContainerKey();
-  });
+      this.PrevContainerKey();
+    });
   }
 
   /**
@@ -262,14 +260,14 @@ export class LidoHome {
    * @param rootElement - The root element of the parsed XML document.
    */
   private parseContainers(rootElement: Element) {
-  const containerElements = rootElement.querySelectorAll('lido-container');
+    const containerElements = rootElement.querySelectorAll('lido-container');
 
-  const containers = Array.from(containerElements).map(container => {
-    // Return a factory function that generates a fresh JSX node each time
-    return () => this.parseElement(container);
-  });
+    const containers = Array.from(containerElements).map(container => {
+      // Return a factory function that generates a fresh JSX node each time
+      return () => this.parseElement(container);
+    });
 
-  this.containers = containers;
+    this.containers = containers;
   }
 
   // update arrow visibility
@@ -279,27 +277,24 @@ export class LidoHome {
     // console.log("actttive",activecontainer);
     // if (!activecontainer) return;
 
-    
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
-      const prevbtn = containerElement.getAttribute('showPrevButton');
-      const nextbtn = containerElement.getAttribute('showNextButton');
+      const prevbtn = containerElement.getAttribute('show-prev-button');
+      const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
       
       
       if(prevbtn !== 'true') {
         leftbtn.style.visibility = 'hidden';
-      }
-      else{
+      } else {
         leftbtn.style.visibility = 'visible';
       }
-      
-      if(nextbtn!=='true'){
-        rightbtn.style.visibility='hidden';
-      }
-      else{
-        rightbtn.style.visibility='visible';
+
+      if (nextbtn !== 'true') {
+        rightbtn.style.visibility = 'hidden';
+      } else {
+        rightbtn.style.visibility = 'visible';
       }
     }, 100);
   };
@@ -313,7 +308,13 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div class="navbar">
-        <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png" type="click" onTouch="this.prevBtn='true';" id="lido-arrow-left" onEntry="this.padding='0px 0px 0px 0px';" />
+        <lido-image
+          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
+          type="click"
+          onTouch="this.prevBtn='true';"
+          id="lido-arrow-left"
+          onEntry="this.padding='0px 0px 0px 0px';"
+        />
         {/* <img id="firstimg" src="/assets/images/story/BackButton.png"></img> */}
         <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
           {/* Navigation arrows and dots for container navigation */}
@@ -324,8 +325,14 @@ export class LidoHome {
             ></span>
           ))}
         </div>
-        <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/NextButton.png" type="click" onTouch="this.nextBtn='true';" id="lido-arrow-right" onEntry="this.padding='0px 0px 0px 0px';" />
-      </div>
+        <lido-image
+          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/NextButton.png"
+          type="click"
+          onTouch="this.nextBtn='true';"
+          id="lido-arrow-right"
+          onEntry="this.padding='0px 0px 0px 0px';"
+      />
+      </div>  
     );
   }
 
@@ -350,15 +357,13 @@ export class LidoHome {
     return (
       <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
-              <div key={this.currentContainerIndex}>
-        {this.containers[this.currentContainerIndex]?.()}
-      </div>
+        <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
 
         {/* Render navigation dots below the container */}
-        {this.showDotsandbtn&&this.renderDots()}
+        {this.showDotsandbtn && this.renderDots()}
 
         {/* Show completion message if all containers have been displayed */}
-        {this.showCompletionMessage && (<div class="lido-snackbar">All containers have been displayed!</div>)}
+        {this.showCompletionMessage && <div class="lido-snackbar">All containers have been displayed!</div>}
       </Host>
     );
   }

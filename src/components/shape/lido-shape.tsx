@@ -126,8 +126,13 @@ export class LidoShape {
    * Reference to the HTML element representing this `lido-shape` component.
    */
   @Element() el: HTMLElement;
+  
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() margin: string = '';
 
-   @Prop() margin:string='';
 
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
@@ -155,7 +160,7 @@ export class LidoShape {
         class={`lido-shape ${this.shapeType}`} // Apply shape-specific class
         value={this.value}
         type={this.type}
-        tabindex={this.tabIndex}
+        tab-index={this.tabIndex}
         style={style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}

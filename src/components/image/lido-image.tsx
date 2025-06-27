@@ -133,7 +133,8 @@ export class LidoImage {
   @Prop() maxDrops: number = 1;
 
   /**
-   * margin to adjust the position of element
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
    */
   @Prop() margin: string = '';
 
@@ -142,6 +143,13 @@ export class LidoImage {
    * Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
    */
   @Prop() filter: string = '';
+
+
+   /**
+   * CSS filter to apply border radius to the image.
+   * Example: '10px' for  images.
+   */
+  @Prop() borderRadius: string = '0px';
 
   /**
    * Reference to the HTML element that represents this image component.
@@ -197,6 +205,7 @@ export class LidoImage {
       alignItems: 'center',
       justifyContent: 'center',
       margin: parseProp(this.margin, orientation),
+      borderRadius: this.borderRadius,
 
       // Slice Style
       borderImageSource: this.isSlice === 'true' ? `url(${convertUrlToRelative(this.src)})` : 'none',
@@ -209,13 +218,13 @@ export class LidoImage {
 
   render() {
     if (this.isSlice === 'true') {
-      return <Host class="slice" id={this.id} type={this.type} tabIndex={this.tabIndex} onEntry={this.onEntry} style={this.style}></Host>;
+      return <Host class="slice" id={this.id} type={this.type} tab-index={this.tabIndex} onEntry={this.onEntry} style={this.style}></Host>;
     } else {
       return (
         <Host
           id={this.id}
           type={this.type}
-          tabindex={this.tabIndex}
+          tab-index={this.tabIndex}
           style={this.style}
           aria-label={this.ariaLabel}
           aria-hidden={this.ariaHidden}

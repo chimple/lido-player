@@ -194,7 +194,7 @@ export function enableReorderDrag(element: HTMLElement): void {
         } else {
           const categoryElement = element.parentElement;
           const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-          const tabKey = categoryElement['tabIndex'];
+          const tabKey = categoryElement.getAttribute('tab-index');
           const targetValue = element['value'];
           if (dragValues[tabKey]) {
             dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
@@ -244,7 +244,7 @@ export function enableReorderDrag(element: HTMLElement): void {
       const category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
       if (element.parentElement.getAttribute('type') === 'category') {
         const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-        const tabKey = category['tabIndex'];
+        const tabKey = category.getAttribute('tab-index');
         const targetValue = element['value'];
         if (dragValues[tabKey]) {
           dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
@@ -423,7 +423,7 @@ const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
   if (elementIndex >= 0) {
     const res = matchStringPattern(element['value'], [objectiveArray[elementIndex].trim()]);
 
-    if (!res && container['isAllowOnlyCorrect']) {
+    if (!res && container.getAttribute('is-allow-only-correct')) {
       const childs = Array.from(container.querySelectorAll(`[value="${element['value']}"]`));
       const dubEl = childs.find(el => el !== element);
       dubEl.replaceWith(element);
@@ -435,7 +435,7 @@ const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
 
 async function onDropToCategory(dragElement: HTMLElement, categoryElement: HTMLElement) {
   let dragSelected = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-  let elementArr = dragSelected[categoryElement['tabIndex']];
+  let elementArr = dragSelected[categoryElement.getAttribute('tab-index')];
 
   if (Array.isArray(elementArr)) {
     if (elementArr.includes(dragElement['value'])) return;
