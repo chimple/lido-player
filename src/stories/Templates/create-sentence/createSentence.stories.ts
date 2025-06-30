@@ -18,7 +18,6 @@ export const CreateSentence: StoryObj = {
     correct4: 'streetlight',
   },
 
-
   render: args => {
     const xml = getContainerXml(args);
     return html`<lido-home .xmlData="${xml}"></lido-home>`;
