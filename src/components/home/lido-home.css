@@ -50,19 +50,16 @@
   background-color: #bbb;
 }
 
-#lido-arrow-left,
-#lido-arrow-right {
+#lido-arrow-left,#lido-arrow-right {
   cursor: pointer;
   width: 92px;
   height: 92px;
   margin: 0 30px 0px 30px;
 }
-
-.navbar {
+.navbar{
+  position: relative;
   display: flex;
   justify-content: center;
+  margin-top:15px;
   visibility: hidden;
-  position: absolute;
-  top: 6%;
-  left: 50%;
 }

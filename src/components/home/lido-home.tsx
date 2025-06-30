@@ -283,9 +283,10 @@ export class LidoHome {
       const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
-      
-      
-      if(prevbtn !== 'true') {
+      // console.log("prev btn",prevbtn);
+      // console.log("next btn",nextbtn);
+
+      if (prevbtn !== 'true') {
         leftbtn.style.visibility = 'hidden';
       } else {
         leftbtn.style.visibility = 'visible';
