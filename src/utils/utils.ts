@@ -125,9 +125,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
         case 'nextBtn': {
-          storeActivityScore(100);
-          storingEachActivityScore(true);
-          triggerNextContainer();
+          validateObjectiveStatus();
           break;
         }
         case 'prevBtn': {
@@ -465,9 +463,21 @@ export const handleShowCheck = () => {
 };
 
 export const validateObjectiveStatus = async () => {
-  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;  
   if (!container) return;
   const objectiveString = container['objective'];
+
+  if(objectiveString===""||objectiveString.length===0){
+    const onCorrect = container.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, container);
+    }    
+    storeActivityScore(100);
+    storingEachActivityScore(true);
+    triggerNextContainer();
+    return;
+  }
+  else{
   const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
   let res;
   const additionalCheck = container.getAttribute('equationCheck');
@@ -496,6 +506,7 @@ export const validateObjectiveStatus = async () => {
     }
   }
   await calculateScore();
+}
 };
 
 export const triggerNextContainer = () => {
