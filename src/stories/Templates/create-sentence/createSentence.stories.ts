@@ -2,22 +2,12 @@ import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 const meta: Meta = {
-  title: 'Templates/CreateSentence',
-  argTypes: {
-    option1: { control: 'text' },
-    option2: { control: 'text' },
-    option3: { control: 'text' },
-    option4: { control: 'text' },
-    correct1: { control: 'text' },
-    correct2: { control: 'text' },
-    correct3: { control: 'text' },
-    correct4: { control: 'text' },
-  },
+  title: 'Templates/create-sentence',
 };
 export default meta;
 
 export const CreateSentence: StoryObj = {
-  args: {
+ args: {
     option1: 'streetlight',
     option2: 'Girl',
     option3: 'sits',
@@ -36,7 +26,7 @@ export const CreateSentence: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-	<lido-container id="lido-container" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="background1.mp3" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="this.sleep='1000';speak-con.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false" is-allow-only-correct="true">
+	<lido-container id="lido-container" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="background1.mp3" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="this.sleep='1000';speak-con.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false" is-allow-only-correct="true" appendToDropOnCompletion="true">
 		<lido-cell visible="false" id="speak-con">
 			<lido-text id="sentenceText" value="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4}" string="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4}" />
 		</lido-cell>
@@ -51,13 +41,13 @@ function getContainerXml(args) {
 					</lido-image>
 					<lido-cell layout="row" visible="true" width="landscape.47%, portrait.76%" minLength="2" maxLength="6" height="landscape.0%, portrait.20%" x="landscape.33%, portrait.17%" y="landscape.56%, portrait.61%" bg-color="transparent" onEntry="">
 
-						<lido-text id="drop1" visible="true" width="150px" height="80px" value="Girl" z="1" y="149px" type="drop" tab-index="1" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
+						<lido-text id="drop1" visible="true" width="150px" height="80px" value="${args.correct1}" z="1" y="149px" type="drop" tab-index="1" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
 
-						<lido-text id="drop2" visible="true" width="150px" height="80px" value="sits" z="1" y="149px" type="drop" tab-index="2" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
+						<lido-text id="drop2" visible="true" width="150px" height="80px" value="${args.correct2}" z="1" y="149px" type="drop" tab-index="2" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
 
-						<lido-text id="drop3" visible="true" width="150px" height="80px" value="under" z="1" y="149px" type="drop" tab-index="3" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
+						<lido-text id="drop3" visible="true" width="150px" height="80px" value="${args.correct3}" z="1" y="149px" type="drop" tab-index="3" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
 
-						<lido-text id="drop4" visible="true" width="150px" height="80px" value="streetlight" z="1" y="149px" type="drop" tab-index="4" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
+						<lido-text id="drop4" visible="true" width="150px" height="80px" value="${args.correct4}" z="1" y="149px" type="drop" tab-index="4" isAllowOnlyOneDrop="true" onEntry="this.border='2px dashed black'; this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';"></lido-text>
 					</lido-cell>
 
 				</lido-cell>
