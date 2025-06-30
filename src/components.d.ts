@@ -408,11 +408,11 @@ export namespace Components {
         /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
          */
-        "showNextButton": boolean;
+        "showNextButton": string;
         /**
           * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
          */
-        "showPrevButton": boolean;
+        "showPrevButton": string;
         /**
           * TabIndex for keyboard navigation.
          */
@@ -2063,11 +2063,11 @@ declare namespace LocalJSX {
         /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
          */
-        "showNextButton"?: boolean;
+        "showNextButton"?: string;
         /**
           * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
          */
-        "showPrevButton"?: boolean;
+        "showPrevButton"?: string;
         /**
           * TabIndex for keyboard navigation.
          */
