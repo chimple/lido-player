@@ -466,7 +466,7 @@ export const validateObjectiveStatus = async () => {
   if (!container) return;
   const objectiveString = container['objective'];
 
-  if (objectiveString === null || objectiveString.length === 0) {
+  if (objectiveString == null || objectiveString.length === 0) {
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
