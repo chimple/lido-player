@@ -177,7 +177,7 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       dragElement.style.transition = 'none';
 
       let dummyElement = document.createElement('div') as HTMLElement;
-      if (isInfinite) {
+      if(isInfinite){
         dummyElement = cloneElementWithComputedStyles(dragElement);
       }
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
@@ -202,6 +202,7 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
     }, 500);
   }
+
 };
 
 function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
@@ -213,7 +214,7 @@ function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
   clone = clone.firstChild as HTMLElement;
   clone.setAttribute('height', originalEl.style.height);
   clone.setAttribute('width', originalEl.style.width);
-  console.log('src : ', originalEl.getAttribute('src'));
+  console.log("src : ", originalEl.getAttribute('src'));
 
   return clone;
 }
@@ -462,49 +463,50 @@ export const handleShowCheck = () => {
 };
 
 export const validateObjectiveStatus = async () => {
-  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const container = document.getElementById(LidoContainer) as HTMLElement;  
   if (!container) return;
   const objectiveString = container['objective'];
 
-  if (objectiveString === '' || objectiveString.length === 0 || objectiveString === null) {
+  if(objectiveString===""||objectiveString.length===0){
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
-    }
+    }    
     storeActivityScore(100);
     storingEachActivityScore(true);
     triggerNextContainer();
     return;
-  } else {
-    const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
-    let res;
-    const additionalCheck = container.getAttribute('equationCheck');
-    if (!!additionalCheck) {
-      res = equationCheck(additionalCheck);
-      console.log('🚀 ~ handleShowCheck ~ res:', res);
-    } else {
-      res = matchStringPattern(objectiveString, objectiveArray);
-    }
-    if (res) {
-      const attach = container.getAttribute('appendToDropOnCompletion');
-      if (attach === 'true') {
-        appendingDragElementsInDrop();
-      }
-      const onCorrect = container.getAttribute('onCorrect');
-      if (onCorrect) {
-        await executeActions(onCorrect, container);
-      }
-      triggerNextContainer();
-    } else {
-      const onInCorrect = container.getAttribute('onInCorrect');
-      await executeActions(onInCorrect, container);
-      const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
-      if (!isContinueOnCorrect) {
-        triggerNextContainer();
-      }
-    }
-    await calculateScore();
   }
+  else{
+  const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
+  let res;
+  const additionalCheck = container.getAttribute('equationCheck');
+  if (!!additionalCheck) {
+    res = equationCheck(additionalCheck);
+    console.log('🚀 ~ handleShowCheck ~ res:', res);
+  } else {
+    res = matchStringPattern(objectiveString, objectiveArray);
+  }
+  if (res) {
+    const attach = container.getAttribute('appendToDropOnCompletion');
+    if (attach === 'true') {
+      appendingDragElementsInDrop();
+    }
+    const onCorrect = container.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, container);
+    }
+    triggerNextContainer();
+  } else {
+    const onInCorrect = container.getAttribute('onInCorrect');
+    await executeActions(onInCorrect, container);
+    const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
+    if (!isContinueOnCorrect) {
+      triggerNextContainer();
+    }
+  }
+  await calculateScore();
+}
 };
 
 export const triggerNextContainer = () => {
