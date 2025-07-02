@@ -4,6 +4,7 @@ import { html } from 'lit';
 const meta: Meta = {
   title: 'Templates/Categorize2',
   argTypes: {
+    heading:{control: 'text'},
     image1:{control:'file'},
     image2:{control:'file'},
     image3:{control:'file'},
@@ -27,6 +28,7 @@ const meta: Meta = {
 export default meta;
 export const Categ: StoryObj = {
   args: {
+    heading:'कीटों को उनके पैरों की संख्या के अनुसार बताएँ!',
     image1:'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png',
     image2: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect2.png',
     image3: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png',
@@ -67,7 +69,7 @@ function getContainerXml(args) {
 			</lido-cell>
 
 			<!-- heading -->
-			<lido-text id="heading"  tabIndex="2"   visible="true" string="कीटों को उनके पैरों की संख्या के अनुसार बताएँ!" font="'Baloo Bhai 2'" fontColor="#323232" font-size="landscape.44px,portrait.32px" bg-Color="transparent" onEntry="  this.fontWeight='400';"   margin="landscape.0px 0px 0px 0px, portrait.46px 0px -39px 0px" >
+			<lido-text id="heading"  tabIndex="2"   visible="true" string="${args.heading}" font="'Baloo Bhai 2'" fontColor="#323232" font-size="landscape.44px,portrait.32px" bg-Color="transparent" onEntry="  this.fontWeight='400';"   margin="landscape.0px 0px 0px 0px, portrait.46px 0px -39px 0px" >
 			</lido-text>
 			<!-- dropElements -->
 			<lido-cell layout="row" visible="true"  height="landscape.38%,portrait.41%" width="100%" bg-Color="transparent" margin="landscape.7px 0px 0px 0px,portrait.55px 0px -73px 0px"   >
