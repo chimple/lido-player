@@ -15,16 +15,15 @@
 }
 
 .lido-dot-container {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  /* position: fixed; */
+  position: fixed;
   z-index: 1;
-  width: fit-content;
-  top: 3%;
+  top: 6%;
   left: 50%;
-  /* transform: translate(-50%); */
 }
 
 .lido-dot {
@@ -36,6 +35,7 @@
   display: inline-block;
   transition: background-color 0.3s;
   cursor: pointer;
+  z-index: 1;
 }
 
 .lido-dot.completed {
@@ -61,8 +61,4 @@
 .navbar {
   display: flex;
   justify-content: center;
-  visibility: hidden;
-  position: absolute;
-  top: 6%;
-  left: 50%;
 }
