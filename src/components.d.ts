@@ -410,6 +410,10 @@ export namespace Components {
          */
         "showCheck": boolean;
         /**
+          * Controls whether the drop zone displays a border; true shows the border, false hides it.
+         */
+        "showDropBorder": boolean;
+        /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
          */
         "showNextButton": string;
@@ -2076,6 +2080,10 @@ declare namespace LocalJSX {
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck"?: boolean;
+        /**
+          * Controls whether the drop zone displays a border; true shows the border, false hides it.
+         */
+        "showDropBorder"?: boolean;
         /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
          */

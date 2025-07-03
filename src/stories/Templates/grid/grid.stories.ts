@@ -7,36 +7,36 @@ const meta: Meta = {
 export default meta;
 
 export const Options: StoryObj = {
-	args: {
-		option1: "chop",
-		option2: "chug",
-		option3: "chad",
-		option4: "dop",
-		option5: "dug",
-		option6: "dad",
-		option7: "mop",
-		option8: "mug",
-		option9: "mad",
-		correct1: "chop",
-		correct2: "chug",
-		correct3: "chad",
-		correct4: "dop",
-		correct5: "dug",
-		correct6: "dad",
-		correct7: "mop",
-		correct8: "mug",
-		correct9: "mad",
-	},
-	
+  args: {
+    option1: 'chop',
+    option2: 'chug',
+    option3: 'chad',
+    option4: 'dop',
+    option5: 'dug',
+    option6: 'dad',
+    option7: 'mop',
+    option8: 'mug',
+    option9: 'mad',
+    correct1: 'chop',
+    correct2: 'chug',
+    correct3: 'chad',
+    correct4: 'dop',
+    correct5: 'dug',
+    correct6: 'dad',
+    correct7: 'mop',
+    correct8: 'mug',
+    correct9: 'mad',
+  },
+
   render: args => {
-		const xml = getContainerXml(args);
-		return html`<lido-home .xmlData="${xml}"></lido-home>`
-	},
+    const xml = getContainerXml(args);
+    return html`<lido-home .xmlData="${xml}"></lido-home>`;
+  },
 };
 
-function getContainerXml(args){
-	return `<main>
-				<lido-container id="lido-container" value="mainContainer1" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5},${args.correct6},${args.correct7},${args.correct8},${args.correct9}" height="100%" width="100%" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" is-allow-only-correct="true">
+function getContainerXml(args) {
+  return `<main>
+	<lido-container id="lido-container" value="mainContainer1" drop-action="move"  objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5},${args.correct6},${args.correct7},${args.correct8},${args.correct9}" height="100%" width="100%" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" is-allow-only-correct="true">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.591px, portrait.1274px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
@@ -107,44 +107,44 @@ function getContainerXml(args){
 
 					</lido-cell>
 					<!-- drag container -->
-					<lido-cell layout="landscape.col, portrait.row" visible="true" onEntry="this.gap = '90px';" width="landscape.25%, portrait.75%"  height="landscape.73%, portrait.30%" bg-color="transparent" x="0px" y="0px" margin="landscape.30% 0px 0px 0px, portrait.0px 0px 0px 35%" z="1">
-						<lido-image is-slice="true" type="drag" id="option16" value='${args.option1}' tab-index="16" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70%, portrait.30%" height="landscape.20%, portrait.65%" font-size="36px" z="0">
-							<lido-text visible="true"  bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option1}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+					<lido-cell layout="landscape.col, portrait.row" visible="true" width="landscape.25%, portrait.75%"  height="landscape.73%, portrait.30%" bg-color="transparent" x="0px" y="0px" margin="landscape.30% 0px 0px 0px, portrait.0px 0px 0px 35%" z="1">
+						<lido-image is-slice="true" type="drag" id="option16" value='${args.option1}' tab-index="16" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px" font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true"  bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option1}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
-						<lido-image is-slice="true" type="drag" id="option17" value='${args.option2}' tab-index="17" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70%, portrait.22%" height="landscape.20%, portrait.65%"  font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option2}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option17" value='${args.option2}' tab-index="17" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px"  font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option2}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
-						<lido-image is-slice="true" type="drag" id="option18" value='${args.option3}' tab-index="18" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70% ,portrait.22%" height="landscape.20%, portrait.65%"  font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option3}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option18" value='${args.option3}' tab-index="18" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px"  font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option3}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
 
 						<!--hidden drags -->
-						<lido-image is-slice="true" type="drag" id="option19" value='${args.option4}' tab-index="19" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70%, portrait.22%" height="landscape.20%, portrait.65%" font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option4}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option19" value='${args.option4}' tab-index="19" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px" font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option4}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
-						<lido-image is-slice="true" type="drag" id="option20" value='${args.option5}' tab-index="20" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70%, portrait.22%" height="landscape.20%, portrait.65%"  font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option5}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option20" value='${args.option5}' tab-index="20" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px"  font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option5}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
-						<lido-image is-slice="true" type="drag" id="option21" value='${args.option6}' tab-index="21" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70% ,portrait.22%" height="landscape.20%, portrait.65%"  font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option6}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option21" value='${args.option6}' tab-index="21" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px"  font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option6}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
 
-						<lido-image is-slice="true" type="drag" id="option22" value='${args.option7}' tab-index="22" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70%, portrait.22%" height="landscape.20%, portrait.65%" font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option7}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option22" value='${args.option7}' tab-index="22" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px" font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option7}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
-						<lido-image is-slice="true" type="drag" id="option23" value='${args.option8}' tab-index="23" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70%, portrait.22%" height="landscape.20%, portrait.65%"  font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option8}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option23" value='${args.option8}' tab-index="23" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px"  font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option8}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
-						<lido-image is-slice="true" type="drag" id="option24" value='${args.option9}' tab-index="24" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.70% ,portrait.22%" height="landscape.20%, portrait.65%"  font-size="36px" z="0">
-							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.115px" height="landscape.115px, portrait.100px" string='${args.option9}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0">
+						<lido-image is-slice="true" type="drag" id="option24" value='${args.option9}' tab-index="24" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/blue_alphabet_wordmatrix.png" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset';" width="landscape.120px, portrait.120px" height="landscape.120px, portrait.120px"  font-size="36px" z="0" margin="landscape.0px 0px 80px 0px, portrait.0px 80px 0px 0px">
+							<lido-text visible="true" bg-color="transparent" onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" width="landscape.100px, portrait.120px" height="landscape.120px, portrait.100px" string='${args.option9}' font-color="black" font-family="'Baloo 2', serif" font-size="36px" z="0" onTouch="this.speak='true';">
 							</lido-text>
 						</lido-image>
 
