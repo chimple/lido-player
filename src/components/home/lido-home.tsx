@@ -313,8 +313,7 @@ export class LidoHome {
           type="click"
           onTouch="this.prevBtn='true';"
           id="lido-arrow-left"
-          onEntry="this.padding='0px 0px 0px 0px';"
-          z="9999"
+          onEntry="this.padding='0px'; this.borderRadius='8px';"
         />
 
         {this.containers.map((_, index) => (
@@ -329,10 +328,9 @@ export class LidoHome {
           type="click"
           onTouch="this.nextBtn='true';"
           id="lido-arrow-right"
-          onEntry="this.padding='0px 0px 0px 0px';"
-          z="9999"
-        />
-      </div>
+          onEntry="this.padding='0px'; this.borderRadius='8px';"
+      />
+      </div>  
     );
   }
 
