@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction, DropHasDrag } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -156,7 +156,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
 
         default: {
-          targetElement.style[action.action] = action.value;
+          targetElement.style[action.action] = action.value;      
           break;
         }
       }
