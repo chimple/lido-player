@@ -1318,6 +1318,14 @@ export namespace Components {
          */
         "mode": string;
         /**
+          * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect": string;
+        /**
+          * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect": string;
+        /**
           * Source URL or path for the SVG file used in this component.
          */
         "svgSource": string;
@@ -2972,6 +2980,14 @@ declare namespace LocalJSX {
           * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`
          */
         "mode"?: string;
+        /**
+          * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect"?: string;
+        /**
+          * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect"?: string;
         /**
           * Source URL or path for the SVG file used in this component.
          */
