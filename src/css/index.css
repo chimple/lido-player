@@ -38,7 +38,7 @@ body {
 }
 
 .highlight-element {
-  border: 2px solid white !important;
+  border: 2px solid white ;
   box-shadow: 0 2px 4px rgba(151, 150, 150, 0.1) !important;
 }
 
@@ -46,13 +46,13 @@ body {
   border: 5px dashed #f34d08 !important;
 }
 
-.drop-element.filled {
-  border: none !important;
+.drop-element.filled  {
+  border: 'none' !important ;
 }
 
 
 .drag-element {
-  box-shadow: 0px 8px 0px -2px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0px 15px 11px rgba(43, 0, 0, 0.3) !important ;
 }
 
 .click-element {
