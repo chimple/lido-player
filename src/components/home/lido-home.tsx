@@ -286,15 +286,17 @@ export class LidoHome {
       
       
       if(prevbtn !== 'true') {
-        leftbtn.style.visibility = 'hidden';
-      } else {
-        leftbtn.style.visibility = 'visible';
+        if(leftbtn) leftbtn.style.visibility = 'hidden';
       }
-
-      if (nextbtn !== 'true') {
-        rightbtn.style.visibility = 'hidden';
-      } else {
-        rightbtn.style.visibility = 'visible';
+      else{
+        if(leftbtn) leftbtn.style.visibility = 'visible';
+      }
+      
+      if(nextbtn!=='true'){
+        if(rightbtn) rightbtn.style.visibility='hidden';
+      }
+      else{
+        if(rightbtn) rightbtn.style.visibility='visible';
       }
     }, 100);
   };
@@ -357,7 +359,9 @@ export class LidoHome {
     return (
       <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
-        <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
+        <div key={this.currentContainerIndex}>
+            {this.containers[this.currentContainerIndex]?.()}
+        </div>
 
         {/* Render navigation dots below the container */}
         {this.showDotsandbtn && this.renderDots()}

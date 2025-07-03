@@ -157,6 +157,16 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
+        // case 'showNextBtn': {
+        //   const isTrue = action.value === 'true';
+        //   const element = document.getElementById(LidoContainer) as HTMLElement;
+        //   var attribute = element.getAttribute('showNextButton') as string;
+        //   if (isTrue && attribute === 'false') {
+        //     element.setAttribute('showNextButton', 'true');  
+        //   }
+        //   break;
+        // }
+
         default: {
           targetElement.style[action.action] = action.value;
           break;

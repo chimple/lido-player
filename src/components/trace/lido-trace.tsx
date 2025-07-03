@@ -24,6 +24,9 @@ export class LidoTrace {
    */
   @Prop() svgSource: string = '';
 
+  @State() svgUrls: string[] = [];
+  @State() currentSvgIndex: number = 0;
+
   /**
    * A custom string value associated with the component for additional data or identification.
    */
@@ -130,10 +133,15 @@ export class LidoTrace {
       lastPointerPos: null as { x: number; y: number } | null,
     };
 
+    const url = this.svgUrls[this.currentSvgIndex];
+    const svgText = await this.fetchSVG(url);
+
     await this.loadAnotherSVG(state, true); // Load the first SVG
   }
 
   componentWillLoad() {
+    this.svgUrls = this.svgSource.split(';').map(s => s.trim());
+    this.currentSvgIndex = 0;
     this.initializeSVG();
   }
 
@@ -230,6 +238,7 @@ export class LidoTrace {
   // Insert the fetched SVG into the container and adjust viewBox
   insertSVG(svgText: string) {
     const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
+    if (!svgContainer) return
     svgContainer.innerHTML = svgText;
 
     // After inserting, get the SVG element
@@ -545,6 +554,15 @@ export class LidoTrace {
   async moveToNextContainer() {
     if (this.moving) return; // Prevent multiple calls
     this.moving = true; // Set moving to true to prevent re-entrance
+
+    if(this.currentSvgIndex < this.svgUrls.length - 1)
+    {
+       this.currentSvgIndex++;
+       await this.initializeSVG();
+       this.moving = false;
+       return;
+    }
+
     const container = document.getElementById(LidoContainer) as HTMLElement;
     if (container && this.onCorrect) {
       await executeActions(this.onCorrect, container);
