@@ -120,6 +120,10 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
+          * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
+         */
+        "gap": string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -182,7 +186,7 @@ export namespace Components {
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
          */
-        "visible": boolean;
+        "visible": string;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
          */
@@ -1318,6 +1322,14 @@ export namespace Components {
          */
         "mode": string;
         /**
+          * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect": string;
+        /**
+          * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect": string;
+        /**
           * Source URL or path for the SVG file used in this component.
          */
         "svgSource": string;
@@ -1775,6 +1787,10 @@ declare namespace LocalJSX {
          */
         "childElementsLength"?: number;
         /**
+          * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
+         */
+        "gap"?: string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1837,7 +1853,7 @@ declare namespace LocalJSX {
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
          */
-        "visible"?: boolean;
+        "visible"?: string;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
          */
@@ -2972,6 +2988,14 @@ declare namespace LocalJSX {
           * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`
          */
         "mode"?: string;
+        /**
+          * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
+         */
+        "onCorrect"?: string;
+        /**
+          * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
+         */
+        "onInCorrect"?: string;
         /**
           * Source URL or path for the SVG file used in this component.
          */
