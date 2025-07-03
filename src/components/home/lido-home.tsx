@@ -283,9 +283,8 @@ export class LidoHome {
       const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
-      
-      
-      if(prevbtn !== 'true') {
+
+      if (prevbtn !== 'true') {
         leftbtn.style.visibility = 'hidden';
       } else {
         leftbtn.style.visibility = 'visible';
@@ -296,7 +295,7 @@ export class LidoHome {
       } else {
         rightbtn.style.visibility = 'visible';
       }
-    }, 100);
+    }, 500);
   };
 
   /**
@@ -307,32 +306,33 @@ export class LidoHome {
   private renderDots() {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
-      <div class="navbar">
+      <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
+        {/* Navigation arrows and dots for container navigation */}
         <lido-image
           src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
           type="click"
           onTouch="this.prevBtn='true';"
           id="lido-arrow-left"
           onEntry="this.padding='0px 0px 0px 0px';"
+          z="9999"
         />
-        {/* <img id="firstimg" src="/assets/images/story/BackButton.png"></img> */}
-        <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
-          {/* Navigation arrows and dots for container navigation */}
-          {this.containers.map((_, index) => (
-            <span
-              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-              onClick={() => this.jumpToContainer(index)}
-            ></span>
-          ))}
-        </div>
+
+        {this.containers.map((_, index) => (
+          <span
+            class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+            onClick={() => this.jumpToContainer(index)}
+          ></span>
+        ))}
+
         <lido-image
           src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/NextButton.png"
           type="click"
           onTouch="this.nextBtn='true';"
           id="lido-arrow-right"
           onEntry="this.padding='0px 0px 0px 0px';"
-      />
-      </div>  
+          z="9999"
+        />
+      </div>
     );
   }
 

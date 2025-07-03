@@ -234,7 +234,7 @@ export class LidoContainer {
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling    
   
     setTimeout(() => {
-      const navBar = document.querySelector('.navbar') as HTMLElement;  
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;  
       console.log('navBar', navBar);
 
       if (navBar) {
