@@ -1,12 +1,12 @@
-import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";const u={title:"Templates/letterboard"},t={render:l=>{const e=b();return d`<lido-home xml-data="${e}" xmlData="${e}"></lido-home>`}};function o(){return"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((e,r)=>`
-    <lido-image id="drag${e}" value="${e}" type="drag" tab-index="${30+r}" disable-edit="true" visible="true"
+import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";const u={title:"Templates/letterboard"},t={render:r=>{const e=b();return d`<lido-home xml-data="${e}" xmlData="${e}"></lido-home>`}};function o(){return"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((e,l)=>`
+    <lido-image id="drag${e}" value="${e}" type="drag" tab-index="${30+l}" disable-edit="true" visible="true"
       src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/draggables/${e}.svg"
       width="100%" onEntry="this.boxShadow='none';" onTouch="this.play='true'"
       audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/sounds/${e.toLowerCase()}.mp3">
     </lido-image>
   `).join(`
 `)}function b(){return`<main>
-  <lido-container id="lido-container" objective="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y" tab-index="1" value="mainContainer1" height="100%" width="100%" visible="true" 
+  <lido-container id="lido-container" drop-action="move" objective="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y" tab-index="1" value="mainContainer1" height="100%" width="100%" visible="true" 
         audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/sounds/letterboard.mp3"  
         onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" 
         onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" bg-color="transparent" show-check="false" is-continue-on-correct="true"
@@ -15,9 +15,8 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
         <lido-cell id="cell1" tab-index="2" disable-edit="true" layout="row" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
             <lido-image id="image1" z="3" disable-edit="true" value="image1" visible="landscape.true, portrait.false" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/truck.png" bg-color="transparent" onEntry="this.animation='rightToPlace 2.5s linear';" width="landscape.10%, portrait.0px">
             </lido-image>
-      <lido-cell id="cell2" tab-index="3" disable-edit="true" layout="col" height="landscape.85%, portrait.50%" width="landscape.60%, portrait.90%" aria-hidden="true"
+      <lido-cell id="cell2" tab-index="3" disable-edit="true" layout="wrap" height="landscape.85%, portrait.50%" width="landscape.60%, portrait.90%" aria-hidden="true"
        z="1" bg-color="#F57C00" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
-                <lido-cell id="cell3" disable-edit="true" layout="row"  aria-hidden="true" visible="true">
                     <lido-image id="A" value="A" tab-index="4" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/A.svg"
                         ></lido-image>
@@ -33,8 +32,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
                     <lido-image id="E" value="E" tab-index="8" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/E.svg"
                         ></lido-image>
-                </lido-cell>
-                <lido-cell id="cell4" tab-index="3" disable-edit="true" layout="row"  aria-hidden="true"  visible="true">
                     <lido-image id="F" value="F" tab-index="9" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/F.svg"
                         ></lido-image>
@@ -50,8 +47,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
                     <lido-image id="J" value="J" tab-index="13" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/J.svg"
                         ></lido-image>
-                </lido-cell>
-                <lido-cell id="cell5" tab-index="3" disable-edit="true" layout="row"  aria-hidden="true"  visible="true">
                     <lido-image id="K" value="K" tab-index="14" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/K.svg"
                         ></lido-image>
@@ -67,8 +62,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
                     <lido-image id="O" value="O" tab-index="18" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/O.svg"
                         ></lido-image>
-                </lido-cell>
-                <lido-cell id="cell6" tab-index="3" disable-edit="true" layout="row"  aria-hidden="true"  visible="true">
                     <lido-image id="P" value="P" tab-index="19" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/P.svg"
                         ></lido-image>
@@ -84,8 +77,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
                     <lido-image id="T" value="T" tab-index="23" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/T.svg"
                         ></lido-image>
-                </lido-cell>
-                <lido-cell id="cell7" tab-index="3" disable-edit="true" layout="row"  aria-hidden="true"  visible="true">
                     <lido-image id="U" value="U" tab-index="24" type="drop" disable-edit="true" visible="true"
                         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/droppables/U.svg"
                         ></lido-image>
