@@ -144,8 +144,7 @@ export class LidoImage {
    */
   @Prop() filter: string = '';
 
-
-   /**
+  /**
    * CSS filter to apply border radius to the image.
    * Example: '10px' for  images.
    */
@@ -218,7 +217,25 @@ export class LidoImage {
 
   render() {
     if (this.isSlice === 'true') {
-      return <Host class="slice" id={this.id} type={this.type} tab-index={this.tabIndex} onEntry={this.onEntry} style={this.style}></Host>;
+      return (
+        <Host
+          class="slice"
+          id={this.id}
+          type={this.type}
+          tab-index={this.tabIndex}
+          style={this.style}
+          aria-label={this.ariaLabel}
+          aria-hidden={this.ariaHidden}
+          value={this.value}
+          minDrops={this.minDrops}
+          maxDrops={this.maxDrops}
+          audio={this.audio}
+          onTouch={this.onTouch}
+          onCorrect={this.onCorrect}
+          onInCorrect={this.onInCorrect}
+          onEntry={this.onEntry}
+        ></Host>
+      );
     } else {
       return (
         <Host
