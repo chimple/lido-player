@@ -16,6 +16,10 @@ import { string } from 'mathjs';
 })
 export class LidoContainer {
   /**
+   * Controls whether the drop zone displays a border; true shows the border, false hides it.
+   */
+  @Prop() showDropBorder:boolean=true;
+  /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
   @Prop() appendToDropOnCompletion: boolean = false;
@@ -230,7 +234,7 @@ export class LidoContainer {
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling    
   
     setTimeout(() => {
-      const navBar = document.querySelector('.navbar') as HTMLElement;  
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;  
       console.log('navBar', navBar);
 
       if (navBar) {
@@ -322,6 +326,7 @@ export class LidoContainer {
         appendToDropOnCompletion={`${this.appendToDropOnCompletion}`}
         show-prev-button={`${this.showPrevButton}`}
         show-next-button={`${this.showNextButton}`}
+        show-drop-border={`${this.showDropBorder}`}
       >
         <slot />
       </Host>

@@ -60,6 +60,12 @@ export class LidoCell {
   @Prop() z: string = '0';
 
   /**
+   * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px').
+   * This is applicable when the layout is set to `wrap` or `flex`.
+   */
+  @Prop() gap: string = '0';
+
+  /**
    * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
    */
   @Prop() bgColor: string = '';
@@ -77,7 +83,7 @@ export class LidoCell {
   /**
    * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
    */
-  @Prop() visible: boolean = false;
+  @Prop() visible: string = "false";
 
   /**
    * Audio file URL or identifier for sound that will be associated with the column.
@@ -207,6 +213,7 @@ export class LidoCell {
       left: parseProp(this.x, orientation),
       zIndex: this.z,
       margin: parseProp(this.margin, orientation),
+      gap: parseProp(this.gap, orientation),
       display: JSON.parse(parseProp(`${this.visible}`, orientation))
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'

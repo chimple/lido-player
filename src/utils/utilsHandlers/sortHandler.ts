@@ -50,7 +50,7 @@ export function enableReorderDrag(element: HTMLElement): void {
   const elementType = element.getAttribute('type');
   const optionArea = container.querySelector('[type="optionArea"]') as HTMLElement;
   if (optionArea) {
-    optionArea.style.display = 'block';
+    // optionArea.style.display = 'block';
     optionArea.style.overflowY = 'auto';
   }
 
@@ -163,6 +163,7 @@ export function enableReorderDrag(element: HTMLElement): void {
       if (category) {
         if (dummy) {
           dummy.replaceWith(element);
+          // element.style.boxShadow='none';
           category.parentElement.classList.add('highlight-element');
           const categoryArr = container.querySelectorAll('[type="category"]');
           categoryArr.forEach(el => {

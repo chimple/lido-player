@@ -10,7 +10,12 @@ type Choice = {
 type OpenWindowArgs = {
   objective: string;
   heading: string;
-  choices: Choice[];
+  backgroundImage: string;
+  letterBackgroundImage: string;
+  choice1Text: string;
+  choice1ImageUrl: string;
+  choice2Text: string;
+  choice2ImageUrl: string;
 };
 
 const meta: Meta<OpenWindowArgs> = {
@@ -18,42 +23,63 @@ const meta: Meta<OpenWindowArgs> = {
   argTypes: {
     objective: { control: 'text' },
     heading: { control: 'text' },
-    choices: { control: 'object' },
+
+    backgroundImage: { control: 'text', name: 'Background Image URL' },
+    letterBackgroundImage: { control: 'text', name: 'Letter Background Image URL' },
+
+    choice1Text: { control: 'text', name: 'Choice 1 Text' },
+    choice1ImageUrl: { control: 'text', name: 'Choice 1 Image URL' },
+    choice2Text: { control: 'text', name: 'Choice 2 Text' },
+    choice2ImageUrl: { control: 'text', name: 'Choice 2 Image URL' },
   },
   args: {
     objective: 'city',
     heading: 'CITY',
-    choices: [
-      {
-        id: 'choice1',
-        value: 'city',
-        src: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/city.png',
-      },
-      {
-        id: 'choice2',
-        value: 'sun',
-        src: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/sun.png',
-      },
-    ],
+    backgroundImage: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/Spring.png',
+    letterBackgroundImage: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/letter_bg.png',
+    choice1Text: 'city',
+    choice1ImageUrl: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/city.png',
+    choice2Text: 'sun',
+    choice2ImageUrl: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/sun.png',
   },
 };
 
 export default meta;
 
 export const OpenWindow: StoryObj<OpenWindowArgs> = {
+  args: {
+    objective: "mom",
+    heading: "MOM",
+    choice2Text: "mom",
+    choice2ImageUrl: "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/mom.png"
+  },
+
   render: args => {
     const xml = getOpenWindowXml(args);
     return html`<lido-home xml-data="${xml}" .xmlData="${xml}"></lido-home>`;
-  },
+  }
 };
 
 function getOpenWindowXml(args: OpenWindowArgs): string {
+  const choices: Choice[] = [
+    {
+      id: 'choice1',
+      value: args.choice1Text,
+      src: args.choice1ImageUrl,
+    },
+    {
+      id: 'choice2',
+      value: args.choice2Text,
+      src: args.choice2ImageUrl,
+    },
+  ];
+
   const headingLettersXml = args.heading
     .split('')
     .map(
       (char, i) => `
     <lido-text id="heading${i + 1}" tab-index="${i + 2}" flexible-width="false" visible="true"
-      border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/letter_bg.png"
+      border-image="${args.letterBackgroundImage}" 
       bg-color="transparent" width="180px" height="210px"
       string="${char}" font-color="black" font-family="'Baloo 2', serif"
       font-size="146px" z="0"
@@ -63,7 +89,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
     )
     .join('\n');
 
-  const choicesXml = args.choices
+  const choicesXml = choices
     .map(
       choice => `
     <lido-cell visible="true" layout="col" width="250px" height="180px" value="${choice.value}" type="click" onEntry="this.background='white'; this.background-color='white !important'; this.box-shadow='white !important';">
@@ -81,7 +107,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
 
   return `<main>
     <lido-container id="lido-container" tab-index="1" 
-      bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/Spring.png" 
+      bg-image="${args.backgroundImage}" 
       height="100%" width="100%" visible="true"
 	    is-continue-on-correct="true"
       onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" 

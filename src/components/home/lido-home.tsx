@@ -298,7 +298,7 @@ export class LidoHome {
       else{
         if(rightbtn) rightbtn.style.visibility='visible';
       }
-    }, 100);
+    }, 500);
   };
 
   /**
@@ -309,30 +309,33 @@ export class LidoHome {
   private renderDots() {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
-      <div class="navbar">
+      <div id="lido-dot-indicator" class="lido-dot-container" >
+        {/* Navigation arrows and dots for container navigation */}
         <lido-image
           src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
           type="click"
           onTouch="this.prevBtn='true';"
           id="lido-arrow-left"
-          onEntry="this.padding='0px 0px 0px 0px';"
+          onEntry="this.padding='0px';"
+          bg-color="#FFAC4C"
+          border-radius="8px"
         />
-        {/* <img id="firstimg" src="/assets/images/story/BackButton.png"></img> */}
-        <div id="lido-dot-indicator" class="lido-dot-container" style={style}>
-          {/* Navigation arrows and dots for container navigation */}
-          {this.containers.map((_, index) => (
-            <span
-              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-              onClick={() => this.jumpToContainer(index)}
-            ></span>
-          ))}
-        </div>
+
+        {this.containers.map((_, index) => (
+          <span
+            class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+            onClick={() => this.jumpToContainer(index)} style={style}
+          ></span>
+        ))}
+
         <lido-image
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/NextButton.png"
+          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayer/Next%20Arrow.png"
           type="click"
           onTouch="this.nextBtn='true';"
           id="lido-arrow-right"
-          onEntry="this.padding='0px 0px 0px 0px';"
+          onEntry="this.padding='0px';"
+          bg-color="#FFAC4C"
+          border-radius="8px"
       />
       </div>  
     );

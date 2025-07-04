@@ -394,6 +394,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
   }
   if (dropElement) {
+    
     if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
       if (isisFull) {
@@ -608,7 +609,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
 export function updateDropBorder(element: HTMLElement): void {
   if (!element.classList.contains('drop-element')) return;
-
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return;
+  const showBorder = container.getAttribute('show-drop-border'); 
+  if (showBorder!== 'true' ) {
+    return; 
+  }
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
 
@@ -751,6 +757,7 @@ export const appendingDragElementsInDrop = () => {
       if (drop['value'].includes(drag['value'])) {
         drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
+        //  drag.style.boxShadow = 'none'; 
       }
     });
   });

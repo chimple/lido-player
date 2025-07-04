@@ -1,5 +1,5 @@
 .lido-text {
-  background-color: #fff;
+  /* background-color: #fff; */
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   transition: background-color 0.3s ease;
   user-select: none;
@@ -9,6 +9,7 @@
   border-radius: 24px;
   color: #333;
   cursor: pointer;
+  font-family: 'Baloo 2', serif;
 }
 
 .lido-text:hover {

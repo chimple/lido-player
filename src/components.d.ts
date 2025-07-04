@@ -120,6 +120,10 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
+          * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
+         */
+        "gap": string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -182,7 +186,7 @@ export namespace Components {
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
          */
-        "visible": boolean;
+        "visible": string;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
          */
@@ -405,6 +409,10 @@ export namespace Components {
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck": boolean;
+        /**
+          * Controls whether the drop zone displays a border; true shows the border, false hides it.
+         */
+        "showDropBorder": boolean;
         /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
          */
@@ -1783,6 +1791,10 @@ declare namespace LocalJSX {
          */
         "childElementsLength"?: number;
         /**
+          * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
+         */
+        "gap"?: string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1845,7 +1857,7 @@ declare namespace LocalJSX {
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
          */
-        "visible"?: boolean;
+        "visible"?: string;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
          */
@@ -2068,6 +2080,10 @@ declare namespace LocalJSX {
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck"?: boolean;
+        /**
+          * Controls whether the drop zone displays a border; true shows the border, false hides it.
+         */
+        "showDropBorder"?: boolean;
         /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
          */
