@@ -285,18 +285,16 @@ export class LidoHome {
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
       
       
-      if(prevbtn !== 'true') {
-        if(leftbtn) leftbtn.style.visibility = 'hidden';
+      if (prevbtn !== 'true') {
+        leftbtn.style.visibility = 'hidden';
+      } else {
+        leftbtn.style.visibility = 'visible';
       }
-      else{
-        if(leftbtn) leftbtn.style.visibility = 'visible';
-      }
-      
-      if(nextbtn!=='true'){
-        if(rightbtn) rightbtn.style.visibility='hidden';
-      }
-      else{
-        if(rightbtn) rightbtn.style.visibility='visible';
+
+      if (nextbtn !== 'true') {
+        rightbtn.style.visibility = 'hidden';
+      } else {
+        rightbtn.style.visibility = 'visible';
       }
     }, 500);
   };
