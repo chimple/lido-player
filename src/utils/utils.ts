@@ -331,26 +331,6 @@ const calculateScore = () => {
 export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
-
-  const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
-  if (isAllowOnlyCorrect) {
-    const isCorrect = dropElement['value'].includes(dragElement['value']);
-
-    if (!isCorrect) {
-      dragElement.style.transform = 'translate(0,0)';
-      if (dragElement['type'] === 'option') {
-        const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
-        childs.forEach(item => {
-          if (item === dragElement) return;
-          if (item.getAttribute('value') === dragElement.getAttribute('value')) {
-            item.replaceWith(dragElement);
-          }
-        });
-      }
-      return;
-    }
-  }
-
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');

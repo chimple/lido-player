@@ -378,6 +378,28 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
 
   return mostOverlappedElement;
 };
+  function animateDragToTarget(
+  dragElement: HTMLElement,
+  targetElement: HTMLElement,
+  container: HTMLElement,
+  transition: string = 'transform 0.5s ease'
+): void {
+  const dropRect = targetElement.getBoundingClientRect();
+  const dragRect = dragElement.getBoundingClientRect();
+  const containerScale = getElementScale(container); // Assuming you have this function
+
+  const dropCenterX = dropRect.left + dropRect.width / 2;
+  const dropCenterY = dropRect.top + dropRect.height / 2;
+  const dragCenterX = dragRect.left + dragRect.width / 2;
+  const dragCenterY = dragRect.top + dragRect.height / 2;
+
+  const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+  const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+  dragElement.style.transition = transition;
+  dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+  
+}
 
 export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
@@ -385,6 +407,36 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const dropSelectedData = localStorage.getItem(DragMapKey);
 
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
+  if (isAllowOnlyCorrect) {
+    if (!dropElement) {
+    dragElement.style.transition = 'transform 0.5s ease';
+    dragElement.style.transform = 'translate(0, 0)';
+    return;
+  }
+    const isCorrect = dropElement['value'].includes(dragElement['value']);
+     
+    if (!isCorrect) {
+       dragElement.style.transition = 'transform 0.5s ease';
+    animateDragToTarget(dragElement, dropElement, container);
+    setTimeout(() => {
+       dragElement.style.transform = 'translate(0, 0)';
+     }, 500);
+ 
+      if (dragElement['type'] === 'option') {
+        const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
+        childs.forEach(item => {
+          if (item === dragElement) return;
+          if (item.getAttribute('value') === dragElement.getAttribute('value')) {
+            item.replaceWith(dragElement);
+          }
+        });
+      }
+      return;
+    }
+
+  }
   if (dragElement) {
     if (dropElement) {
       dragElement.setAttribute(DropToAttr, dropElement?.id);
@@ -457,19 +509,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     dragElement.style.transition = 'transform 0.5s ease';
     if (cloneDragElement) {
       dragElement.style.transform = 'translate(0,0)';
-      const containerScale = getElementScale(container);
-      const dropRect = cloneDragElement.getBoundingClientRect();
-      const dragRect = dragElement.getBoundingClientRect();
-
-      const dropCenterX = dropRect.left + dropRect.width / 2;
-      const dropCenterY = dropRect.top + dropRect.height / 2;
-      const dragCenterX = dragRect.left + dragRect.width / 2;
-      const dragCenterY = dragRect.top + dragRect.height / 2;
-
-      let scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-      let scaledTop = (dropCenterY - dragCenterY) / containerScale;
-
-      dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+      
+      animateDragToTarget(dragElement, dropElement, container);
       setTimeout(() => {
         cloneDragElement.style.width = dragElement.style.width;
         cloneDragElement.style.height = dragElement.style.height;
