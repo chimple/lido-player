@@ -32,13 +32,13 @@ export const DefaultGame: StoryObj = {
     dropTarget9Value: "dop", 
 
     draggable1Word: "mug",
-    draggable2Word: "chad",
-    draggable3Word: "dug",
-    draggable4Word: "dad",
-    draggable5Word: "chug",
+    draggable2Word: "mad",
+    draggable3Word: "mop",
+    draggable4Word: "chug",
+    draggable5Word: "chad",
     draggable6Word: "chop",
-    draggable7Word: "mad",
-    draggable8Word: "mop",
+    draggable7Word: "dug",
+    draggable8Word: "dad",
     draggable9Word: "dop",
   },
   render: args => {
@@ -61,8 +61,8 @@ function getContainerXml(args: any): string {
 
 			<!-- TOP ROW: Column Headers -->
 			<lido-cell id="top-row" flex="1" bg-color="transparent" onEntry="this.display='flex'; this.flex='0 0 15%';">
-				<lido-cell id="blank-space" visible="true" onEntry="this.flex='0 0 15%';" bg-color="transparent"></lido-cell>
-				<lido-cell id="column-headers" width="60vh" visible="true" flex="1" bg-color="transparent" padding-left="45%" onEntry="this.display='flex'; this.justifyContent='space-around'; this.alignItems='center'; this.margin-left='-9vh' this.gap='10vh';">
+				<lido-cell id="blank-space" width="5%" visible="true" onEntry="this.flex='0 0 15%';" bg-color="transparent"></lido-cell>
+				<lido-cell id="column-headers" width="85%" visible="true" flex="1" bg-color="transparent" padding-left="45%" onEntry="this.display='flex'; this.justifyContent='space-around'; this.alignItems='center'; this.margin-left='-9vh' this.gap='10vh';">
 					<lido-text string="${args.colHeader1Text}" font-size="clamp(24px, 4vw, 48px)" visible="true" font-weight="700" font-family="'Baloo Bhai 2', serif" font-color="#EEB565" onEntry="this.backgroundColor='#EEB565'; this.width='40%'; this.font-size='clamp(24px, 4vw, 48px)'; "></lido-text>
 					<lido-text string="${args.colHeader2Text}" font-size="clamp(24px, 4vw, 48px)" visible="true" font-weight="700" font-family="'Baloo Bhai 2', serif" font-color="#EEB565" onEntry="this.backgroundColor='#EEB565'; this.width='40%'; this.font-size='clamp(24px, 4vw, 48px)'; "></lido-text>
 					<lido-text string="${args.colHeader3Text}" font-size="clamp(24px, 4vw, 48px)" visible="true" font-weight="700" font-family="'Baloo Bhai 2', serif" font-color="#EEB565" onEntry="this.backgroundColor='#EEB565'; this.width='40%'; this.font-size='clamp(24px, 4vw, 48px)';"></lido-text>
@@ -77,31 +77,31 @@ function getContainerXml(args: any): string {
 					<lido-text string="${args.rowLabel3Text}" font-size="clamp(24px, 4vw, 48px)" visible="true" font-weight="700" font-family="'Baloo Bhai 2', serif" font-color="#654321" onEntry="this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)';"></lido-text>
 				</lido-cell>
 
-				<lido-cell id="drop-grid" flex="1" visible="true" bg-color="#E7CFAA" onEntry="this.display='grid'; this.gridTemplateColumns='repeat(3, 1fr)'; this.gridTemplateRows='repeat(3, 1fr)'; this.gap='15px'; this.padding='15px'; this.borderRadius='10px';">
-					<lido-cell id="drop_mug" visible="true" type="drop" value="${args.dropTarget1Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_mad" visible="true" type="drop" value="${args.dropTarget2Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_mop" visible="true" type="drop" value="${args.dropTarget3Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_chug" visible="true" type="drop" value="${args.dropTarget4Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_chad" visible="true" type="drop" value="${args.dropTarget5Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_chop" visible="true" type="drop" value="${args.dropTarget6Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_dug" visible="true" type="drop" value="${args.dropTarget7Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_dad" visible="true" type="drop" value="${args.dropTarget8Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
-					<lido-cell id="drop_dop" visible="true" type="drop" value="${args.dropTarget9Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-cell>
+				<lido-cell id="drop-grid" flex="1" visible="true" width="100%" bg-color="#E7CFAA" onEntry="this.display='grid'; this.gridTemplateColumns='repeat(3, 1fr)'; this.gridTemplateRows='repeat(3, 1fr)'; this.gap='15px'; this.padding='15px'; this.borderRadius='10px';">
+					<lido-text id="drop_mug"  tab-index="1" visible="true" type="drop" value="${args.dropTarget1Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_mad" tab-index="2" visible="true" type="drop" value="${args.dropTarget2Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_mop" tab-index="3" visible="true" type="drop" value="${args.dropTarget3Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_chug" tab-index="4" visible="true" type="drop" value="${args.dropTarget4Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_chad" tab-index="5" visible="true" type="drop" value="${args.dropTarget5Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_chop" tabIndex="6" visible="true" type="drop" value="${args.dropTarget6Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_dug" tab-index="7" visible="true" type="drop" value="${args.dropTarget7Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_dad" tab-index="8" visible="true" type="drop" value="${args.dropTarget8Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_dop" tab-index="9" visible="true" type="drop" value="${args.dropTarget9Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
 				</lido-cell>
 			</lido-cell>
 		</lido-cell>
 
 		<!-- Draggable Words Container -->
 		<lido-cell id="draggable-area" visible="true" bg-color="transparent" width="landscape.12%, portrait.43%" height="landscape.90vh, portrait.33%" overflow="hidden" onEntry="this.display='flex'; this.flexWrap='wrap'; this.justifyContent='center'; this.alignContent='center'; this.gap='10px';">
-			<lido-text type="drag" value="${args.draggable1Word}" string="${args.draggable1Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5"  font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.display='grid'; this.placeItems='center'; this.bg-color='red' this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable2Word}" string="${args.draggable2Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable3Word}" string="${args.draggable3Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable4Word}" string="${args.draggable4Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable5Word}" string="${args.draggable5Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable6Word}" string="${args.draggable6Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable7Word}" string="${args.draggable7Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable8Word}" string="${args.draggable8Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
-			<lido-text type="drag" value="${args.draggable9Word}" string="${args.draggable9Word}" visible="true" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drad_mug" tab-index="11" value="${args.draggable1Word}" string="${args.draggable1Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5"  font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.display='grid'; this.placeItems='center'; this.bg-color='red' this.cursor='grab';" />
+			<lido-text type="drag" id="drag_mad" tab-index="12" value="${args.draggable2Word}" string="${args.draggable2Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drag_mop" tab-index="13" value="${args.draggable3Word}" string="${args.draggable3Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drag_chug" tab-index="14" value="${args.draggable4Word}" string="${args.draggable4Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drag_chad" tab-index="15" value="${args.draggable5Word}" string="${args.draggable5Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drag_chop" tab-index="16" value="${args.draggable6Word}" string="${args.draggable6Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drag_dug" tab-index="17" value="${args.draggable7Word}" string="${args.draggable7Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drag_dad" tab-index="18" value="${args.draggable8Word}" string="${args.draggable8Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
+			<lido-text type="drag" id="drag_dop" tab-index="19" value="${args.draggable9Word}" string="${args.draggable9Word}" visible="true" onTouch="this.speak='true'" width="clamp(100px, 25vw, 150px)" height="auto" aspectRatio="2.5" bg-color="#fcf3b1" font-size="clamp(24px, 5vw, 32px)" onEntry="this.borderRadius='15px'; this.backgroundColor='#EEB565'; this.width='60%'; this.font-size='clamp(24px, 4vw, 48px)'; this.textAlign='center'; this.display='grid'; this.placeItems='center'; this.cursor='grab';" />
 		</lido-cell>
 	</lido-cell>
 </lido-container>
