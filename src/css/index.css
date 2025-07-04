@@ -57,7 +57,7 @@ body {
 
 .click-element {
   background-color: var(--btn-bg-color, rgba(255, 172, 76, 1)) !important;
-  box-shadow: 0px 31px 0px var(--btn-shadow-color, rgba(225, 121, 76, 1)) !important;
+  box-shadow: var(--btn-shadow-px) var(--btn-shadow-color, rgba(225, 121, 76, 1)) !important;
   cursor: pointer; /* Important for mouse, good practice */
   transition: box-shadow 0.1s ease-out, transform 0.1s ease-out;
   /* border: none !important; */

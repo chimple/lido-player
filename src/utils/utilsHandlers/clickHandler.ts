@@ -154,8 +154,11 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }, 50);
     }
   });
+  const elementShadow = element.offsetHeight * 0.08;
+  ;
   const backGroundColor = element.style?.backgroundColor || '#FFB742';
   element.style.setProperty('--btn-bg-color', backGroundColor);
+  element.style.setProperty('--btn-shadow-px', `0px ${elementShadow}px 0px`);
   element.style.setProperty('--btn-shadow-color', tinycolor(backGroundColor).darken(17).toString());
   element.classList.add('click-element');
 }
