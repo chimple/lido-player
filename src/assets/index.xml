@@ -43,18 +43,17 @@
 				<lido-cell layout="col" id="col1" slot="front" disableEdit="true" visible="true" width="landscape.594px, portrait.754px" height="landscape.725px, portrait.925px" bgColor="white" type="" tabIndex="2" dropAttr="diagonal" onEntry="this.border-radius=32px; this.padding='8px 8px 16px 8px';" y="landscape.5px,portrait.10px">
 					<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/flash-card/Unicorn.png" z="1" width="landscape.578px, portrait.738px" height="landscape.578px, portrait.738px" onEntry="this.flex-shrink='0';" borderRadius="24px 24px 6px 6px" altText="{image1}">
 					</lido-image>
-					<lido-text id="txt1" width="371px" height="80px" display="flex" onEntry="this.text-align='center'; this.flex-direction='cloumn'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" fontSize="64px" z="1" fontColor="black" fontWeight="500" color="#303030" string="Unicorn" visible="true" y="landscape.15px, portrait.15px" bgColor="white" margin="landscape.45px 0px 45px 0px, portrait.45px 0px 45px 0px">
+					<lido-text id="txt1" width="553px" height="80px" display="flex" onEntry="this.textAlign='center'; this.flexDirection='column'; this.justifyContent='center'; this.alignItems='center'; this.flexShrink='0';" fontFamily="'Baloo Bhai 2'" fontSize="52px" z="1" fontColor="black" fontWeight="500" color="#303030" string="Unicorn is cute and shy" visible="true" y="landscape.15px, portrait.15px" bgColor="white" margin="landscape.45px 0px 45px 0px, portrait.45px 0px 45px 0px">
 					</lido-text>
 				</lido-cell>
 				<lido-cell layout="col" id="col2" slot="back" disableEdit="true" visible="true"  width="landscape.594px, portrait.754px" height="landscape.725px, portrait.925px" bgColor="white" type="" tabIndex="2" dropAttr="diagonal" onEntry="this.border-radius=32px; this.padding='8px 8px 16px 8px';" y="landscape.,portrait.">
-					<lido-text id="txt2" height="80px" width="371px" display="flex" onEntry="this.text-align='center'; this.flex-direction='cloumn'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" fontSize="84px" z="1" fontColor="black" fontWeight="500" color="#000000" string="Unicorn" visible="true" y="landscape.35px, portrait.15px" bgColor="white" margin="landscape.45px 0px 45px 0px, portrait.45px 0px 45px 0px">
+					<lido-text id="txt2" height="480px" width="495px" display="flex" onEntry="this.textAlign='left'; this.lineHeight='1.5';" fontFamily="'Baloo Bhai 2'" fontSize="52px" z="1" fontColor="black" fontWeight="500" color="#000000" string="I am a colour. I am mentioned in the poem along with Yellow and Blue. My name starts with the letter 'R'. Who am I?" visible="true" y="landscape.35px, portrait.15px" bgColor="white" margin="landscape.45px 0px 45px 0px, portrait.45px 0px 45px 0px">
 					</lido-text>
 				</lido-cell>
 			</lido-flash-card>
 		</lido-cell>
 
 	</lido-container>
-
 
 
 
