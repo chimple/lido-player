@@ -4,6 +4,7 @@ const meta: Meta = {
   title: 'Templates/FillUp',
 	argTypes: {
 		heading:{control: "text"},
+		audio: { control: 'file' },
 		img: { control: 'file' },
 		option1: { control: "text" },
 		option2: { control: "text" },
@@ -30,6 +31,7 @@ export const Blanks: StoryObj = {
     args: {
 		heading:"Fill  in  the  blanks",
        img: ["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/image%201.png"],
+		audio: "",
         option1: "quick",
         option2: "lazy",
         option3: "quick1",
@@ -57,14 +59,14 @@ export const Blanks: StoryObj = {
 function getContainerXml(args){
 	return `
    <main>
-		<lido-container id="lido-container" tab-index="1" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="${args.answer1},${args.answer2},${args.answer3},${args.answer4}" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000'; speak.speak='true'; " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+		<lido-container id="lido-container" tab-index="1" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="${args.answer1},${args.answer2},${args.answer3},${args.answer4}" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000'; audioSupport.speak='true'; " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1267px, portrait.541px" y="landscape.587px, portrait.1304px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 			</lido-avatar>
 		</lido-cell>
 		<!-- audio -->
-		<lido-cell visible="false" id="speak">
+		<lido-cell  id="audioSupport" audio="${args.audio}" >
 			<lido-text id="sentenceText" value="${args.text1} ${args.answer1} ${args.text2} ${args.text3} ${args.answer2} ${args.text4} ${args.text5} ${args.answer3} ${args.text6} ${args.text7} ${args.answer4} ${args.text8}" string="${args.text1} ${args.answer1} ${args.text2} ${args.text3} ${args.answer2} ${args.text4} ${args.text5} ${args.answer3} ${args.text6} ${args.text7} ${args.answer4} ${args.text8}" />
 		</lido-cell>
 		<!--Parent cell  -->
