@@ -78,15 +78,15 @@ function getContainerXml(args: any): string {
 				</lido-cell>
 
 				<lido-cell id="drop-grid" flex="1" visible="true" width="100%" bg-color="#E7CFAA" onEntry="this.display='grid'; this.gridTemplateColumns='repeat(3, 1fr)'; this.gridTemplateRows='repeat(3, 1fr)'; this.gap='15px'; this.padding='15px'; this.borderRadius='10px';">
-					<lido-text id="drop_mug"  tab-index="1" visible="true" type="drop" value="${args.dropTarget1Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_mad" tab-index="2" visible="true" type="drop" value="${args.dropTarget2Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_mop" tab-index="3" visible="true" type="drop" value="${args.dropTarget3Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_chug" tab-index="4" visible="true" type="drop" value="${args.dropTarget4Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_chad" tab-index="5" visible="true" type="drop" value="${args.dropTarget5Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_chop" tabIndex="6" visible="true" type="drop" value="${args.dropTarget6Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_dug" tab-index="7" visible="true" type="drop" value="${args.dropTarget7Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_dad" tab-index="8" visible="true" type="drop" value="${args.dropTarget8Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
-					<lido-text id="drop_dop" tab-index="9" visible="true" type="drop" value="${args.dropTarget9Value}" bg-color="#6B4226" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_mug"  tab-index="1" visible="true" type="drop" value="${args.dropTarget1Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_mad" tab-index="2" visible="true" type="drop" value="${args.dropTarget2Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_mop" tab-index="3" visible="true" type="drop" value="${args.dropTarget3Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_chug" tab-index="4" visible="true" type="drop" value="${args.dropTarget4Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_chad" tab-index="5" visible="true" type="drop" value="${args.dropTarget5Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_chop" tabIndex="6" visible="true" type="drop" value="${args.dropTarget6Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_dug" tab-index="7" visible="true" type="drop" value="${args.dropTarget7Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_dad" tab-index="8" visible="true" type="drop" value="${args.dropTarget8Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
+					<lido-text id="drop_dop" tab-index="9" visible="true" type="drop" value="${args.dropTarget9Value}" bg-color="transparent" is-allow-only-correct="true" onEntry="this.borderRadius='10px';"></lido-text>
 				</lido-cell>
 			</lido-cell>
 		</lido-cell>
