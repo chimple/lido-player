@@ -207,6 +207,7 @@ export function enableReorderDrag(element: HTMLElement): void {
           });
 
           optionArea.appendChild(element);
+          element.classList.remove('dropped');
           if (dummy) {
             dummy.remove();
           }
@@ -263,7 +264,8 @@ export function enableReorderDrag(element: HTMLElement): void {
         setTimeout(() => {
           resetElementStyles(element);
           dummy.replaceWith(element);
-        }, 500);
+           element.classList.remove('dropped');
+        }, 100);
         return;
       } else {
         if (!category) return;
@@ -277,7 +279,7 @@ export function enableReorderDrag(element: HTMLElement): void {
           onDropToCategory(element, category);
           element.style.transform = 'translate(0,0)';
           element.style.marginBottom = '10px';
-        }, 500);
+        }, 100);
         return;
       }
     }
@@ -435,6 +437,7 @@ const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
 };
 
 async function onDropToCategory(dragElement: HTMLElement, categoryElement: HTMLElement) {
+  dragElement.classList.add('dropped');
   let dragSelected = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
   let elementArr = dragSelected[categoryElement.getAttribute('tab-index')];
 
