@@ -83,7 +83,7 @@ export class LidoCell {
   /**
    * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
    */
-  @Prop() visible: string = "false";
+  @Prop() visible: string = 'false';
 
   /**
    * Audio file URL or identifier for sound that will be associated with the column.
@@ -162,7 +162,13 @@ export class LidoCell {
    * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
    */
   @Prop() margin: string = '';
-  
+
+  /**
+   * CSS filter to apply border radius to the image.
+   * Example: '10px' for  images.
+   */
+  @Prop() borderRadius: string = '0px';
+
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -213,6 +219,7 @@ export class LidoCell {
       left: parseProp(this.x, orientation),
       zIndex: this.z,
       margin: parseProp(this.margin, orientation),
+      borderRadius: parseProp(this.borderRadius, orientation),
       gap: parseProp(this.gap, orientation),
       display: JSON.parse(parseProp(`${this.visible}`, orientation))
         ? parseProp(this.layout, orientation) === 'wrap'

@@ -73,15 +73,15 @@
 			<lido-cell layout="row" visible="true"  height="landscape.38%,portrait.41%" width="100%" bg-Color="transparent" margin="landscape.7px 0px 0px 0px,portrait.55px 0px -73px 0px"   >
 				<lido-cell id="cate1" z="100"  visible="true"  width="landscape.32%,portrait.30%" height="100%" bg-Color="#E3F5FC"  onEntry="this.border-radius='6px';this.border=' 2px dashed #326B80';this.display='flex';this.flex-direction='column';this.align-items='center';" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
 					<lido-text visible="true" font-family="'Baloo Bhai 2'" font-size="landscape.32px,portrait.32px" string="छह पैर वाले" bg-Color="transparent" onEntry="  this.fontWeight='600';" ></lido-text>
-					<lido-cell  layout="landscape.wrap,portrait.col" id="category1" tab-index="3"  visible="true" value="झींगुर,मक्खी" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#E3F5FC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto';" ></lido-cell>
+					<lido-cell  layout="landscape.wrap,portrait.col" id="category1" tab-index="3"  visible="true" value="झींगुर,मक्खी" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#E3F5FC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto';" margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
 				</lido-cell>
 				<lido-cell id="cate2" z="100"  visible="true"  width="landscape.32%,portrait.30%" height="100%" bg-Color="#F2EAFC" onEntry="this.border-radius='6px';this.border=' 2px dashed #67428F';this.display='flex';this.flex-direction='column';this.align-items='center';" onTouch="this.addClass='highlight-element'; cate1.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
 					<lido-text visible="true" font-family="'Baloo Bhai 2'" font-size="landscape.32px,portrait.32px" string="आठ पैर वाले" bg-Color="transparent" onEntry="  this.fontWeight='600';" ></lido-text>
-					<lido-cell layout="landscape.wrap,portrait.col" id="category2" tab-index="4"  visible="true" value="मकड़ी,भँवरा" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#F2EAFC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto'; this.flex-direction='column';" ></lido-cell>
+					<lido-cell layout="landscape.wrap,portrait.col" id="category2" tab-index="4"  visible="true" value="मकड़ी,भँवरा" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#F2EAFC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto'; this.flex-direction='column';" margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
 				</lido-cell>
 				<lido-cell id="cate3" z="100"  visible="true" width="landscape.32%,portrait.30%" height="100%" bg-Color="#DAF1BC" onEntry="this.border-radius='6px'; this.border=' 2px dashed #799650';this.display='flex';this.flex-direction='column';this.align-items='center';" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate1.removeClass='highlight-element';">
 					<lido-text visible="true" font-family="'Baloo Bhai 2'" font-size="landscape.32px,portrait.32px" string="कई पैर वाले" bg-Color="transparent" onEntry="  this.fontWeight='600';" ></lido-text>
-					<lido-cell layout="landscape.wrap,portrait.col" id="category3" tab-index="5"  visible="true" value="कनखजूरा,कनखजूरा2" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#DAF1BC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto';this.flex-direction='column'; " ></lido-cell>
+					<lido-cell layout="landscape.wrap,portrait.col" id="category3" tab-index="5"  visible="true" value="कनखजूरा,कनखजूरा2" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#DAF1BC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto'; this.flex-direction='column'; " margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
 				</lido-cell>
 			</lido-cell>
 			<!-- dragElements -->
@@ -208,13 +208,16 @@
 			</lido-cell>
 	</lido-container>
 
-	 
-	<lido-container id="lido-container" tab-index="1" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="quick,lazy,quick1,lazy1" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
-
+  
+<lido-container id="lido-container" tab-index="1" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="quick,lazy,quick1,lazy1" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000'; audioSupport.speak='true'; " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1267px, portrait.541px" y="landscape.587px, portrait.1304px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 			</lido-avatar>
+		</lido-cell>
+		<!-- audio -->
+		<lido-cell id="audioSupport" audio="https://aeakbcdznktpsbrfsgys.storage.supabase.co/v1/object/public/template-assets/fill-in-the-blanks/fill-up-audio.mp3">
+			<lido-text   value="the quick brown fox jumped over a lazy dog the quick brown fox jumped over a lazy dog" string="the quick brown fox jumped over a lazy dog the quick brown fox jumped over a lazy dog" ></lido-text>
 		</lido-cell>
 		<!--Parent cell  -->
 		<lido-cell layout="col" visible="true" width="100%" height="100%" bg-color="transparent">
@@ -245,13 +248,13 @@
 				</lido-cell>
 			</lido-cell>
 			<lido-cell layout="landscape.row, portrait.wrap" childElementsLength="4" onEntry="this.gap='28px';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true" margin="landscape.0px 434px 91px 0px, portrait.243px 338px -28px 0px">
-				<lido-text font-family="'Baloo Bhai 2'" id="option1" value="quick" tab-index="7" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="quick" fontColor="black" font-size="40px" dropAttr="stretch" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option1" value="quick" tab-index="7" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="quick" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
 				</lido-text>
-				<lido-text font-family="'Baloo Bhai 2'" id="option2" value="lazy" tab-index="8" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="lazy" fontColor="black" font-size="40px" dropAttr="stretch" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option2" value="lazy" tab-index="8" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="lazy" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
 				</lido-text>
-				<lido-text font-family="'Baloo Bhai 2'" id="option3" value="quick1" tab-index="9" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px'; this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="quick1" fontColor="black" font-size="40px" dropAttr="stretch" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option3" value="quick1" tab-index="9" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px'; this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="quick1" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
 				</lido-text>
-				<lido-text font-family="'Baloo Bhai 2'" id="option4" value="lazy1" tab-index="10" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="lazy1" fontColor="black" font-size="40px" dropAttr="stretch" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option4" value="lazy1" tab-index="10" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="lazy1" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
 				</lido-text>
 			</lido-cell>
 		</lido-cell>

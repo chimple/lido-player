@@ -159,6 +159,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   const backGroundColor = element.style?.backgroundColor || '#FFB742';
   element.style.setProperty('--btn-bg-color', backGroundColor);
   element.style.setProperty('--btn-shadow-px', `0px ${elementShadow}px 0px`);
+  element.style.setProperty('--btn-active', `${elementShadow}px`);
   element.style.setProperty('--btn-shadow-color', tinycolor(backGroundColor).darken(17).toString());
   element.classList.add('click-element');
 }

@@ -446,7 +446,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
   }
   if (dropElement) {
-    
+    dragElement.classList.add('dropped');
     if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
       if (isisFull) {
@@ -503,6 +503,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
   }
   if (!dropElement) {
+    dragElement.classList.remove('dropped');
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
     const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
@@ -727,6 +728,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
   }
 
   if (selectedDropElement && selectedDragElement) {
+    if(selectedDragElement.getAttribute('drop-to'))return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
 
