@@ -283,7 +283,8 @@ export class LidoHome {
       const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
-
+      
+      
       if (prevbtn !== 'true') {
         leftbtn.style.visibility = 'hidden';
       } else {
@@ -359,7 +360,9 @@ export class LidoHome {
     return (
       <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
-        <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
+        <div key={this.currentContainerIndex}>
+            {this.containers[this.currentContainerIndex]?.()}
+        </div>
 
         {/* Render navigation dots below the container */}
         {this.showDotsandbtn && this.renderDots()}

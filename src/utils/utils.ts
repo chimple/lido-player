@@ -153,7 +153,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             riveInstance.play(action.value);
           }
           break;
-        }
+        }        
 
         default: {
           targetElement.style[action.action] = action.value;      
