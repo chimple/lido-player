@@ -728,6 +728,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
   }
 
   if (selectedDropElement && selectedDragElement) {
+    if(selectedDragElement.getAttribute('drop-to'))return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
 

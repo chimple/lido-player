@@ -151,6 +151,12 @@ export class LidoText {
   @Prop() margin: string = '';
 
   /**
+   * CSS filter to apply border radius to the image.
+   * Example: '10px' for  images.
+   */
+  @Prop() borderRadius: string = '0px';
+
+  /**
    * Reference to the HTML element representing this `lido-text` component.
    */
   @Element() el: HTMLElement;
@@ -200,6 +206,7 @@ export class LidoText {
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
       margin: parseProp(this.margin, orientation),
+      borderRadius: parseProp(this.borderRadius, orientation),
     };
   }
 

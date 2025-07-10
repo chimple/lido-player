@@ -116,6 +116,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius": string;
+        /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
@@ -1212,6 +1216,10 @@ export namespace Components {
          */
         "borderImage"?: string;
         /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius": string;
+        /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
         "fontColor": string;
@@ -1786,6 +1794,10 @@ declare namespace LocalJSX {
           * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor"?: string;
+        /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius"?: string;
         /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
@@ -2882,6 +2894,10 @@ declare namespace LocalJSX {
           * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
          */
         "borderImage"?: string;
+        /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius"?: string;
         /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
