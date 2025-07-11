@@ -243,7 +243,7 @@ export function enableReorderDrag(element: HTMLElement): void {
   const onClickElement = (element: HTMLElement) => {
     if (elementType === 'option') {
       const categoryArr = container.querySelectorAll('[type="category"]');
-      const category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
+      let category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
       if (element.parentElement.getAttribute('type') === 'category') {
         const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const tabKey = category.getAttribute('tab-index');
@@ -268,7 +268,9 @@ export function enableReorderDrag(element: HTMLElement): void {
         }, 100);
         return;
       } else {
-        if (!category) return;
+        if (!category) {
+          category = categoryArr[0] as HTMLElement;
+        }
         const divEl = createDummyElement(element);
         category.appendChild(divEl);
         element.style.position = 'absolute';
