@@ -24,6 +24,7 @@
   z-index: 1;
   top: 6%;
   left: 50%;
+  visibility: hidden;
 }
 
 .lido-dot {
@@ -36,6 +37,8 @@
   transition: background-color 0.3s;
   cursor: pointer;
   z-index: 1;
+  /* visibility: hidden; */
+  
 }
 
 .lido-dot.completed {
@@ -56,6 +59,7 @@
   width: 92px;
   height: 92px;
   margin: 0 30px 0px 30px;
+  visibility: hidden;
 }
 
 .navbar {

@@ -129,17 +129,53 @@ export class LidoRandom {
    * It randomly positions all child elements within the container using CSS `top` and `left` percentages.
    */
   componentDidLoad() {
-    // Select all direct child elements of the component
-    const slotElements = this.el.querySelectorAll('.lido-random > *');
+    setTimeout(() => {
+      // Select all direct child elements of the component
+      const parentcontainer = this.el.parentElement;
+      if (!parentcontainer) return;
+      console.log('parent elementttt', parentcontainer);
 
-    // Iterate over each child and apply random positions
-    slotElements.forEach((child: HTMLElement) => {
-      const randomTop = Math.random() * 100; // Random value between 0 and 100 for vertical position
-      const randomLeft = Math.random() * 100; // Random value between 0 and 100 for horizontal position
+      // Get parent size
+      const rect = parentcontainer.getBoundingClientRect();
+      const parentWidth = rect.width;
+      const parentHeight = rect.height;
+      console.log('parenet width', parentWidth);
+      console.log('parenet highth', parentHeight);
 
-      child.style.top = `${randomTop}%`;
-      child.style.left = `${randomLeft}%`;
-    });
+      // Apply own dimensions if provided
+      // if (this.width) this.el.style.width = this.width;
+      // if (this.height) this.el.style.height = this.height;
+      // if (this.x) this.el.style.left = this.x;
+      // if (this.y) this.el.style.top = this.y;
+
+      // Ensure parent has relative positioning
+      if (getComputedStyle(parentcontainer).position === 'static') {
+        parentcontainer.style.position = 'relative';
+      }
+
+      // Place child elements randomly inside parent
+      const children = Array.from(this.el.children) as HTMLElement[];
+
+      children.forEach(child => {
+        const childRect = child.getBoundingClientRect();
+        const childWidth = childRect.width;
+        const childHeight = childRect.height;
+
+        console.log('child width', childWidth);
+        const maxLeft = Math.max(parentWidth - childWidth, 0);
+        const maxTop = Math.max(parentHeight - childHeight, 0);
+
+        const randLeft = Math.floor(Math.random() * maxLeft);
+        const randTop = Math.floor(Math.random() * maxTop);
+
+        console.log('randomleft', randLeft);
+        console.log('randomtop', randTop);
+
+        child.style.position = 'absolute';
+        child.style.left = `${randLeft}px`;
+        child.style.top = `${randTop}px`;
+      });
+    }, 50);
   }
 
   render() {
