@@ -10,6 +10,7 @@ import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDro
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
+import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 const gameScore = new GameScore();
 
 export function format(first?: string, middle?: string, last?: string): string {
@@ -153,10 +154,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             riveInstance.play(action.value);
           }
           break;
-        }        
+        }
 
         default: {
-          targetElement.style[action.action] = action.value;      
+          targetElement.style[action.action] = action.value;
           break;
         }
       }
@@ -537,6 +538,9 @@ export async function speakText(text: string, targetElement?: HTMLElement): Prom
         resolve(true); // Resolve when speech is completed
       };
       synth.speak(utterance);
+      if (!synth.speaking) {
+        stopHighlightForSpeakingElement(targetElement);
+      }
     }, 50);
   });
 }
