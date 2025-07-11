@@ -24,7 +24,16 @@ export class LidoTrace {
    */
   @Prop() svgSource: string = '';
 
+  /**
+ * Array of SVG URLs to be used for tracing, separated by semicolons.
+ * This allows multiple SVGs to be loaded and traced in sequence.
+ */
   @State() svgUrls: string[] = [];
+
+  /**
+   * Index of the currently active SVG in the `svgUrls` array.
+   * This is used to track which SVG is currently being traced.
+   */
   @State() currentSvgIndex: number = 0;
 
   /**
@@ -92,6 +101,16 @@ export class LidoTrace {
    * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
    */
   @Prop() onCorrect: string;
+
+  /**
+   * Indicates whether to highlight the text associated with the SVG when the trace is completed.
+   */
+  @Prop() highlightTextId: string = '';
+
+  /**
+   * Indicates whether to play an animation trace when the SVG is completed.
+   */
+  @Prop() animationTrace: boolean = false;
 
   //   @Element() el!: HTMLElement;
 
@@ -555,6 +574,13 @@ export class LidoTrace {
     if (this.moving) return; // Prevent multiple calls
     this.moving = true; // Set moving to true to prevent re-entrance
 
+    if(this.highlightTextId) {
+      this.highlightLetter(this.currentSvgIndex);
+    }
+    if(this.animationTrace) {
+      await this.playTraceAnimation();
+    }
+
     if(this.currentSvgIndex < this.svgUrls.length - 1)
     {
        this.currentSvgIndex++;
@@ -710,6 +736,34 @@ export class LidoTrace {
 
     this.resetIdleTimer(state);
   }
+
+  private async playTraceAnimation() {
+    const el = document.getElementById(this.id);
+    if (!el) return;
+    el.classList.add('trace-animate');
+    // Wait for the animation to finish (500ms)
+    await new Promise(resolve => setTimeout(resolve, 500));
+    el.classList.remove('trace-animate');
+  }
+
+  private async highlightLetter(index: number) {
+    // Find the lido-text element by id (e.g., "bug")
+    const textId = this.highlightTextId;
+    const textElem = document.getElementById(textId);
+    if (!textElem) return;
+
+    // Find the .lido-text-content container inside lido-text
+    const content = textElem.querySelector('.lido-text-content');
+    if (!content) return;
+
+    const letters = content.querySelectorAll('.text-letters');
+    if (index < 0 || index >= letters.length) return;
+
+    // Highlight the current letter keeping the previous ones highlighted
+    const letter = letters[index];
+    if (letter) letter.classList.add('letter-highlight');
+  }
+
 
   render() {
     const style = {
