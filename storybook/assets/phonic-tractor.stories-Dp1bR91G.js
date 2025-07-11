@@ -22,7 +22,7 @@ import"./lit-element-BxxbMms4.js";import{x as r}from"./lit-html-DLYuhZ0i.js";con
                 </lido-image>
                 <!-- drop and 1st trolley -->
                 <lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" margin="landscape.68px 97px 0px -41px, portrait.0px -142px 0px 151px">
-                    <lido-text id="t1" type="drop" tab-index="1" bg-color="transparent" height="132px" width="132px" value="${t.answer1}" is-allow-only-one-drop="true" margin="-25px 0px 16px 0px" onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';"></lido-text>
+                    <lido-text id="t1" type="drop" tab-index="1" bg-color="transparent" height="132px" width="132px" value="${t.answer1}" is-allow-only-one-drop="true" margin="-25px 0px 16px 0px" onEntry=" this.borderRadius='6px';"></lido-text>
                     <lido-image id="img4" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 0px" >
                     </lido-image>
                     
@@ -32,7 +32,7 @@ import"./lit-element-BxxbMms4.js";import{x as r}from"./lit-html-DLYuhZ0i.js";con
                 
                 <!-- drop and trolley -->
                     <lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" margin="landscape.68px 171px 0px -171px, portrait.0px 0px 0px 0px">
-                        <lido-text id="t2" type="drop" bg-color="transparent" tab-index="2" height="132px" width="132px" value="${t.answer2}" is-allow-only-one-drop="true"  margin="landscape.-25px 0px 16px 0px, portrait.-25px 0px 16px 180px"  onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';"></lido-text>
+                        <lido-text id="t2" type="drop" bg-color="transparent" tab-index="2" height="132px" width="132px" value="${t.answer2}" is-allow-only-one-drop="true"  margin="landscape.-25px 0px 16px 0px, portrait.-25px 0px 16px 180px"  onEntry=" this.borderRadius='6px';"></lido-text>
                         <lido-image id="img6" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px -89px 0px 0px" >
                         </lido-image>
                     </lido-cell>
@@ -40,7 +40,7 @@ import"./lit-element-BxxbMms4.js";import{x as r}from"./lit-html-DLYuhZ0i.js";con
                 <!-- 3rd trolley -->
                 <!-- drop and trolley -->
                     <lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" margin="landscape.68px 254px 0px -245px, portrait.0px -41px 0px 36px">
-                        <lido-text id="t3" type="drop" bg-color="transparent" tab-index="3" height="132px" width="132px" value="${t.answer3}" is-allow-only-one-drop="true"  margin="-25px 0px 16px 0px"  onEntry="this.border='5px dashed #f34d08 '; this.borderRadius='6px';"></lido-text>
+                        <lido-text id="t3" type="drop" bg-color="transparent" tab-index="3" height="132px" width="132px" value="${t.answer3}" is-allow-only-one-drop="true"  margin="-25px 0px 16px 0px"  onEntry=" this.borderRadius='6px';"></lido-text>
                         <lido-image id="img8" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 0px" >
                         </lido-image>
                     </lido-cell>
