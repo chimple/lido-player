@@ -157,6 +157,13 @@ export class LidoText {
   @Prop() borderRadius: string = '0px';
 
   /**
+   * Indicates whether to wrap each letter of the text in a span element.
+   * This can be useful for animations or styling individual letters.
+   */
+  
+  @Prop() wrapLetters: boolean = false;
+
+  /**
    * Reference to the HTML element representing this `lido-text` component.
    */
   @Element() el: HTMLElement;
@@ -172,6 +179,7 @@ export class LidoText {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
+    this.addSpanToText();
   }
 
   /**
@@ -210,6 +218,22 @@ export class LidoText {
     };
   }
 
+  private async addSpanToText() {
+      if(this.wrapLetters) {// only wrap if requested
+      // Wrap each letter in a span inside .lido-text-content
+      const content = this.el.querySelector('.lido-text-content');
+      if (!content) return;
+      const text = content.textContent || '';
+      content.innerHTML = '';
+      text.split('').forEach((char, idx) => {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.className = 'text-letters';
+        content.appendChild(span);
+      });
+    }
+  }
+
   render() {
     return (
       <Host
@@ -229,7 +253,7 @@ export class LidoText {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
       >
-        {this.string}
+        <div class="lido-text-content">{this.string}</div>
       </Host>
     );
   }

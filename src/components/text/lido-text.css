@@ -15,3 +15,23 @@
 .lido-text:hover {
   background-color: #f0f0f0;
 }
+
+.text-letters {
+  transition: color 0.3s, text-shadow 0.3s;
+  display: inline-block;
+  padding: 0 2px;  
+}
+
+.text-letters.letter-highlight {
+  color: #8e24aa;
+  background: none;
+  border-radius: 0;
+  text-shadow: 0 2px 8px #8e24aa88;
+  animation: pop 0.4s;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  60% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
