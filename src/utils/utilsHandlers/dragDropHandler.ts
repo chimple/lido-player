@@ -527,15 +527,16 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
-          div.classList.add('popup-container');
+          div.classList.add('Afterdrop-popup-container');
 
           // Remove from old parents
           dragElement.parentElement.parentElement.remove();
           dropElement.parentElement.parentElement.remove();
 
           // Add animation and popup classes
-          dragElement.classList.add('zoom-fade-in', 'popup-drag-element');
-          dropElement.classList.add('zoom-fade-in', 'popup-drop-element');
+          dragElement.classList.add('zoom-fade-in', 'Afterdrop-popup-drag-element');
+          
+          dropElement.classList.add('zoom-fade-in', 'Afterdrop-popup-drop-element');
 
           div.appendChild(dragElement);
           div.appendChild(dropElement);
