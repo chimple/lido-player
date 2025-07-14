@@ -3,6 +3,8 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
+import { log } from 'util';
+import { e } from 'mathjs';
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
@@ -225,7 +227,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
           otherElement.style.border = ''; // Reset border
           otherElement.style.backgroundColor = ''; // Reset background color
         }
-        if (otherElement.tagName.toLowerCase() === 'lido-image') {
+        if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
           otherElement.style.opacity = '1';
         }
       }
@@ -282,7 +284,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.border = ''; // Reset border
             otherElement.style.backgroundColor = ''; // Reset background color
           }
-          if (otherElement.tagName.toLowerCase() === 'lido-image') {
+          if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
             otherElement.style.opacity = '1';
           }
         }
@@ -378,12 +380,7 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
 
   return mostOverlappedElement;
 };
-  function animateDragToTarget(
-  dragElement: HTMLElement,
-  targetElement: HTMLElement,
-  container: HTMLElement,
-  transition: string = 'transform 0.5s ease'
-): void {
+function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElement, container: HTMLElement, transition: string = 'transform 0.5s ease'): void {
   const dropRect = targetElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
   const containerScale = getElementScale(container); // Assuming you have this function
@@ -398,7 +395,6 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
 
   dragElement.style.transition = transition;
   dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-  
 }
 export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTMLElement, dropHasDrag: Record<string, { drop: string; isFull: boolean }>,selectedValueData?: string,dragSelectedData?: string,dropSelectedData?: string): void
   {
@@ -507,14 +503,14 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   return;
 }
     const isCorrect = dropElement['value'].includes(dragElement['value']);
- 
+
     if (!isCorrect) {
-       dragElement.style.transition = 'transform 0.5s ease';
-    animateDragToTarget(dragElement, dropElement, container);
-    setTimeout(() => {
-       dragElement.style.transform = 'translate(0, 0)';
-     }, 500);
- 
+      dragElement.style.transition = 'transform 0.5s ease';
+      animateDragToTarget(dragElement, dropElement, container);
+      setTimeout(() => {
+        dragElement.style.transform = 'translate(0, 0)';
+      }, 500);
+
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
         childs.forEach(item => {
@@ -525,9 +521,44 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         });
       }
       return;
-    }
+    } else {
+      const checkdropAttr = container.getAttribute('dropAttr');
+      if (checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          container.append(div);
+          div.classList.add('after-drop-popup-container');
 
+          // Remove from old parents
+          dragElement.parentElement.parentElement.remove();
+          dropElement.parentElement.parentElement.remove();
+
+          // Add animation and popup classes
+          dragElement.classList.add('zoom-fade-in', 'after-drop-popup-drag-element');
+          
+          dropElement.classList.add('zoom-fade-in', 'after-drop-popup-drop-element');
+
+          div.appendChild(dragElement);
+          div.appendChild(dropElement);
+
+          dropElement.classList.remove('empty');
+
+          setTimeout(() => {
+            dragElement.classList.remove('zoom-fade-in');
+            dropElement.classList.remove('zoom-fade-in');
+
+            dragElement.classList.add('zoom-fade-out');
+            dropElement.classList.add('zoom-fade-out');
+
+            setTimeout(() => {
+              div.remove();
+            }, 800); // match animation duration
+          }, 2000); // stay for 2 seconds
+        }, 250);
+      }
+    }
   }
+
   if (dragElement) {
     if (dropElement) {
       dragElement.setAttribute(DropToAttr, dropElement?.id);
@@ -559,8 +590,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
       // Check for overlaps and highlight only the most overlapping element
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === "true" || "";
-      
+      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
+
       if (mostOverlappedElement && isAllowOnlyOneDrop) {
         dragElement.style.transform = 'translate(0,0)';
         dragElement.style.transition = 'transform 0.5s ease';
@@ -584,7 +615,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
               otherElement.style.border = ''; // Reset border
               otherElement.style.backgroundColor = ''; // Reset background color
             }
-            if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
               otherElement.style.opacity = '1';
             }
           }
@@ -659,12 +690,12 @@ if (!dropElement) {
 }
 
 export function updateDropBorder(element: HTMLElement): void {
-   if (!element.classList.contains('drop-element')) return;
+  if (!element.classList.contains('drop-element')) return;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
-  const showBorder = container.getAttribute('show-drop-border'); 
-  if (showBorder!== 'true' ) {
-    return; 
+  const showBorder = container.getAttribute('show-drop-border');
+  if (showBorder !== 'true') {
+    return;
   }
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
@@ -737,7 +768,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
   }
 
   if (selectedDropElement && selectedDragElement) {
-    if(selectedDragElement.getAttribute('drop-to'))return;
+    if (selectedDragElement.getAttribute('drop-to')) return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
 
@@ -809,7 +840,7 @@ export const appendingDragElementsInDrop = () => {
       if (drop['value'].includes(drag['value'])) {
         drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
-        //  drag.style.boxShadow = 'none'; 
+        //  drag.style.boxShadow = 'none';
       }
     });
   });

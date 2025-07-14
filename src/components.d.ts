@@ -124,6 +124,10 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
+          * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
+         */
+        "flexDirection": string;
+        /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
          */
         "gap": string;
@@ -1802,6 +1806,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
+         */
+        "flexDirection"?: string;
         /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
          */

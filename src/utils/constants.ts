@@ -35,6 +35,7 @@ export enum DropMode {
   Diagonal = 'diagonal',
   Stretch = 'stretch',
   InfiniteDrop = 'infinite-drop',
+  EnableAnimation = "enableanimation",
 }
 
 export enum DropAction {
