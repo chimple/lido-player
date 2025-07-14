@@ -1,0 +1,76 @@
+.lido-col {
+  /* position: absolute; */
+  top: var(--y, 0);
+  left: var(--x, 0);
+  height: var(--height, 100%);
+  width: var(--width, 100%);
+  background-color: var(--bgColor, #eeeeee);
+  /* position: relative; */
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lido-col > * {
+  /* position: relative; */
+}
+
+.lido-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* position: absolute; */
+}
+
+.lido-row > * {
+  /* position: relative; */
+}
+
+.lido-wrap {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(186px, auto));
+}
+
+.lido-wrap > * {
+  padding: 10px;
+  background-color: var(--child-bg-color, #f0f0f0);
+  box-sizing: border-box;
+}
+
+.lido-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 10px;
+}
+
+.lido-pos {
+  top: var(--y, 0);
+  left: var(--x, 0);
+  height: var(--height, 100%);
+  width: var(--width, 100%);
+  background-color: var(--bgColor, #eeeeee);
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  position: fixed;
+}
+
+.lido-pos > * {
+  position: absolute;
+}
+
+.lido-random {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute; /* Container is now relative */
+}
+
+.lido-random > * {
+  position: absolute;
+}
