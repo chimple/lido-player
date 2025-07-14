@@ -11,21 +11,21 @@ import"./lit-element-BxxbMms4.js";import{x as r}from"./lit-html-DLYuhZ0i.js";con
             </lido-cell>
 
             <!-- heading -->
-            <lido-text id="heading"  tabIndex="2"   visible="true" string="${t.heading}" font-family="'Baloo Bhai 2'" fontColor="#323232" font-size="landscape.44px,portrait.32px" bg-Color="transparent" onEntry="  this.fontWeight='400';this.sleep='1000'; this.speak='true';"   margin="landscape.26px 0px -25px 0px, portrait.46px 0px -39px 0px" >
+            <lido-text id="heading"  tabIndex="2"   visible="true" string="${t.heading}" font-family="'Baloo Bhai 2'" fontColor="#323232" font-size="landscape.44px,portrait.32px" bg-Color="transparent" onEntry="  this.fontWeight='400';this.sleep='1000'; this.speak='true';"   margin="landscape.26px 0px -25px 0px, portrait.80px 0px -62px" >
             </lido-text>
             <!-- dropElements -->
             <lido-cell layout="row" visible="true"  height="landscape.38%,portrait.41%" width="100%" bg-Color="transparent" margin="landscape.7px 0px 0px 0px,portrait.55px 0px -73px 0px"   >
                 <lido-cell id="cate1" z="100"  visible="true"  width="landscape.32%,portrait.30%" height="100%" bg-Color="#E3F5FC"  onEntry="this.border-radius='6px';this.border=' 2px dashed #326B80';this.display='flex';this.flex-direction='column';this.align-items='center';" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
                     <lido-text visible="true" font-family="'Baloo Bhai 2'" font-size="landscape.32px,portrait.32px" string="${t.category1}" bg-Color="transparent" onEntry=" this.sleep='6000'; this.fontWeight='600';  this.speak='true';" ></lido-text>
-                    <lido-cell  layout="landscape.wrap,portrait.col" id="category1" tab-index="3"  visible="true" value="${t.correct1}" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#E3F5FC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto';" margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
+                    <lido-cell  layout="landscape.wrap,portrait.col" id="category1" tab-index="3"  visible="true" value="${t.correct1}" type="category" height="1000px" width="100%" bg-color="#E3F5FC" onEntry="this.overflow=' hidden'; this.justify-items='center';  this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto';" margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
                 </lido-cell>
                 <lido-cell id="cate2" z="100"  visible="true"  width="landscape.32%,portrait.30%" height="100%" bg-Color="#F2EAFC" onEntry="this.border-radius='6px';this.border=' 2px dashed #67428F';this.display='flex';this.flex-direction='column';this.align-items='center';" onTouch="this.addClass='highlight-element'; cate1.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
                     <lido-text visible="true" font-family="'Baloo Bhai 2'" font-size="landscape.32px,portrait.32px" string="${t.category2}" bg-Color="transparent" onEntry="this.sleep='8000';   this.fontWeight='600'; this.speak='true';" ></lido-text>
-                    <lido-cell layout="landscape.wrap,portrait.col" id="category2" tab-index="4"  visible="true" value="${t.correct2}" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#F2EAFC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto'; this.flex-direction='column';" margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
+                    <lido-cell layout="landscape.wrap,portrait.col" id="category2" tab-index="4"  visible="true" value="${t.correct2}" type="category" height="1000px" width="100%" bg-color="#F2EAFC" onEntry="this.overflow=' hidden'; this.justify-items='center';  this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto'; this.flex-direction='column';" margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
                 </lido-cell>
                 <lido-cell id="cate3" z="100"  visible="true" width="landscape.32%,portrait.30%" height="100%" bg-Color="#DAF1BC" onEntry="this.border-radius='6px'; this.border=' 2px dashed #799650';this.display='flex';this.flex-direction='column';this.align-items='center';" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate1.removeClass='highlight-element';">
                     <lido-text visible="true" font-family="'Baloo Bhai 2'" font-size="landscape.32px,portrait.32px" string="${t.category3}" bg-Color="transparent" onEntry="this.sleep='10000';  this.fontWeight='600'; this.speak='true';" ></lido-text>
-                    <lido-cell layout="landscape.wrap,portrait.col" id="category3" tab-index="5"  visible="true" value="${t.correct2}" type="category" height="1000px" width="landscape.327px,portrait.-18px" bg-color="#DAF1BC" onEntry="this.overflow=' hidden'; this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto'; this.flex-direction='column'; " margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
+                    <lido-cell layout="landscape.wrap,portrait.col" id="category3" tab-index="5"  visible="true" value="${t.correct2}" type="category" height="1000px" width="100%" bg-color="#DAF1BC" onEntry="this.overflow=' hidden'; this.justify-items='center';  this.grid-template-columns=' repeat(2, 1fr)'; this.gap=' 10px'; this.overflow-y=' auto'; this.flex-direction='column'; " margin="landscape.-15px 0px 0px 0px,portrait.0px" ></lido-cell>
                 </lido-cell>
             </lido-cell>
             <!-- dragElements -->
@@ -57,7 +57,7 @@ import"./lit-element-BxxbMms4.js";import{x as r}from"./lit-html-DLYuhZ0i.js";con
             </lido-cell>
         </lido-cell>
     </lido-container>
-  </main>`}var o,a,s;e.parameters={...e.parameters,docs:{...(o=e.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  </main>`}var o,s,a;e.parameters={...e.parameters,docs:{...(o=e.parameters)==null?void 0:o.docs,source:{originalSource:`{
   args: {
     heading: 'कीटों को उनके पैरों की संख्या के अनुसार बताएँ!',
     image1: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png',
@@ -83,4 +83,4 @@ import"./lit-element-BxxbMms4.js";import{x as r}from"./lit-html-DLYuhZ0i.js";con
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(s=(a=e.parameters)==null?void 0:a.docs)==null?void 0:s.source}}};const c=["Categ"];export{e as Categ,c as __namedExportsOrder,h as default};
+}`,...(a=(s=e.parameters)==null?void 0:s.docs)==null?void 0:a.source}}};const c=["Categ"];export{e as Categ,c as __namedExportsOrder,h as default};
