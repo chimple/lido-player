@@ -527,47 +527,24 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
       if (checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
-        
         setTimeout(() => {
-          
           const div = document.createElement('div');
-          container.append(div);          
+          container.append(div);
+          div.classList.add('popup-container');
 
-          // Style the popup container
-          div.style.width = '100%';
-          div.style.height = '100%';
-          div.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-          div.style.position = 'absolute';
-          div.style.display = 'flex';
-          div.style.alignItems = 'center';
-          div.style.justifyContent = 'center';
-          div.style.gap = '145px';
-
-          // Remove original elements from their parent containers
+          // Remove from old parents
           dragElement.parentElement.parentElement.remove();
           dropElement.parentElement.parentElement.remove();
 
-          // Add animation classes (CSS handles the animation now)
-          dragElement.classList.add('zoom-fade-in');
-          dropElement.classList.add('zoom-fade-in');
+          // Add animation and popup classes
+          dragElement.classList.add('zoom-fade-in', 'popup-drag-element');
+          dropElement.classList.add('zoom-fade-in', 'popup-drop-element');
 
-          // Append to popup
           div.appendChild(dragElement);
           div.appendChild(dropElement);
 
-          // Stylize the elements
-          dragElement.style.scale = '1.5';
-          dropElement.style.scale = '1.5';
-          dropElement.style.border = 'unset';
-          dragElement.style.borderRadius = '4px';
-          dropElement.style.borderRadius = '4px';
           dropElement.classList.remove('empty');
-          dragElement.style.transform = 'none';
-          dropElement.style.transform = 'none';
-          dragElement.style.position = 'unset';
-          dropElement.style.position = 'unset';
 
-          // Fade out after 2 seconds
           setTimeout(() => {
             dragElement.classList.remove('zoom-fade-in');
             dropElement.classList.remove('zoom-fade-in');
@@ -575,7 +552,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
             dragElement.classList.add('zoom-fade-out');
             dropElement.classList.add('zoom-fade-out');
 
-            // Remove after fade-out animation
             setTimeout(() => {
               div.remove();
             }, 800); // match animation duration
