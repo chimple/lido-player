@@ -284,7 +284,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.border = ''; // Reset border
             otherElement.style.backgroundColor = ''; // Reset background color
           }
-          if (otherElement.tagName.toLowerCase() === 'lido-image'|| 'lido-cell') {
+          if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
             otherElement.style.opacity = '1';
           }
         }
@@ -397,7 +397,12 @@ function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElemen
   dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
 }
 export function handleResetDragElement(
-  dragElement: HTMLElement,dropHasDrag: Record<string, { drop: string; isFull: boolean }>,selectedValueData?: string,dragSelectedData?: string,dropSelectedData?: string): void {
+  dragElement: HTMLElement,
+  dropHasDrag: Record<string, { drop: string; isFull: boolean }>,
+  selectedValueData?: string,
+  dragSelectedData?: string,
+  dropSelectedData?: string,
+): void {
   dragElement.classList.remove('dropped');
 
   const container = document.getElementById(LidoContainer) as HTMLElement;
@@ -423,7 +428,7 @@ export function handleResetDragElement(
   const currentDrop = dragToDropMap.get(dragElement);
   if (currentDrop) {
     dragElement.removeAttribute(DropToAttr);
-   dragToDropMap.delete(dragElement);
+    dragToDropMap.delete(dragElement);
     updateDropBorder(currentDrop);
     const prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
     if (prevDropItem) {
@@ -494,20 +499,19 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
   if (isAllowOnlyCorrect) {
-  if (!dropElement) {
-    dragElement.style.transition = 'transform 0.5s ease';
-    dragElement.style.transform = 'translate(0, 0)';
-    handleResetDragElement(dragElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
-  return;
-}
+    if (!dropElement) {
+      dragElement.style.transition = 'transform 0.5s ease';
+      dragElement.style.transform = 'translate(0, 0)';
+      handleResetDragElement(dragElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+      return;
+    }
     const isCorrect = dropElement['value'].includes(dragElement['value']);
- 
+
     if (!isCorrect) {
       dragElement.style.transition = 'transform 0.5s ease';
       animateDragToTarget(dragElement, dropElement, container);
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
-        
       }, 500);
 
       if (dragElement['type'] === 'option') {
@@ -522,73 +526,61 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       return;
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
-      if (checkdropAttr.toLowerCase() === DropMode.Animation) {
-        const div = document.createElement('div');
-        container.append(div);
-
-        // Style the popup container
-        div.style.width = '100%';
-        div.style.height = '100%';
-        div.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-        div.style.position = 'absolute';
-        div.style.display = 'flex';
-        div.style.alignItems = 'center';
-        div.style.justifyContent = 'center';
-        div.style.gap = '145px';
-
-        // Add zoom-in animation
-        dragElement.style.animation = 'zoomFadeIn 0.8s ease-out forwards';
-        dropElement.style.animation = 'zoomFadeIn 0.8s ease-out forwards';
-
-        // Add keyframes only once
-        if (!document.getElementById('popup-animation-style')) {
-          const style = document.createElement('style');
-          style.id = 'popup-animation-style';
-          style.textContent = `
-        @keyframes zoomFadeIn {
-          0% { transform: scale(0.6); opacity: 0; }
-          100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes zoomFadeOut {
-          0% { transform: scale(1); opacity: 1; }
-          100% { transform: scale(0.6); opacity: 0; }
-        }
-      `;
-          document.head.appendChild(style);
-        }
-        dragElement.parentElement.parentElement.remove();
-        dropElement.parentElement.parentElement.remove();
-        // Add the actual elements
-        div.appendChild(dragElement);
-        div.appendChild(dropElement);
-
-        // Stylize the elements
-        dragElement.style.scale = '1.5';
-        dropElement.style.scale = '1.5';
-        // dropElement.style.opacity = '1';
-        dropElement.style.border = 'unset';
-        dragElement.style.borderRadius = '4px';
-        dropElement.style.borderRadius = '4px';
-        dropElement.classList.remove('empty');
-        dragElement.style.transform = 'none';
-        dropElement.style.transform = 'none';
-        dragElement.style.position = 'unset';
-        dropElement.style.position = 'unset';
-
-        // Wait 2 seconds, then animate fade-out
+      if (checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
+        
         setTimeout(() => {
-          dragElement.style.animation = 'zoomFadeOut 0.8s ease-in forwards';
-          dropElement.style.animation = 'zoomFadeOut 0.8s ease-in forwards';
+          
+          const div = document.createElement('div');
+          container.append(div);          
 
-          // Remove the popup after animation completes
+          // Style the popup container
+          div.style.width = '100%';
+          div.style.height = '100%';
+          div.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+          div.style.position = 'absolute';
+          div.style.display = 'flex';
+          div.style.alignItems = 'center';
+          div.style.justifyContent = 'center';
+          div.style.gap = '145px';
+
+          // Remove original elements from their parent containers
+          dragElement.parentElement.parentElement.remove();
+          dropElement.parentElement.parentElement.remove();
+
+          // Add animation classes (CSS handles the animation now)
+          dragElement.classList.add('zoom-fade-in');
+          dropElement.classList.add('zoom-fade-in');
+
+          // Append to popup
+          div.appendChild(dragElement);
+          div.appendChild(dropElement);
+
+          // Stylize the elements
+          dragElement.style.scale = '1.5';
+          dropElement.style.scale = '1.5';
+          dropElement.style.border = 'unset';
+          dragElement.style.borderRadius = '4px';
+          dropElement.style.borderRadius = '4px';
+          dropElement.classList.remove('empty');
+          dragElement.style.transform = 'none';
+          dropElement.style.transform = 'none';
+          dragElement.style.position = 'unset';
+          dropElement.style.position = 'unset';
+
+          // Fade out after 2 seconds
           setTimeout(() => {
-            div.remove();
-          }, 700); // match fade-out duration
-        }, 2000); // stay visible for 2 seconds
-        storingEachActivityScore(isCorrect);
-        onActivityComplete(dragElement, dropElement);
-        return;
+            dragElement.classList.remove('zoom-fade-in');
+            dropElement.classList.remove('zoom-fade-in');
+
+            dragElement.classList.add('zoom-fade-out');
+            dropElement.classList.add('zoom-fade-out');
+
+            // Remove after fade-out animation
+            setTimeout(() => {
+              div.remove();
+            }, 800); // match animation duration
+          }, 2000); // stay for 2 seconds
+        }, 250);
       }
     }
   }
@@ -649,7 +641,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
               otherElement.style.border = ''; // Reset border
               otherElement.style.backgroundColor = ''; // Reset background color
             }
-            if (otherElement.tagName.toLowerCase() === 'lido-image'|| 'lido-cell') {
+            if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
               otherElement.style.opacity = '1';
             }
           }
@@ -659,7 +651,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
   }
   if (!dropElement) {
-    handleResetDragElement(dragElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
     dragElement.classList.remove('dropped');
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
@@ -735,7 +726,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
-        if (otherElement.tagName.toLowerCase() === 'lido-image'||'lido-cell') {
+        if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
           otherElement.style.opacity = '1';
           otherElement.style.backgroundColor = 'transparent';
         }
@@ -807,7 +798,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 }
 
 export function updateDropBorder(element: HTMLElement): void {
-   if (!element.classList.contains('drop-element')) return;
+  if (!element.classList.contains('drop-element')) return;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const showBorder = container.getAttribute('show-drop-border');
@@ -885,7 +876,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
   }
 
   if (selectedDropElement && selectedDragElement) {
-    if(selectedDragElement.getAttribute('drop-to'))return;
+    if (selectedDragElement.getAttribute('drop-to')) return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
 
