@@ -82,19 +82,19 @@ function getContainerXml(args){
 				<lido-image id="image1" disable-edit="true" visible="true" src="${args.img}" width="landscape.41%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 21px 0px 0px , portrait. 0">
 				</lido-image>
 				<!-- text -->
-				<lido-cell layout="flex" visible="true" height="landscape.100%,portrait.50%" width="landscape.50%, portrait.90%" onEntry="this.align-content='center'; this.gap='32px';this.display='ruby';" margin="landscape.0px 40px 0px 0px, portrait.0">
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text1}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; "></lido-text>
-					<lido-text id="drop1" margin="28px 20px -22px 20px"   disable-edit="true" tab-index="3" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer1}" type="drop" is-AllowOnlyOneDrop="true" onEntry="this.border-radius='10px';this.box-shoadow='';" ></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text2}" bg-color="transparent" onEntry="this.display='inline';this.boxShadow='0 0 0';"></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text3}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline';"></lido-text>
-					<lido-text id="drop2" margin="28px 20px -22px 20px"   disable-edit="true" tab-index="4" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer2}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';" ></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text4}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; "></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text5}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; "></lido-text>
-					<lido-text id="drop3" margin="28px 20px -22px 20px"   disable-edit="true" tab-index="5" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer3}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';"></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text6}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; "></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text7} " bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; "></lido-text>
-					<lido-text id="drop4" margin="28px 20px -22px 20px"   disable-edit="true" tab-index="6" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer4}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';" ></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text8}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; "></lido-text>
+				<lido-cell layout="flex" visible="true" height="landscape.100%,portrait.50%" width="landscape.50%, portrait.90%" onEntry="this.align-content='center'; this.gap='32px';" margin="landscape.32px 40px 0px 0px, portrait.0">
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text1} " bg-color="transparent" onEntry=" this.fontWeight='400'; "></lido-text>
+					<lido-text id="drop1"  disable-edit="true" tab-index="3" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer1}" type="drop" is-AllowOnlyOneDrop="true" onEntry="this.border-radius='10px';this.box-shoadow='';" ></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="  ${args.text2}" bg-color="transparent" onEntry="this.display='inline';this.boxShadow='0 0 0';"></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="  ${args.text3} " bg-color="transparent" onEntry=" this.fontWeight='400';"></lido-text>
+					<lido-text id="drop2"  disable-edit="true" tab-index="4" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer2}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';" ></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text4}" bg-color="transparent" onEntry=" this.fontWeight='400'; "></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.tex5}  " bg-color="transparent" onEntry=" this.fontWeight='400'; "></lido-text>
+					<lido-text id="drop3"  disable-edit="true" tab-index="5" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer3}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';"></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text6}  " bg-color="transparent" onEntry=" this.fontWeight='400'; "></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text7} " bg-color="transparent" onEntry=" this.fontWeight='400'; "></lido-text>
+					<lido-text id="drop4"  disable-edit="true" tab-index="6" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer4}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';" ></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text8}" bg-color="transparent" onEntry=" this.fontWeight='400'; "></lido-text>
 				</lido-cell>
 			</lido-cell>
 			<lido-cell layout="landscape.row, portrait.wrap" childElementsLength="4" onEntry="this.gap='28px';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true" margin="landscape.0px 434px 91px 0px, portrait.243px 338px -28px 0px">

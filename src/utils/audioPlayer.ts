@@ -27,7 +27,7 @@ export class AudioPlayer {
     this.audioElement.currentTime = 0;
     this.audioElement.src = '';
     const highlightedElements = document.querySelectorAll('.speaking-highlight');
-    highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));
+    // highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));
 
     const playElement = document.querySelector('#play') as HTMLElement;
     const pauseElement = document.querySelector('#pause') as HTMLElement;
@@ -57,11 +57,11 @@ export class AudioPlayer {
 
       try {
         await this.audioElement.play();
-        highlightSpeakingElement(targetElement);
+        // highlightSpeakingElement(targetElement);
 
         await new Promise<void>(resolve => {
           this.audioElement.onended = () => {
-            stopHighlightForSpeakingElement(targetElement);
+            // stopHighlightForSpeakingElement(targetElement);
             resolve();
           };
         });
@@ -72,9 +72,9 @@ export class AudioPlayer {
     // If no audio, use text-to-speech
     else if (targetElement.textContent) {
       try {
-        highlightSpeakingElement(targetElement);
+        // highlightSpeakingElement(targetElement);
         await speakText(targetElement.textContent, targetElement);
-        stopHighlightForSpeakingElement(targetElement);
+        // stopHighlightForSpeakingElement(targetElement);
       } catch (error) {
         console.log('🚀 TTS Error:', error);
       }
