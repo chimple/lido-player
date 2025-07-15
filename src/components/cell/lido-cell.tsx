@@ -15,6 +15,11 @@ import { max } from 'mathjs';
   shadow: false,
 })
 export class LidoCell {
+   /**
+   * Defines the width of the scrollbar within the cell (e.g., '14px'). 
+   * Defaults to '0px' if not specified, effectively hiding the scrollbar.
+   */
+   @Prop() scrollbarWidth: string = '';
   /**
    * The unique identifier for the column component.
    */
@@ -278,6 +283,7 @@ export class LidoCell {
       margin: parseProp(this.margin, orientation),
       borderRadius: parseProp(this.borderRadius, orientation),
       gap: parseProp(this.gap, orientation),
+      '--scrollbar-width': parseProp(this.scrollbarWidth || '0px', orientation),
       display: JSON.parse(parseProp(`${this.visible}`, orientation))
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'

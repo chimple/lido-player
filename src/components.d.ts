@@ -180,6 +180,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth": string;
+        /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
         "tabIndex": number;
@@ -1862,6 +1866,10 @@ declare namespace LocalJSX {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
+        /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth"?: string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
