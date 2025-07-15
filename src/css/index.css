@@ -151,3 +151,24 @@ body {
   justify-content: center;
   font-family: 'Baloo Bhai 2', serif;
 }
+
+.slide-numbers-bottom {
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  bottom: -25px;
+  width: 100%;
+  height: 50px;
+}
+
+.slide-numbers-left {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  width: 50px;
+  left: -25px;
+  bottom: 0px;
+}

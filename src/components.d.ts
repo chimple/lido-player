@@ -128,7 +128,7 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
-          * CSS flex-direction property to control the direction of the flex items. Example: 'row', 'column', 'row-reverse', 'column-reverse'.
+          * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
          */
         "flexDirection": string;
         /**
@@ -184,7 +184,7 @@ export namespace Components {
          */
         "onTouch": string;
         /**
-          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
          */
         "scrollbarWidth": string;
         /**
@@ -1831,7 +1831,7 @@ declare namespace LocalJSX {
          */
         "childElementsLength"?: number;
         /**
-          * CSS flex-direction property to control the direction of the flex items. Example: 'row', 'column', 'row-reverse', 'column-reverse'.
+          * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
          */
         "flexDirection"?: string;
         /**
@@ -1887,7 +1887,7 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
-          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
          */
         "scrollbarWidth"?: string;
         /**

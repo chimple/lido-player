@@ -19,21 +19,10 @@ const slideNumbers = (element: HTMLElement) => {
   numbersElement.innerHTML = tag;
   elementParent.appendChild(numbersElement);
   elementParent.style.position = 'relative';
-  numbersElement.className = 'slide-numbers-div';
-  numbersElement.style.position = 'absolute';
-  numbersElement.style.display = 'flex';
-  numbersElement.style.justifyContent = 'space-around';
-  numbersElement.style.alignItems = 'center';
-  numbersElement.style.bottom = '-25px';
-  numbersElement.style.width = elementParent?.offsetWidth + 'px';
-  numbersElement.style.height = '50px';
+  numbersElement.className = 'slide-numbers-div slide-numbers-bottom';
 
   if (elementParent.className === 'lido-col') {
-    numbersElement.style.flexDirection = 'column';
-    numbersElement.style.height = elementParent?.offsetHeight + 'px';
-    numbersElement.style.width = '50px';
-    numbersElement.style.left = '-25px';
-    numbersElement.style.bottom = '0px';
+    numbersElement.className = 'slide-numbers-div slide-numbers-bottom';
   }
 };
 
