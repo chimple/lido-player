@@ -100,6 +100,10 @@ export namespace Components {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems": string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden": string;
@@ -123,6 +127,10 @@ export namespace Components {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
+        /**
+          * CSS flex-direction property to control the direction of the flex items. Example: 'row', 'column', 'row-reverse', 'column-reverse'.
+         */
+        "flexDirection": string;
         /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
          */
@@ -1779,6 +1787,10 @@ declare namespace LocalJSX {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems"?: string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden"?: string;
@@ -1802,6 +1814,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * CSS flex-direction property to control the direction of the flex items. Example: 'row', 'column', 'row-reverse', 'column-reverse'.
+         */
+        "flexDirection"?: string;
         /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
          */

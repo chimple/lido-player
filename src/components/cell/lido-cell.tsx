@@ -164,6 +164,18 @@ export class LidoCell {
   @Prop() margin: string = '';
 
   /**
+   * CSS flex-direction property to control the direction of the flex items.
+   * Example: 'row', 'column', 'row-reverse', 'column-reverse'.
+   */
+  @Prop() flexDirection: string = '';
+
+  /**
+   * CSS align-items property to control the alignment of flex items.
+   * Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+   */
+  @Prop() alignItems: string = '';
+
+  /**
    * CSS filter to apply border radius to the image.
    * Example: '10px' for  images.
    */
@@ -228,6 +240,8 @@ export class LidoCell {
           ? 'block'
           : 'flex'
         : 'none',
+      flexDirection: this.flexDirection ? parseProp(this.flexDirection, orientation) : '',
+      alignItems: this.alignItems ? parseProp(this.alignItems, orientation) : '',
     };
     this.el.className = `lido-${parseProp(this.layout, orientation)}`;
   }
