@@ -184,6 +184,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth": string;
+        /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
         "tabIndex": number;
@@ -1280,6 +1284,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+         */
+        "spanType": 'letters' | 'words' | '';
+        /**
           * The string of text to be displayed in the component.
          */
         "string": string;
@@ -1318,6 +1326,10 @@ export namespace Components {
     }
     interface LidoTrace {
         /**
+          * Indicates whether to play an animation trace when the SVG is completed.
+         */
+        "animationTrace": boolean;
+        /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
          */
         "ariaHidden": string;
@@ -1333,6 +1345,10 @@ export namespace Components {
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */
         "height": string;
+        /**
+          * Indicates whether to highlight the text associated with the SVG when the trace is completed.
+         */
+        "highlightTextId": string;
         /**
           * Unique identifier for this `lido-trace` component instance.
          */
@@ -1870,6 +1886,10 @@ declare namespace LocalJSX {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
+        /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth"?: string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
@@ -2967,6 +2987,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+         */
+        "spanType"?: 'letters' | 'words' | '';
+        /**
           * The string of text to be displayed in the component.
          */
         "string"?: string;
@@ -3005,6 +3029,10 @@ declare namespace LocalJSX {
     }
     interface LidoTrace {
         /**
+          * Indicates whether to play an animation trace when the SVG is completed.
+         */
+        "animationTrace"?: boolean;
+        /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
          */
         "ariaHidden"?: string;
@@ -3020,6 +3048,10 @@ declare namespace LocalJSX {
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */
         "height"?: string;
+        /**
+          * Indicates whether to highlight the text associated with the SVG when the trace is completed.
+         */
+        "highlightTextId"?: string;
         /**
           * Unique identifier for this `lido-trace` component instance.
          */

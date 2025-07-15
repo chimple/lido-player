@@ -157,6 +157,12 @@ export class LidoText {
   @Prop() borderRadius: string = '0px';
 
   /**
+   * Indicates whether to wrap each letter or each word of the text in a span element.
+   * This can be useful for animations or styling individual letters.
+   */
+  @Prop() spanType: 'letters' | 'words' | '' = '';
+
+  /**
    * Reference to the HTML element representing this `lido-text` component.
    */
   @Element() el: HTMLElement;
@@ -172,6 +178,10 @@ export class LidoText {
    */
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
+    // only create span element if requested
+    if(this.spanType === 'words' || this.spanType === 'letters') {
+      this.addSpanToText();   
+    }
   }
 
   /**
@@ -210,6 +220,37 @@ export class LidoText {
     };
   }
 
+  private async addSpanToText() {
+    const content = this.el.querySelector('.lido-text-content');
+    if (!content) return;
+
+    const text = content.textContent || '';
+    content.innerHTML = '';
+
+    // Wrap each letters in a span inside .lido-text-content
+    if(this.spanType === 'letters') {
+      text.split('').forEach((letter, idx) => {
+          // Skip spaces
+          if (letter.trim() === '') return;
+          // Create a span for each letter
+          const letterSpan = document.createElement('span');
+          letterSpan.textContent = letter;
+          letterSpan.className = 'text-letters';
+          content.appendChild(letterSpan);
+        }); 
+    }   
+
+    // Wrap each words in a span inside .lido-text-content
+    if(this.spanType === 'words') {
+      text.split(' ').forEach((word, idx) => {
+          const wordSpan = document.createElement('span');
+          wordSpan.textContent = word;
+          wordSpan.className = 'text-words';
+          content.appendChild(wordSpan);
+      });
+    }
+  }
+
   render() {
     return (
       <Host
@@ -228,8 +269,9 @@ export class LidoText {
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        span-type={this.spanType}
       >
-        {this.string}
+        <div class="lido-text-content">{this.string}</div>
       </Host>
     );
   }

@@ -1,5 +1,6 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
+import { max } from 'mathjs';
 
 /**
  * @component LidoCell
@@ -14,6 +15,11 @@ import { handlingChildElements, initEventsForElement, parseProp } from '../../ut
   shadow: false,
 })
 export class LidoCell {
+   /**
+   * Defines the width of the scrollbar within the cell (e.g., '14px'). 
+   * Defaults to '0px' if not specified, effectively hiding the scrollbar.
+   */
+   @Prop() scrollbarWidth: string = '';
   /**
    * The unique identifier for the column component.
    */
@@ -182,6 +188,12 @@ export class LidoCell {
   @Prop() borderRadius: string = '0px';
 
   /**
+   * CSS flex direction for the component, which can be used to control the layout of child elements.
+   * Accepts values like 'row', 'column', etc.
+   */
+  @Prop() flexDirection:string='';
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string } = {};
@@ -194,16 +206,65 @@ export class LidoCell {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     // Select all direct child elements of the component
-    const slotElements = this.el.querySelectorAll('.lido-random > *');
-    if (!slotElements) return;
-    // Iterate over each child and apply random positions
-    slotElements.forEach((child: HTMLElement) => {
-      const randomTop = Math.random() * 100; // Random value between 0 and 100 for vertical position
-      const randomLeft = Math.random() * 100; // Random value between 0 and 100 for horizontal position
+    // const slotElements = this.el.querySelectorAll('.lido-random > *');
+    // if (!slotElements) return;
+    // // Iterate over each child and apply random positions
+    // slotElements.forEach((child: HTMLElement) => {
+    //   const randomTop = Math.random() * 100; // Random value between 0 and 100 for vertical position
+    //   const randomLeft = Math.random() * 100; // Random value between 0 and 100 for horizontal position
 
-      child.style.top = `${randomTop}%`;
-      child.style.left = `${randomLeft}%`;
-    });
+    //   child.style.top = `${randomTop}%`;
+    //   child.style.left = `${randomLeft}%`;
+    // });
+
+    setTimeout(() => {
+      const check_random_attr = this.el.querySelector('.lido-random') as HTMLElement;
+      // console.log("this is random cell",check_random_attr);
+
+      if (check_random_attr) {
+        const parentcontainer = check_random_attr.parentElement;
+        // console.log("getting parent cell : ", parentcontainer);
+
+        if (!parentcontainer) return;
+        // console.log('parent element', parentcontainer);
+
+        // Get parent size
+        const rect = parentcontainer.getBoundingClientRect();
+        const parentWidth = rect.width;
+        const parentHeight = rect.height;
+        
+
+        // Apply own dimensions if provided
+        // if (this.width) check_random_attr.style.width = this.width;
+        // if (this.height) check_random_attr.style.height = this.height;
+        // if (this.x) check_random_attr.style.left = this.x;
+        // if (this.y) check_random_attr.style.top = this.y;
+
+        // Ensure parent has relative positioning
+        if (getComputedStyle(parentcontainer).position === 'static') {
+          parentcontainer.style.position = 'relative';
+        }
+
+        // Place child elements randomly inside parent
+        const children = Array.from(check_random_attr.children) as HTMLElement[];
+
+        children.forEach(child => {
+          const childRect = child.getBoundingClientRect();
+          const childWidth = childRect.width;
+          const childHeight = childRect.height;
+
+          const maxLeft = Math.max(parentWidth - childWidth, 0);
+          const maxTop = Math.max(parentHeight - childHeight, 0);
+
+          const randLeft = Math.floor(Math.random() * maxLeft);
+          const randTop = Math.floor(Math.random() * maxTop);
+
+          child.style.position = 'absolute';
+          child.style.left = `${randLeft}px`;
+          child.style.top = `${randTop}px`;
+        });
+      }
+    }, 50);
   }
 
   /**
@@ -212,6 +273,7 @@ export class LidoCell {
    */
   componentWillLoad() {
     this.updateStyles();
+    
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
   }
@@ -233,6 +295,7 @@ export class LidoCell {
       margin: parseProp(this.margin, orientation),
       borderRadius: parseProp(this.borderRadius, orientation),
       gap: parseProp(this.gap, orientation),
+      '--scrollbar-width': parseProp(this.scrollbarWidth || '0px', orientation),
       display: JSON.parse(parseProp(`${this.visible}`, orientation))
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'
@@ -262,6 +325,7 @@ export class LidoCell {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        flex-direction={this.flexDirection}
       >
         {/* Slot for child elements */}
         <slot />
