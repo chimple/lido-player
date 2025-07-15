@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Watch } from '@stencil/core';
+import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
 import { convertUrlToRelative, executeActions, triggerNextContainer } from '../../utils/utils';
 import { LidoContainer, TraceMode } from '../../utils/constants';
 
@@ -112,7 +112,7 @@ export class LidoTrace {
    */
   @Prop() animationTrace: boolean = false;
 
-  //   @Element() el!: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() fileIndex: number = -1;
   @State() isDragging: boolean = false;
@@ -747,21 +747,41 @@ export class LidoTrace {
   }
 
   private async highlightLetter(index: number) {
-    // Find the lido-text element by id (e.g., "bug")
+
+    const container = document.getElementById(LidoContainer);
+    if (!container) return;
+  
+    // Ensure highlightTextId is set
     const textId = this.highlightTextId;
+    if(!textId) return;
+
+    // Find the lido-text element by id 
     const textElem = document.getElementById(textId);
     if (!textElem) return;
-
+    
+    // Check if the textElem has a span-type attribute
+    const spanType = textElem.getAttribute('span-type');
+    if (!spanType) return;
+   
     // Find the .lido-text-content container inside lido-text
     const content = textElem.querySelector('.lido-text-content');
     if (!content) return;
+  
+    if (spanType === 'letters') {
+      const letters = content.querySelectorAll('.text-letters');
+      if (index < 0 || index >= letters.length) return;
+      // Highlight the current letter keeping the previous ones highlighted
+      const letter = letters[index];
+      if (letter) letter.classList.add('letter-highlight');
+    }
 
-    const letters = content.querySelectorAll('.text-letters');
-    if (index < 0 || index >= letters.length) return;
-
-    // Highlight the current letter keeping the previous ones highlighted
-    const letter = letters[index];
-    if (letter) letter.classList.add('letter-highlight');
+    if (spanType === 'words') {
+      const words = content.querySelectorAll('.text-words');
+      if (index < 0 || index >= words.length) return;
+      // Highlight the current word keeping the previous ones highlighted
+      const word = words[index];
+      if (word) word.classList.add('word-highlight');
+    }
   }
 
 

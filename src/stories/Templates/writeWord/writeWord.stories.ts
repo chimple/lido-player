@@ -10,6 +10,7 @@ type WriteWordArgs = {
     highlightedText: string;
     topDisplayImage: string;
     bottomDisplayImage: string;
+    spanType: 'letters' | 'words';
 }
 
 const meta: Meta<WriteWordArgs> = {
@@ -22,6 +23,7 @@ const meta: Meta<WriteWordArgs> = {
         highlightedText: { control: 'text', name: 'Highlighted Text' },
         topDisplayImage: { control: 'text', name: 'Top Display Image URL', multiple: true },
         bottomDisplayImage: { control: 'text', name: 'Bottom Display Image URL', multiple: true },
+        spanType: { control: 'select', options: ['letters', 'words'], name: 'Text Highlight Type' },
     },
     args: {
         traceImage1: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg',
@@ -31,6 +33,7 @@ const meta: Meta<WriteWordArgs> = {
         highlightedText: 'bug',
         topDisplayImage: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/questionBg.png',
         bottomDisplayImage: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/traceBackground.png',
+        spanType: 'letters',
     }
 }
 
@@ -39,6 +42,7 @@ export default meta;
 export const WriteWord: StoryObj = {
     args: {
         highlightedText: 'bug',
+        spanType: "letters"
     },
 
     render: (args: WriteWordArgs) => {
@@ -63,6 +67,7 @@ function getContainerXml(args : WriteWordArgs) {
     const text = args.highlightedText;
     const topDisplayImage = args.topDisplayImage;
     const bottomDisplayImage = args.bottomDisplayImage;
+    const spanType = args.spanType;
 
     if (!traceImage1 || !traceImage2 || !traceImage3) {
         console.error('Trace image is missing');
@@ -83,7 +88,7 @@ function getContainerXml(args : WriteWordArgs) {
 
                     <!-- text-element -->
                     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.80px, portrait.80px" width="landscape.297px, portrait.297px" x="landscape.650px, portrait.300px" y="landscape.125px, portrait.190px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="">
-                        <lido-text id="bug" wrapLetters="true" width="inherit" height="inherit" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
+                        <lido-text id="txt1" span-type="${spanType}" width="inherit" height="inherit" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
                         </lido-text>
                     </lido-cell>
 
@@ -97,7 +102,7 @@ function getContainerXml(args : WriteWordArgs) {
 
                     <!-- trace element -->
                     <lido-cell layout="pos" id="pos2" disable-edit="true" value="pos2" height="landscape.500px, portrait.500px" width="landscape.550px, portrait.600px" x="landscape.530px, portrait.175px" y="landscape.330px, portrait.475px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="trace1.visibility='visible'; this.flex-shrink='0';">
-                        <lido-trace id="trace1" animationTrace="true" highlightTextId="bug" tabIndex="2" value="a" visible="true" svg-source="${traceImage1}; ${traceImage2}; ${traceImage3}" onCorrect="" mode="${traceMode}" z="1" x="25px" y="25px" width="495px" height="495px" altText="{backgroundImage}">
+                        <lido-trace id="trace1" animationTrace="true" highlightTextId="txt1" tabIndex="2" value="a" visible="true" svg-source="${traceImage1}; ${traceImage2}; ${traceImage3}" onCorrect="" mode="${traceMode}" z="1" x="25px" y="25px" width="495px" height="495px" altText="{backgroundImage}">
                         </lido-trace>
                     </lido-cell>
             </lido-container>

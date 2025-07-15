@@ -1272,6 +1272,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+         */
+        "spanType": 'letters' | 'words' | '';
+        /**
           * The string of text to be displayed in the component.
          */
         "string": string;
@@ -1295,10 +1299,6 @@ export namespace Components {
           * Width of the text component (CSS value, e.g., '100px', '50%').
          */
         "width": string;
-        /**
-          * Indicates whether to wrap each letter of the text in a span element. This can be useful for animations or styling individual letters.
-         */
-        "wrapLetters": boolean;
         /**
           * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
          */
@@ -2963,6 +2963,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+         */
+        "spanType"?: 'letters' | 'words' | '';
+        /**
           * The string of text to be displayed in the component.
          */
         "string"?: string;
@@ -2986,10 +2990,6 @@ declare namespace LocalJSX {
           * Width of the text component (CSS value, e.g., '100px', '50%').
          */
         "width"?: string;
-        /**
-          * Indicates whether to wrap each letter of the text in a span element. This can be useful for animations or styling individual letters.
-         */
-        "wrapLetters"?: boolean;
         /**
           * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
          */
