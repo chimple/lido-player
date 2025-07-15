@@ -98,13 +98,13 @@ function getContainerXml(args){
 				</lido-cell>
 			</lido-cell>
 			<lido-cell layout="landscape.row, portrait.wrap" childElementsLength="4" onEntry="this.gap='28px';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true" margin="landscape.0px 434px 91px 0px, portrait.243px 338px -28px 0px">
-				<lido-text font-family="'Baloo Bhai 2'" id="option1" value="${args.option1}" tab-index="7" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option1}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option1" value="${args.option1}" tab-index="7" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option1}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="" type="drag">
 				</lido-text>
-				<lido-text font-family="'Baloo Bhai 2'" id="option2" value="${args.option2}" tab-index="8" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option2}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option2" value="${args.option2}" tab-index="8" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option2}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="" type="drag">
 				</lido-text>
-				<lido-text font-family="'Baloo Bhai 2'" id="option3" value="${args.option3}" tab-index="9" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px'; this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option3}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option3" value="${args.option3}" tab-index="9" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px'; this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option3}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="" type="drag">
 				</lido-text>
-				<lido-text font-family="'Baloo Bhai 2'" id="option4" value="${args.option4}" tab-index="10" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option4}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="this.speak='true';" type="drag">
+				<lido-text font-family="'Baloo Bhai 2'" id="option4" value="${args.option4}" tab-index="10" visible="true" bg-color="#fcf3b1" onEntry=" this.borderRadius='24px';  this.fontWeight='400';" width="landscape.174px, portrait.164px" height="landscape.87px, portrait.91px" string="${args.option4}" fontColor="black" font-size="40px" dropAttr="stretch" onTouch="" type="drag">
 				</lido-text>
 			</lido-cell>
 		</lido-cell>
