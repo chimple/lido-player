@@ -117,10 +117,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           targetElement.classList.remove(action.value);
           break;
         }
-        // case 'speak': {
-        //   await AudioPlayer.getI().play(targetElement);
-        //   break;
-        // }
+        case 'speak': {
+          await AudioPlayer.getI().play(targetElement);
+          break;
+        }
         case 'fill-slide': {
           fillSlideHandle(action.value);
           break;
