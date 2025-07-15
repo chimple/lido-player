@@ -89,7 +89,7 @@ function getContainerXml(args){
 					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="  ${args.text3} " bg-color="transparent" onEntry=" this.fontWeight='400'; this.display='inline';"></lido-text>
 					<lido-text id="drop2" margin="28px 20px -9px 20px" disable-edit="true" tab-index="4" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer2}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';" ></lido-text>
 					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text4}" bg-color="transparent" onEntry=" this.fontWeight='400'; this.display='inline'; "></lido-text>
-					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.tex5}  " bg-color="transparent" onEntry=" this.fontWeight='400'; this.display='inline'; "></lido-text>
+					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text5}  " bg-color="transparent" onEntry=" this.fontWeight='400'; this.display='inline'; "></lido-text>
 					<lido-text id="drop3" margin="28px 20px -9px 20px"  disable-edit="true" tab-index="5" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer3}" type="drop" isAllowOnlyOneDrop="true" onEntry="this.border-radius='10px';"></lido-text>
 					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text6}  " bg-color="transparent" onEntry=" this.fontWeight='400'; this.display='inline'; "></lido-text>
 					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text7} " bg-color="transparent" onEntry=" this.fontWeight='400';  this.display='inline';"></lido-text>
