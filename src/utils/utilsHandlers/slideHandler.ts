@@ -22,7 +22,7 @@ const slideNumbers = (element: HTMLElement) => {
   numbersElement.className = 'slide-numbers-div slide-numbers-bottom';
 
   if (elementParent.className === 'lido-col') {
-    numbersElement.className = 'slide-numbers-div slide-numbers-bottom';
+    numbersElement.className = 'slide-numbers-div slide-numbers-left';
   }
 };
 
