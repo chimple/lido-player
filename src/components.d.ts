@@ -100,6 +100,10 @@ export namespace Components {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems": string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden": string;
@@ -180,7 +184,7 @@ export namespace Components {
          */
         "onTouch": string;
         /**
-          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
          */
         "scrollbarWidth": string;
         /**
@@ -1799,6 +1803,10 @@ declare namespace LocalJSX {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems"?: string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden"?: string;
@@ -1879,7 +1887,7 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
-          * Defines the width of the scrollbar within the cell (e.g., '14px').  Defaults to '0px' if not specified, effectively hiding the scrollbar.
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
          */
         "scrollbarWidth"?: string;
         /**

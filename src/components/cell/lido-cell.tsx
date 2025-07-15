@@ -15,11 +15,11 @@ import { max } from 'mathjs';
   shadow: false,
 })
 export class LidoCell {
-   /**
-   * Defines the width of the scrollbar within the cell (e.g., '14px'). 
+  /**
+   * Defines the width of the scrollbar within the cell (e.g., '14px').
    * Defaults to '0px' if not specified, effectively hiding the scrollbar.
    */
-   @Prop() scrollbarWidth: string = '';
+  @Prop() scrollbarWidth: string = '';
   /**
    * The unique identifier for the column component.
    */
@@ -170,6 +170,12 @@ export class LidoCell {
   @Prop() margin: string = '';
 
   /**
+   * CSS align-items property to control the alignment of flex items.
+   * Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+   */
+  @Prop() alignItems: string = '';
+
+  /**
    * CSS filter to apply border radius to the image.
    * Example: '10px' for  images.
    */
@@ -179,7 +185,7 @@ export class LidoCell {
    * CSS flex direction for the component, which can be used to control the layout of child elements.
    * Accepts values like 'row', 'column', etc.
    */
-  @Prop() flexDirection:string='';
+  @Prop() flexDirection: string = '';
 
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
@@ -220,7 +226,6 @@ export class LidoCell {
         const rect = parentcontainer.getBoundingClientRect();
         const parentWidth = rect.width;
         const parentHeight = rect.height;
-        
 
         // Apply own dimensions if provided
         // if (this.width) check_random_attr.style.width = this.width;
@@ -261,7 +266,7 @@ export class LidoCell {
    */
   componentWillLoad() {
     this.updateStyles();
-    
+
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
   }
@@ -274,24 +279,25 @@ export class LidoCell {
   updateStyles() {
     const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
     this.style = {
-      height: parseProp(this.height, orientation),
-      width: parseProp(this.width, orientation),
-      backgroundColor: parseProp(this.bgColor, orientation),
-      top: parseProp(this.y, orientation),
-      left: parseProp(this.x, orientation),
-      zIndex: this.z,
-      margin: parseProp(this.margin, orientation),
-      borderRadius: parseProp(this.borderRadius, orientation),
-      gap: parseProp(this.gap, orientation),
+      'height': parseProp(this.height, orientation),
+      'width': parseProp(this.width, orientation),
+      'backgroundColor': parseProp(this.bgColor, orientation),
+      'top': parseProp(this.y, orientation),
+      'left': parseProp(this.x, orientation),
+      'zIndex': this.z,
+      'margin': parseProp(this.margin, orientation),
+      'borderRadius': parseProp(this.borderRadius, orientation),
+      'gap': parseProp(this.gap, orientation),
       '--scrollbar-width': parseProp(this.scrollbarWidth || '0px', orientation),
-      display: JSON.parse(parseProp(`${this.visible}`, orientation))
+      'display': JSON.parse(parseProp(`${this.visible}`, orientation))
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'
           : parseProp(this.layout, orientation) === 'pos' || parseProp(this.layout, orientation) === 'random'
           ? 'block'
           : 'flex'
         : 'none',
-      flexDirection: parseProp(this.flexDirection,orientation)
+      'flexDirection': this.flexDirection ? parseProp(this.flexDirection, orientation) : '',
+      'alignItems': this.alignItems ? parseProp(this.alignItems, orientation) : '',
     };
     this.el.className = `lido-${parseProp(this.layout, orientation)}`;
   }
