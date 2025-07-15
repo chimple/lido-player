@@ -3,8 +3,7 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
-import { log } from 'util';
-import { e } from 'mathjs';
+
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
@@ -523,7 +522,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       return;
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
-      if (checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
+      if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation .toLowerCase()) {
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
