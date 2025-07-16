@@ -50,8 +50,6 @@ export const Default: StoryObj = {
 
 
 
-function getContainerXml(args) {
-  console.log("option 1 : ", args.optionImg1.length);
 function getContainerXml(args) {  
   const questionImage = args.questionImg.length === 0 ? "" : `<lido-image visible="true" bg-color="white" height="landscape.80%, portrait.35%" src="${args.questionImg}" border-radius="6px" onEntry="this.border='5px solid white';"></lido-image>`;
   return `<main>
