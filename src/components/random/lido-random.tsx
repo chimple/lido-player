@@ -133,40 +133,24 @@ export class LidoRandom {
       // Select all direct child elements of the component
       const parentcontainer = this.el.parentElement;
       if (!parentcontainer) return;
-      console.log('parent elementttt', parentcontainer);
 
       // Get parent size
-      const rect = parentcontainer.getBoundingClientRect();
-      const parentWidth = rect.width;
-      const parentHeight = rect.height;
-      console.log('parenet width', parentWidth);
-      console.log('parenet highth', parentHeight);
-
-      // Apply own dimensions if provided
-      // if (this.width) this.el.style.width = this.width;
-      // if (this.height) this.el.style.height = this.height;
-      // if (this.x) this.el.style.left = this.x;
-      // if (this.y) this.el.style.top = this.y;
-
-      // Ensure parent has relative positioning
-      if (getComputedStyle(parentcontainer).position === 'static') {
-        parentcontainer.style.position = 'relative';
-      }
+      const parentWidth = parentcontainer.offsetWidth;
+      const parentHeight = parentcontainer.offsetHeight;
 
       // Place child elements randomly inside parent
       const children = Array.from(this.el.children) as HTMLElement[];
 
       children.forEach(child => {
-        const childRect = child.getBoundingClientRect();
-        const childWidth = childRect.width;
-        const childHeight = childRect.height;
+        const childWidth = child.offsetWidth;
+        const childHeight = child.offsetHeight;
 
         console.log('child width', childWidth);
-        const maxLeft = Math.max(parentWidth - childWidth, 0);
-        const maxTop = Math.max(parentHeight - childHeight, 0);
+        const maxLeft = parentWidth - childWidth;
+        const maxTop = parentHeight - childHeight;
 
-        const randLeft = Math.floor(Math.random() * maxLeft);
-        const randTop = Math.floor(Math.random() * maxTop);
+        const randLeft = Math.random() * maxLeft;
+        const randTop = Math.random() * maxTop;
 
         console.log('randomleft', randLeft);
         console.log('randomtop', randTop);
