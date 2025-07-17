@@ -100,6 +100,10 @@ export namespace Components {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems": string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden": string;
@@ -123,6 +127,10 @@ export namespace Components {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
+        /**
+          * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
+         */
+        "flexDirection": string;
         /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
          */
@@ -175,6 +183,10 @@ export namespace Components {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch": string;
+        /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth": string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
@@ -1272,6 +1284,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+         */
+        "spanType": 'letters' | 'words' | '';
+        /**
           * The string of text to be displayed in the component.
          */
         "string": string;
@@ -1310,6 +1326,10 @@ export namespace Components {
     }
     interface LidoTrace {
         /**
+          * Indicates whether to play an animation trace when the SVG is completed.
+         */
+        "animationTrace": boolean;
+        /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
          */
         "ariaHidden": string;
@@ -1325,6 +1345,10 @@ export namespace Components {
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */
         "height": string;
+        /**
+          * Indicates whether to highlight the text associated with the SVG when the trace is completed.
+         */
+        "highlightTextId": string;
         /**
           * Unique identifier for this `lido-trace` component instance.
          */
@@ -1779,6 +1803,10 @@ declare namespace LocalJSX {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems"?: string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden"?: string;
@@ -1802,6 +1830,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
+         */
+        "flexDirection"?: string;
         /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
          */
@@ -1854,6 +1886,10 @@ declare namespace LocalJSX {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
+        /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth"?: string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
@@ -2951,6 +2987,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+         */
+        "spanType"?: 'letters' | 'words' | '';
+        /**
           * The string of text to be displayed in the component.
          */
         "string"?: string;
@@ -2989,6 +3029,10 @@ declare namespace LocalJSX {
     }
     interface LidoTrace {
         /**
+          * Indicates whether to play an animation trace when the SVG is completed.
+         */
+        "animationTrace"?: boolean;
+        /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
          */
         "ariaHidden"?: string;
@@ -3004,6 +3048,10 @@ declare namespace LocalJSX {
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
          */
         "height"?: string;
+        /**
+          * Indicates whether to highlight the text associated with the SVG when the trace is completed.
+         */
+        "highlightTextId"?: string;
         /**
           * Unique identifier for this `lido-trace` component instance.
          */

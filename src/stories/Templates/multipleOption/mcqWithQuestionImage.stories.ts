@@ -50,9 +50,7 @@ export const Default: StoryObj = {
 
 
 
-function getContainerXml(args) {
-  console.log("option 1 : ", args.optionImg1.length);
-  
+function getContainerXml(args) {  
   const questionImage = args.questionImg.length === 0 ? "" : `<lido-image visible="true" bg-color="white" height="landscape.80%, portrait.35%" src="${args.questionImg}" border-radius="6px" onEntry="this.border='5px solid white';"></lido-image>`;
   return `<main>
 			<lido-container id="lido-container" tab-index="1" value="maincontainer" objective="${args.correctAns}" aria-label="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" onEntry="lido-question.speak='true';">

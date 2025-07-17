@@ -82,6 +82,7 @@ function getContainerXml(args){
 				<lido-image id="image1" disable-edit="true" visible="true" src="${args.img}" width="landscape.41%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 21px 0px 0px , portrait. 0">
 				</lido-image>
 				<!-- text -->
+
 				
 				<lido-cell layout="flex" visible="true" height="landscape.100%,portrait.50%" width="landscape.50%, portrait.90%" onEntry="this.align-content='center'; this.gap='32px';this.display='ruby';" margin="landscape.73px 40px 0px 0px, portrait.21px 0px 0px 0px">
 					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text1}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; this.padding='0px 18px 0px 0px'; "></lido-text>
@@ -96,6 +97,7 @@ function getContainerXml(args){
 					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text7} " bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; this.padding='0px 18px 0px 0px'; "></lido-text>
 					<lido-text id="drop4"    disable-edit="true" tab-index="6" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer4}" type="drop" is-allow-only-one-drop="true" onEntry="this.border-radius='10px'; this.margin-right='18px';" ></lido-text>
 					<lido-text font-family="'Baloo Bhai 2'" visible="true" font-size="40px" string="${args.text8}" bg-color="transparent" onEntry=" this.fontWeight='400';this.display='inline'; this.padding='0px 18px 0px 0px'; "></lido-text>
+
 				</lido-cell>
 				
 			</lido-cell>
