@@ -12,6 +12,7 @@
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
+  
 }
 
 .lido-col > * {
@@ -65,12 +66,13 @@
 }
 
 .lido-random {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute; /* Container is now relative */
+  position: relative; /* Ensures children position within this box */
+  width: 100%;
+  height: 100%;
 }
 
 .lido-random > * {
   position: absolute;
 }
+
+

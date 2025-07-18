@@ -4,6 +4,7 @@ import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValues
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
+
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
   el.style.animation = 'unset';
@@ -225,7 +226,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
           otherElement.style.border = ''; // Reset border
           otherElement.style.backgroundColor = ''; // Reset background color
         }
-        if (otherElement.tagName.toLowerCase() === 'lido-image') {
+        if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
           otherElement.style.opacity = '1';
         }
       }
@@ -282,7 +283,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
             otherElement.style.border = ''; // Reset border
             otherElement.style.backgroundColor = ''; // Reset background color
           }
-          if (otherElement.tagName.toLowerCase() === 'lido-image') {
+          if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
             otherElement.style.opacity = '1';
           }
         }
@@ -378,12 +379,7 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
 
   return mostOverlappedElement;
 };
-  function animateDragToTarget(
-  dragElement: HTMLElement,
-  targetElement: HTMLElement,
-  container: HTMLElement,
-  transition: string = 'transform 0.5s ease'
-): void {
+function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElement, container: HTMLElement, transition: string = 'transform 0.5s ease'): void {
   const dropRect = targetElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
   const containerScale = getElementScale(container); // Assuming you have this function
@@ -398,95 +394,96 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
 
   dragElement.style.transition = transition;
   dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-  
 }
-export function handleResetDragElement(
-  dragElement: HTMLElement,dropHasDrag: Record<string, { drop: string; isFull: boolean }>,selectedValueData?: string,dragSelectedData?: string,dropSelectedData?: string): void {
-  dragElement.classList.remove('dropped');
-
-  const container = document.getElementById(LidoContainer) as HTMLElement;
-  const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
-  const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
-  dragElement.style.transition = 'transform 0.5s ease';
-
-  if (cloneDragElement) {
-    dragElement.style.transform = 'translate(0,0)';
-    animateDragToTarget(dragElement, null, container);
-
-    setTimeout(() => {
-      cloneDragElement.style.width = dragElement.style.width;
-      cloneDragElement.style.height = dragElement.style.height;
+export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTMLElement, dropHasDrag: Record<string, { drop: string; isFull: boolean }>,selectedValueData?: string,dragSelectedData?: string,dropSelectedData?: string): void
+  {
+        dragElement.classList.remove('dropped');
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
+    const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
+    dragElement.style.transition = 'transform 0.5s ease';
+    if (cloneDragElement) {
       dragElement.style.transform = 'translate(0,0)';
+      
+      animateDragToTarget(dragElement, dropElement, container);
+      setTimeout(() => {
+        cloneDragElement.style.width = dragElement.style.width;
+        cloneDragElement.style.height = dragElement.style.height;
+        dragElement.style.transform = 'translate(0,0)';
+        dragElement.style.position = 'unset';
+        cloneDragElement.replaceWith(dragElement);
+      }, 250);
+
       dragElement.style.position = 'unset';
       cloneDragElement.replaceWith(dragElement);
-    }, 250);
-  } else {
-    dragElement.style.transform = 'translate(0,0)';
-  }
-
-  const currentDrop = dragToDropMap.get(dragElement);
-  if (currentDrop) {
-    dragElement.removeAttribute(DropToAttr);
-   dragToDropMap.delete(dragElement);
-    updateDropBorder(currentDrop);
-    const prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
-    if (prevDropItem) {
-      prevDropItem.isFull = false;
-      localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+    } else {
+      dragElement.style.transform = 'translate(0,0)';
     }
+    let currentDrop = dragToDropMap.get(dragElement);
+    if (currentDrop) {
+      dragElement.removeAttribute(DropToAttr);
     dragToDropMap.delete(dragElement);
-  }
+      updateDropBorder(currentDrop);
+      let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
+      if (prevDropItem) {
+        prevDropItem.isFull = false;
+        localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+      }
+      dragToDropMap.delete(dragElement);
+    }
 
-  if (selectedValueData) {
-    let selectedValue = JSON.parse(selectedValueData);
-    selectedValue = selectedValue.filter(value => value !== dragElement['value']);
-    localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
-  }
+    if (selectedValueData) {
+      let selectedValue = JSON.parse(selectedValueData);
+      selectedValue = selectedValue.filter(value => value != dragElement['value']);
+      localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+    }
+    if (dragSelectedData) {
+      let dragSelected = JSON.parse(dragSelectedData);
+      let dropSelected = JSON.parse(dropSelectedData);
+      for (const key in dragSelected) {
+        if (dragSelected[key].includes(dragElement['value'])) {
+          for (const key in dropSelected) {
+            if (dropSelected[key].includes(dragElement.id)) {
+              delete dropSelected[key];
+            }
+          }
 
-  if (dragSelectedData && dropSelectedData) {
-    let dragSelected = JSON.parse(dragSelectedData);
-    let dropSelected = JSON.parse(dropSelectedData);
+          delete dragSelected[key];
+        }
+      }
 
-    for (const key in dragSelected) {
-      if (dragSelected[key].includes(dragElement['value'])) {
-        for (const dropKey in dropSelected) {
-          if (dropSelected[dropKey].includes(dragElement.id)) {
-            delete dropSelected[dropKey];
+      localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+      // localStorage.setItem(DragMapKey, JSON.stringify(dropSelected));
+    }
+
+    const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+    allElements.forEach(otherElement => {
+      const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      const storedTabIndexes = Object.keys(dropObject).map(Number);
+      if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
+        if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+          if (otherElement.tagName.toLowerCase() === 'lido-text') {
+            otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          }
+          if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            otherElement.style.opacity = '0';
+            otherElement.style.backgroundColor = 'transparent';
           }
         }
-        delete dragSelected[key];
-      }
-    }
-
-    localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
-  }
-
-  const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-  allElements.forEach(otherElement => {
-    const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey) || '{}');
-    const storedTabIndexes = Object.keys(dropObject).map(Number);
-    if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index') || '0'))) {
-      if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+      } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.backgroundColor = 'transparent';
+          otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.opacity = '0';
+          otherElement.style.opacity = '1';
           otherElement.style.backgroundColor = 'transparent';
         }
       }
-    } else {
-      if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.backgroundColor = 'transparent';
-      }
-      if (otherElement.tagName.toLowerCase() === 'lido-image') {
-        otherElement.style.opacity = '1';
-        otherElement.style.backgroundColor = 'transparent';
-      }
-    }
-  });
+    });
 
-  handleShowCheck();
+    handleShowCheck();
+    
+
 }
 
 export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
@@ -501,18 +498,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   if (!dropElement) {
     dragElement.style.transition = 'transform 0.5s ease';
     dragElement.style.transform = 'translate(0, 0)';
-  handleResetDragElement(dragElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
+  handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
   return;
 }
     const isCorrect = dropElement['value'].includes(dragElement['value']);
- 
+
     if (!isCorrect) {
-       dragElement.style.transition = 'transform 0.5s ease';
-    animateDragToTarget(dragElement, dropElement, container);
-    setTimeout(() => {
-       dragElement.style.transform = 'translate(0, 0)';
-     }, 500);
- 
+      dragElement.style.transition = 'transform 0.5s ease';
+      animateDragToTarget(dragElement, dropElement, container);
+      setTimeout(() => {
+        dragElement.style.transform = 'translate(0, 0)';
+      }, 500);
+
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
         childs.forEach(item => {
@@ -523,9 +520,44 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         });
       }
       return;
-    }
+    } else {
+      const checkdropAttr = container.getAttribute('dropAttr');
+      if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation .toLowerCase()) {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          container.append(div);
+          div.classList.add('after-drop-popup-container');
 
+          // Remove from old parents
+          dragElement.parentElement.parentElement.remove();
+          dropElement.parentElement.parentElement.remove();
+
+          // Add animation and popup classes
+          dragElement.classList.add('zoom-fade-in', 'after-drop-popup-drag-element');
+          
+          dropElement.classList.add('zoom-fade-in', 'after-drop-popup-drop-element');
+
+          div.appendChild(dragElement);
+          div.appendChild(dropElement);
+
+          dropElement.classList.remove('empty');
+
+          setTimeout(() => {
+            dragElement.classList.remove('zoom-fade-in');
+            dropElement.classList.remove('zoom-fade-in');
+
+            dragElement.classList.add('zoom-fade-out');
+            dropElement.classList.add('zoom-fade-out');
+
+            setTimeout(() => {
+              div.remove();
+            }, 800); // match animation duration
+          }, 2000); // stay for 2 seconds
+        }, 250);
+      }
+    }
   }
+
   if (dragElement) {
     if (dropElement) {
       dragElement.setAttribute(DropToAttr, dropElement?.id);
@@ -557,8 +589,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
       // Check for overlaps and highlight only the most overlapping element
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === "true" || "";
-      
+      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
+
       if (mostOverlappedElement && isAllowOnlyOneDrop) {
         dragElement.style.transform = 'translate(0,0)';
         dragElement.style.transition = 'transform 0.5s ease';
@@ -582,7 +614,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
               otherElement.style.border = ''; // Reset border
               otherElement.style.backgroundColor = ''; // Reset background color
             }
-            if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
               otherElement.style.opacity = '1';
             }
           }
@@ -592,7 +624,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
   }
 if (!dropElement) {
-  handleResetDragElement(dragElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
+  handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
   return;
 }
 
@@ -657,12 +689,12 @@ if (!dropElement) {
 }
 
 export function updateDropBorder(element: HTMLElement): void {
-   if (!element.classList.contains('drop-element')) return;
+  if (!element.classList.contains('drop-element')) return;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
-  const showBorder = container.getAttribute('show-drop-border'); 
-  if (showBorder!== 'true' ) {
-    return; 
+  const showBorder = container.getAttribute('show-drop-border');
+  if (showBorder !== 'true') {
+    return;
   }
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
@@ -735,7 +767,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
   }
 
   if (selectedDropElement && selectedDragElement) {
-    if(selectedDragElement.getAttribute('drop-to'))return;
+    if (selectedDragElement.getAttribute('drop-to')) return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
 
@@ -807,7 +839,7 @@ export const appendingDragElementsInDrop = () => {
       if (drop['value'].includes(drag['value'])) {
         drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
-        //  drag.style.boxShadow = 'none'; 
+        //  drag.style.boxShadow = 'none';
       }
     });
   });
