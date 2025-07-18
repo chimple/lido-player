@@ -4,6 +4,28 @@ import { handleShowCheck, matchStringPattern, storingEachActivityScore } from '.
 import { onClickDropOrDragElement } from './dragDropHandler';
 import { removeHighlight } from './highlightHandler';
 
+let numberOfSlides = 0;
+const slideNumbers = (element: HTMLElement) => {
+  const tag = `<div class="slide-numbers">${++numberOfSlides}</div>`;
+
+  let numbersElement = document.querySelector('.slide-numbers-div') as HTMLElement;
+
+  if (numbersElement) {
+    numbersElement.innerHTML += tag;
+    return;
+  }
+  const elementParent = element.parentElement;
+  numbersElement = document.createElement('div') as HTMLElement;
+  numbersElement.innerHTML = tag;
+  elementParent.appendChild(numbersElement);
+  elementParent.style.position = 'relative';
+  numbersElement.className = 'slide-numbers-div slide-numbers-bottom';
+
+  if (elementParent.className === 'lido-col') {
+    numbersElement.className = 'slide-numbers-div slide-numbers-left';
+  }
+};
+
 export function slidingWithScaling(element: HTMLElement): void {
   let overlapElement = false;
   let isDragging = false;
@@ -11,7 +33,8 @@ export function slidingWithScaling(element: HTMLElement): void {
   let startY = 0;
   let initialX = 0;
   let initialY = 0;
-
+  element.classList.add('drag-element');
+  slideNumbers(element);
   // Fetch the container element
   const parentElement = element.parentElement;
   if (!parentElement) {

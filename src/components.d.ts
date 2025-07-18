@@ -100,6 +100,10 @@ export namespace Components {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems": string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden": string;
@@ -179,6 +183,10 @@ export namespace Components {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch": string;
+        /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth": string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
@@ -1795,6 +1803,10 @@ declare namespace LocalJSX {
      */
     interface LidoCell {
         /**
+          * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+         */
+        "alignItems"?: string;
+        /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
          */
         "ariaHidden"?: string;
@@ -1874,6 +1886,10 @@ declare namespace LocalJSX {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
+        /**
+          * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
+         */
+        "scrollbarWidth"?: string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
