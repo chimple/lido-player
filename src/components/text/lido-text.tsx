@@ -271,7 +271,13 @@ export class LidoText {
         aria-hidden={this.ariaHidden}
         span-type={this.spanType}
       >
-        <div class="lido-text-content">{this.string}</div>
+        {
+          (this.spanType !== '') ? (
+            <div class="lido-text-content">{this.string}</div>
+          ) : (
+            this.string
+          )
+        }
       </Host>
     );
   }
