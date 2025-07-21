@@ -1,6 +1,10 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
+import { AudioPlayer } from '../../utils/audioPlayer';
+import { highlightSpeakingElement, stopHighlightForSpeakingElement } from '../../utils/utilsHandlers/highlightHandler';
+import { html } from 'lit';
+import { number } from 'mathjs';
 
 /**
  * @component LidoHome
@@ -157,8 +161,6 @@ export class LidoHome {
       this.showDotsandbtn = true;
     }, 10);
     this.updateArrowVisibility();
-
-    
   }
 
   /**
@@ -280,14 +282,12 @@ export class LidoHome {
     // if (!activecontainer) return;
 
     setTimeout(() => {
-
       const containerElement = this.el.querySelector('lido-container');
       const prevbtn = containerElement.getAttribute('show-prev-button');
       const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
-      
-      
+
       if (prevbtn !== 'true') {
         leftbtn.style.visibility = 'hidden';
       } else {
@@ -302,6 +302,47 @@ export class LidoHome {
     }, 100);
   };
 
+  private async btnpopup() {
+    await AudioPlayer.getI().stop();
+
+    const container = document.getElementById('lido-container');
+    const allele = container.querySelectorAll('*');
+    for (const el of Array.from(allele)) {
+      const tabIndex = el.getAttribute('tab-index');
+      const htmlel = el as HTMLElement;
+      if (tabIndex && number(tabIndex) > 0) {
+        await AudioPlayer.getI().play(htmlel);
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+    }
+  }
+
+  //   for (const el of Array.from(textElements)) {
+  //     const htmlEl = el as HTMLElement;
+
+  //     // Try reading the text value
+  //     const text = (htmlEl as any).string || htmlEl.getAttribute('string') || htmlEl.textContent?.trim();
+  //     if (!text) continue;
+
+  //     // Set yellow background
+  //     htmlEl.style.backgroundColor = '#FFFF0B';
+
+  //     // htmlEl.classList.remove('.speaking-highlight')
+
+  //     // Speak the text
+  //     await AudioPlayer.getI().play(htmlEl);
+
+  //     // Small wait before removing background
+  //     await new Promise(resolve => setTimeout(resolve, 300));
+
+  //     // Clear background
+  //     htmlEl.style.backgroundColor = 'transparent';
+  //   }
+
+  //   // Ensure audio is stopped
+  //   await AudioPlayer.getI().stop();
+  // }
+
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
    * Clicking on a dot allows the user to jump to a specific container.
@@ -310,35 +351,41 @@ export class LidoHome {
   private renderDots() {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
-      <div id="lido-dot-indicator" class="lido-dot-container">
-        {/* Navigation arrows and dots for container navigation */}
-        <lido-image
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
-          type="click"
-          onTouch="this.prevBtn='true';"
-          id="lido-arrow-left"
-          onEntry="this.padding='0px';"
-          bg-color="#FFAC4C"
-          border-radius="8px"
-        />
-        
-        {this.containers.map((_, index) => (
-          <span
-            class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-            onClick={() => this.jumpToContainer(index)} style={style}
-          ></span>
-        ))}
+      <div>
+        <div id="lido-dot-indicator" class="lido-dot-container">
+          {/* Navigation arrows and dots for container navigation */}
+          <lido-image
+            src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
+            type="click"
+            onTouch="this.prevBtn='true';"
+            id="lido-arrow-left"
+            onEntry="this.padding='0px';"
+            bg-color="#FFAC4C"
+            border-radius="8px"
+          />
 
-        <lido-image
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayer/Next%20Arrow.png"
-          type="click"
-          onTouch="this.nextBtn='true';"
-          id="lido-arrow-right"
-          onEntry="this.padding='0px';"
-          bg-color="#FFAC4C"
-          border-radius="8px"
-      />
-      </div>  
+          {this.containers.map((_, index) => (
+            <span
+              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+              onClick={() => this.jumpToContainer(index)}
+              style={style}
+            ></span>
+          ))}
+
+          <lido-image
+            src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayer/Next%20Arrow.png"
+            type="click"
+            onTouch="this.nextBtn='true';"
+            id="lido-arrow-right"
+            onEntry="this.padding='0px';"
+            bg-color="#FFAC4C"
+            border-radius="8px"
+          />
+        </div>
+        <div id="main-audio" onClick={() => this.btnpopup()}>
+          <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon%20(1).png"></lido-image>
+        </div>
+      </div>
     );
   }
 
@@ -363,9 +410,7 @@ export class LidoHome {
     return (
       <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
-        <div key={this.currentContainerIndex}>
-            {this.containers[this.currentContainerIndex]?.()}
-        </div>
+        <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
 
         {/* Render navigation dots below the container */}
         {this.showDotsandbtn && this.renderDots()}

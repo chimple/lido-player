@@ -63,7 +63,7 @@ function getContainerXml(args) {
 	<lido-text bg-color="transparent" width="100%" height="landscape.10%, portrait.0%"></lido-text>
 
 	<!-- Question -->
-	<lido-text visible="true" width="landscape.70%, portrait.65%" height="landscape.20%, portrait.13%" bg-color="transparent" string="${args.question}" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.speak='true';"></lido-text>
+	<lido-text tab-index="1" visible="true" width="landscape.70%, portrait.65%" height="landscape.20%, portrait.13%" bg-color="transparent" string="${args.question}" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.speak='true';"></lido-text>
 
 	<!-- Options -->
 	<lido-cell visible="true" layout="landscape.col, portrait.row" flex-direction="landscape.,portrait.row-reverse" width="80%" height="landscape.60%, portrait.80%" bg-color='transparent' gap="20px" align-items="landscape.center, portrait.start">
@@ -75,7 +75,7 @@ function getContainerXml(args) {
 
 		<lido-cell visible="true" layout="col" bg-color="transparent" width="landscape.100%, portrait.65%" height="landscape.90%, portrait.100%" flex-direction="landscape., portrait.row-reverse" onEntry="this.padding='0';">
 			<lido-cell visible="true" layout="landscape.row, portrait.col" bg-color="#FBCAB5" width="100%" height="100%" border-radius="landscape.16px 16px 0 0, portrait.0 16px 16px 0" onEntry="this.padding='0';" z="1">
-				<lido-cell visible="true" layout="col" type="slide" value="${args.option1.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
+				<lido-cell tab-index="2" visible="true" layout="col" type="slide" value="${args.option1.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
 					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
 								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
 					</lido-cell>
@@ -88,7 +88,7 @@ function getContainerXml(args) {
             args.option1
           }" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.alignItems='end';"></lido-text>
 				</lido-cell>
-				<lido-cell visible="true" layout="col" type="slide" value="${args.option2.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
+				<lido-cell tab-index="3" visible="true" layout="col" type="slide" value="${args.option2.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
 					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
 								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
 					</lido-cell>
@@ -101,7 +101,7 @@ function getContainerXml(args) {
             args.option2
           }" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.alignItems='end';"></lido-text>
 				</lido-cell>
-				<lido-cell visible="true" layout="col" type="slide" value="${args.option3.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
+				<lido-cell tab-index="4" visible="true" layout="col" type="slide" value="${args.option3.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
 					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
 								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
 					</lido-cell>
@@ -114,7 +114,7 @@ function getContainerXml(args) {
             args.option3
           }" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.alignItems='end';"></lido-text>
 				</lido-cell>
-				<lido-cell visible="true" layout="col" type="slide" value="${args.option4.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
+				<lido-cell tab-index="5" visible="true" layout="col" type="slide" value="${args.option4.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
 					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
 								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
 					</lido-cell>
