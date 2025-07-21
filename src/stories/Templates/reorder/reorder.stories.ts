@@ -51,11 +51,6 @@ export const QuestionAndOptions: StoryObj = {
 };
 
 function getContainerXml(args) {
-  console.log("question image : ", args.questionImg);
-  console.log("option1 : ", args.option1 , args.option1.toLowerCase());
-  
-  
-
   return `<main>
  <lido-container visible="true" objective="${args.correctObjective.toLowerCase()}" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
 
