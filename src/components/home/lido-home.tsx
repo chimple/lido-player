@@ -317,32 +317,6 @@ export class LidoHome {
     }
   }
 
-  //   for (const el of Array.from(textElements)) {
-  //     const htmlEl = el as HTMLElement;
-
-  //     // Try reading the text value
-  //     const text = (htmlEl as any).string || htmlEl.getAttribute('string') || htmlEl.textContent?.trim();
-  //     if (!text) continue;
-
-  //     // Set yellow background
-  //     htmlEl.style.backgroundColor = '#FFFF0B';
-
-  //     // htmlEl.classList.remove('.speaking-highlight')
-
-  //     // Speak the text
-  //     await AudioPlayer.getI().play(htmlEl);
-
-  //     // Small wait before removing background
-  //     await new Promise(resolve => setTimeout(resolve, 300));
-
-  //     // Clear background
-  //     htmlEl.style.backgroundColor = 'transparent';
-  //   }
-
-  //   // Ensure audio is stopped
-  //   await AudioPlayer.getI().stop();
-  // }
-
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
    * Clicking on a dot allows the user to jump to a specific container.
