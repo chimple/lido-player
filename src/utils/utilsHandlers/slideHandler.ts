@@ -34,7 +34,7 @@ export function slidingWithScaling(element: HTMLElement): void {
   let initialX = 0;
   let initialY = 0;
   element.classList.add('drag-element');
-  slideNumbers(element);
+  // slideNumbers(element);
   // Fetch the container element
   const parentElement = element.parentElement;
   if (!parentElement) {
