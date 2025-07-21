@@ -2,8 +2,6 @@ import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
 import { AudioPlayer } from '../../utils/audioPlayer';
-import { highlightSpeakingElement, stopHighlightForSpeakingElement } from '../../utils/utilsHandlers/highlightHandler';
-import { html } from 'lit';
 import { number } from 'mathjs';
 
 /**
