@@ -327,6 +327,7 @@ export class LidoContainer {
         show-prev-button={`${this.showPrevButton}`}
         show-next-button={`${this.showNextButton}`}
         show-drop-border={`${this.showDropBorder}`}
+        bg-image={this.bgImage}
       >
         <slot />
       </Host>

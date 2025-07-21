@@ -26,6 +26,7 @@
 | `sliceWidth`   | `slice-width`   | Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.                                     | `string`            | `'30px'`    |
 | `src`          | `src`           | The source URL of the image to be displayed.                                                                                               | `string`            | `undefined` |
 | `tabIndex`     | `tab-index`     | Tab index for keyboard navigation.                                                                                                         | `number`            | `undefined` |
+| `transform`    | `transform`     | CSS transform property to apply transformations like rotate, scale, translate, etc. Example: 'rotate(45deg)' or 'scale(1.2)'.              | `string`            | `''`        |
 | `type`         | `type`          | Defines the type of the image component, which can be used for conditional logic or styling purposes.                                      | `string`            | `undefined` |
 | `value`        | `value`         | The value associated with the image. Typically used for internal logic or identification.                                                  | `string`            | `undefined` |
 | `visible`      | `visible`       | Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.                                  | `boolean \| string` | `undefined` |

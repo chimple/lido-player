@@ -305,6 +305,7 @@ export class LidoCell {
     return (
       <Host
         id={this.id}
+        class="lido-cell"
         value={this.value}
         type={this.type}
         tab-index={this.tabIndex}
