@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
-import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
+import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, LidoContainer } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { number } from 'mathjs';
@@ -303,7 +303,7 @@ export class LidoHome {
   private async btnpopup() {
     await AudioPlayer.getI().stop();
 
-    const container = document.getElementById('lido-container');
+    const container = document.getElementById(LidoContainer);
     const allele = container.querySelectorAll('*');
     for (const el of Array.from(allele)) {
       const tabIndex = el.getAttribute('tab-index');
