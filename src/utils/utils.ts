@@ -762,7 +762,8 @@ export const speakIcon = (targetElement: HTMLElement) => {
   // }
 //  targetElement.appendChild(speakIcon);
 
-  speakIcon.addEventListener('click', async () => {
+  speakIcon.addEventListener('click', async (event) => {
+     event.stopPropagation(); 
     // const text = targetElement?.innerText?.trim();
     // const audioAttr = targetElement.getAttribute('audio');
     if (currentlySpeakingElement && currentlySpeakingElement !== targetElement) {
