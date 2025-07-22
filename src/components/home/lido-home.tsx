@@ -155,14 +155,14 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    if(this.height != ''){
-      this.updateBackgroundImage(); 
+    if (this.height != '') {
+      this.updateBackgroundImage();
     }
   }
 
   updateBackgroundImage() {
     const container = document.querySelector(LidoContainer);
-    const bgImageSrc = container.getAttribute("bg-image");
+    const bgImageSrc = container.getAttribute('bg-image');
     document.body.style.background = 'none';
     container.style.backgroundImage = bgImageSrc ? `url(${bgImageSrc})` : 'none';
     container.style.backgroundPosition = bgImageSrc ? `bottom` : 'none';
@@ -282,8 +282,6 @@ export class LidoHome {
   // update arrow visibility
 
   private updateArrowVisibility = () => {
-
-
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
       const prevbtn = containerElement.getAttribute('show-prev-button');
@@ -341,11 +339,11 @@ export class LidoHome {
   private renderDots() {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
-      <div>
-        <div class="lido-exit-button" onClick={() => this.exitFlag = true}>
+      <div id="lido-dot-indicator" class="lido-dot-container">
+        <div class="lido-exit-button" onClick={() => (this.exitFlag = true)}>
           <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/exitIcon.png" width="48px" height="48px"></lido-image>
         </div>
-        <div id="lido-dot-indicator" class="lido-dot-container">
+        <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
           <lido-image
             src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
@@ -401,7 +399,7 @@ export class LidoHome {
     }
 
     return (
-      <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
+      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
 
@@ -409,17 +407,26 @@ export class LidoHome {
         {this.showDotsandbtn && this.renderDots()}
 
         {/* Exit button */}
-        {this.exitFlag &&
+        {this.exitFlag && (
           <div class="lido-alert-popup">
-            <lido-cell class="lido-alert-content" visible="true" layout="col" width="400px" height="300px" bg-color="#fff" border-radius="30px" onEntry="this.border='4px solid #F34D08';">
+            <lido-cell
+              class="lido-alert-content"
+              visible="true"
+              layout="col"
+              width="400px"
+              height="300px"
+              bg-color="#fff"
+              border-radius="30px"
+              onEntry="this.border='4px solid #F34D08';"
+            >
               <lido-text visible="true" string="Are you sure you want to exit the game?" width="90%" font-size="36px"></lido-text>
               <lido-cell visible="true" layout="row" width="80%">
-                <lido-text visible="true" string="Cancel" font-size="36px" class="cancel-btn" onClick={() => this.popUpClick("cancel")}></lido-text>
-                <lido-text visible="true" string="Yes" font-size="36px" class="yes-btn" onClick={() => this.popUpClick("cancel")}></lido-text>
+                <lido-text visible="true" string="Cancel" font-size="36px" class="cancel-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
+                <lido-text visible="true" string="Yes" font-size="36px" class="yes-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
               </lido-cell>
             </lido-cell>
           </div>
-        }
+        )}
 
         {/* Show completion message if all containers have been displayed */}
         {this.showCompletionMessage && <div class="lido-snackbar">All containers have been displayed!</div>}

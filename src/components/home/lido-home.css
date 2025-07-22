@@ -15,14 +15,13 @@
 }
 
 .lido-dot-container {
-  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   position: fixed;
   z-index: 1;
-  top: 6%;
+  top: 6.5%;
   left: 50%;
   visibility: hidden;
 }
@@ -38,7 +37,14 @@
   cursor: pointer;
   z-index: 1;
   /* visibility: hidden; */
-  
+}
+.lido-btn-dot-container{
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
 }
 
 .lido-dot.completed {
@@ -67,9 +73,6 @@
   justify-content: center;
 }
 #main-audio{
-  position: absolute;
-  right: 25px;
-  top: 20px;
   background-color: white;
   width: 88px;
   height: 88px;
@@ -87,9 +90,6 @@
 }
 
 .lido-exit-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   width: 88px;
   height: 88px;
   z-index: 1000;
