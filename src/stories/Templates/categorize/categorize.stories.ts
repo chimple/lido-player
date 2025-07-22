@@ -36,7 +36,7 @@ function getContainerXml(args) {
   const objective = `(${args.correct1.split(',').join('|')}),(${args.correct2.split(',').join('|')}),(${args.correct3.split(',').join('|')})`;
   return `
   <main>
-    <lido-container id="lido-container" tab-index="1" value="mainContainer1" objective="${objective}" aria-label="" height="100vh" width="100vw" x="0" y="0" z="0" bg-color="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="true" is-continue-on-correct="true" is-allow-only-correct="false">
+    <lido-container id="lido-container" value="mainContainer1" objective="${objective}" aria-label="" height="100vh" width="100vw" x="0" y="0" z="0" bg-color="#FFB742" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="true" is-continue-on-correct="true" is-allow-only-correct="false">
 		<!-- Chimple Avatar -->
       <lido-pos id="pos1" disable-edit="true" value="pos1" height="350px" width="350px" x="1430px" y="500px" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
         <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
@@ -52,15 +52,15 @@ function getContainerXml(args) {
         <lido-col visible="true" type="optionArea" bg-color="transparent" width="300px" height="840px">
         ${args.options
           .map(
-            option => `
-          <lido-text visible="true" bg-color="white" value="${option}" string="${option}" width="200px" height="80px" font-family="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>`,
+            (option, index) => `
+          <lido-text visible="true" tab-index="${index+1}" bg-color="white" value="${option}" string="${option}" width="200px" height="80px" font-family="'Baloo 2', serif" font-size="30px" onEntry="this.fontWeight='800'; this.marginBottom='10px';" type="option"></lido-text>`,
           )
           .join('')}
         
         </lido-col>
         <lido-row visible="true" bg-color="transparent" width="1150px" height="840px">
           <lido-col id="cate1" visible="true" width="200px" height="700px" onEntry="this.border='2px solid';" bg-color="#0000005e" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
-            <lido-text visible="true" width="200px" bg-color="black" font-color="white" string="${
+            <lido-text tab-index="9" visible="true" width="200px" bg-color="black" font-color="white" string="${
               args.category1
             }" font-size="30px" font-family="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
             <lido-col visible="true" id="category1" tab-index="1" width="200px" height="100%" onEntry="this.display='block'; this.overflow='auto'; this.scrollbarWidth='none';" value="${
@@ -69,7 +69,7 @@ function getContainerXml(args) {
             </lido-col>
           </lido-col>
           <lido-col id="cate2" visible="true" width="200px" height="700px" onEntry="this.border='2px solid';" bg-color="#0000005e" onTouch="this.addClass='highlight-element'; cate1.removeClass='highlight-element'; cate3.removeClass='highlight-element';">
-            <lido-text visible="true" width="200px" bg-color="black" font-color="white" string="${
+            <lido-text tab-index="10" visible="true" width="200px" bg-color="black" font-color="white" string="${
               args.category2
             }" font-size="30px" font-family="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
             <lido-col visible="true" id="category2" tab-index="2" width="200px" height="100%" onEntry="this.display='block'; this.overflow='auto'; this.scrollbarWidth='none';" value="${
@@ -77,7 +77,7 @@ function getContainerXml(args) {
             }" bg-color="transparent" type="category"></lido-col>
           </lido-col>
           <lido-col id="cate3" visible="true" width="200px" height="700px" onEntry="this.border='2px solid';" bg-color="#0000005e" onTouch="this.addClass='highlight-element'; cate2.removeClass='highlight-element'; cate1.removeClass='highlight-element';">
-            <lido-text visible="true" width="200px" bg-color="black" font-color="white" string="${
+            <lido-text tab-index="11" visible="true" width="200px" bg-color="black" font-color="white" string="${
               args.category3
             }" font-size="30px" font-family="'Baloo 2', serif" onEntry="this.fontWeight='800';"></lido-text>
             <lido-col visible="true" id="category3" tab-index="3" width="200px" height="100%" onEntry="this.display='block'; this.overflow='auto'; this.scrollbarWidth='none';" value="${
