@@ -52,7 +52,6 @@ body {
 
 .drag-element {
   box-shadow: 0px 15px 11px rgba(43, 0, 0, 0.3) !important ;
-  position:relative;
 }
 
 .drag-element.dropped {
