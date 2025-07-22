@@ -828,6 +828,7 @@ async function onClickDragElement(element) {
   }
 }
 
+
 export const appendingDragElementsInDrop = () => {
   const dragItems = document.querySelectorAll("[type='drag']");
   const dropItems = document.querySelectorAll("[type='drop']");
@@ -836,11 +837,21 @@ export const appendingDragElementsInDrop = () => {
     dragItems.forEach(dragElement => {
       const drag = dragElement as HTMLElement;
       const drop = dropElement as HTMLElement;
-      if (drop['value'].includes(drag['value'])) {
-        drag.style.transform = 'translate(0,0)';
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
+  if(isAllowOnlyCorrect===true){
+    if (drop['value']===(drag['value'])) {
+      drag.style.transform = 'translate(0,0)';
+      drop.appendChild(drag);
+        //  drag.style.boxShadow = 'none'; 
+      }}
+else{
+   if (drop['value'].includes(drag['value'])) { 
+    drag.style.transform = 'translate(0,0)';
         drop.appendChild(drag);
-        //  drag.style.boxShadow = 'none';
-      }
+        //  drag.style.boxShadow = 'none'; 
+      }}
     });
   });
 };
+
