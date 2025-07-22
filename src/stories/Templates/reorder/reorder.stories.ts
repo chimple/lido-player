@@ -6,18 +6,20 @@ const meta: Meta = {
   argTypes: {
     question: { control: 'text' },
     questionImg: { control: 'file' },
+    questionAudio: { control: 'file'},
     option1: { control: 'text' },
-    optionImg1: { control: 'file' },
+    option1Img: { control: 'file' },
+    option1Audio: { control: 'file'},
     option2: { control: 'text' },
-    optionImg2: { control: 'file' },
+    option2Img: { control: 'file' },
+    option2Audio: { control: 'file' },
     option3: { control: 'text' },
-    optionImg3: { control: 'file' },
+    option3Img: { control: 'file' },
+    option3Audio: { control: 'file' },
     option4: { control: 'text' },
-    optionImg4: { control: 'file' },
-    correct1: { control: 'text' },
-    correct2: { control: 'text' },
-    correct3: { control: 'text' },
-    correct4: { control: 'text' },
+    option4Img: { control: 'file' },
+    option4Audio: { control: 'file' },
+    correctObjective: { control: 'text' }
   },
 };
 export default meta;
@@ -26,18 +28,20 @@ export const QuestionAndOptions: StoryObj = {
   args: {
     question: 'Reorder the following shapes from the fewest flat faces to the most flat faces.',
     questionImg: '',
+    questionAudio: '',
     option1: 'Sphere',
-    optionImg1: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/sphere.png',
+    option1Img: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/sphere.png',
+    option1Audio: '',
     option2: 'Cube',
-    optionImg2: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/cube.png',
+    option2Img: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/cube.png',
+    option2Audio: '',
     option3: 'Cylinder',
-    optionImg3: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/cylinder.png',
+    option3Img: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/cylinder.png',
+    option3Audio: '',
     option4: 'Cone',
-    optionImg4: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/cone.png',
-    correct1: 'sphere',
-    correct2: 'cone',
-    correct3: 'cylinder',
-    correct4: 'cube',
+    option4Img: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/cone.png',
+    option4Audio: '',
+    correctObjective: 'sphere,cone,cylinder,cube',
   },
 
   render: args => {
@@ -47,10 +51,13 @@ export const QuestionAndOptions: StoryObj = {
 };
 
 function getContainerXml(args) {
-  console.log('que : ', args.questionImg);
+  console.log("question image : ", args.questionImg);
+  console.log("option1 : ", args.option1 , args.option1.toLowerCase());
+  
+  
 
   return `<main>
-    <lido-container visible="true" bg-color="transparent" objective="${args.correct1.toLowerCase()},${args.correct2.toLowerCase()},${args.correct3.toLowerCase()},${args.correct4.toLowerCase()}" is-continue-on-correct="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='fail'; this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png">
+ <lido-container visible="true" objective="${args.correctObjective.toLowerCase()}" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
 
 	<!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="250px" width="250px" x="landscape.0, portrait.670px" y="landscape.105px, portrait.1315px" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">
@@ -60,77 +67,55 @@ function getContainerXml(args) {
 		</lido-image>
 	</lido-cell>
 
-	<lido-text bg-color="transparent" width="100%" height="landscape.10%, portrait.0%"></lido-text>
+	<lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
+		<lido-text visible="true" width="70%" height="landscape.10%, portrait.5%" bg-color="transparent"></lido-text>
 
-	<!-- Question -->
-	<lido-text tab-index="1" visible="true" width="landscape.70%, portrait.65%" height="landscape.20%, portrait.13%" bg-color="transparent" string="${args.question}" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.speak='true';"></lido-text>
+		<!-- Question -->
+		<lido-text tab-index="1" visible="true" width="landscape.70%, portrait.62%" height="10%" string="${args.question}" audio="${args.questionAudio}" font-size="36px" onEntry="this.fontWeight='600'; this.speak='true';" bg-color="transparent"></lido-text>
 
-	<!-- Options -->
-	<lido-cell visible="true" layout="landscape.col, portrait.row" flex-direction="landscape.,portrait.row-reverse" width="80%" height="landscape.60%, portrait.80%" bg-color='transparent' gap="20px" align-items="landscape.center, portrait.start">
-  ${
-    !args.questionImg || args.questionImg.length === 0
-      ? ''
-      : `<lido-image visible="true" bg-color="white" src="${args.questionImg}" width="250px" height="250px" border-radius="6px"></lido-image>`
-  }
+		<lido-cell visible="true" layout="landscape.col, portrait.row" flex-direction="landscape., portrait.row-reverse" align-items="landscape.center, portrait.start" width="100%" height="80%" bg-color="transparent">
 
-		<lido-cell visible="true" layout="col" bg-color="transparent" width="landscape.100%, portrait.65%" height="landscape.90%, portrait.100%" flex-direction="landscape., portrait.row-reverse" onEntry="this.padding='0';">
-			<lido-cell visible="true" layout="landscape.row, portrait.col" bg-color="#FBCAB5" width="100%" height="100%" border-radius="landscape.16px 16px 0 0, portrait.0 16px 16px 0" onEntry="this.padding='0';" z="1">
-				<lido-cell tab-index="2" visible="true" layout="col" type="slide" value="${args.option1.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
-					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
-								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
+			<!-- Question Image -->
+      ${args.questionImg === '' || args.questionImg.length <= 0 ? '' : `<lido-image visible="true" height="30%" bg-color="white" src="${args.questionImg}"></lido-image>`}
+			
+			<!-- Slide Elements -->
+			<lido-cell visible="true" layout="landscape.row, portrait.col" width="landscape.75%, portrait.35%" height="landscape.40%, portrait.90%" bg-color="#FBCAB5" border-radius="landscape.16px 16px 0 0, portrait.0 16px 16px 0" onEntry="this.padding='60px 40px';">
+				<lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option1.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
+						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
 					</lido-cell>
-					${
-            !args.optionImg1 || args.optionImg1.length === 0
-              ? ''
-              : `<lido-image visible="true" bg-color="transparent" width="landscape.100%, portrait.170px" height="landscape.100%, portrait.170px" src="${args.optionImg1}"></lido-image>`
-          }
-					<lido-text visible="true" height="landscape.100px, portrait.auto" width="100%" string="${
-            args.option1
-          }" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.alignItems='end';"></lido-text>
-				</lido-cell>
-				<lido-cell tab-index="3" visible="true" layout="col" type="slide" value="${args.option2.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
-					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
-								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
-					</lido-cell>
-					${
-            !args.optionImg2 || args.optionImg2.length === 0
-              ? ''
-              : `<lido-image visible="true" bg-color="transparent" width="landscape.100%, portrait.170px" height="landscape.100%, portrait.170px" src="${args.optionImg2}"></lido-image>`
-          }
-					<lido-text visible="true" height="landscape.100px, portrait.auto" width="100%" string="${
-            args.option2
-          }" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.alignItems='end';"></lido-text>
-				</lido-cell>
-				<lido-cell tab-index="4" visible="true" layout="col" type="slide" value="${args.option3.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
-					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
-								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
-					</lido-cell>
-					${
-            !args.optionImg3 || args.optionImg3.length === 0
-              ? ''
-              : `<lido-image visible="true" bg-color="transparent" width="landscape.100%, portrait.170px" height="landscape.100%, portrait.170px" src="${args.optionImg3}"></lido-image>`
-          }
-					<lido-text visible="true" height="landscape.100px, portrait.auto" width="100%" string="${
-            args.option3
-          }" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.alignItems='end';"></lido-text>
-				</lido-cell>
-				<lido-cell tab-index="5" visible="true" layout="col" type="slide" value="${args.option4.toLowerCase()}" width="landscape.15%, portrait.55%" height="auto" bg-color="white" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.padding='0';" onTouch="this.speak='true';">
-					<lido-cell visible="true" layout="landscape.pos, portrait.col" height="50px" width="lanscape.50px, portrait.100%" border-radius="6px" onEntry="this.alignItems='start'; this.padding='0';" bg-color="transparent">
-								<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png" border-radius="6px"></lido-image>
-					</lido-cell>
-          ${
-            !args.optionImg4 || args.optionImg4.length === 0
-              ? ''
-              : `<lido-image visible="true" bg-color="transparent" width="landscape.100%, portrait.170px" height="landscape.100%, portrait.170px" src="${args.optionImg4}"></lido-image>`
-          }
+          ${args.option1Img === '' || args.option1Img.length <=0 ? '' : `<lido-image visible="true" width="landscape., portrait.100%" src="${args.option1Img}"></lido-image>`}
 					
-					<lido-text visible="true" height="landscape.100px, portrait.auto" width="100%" string="${
-            args.option4
-          }" font-size="36px" font-color="black" onEntry="this.fontWeight='500'; this.alignItems='end';"></lido-text>
+					<lido-text visible="true" string="${args.option1}" audio="${args.option1Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
 				</lido-cell>
-				
+				<lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png" margin="landscape.100px 0 0 0, portrait.0 100px 0 0"></lido-image>
+				<lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option2.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
+						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
+					</lido-cell>
+					${args.option2Img === '' || args.option2Img.length <=0 ? '' : `<lido-image visible="true" width="landscape., portrait.100%" src="${args.option2Img}"></lido-image>`}
+					
+					<lido-text visible="true" string="${args.option2}" audio="${args.option2Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
+				</lido-cell>
+				<lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png"></lido-image>
+				<lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option3.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
+						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
+					</lido-cell>
+					${args.option3Img === '' || args.option3Img.length <=0 ? '' : `<lido-image visible="true" width="landscape., portrait.100%" src="${args.option3Img}"></lido-image>`}
+					
+					<lido-text visible="true" string="${args.option3}" audio="${args.option3Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
+				</lido-cell>
+				<lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png" margin="landscape.0 0 100px 0, portrait.0 0 0 100px"></lido-image>
+				<lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option4.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
+						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
+					</lido-cell>
+					${args.option4Img === '' || args.option4Img.length <=0 ? '' : `<lido-image visible="true" width="landscape., portrait.100%" src="${args.option4Img}"></lido-image>`}
+					
+					<lido-text visible="true" string="${args.option4}" audio="${args.option4Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
+				</lido-cell>
 			</lido-cell>
-			<lido-text visible="true" bg-color="#F57139" height="landscape.70px, portrait.100%" width="landscape.100%, portrait.60px" border-radius="landscape.0 0 16px 16px, portrait.16px 0 0 16px"></lido-text>
 		</lido-cell>
 	</lido-cell>
 </lido-container>

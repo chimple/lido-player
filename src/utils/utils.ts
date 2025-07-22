@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction, DropHasDrag } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction, DropHasDrag, DropLength } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -746,3 +746,11 @@ const getElementsForQueries = (query: string) => {
   const sortedDragSelectedElements = Array.from(dragSelectedElements).sort((a, b) => parseInt(a.getAttribute(DropTimeAttr)) - parseInt(b.getAttribute(DropTimeAttr)));
   return sortedDragSelectedElements;
 };
+
+export const clearLocalStorage = () => {
+  localStorage.removeItem(DragSelectedMapKey);
+  localStorage.removeItem(DragMapKey);
+  localStorage.removeItem(SelectedValuesKey);
+  localStorage.removeItem(DropHasDrag);
+  localStorage.removeItem(DropLength);
+}

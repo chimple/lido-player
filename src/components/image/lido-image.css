@@ -6,6 +6,8 @@
   height: 100% !important;
   aspect-ratio: 1 / 1; /* Ensures the image retains a 1:1 aspect ratio
   /* The image will scale to fit within its container, keeping the aspect ratio */
+  transform: rotate(0) !important;
+  margin: 0 !important;
 }
 
 .slice {
