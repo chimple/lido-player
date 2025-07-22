@@ -29,7 +29,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
     >
       <lido-image
         id="wood-image-1"
-        tab-index="1"
         visible="true"
         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
         width="100%"
@@ -39,7 +38,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
       ></lido-image>
       <lido-image
         id="wood-image-2"
-        tab-index="2"
         visible="true"
         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
         width="100%"
@@ -62,7 +60,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
     >
       <lido-image
         id="question-board-image"
-        tab-index="3"
         visible="true"
         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//board_question_wordkicker.png"
         width="landscape.100%, portrait.100%"
@@ -73,6 +70,7 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
       >
         <lido-cell layout="row"
           id="row-question-inline"
+          tab-index="1"
           visible="true"
           direction="row"
           width="landscape.80%, portrait.95%"
@@ -83,7 +81,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
         >
           <lido-text
             id="question-text-before"
-            tab-index="4"
             visible="true"
             string="${r.trim()}"
             font="'Baloo 2', serif"
@@ -95,7 +92,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
           ></lido-text>
           <lido-text
             id="question-drop-slot"
-            tab-index="5"
             visible="true"
             width="25%"
             height="${e}"
@@ -111,7 +107,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
           ></lido-text>
           <lido-text
             id="question-text-after"
-            tab-index="6"
             visible="true"
             string="${s.trim()}"
             font="'Baloo 2', serif"
@@ -156,7 +151,7 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
       >
         <lido-text
           id="option-1"
-          tab-index="7"
+          tab-index="2"
           value="${t.option1}"
           visible="true"
           type="drag"
@@ -172,7 +167,7 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
         ></lido-text>
         <lido-text
           id="option-2"
-          tab-index="8"
+          tab-index="3"
           value="${t.option2}"
           visible="true"
           type="drag"
@@ -197,7 +192,7 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
       >
         <lido-text
           id="option-3"
-          tab-index="9"
+          tab-index="4"
           value="${t.option3}"
           visible="true"
           type="drag"
@@ -213,7 +208,7 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
         ></lido-text>
         <lido-text
           id="option-4"
-          tab-index="10"
+          tab-index="5"
           value="${t.option4}"
           visible="true"
           type="drag"
@@ -262,7 +257,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
     >
       <lido-avatar
         id="lido-avatar"
-        tab-index="11"
         disableEdit="true"
         visible="true"
         height="350px"
@@ -273,7 +267,6 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
       ></lido-avatar>
       <lido-image
         id="shadow-image"
-        tab-index="12"
         disableEdit="true"
         value="image1"
         visible="true"
