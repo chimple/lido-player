@@ -746,3 +746,42 @@ const getElementsForQueries = (query: string) => {
   const sortedDragSelectedElements = Array.from(dragSelectedElements).sort((a, b) => parseInt(a.getAttribute(DropTimeAttr)) - parseInt(b.getAttribute(DropTimeAttr)));
   return sortedDragSelectedElements;
 };
+
+
+let currentlySpeakingElement: HTMLElement | null = null;
+export const speakIcon = (targetElement: HTMLElement) => {
+   if (targetElement.querySelector('.lido-speak-icon')) {
+    return null;
+  }
+  const speakIcon = document.createElement('div');
+  speakIcon.classList.add('lido-speak-icon');
+  // const stringAttr = targetElement?.getAttribute('string') || (targetElement as any)?.string;
+  // const hasAudioAttr = targetElement?.getAttribute('audio');
+  // if (!stringAttr && !hasAudioAttr) {// hide the button
+  //   speakIcon.style.display = 'none';
+  // }
+//  targetElement.appendChild(speakIcon);
+
+  speakIcon.addEventListener('click', async () => {
+    // const text = targetElement?.innerText?.trim();
+    // const audioAttr = targetElement.getAttribute('audio');
+    if (currentlySpeakingElement && currentlySpeakingElement !== targetElement) {
+      try {
+        await AudioPlayer.getI().stop();
+      } catch (err) {
+        console.warn('Failed to stop previous audio:', err);
+      }
+    }
+
+    currentlySpeakingElement = targetElement;
+
+    try {
+      await AudioPlayer.getI().play(targetElement); 
+    } catch (error) {
+      console.error('Error playing audio or TTS:', error);
+    }
+  });
+
+  return speakIcon;
+};
+

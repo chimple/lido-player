@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host, getAssetPath, State } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
 import CssFilter from 'css-filter-converter';
 import tinyColor from 'tinycolor2';
 /**
@@ -16,6 +16,10 @@ import tinyColor from 'tinycolor2';
   shadow: false,
 })
 export class LidoImage {
+  /**
+   * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+   */
+  @Prop() showSpeakIcon: boolean = false;
   /**
    * Unique identifier for the text element.
    */
@@ -173,6 +177,10 @@ export class LidoImage {
         img.style.filter = `${CssFilter.hexToFilter(tinyColor(this.filter).toHexString()).color}`;
       }
     }
+    if(this.showSpeakIcon) {
+        speakIcon(this.el);
+         this.el.append(speakIcon(this.el));
+        }
   }
 
   /**
