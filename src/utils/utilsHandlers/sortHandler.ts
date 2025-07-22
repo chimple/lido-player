@@ -60,6 +60,10 @@ export function enableReorderDrag(element: HTMLElement): void {
   }
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    const target = event.target as HTMLElement;
+  if (target.closest('.lido-speak-icon')) {
+    return;
+  }
     isClicked = true;
     isDragging = false;
 

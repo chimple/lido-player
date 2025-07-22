@@ -52,10 +52,12 @@ body {
 
 .drag-element {
   box-shadow: 0px 15px 11px rgba(43, 0, 0, 0.3) !important ;
+  position:relative;
 }
 
 .drag-element.dropped {
   box-shadow: none !important ;
+  
 }
 
 .click-element {
@@ -175,6 +177,9 @@ body {
 }
 /* speakIcon for each element */
 .lido-speak-icon{
+  /* pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;  */
   width : 56px;
   height:56px;
   position: absolute;
