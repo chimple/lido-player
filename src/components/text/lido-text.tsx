@@ -16,7 +16,7 @@ import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon } from
 export class LidoText {
   /**
    * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
-  */
+   */
   @Prop() showSpeakIcon: boolean = false;
   /**
    * Unique identifier for the text element.
@@ -155,6 +155,12 @@ export class LidoText {
   @Prop() margin: string = '';
 
   /**
+   * CSS padding value applied to each child element inside the container.
+   * Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() padding: string = '';
+
+  /**
    * CSS filter to apply border radius to the image.
    * Example: '10px' for  images.
    */
@@ -183,15 +189,13 @@ export class LidoText {
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
     // only create span element if requested
-    if(this.spanType === 'words' || this.spanType === 'letters') {
-      this.addSpanToText();   
+    if (this.spanType === 'words' || this.spanType === 'letters') {
+      this.addSpanToText();
     }
-    if(this.showSpeakIcon) {
+    if (this.showSpeakIcon) {
       speakIcon(this.el);
-       this.el.append(speakIcon(this.el));
-     
+      this.el.append(speakIcon(this.el));
     }
-    
   }
 
   /**
@@ -226,6 +230,7 @@ export class LidoText {
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
       margin: parseProp(this.margin, orientation),
+      padding: parseProp(this.padding, orientation),
       borderRadius: parseProp(this.borderRadius, orientation),
     };
   }
@@ -238,25 +243,25 @@ export class LidoText {
     content.innerHTML = '';
 
     // Wrap each letters in a span inside .lido-text-content
-    if(this.spanType === 'letters') {
+    if (this.spanType === 'letters') {
       text.split('').forEach((letter, idx) => {
-          // Skip spaces
-          if (letter.trim() === '') return;
-          // Create a span for each letter
-          const letterSpan = document.createElement('span');
-          letterSpan.textContent = letter;
-          letterSpan.className = 'text-letters';
-          content.appendChild(letterSpan);
-        }); 
-    }   
+        // Skip spaces
+        if (letter.trim() === '') return;
+        // Create a span for each letter
+        const letterSpan = document.createElement('span');
+        letterSpan.textContent = letter;
+        letterSpan.className = 'text-letters';
+        content.appendChild(letterSpan);
+      });
+    }
 
     // Wrap each words in a span inside .lido-text-content
-    if(this.spanType === 'words') {
+    if (this.spanType === 'words') {
       text.split(' ').forEach((word, idx) => {
-          const wordSpan = document.createElement('span');
-          wordSpan.textContent = word;
-          wordSpan.className = 'text-words';
-          content.appendChild(wordSpan);
+        const wordSpan = document.createElement('span');
+        wordSpan.textContent = word;
+        wordSpan.className = 'text-words';
+        content.appendChild(wordSpan);
       });
     }
   }
@@ -281,13 +286,7 @@ export class LidoText {
         aria-hidden={this.ariaHidden}
         span-type={this.spanType}
       >
-        {
-          (this.spanType !== '') ? (
-            <div class="lido-text-content">{this.string}</div>
-          ) : (
-            this.string
-          )
-        }
+        {this.spanType !== '' ? <div class="lido-text-content">{this.string}</div> : this.string}
       </Host>
     );
   }

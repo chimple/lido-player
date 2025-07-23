@@ -1,5 +1,5 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp ,speakIcon} from '../../utils/utils';
+import { handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
 import { max } from 'mathjs';
 
 /**
@@ -15,10 +15,10 @@ import { max } from 'mathjs';
   shadow: false,
 })
 export class LidoCell {
-   /**
+  /**
    * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
    */
-   @Prop() showSpeakIcon: boolean = false;
+  @Prop() showSpeakIcon: boolean = false;
   /**
    * Defines the width of the scrollbar within the cell (e.g., '14px').
    * Defaults to '0px' if not specified, effectively hiding the scrollbar.
@@ -174,6 +174,12 @@ export class LidoCell {
   @Prop() margin: string = '';
 
   /**
+   * CSS padding value applied to each child element inside the container.
+   * Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() padding: string = '';
+
+  /**
    * CSS align-items property to control the alignment of flex items.
    * Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
    */
@@ -248,10 +254,10 @@ export class LidoCell {
         });
       }
     }, 50);
-    if(this.showSpeakIcon) {
-          speakIcon(this.el);
-           this.el.append(speakIcon(this.el));
-        }
+    if (this.showSpeakIcon) {
+      speakIcon(this.el);
+      this.el.append(speakIcon(this.el));
+    }
   }
 
   /**
@@ -280,6 +286,7 @@ export class LidoCell {
       'left': parseProp(this.x, orientation),
       'zIndex': this.z,
       'margin': parseProp(this.margin, orientation),
+      'padding': parseProp(this.padding, orientation),
       'borderRadius': parseProp(this.borderRadius, orientation),
       'gap': parseProp(this.gap, orientation),
       '--scrollbar-width': parseProp(this.scrollbarWidth || '0px', orientation),

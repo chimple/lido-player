@@ -1,6 +1,6 @@
 import { LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
-import { handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
+import { executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
 import { removeHighlight } from './highlightHandler';
 
@@ -24,6 +24,48 @@ const slideNumbers = (element: HTMLElement) => {
   if (elementParent.className === 'lido-col') {
     numbersElement.className = 'slide-numbers-div slide-numbers-left';
   }
+};
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+export const slideAnimation = async () => {
+  const container = document.getElementById(LidoContainer);
+  container.style.pointerEvents = 'none';
+  const slideElements = container.querySelectorAll('[type="slide"]');
+
+  const firstElement = slideElements[0] ? (slideElements[0] as HTMLElement) : null;
+  const secElement = slideElements[1] ? (slideElements[1] as HTMLElement) : null;
+  const thirdElement = slideElements[2] ? (slideElements[2] as HTMLElement) : null;
+  const fourthElement = slideElements[3] ? (slideElements[3] as HTMLElement) : null;
+
+  const containerScale = getElementScale(container);
+
+  const firstRect = firstElement.getBoundingClientRect();
+  const secRect = secElement.getBoundingClientRect();
+
+  const firstX = firstRect.left + firstRect.width / 2;
+  const secondX = secRect.left + secRect.width / 2;
+  const firstY = firstRect.top + firstRect.height / 2;
+  const secondY = secRect.top + secRect.height / 2;
+
+  const rightToLeft = (firstX - secondX) / containerScale;
+  const leftToRight = (secondX - firstX) / containerScale;
+  const bottomToTop = (firstY - secondY) / containerScale;
+  const topToBottom = (secondY - firstY) / containerScale;
+
+  [firstElement, secElement, thirdElement, fourthElement].forEach( slide => slide.style.transition = 'transform 0.5s ease');
+
+  secElement.style.transform = `translate(${rightToLeft}px, ${bottomToTop}px)`;
+  fourthElement.style.transform = `translate(${rightToLeft}px, ${bottomToTop}px)`;
+  firstElement.style.transform = `translate(${leftToRight}px, ${topToBottom}px)`;
+  thirdElement.style.transform = `translate(${leftToRight}px, ${topToBottom}px)`;
+  await delay(800);
+  [firstElement, secElement, thirdElement, fourthElement].forEach( slide => slide.style.transform = `translate(0,0)`);
+  await delay(500);
+  [firstElement, secElement, thirdElement, fourthElement].forEach( slide => {
+    slide.style.transition = '';
+    container.style.pointerEvents = '';
+  });
 };
 
 export function slidingWithScaling(element: HTMLElement): void {
