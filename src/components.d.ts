@@ -727,6 +727,10 @@ export namespace Components {
          */
         "tabIndex": number;
         /**
+          * CSS transform property to apply transformations like rotate, scale, translate, etc. Example: 'rotate(45deg)' or 'scale(1.2)'.
+         */
+        "transform": string;
+        /**
           * Defines the type of the image component, which can be used for conditional logic or styling purposes.
          */
         "type": string;
@@ -2461,6 +2465,10 @@ declare namespace LocalJSX {
           * Tab index for keyboard navigation.
          */
         "tabIndex"?: number;
+        /**
+          * CSS transform property to apply transformations like rotate, scale, translate, etc. Example: 'rotate(45deg)' or 'scale(1.2)'.
+         */
+        "transform"?: string;
         /**
           * Defines the type of the image component, which can be used for conditional logic or styling purposes.
          */

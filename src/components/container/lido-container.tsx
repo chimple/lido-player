@@ -233,21 +233,25 @@ export class LidoContainer {
     }
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling    
   
-    setTimeout(() => {
-      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;  
-      console.log('navBar', navBar);
-
-      if (navBar) {
-        navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;//ensure proper scaling
-        navBar.style.visibility = 'visible';
-      }
-    }, 100);
+    
 
     // Center the container and apply scaling
     container.style.transform = `translate(-50%, -50%) scale(${scale})`;
     container.style.left = '50%';
     container.style.top = '50%';
     container.style.position = 'absolute'; // Ensure proper positioning
+
+
+    setTimeout(() => {
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;  
+      console.log('navBar', navBar);
+
+      if (navBar) {
+        navBar.style.width=`${container.offsetWidth-25}px`;
+        navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;//ensure proper scaling
+        navBar.style.visibility = 'visible';
+      }
+    }, 100);
     this.screenOrientation();
   }
 
@@ -327,6 +331,7 @@ export class LidoContainer {
         show-prev-button={`${this.showPrevButton}`}
         show-next-button={`${this.showNextButton}`}
         show-drop-border={`${this.showDropBorder}`}
+        bg-image={this.bgImage}
       >
         <slot />
       </Host>

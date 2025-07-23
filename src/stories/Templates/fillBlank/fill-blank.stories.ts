@@ -4,13 +4,13 @@ import { html } from 'lit';
 const meta: Meta = {
   title: 'Templates/fillBlank',
   argTypes: {
-    question: { control: "text" },
-    option1: { control: "text" },
-    option2: { control: "text" },
-    option3: { control: "text" },
-    option4: { control: "text" },
-    correctAns: { control: "text" },
-  }
+    question: { control: 'text' },
+    option1: { control: 'text' },
+    option2: { control: 'text' },
+    option3: { control: 'text' },
+    option4: { control: 'text' },
+    correctAns: { control: 'text' },
+  },
 };
 export default meta;
 
@@ -26,13 +26,13 @@ export const QuestionAndOptions: StoryObj = {
 
   render: args => {
     const xml = getContainerXml(args);
-    return html`<lido-home .xmlData="${xml}"></lido-home>`
+    return html`<lido-home .xmlData="${xml}"></lido-home>`;
   },
 };
 function getContainerXml(args: Args) {
   const [beforeBlank, afterBlank] = args.question.split('_');
-  const boxHeight = "landscape.10vw, portrait.20vw";
-  const fontSize = "landscape.48px, portrait.40px";
+  const boxHeight = 'landscape.10vw, portrait.20vw';
+  const fontSize = 'landscape.48px, portrait.40px';
 
   let xml = `<main>
   <lido-container
@@ -65,7 +65,6 @@ function getContainerXml(args: Args) {
     >
       <lido-image
         id="wood-image-1"
-        tab-index="1"
         visible="true"
         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
         width="100%"
@@ -75,7 +74,6 @@ function getContainerXml(args: Args) {
       ></lido-image>
       <lido-image
         id="wood-image-2"
-        tab-index="2"
         visible="true"
         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//word_kicker_wood.png"
         width="100%"
@@ -98,7 +96,6 @@ function getContainerXml(args: Args) {
     >
       <lido-image
         id="question-board-image"
-        tab-index="3"
         visible="true"
         src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//board_question_wordkicker.png"
         width="landscape.100%, portrait.100%"
@@ -109,6 +106,7 @@ function getContainerXml(args: Args) {
       >
         <lido-cell layout="row"
           id="row-question-inline"
+          tab-index="1"
           visible="true"
           direction="row"
           width="landscape.80%, portrait.95%"
@@ -119,7 +117,6 @@ function getContainerXml(args: Args) {
         >
           <lido-text
             id="question-text-before"
-            tab-index="4"
             visible="true"
             string="${beforeBlank.trim()}"
             font="'Baloo 2', serif"
@@ -131,7 +128,6 @@ function getContainerXml(args: Args) {
           ></lido-text>
           <lido-text
             id="question-drop-slot"
-            tab-index="5"
             visible="true"
             width="25%"
             height="${boxHeight}"
@@ -147,7 +143,6 @@ function getContainerXml(args: Args) {
           ></lido-text>
           <lido-text
             id="question-text-after"
-            tab-index="6"
             visible="true"
             string="${afterBlank.trim()}"
             font="'Baloo 2', serif"
@@ -192,7 +187,7 @@ function getContainerXml(args: Args) {
       >
         <lido-text
           id="option-1"
-          tab-index="7"
+          tab-index="2"
           value="${args.option1}"
           visible="true"
           type="drag"
@@ -208,7 +203,7 @@ function getContainerXml(args: Args) {
         ></lido-text>
         <lido-text
           id="option-2"
-          tab-index="8"
+          tab-index="3"
           value="${args.option2}"
           visible="true"
           type="drag"
@@ -233,7 +228,7 @@ function getContainerXml(args: Args) {
       >
         <lido-text
           id="option-3"
-          tab-index="9"
+          tab-index="4"
           value="${args.option3}"
           visible="true"
           type="drag"
@@ -249,7 +244,7 @@ function getContainerXml(args: Args) {
         ></lido-text>
         <lido-text
           id="option-4"
-          tab-index="10"
+          tab-index="5"
           value="${args.option4}"
           visible="true"
           type="drag"
@@ -298,7 +293,6 @@ function getContainerXml(args: Args) {
     >
       <lido-avatar
         id="lido-avatar"
-        tab-index="11"
         disableEdit="true"
         visible="true"
         height="350px"
@@ -309,7 +303,6 @@ function getContainerXml(args: Args) {
       ></lido-avatar>
       <lido-image
         id="shadow-image"
-        tab-index="12"
         disableEdit="true"
         value="image1"
         visible="true"

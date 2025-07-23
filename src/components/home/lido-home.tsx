@@ -1,6 +1,9 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
-import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag } from '../../utils/constants';
-import { dispatchActivityChangeEvent, dispatchGameCompletedEvent } from '../../utils/customEvents';
+import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
+import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
+import { clearLocalStorage } from '../../utils/utils';
+import { AudioPlayer } from '../../utils/audioPlayer';
+import { number } from 'mathjs';
 
 /**
  * @component LidoHome
@@ -53,6 +56,12 @@ export class LidoHome {
   @State() showCompletionMessage: boolean = false;
 
   /**
+   * Boolean that controls the visibility of the exit confirmation popup.
+   * This is set to true when the user attempts to exit the game.
+   */
+  @State() exitFlag: boolean = false;
+
+  /**
    * Stores the list of container-rendering functions parsed from XML.
    */
   @State() containers: (() => any)[] = [];
@@ -65,11 +74,7 @@ export class LidoHome {
     // console.log("👉 NextContainerKey CALLED with index:", index);
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
-    localStorage.removeItem(SelectedValuesKey);
-    localStorage.removeItem(DragSelectedMapKey);
-    localStorage.removeItem(DropLength);
-    localStorage.removeItem(DropHasDrag);
-    localStorage.removeItem(DragMapKey);
+    clearLocalStorage();
 
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
@@ -104,11 +109,7 @@ export class LidoHome {
     if (this.currentContainerIndex <= 0) return;
 
     // Clear selected values from localStorage on container transition
-    localStorage.removeItem(SelectedValuesKey);
-    localStorage.removeItem(DragSelectedMapKey);
-    localStorage.removeItem(DropLength);
-    localStorage.removeItem(DropHasDrag);
-    localStorage.removeItem(DragMapKey);
+    clearLocalStorage();
 
     // Move to the previous container
     this.currentContainerIndex--;
@@ -144,11 +145,7 @@ export class LidoHome {
 
     // Remove stored values in localStorage when the page is about to be unloaded
     window.addEventListener('beforeunload', () => {
-      localStorage.removeItem(SelectedValuesKey);
-      localStorage.removeItem(DragSelectedMapKey);
-      localStorage.removeItem(DropLength);
-      localStorage.removeItem(DropHasDrag);
-      localStorage.removeItem(DragMapKey);
+      clearLocalStorage();
     });
   }
   @State() showDotsandbtn: boolean = false;
@@ -158,7 +155,17 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    
+    if (this.height != '') {
+      this.updateBackgroundImage();
+    }
+  }
+
+  updateBackgroundImage() {
+    const container = document.querySelector(LidoContainer);
+    const bgImageSrc = container.getAttribute('bg-image');
+    document.body.style.background = 'none';
+    container.style.backgroundImage = bgImageSrc ? `url(${bgImageSrc})` : 'none';
+    container.style.backgroundPosition = bgImageSrc ? `bottom` : 'none';
   }
 
   /**
@@ -275,19 +282,13 @@ export class LidoHome {
   // update arrow visibility
 
   private updateArrowVisibility = () => {
-    // const activecontainer=containerElement[this.currentContainerIndex];
-    // console.log("actttive",activecontainer);
-    // if (!activecontainer) return;
-
     setTimeout(() => {
-
       const containerElement = this.el.querySelector('lido-container');
       const prevbtn = containerElement.getAttribute('show-prev-button');
       const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
       const leftbtn = this.el.querySelector('#lido-arrow-left') as HTMLElement;
-      
-      
+
       if (prevbtn !== 'true') {
         leftbtn.style.visibility = 'hidden';
       } else {
@@ -302,6 +303,34 @@ export class LidoHome {
     }, 100);
   };
 
+  private async btnpopup() {
+    await AudioPlayer.getI().stop();
+
+    const container = document.getElementById(LidoContainer);
+    const allele = container.querySelectorAll('*');
+    for (const el of Array.from(allele)) {
+      const tabIndex = el.getAttribute('tab-index');
+      const htmlel = el as HTMLElement;
+      if (tabIndex && number(tabIndex) > 0) {
+        await AudioPlayer.getI().play(htmlel);
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+    }
+  }
+  popUpClick = (comment: string) => {
+    const alertElement = this.el.querySelector('.lido-alert-popup');
+    this.exitFlag = false;
+    if (alertElement) {
+      if (comment === 'cancel') {
+        alertElement.remove();
+      } else {
+        dispatchGameExitEvent();
+        clearLocalStorage();
+        alertElement.remove();
+      }
+    }
+  };
+
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
    * Clicking on a dot allows the user to jump to a specific container.
@@ -311,34 +340,43 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
-        {/* Navigation arrows and dots for container navigation */}
-        <lido-image
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
-          type="click"
-          onTouch="this.prevBtn='true';"
-          id="lido-arrow-left"
-          onEntry="this.padding='0px';"
-          bg-color="#FFAC4C"
-          border-radius="8px"
-        />
-        
-        {this.containers.map((_, index) => (
-          <span
-            class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-            onClick={() => this.jumpToContainer(index)} style={style}
-          ></span>
-        ))}
+        <div class="lido-exit-button" onClick={() => (this.exitFlag = true)}>
+          <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/exitIcon.png" width="48px" height="48px"></lido-image>
+        </div>
+        <div class="lido-btn-dot-container">
+          {/* Navigation arrows and dots for container navigation */}
+          <lido-image
+            src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
+            type="click"
+            onTouch="this.prevBtn='true';"
+            id="lido-arrow-left"
+            onEntry="this.padding='0px';"
+            bg-color="#FFAC4C"
+            border-radius="8px"
+          />
 
-        <lido-image
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayer/Next%20Arrow.png"
-          type="click"
-          onTouch="this.nextBtn='true';"
-          id="lido-arrow-right"
-          onEntry="this.padding='0px';"
-          bg-color="#FFAC4C"
-          border-radius="8px"
-      />
-      </div>  
+          {this.containers.map((_, index) => (
+            <span
+              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+              onClick={() => this.jumpToContainer(index)}
+              style={style}
+            ></span>
+          ))}
+
+          <lido-image
+            src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayer/Next%20Arrow.png"
+            type="click"
+            onTouch="this.nextBtn='true';"
+            id="lido-arrow-right"
+            onEntry="this.padding='0px';"
+            bg-color="#FFAC4C"
+            border-radius="8px"
+          />
+        </div>
+        <div id="main-audio" onClick={() => this.btnpopup()}>
+          <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon%20(1).png"></lido-image>
+        </div>
+      </div>
     );
   }
 
@@ -361,14 +399,34 @@ export class LidoHome {
     }
 
     return (
-      <Host index={this.currentContainerIndex} totalIndex={this.containers.length}>
+      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
-        <div key={this.currentContainerIndex}>
-            {this.containers[this.currentContainerIndex]?.()}
-        </div>
+        <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
 
         {/* Render navigation dots below the container */}
         {this.showDotsandbtn && this.renderDots()}
+
+        {/* Exit button */}
+        {this.exitFlag && (
+          <div class="lido-alert-popup">
+            <lido-cell
+              class="lido-alert-content"
+              visible="true"
+              layout="col"
+              width="400px"
+              height="300px"
+              bg-color="#fff"
+              border-radius="30px"
+              onEntry="this.border='4px solid #F34D08';"
+            >
+              <lido-text visible="true" string="Are you sure you want to exit the game?" width="90%" font-size="36px"></lido-text>
+              <lido-cell visible="true" layout="row" width="80%">
+                <lido-text visible="true" string="Cancel" font-size="36px" class="cancel-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
+                <lido-text visible="true" string="Yes" font-size="36px" class="yes-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
+              </lido-cell>
+            </lido-cell>
+          </div>
+        )}
 
         {/* Show completion message if all containers have been displayed */}
         {this.showCompletionMessage && <div class="lido-snackbar">All containers have been displayed!</div>}

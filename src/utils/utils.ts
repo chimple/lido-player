@@ -1,4 +1,4 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction, DropHasDrag } from './constants';
+import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction, DropHasDrag, DropLength } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -748,6 +748,7 @@ const getElementsForQueries = (query: string) => {
 };
 
 
+
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
    if (targetElement.querySelector('.lido-speak-icon')) {
@@ -785,4 +786,13 @@ export const speakIcon = (targetElement: HTMLElement) => {
 
   return speakIcon;
 };
+
+
+export const clearLocalStorage = () => {
+  localStorage.removeItem(DragSelectedMapKey);
+  localStorage.removeItem(DragMapKey);
+  localStorage.removeItem(SelectedValuesKey);
+  localStorage.removeItem(DropHasDrag);
+  localStorage.removeItem(DropLength);
+}
 

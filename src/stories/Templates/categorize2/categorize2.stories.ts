@@ -58,7 +58,7 @@ function getContainerXml(args) {
   const objective = `(${args.correct1.split(',').join('|')}),(${args.correct2.split(',').join('|')}),(${args.correct3.split(',').join('|')})`;
   return `
   <main>
-   <lido-container id="lido-container" show-next-button="true" show-drop-border="false" tabIndex="1"  value="mainContainer1"   bg-Color="#FFF"  height="100%" width="100%" visible="true" objective="${objective}" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-allow-only-correct="false"  > 
+   <lido-container id="lido-container" show-next-button="true" show-drop-border="false" tabIndex="0"  value="mainContainer1"   bg-Color="#FFF"  height="100%" width="100%" visible="true" objective="${objective}" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-allow-only-correct="false"  > 
 		
 		<!-- parent cell -->
 		<lido-cell layout="col" visible="true"  height="100%"  width="98%" bgColor="transparent"  margin="landscape.83px 0px 0px 0px, portrait.36px 0px -49px 0px">

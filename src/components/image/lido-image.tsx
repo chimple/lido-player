@@ -155,6 +155,12 @@ export class LidoImage {
   @Prop() borderRadius: string = '0px';
 
   /**
+   * CSS transform property to apply transformations like rotate, scale, translate, etc.
+   * Example: 'rotate(45deg)' or 'scale(1.2)'.
+   */
+  @Prop() transform: string = '';
+
+  /**
    * Reference to the HTML element that represents this image component.
    */
   @Element() el: HTMLElement;
@@ -212,6 +218,7 @@ export class LidoImage {
       alignItems: 'center',
       justifyContent: 'center',
       margin: parseProp(this.margin, orientation),
+      transform: parseProp(this.transform, orientation),
       borderRadius: this.borderRadius,
 
       // Slice Style
