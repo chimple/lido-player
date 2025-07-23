@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer } from '../../utils/utils';
+import { convertUrlToRelative, executeActions, triggerNextContainer,speakIcon } from '../../utils/utils';
 import { LidoContainer, TraceMode } from '../../utils/constants';
 
 // Enum for different tracing modes
@@ -11,6 +11,10 @@ import { LidoContainer, TraceMode } from '../../utils/constants';
   assetsDirs: ['svg', 'images'], //  ← added “images” so finger.png is bundled
 })
 export class LidoTrace {
+  /**
+   * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+  */
+  @Prop() showSpeakIcon: boolean = false;
   /**
    * Various configuration properties for `lido-trace`
    */
@@ -162,6 +166,10 @@ export class LidoTrace {
     this.svgUrls = this.svgSource.split(';').map(s => s.trim());
     this.currentSvgIndex = 0;
     this.initializeSVG();
+     if(this.showSpeakIcon) {
+      speakIcon(this.el);
+       this.el.append(speakIcon(this.el));
+           }
   }
 
   /** ───────────────────────────────────────────────────────────

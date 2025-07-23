@@ -66,7 +66,7 @@ function getContainerXml(args) {
 		<lido-text visible="true" width="70%" height="landscape.10%, portrait.5%" bg-color="transparent"></lido-text>
 
 		<!-- Question -->
-		<lido-text visible="true" width="landscape.70%, portrait.62%" height="10%" string="${args.question}" audio="${args.questionAudio}" font-size="36px" onEntry="this.fontWeight='600'; this.speak='true';" bg-color="transparent"></lido-text>
+		<lido-text tab-index="1" visible="true" width="landscape.70%, portrait.62%" height="10%" string="${args.question}" audio="${args.questionAudio}" font-size="36px" onEntry="this.fontWeight='600'; this.speak='true';" bg-color="transparent"></lido-text>
 
 		<lido-cell visible="true" layout="landscape.col, portrait.row" flex-direction="landscape., portrait.row-reverse" align-items="landscape.center, portrait.start" width="100%" height="80%" bg-color="transparent">
 

@@ -188,6 +188,10 @@ export namespace Components {
          */
         "scrollbarWidth": string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon": boolean;
+        /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
         "tabIndex": number;
@@ -305,6 +309,10 @@ export namespace Components {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch": string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+         */
+        "showSpeakIcon": boolean;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
@@ -703,6 +711,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon": boolean;
+        /**
           * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
          */
         "sliceWidth": string;
@@ -899,6 +911,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon": boolean;
+        /**
           * Tab index for keyboard navigation.
          */
         "tabIndex": number;
@@ -1033,6 +1049,10 @@ export namespace Components {
           * Event handler triggered when the row is touched or clicked.
          */
         "onTouch": string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon": boolean;
         /**
           * Tab index for keyboard navigation.
          */
@@ -1288,6 +1308,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon": boolean;
+        /**
           * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
          */
         "spanType": 'letters' | 'words' | '';
@@ -1369,6 +1393,10 @@ export namespace Components {
           * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+         */
+        "showSpeakIcon": boolean;
         /**
           * Source URL or path for the SVG file used in this component.
          */
@@ -1473,6 +1501,10 @@ export namespace Components {
           * Event handler triggered when the wrap container is touched or clicked.
          */
         "onTouch": string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+         */
+        "showSpeakIcon": boolean;
         /**
           * Tab index for keyboard navigation.
          */
@@ -1895,6 +1927,10 @@ declare namespace LocalJSX {
          */
         "scrollbarWidth"?: string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon"?: boolean;
+        /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
         "tabIndex"?: number;
@@ -2012,6 +2048,10 @@ declare namespace LocalJSX {
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+         */
+        "showSpeakIcon"?: boolean;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
          */
@@ -2410,6 +2450,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon"?: boolean;
+        /**
           * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
          */
         "sliceWidth"?: string;
@@ -2606,6 +2650,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon"?: boolean;
+        /**
           * Tab index for keyboard navigation.
          */
         "tabIndex"?: number;
@@ -2740,6 +2788,10 @@ declare namespace LocalJSX {
           * Event handler triggered when the row is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon"?: boolean;
         /**
           * Tab index for keyboard navigation.
          */
@@ -2995,6 +3047,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+         */
+        "showSpeakIcon"?: boolean;
+        /**
           * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
          */
         "spanType"?: 'letters' | 'words' | '';
@@ -3076,6 +3132,10 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+         */
+        "showSpeakIcon"?: boolean;
         /**
           * Source URL or path for the SVG file used in this component.
          */
@@ -3180,6 +3240,10 @@ declare namespace LocalJSX {
           * Event handler triggered when the wrap container is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+         */
+        "showSpeakIcon"?: boolean;
         /**
           * Tab index for keyboard navigation.
          */

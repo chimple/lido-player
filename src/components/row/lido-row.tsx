@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element, State } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
+import { handlingChildElements, initEventsForElement, parseProp,speakIcon } from '../../utils/utils';
 import { uptime } from 'process';
 
 /**
@@ -14,6 +14,10 @@ import { uptime } from 'process';
   shadow: false,
 })
 export class LidoRow {
+  /**
+     * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+    */
+    @Prop() showSpeakIcon: boolean = false;
   /**
    * Value associated with the row, typically used for internal logic or data.
    */
@@ -161,6 +165,10 @@ export class LidoRow {
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
+     if(this.showSpeakIcon) {
+          speakIcon(this.el);
+           this.el.append(speakIcon(this.el));
+          }
   }
 
   /**

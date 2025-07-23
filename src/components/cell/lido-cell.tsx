@@ -1,5 +1,5 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
+import { handlingChildElements, initEventsForElement, parseProp ,speakIcon} from '../../utils/utils';
 import { max } from 'mathjs';
 
 /**
@@ -15,6 +15,10 @@ import { max } from 'mathjs';
   shadow: false,
 })
 export class LidoCell {
+   /**
+   * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+   */
+   @Prop() showSpeakIcon: boolean = false;
   /**
    * Defines the width of the scrollbar within the cell (e.g., '14px').
    * Defaults to '0px' if not specified, effectively hiding the scrollbar.
@@ -212,45 +216,31 @@ export class LidoCell {
     // });
 
     setTimeout(() => {
-      const check_random_attr = this.el.querySelector('.lido-random') as HTMLElement;
-      // console.log("this is random cell",check_random_attr);
+      const check_random_attr = this.el.className.includes('lido-random') ? this.el : null;
 
       if (check_random_attr) {
         const parentcontainer = check_random_attr.parentElement;
-        // console.log("getting parent cell : ", parentcontainer);
 
         if (!parentcontainer) return;
-        // console.log('parent element', parentcontainer);
 
         // Get parent size
-        const rect = parentcontainer.getBoundingClientRect();
-        const parentWidth = rect.width;
-        const parentHeight = rect.height;
 
-        // Apply own dimensions if provided
-        // if (this.width) check_random_attr.style.width = this.width;
-        // if (this.height) check_random_attr.style.height = this.height;
-        // if (this.x) check_random_attr.style.left = this.x;
-        // if (this.y) check_random_attr.style.top = this.y;
+        const parentWidth = parentcontainer.offsetWidth;
 
-        // Ensure parent has relative positioning
-        if (getComputedStyle(parentcontainer).position === 'static') {
-          parentcontainer.style.position = 'relative';
-        }
+        const parentHeight = parentcontainer.offsetHeight;
 
         // Place child elements randomly inside parent
         const children = Array.from(check_random_attr.children) as HTMLElement[];
 
         children.forEach(child => {
-          const childRect = child.getBoundingClientRect();
-          const childWidth = childRect.width;
-          const childHeight = childRect.height;
+          const childWidth = child.offsetWidth;
+          const childHeight = child.offsetHeight;
 
-          const maxLeft = Math.max(parentWidth - childWidth, 0);
-          const maxTop = Math.max(parentHeight - childHeight, 0);
+          const maxLeft = parentWidth - childWidth;
+          const maxTop = parentHeight - childHeight;
 
-          const randLeft = Math.floor(Math.random() * maxLeft);
-          const randTop = Math.floor(Math.random() * maxTop);
+          const randLeft = Math.random() * maxLeft;
+          const randTop = Math.random() * maxTop;
 
           child.style.position = 'absolute';
           child.style.left = `${randLeft}px`;
@@ -258,6 +248,10 @@ export class LidoCell {
         });
       }
     }, 50);
+    if(this.showSpeakIcon) {
+          speakIcon(this.el);
+           this.el.append(speakIcon(this.el));
+        }
   }
 
   /**
