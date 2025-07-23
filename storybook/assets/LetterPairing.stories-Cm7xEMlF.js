@@ -6,7 +6,7 @@ import"./lit-element-BxxbMms4.js";import{x as p}from"./lit-html-DLYuhZ0i.js";con
                 </lido-avatar>
         </lido-cell>
             <!-- heading -->
-            <lido-text id="heading" width="landscape.80%,portrait.70%" tabIndex="20" visible="true" string="${t.question}" font-family="'Baloo Bhai 2'" fontColor="#323232" font-size="landscape.36px,portrait.36px" bg-Color="transparent" onEntry="this.fontWeight='600';"  margin="landscape.120px 0px -25px 0px, portrait.160px 0px -39px 0px" >
+            <lido-text id="heading" width="landscape.71%,portrait.70%" tabIndex="20" visible="true" string="${t.question}" font-family="'Baloo Bhai 2'" fontColor="#323232" font-size="landscape.36px,portrait.36px" bg-Color="transparent" onEntry="this.fontWeight='600';"  margin="landscape.120px 0px -25px 0px, portrait.160px 0px -39px 0px" >
             </lido-text>
         <lido-cell visible="true" flex-direction="landscape., portrait.row-reverse" bg-color="transparent" layout="portrait.row,landscape.col" width="100%" height="100%" onEntry="">
             
