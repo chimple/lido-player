@@ -341,19 +341,13 @@ export class LidoHome {
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
         <div class="lido-exit-button" onClick={() => (this.exitFlag = true)}>
-          <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/exitIcon.png" width="48px" height="48px"></lido-image>
+          <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
-          <lido-image
-            src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayerButton/BackButton.png"
-            type="click"
-            onTouch="this.prevBtn='true';"
-            id="lido-arrow-left"
-            onEntry="this.padding='0px';"
-            bg-color="#FFAC4C"
-            border-radius="8px"
-          />
+          <div id="lido-arrow-left">
+            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" onTouch="this.prevBtn='true';" />
+          </div>
 
           {this.containers.map((_, index) => (
             <span
@@ -362,19 +356,13 @@ export class LidoHome {
               style={style}
             ></span>
           ))}
-
-          <lido-image
-            src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/lidoPlayer/Next%20Arrow.png"
-            type="click"
-            onTouch="this.nextBtn='true';"
-            id="lido-arrow-right"
-            onEntry="this.padding='0px';"
-            bg-color="#FFAC4C"
-            border-radius="8px"
-          />
+          <div id="lido-arrow-right">
+            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" onTouch="this.nextBtn='true';" />
+          </div>
         </div>
+
         <div id="main-audio" onClick={() => this.btnpopup()}>
-          <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets//Audio%20icon%20(1).png"></lido-image>
+          <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
         </div>
       </div>
     );
