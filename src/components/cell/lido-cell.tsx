@@ -1,5 +1,5 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
+import { handlingChildElements, initEventsForElement, parseProp ,speakIcon} from '../../utils/utils';
 import { max } from 'mathjs';
 
 /**
@@ -15,6 +15,10 @@ import { max } from 'mathjs';
   shadow: false,
 })
 export class LidoCell {
+   /**
+   * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+   */
+   @Prop() showSpeakIcon: boolean = false;
   /**
    * Defines the width of the scrollbar within the cell (e.g., '14px').
    * Defaults to '0px' if not specified, effectively hiding the scrollbar.
@@ -244,6 +248,10 @@ export class LidoCell {
         });
       }
     }, 50);
+    if(this.showSpeakIcon) {
+          speakIcon(this.el);
+           this.el.append(speakIcon(this.el));
+        }
   }
 
   /**

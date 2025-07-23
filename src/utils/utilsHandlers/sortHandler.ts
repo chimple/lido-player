@@ -60,6 +60,10 @@ export function enableReorderDrag(element: HTMLElement): void {
   }
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    const target = event.target as HTMLElement;
+  if (target.closest('.lido-speak-icon')) {
+    return;
+  }
     isClicked = true;
     isDragging = false;
 
@@ -244,6 +248,9 @@ export function enableReorderDrag(element: HTMLElement): void {
     if (elementType === 'option') {
       const categoryArr = container.querySelectorAll('[type="category"]');
       let category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
+      if (!category) {
+          category = categoryArr[0] as HTMLElement;
+        }
       if (element.parentElement.getAttribute('type') === 'category') {
         const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const tabKey = category.getAttribute('tab-index');
@@ -268,9 +275,7 @@ export function enableReorderDrag(element: HTMLElement): void {
         }, 100);
         return;
       } else {
-        if (!category) {
-          category = categoryArr[0] as HTMLElement;
-        }
+        
         const divEl = createDummyElement(element);
         category.appendChild(divEl);
         element.style.position = 'absolute';
@@ -321,7 +326,7 @@ const resetElementStyles = (el: HTMLElement): void => {
   el.style.cursor = 'move';
   el.style.zIndex = '';
   el.style.transform = '';
-  el.style.position = '';
+  el.style.position = 'relative';
   el.style.left = '';
   el.style.top = '';
 };
