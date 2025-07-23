@@ -828,7 +828,6 @@ export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => 
 
   const shadow = `${redRing}, ${dropShadow}`;  // Combine the shadows
 
-  cell.style.backgroundColor = 'white'; // Ensure background is not transparent
   cell.style.borderRadius = '25px';  // Apply border radius
   cell.style.border = 'none';  // Remove any existing border
   cell.style.boxShadow = shadow;  // Apply the shadow
