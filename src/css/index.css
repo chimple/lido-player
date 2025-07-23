@@ -198,3 +198,92 @@ body {
  transform:translateY(8px);
   box-shadow: 0px 0px 0px 0px !important;
 }
+
+
+
+/* diffrent shaking animations for cell element */
+@keyframes strongShake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+.lido-strong-shake {
+  animation: strongShake 0.3s ease;
+}
+
+@keyframes scaledShake {
+  0% { transform: scale(1) translateX(0); box-shadow: 0 0 0 transparent; }
+  20% { transform: scale(1.10) translateX(-12px); box-shadow: 0 0 10px red; }
+  40% { transform: scale(1.10) translateX(12px); box-shadow: 0 0 12px red; }
+  60% { transform: scale(1.10) translateX(-8px); box-shadow: 0 0 10px red; }
+  80% { transform: scale(1.10) translateX(8px); box-shadow: 0 0 12px red; }
+  100% { transform: scale(1) translateX(0); box-shadow: none; }
+}
+
+.lido-scaled-shake {
+  animation: scaledShake 0.6s ease-in-out;
+}
+
+@keyframes horizontalShake {
+  0% {
+    transform: scale(1) translateX(0);
+    background-color: transparent;
+  }
+  20% {
+    transform: translateX(-20px);
+    background-color: rgba(255, 0, 0, 0.2);
+  }
+  40% {
+    transform: translateX(20px);
+    background-color: rgba(255, 0, 0, 0.4);
+  }
+  60% {
+    transform: translateX(-10px);
+    background-color: rgba(255, 0, 0, 0.3);
+  }
+  80% {
+    transform: translateX(10px);
+    background-color: rgba(255, 0, 0, 0.2);
+  }
+  100% {
+    transform: translateX(0);
+    background-color: transparent;
+  }
+}
+
+.lido-horizontal-shake {
+  animation: horizontalShake 0.6s ease-in-out;
+  border-radius: 20px;
+}
+
+@keyframes verticalShake {
+  0%   { transform: translateY(0); background-color: transparent; }
+  20%  { transform: translateY(-20px); background-color: rgba(255, 0, 0, 0.2); }
+  40%  { transform: translateY(0); background-color: rgba(255, 0, 0, 0.4); }
+  60%  { transform: translateY(20px); background-color: rgba(255, 0, 0, 0.2); }
+  80%  { transform: translateY(0); background-color: rgba(255, 0, 0, 0.1); }
+  100% { transform: translateY(0); background-color: transparent; }
+}
+
+.lido-vertical-shake {
+  animation: verticalShake 0.6s ease-in-out;
+  border-radius: 20px;
+}
+
+@keyframes diagonalShake {
+  0%   { transform: translate(0, 0); background-color: transparent; }
+  25%  { transform: translate(20px, -20px); background-color: rgba(255, 0, 0, 0.2); }
+  50%  { transform: translate(-20px, 20px); background-color: rgba(255, 0, 0, 0.3); }
+  75%  { transform: translate(10px, -10px); background-color: rgba(255, 0, 0, 0.2); }
+  100% { transform: translate(0, 0); background-color: transparent; }
+}
+
+.lido-diagonal-shake {
+  animation: diagonalShake 0.5s ease-in-out;
+  border-radius: 20px;
+  will-change: transform;
+}

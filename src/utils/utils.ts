@@ -156,6 +156,22 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
+        case 'applyBorderToCell': {
+          const value = action.value;
+          if(value && targetElement) {
+            applyBorderToClickableCell(targetElement as HTMLElement, value);
+          }
+          break;
+        }
+
+        case 'shakeCell': {
+          const value = action.value;
+          if (value && targetElement) {
+            shakeCell(targetElement as HTMLElement, value);
+          }
+          break;
+        }
+
         default: {
           targetElement.style[action.action] = action.value;
           break;
@@ -796,3 +812,49 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(DropLength);
 }
 
+// apply border to the clickable cell
+export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => {
+  if (!cell) return;
+  
+  if (!color) {
+    color = 'red'; // Default color if none is provided
+  } 
+
+  // Calculate the shadow based on the cell's height
+  const elementShadow = cell.offsetHeight * 0.08;  // 8% of the cell height
+  const redRing = `0 0 0 6px ${color}`;  // 6px red ring around the cell
+  // Adjust the drop shadow to be below the cell
+  const dropShadow = `0 ${elementShadow}px 10px rgba(0, 0, 0, 0.25)`;  // 10px shadow below the cell
+
+  const shadow = `${redRing}, ${dropShadow}`;  // Combine the shadows
+
+  cell.style.backgroundColor = 'white'; // Ensure background is not transparent
+  cell.style.borderRadius = '25px';  // Apply border radius
+  cell.style.border = 'none';  // Remove any existing border
+  cell.style.boxShadow = shadow;  // Apply the shadow
+  cell.style.setProperty('box-shadow', shadow, 'important'); // enforce priority
+
+}
+
+// apply shake animation to the cell
+// value can be 'scaled-shake', 'vertical-shake', 'horizontal-shake', 'strong-shake', 'diagonal-shake'
+export const  shakeCell = (cell: HTMLElement,value: string) => {
+  if(!cell) return;
+  
+  if (!value) {
+    value = 'horizontal-shake'; // Default animation type if none is provided
+  }
+  
+  const animationType = value;
+
+  // Create the class name
+  const className = `lido-${animationType}`;
+  // Add animation class
+  cell.classList.add(className);
+  // Duration should match our animation timing (500–600ms)
+  setTimeout(() => {
+    // Remove class to allow future reuse of the animation
+    cell.classList.remove(className);
+
+  }, 600); // Match to longest duration (e.g., 0.6s)
+}
