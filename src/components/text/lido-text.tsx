@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host, State } from '@stencil/core';
-import { initEventsForElement, convertUrlToRelative, parseProp } from '../../utils/utils';
+import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon } from '../../utils/utils';
 
 /**
  * @component LidoText
@@ -14,6 +14,10 @@ import { initEventsForElement, convertUrlToRelative, parseProp } from '../../uti
   shadow: false,
 })
 export class LidoText {
+  /**
+   * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+  */
+  @Prop() showSpeakIcon: boolean = false;
   /**
    * Unique identifier for the text element.
    */
@@ -182,6 +186,12 @@ export class LidoText {
     if(this.spanType === 'words' || this.spanType === 'letters') {
       this.addSpanToText();   
     }
+    if(this.showSpeakIcon) {
+      speakIcon(this.el);
+       this.el.append(speakIcon(this.el));
+     
+    }
+    
   }
 
   /**

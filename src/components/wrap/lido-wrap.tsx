@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element, State } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp } from '../../utils/utils';
+import { handlingChildElements, initEventsForElement, parseProp ,speakIcon} from '../../utils/utils';
 
 /**
  * @component LidoWrap
@@ -14,6 +14,10 @@ import { handlingChildElements, initEventsForElement, parseProp } from '../../ut
   shadow: false,
 })
 export class LidoWrap {
+  /**
+   * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+  */
+  @Prop() showSpeakIcon: boolean = false;
   /**
    * Unique identifier for the wrap element.
    */
@@ -166,6 +170,10 @@ export class LidoWrap {
       this.el.classList.remove('lido-wrap');
       this.el.classList.add('lido-flex');
     }
+    if(this.showSpeakIcon) {
+        speakIcon(this.el);
+         this.el.append(speakIcon(this.el));
+          }
   }
 
   /**
