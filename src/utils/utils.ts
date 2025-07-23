@@ -156,7 +156,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-        case 'applyBorderToCell': {
+        case 'highlightBorder': {
           const value = action.value;
           if(value && targetElement) {
             applyBorderToClickableCell(targetElement as HTMLElement, value);
@@ -164,10 +164,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-        case 'shakeCell': {
+        case 'vibrate': {
           const value = action.value;
           if (value && targetElement) {
-            shakeCell(targetElement as HTMLElement, value);
+            vibrateCell(targetElement as HTMLElement, value);
           }
           break;
         }
@@ -838,7 +838,7 @@ export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => 
 
 // apply shake animation to the cell
 // value can be 'scaled-shake', 'vertical-shake', 'horizontal-shake', 'strong-shake', 'diagonal-shake'
-export const  shakeCell = (cell: HTMLElement,value: string) => {
+export const  vibrateCell = (cell: HTMLElement,value: string) => {
   if(!cell) return;
   
   if (!value) {
