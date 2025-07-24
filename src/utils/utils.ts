@@ -167,7 +167,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'vibrate': {
           const value = action.value;
           if (value && targetElement) {
-            vibrateCell(targetElement as HTMLElement, value);
+            await vibrateCell(targetElement as HTMLElement, value);
           }
           break;
         }
@@ -835,7 +835,7 @@ export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => 
 
 // apply shake animation to the cell
 // value can be 'scaled-shake', 'vertical-shake', 'horizontal-shake', 'strong-shake', 'diagonal-shake'
-export const  vibrateCell = (cell: HTMLElement,value: string) => {
+export const  vibrateCell = async (cell: HTMLElement,value: string) : Promise<void> => {
   if(!cell) return;
   
   if (!value) {
@@ -849,9 +849,9 @@ export const  vibrateCell = (cell: HTMLElement,value: string) => {
   // Add animation class
   cell.classList.add(className);
   // Duration should match our animation timing (500–600ms)
-  setTimeout(() => {
-    // Remove class to allow future reuse of the animation
-    cell.classList.remove(className);
 
-  }, 600); // Match to longest duration (e.g., 0.6s)
+  await new Promise(resolve => setTimeout(resolve, 600)); // Wait for the animation to complete
+
+  // Remove the class after the animation completes
+  cell.classList.remove(className);
 }
