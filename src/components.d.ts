@@ -128,6 +128,10 @@ export namespace Components {
          */
         "childElementsLength": number;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
+        /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
          */
         "flexDirection": string;
@@ -1878,6 +1882,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
         /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
          */

@@ -203,10 +203,26 @@ export class LidoCell {
   @State() style: { [key: string]: string } = {};
 
   /**
+   * Delay in milliseconds to make the cell visible after mount.
+   */
+  @Prop() delayVisible: string = '';
+
+  /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
    */
   componentDidLoad() {
+    // Logic for Initially hides the element and makes it visible after some delay
+    if (this.delayVisible) {
+      const delay = parseInt(this.delayVisible, 10);
+      this.el.style.visibility = "hidden"
+      if (!isNaN(delay)) {
+        setTimeout(() => {
+          this.el.style.visibility = "visible";
+        }, delay);
+      }
+    }
+
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     // Select all direct child elements of the component
@@ -294,8 +310,8 @@ export class LidoCell {
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'
           : parseProp(this.layout, orientation) === 'pos' || parseProp(this.layout, orientation) === 'random'
-          ? 'block'
-          : 'flex'
+            ? 'block'
+            : 'flex'
         : 'none',
       'flexDirection': this.flexDirection ? parseProp(this.flexDirection, orientation) : '',
       'alignItems': this.alignItems ? parseProp(this.alignItems, orientation) : '',
