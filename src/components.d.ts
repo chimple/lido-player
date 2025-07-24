@@ -184,6 +184,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding": string;
+        /**
           * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
          */
         "scrollbarWidth": string;
@@ -710,6 +714,10 @@ export namespace Components {
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch": string;
+        /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
          */
@@ -1307,6 +1315,10 @@ export namespace Components {
           * Event handler triggered when the text component is touched or clicked.
          */
         "onTouch": string;
+        /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
          */
@@ -1923,6 +1935,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding"?: string;
+        /**
           * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
          */
         "scrollbarWidth"?: string;
@@ -2449,6 +2465,10 @@ declare namespace LocalJSX {
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
          */
@@ -3046,6 +3066,10 @@ declare namespace LocalJSX {
           * Event handler triggered when the text component is touched or clicked.
          */
         "onTouch"?: string;
+        /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
          */

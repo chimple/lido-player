@@ -1,6 +1,6 @@
 import { LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
-import { handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
+import { executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
 import { removeHighlight } from './highlightHandler';
 
@@ -25,6 +25,60 @@ const slideNumbers = (element: HTMLElement) => {
     numbersElement.className = 'slide-numbers-div slide-numbers-left';
   }
 };
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+export const slideAnimation = async () => {
+  const container = document.getElementById(LidoContainer);
+  if (!container) return;
+
+  container.style.pointerEvents = 'none';
+
+  const slideElements = Array.from(container.querySelectorAll('[type="slide"]')) as HTMLElement[];
+
+  const containerScale = getElementScale(container);
+
+  const count = slideElements.length;
+
+  const loopLength = count % 2 === 0 ? count : count - 1;
+
+  for (let i = 0; i < loopLength; i += 2) {
+    const first = slideElements[i];
+    const second = slideElements[i + 1];
+
+    const firstRect = first.getBoundingClientRect();
+    const secondRect = second.getBoundingClientRect();
+
+    const firstX = firstRect.left + firstRect.width / 2;
+    const secondX = secondRect.left + secondRect.width / 2;
+    const firstY = firstRect.top + firstRect.height / 2;
+    const secondY = secondRect.top + secondRect.height / 2;
+
+    const xDiff = (secondX - firstX) / containerScale;
+    const yDiff = (secondY - firstY) / containerScale;
+
+    first.style.transition = second.style.transition = 'transform 0.5s ease';
+    first.style.transform = `translate(${xDiff}px, ${yDiff}px)`;
+    second.style.transform = `translate(${-xDiff}px, ${-yDiff}px)`;
+  }
+
+  await delay(800);
+
+  for (let i = 0; i < loopLength; i++) {
+    const el = slideElements[i];
+    el.style.transform = 'translate(0, 0)';
+  }
+
+  await delay(500);
+
+  for (let i = 0; i < loopLength; i++) {
+    const el = slideElements[i];
+    el.style.transition = '';
+  }
+
+  container.style.pointerEvents = '';
+};
+
 
 export function slidingWithScaling(element: HTMLElement): void {
   let overlapElement = false;
