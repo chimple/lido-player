@@ -5,7 +5,7 @@ import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
-import { slidingWithScaling } from './utilsHandlers/slideHandler';
+import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
@@ -169,6 +169,11 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           if (value && targetElement) {
             await vibrateCell(targetElement as HTMLElement, value);
           }
+          break;
+        }
+          
+        case 'slideAnimation': {
+          slideAnimation();
           break;
         }
 

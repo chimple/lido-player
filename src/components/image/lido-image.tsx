@@ -143,6 +143,12 @@ export class LidoImage {
   @Prop() margin: string = '';
 
   /**
+   * CSS padding value applied to each child element inside the container.
+   * Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() padding: string = '';
+
+  /**
    * CSS filter to apply visual effects (e.g., blur, brightness) to the image.
    * Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
    */
@@ -183,10 +189,10 @@ export class LidoImage {
         img.style.filter = `${CssFilter.hexToFilter(tinyColor(this.filter).toHexString()).color}`;
       }
     }
-    if(this.showSpeakIcon) {
-        speakIcon(this.el);
-         this.el.append(speakIcon(this.el));
-        }
+    if (this.showSpeakIcon) {
+      speakIcon(this.el);
+      this.el.append(speakIcon(this.el));
+    }
   }
 
   /**
@@ -218,6 +224,7 @@ export class LidoImage {
       alignItems: 'center',
       justifyContent: 'center',
       margin: parseProp(this.margin, orientation),
+      padding: parseProp(this.padding, orientation),
       transform: parseProp(this.transform, orientation),
       borderRadius: this.borderRadius,
 
