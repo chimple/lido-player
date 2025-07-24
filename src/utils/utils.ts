@@ -156,7 +156,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-        case 'highlightBorder': {
+        case 'cellBorderAnimate': {
           const value = action.value;
           if(value && targetElement) {
             applyBorderToClickableCell(targetElement as HTMLElement, value);
@@ -817,7 +817,7 @@ export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => 
   if (!cell) return;
   
   if (!color) {
-    color = 'red'; // Default color if none is provided
+    color = 'green'; // Default color if none is provided
   } 
 
   // Calculate the shadow based on the cell's height
@@ -828,8 +828,6 @@ export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => 
 
   const shadow = `${redRing}, ${dropShadow}`;  // Combine the shadows
 
-  cell.style.borderRadius = '25px';  // Apply border radius
-  cell.style.border = 'none';  // Remove any existing border
   cell.style.boxShadow = shadow;  // Apply the shadow
   cell.style.setProperty('box-shadow', shadow, 'important'); // enforce priority
 
