@@ -473,7 +473,8 @@ export const validateObjectiveStatus = async () => {
     if (res) {
       const attach = container.getAttribute('appendToDropOnCompletion');
       if (attach === 'true') {
-        appendingDragElementsInDrop();
+        // Delays execution of appendingDragElementsInDrop to ensure all animations finish (within 1 second) before it runs
+        setTimeout(appendingDragElementsInDrop, 1000);
       }
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
