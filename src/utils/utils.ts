@@ -156,8 +156,25 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
+        case 'cellBorderAnimate': {
+          const value = action.value;
+          if(value && targetElement) {
+            applyBorderToClickableCell(targetElement as HTMLElement, value);
+          }
+          break;
+        }
+
+        case 'vibrate': {
+          const value = action.value;
+          if (value && targetElement) {
+            await vibrateCell(targetElement as HTMLElement, value);
+          }
+          break;
+        }
+          
         case 'slideAnimation': {
           slideAnimation();
+          break;
         }
 
         default: {
@@ -800,3 +817,46 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(DropLength);
 }
 
+// apply border to the clickable cell
+export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => {
+  if (!cell) return;
+  
+  if (!color) {
+    color = 'green'; // Default color if none is provided
+  } 
+
+  // Calculate the shadow based on the cell's height
+  const elementShadow = cell.offsetHeight * 0.08;  // 8% of the cell height
+  const redRing = `0 0 0 6px ${color}`;  // 6px red ring around the cell
+  // Adjust the drop shadow to be below the cell
+  const dropShadow = `0 ${elementShadow}px 10px rgba(0, 0, 0, 0.25)`;  // 10px shadow below the cell
+
+  const shadow = `${redRing}, ${dropShadow}`;  // Combine the shadows
+
+  cell.style.boxShadow = shadow;  // Apply the shadow
+  cell.style.setProperty('box-shadow', shadow, 'important'); // enforce priority
+
+}
+
+// apply shake animation to the cell
+// value can be 'scaled-shake', 'vertical-shake', 'horizontal-shake', 'strong-shake', 'diagonal-shake'
+export const  vibrateCell = async (cell: HTMLElement,value: string) : Promise<void> => {
+  if(!cell) return;
+  
+  if (!value) {
+    value = 'horizontal-shake'; // Default animation type if none is provided
+  }
+  
+  const animationType = value;
+
+  // Create the class name
+  const className = `lido-${animationType}`;
+  // Add animation class
+  cell.classList.add(className);
+  // Duration should match our animation timing (500–600ms)
+
+  await new Promise(resolve => setTimeout(resolve, 600)); // Wait for the animation to complete
+
+  // Remove the class after the animation completes
+  cell.classList.remove(className);
+}
