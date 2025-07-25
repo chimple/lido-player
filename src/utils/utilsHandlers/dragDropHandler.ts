@@ -317,10 +317,11 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       }
     }
 
-    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
-      const computedStyle = window.getComputedStyle(element);
-      mostOverlappedElement.style.width = computedStyle.width;
-    }
+
+    // if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
+    //   const computedStyle = window.getComputedStyle(element);
+    //   mostOverlappedElement.style.width = computedStyle.width;
+    // }
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
       if (mostOverlappedElement) {
@@ -431,12 +432,10 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
     currentDrop.style.width = originalWidth;
     currentDrop.removeAttribute('data-original-width');
   } else {
-   
-    currentDrop.style.width = ''; 
+   currentDrop.classList.add('reset-stretch-style');
+    
   }
-  currentDrop.style.paddingLeft = '';
-  currentDrop.style.paddingRight = '';
-  currentDrop.style.boxSizing = '';
+  
 }
 
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);

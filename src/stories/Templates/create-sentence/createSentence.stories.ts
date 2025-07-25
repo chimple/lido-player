@@ -32,7 +32,7 @@ function getContainerXml(args) {
 			<lido-text id="sentenceText" value="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4}" string="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4}" />
 		</lido-cell>
 		<lido-cell id="row1" layout="col" height="100%" width="100%" visible="true" bg-Color="transparent">
-			<lido-text visible="true" showSpeakIcon="true" width="auto" height="10%" string="${args.heading}"  font-family="'Baloo Bhai 2'" margin="60px 0px -139px 0px" font-size="landscape.36px,portrait.36px" onEntry="this.padding='0px 43px';this.position='relative';this.fontWeight='600';"></lido-text>
+			<lido-text visible="true" show-speak-icon="true" width="auto" height="10%" string="${args.heading}"  font-family="'Baloo Bhai 2'" margin="60px 0px -139px 0px" font-size="landscape.36px,portrait.36px" onEntry="this.padding='0px 43px';this.position='relative';this.fontWeight='600';"></lido-text>
 			<!-- Truck -->
 			<lido-cell id="col" layout="col" disable-edit="true" value="pos" aria-hidden="true" x="0" y="0" z="0" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" width="100%" height="100%" onEntry="">
 				<lido-cell id="pos2" layout="pos" disable-edit="true" value="pos" aria-hidden="true" x="0" y="0" z="0" bg-color="transparent" type="" visible="true" audio="" onTouch="" width="100%" height="100%" onEntry="this.animation='rightToPlace 2.5s linear'; this.sleep='2000'">
@@ -52,13 +52,13 @@ function getContainerXml(args) {
 					</lido-cell>
 				</lido-cell>
 				<lido-cell layout="row" visible="true" width="landscape.70%, portrait.88%" y="landscape.40%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
-					<lido-text id="option1" showSpeakIcon="true" value="${args.option1}" tab-index="5"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative'; " width="auto" height="90px" string="${args.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option1" show-speak-icon="true" value="${args.option1}" tab-index="5"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative'; " width="auto" height="90px" string="${args.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
-					<lido-text id="option2" showSpeakIcon="true" value="${args.option2}" tab-index="6"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative';" width="auto" height="90px" string="${args.option2}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option2" show-speak-icon="true" value="${args.option2}" tab-index="6"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative';" width="auto" height="90px" string="${args.option2}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
-					<lido-text id="option3" showSpeakIcon="true" value="${args.option3}" tab-index="7"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="90px" string="${args.option3}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option3" show-speak-icon="true" value="${args.option3}" tab-index="7"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="90px" string="${args.option3}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
-					<lido-text id="option4" showSpeakIcon="true" value="${args.option4}" tab-index="8"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="90px" string="${args.option4}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option4" show-speak-icon="true" value="${args.option4}" tab-index="8"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="90px" string="${args.option4}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
 				</lido-cell>
 			</lido-cell>
