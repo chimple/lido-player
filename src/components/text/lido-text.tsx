@@ -194,7 +194,7 @@ export class LidoText {
     }
     if (this.showSpeakIcon) {
       speakIcon(this.el);
-      this.el.append(speakIcon(this.el));
+      this.el.prepend(speakIcon(this.el));
     }
   }
 
