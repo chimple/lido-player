@@ -1,5 +1,5 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
+import { handlingChildElements, initEventsForElement, setVisibilityWithDelay, parseProp, speakIcon } from '../../utils/utils';
 import { max } from 'mathjs';
 
 /**
@@ -212,16 +212,8 @@ export class LidoCell {
    * It initializes events for the column based on the provided type.
    */
   componentDidLoad() {
-    // Logic for Initially hides the element and makes it visible after some delay
-    if (this.delayVisible) {
-      const delay = parseInt(this.delayVisible, 10);
-      this.el.style.visibility = "hidden"
-      if (!isNaN(delay)) {
-        setTimeout(() => {
-          this.el.style.visibility = "visible";
-        }, delay);
-      }
-    }
+
+    setVisibilityWithDelay(this.el, this.delayVisible);
 
     initEventsForElement(this.el, this.type);
     

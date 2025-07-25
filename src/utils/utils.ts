@@ -756,7 +756,7 @@ const getElementsForQueries = (query: string) => {
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
-   if (targetElement.querySelector('.lido-speak-icon')) {
+  if (targetElement.querySelector('.lido-speak-icon')) {
     return null;
   }
   const speakIcon = document.createElement('div');
@@ -766,10 +766,10 @@ export const speakIcon = (targetElement: HTMLElement) => {
   // if (!stringAttr && !hasAudioAttr) {// hide the button
   //   speakIcon.style.display = 'none';
   // }
-//  targetElement.appendChild(speakIcon);
+  //  targetElement.appendChild(speakIcon);
 
   speakIcon.addEventListener('click', async (event) => {
-     event.stopPropagation(); 
+    event.stopPropagation();
     // const text = targetElement?.innerText?.trim();
     // const audioAttr = targetElement.getAttribute('audio');
     if (currentlySpeakingElement && currentlySpeakingElement !== targetElement) {
@@ -783,7 +783,7 @@ export const speakIcon = (targetElement: HTMLElement) => {
     currentlySpeakingElement = targetElement;
 
     try {
-      await AudioPlayer.getI().play(targetElement); 
+      await AudioPlayer.getI().play(targetElement);
     } catch (error) {
       console.error('Error playing audio or TTS:', error);
     }
@@ -801,3 +801,21 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(DropLength);
 }
 
+/**
+ * Applies a delay to the element's visibility based on `delayVisible`.
+ */
+
+export const setVisibilityWithDelay = (element: HTMLElement, delayVisible: string) => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return;
+
+  if (delayVisible) {
+    const delay = parseInt(delayVisible, 10);
+    element.style.visibility = "hidden"
+    if (!isNaN(delay)) {
+      setTimeout(() => {
+        element.style.visibility = "visible";
+      }, delay);
+    }
+  }
+};
