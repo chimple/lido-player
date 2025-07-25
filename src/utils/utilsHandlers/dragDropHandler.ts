@@ -424,6 +424,21 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
       dragElement.removeAttribute(DropToAttr);
     dragToDropMap.delete(dragElement);
       updateDropBorder(currentDrop);
+      if (currentDrop?.getAttribute('drop-attr')?.toLowerCase() === DropMode.Stretch) {
+  const originalWidth = currentDrop.getAttribute('data-original-width');
+
+  if (originalWidth) {
+    currentDrop.style.width = originalWidth;
+    currentDrop.removeAttribute('data-original-width');
+  } else {
+   
+    currentDrop.style.width = ''; 
+  }
+  currentDrop.style.paddingLeft = '';
+  currentDrop.style.paddingRight = '';
+  currentDrop.style.boxSizing = '';
+}
+
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
       if (prevDropItem) {
         prevDropItem.isFull = false;
@@ -566,7 +581,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
     dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
   }
+  
   if (dropElement) {
+   if (dropElement.getAttribute("drop-attr") === "stretch") {
+  if (!dropElement.hasAttribute('data-original-width')) {
+    const computedStyle = window.getComputedStyle(dropElement);
+    dropElement.setAttribute('data-original-width', computedStyle.width);
+  }
+
+  const dragWidth = dragElement.offsetWidth;
+  dropElement.style.width = `${dragWidth}px`;
+}
+
     dragElement.classList.add('dropped');
     if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);

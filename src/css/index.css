@@ -182,8 +182,8 @@ body {
   width : 56px;
   height:56px;
   position: absolute;
-  top: -8%;
-  right: -7%;
+  top: -25px;
+  right: -25px;
   z-index: 10;
   background-image : url("https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/template/audioIcon.png");
   background-color:   white;
