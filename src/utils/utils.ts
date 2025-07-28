@@ -814,7 +814,7 @@ export const speakIcon = (targetElement: HTMLElement) => {
     speakIcon.style.position = 'unset';
     return parentDiv;
   }
-
+  targetElement.style.position = "relative";
   return speakIcon;
 };
 
