@@ -59,7 +59,7 @@ export const Blanks: StoryObj = {
 function getContainerXml(args){
 	return `
    <main>
-		<lido-container id="lido-container" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="${args.answer1},${args.answer2},${args.answer3},${args.answer4}" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+		<lido-container id="lido-container"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="${args.answer1},${args.answer2},${args.answer3},${args.answer4}" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1267px, portrait.541px" y="landscape.587px, portrait.1304px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
@@ -73,11 +73,11 @@ function getContainerXml(args){
 		<lido-cell layout="col" visible="true" width="100%" height="100%" bg-color="transparent">
 			<!-- heading -->
 			<lido-cell   visible="true" margin="landscape.12px 0px -17px 0px, portrait.0px 0px 0px;">
-				<lido-text show-speak-icon="true" id="heading" tab-index="1" width="354px" visible="true" string="${args.heading}" font-family="'Baloo Bhai 2'" fontColor="black" font-size="landscape.36px, portrait.40px" bg-color="transparent" onEntry="this.position='relative'; this.fontWeight='700';" margin="landscape.32px 0px 4px 0px,portrait.0px 0px 0px">
+				<lido-text show-speak-icon="true" id="heading" tab-index="1" width="354px" visible="true" string="${args.heading}" font-family="'Baloo Bhai 2'" fontColor="black" font-size="landscape.36px, portrait.40px" bg-color="transparent" onEntry=" this.fontWeight='700';" margin="landscape.32px 0px 4px 0px,portrait.0px 0px 0px">
 				</lido-text>
 			</lido-cell>
 			<!-- fill up based on image -->
-			<lido-cell show-speak-icon="true" layout="landscape.row, portrait.col" visible="true" width="landscape.75%, portrait.76%" height="landscape.57%, portrait.73%" bg-color="white" onEntry="this.position='relative';this.borderRadius='10px'; this.padding='8px';" margin="landscape.0 , portrait. 0px 0px 0px">
+			<lido-cell show-speak-icon="true" layout="landscape.row, portrait.col" visible="true" width="landscape.75%, portrait.76%" height="landscape.57%, portrait.73%" bg-color="white" onEntry="this.borderRadius='10px'; this.padding='8px';" margin="landscape.0 , portrait. 0px 0px 0px">
 				<!-- image -->
 				<lido-image id="image1" disable-edit="true" visible="true" src="${args.img}" width="landscape.41%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 59px 0px 0px , portrait. 0">
 				</lido-image>
@@ -102,15 +102,16 @@ function getContainerXml(args){
 				
 			</lido-cell>
 			<lido-cell layout="landscape.row, portrait.wrap" childElementsLength="4" onEntry="this.gap='28px';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true" margin="landscape.6px 383px 74px 0px, portrait.34px 128px 0px -113px">
-				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option1" value="${args.option1}" tab-index="14" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';this.position='relative';" width="auto" height="landscape.87px, portrait.91px" string="${args.option1}" fontColor="black" font-size="40px" dropAttr="stretch"  type="drag">
+				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option1" value="${args.option1}" tab-index="14" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400'; width="auto" height="landscape.87px, portrait.91px" string="${args.option1}" fontColor="black" font-size="40px"   type="drag">
 				</lido-text>
-				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option2" value="${args.option2}" tab-index="15" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400'; this.position='relative';" width="auto" height="landscape.87px, portrait.91px" string="${args.option2}" fontColor="black" font-size="40px" dropAttr="stretch" type="drag">
+				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option2" value="${args.option2}" tab-index="15" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';  width="auto" height="landscape.87px, portrait.91px" string="${args.option2}" fontColor="black" font-size="40px"  type="drag">
 				</lido-text>
-				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option3" value="${args.option3}" tab-index="16" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px'; this.fontWeight='400'; this.position='relative';" width="auto" height="landscape.87px, portrait.91px" string="${args.option3}" fontColor="black" font-size="40px" dropAttr="stretch"  type="drag">
+				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option3" value="${args.option3}" tab-index="16" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px'; this.fontWeight='400'; width="auto" height="landscape.87px, portrait.91px" string="${args.option3}" fontColor="black" font-size="40px" type="drag">
 				</lido-text>
-				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option4" value="${args.option4}" tab-index="17" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';this.position='relative';" width="auto" height="landscape.87px, portrait.91px" string="${args.option4}" fontColor="black" font-size="40px" dropAttr="stretch"  type="drag">
+				<lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option4" value="${args.option4}" tab-index="17" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400'; width="auto" height="landscape.87px, portrait.91px" string="${args.option4}" fontColor="black" font-size="40px"   type="drag">
 				</lido-text>
 			</lido-cell>
+			
 		</lido-cell>
 	</lido-container>
     </main>
