@@ -82,7 +82,7 @@ function getContainerXml(args) {
 					</lido-text>
 					<lido-text id="option4" show-speak-icon="true" value="${args.option4}" tab-index="12"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84px" string="${args.option4}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
-					<lido-text id="option5" show-speak-icon="true" value="${args.option5}" tab-index="13"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84ypx" string="${args.option5}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option5" show-speak-icon="true" value="${args.option5}" tab-index="13"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84px" string="${args.option5}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
 					<lido-text id="option6" show-speak-icon="true" value="${args.option6}" tab-index="14"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';" width="auto" height="84px" string="${args.option6}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
