@@ -3,20 +3,32 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Templates/create-sentence',
+  argTypes: {
+		questionImg:{control: 'file'},
+  }
 };
 export default meta;
 
 export const CreateSentence: StoryObj = {
  args: {
-	heading:'Create a Sentence from the Image',
-    option1: 'streetlight',
-    option2: 'Girl',
-    option3: 'sits',
-    option4: 'under',
-    correct1: 'Girl',
-    correct2: 'sits',
-    correct3: 'under',
-    correct4: 'streetlight',
+	heading:'Who is the father of the nation?',
+	questionImg:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Mahatma-Gandhi.jpg"],
+    option1: 'called',
+    option2: 'the',
+    option3: 'Mahatma',
+    option4: 'is',
+    option5: 'of',
+    option6: 'Father',
+    option7: 'India',
+    option8: 'Gandhi',
+	correct1: 'Mahatma',
+	correct2: 'Gandhi',
+	correct3: 'is',
+	correct4: 'called',
+	correct5: 'the',
+	correct6: 'Father',
+	correct7: 'of',
+	correct8: 'India',
   },
 
   render: args => {
@@ -27,46 +39,67 @@ export const CreateSentence: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-	<lido-container id="lido-container" is-allow-only-correct="true" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="background1.mp3" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="this.sleep='1000';speak-con.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false"  appendToDropOnCompletion="true">
+	<lido-container id="lido-container" is-allow-only-correct="true" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5},${args.correct6},${args.correct7},${args.correct8}" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="" onCorrect="this.sleep='1000';speak-con.speak='';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false"  appendToDropOnCompletion="true">
 		<lido-cell visible="false" id="speak-con">
-			<lido-text id="sentenceText" value="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4}" string="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4}" />
+			<lido-text id="sentenceText" value="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4} ${args.correct5} ${args.correct6} ${args.correct7} ${args.correct8}" string="${args.correct1} ${args.correct2} ${args.correct3} ${args.correct4} ${args.correct5} ${args.correct6} ${args.correct7} ${args.correct8}" />
 		</lido-cell>
 		<lido-cell id="row1" layout="col" height="100%" width="100%" visible="true" bg-Color="transparent">
-			<lido-text visible="true" show-speak-icon="true" width="auto" height="10%" string="${args.heading}"  font-family="'Baloo Bhai 2'" margin="60px 0px -139px 0px" font-size="landscape.36px,portrait.36px" onEntry="this.padding='0px 43px';this.position='relative';this.fontWeight='600';"></lido-text>
+			
+			<lido-text  show-speak-icon="true"  margin="60px 0px -139px 0px"  visible="true" bg-color="transparent" y="landscape.0px, portrait.79px" onEntry="this.padding='0px 45px'; this.fontWeight='600'; this.position='relative'; " width="auto" height="5%" string="${args.heading}" font-family="'Baloo 2', serif" font-size="36px" z="2" >
+					</lido-text>
 			<!-- Truck -->
 			<lido-cell id="col" layout="col" disable-edit="true" value="pos" aria-hidden="true" x="0" y="0" z="0" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" width="100%" height="100%" onEntry="">
 				<lido-cell id="pos2" layout="pos" disable-edit="true" value="pos" aria-hidden="true" x="0" y="0" z="0" bg-color="transparent" type="" visible="true" audio="" onTouch="" width="100%" height="100%" onEntry="this.animation='rightToPlace 2.5s linear'; this.sleep='2000'">
-					<lido-image width="landscape.87%, portrait.145%" height="landscape.127%, portrait.70%" y="landscape.-21%, portrait.26%" x="landscape.0%, portrait.-39%" id="image1" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/blueTruck.png" onEntry="">
+					<lido-image width="landscape.1477px, portrait.200%" height="landscape.139%, portrait.100%" y="landscape.-28%, portrait.-7%" x="landscape.0%, portrait.-73%" id="image1" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/blueTruck.png" onEntry="">
 					</lido-image>
-					<lido-image width="landscape.20%, portrait.32%" y="landscape.20%, portrait.49%" x="landscape.46%, portrait.40%" z="2" id="image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/question%20image.png" onEntry="">
+					<lido-image width="landscape.16%, portrait.32%" y="landscape.17%, portrait.26%" x="landscape.51%, portrait.35%" z="2" id="image2" disable-edit="true" visible="true" src="${args.questionImg}" onEntry="">
 					</lido-image>
-					<lido-cell layout="row" visible="true" width="landscape.47%, portrait.76%" min-length="2" max-length="6" height="landscape.0%, portrait.20%" x="landscape.33%, portrait.17%" y="landscape.56%, portrait.61%" bg-color="transparent" onEntry="">
-						<lido-text drop-attr="stretch" visible="true" id="drop1" width="150px" height="80px" value="${args.correct1}" z="1" margin="landscape.98px 0px 0px 0px, portrait.-6px 0px 0px 0px" type="drop" tab-index="1" is-allow-only-one-drop="true" onEntry=" this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';">
-						</lido-text>
-						<lido-text visible="true" drop-attr="stretch" id="drop2" width="150px" height="80px" value="${args.correct2}" z="1" margin="landscape.98px 0px 0px 0px, portrait.-6px 0px 0px 0px" type="drop" tab-index="2" is-allow-only-one-drop="true" onEntry=" this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';">
-						</lido-text>
-						<lido-text visible="true" drop-attr="stretch" id="drop3" width="150px" height="80px" value="${args.correct3}" z="1" margin="landscape.98px 0px 0px 0px, portrait.-6px 0px 0px 0px" type="drop" tab-index="3" is-allow-only-one-drop="true" onEntry=" this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';">
-						</lido-text>
-						<lido-text visible="true" drop-attr="stretch" id="drop4" width="150px" height="80px" value="${args.correct4}" z="1" margin="landscape.98px 0px 0px 0px, portrait.-6px 0px 0px 0px" type="drop" tab-index="4" is-allow-only-one-drop="true" onEntry=" this.background='transparent'; this.borderRadius='15px'; this.display='flex'; this.alignItems='center'; this.justifyContent='center'; this.fontWeight='bold';">
-						</lido-text>
-					</lido-cell>
+					<lido-cell layout="wrap" visible="true" width="landscape.50%, portrait.88%" y="landscape.48%, portrait.48%" x="landscape.35%,portrait.7%" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='36px';" bg-color="transparent">
+					<lido-text id="drop1"  value="${args.correct1}" tab-index="1" is-allow-only-one-drop="true" visible="true"  onEntry="this.background='transparent';  this.borderRadius='15px'; " width="150px" height="84px"   type="drop">
+					</lido-text>
+					<lido-text id="drop2"  value="${args.correct2}" tab-index="2" is-allow-only-one-drop="true"  visible="true" onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="84px"   z="2" type="drop">
+					</lido-text>
+					<lido-text id="drop3"  value="${args.correct3}" tab-index="3" is-allow-only-one-drop="true"  visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="84px"   z="2" type="drop">
+					</lido-text>
+					<lido-text id="drop4"  value="${args.correct4}" tab-index="4" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="84px"   z="2" type="drop">
+					</lido-text>
+					<lido-text id="drop5"  value="${args.correct5}" tab-index="5" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="84px"   z="2" type="drop">
+					</lido-text>
+					<lido-text id="drop6"  value="${args.correct6}" tab-index="6" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="84px"   z="2" type="drop">
+					</lido-text>
+					<lido-text id="drop7" value="${args.correct7}" tab-index="7" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="84px"   z="2" type="drop">
+					</lido-text>
+					<lido-text id="drop8"  value="${args.correct8}" tab-index="8" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="84px"   z="2" type="drop">
+					</lido-text>
 				</lido-cell>
-				<lido-cell layout="row" visible="true" width="landscape.70%, portrait.88%" y="landscape.40%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
-					<lido-text id="option1" show-speak-icon="true" value="${args.option1}" tab-index="5"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative'; " width="auto" height="90px" string="${args.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+				</lido-cell>
+				<lido-cell layout="wrap" visible="true" width="landscape.38%, portrait.88%" y="landscape.58%, portrait.62%" x="landscape.4%,portrait.0px" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
+					<lido-text id="option1" show-speak-icon="true" value="${args.option1}" tab-index="9"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative'; " width="auto" height="90px" string="${args.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
-					<lido-text id="option2" show-speak-icon="true" value="${args.option2}" tab-index="6"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative';" width="auto" height="90px" string="${args.option2}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option2" show-speak-icon="true" value="${args.option2}" tab-index="10"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative';" width="auto" height="84px" string="${args.option2}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
-					<lido-text id="option3" show-speak-icon="true" value="${args.option3}" tab-index="7"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="90px" string="${args.option3}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option3" show-speak-icon="true" value="${args.option3}" tab-index="11"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="84px" string="${args.option3}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
-					<lido-text id="option4" show-speak-icon="true" value="${args.option4}" tab-index="8"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="90px" string="${args.option4}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					<lido-text id="option4" show-speak-icon="true" value="${args.option4}" tab-index="12"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="84px" string="${args.option4}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
+					<lido-text id="option5" show-speak-icon="true" value="${args.option5}" tab-index="13"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative'; " width="auto" height="84px" string="${args.option5}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					</lido-text>
+					<lido-text id="option6" show-speak-icon="true" value="${args.option6}" tab-index="14"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.position='relative';" width="auto" height="84px" string="${args.option6}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					</lido-text>
+					<lido-text id="option7" show-speak-icon="true" value="${args.option7}" tab-index="15"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="84px" string="${args.option7}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					</lido-text>
+					<lido-text id="option8" show-speak-icon="true" value="${args.option8}" tab-index="16"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';this.position='relative'; " width="auto" height="84px" string="${args.option8}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" width="landscape.70%, portrait.88%" y="landscape.21%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
+					
 				</lido-cell>
 			</lido-cell>
 				<!-- avatar -->
-			<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1329px, portrait.541px" y="landscape.587px, portrait.335px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
+			<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.327px" width="landscape.350px,portrait.294px" x="landscape.1330px, portrait.640px" y="landscape.595px, portrait.172px" aria-hidden="true" z="-13" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 				<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 				</lido-avatar>
-				<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bg-color="transparent" width="186px" height="20px" x="landscape.77px,portrait.103px" y="landscape.305px,portrait.353px" alt-text="{shadowImage}">
+				<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bg-color="transparent" width="186px" height="20px" x="landscape.77px,portrait.53px" y="landscape.331px,portrait.276px" alt-text="{shadowImage}">
 				</lido-image>
 			
 			</lido-cell>
