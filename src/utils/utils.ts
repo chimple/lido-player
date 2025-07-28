@@ -772,10 +772,15 @@ const getElementsForQueries = (query: string) => {
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
-   if (targetElement.querySelector('.lido-speak-icon')) {
+   if (targetElement.className.includes('lido-speak-icon')) {
     return null;
   }
+  const parentDiv = document.createElement('div')
+  parentDiv.style.width = '0';
+  parentDiv.style.height = '0';
+  
   const speakIcon = document.createElement('div');
+  parentDiv.append(speakIcon);
   speakIcon.classList.add('lido-speak-icon');
   // const stringAttr = targetElement?.getAttribute('string') || (targetElement as any)?.string;
   // const hasAudioAttr = targetElement?.getAttribute('audio');
@@ -804,6 +809,12 @@ export const speakIcon = (targetElement: HTMLElement) => {
       console.error('Error playing audio or TTS:', error);
     }
   });
+
+  console.log("target type: ", targetElement["type"]);
+  if(targetElement["type"] === "option") {
+    speakIcon.style.position = "unset";
+    return parentDiv;
+  }
 
   return speakIcon;
 };

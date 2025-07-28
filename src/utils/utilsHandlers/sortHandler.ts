@@ -115,7 +115,7 @@ export function enableReorderDrag(element: HTMLElement): void {
       element.style.opacity = '0.8';
       element.style.cursor = 'grabbing';
       element.style.position = 'absolute';
-      element.style.zIndex = '1000';
+      element.style.zIndex = '9999';
       element.style.touchAction = 'none';
       element.style.transition = 'none';
     }

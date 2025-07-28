@@ -15,9 +15,9 @@ import { speakIcon } from '../../utils/utils';
 })
 export class LidoRandom {
   /**
-     * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
-    */
-    @Prop() showSpeakIcon: boolean = false;
+   * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+   */
+  @Prop() showSpeakIcon: boolean = false;
   /**
    * Unique identifier for the random container.
    */
@@ -165,10 +165,15 @@ export class LidoRandom {
         child.style.top = `${randTop}px`;
       });
     }, 50);
-     if(this.showSpeakIcon) {
-          speakIcon(this.el);
-           this.el.append(speakIcon(this.el));
-          }
+    if (this.showSpeakIcon) {
+      const speakIconElement = speakIcon(this.el);
+      if (this.type === 'option') {
+        const icon = speakIconElement.firstChild as HTMLElement;
+        icon.style.marginLeft = this.x;
+        icon.style.marginTop = this.y;
+      }
+      this.el.prepend(speakIconElement);
+    }
   }
 
   render() {

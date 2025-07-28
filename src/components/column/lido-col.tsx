@@ -18,7 +18,7 @@ import { convertUrlToRelative, handlingChildElements, initEventsForElement, pars
 export class LidoCol {
   /**
    * Controls whether the speak icon should appear directly on the top right corner of targeted element.
-  */
+   */
   @Prop() showSpeakIcon: boolean = false;
   /**
    * The unique identifier for the column component.
@@ -178,10 +178,15 @@ export class LidoCol {
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
-    if(this.showSpeakIcon) {
-        speakIcon(this.el);
-          this.el.append(speakIcon(this.el));
-       }
+    if (this.showSpeakIcon) {
+      const speakIconElement = speakIcon(this.el);
+      if (this.type === 'option') {
+        const icon = speakIconElement.firstChild as HTMLElement;
+        icon.style.marginLeft = this.x;
+        icon.style.marginTop = this.y;
+      }
+      this.el.prepend(speakIconElement);
+    }
   }
 
   /**

@@ -190,8 +190,13 @@ export class LidoImage {
       }
     }
     if (this.showSpeakIcon) {
-      speakIcon(this.el);
-      this.el.append(speakIcon(this.el));
+      const speakIconElement = speakIcon(this.el);
+      if (this.type === 'option') {
+        const icon = speakIconElement.firstChild as HTMLElement;
+        icon.style.marginLeft = this.x;
+        icon.style.marginTop = this.y;
+      }
+      this.el.prepend(speakIconElement);
     }
   }
 
