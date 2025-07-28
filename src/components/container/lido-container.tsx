@@ -18,7 +18,7 @@ export class LidoContainer {
   /**
    * Controls whether the drop zone displays a border; true shows the border, false hides it.
    */
-  @Prop() showDropBorder:boolean=true;
+  @Prop() showDropBorder: boolean = true;
   /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
@@ -161,7 +161,7 @@ export class LidoContainer {
    * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
    */
   @Prop() margin: string = '';
-  
+
   /**
    * Reference to the HTML element that represents this container component.
    */
@@ -170,13 +170,12 @@ export class LidoContainer {
   /**
    * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showPrevButton: string="false";
-  
+  @Prop() showPrevButton: string = 'false';
+
   /**
    * Indicates whether the next button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showNextButton: string="false";
-
+  @Prop() showNextButton: string = 'false';
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -231,27 +230,13 @@ export class LidoContainer {
       scaleX = width / 1600;
       scaleY = height / 900;
     }
-    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling    
-  
-    
+    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
 
     // Center the container and apply scaling
     container.style.transform = `translate(-50%, -50%) scale(${scale})`;
     container.style.left = '50%';
     container.style.top = '50%';
     container.style.position = 'absolute'; // Ensure proper positioning
-
-
-    setTimeout(() => {
-      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;  
-      console.log('navBar', navBar);
-
-      if (navBar) {
-        navBar.style.width=`${container.offsetWidth-25}px`;
-        navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;//ensure proper scaling
-        navBar.style.visibility = 'visible';
-      }
-    }, 100);
     this.screenOrientation();
   }
 

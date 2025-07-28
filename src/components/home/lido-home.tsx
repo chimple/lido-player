@@ -158,6 +158,12 @@ export class LidoHome {
     if (this.height != '') {
       this.updateBackgroundImage();
     }
+
+    this.scaleNavbarContainer(); // new navbar scaling
+
+    window.addEventListener('resize', () => {
+      this.scaleNavbarContainer(); // re-scale navbar on resize
+    });
   }
 
   updateBackgroundImage() {
@@ -180,6 +186,9 @@ export class LidoHome {
     });
     window.removeEventListener(PrevContainerKey, () => {
       this.PrevContainerKey();
+    });
+    window.removeEventListener('resize', () => {
+      // this.scaleNavbarContainer(); // clean up
     });
   }
 
@@ -330,6 +339,64 @@ export class LidoHome {
       }
     }
   };
+  private scaleNavbarContainer() {
+    setTimeout(() => {
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
+      if (!navBar) return;
+      const container = document.getElementById(LidoContainer);
+      // navBar.style.width = win;
+
+      const widths = [window.innerWidth];
+      const heights = [window.innerHeight];
+
+      if (window.screen?.width) {
+        widths.push(window.screen.width);
+        heights.push(window.screen.height);
+      }
+
+      const width = Math.min(...widths);
+      const height = Math.min(...heights);
+
+      const isPortrait = height > width; // Check if the device is in portrait mode
+
+      let scaleX: number;
+      let scaleY: number;
+
+      if (isPortrait) {
+        // Portrait Mode: Scale based on portrait reference size (e.g., 900x1600)
+        scaleX = width / 900;
+        scaleY = height / 1600;
+      } else {
+        // Landscape Mode: Scale based on landscape reference size (e.g., 1600x900)
+        scaleX = width / 1600;
+        scaleY = height / 900;
+      }
+      const scale = Math.min(scaleX, scaleY); // Design reference height
+
+      // Apply the scale to the navbar
+      navBar.style.transform = `translate(-50%, -50%)`;
+      navBar.style.visibility = 'visible';
+      console.log('navbar child : ', navBar.children);
+
+      Array.from(navBar.children).forEach(el => {
+        const item = el as HTMLElement;
+        item.style.transform = `scale(${scale})`;
+      });
+
+      navBar.style.width = window.outerWidth + 'px';
+      console.log('width of navbar', (navBar.style.width = window.outerWidth + 'px'));
+    }, 100);
+  }
+
+  screenOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+      this.el.style.height = '1600px';
+      this.el.style.width = '900px';
+    } else {
+      this.el.style.height = '900px';
+      this.el.style.width = '1600px';
+    }
+  }
 
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
@@ -360,7 +427,6 @@ export class LidoHome {
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" onTouch="this.nextBtn='true';" />
           </div>
         </div>
-
         <div id="main-audio" onClick={() => this.btnpopup()}>
           <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
         </div>
@@ -392,6 +458,7 @@ export class LidoHome {
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
 
         {/* Render navigation dots below the container */}
+
         {this.showDotsandbtn && this.renderDots()}
 
         {/* Exit button */}
