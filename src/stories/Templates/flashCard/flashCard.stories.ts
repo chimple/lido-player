@@ -72,7 +72,7 @@ function getContainerXml(args: flashCardargs){
                 </lido-cell>
 
                 <!-- flash-card element -->
-                <lido-cell layout="pos" id="pos2"  disable-edit="true" value="pos2" width="landscape.594px, portrait.754px" height="landscape.725px, portrait.925px" x="landscape.0px, portrait. -7px" y="landscape.35px, portrait.-170px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
+                <lido-cell layout="pos" id="pos2"  disable-edit="true" value="pos2" width="landscape.594px, portrait.754px" height="landscape.725px, portrait.925px" x="landscape.0px, portrait. -7px" y="landscape.35px, portrait.-170px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';this.position='relative';">
                     <lido-flash-card x="50" y="100" width="landscape.594px, portrait.754px" height="landscape.725px, portrait.925px" bg-color="transparent" onEntry="this.border-radius='32px';" onTouch="">
                         <lido-cell layout="col" id="col1" show-speak-icon="true" slot="${frontSlot}" disable-edit="true" visible="true" width="landscape.594px, portrait.754px" height="landscape.725px, portrait.925px" bg-color="white" type="" tabIndex="2" dropAttr="diagonal" onEntry="this.border-radius=32px; this.padding='8px 8px 16px 8px';" y="landscape.5px,portrait.10px">
                             <lido-image visible="true" src="${flashCardImage}" z="1" width="landscape.578px, portrait.738px" height="landscape.578px, portrait.738px" onEntry="this.flex-shrink='0';" border-radius="24px 24px 6px 6px" alt-text="{image1}">
