@@ -805,17 +805,22 @@ export const clearLocalStorage = () => {
  * Applies a delay to the element's visibility based on `delayVisible`.
  */
 
-export const setVisibilityWithDelay = (element: HTMLElement, delayVisible: string) => {
+export const setVisibilityWithDelay = async (element: HTMLElement, delayVisible: string) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
 
   if (delayVisible) {
     const delay = parseInt(delayVisible, 10);
-    element.style.visibility = "hidden"
+    element.style.visibility = "hidden";
+
     if (!isNaN(delay)) {
-      setTimeout(() => {
-        element.style.visibility = "visible";
-      }, delay);
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          element.style.visibility = "visible";
+          resolve();
+        }, delay);
+      });
     }
   }
 };
+
