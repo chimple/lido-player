@@ -810,9 +810,8 @@ export const speakIcon = (targetElement: HTMLElement) => {
     }
   });
 
-  console.log("target type: ", targetElement["type"]);
-  if(targetElement["type"] === "option") {
-    speakIcon.style.position = "unset";
+  if (targetElement['type'] === 'option') {
+    speakIcon.style.position = 'unset';
     return parentDiv;
   }
 
