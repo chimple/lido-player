@@ -432,7 +432,8 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
     currentDrop.style.width = originalWidth;
     currentDrop.removeAttribute('data-original-width');
   } else {
-   currentDrop.classList.add('reset-stretch-style');
+   currentDrop.style.width = '';
+  currentDrop.removeAttribute('data-original-width');
     
   }
   

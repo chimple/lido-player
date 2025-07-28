@@ -199,9 +199,3 @@ body {
   box-shadow: 0px 0px 0px 0px !important;
 }
 
-.reset-stretch-style {
-  width: auto !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  box-sizing: border-box !important;
-}
