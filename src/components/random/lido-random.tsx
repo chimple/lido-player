@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { speakIcon } from '../../utils/utils';
+import { attachSpeakIcon, speakIcon } from '../../utils/utils';
 
 /**
  * @component LidoRandom
@@ -166,13 +166,7 @@ export class LidoRandom {
       });
     }, 50);
     if (this.showSpeakIcon) {
-      const speakIconElement = speakIcon(this.el);
-      if (this.type === 'option') {
-        const icon = speakIconElement.firstChild as HTMLElement;
-        icon.style.marginLeft = this.x;
-        icon.style.marginTop = this.y;
-      }
-      this.el.prepend(speakIconElement);
+      attachSpeakIcon(this.el, this.x, this.y);
     }
   }
 

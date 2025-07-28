@@ -818,6 +818,15 @@ export const speakIcon = (targetElement: HTMLElement) => {
   return speakIcon;
 };
 
+export const attachSpeakIcon = (element: HTMLElement, x: string, y: string) => {
+  const speakIconElement = speakIcon(element);
+  if (element['type'] === 'option') {
+    const icon = speakIconElement.firstChild as HTMLElement;
+    icon.style.marginLeft = x;
+    icon.style.marginTop = y;
+  }
+  element.prepend(speakIconElement);
+};
 
 export const clearLocalStorage = () => {
   localStorage.removeItem(DragSelectedMapKey);

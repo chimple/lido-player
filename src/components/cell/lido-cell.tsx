@@ -1,5 +1,5 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import { handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
+import { attachSpeakIcon, handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
 import { max } from 'mathjs';
 
 /**
@@ -255,13 +255,7 @@ export class LidoCell {
       }
     }, 50);
     if (this.showSpeakIcon) {
-      const speakIconElement = speakIcon(this.el);
-      if (this.type === 'option') {
-        const icon = speakIconElement.firstChild as HTMLElement;
-        icon.style.marginLeft = this.x;
-        icon.style.marginTop = this.y;
-      }
-      this.el.prepend(speakIconElement);
+      attachSpeakIcon(this.el, this.x, this.y);
     }
   }
 

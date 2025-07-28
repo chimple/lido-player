@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element, State } from '@stencil/core';
-import { convertUrlToRelative, handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
+import { attachSpeakIcon, convertUrlToRelative, handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
 
 /**
  * @component LidoCol
@@ -179,13 +179,7 @@ export class LidoCol {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     if (this.showSpeakIcon) {
-      const speakIconElement = speakIcon(this.el);
-      if (this.type === 'option') {
-        const icon = speakIconElement.firstChild as HTMLElement;
-        icon.style.marginLeft = this.x;
-        icon.style.marginTop = this.y;
-      }
-      this.el.prepend(speakIconElement);
+      attachSpeakIcon(this.el, this.x, this.y);
     }
   }
 

@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host, getAssetPath, State } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
+import { attachSpeakIcon, convertUrlToRelative, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
 import CssFilter from 'css-filter-converter';
 import tinyColor from 'tinycolor2';
 /**
@@ -190,13 +190,7 @@ export class LidoImage {
       }
     }
     if (this.showSpeakIcon) {
-      const speakIconElement = speakIcon(this.el);
-      if (this.type === 'option') {
-        const icon = speakIconElement.firstChild as HTMLElement;
-        icon.style.marginLeft = this.x;
-        icon.style.marginTop = this.y;
-      }
-      this.el.prepend(speakIconElement);
+      attachSpeakIcon(this.el, this.x, this.y);
     }
   }
 
