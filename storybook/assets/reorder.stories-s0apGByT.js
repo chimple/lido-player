@@ -13,7 +13,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
         <lido-text visible="true" width="70%" height="landscape.10%, portrait.5%" bg-color="transparent"></lido-text>
 
         <!-- Question -->
-        <lido-text tab-index="1" visible="true" width="landscape.70%, portrait.62%" height="10%" string="${t.question}" audio="${t.questionAudio}" font-size="36px" onEntry="this.fontWeight='600'; this.speak='true';" bg-color="transparent"></lido-text>
+        <lido-text tab-index="1" show-speak-icon="true" visible="true" width="landscape.70%, portrait.62%" height="10%" string="${t.question}" audio="${t.questionAudio}" font-size="36px" onEntry=" this.padding='0px 45px';this.fontWeight='600'; " bg-color="transparent"></lido-text>
 
         <lido-cell visible="true" layout="landscape.col, portrait.row" flex-direction="landscape., portrait.row-reverse" align-items="landscape.center, portrait.start" width="100%" height="80%" bg-color="transparent">
 
@@ -22,7 +22,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
             
             <!-- Slide Elements -->
             <lido-cell visible="true" layout="landscape.row, portrait.col" width="landscape.75%, portrait.35%" height="landscape.40%, portrait.90%" bg-color="#FBCAB5" border-radius="landscape.16px 16px 0 0, portrait.0 16px 16px 0" onEntry="this.padding='60px 40px';">
-                <lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option1.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+                <lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option1.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
                     <lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
                         <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
                     </lido-cell>
@@ -31,7 +31,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
                     <lido-text visible="true" string="${t.option1}" audio="${t.option1Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
                 </lido-cell>
                 <lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png" margin="landscape.100px 0 0 0, portrait.0 100px 0 0"></lido-image>
-                <lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option2.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+                <lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option2.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
                     <lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
                         <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
                     </lido-cell>
@@ -40,7 +40,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
                     <lido-text visible="true" string="${t.option2}" audio="${t.option2Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
                 </lido-cell>
                 <lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png"></lido-image>
-                <lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option3.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+                <lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option3.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
                     <lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
                         <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
                     </lido-cell>
@@ -49,7 +49,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
                     <lido-text visible="true" string="${t.option3}" audio="${t.option3Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
                 </lido-cell>
                 <lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png" margin="landscape.0 0 100px 0, portrait.0 0 0 100px"></lido-image>
-                <lido-cell visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option4.toLowerCase()}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+                <lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${t.option4.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
                     <lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
                         <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
                     </lido-cell>
