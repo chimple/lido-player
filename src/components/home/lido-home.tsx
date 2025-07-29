@@ -1,7 +1,7 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage } from '../../utils/utils';
+import { clearLocalStorage, calculateScale } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { number } from 'mathjs';
 
@@ -188,7 +188,7 @@ export class LidoHome {
       this.PrevContainerKey();
     });
     window.removeEventListener('resize', () => {
-      // this.scaleNavbarContainer(); // clean up
+      this.scaleNavbarContainer(); // clean up
     });
   }
 
@@ -343,35 +343,19 @@ export class LidoHome {
     setTimeout(() => {
       const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
       if (!navBar) return;
-      const container = document.getElementById(LidoContainer);
-      // navBar.style.width = win;
 
-      const widths = [window.innerWidth];
-      const heights = [window.innerHeight];
-
-      if (window.screen?.width) {
-        widths.push(window.screen.width);
-        heights.push(window.screen.height);
+      if ((window.innerWidth === 1600 && window.innerHeight === 900) || (window.innerWidth === 900 && window.innerHeight === 1600)) {
+        const exit_and_audio_margin = document.querySelectorAll<HTMLElement>('.lido-exit-button, #main-audio');
+        exit_and_audio_margin.forEach(el => {
+          el.style.marginLeft = '10px';
+          el.style.marginRight = '10px';
+        });
       }
-
-      const width = Math.min(...widths);
-      const height = Math.min(...heights);
-
-      const isPortrait = height > width; // Check if the device is in portrait mode
-
-      let scaleX: number;
-      let scaleY: number;
-
-      if (isPortrait) {
-        // Portrait Mode: Scale based on portrait reference size (e.g., 900x1600)
-        scaleX = width / 900;
-        scaleY = height / 1600;
+      if (window.innerWidth > window.innerHeight) {
+        navBar.style.top = '6%';
       } else {
-        // Landscape Mode: Scale based on landscape reference size (e.g., 1600x900)
-        scaleX = width / 1600;
-        scaleY = height / 900;
+        navBar.style.top = '3.5%';
       }
-      const scale = Math.min(scaleX, scaleY); // Design reference height
 
       // Apply the scale to the navbar
       navBar.style.transform = `translate(-50%, -50%)`;
@@ -380,22 +364,11 @@ export class LidoHome {
 
       Array.from(navBar.children).forEach(el => {
         const item = el as HTMLElement;
-        item.style.transform = `scale(${scale})`;
+        item.style.transform = `scale(${calculateScale()})`;
       });
 
       navBar.style.width = window.outerWidth + 'px';
-      console.log('width of navbar', (navBar.style.width = window.outerWidth + 'px'));
     }, 100);
-  }
-
-  screenOrientation() {
-    if (window.innerHeight > window.innerWidth) {
-      this.el.style.height = '1600px';
-      this.el.style.width = '900px';
-    } else {
-      this.el.style.height = '900px';
-      this.el.style.width = '1600px';
-    }
   }
 
   /**
