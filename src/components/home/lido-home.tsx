@@ -4,6 +4,7 @@ import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameEx
 import { clearLocalStorage } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { number } from 'mathjs';
+import { executeActions } from '../../utils/utils';
 
 /**
  * @component LidoHome
@@ -345,8 +346,13 @@ export class LidoHome {
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
-          <div id="lido-arrow-left">
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" onTouch="this.prevBtn='true';" />
+          <div id="lido-arrow-left" onClick={(event) => {
+            console.log('Target:', event.target);         // What was clicked
+            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+            console.log('✅ Button clicked - prevBtn action triggered');
+                executeActions("this.nextBtn='true'",event.currentTarget as HTMLElement);
+              }}>
+            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" />
           </div>
 
           {this.containers.map((_, index) => (
@@ -356,8 +362,13 @@ export class LidoHome {
               style={style}
             ></span>
           ))}
-          <div id="lido-arrow-right">
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" onTouch="this.nextBtn='true';" />
+          <div id="lido-arrow-right" onClick={(event) => {
+            console.log('Target:', event.target);         // What was clicked
+            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+            console.log('✅ Button clicked - nextBtn action triggered');
+                executeActions("this.nextBtn='true'",event.currentTarget as HTMLElement);
+              }}>
+            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
           </div>
         </div>
 

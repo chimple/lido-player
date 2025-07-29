@@ -266,6 +266,9 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   let arrIndex = 0;
   let options = new Set<string>();
 
+  if (patternGroups.length === 0 || arr.length === 0) return false;  // Empty pattern or array
+  if (patternGroups.length > arr.length) return false; // More pattern groups than array elements
+
   for (const group of patternGroups) {
     if (group.startsWith('(') && group.endsWith(')')) {
       // Inside parentheses: '|' acts like "OR" condition
