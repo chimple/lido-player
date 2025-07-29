@@ -772,7 +772,8 @@ const getElementsForQueries = (query: string) => {
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
-   if (targetElement.className.includes('lido-speak-icon')) {
+
+  if (targetElement.className.includes('lido-speak-icon')) {
     return null;
   }
   const parentDiv = document.createElement('div')
@@ -787,10 +788,10 @@ export const speakIcon = (targetElement: HTMLElement) => {
   // if (!stringAttr && !hasAudioAttr) {// hide the button
   //   speakIcon.style.display = 'none';
   // }
-//  targetElement.appendChild(speakIcon);
+  //  targetElement.appendChild(speakIcon);
 
   speakIcon.addEventListener('click', async (event) => {
-     event.stopPropagation(); 
+    event.stopPropagation();
     // const text = targetElement?.innerText?.trim();
     // const audioAttr = targetElement.getAttribute('audio');
     if (currentlySpeakingElement && currentlySpeakingElement !== targetElement) {
@@ -804,7 +805,7 @@ export const speakIcon = (targetElement: HTMLElement) => {
     currentlySpeakingElement = targetElement;
 
     try {
-      await AudioPlayer.getI().play(targetElement); 
+      await AudioPlayer.getI().play(targetElement);
     } catch (error) {
       console.error('Error playing audio or TTS:', error);
     }
@@ -835,6 +836,31 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(DropHasDrag);
   localStorage.removeItem(DropLength);
 }
+
+
+/**
+ * Applies a delay to the element's visibility based on `delayVisible`.
+ */
+
+export const setVisibilityWithDelay = async (element: HTMLElement, delayVisible: string) => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return;
+
+  if (delayVisible) {
+    const delay = parseInt(delayVisible, 10);
+    element.style.visibility = "hidden";
+
+    if (!isNaN(delay)) {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          element.style.visibility = "visible";
+          resolve();
+        }, delay);
+      });
+    }
+  }
+};
+
 
 // apply border to the clickable cell
 export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => {
@@ -879,3 +905,4 @@ export const  vibrateCell = async (cell: HTMLElement,value: string) : Promise<vo
   // Remove the class after the animation completes
   cell.classList.remove(className);
 }
+

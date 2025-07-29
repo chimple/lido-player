@@ -1,7 +1,7 @@
 //lifo-float component
 import { Component, Prop, h, Host, Element, Method, State } from '@stencil/core';
 import { handleElementClick, handleFloatElementPosition } from '../../utils/utilsHandlers/floatHandler';
-import { parseProp } from '../../utils/utils';
+import { parseProp, setVisibilityWithDelay } from '../../utils/utils';
 
 @Component({
   tag: 'lido-float',
@@ -55,6 +55,11 @@ export class LidoFloat {
   @Prop() bgColor: string;
 
   /**
+   * Delay in milliseconds to make the cell visible after mount.
+   */
+  @Prop() delayVisible: string = '';
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string };
@@ -62,6 +67,8 @@ export class LidoFloat {
   @Element() el: HTMLElement;
 
   componentDidLoad() {
+    setVisibilityWithDelay(this.el, this.delayVisible);
+    
     this.initializeFloatElement();
   }
 

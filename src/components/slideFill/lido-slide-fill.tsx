@@ -1,5 +1,5 @@
 import { Component, h, Host, Prop, State, Element, Watch } from '@stencil/core';
-import { convertUrlToRelative } from '../../utils/utils';
+import { convertUrlToRelative, setVisibilityWithDelay } from '../../utils/utils';
 import * as math from 'mathjs';
 
 @Component({
@@ -69,6 +69,11 @@ export class LidoSlideFill {
 
   @Element() el: HTMLElement;
 
+  /**
+   * Delay in milliseconds to make the cell visible after mount.
+   */
+  @Prop() delayVisible: string = '';
+
   private originalHeight: number = null;
   private originalY: number = null;
 
@@ -114,6 +119,8 @@ export class LidoSlideFill {
   }
 
   componentDidLoad() {
+     setVisibilityWithDelay(this.el, this.delayVisible);
+    
     this.updateFill();
     this.addRulerNumbers();
   }

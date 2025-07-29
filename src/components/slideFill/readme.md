@@ -9,6 +9,7 @@
 
 | Property        | Attribute        | Description                                                                                                                      | Type      | Default             |
 | --------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------- |
+| `delayVisible`  | `delay-visible`  | Delay in milliseconds to make the cell visible after mount.                                                                      | `string`  | `''`                |
 | `division`      | `division`       | Number of divisions or segments to split the ruler path into                                                                     | `number`  | `5`                 |
 | `fill`          | `fill`           | Fill amount to display inside the SVG rect. Accepts values like "30%" or "30" (treated as percentage of fill)                    | `string`  | `undefined`         |
 | `fillDirection` | `fill-direction` | Determines the direction in which the rect fill should grow: - 'vertical': from bottom to top - 'horizontal': from left to right | `string`  | `undefined`         |
