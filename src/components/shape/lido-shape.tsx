@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { initEventsForElement } from '../../utils/utils';
+import { initEventsForElement, setVisibilityWithDelay} from '../../utils/utils';
 
 /**
  * @component LidoShape
@@ -133,12 +133,19 @@ export class LidoShape {
    */
   @Prop() margin: string = '';
 
+  /**
+   * Delay in milliseconds to make the cell visible after mount.
+   */
+  @Prop() delayVisible: string = '';
+
 
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
    * It initializes custom events based on the `type` of the shape component.
    */
   componentDidLoad() {
+    setVisibilityWithDelay(this.el, this.delayVisible);
+    
     initEventsForElement(this.el, this.type);
   }
 

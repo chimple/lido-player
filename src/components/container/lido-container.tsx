@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay } from '../../utils/utils';
 import { string } from 'mathjs';
 
 /**
@@ -18,7 +18,7 @@ export class LidoContainer {
   /**
    * Controls whether the drop zone displays a border; true shows the border, false hides it.
    */
-  @Prop() showDropBorder:boolean=true;
+  @Prop() showDropBorder: boolean = true;
   /**
    * Enables appending the dragged element to the drop target after all correct drops are completed.
    */
@@ -161,7 +161,7 @@ export class LidoContainer {
    * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
    */
   @Prop() margin: string = '';
-  
+
   /**
    * Reference to the HTML element that represents this container component.
    */
@@ -170,12 +170,17 @@ export class LidoContainer {
   /**
    * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showPrevButton: string="false";
-  
+  @Prop() showPrevButton: string = "false";
+
   /**
    * Indicates whether the next button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showNextButton: string="false";
+  @Prop() showNextButton: string = "false";
+
+  /**
+  * Delay in milliseconds to make the cell visible after mount.
+  */
+  @Prop() delayVisible: string = '';
 
 
   convertToPixels(height: string, parentElement = document.body) {
@@ -232,8 +237,8 @@ export class LidoContainer {
       scaleY = height / 900;
     }
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling    
-  
-    
+
+
 
     // Center the container and apply scaling
     container.style.transform = `translate(-50%, -50%) scale(${scale})`;
@@ -243,11 +248,11 @@ export class LidoContainer {
 
 
     setTimeout(() => {
-      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;  
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
       console.log('navBar', navBar);
 
       if (navBar) {
-        navBar.style.width=`${container.offsetWidth-25}px`;
+        navBar.style.width = `${container.offsetWidth - 25}px`;
         navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;//ensure proper scaling
         navBar.style.visibility = 'visible';
       }
@@ -272,6 +277,8 @@ export class LidoContainer {
    * - Adds event listeners for `resize` and `load` to rescale the container on window size changes.
    */
   componentDidLoad() {
+    setVisibilityWithDelay(this.el, this.delayVisible);
+    
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
     document.body.style.backgroundColor = this.bgColor;

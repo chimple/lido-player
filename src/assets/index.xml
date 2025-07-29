@@ -530,7 +530,7 @@
 						</lido-text>
 					</lido-cell>
 				</lido-cell>
-				<lido-cell layout="row" visible="true" width="landscape.70%, portrait.88%" y="landscape.40%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
+				<lido-cell layout="row" visible="true" delay-visible="2650" width="landscape.70%, portrait.88%" y="landscape.40%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
 					<lido-text id="option1" value="streetlight" tab-index="5" flexible-width="false" visible="true" bg-color="#6DC1ED" onEntry="this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.color='white';" width="150px" height="90px" string="streetlight" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
 					<lido-text id="option2" value="Girl" tab-index="6" flexible-width="false" visible="true" bg-color="#6DC1ED" onEntry="this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; this.color='white';" width="150px" height="90px" string="Girl" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
