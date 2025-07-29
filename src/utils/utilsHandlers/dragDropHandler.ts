@@ -131,10 +131,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
-    const rect1 = container.getBoundingClientRect();
-    const rect2 = element.getBoundingClientRect();
-    verticalDistance = rect1.top - rect2.top;
-    horizontalDistance = rect1.left - rect2.left;
+    // const rect1 = container.getBoundingClientRect();
+    // const rect2 = element.getBoundingClientRect();
+    // verticalDistance = rect1.top - rect2.top;
+    // horizontalDistance = rect1.left - rect2.left;
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
