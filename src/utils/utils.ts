@@ -772,10 +772,16 @@ const getElementsForQueries = (query: string) => {
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
-  if (targetElement.querySelector('.lido-speak-icon')) {
+
+  if (targetElement.className.includes('lido-speak-icon')) {
     return null;
   }
+  const parentDiv = document.createElement('div')
+  parentDiv.style.width = '0';
+  parentDiv.style.height = '0';
+  
   const speakIcon = document.createElement('div');
+  parentDiv.append(speakIcon);
   speakIcon.classList.add('lido-speak-icon');
   // const stringAttr = targetElement?.getAttribute('string') || (targetElement as any)?.string;
   // const hasAudioAttr = targetElement?.getAttribute('audio');
@@ -805,9 +811,23 @@ export const speakIcon = (targetElement: HTMLElement) => {
     }
   });
 
+  if (targetElement['type'] === 'option') {
+    speakIcon.style.position = 'unset';
+    return parentDiv;
+  }
+  targetElement.style.position = "relative";
   return speakIcon;
 };
 
+export const attachSpeakIcon = (element: HTMLElement, x: string, y: string) => {
+  const speakIconElement = speakIcon(element);
+  if (element['type'] === 'option') {
+    const icon = speakIconElement.firstChild as HTMLElement;
+    icon.style.marginLeft = x;
+    icon.style.marginTop = y;
+  }
+  element.prepend(speakIconElement);
+};
 
 export const clearLocalStorage = () => {
   localStorage.removeItem(DragSelectedMapKey);

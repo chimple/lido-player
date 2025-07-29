@@ -4,13 +4,13 @@ import { html } from 'lit';
 const meta: Meta = {
   title: 'Templates/Categorize2',
   argTypes: {
-    heading:{control: 'text'},
-    image1:{control:'file'},
-    image2:{control:'file'},
-    image3:{control:'file'},
-    image4:{control:'file'},
-    image5:{control:'file'},
-    image6:{control:'file'},
+    heading: { control: 'text' },
+    image1: { control: 'file' },
+    image2: { control: 'file' },
+    image3: { control: 'file' },
+    image4: { control: 'file' },
+    image5: { control: 'file' },
+    image6: { control: 'file' },
     option1: { control: 'text' },
     option2: { control: 'text' },
     option3: { control: 'text' },
@@ -28,19 +28,19 @@ const meta: Meta = {
 export default meta;
 export const Categ: StoryObj = {
   args: {
-    heading:'कीटों को उनके पैरों की संख्या के अनुसार बताएँ!',
-    image1:'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png',
+    heading: 'कीटों को उनके पैरों की संख्या के अनुसार बताएँ!',
+    image1: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png',
     image2: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect2.png',
     image3: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png',
     image4: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect4.png',
-    image5:  'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect5.png',
-    image6:  'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect5.png',
+    image5: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect5.png',
+    image6: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect5.png',
     option1: 'मकड़ी-2',
     option2: 'झींगुर',
-    option3: 'मकड़ी', 
-    option4:'मक्खी',
-    option5: 'कनखजूरा', 
-    option6:'कनखजूरा2',
+    option3: 'मकड़ी',
+    option4: 'मक्खी',
+    option5: 'कनखजूरा',
+    option6: 'कनखजूरा2',
     category1: 'छह पैर वाले',
     category2: 'आठ पैर वाले',
     category3: 'कई पैर वाले',
@@ -55,7 +55,9 @@ export const Categ: StoryObj = {
   },
 };
 function getContainerXml(args) {
-  const objective = `(${args.correct1.split(',').join('|')}),(${args.correct2.split(',').join('|')}),(${args.correct3.split(',').join('|')})`;
+  const formatCorrect = (str: string) => (str.includes(',') ? `(${str.split(',').join('|')})` : str);
+
+  const objective = `${formatCorrect(args.correct1)},${formatCorrect(args.correct2)},${formatCorrect(args.correct3)}`;
   return `
   <main>
    <lido-container id="lido-container" show-next-button="true" show-drop-border="false" tabIndex="0"  value="mainContainer1"   bg-Color="#FFF"  height="100%" width="100%" visible="true" objective="${objective}" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-allow-only-correct="false"  > 
