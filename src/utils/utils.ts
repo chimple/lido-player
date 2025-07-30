@@ -510,8 +510,12 @@ export const validateObjectiveStatus = async () => {
       }
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
-        await executeActions(onCorrect, container);
-      }
+
+         if (attach === 'true') {
+          appendingDragElementsInDrop();
+        }
+        await executeActions(onCorrect, container); }
+
       triggerNextContainer();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
