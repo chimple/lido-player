@@ -79,8 +79,8 @@ function getContainerXml(args){
 			<!-- fill up based on image -->
 			<lido-cell show-speak-icon="true" layout="landscape.row, portrait.col" visible="true" width="landscape.75%, portrait.76%" height="landscape.59%, portrait.78%" bg-color="white" onEntry="this.borderRadius='10px'; this.padding='8px';" margin="landscape.0 , portrait.18px 0px 0px 0px">
 				<!-- image -->
-				<lido-image id="image1" disable-edit="true" visible="true" src="${args.img}" width="landscape.44%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 59px 0px 0px , portrait. 0">
-				</lido-image>
+				${args.img.length === 0 ? '' : `<lido-image id="image1" disable-edit="true" visible="true" src="${args.img}" width="landscape.44%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 59px 0px 0px , portrait. 0">
+				</lido-image>`}
 				<!-- text -->
 
 				
