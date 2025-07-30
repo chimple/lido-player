@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Element, getAssetPath } from '@stencil/core';
 import { Rive } from '@rive-app/canvas';
 import { RiveService } from '../../utils/rive-service';
-import { convertUrlToRelative, initEventsForElement } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay} from '../../utils/utils';
 
 /**
  * @component LidoAvatar
@@ -126,10 +126,17 @@ export class LidoAvatar {
   @Element() el: HTMLElement;
 
   /**
+    * Delay in milliseconds to make the cell visible after mount.
+    */
+  @Prop() delayVisible: string = '';
+
+  /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
    */
   async componentDidLoad() {
+    setVisibilityWithDelay(this.el, this.delayVisible);
+
     initEventsForElement(this.el, this.type);
 
     // const resolvedPath = this.src.startsWith('http')

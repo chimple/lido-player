@@ -131,10 +131,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
-    const rect1 = container.getBoundingClientRect();
-    const rect2 = element.getBoundingClientRect();
-    verticalDistance = rect1.top - rect2.top;
-    horizontalDistance = rect1.left - rect2.left;
+    // const rect1 = container.getBoundingClientRect();
+    // const rect2 = element.getBoundingClientRect();
+    // verticalDistance = rect1.top - rect2.top;
+    // horizontalDistance = rect1.left - rect2.left;
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
@@ -317,10 +317,11 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       }
     }
 
-    if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
-      const computedStyle = window.getComputedStyle(element);
-      mostOverlappedElement.style.width = computedStyle.width;
-    }
+
+    // if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
+    //   const computedStyle = window.getComputedStyle(element);
+    //   mostOverlappedElement.style.width = computedStyle.width;
+    // }
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
       if (mostOverlappedElement) {
@@ -424,10 +425,26 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
       dragElement.removeAttribute(DropToAttr);
     dragToDropMap.delete(dragElement);
       updateDropBorder(currentDrop);
+      if (currentDrop?.getAttribute('drop-attr')?.toLowerCase() === DropMode.Stretch) {
+  const originalWidth = currentDrop.getAttribute('data-original-width');
+
+  if (originalWidth) {
+    currentDrop.style.width = originalWidth;
+
+    currentDrop.removeAttribute('data-original-width');
+  } else {
+   currentDrop.style.width = '';
+  currentDrop.removeAttribute('data-original-width');
+    
+  }
+  
+}
+
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
       if (prevDropItem) {
         prevDropItem.isFull = false;
         localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+
       }
       dragToDropMap.delete(dragElement);
     }
@@ -566,7 +583,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
     dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
   }
+  
   if (dropElement) {
+   if (dropElement.getAttribute("drop-attr") === "stretch") {
+  if (!dropElement.hasAttribute('data-original-width')) {
+    const computedStyle = window.getComputedStyle(dropElement);
+    dropElement.setAttribute('data-original-width', computedStyle.width);
+  }
+
+  const dragWidth = dragElement.offsetWidth;
+  dropElement.style.width = `${dragWidth}px`;
+}
+
     dragElement.classList.add('dropped');
     if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
@@ -635,6 +663,7 @@ if (!dropElement) {
       if (prevDropItem) {
         prevDropItem.isFull = false;
         localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+        reduceSizeToOriginal();
       }
     }
     //accepting identical
@@ -852,6 +881,26 @@ else{
         //  drag.style.boxShadow = 'none'; 
       }}
     });
+  });
+};
+
+
+export const reduceSizeToOriginal = () => {
+  const dropItems = document.querySelectorAll("[type='drop']");
+  let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  if (!dropHasDrag || !dropItems) return;
+  dropItems.forEach(dropElement => {
+    const drop = dropElement as HTMLElement;
+    const tabIndex = drop.getAttribute('tab-index')
+       if (drop?.getAttribute('drop-attr')?.toLowerCase() === DropMode.Stretch && dropHasDrag[tabIndex].isFull === false ) {
+  const originalWidth = drop.getAttribute('data-original-width');
+
+  if (originalWidth) {
+    drop.style.width = originalWidth;
+    drop.removeAttribute('data-original-width');
+  } 
+
+}
   });
 };
 

@@ -1,4 +1,16 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction, DropHasDrag, DropLength } from './constants';
+import {
+  ActivityScoreKey,
+  DragSelectedMapKey,
+  DragMapKey,
+  SelectedValuesKey,
+  DropMode,
+  DropToAttr,
+  DropTimeAttr,
+  LidoContainer,
+  DropAction,
+  DropHasDrag,
+  DropLength,
+} from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -158,7 +170,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
 
         case 'cellBorderAnimate': {
           const value = action.value;
-          if(value && targetElement) {
+          if (value && targetElement) {
             applyBorderToClickableCell(targetElement as HTMLElement, value);
           }
           break;
@@ -171,7 +183,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           }
           break;
         }
-          
+
         case 'slideAnimation': {
           slideAnimation();
           break;
@@ -265,6 +277,10 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   const patternGroups = pattern.split(',').map(group => group.trim());
   let arrIndex = 0;
   let options = new Set<string>();
+
+  if (patternGroups.length > 0) {
+    if(arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
+  }
 
   for (const group of patternGroups) {
     if (group.startsWith('(') && group.endsWith(')')) {
@@ -489,12 +505,12 @@ export const validateObjectiveStatus = async () => {
     }
     if (res) {
       const attach = container.getAttribute('appendToDropOnCompletion');
-      if (attach === 'true') {
-        appendingDragElementsInDrop();
-      }
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
         await executeActions(onCorrect, container);
+        if (attach === 'true') {
+          appendingDragElementsInDrop();
+        }
       }
       triggerNextContainer();
     } else {
@@ -554,7 +570,6 @@ export async function speakText(text: string, targetElement?: HTMLElement): Prom
 
     setTimeout(() => {
       const utterance = new SpeechSynthesisUtterance(text);
-
       utterance.onend = () => {
         resolve(true); // Resolve when speech is completed
       };
@@ -768,24 +783,28 @@ const getElementsForQueries = (query: string) => {
   return sortedDragSelectedElements;
 };
 
-
-
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
-   if (targetElement.querySelector('.lido-speak-icon')) {
+
+  if (targetElement.className.includes('lido-speak-icon')) {
     return null;
   }
+  const parentDiv = document.createElement('div')
+  parentDiv.style.width = '0';
+  parentDiv.style.height = '0';
+  
   const speakIcon = document.createElement('div');
+  parentDiv.append(speakIcon);
   speakIcon.classList.add('lido-speak-icon');
   // const stringAttr = targetElement?.getAttribute('string') || (targetElement as any)?.string;
   // const hasAudioAttr = targetElement?.getAttribute('audio');
   // if (!stringAttr && !hasAudioAttr) {// hide the button
   //   speakIcon.style.display = 'none';
   // }
-//  targetElement.appendChild(speakIcon);
+  //  targetElement.appendChild(speakIcon);
 
   speakIcon.addEventListener('click', async (event) => {
-     event.stopPropagation(); 
+    event.stopPropagation();
     // const text = targetElement?.innerText?.trim();
     // const audioAttr = targetElement.getAttribute('audio');
     if (currentlySpeakingElement && currentlySpeakingElement !== targetElement) {
@@ -799,15 +818,29 @@ export const speakIcon = (targetElement: HTMLElement) => {
     currentlySpeakingElement = targetElement;
 
     try {
-      await AudioPlayer.getI().play(targetElement); 
+      await AudioPlayer.getI().play(targetElement);
     } catch (error) {
       console.error('Error playing audio or TTS:', error);
     }
   });
 
+  if (targetElement['type'] === 'option') {
+    speakIcon.style.position = 'unset';
+    return parentDiv;
+  }
+  targetElement.style.position = "relative";
   return speakIcon;
 };
 
+export const attachSpeakIcon = (element: HTMLElement, x: string, y: string) => {
+  const speakIconElement = speakIcon(element);
+  if (element['type'] === 'option') {
+    const icon = speakIconElement.firstChild as HTMLElement;
+    icon.style.marginLeft = x;
+    icon.style.marginTop = y;
+  }
+  element.prepend(speakIconElement);
+};
 
 export const clearLocalStorage = () => {
   localStorage.removeItem(DragSelectedMapKey);
@@ -815,38 +848,62 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(SelectedValuesKey);
   localStorage.removeItem(DropHasDrag);
   localStorage.removeItem(DropLength);
-}
+};
+
+
+/**
+ * Applies a delay to the element's visibility based on `delayVisible`.
+ */
+
+export const setVisibilityWithDelay = async (element: HTMLElement, delayVisible: string) => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return;
+
+  if (delayVisible) {
+    const delay = parseInt(delayVisible, 10);
+    element.style.visibility = "hidden";
+
+    if (!isNaN(delay)) {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          element.style.visibility = "visible";
+          resolve();
+        }, delay);
+      });
+    }
+  }
+};
+
 
 // apply border to the clickable cell
 export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => {
   if (!cell) return;
-  
+
   if (!color) {
     color = 'green'; // Default color if none is provided
-  } 
+  }
 
   // Calculate the shadow based on the cell's height
-  const elementShadow = cell.offsetHeight * 0.08;  // 8% of the cell height
-  const redRing = `0 0 0 6px ${color}`;  // 6px red ring around the cell
+  const elementShadow = cell.offsetHeight * 0.08; // 8% of the cell height
+  const redRing = `0 0 0 6px ${color}`; // 6px red ring around the cell
   // Adjust the drop shadow to be below the cell
-  const dropShadow = `0 ${elementShadow}px 10px rgba(0, 0, 0, 0.25)`;  // 10px shadow below the cell
+  const dropShadow = `0 ${elementShadow}px 10px rgba(0, 0, 0, 0.25)`; // 10px shadow below the cell
 
-  const shadow = `${redRing}, ${dropShadow}`;  // Combine the shadows
+  const shadow = `${redRing}, ${dropShadow}`; // Combine the shadows
 
-  cell.style.boxShadow = shadow;  // Apply the shadow
+  cell.style.boxShadow = shadow; // Apply the shadow
   cell.style.setProperty('box-shadow', shadow, 'important'); // enforce priority
-
-}
+};
 
 // apply shake animation to the cell
 // value can be 'scaled-shake', 'vertical-shake', 'horizontal-shake', 'strong-shake', 'diagonal-shake'
-export const  vibrateCell = async (cell: HTMLElement,value: string) : Promise<void> => {
-  if(!cell) return;
-  
+export const vibrateCell = async (cell: HTMLElement, value: string): Promise<void> => {
+  if (!cell) return;
+
   if (!value) {
     value = 'horizontal-shake'; // Default animation type if none is provided
   }
-  
+
   const animationType = value;
 
   // Create the class name
@@ -859,4 +916,25 @@ export const  vibrateCell = async (cell: HTMLElement,value: string) : Promise<vo
 
   // Remove the class after the animation completes
   cell.classList.remove(className);
-}
+};
+
+  export function calculateScale() {
+    const widths = [window.innerWidth];
+    const heights = [window.innerHeight];
+
+    if (window.screen?.width) {
+      widths.push(window.screen.width);
+      heights.push(window.screen.height);
+    }
+
+    const width = Math.min(...widths);
+    const height = Math.min(...heights);
+    const isPortrait = height > width;
+
+    const scaleX = isPortrait ? width / 900 : width / 1600;
+    const scaleY = isPortrait ? height / 1600 : height / 900;
+
+    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
+    return scale;
+  }
+

@@ -1,10 +1,10 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage } from '../../utils/utils';
+import { clearLocalStorage, calculateScale } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { number } from 'mathjs';
-import { clickElementStyle } from '../../utils/utilsHandlers/clickHandler';
+import { executeActions } from '../../utils/utils';
 
 /**
  * @component LidoHome
@@ -164,38 +164,24 @@ export class LidoHome {
       const exitButton = this.el.querySelector('.lido-exit-button');
       const speakerButton = this.el.querySelector('#main-audio');
 
-      console.log("speaker btn : ",speakerButton);
+      console.log("speaker btn : ", speakerButton);
 
-      clickElementStyle(exitButton as HTMLElement, "#F34D08");
-      clickElementStyle(speakerButton as HTMLElement, "#F34D08");
+      // clickElementStyle(exitButton as HTMLElement, "#F34D08");
+      // clickElementStyle(speakerButton as HTMLElement, "#F34D08");
     }, 1000);
 
 
     if (this.height != '') {
       this.updateBackgroundImage();
     }
+
+    this.scaleNavbarContainer(); // new navbar scaling
+
+    window.addEventListener('resize', () => {
+      this.scaleNavbarContainer(); // re-scale navbar on resize
+    });
   }
 
-  //********************************************************************************************************* */
-  popupClickStyling() {
-    this.exitFlag = true;
-    AudioPlayer.getI().stop();
-
-    setTimeout(() => {
-      const yesBtn = this.el.querySelector('.yes-btn');
-      const cancelBtn = this.el.querySelector('.cancel-btn');
-      console.log(yesBtn)
-      console.log(cancelBtn)
-
-      clickElementStyle(yesBtn as HTMLElement, "#F34D08")
-      clickElementStyle(cancelBtn as HTMLElement, "#F34D08")
-
-    }, 100);
-
-
-  }
-
-  //******************************************************************************************************* */
 
   updateBackgroundImage() {
     const container = document.querySelector(LidoContainer);
@@ -217,6 +203,9 @@ export class LidoHome {
     });
     window.removeEventListener(PrevContainerKey, () => {
       this.PrevContainerKey();
+    });
+    window.removeEventListener('resize', () => {
+      this.scaleNavbarContainer(); // clean up
     });
   }
 
@@ -343,6 +332,7 @@ export class LidoHome {
 
 
   private async btnpopup() {
+    
     await AudioPlayer.getI().stop();
 
     const container = document.getElementById(LidoContainer);
@@ -357,6 +347,8 @@ export class LidoHome {
     }
   }
   popUpClick = (comment: string) => {
+    console.log("it is clicking");
+    
     const alertElement = this.el.querySelector('.lido-alert-popup');
     this.exitFlag = false;
     if (alertElement) {
@@ -369,6 +361,37 @@ export class LidoHome {
       }
     }
   };
+  private scaleNavbarContainer() {
+    setTimeout(() => {
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
+      if (!navBar) return;
+
+      if ((window.innerWidth === 1600 && window.innerHeight === 900) || (window.innerWidth === 900 && window.innerHeight === 1600)) {
+        const exit_and_audio_margin = document.querySelectorAll<HTMLElement>('.lido-exit-button, #main-audio');
+        exit_and_audio_margin.forEach(el => {
+          el.style.marginLeft = '10px';
+          el.style.marginRight = '10px';
+        });
+      }
+      if (window.innerWidth > window.innerHeight) {
+        navBar.style.top = '6%';
+      } else {
+        navBar.style.top = '3.5%';
+      }
+
+      // Apply the scale to the navbar
+      navBar.style.transform = `translate(-50%, -50%)`;
+      navBar.style.visibility = 'visible';
+      console.log('navbar child : ', navBar.children);
+
+      Array.from(navBar.children).forEach(el => {
+        const item = el as HTMLElement;
+        item.style.transform = `scale(${calculateScale()})`;
+      });
+
+      navBar.style.width = window.outerWidth + 'px';
+    }, 100);
+  }
 
 
 
@@ -382,28 +405,39 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
-        <div class="lido-exit-button" onClick={() => this.popupClickStyling()}>
+        <div class="lido-exit-button" onClick={() => { () => { this.exitFlag = true; AudioPlayer.getI().stop(); } }}>
           <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
-          <div id="lido-arrow-left">
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" onTouch="this.prevBtn='true';" />
+          <div id="lido-arrow-left" onClick={(event) => {
+            console.log('Target:', event.target);         // What was clicked
+            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+            console.log('✅ Button clicked - prevBtn action triggered');
+            executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
+          }}>
+            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" />
           </div>
 
           {this.containers.map((_, index) => (
-            <span
-              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-              onClick={() => this.jumpToContainer(index)}
-              style={style}
-            ></span>
+            <div class="parent_dots">
+              <span
+                class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+                onClick={() => this.jumpToContainer(index)}
+                style={style}
+              ></span>
+            </div>
           ))}
-          <div id="lido-arrow-right">
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" onTouch="this.nextBtn='true';" />
+          <div id="lido-arrow-right" onClick={(event) => {
+            console.log('Target:', event.target);         // What was clicked
+            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+            console.log('✅ Button clicked - nextBtn action triggered');
+            executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
+          }}>
+            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
           </div>
         </div>
-
-        <div id="main-audio" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="click-button" onClick={() => this.btnpopup()}>
           <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
         </div>
       </div>
@@ -434,6 +468,7 @@ export class LidoHome {
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
 
         {/* Render navigation dots below the container */}
+
         {this.showDotsandbtn && this.renderDots()}
 
         {/* Exit button */}
@@ -452,10 +487,10 @@ export class LidoHome {
 
               >
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
-                <lido-text visible="true" string="Do you want to take a break?" width="622px" height="57px" class="question-text" font-size="40px" onEntry="this.margin-bottom = ' -36px';"></lido-text>
+                <lido-text visible="true" string="Do you want to exit?" width="622px" height="57px" class="question-text" font-size="40px" onEntry="this.margin-bottom = ' -36px';"></lido-text>
                 <lido-cell visible="true" layout="row" width="80%" class="btn-cell">
-                  <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" class="cancel-btn" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color=#F34D08;' ></lido-text>
-                  <lido-text visible="true" string="KEEP PLAYING" font-size="24px" class="yes-btn" onClick={() => this.popUpClick('cancel')} borderRadius='16px' width='280px' height='99px' onEntry='this.color=white;' ></lido-text>
+                  <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" margin="0px 50px 0px 0px" class="click-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' fontFamily="Baloo Bhai 2" font-weight="700" bgColor='white' border-radius="16px"  ></lido-text>
+                  <lido-text visible="true" string="KEEP PLAYING" width='280px' height='105px' font-size="24px" class=" click-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' font-family="Baloo Bhai 2" font-weight="700" bgColor='#F34D08' border-radius="16px" ></lido-text>
                 </lido-cell>
               </lido-cell>
             </div>
