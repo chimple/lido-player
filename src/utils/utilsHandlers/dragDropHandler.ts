@@ -131,10 +131,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
-    const rect1 = container.getBoundingClientRect();
-    const rect2 = element.getBoundingClientRect();
-    verticalDistance = rect1.top - rect2.top;
-    horizontalDistance = rect1.left - rect2.left;
+    // const rect1 = container.getBoundingClientRect();
+    // const rect2 = element.getBoundingClientRect();
+    // verticalDistance = rect1.top - rect2.top;
+    // horizontalDistance = rect1.left - rect2.left;
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
@@ -430,6 +430,7 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
 
   if (originalWidth) {
     currentDrop.style.width = originalWidth;
+
     currentDrop.removeAttribute('data-original-width');
   } else {
    currentDrop.style.width = '';
@@ -443,6 +444,7 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
       if (prevDropItem) {
         prevDropItem.isFull = false;
         localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+
       }
       dragToDropMap.delete(dragElement);
     }
@@ -661,6 +663,7 @@ if (!dropElement) {
       if (prevDropItem) {
         prevDropItem.isFull = false;
         localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+        reduceSizeToOriginal();
       }
     }
     //accepting identical
@@ -878,6 +881,26 @@ else{
         //  drag.style.boxShadow = 'none'; 
       }}
     });
+  });
+};
+
+
+export const reduceSizeToOriginal = () => {
+  const dropItems = document.querySelectorAll("[type='drop']");
+  let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  if (!dropHasDrag || !dropItems) return;
+  dropItems.forEach(dropElement => {
+    const drop = dropElement as HTMLElement;
+    const tabIndex = drop.getAttribute('tab-index')
+       if (drop?.getAttribute('drop-attr')?.toLowerCase() === DropMode.Stretch && dropHasDrag[tabIndex].isFull === false ) {
+  const originalWidth = drop.getAttribute('data-original-width');
+
+  if (originalWidth) {
+    drop.style.width = originalWidth;
+    drop.removeAttribute('data-original-width');
+  } 
+
+}
   });
 };
 
