@@ -13,7 +13,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
         <lido-text visible="true" width="70%" height="landscape.10%, portrait.5%" bg-color="transparent"></lido-text>
 
         <!-- Question -->
-        <lido-text tab-index="1" show-speak-icon="true" visible="true" width="landscape.70%, portrait.62%" height="10%" string="${t.question}" audio="${t.questionAudio}" font-size="36px" onEntry=" this.padding='0px 45px';this.fontWeight='600'; " bg-color="transparent"></lido-text>
+        <lido-text tab-index="1" show-speak-icon="true" visible="true" y="landscape.33px,portrait.0px" width="landscape.70%, portrait.62%" height="10%" string="${t.question}" audio="${t.questionAudio}" font-size="36px" onEntry=" this.padding='0px 45px';this.fontWeight='600'; " bg-color="transparent"></lido-text>
 
         <lido-cell visible="true" layout="landscape.col, portrait.row" flex-direction="landscape., portrait.row-reverse" align-items="landscape.center, portrait.start" width="100%" height="80%" bg-color="transparent">
 
