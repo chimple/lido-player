@@ -279,7 +279,7 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   let options = new Set<string>();
 
   if (patternGroups.length > 0) {
-    if(arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
+    if (arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
   }
 
   for (const group of patternGroups) {
@@ -505,12 +505,12 @@ export const validateObjectiveStatus = async () => {
     }
     if (res) {
       const attach = container.getAttribute('appendToDropOnCompletion');
+      if (attach === 'true') {
+        appendingDragElementsInDrop();
+      }
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
         await executeActions(onCorrect, container);
-        if (attach === 'true') {
-          appendingDragElementsInDrop();
-        }
       }
       triggerNextContainer();
     } else {
@@ -785,14 +785,13 @@ const getElementsForQueries = (query: string) => {
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
-
   if (targetElement.className.includes('lido-speak-icon')) {
     return null;
   }
-  const parentDiv = document.createElement('div')
+  const parentDiv = document.createElement('div');
   parentDiv.style.width = '0';
   parentDiv.style.height = '0';
-  
+
   const speakIcon = document.createElement('div');
   parentDiv.append(speakIcon);
   speakIcon.classList.add('lido-speak-icon');
@@ -803,32 +802,26 @@ export const speakIcon = (targetElement: HTMLElement) => {
   // }
   //  targetElement.appendChild(speakIcon);
 
-  speakIcon.addEventListener('click', async (event) => {
+  speakIcon.addEventListener('click', async event => {
     event.stopPropagation();
-    // const text = targetElement?.innerText?.trim();
-    // const audioAttr = targetElement.getAttribute('audio');
-    if (currentlySpeakingElement && currentlySpeakingElement !== targetElement) {
-      try {
-        await AudioPlayer.getI().stop();
-      } catch (err) {
-        console.warn('Failed to stop previous audio:', err);
-      }
-    }
 
-    currentlySpeakingElement = targetElement;
+    setCancelBtnPopup(true); // Cancel popup loop
+    await AudioPlayer.getI().stop(); // Stop current playback immediately
 
     try {
-      await AudioPlayer.getI().play(targetElement);
+      await AudioPlayer.getI().play(targetElement); // Play clicked element
     } catch (error) {
       console.error('Error playing audio or TTS:', error);
     }
+
+    setCancelBtnPopup(false); // Reset cancel state
   });
 
   if (targetElement['type'] === 'option') {
     speakIcon.style.position = 'unset';
     return parentDiv;
   }
-  targetElement.style.position = "relative";
+  targetElement.style.position = 'relative';
   return speakIcon;
 };
 
@@ -850,7 +843,6 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(DropLength);
 };
 
-
 /**
  * Applies a delay to the element's visibility based on `delayVisible`.
  */
@@ -861,19 +853,18 @@ export const setVisibilityWithDelay = async (element: HTMLElement, delayVisible:
 
   if (delayVisible) {
     const delay = parseInt(delayVisible, 10);
-    element.style.visibility = "hidden";
+    element.style.visibility = 'hidden';
 
     if (!isNaN(delay)) {
-      await new Promise<void>((resolve) => {
+      await new Promise<void>(resolve => {
         setTimeout(() => {
-          element.style.visibility = "visible";
+          element.style.visibility = 'visible';
           resolve();
         }, delay);
       });
     }
   }
 };
-
 
 // apply border to the clickable cell
 export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => {
@@ -918,23 +909,33 @@ export const vibrateCell = async (cell: HTMLElement, value: string): Promise<voi
   cell.classList.remove(className);
 };
 
-  export function calculateScale() {
-    const widths = [window.innerWidth];
-    const heights = [window.innerHeight];
+export function calculateScale() {
+  const widths = [window.innerWidth];
+  const heights = [window.innerHeight];
 
-    if (window.screen?.width) {
-      widths.push(window.screen.width);
-      heights.push(window.screen.height);
-    }
-
-    const width = Math.min(...widths);
-    const height = Math.min(...heights);
-    const isPortrait = height > width;
-
-    const scaleX = isPortrait ? width / 900 : width / 1600;
-    const scaleY = isPortrait ? height / 1600 : height / 900;
-
-    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
-    return scale;
+  if (window.screen?.width) {
+    widths.push(window.screen.width);
+    heights.push(window.screen.height);
   }
 
+  const width = Math.min(...widths);
+  const height = Math.min(...heights);
+  const isPortrait = height > width;
+
+  const scaleX = isPortrait ? width / 900 : width / 1600;
+  const scaleY = isPortrait ? height / 1600 : height / 900;
+
+  const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
+  return scale;
+}
+
+// for handling multiple speak elements played once at a time
+let cancelBtnPopupState = false;
+
+export function setCancelBtnPopup(value: boolean) {
+  cancelBtnPopupState = value;
+}
+
+export function getCancelBtnPopup(): boolean {
+  return cancelBtnPopupState;
+}
