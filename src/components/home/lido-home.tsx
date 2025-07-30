@@ -151,23 +151,8 @@ export class LidoHome {
   componentDidLoad() {
     setTimeout(() => {
       this.showDotsandbtn = true;
-
-      const exitButton = this.el.querySelector('.lido-exit-button');
-      const speakerButton = this.el.querySelector('.main-audio');
     }, 10);
     this.updateArrowVisibility();
-
-    setTimeout(() => {
-
-      const exitButton = this.el.querySelector('.lido-exit-button');
-      const speakerButton = this.el.querySelector('#main-audio');
-
-      console.log("speaker btn : ", speakerButton);
-
-      // clickElementStyle(exitButton as HTMLElement, "#F34D08");
-      // clickElementStyle(speakerButton as HTMLElement, "#F34D08");
-    }, 1000);
-
 
     if (this.height != '') {
       this.updateBackgroundImage();
@@ -179,7 +164,6 @@ export class LidoHome {
       this.scaleNavbarContainer(); // re-scale navbar on resize
     });
   }
-
 
   updateBackgroundImage() {
     const container = document.querySelector(LidoContainer);
@@ -327,8 +311,6 @@ export class LidoHome {
     }, 100);
   };
 
-
-
   private async btnpopup() {
     setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
@@ -356,8 +338,6 @@ export class LidoHome {
   }
 
   popUpClick = (comment: string) => {
-    console.log("it is clicking");
-    
     const alertElement = this.el.querySelector('.lido-alert-popup');
     this.exitFlag = false;
     if (alertElement) {
@@ -402,9 +382,6 @@ export class LidoHome {
     }, 100);
   }
 
-
-
-
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
    * Clicking on a dot allows the user to jump to a specific container.
@@ -414,7 +391,10 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
-        <div class="lido-exit-button" onClick={() => { () => { this.exitFlag = true; AudioPlayer.getI().stop(); } }}>
+        <div class="lido-exit-button click-button" onClick={() => {
+          this.exitFlag = true;
+          AudioPlayer.getI().stop();
+        }}>
           <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
@@ -502,7 +482,7 @@ export class LidoHome {
 
               >
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
-                <lido-text visible="true" string="Do you want to exit?" width="622px" height="57px" class="question-text" font-size="40px" onEntry="this.margin-bottom = ' -36px';"></lido-text>
+                <lido-text visible="true" string="Do you want to exit?" width="622px" height="57px" class="popup-exit-text" font-size="40px" onEntry="this.margin-bottom =' -36px';" ></lido-text>
                 <lido-cell visible="true" layout="row" width="80%" class="btn-cell">
                   <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" margin="0px 50px 0px 0px" class="click-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' fontFamily="Baloo Bhai 2" font-weight="700" bgColor='white' border-radius="16px"  ></lido-text>
                   <lido-text visible="true" string="KEEP PLAYING" width='280px' height='105px' font-size="24px" class=" click-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' font-family="Baloo Bhai 2" font-weight="700" bgColor='#F34D08' border-radius="16px" ></lido-text>
@@ -510,6 +490,7 @@ export class LidoHome {
               </lido-cell>
             </div>
           </div>
+
         )}
 
         {/* Show completion message if all containers have been displayed */}
