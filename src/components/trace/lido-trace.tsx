@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer,speakIcon } from '../../utils/utils';
+import { convertUrlToRelative, executeActions, triggerNextContainer,speakIcon, setVisibilityWithDelay } from '../../utils/utils';
 import { LidoContainer, TraceMode } from '../../utils/constants';
 
 // Enum for different tracing modes
@@ -116,6 +116,11 @@ export class LidoTrace {
    */
   @Prop() animationTrace: boolean = false;
 
+  /**
+   * Delay in milliseconds to make the cell visible after mount.
+   */
+  @Prop() delayVisible: string = '';
+
   @Element() el!: HTMLElement;
 
   @State() fileIndex: number = -1;
@@ -160,6 +165,10 @@ export class LidoTrace {
     const svgText = await this.fetchSVG(url);
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
+  }
+
+  componentDidLoad() {
+    setVisibilityWithDelay(this.el, this.delayVisible);
   }
 
   componentWillLoad() {

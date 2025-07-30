@@ -32,6 +32,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -127,6 +131,10 @@ export namespace Components {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
         /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
          */
@@ -394,6 +402,10 @@ export namespace Components {
          */
         "customStyle": string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
+        /**
           * The height of the container (CSS value).
          */
         "height": string;
@@ -504,6 +516,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
+        /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "direction": string;
@@ -581,6 +597,10 @@ export namespace Components {
           * The background color of the float element (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor": string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
         /**
           * The height of the float element (CSS value, e.g., '100px', '50%').
          */
@@ -670,6 +690,10 @@ export namespace Components {
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
          */
         "borderRadius": string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
         /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
          */
@@ -1118,6 +1142,10 @@ export namespace Components {
          */
         "bgColor": string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
+        /**
           * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
          */
         "height": string;
@@ -1192,6 +1220,10 @@ export namespace Components {
     }
     interface LidoSlideFill {
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
+        /**
           * Number of divisions or segments to split the ruler path into
          */
         "division": number;
@@ -1263,6 +1295,10 @@ export namespace Components {
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
          */
         "borderRadius": string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
         /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
@@ -1377,6 +1413,10 @@ export namespace Components {
           * Accessible label for screen readers, providing a textual description of the component's purpose.
          */
         "ariaLabel": string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible": string;
         /**
           * URL for the finger hint image
          */
@@ -1783,6 +1823,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
+        /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -1878,6 +1922,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
         /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
          */
@@ -2145,6 +2193,10 @@ declare namespace LocalJSX {
          */
         "customStyle"?: string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
+        /**
           * The height of the container (CSS value).
          */
         "height"?: string;
@@ -2255,6 +2307,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
+        /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "direction"?: string;
@@ -2332,6 +2388,10 @@ declare namespace LocalJSX {
           * The background color of the float element (CSS color value, e.g., '#FFFFFF', 'blue').
          */
         "bgColor"?: string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
         /**
           * The height of the float element (CSS value, e.g., '100px', '50%').
          */
@@ -2421,6 +2481,10 @@ declare namespace LocalJSX {
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
          */
         "borderRadius"?: string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
         /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
          */
@@ -2869,6 +2933,10 @@ declare namespace LocalJSX {
          */
         "bgColor"?: string;
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
+        /**
           * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
          */
         "height"?: string;
@@ -2943,6 +3011,10 @@ declare namespace LocalJSX {
     }
     interface LidoSlideFill {
         /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
+        /**
           * Number of divisions or segments to split the ruler path into
          */
         "division"?: number;
@@ -3014,6 +3086,10 @@ declare namespace LocalJSX {
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
          */
         "borderRadius"?: string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
         /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
          */
@@ -3128,6 +3204,10 @@ declare namespace LocalJSX {
           * Accessible label for screen readers, providing a textual description of the component's purpose.
          */
         "ariaLabel"?: string;
+        /**
+          * Delay in milliseconds to make the cell visible after mount.
+         */
+        "delayVisible"?: string;
         /**
           * URL for the finger hint image
          */

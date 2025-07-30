@@ -1,5 +1,5 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import { attachSpeakIcon, handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
+import {attachSpeakIcon, handlingChildElements, initEventsForElement, setVisibilityWithDelay, parseProp, speakIcon } from '../../utils/utils';
 import { max } from 'mathjs';
 
 /**
@@ -203,11 +203,20 @@ export class LidoCell {
   @State() style: { [key: string]: string } = {};
 
   /**
+   * Delay in milliseconds to make the cell visible after mount.
+   */
+  @Prop() delayVisible: string = '';
+
+  /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
    */
   componentDidLoad() {
+
+    setVisibilityWithDelay(this.el, this.delayVisible);
+
     initEventsForElement(this.el, this.type);
+    
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     // Select all direct child elements of the component
     // const slotElements = this.el.querySelectorAll('.lido-random > *');
@@ -293,8 +302,8 @@ export class LidoCell {
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'
           : parseProp(this.layout, orientation) === 'pos' || parseProp(this.layout, orientation) === 'random'
-          ? 'block'
-          : 'flex'
+            ? 'block'
+            : 'flex'
         : 'none',
       'flexDirection': this.flexDirection ? parseProp(this.flexDirection, orientation) : '',
       'alignItems': this.alignItems ? parseProp(this.alignItems, orientation) : '',

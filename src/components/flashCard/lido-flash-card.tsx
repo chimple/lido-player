@@ -5,7 +5,7 @@
  * ------------------------------------------------------------------*/
 
 import { Component, Host, Prop, h, Element, State, Watch } from '@stencil/core';
-import { parseProp, initEventsForElement } from '../../utils/utils';
+import { parseProp, initEventsForElement, setVisibilityWithDelay } from '../../utils/utils';
 
 @Component({
   tag: 'lido-flash-card',
@@ -133,6 +133,11 @@ export class LidoFlash {
   @Element() el: HTMLElement;
   @State() style: { [key: string]: string } = {};
 
+  /**
+  * Delay in milliseconds to make the cell visible after mount.
+  */
+  @Prop() delayVisible: string = '';
+
   /* ---------- Watches ---------- */
 
   /** React to external changes if you need side‑effects. */
@@ -150,6 +155,8 @@ export class LidoFlash {
   }
 
   componentDidLoad() {
+    setVisibilityWithDelay(this.el, this.delayVisible);    
+
     initEventsForElement(this.el, this.type);
     // handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'inline-block');
   }
