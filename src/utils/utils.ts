@@ -781,10 +781,16 @@ const getElementsForQueries = (query: string) => {
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
-  if (targetElement.querySelector('.lido-speak-icon')) {
+
+  if (targetElement.className.includes('lido-speak-icon')) {
     return null;
   }
+  const parentDiv = document.createElement('div')
+  parentDiv.style.width = '0';
+  parentDiv.style.height = '0';
+  
   const speakIcon = document.createElement('div');
+  parentDiv.append(speakIcon);
   speakIcon.classList.add('lido-speak-icon');
   // const stringAttr = targetElement?.getAttribute('string') || (targetElement as any)?.string;
   // const hasAudioAttr = targetElement?.getAttribute('audio');
@@ -793,7 +799,7 @@ export const speakIcon = (targetElement: HTMLElement) => {
   // }
   //  targetElement.appendChild(speakIcon);
 
-  speakIcon.addEventListener('click', async event => {
+  speakIcon.addEventListener('click', async (event) => {
     event.stopPropagation();
     // const text = targetElement?.innerText?.trim();
     // const audioAttr = targetElement.getAttribute('audio');
@@ -814,7 +820,22 @@ export const speakIcon = (targetElement: HTMLElement) => {
     }
   });
 
+  if (targetElement['type'] === 'option') {
+    speakIcon.style.position = 'unset';
+    return parentDiv;
+  }
+  targetElement.style.position = "relative";
   return speakIcon;
+};
+
+export const attachSpeakIcon = (element: HTMLElement, x: string, y: string) => {
+  const speakIconElement = speakIcon(element);
+  if (element['type'] === 'option') {
+    const icon = speakIconElement.firstChild as HTMLElement;
+    icon.style.marginLeft = x;
+    icon.style.marginTop = y;
+  }
+  element.prepend(speakIconElement);
 };
 
 export const clearLocalStorage = () => {
@@ -824,6 +845,31 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(DropHasDrag);
   localStorage.removeItem(DropLength);
 };
+
+
+/**
+ * Applies a delay to the element's visibility based on `delayVisible`.
+ */
+
+export const setVisibilityWithDelay = async (element: HTMLElement, delayVisible: string) => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return;
+
+  if (delayVisible) {
+    const delay = parseInt(delayVisible, 10);
+    element.style.visibility = "hidden";
+
+    if (!isNaN(delay)) {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          element.style.visibility = "visible";
+          resolve();
+        }, delay);
+      });
+    }
+  }
+};
+
 
 // apply border to the clickable cell
 export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => {
@@ -867,24 +913,24 @@ export const vibrateCell = async (cell: HTMLElement, value: string): Promise<voi
   // Remove the class after the animation completes
   cell.classList.remove(className);
 };
-// utils/scaleUtils.ts
-export function calculateScale() {
-  const widths = [window.innerWidth];
-  const heights = [window.innerHeight];
 
-  if (window.screen?.width) {
-    widths.push(window.screen.width);
-    heights.push(window.screen.height);
+  export function calculateScale() {
+    const widths = [window.innerWidth];
+    const heights = [window.innerHeight];
+
+    if (window.screen?.width) {
+      widths.push(window.screen.width);
+      heights.push(window.screen.height);
+    }
+
+    const width = Math.min(...widths);
+    const height = Math.min(...heights);
+    const isPortrait = height > width;
+
+    const scaleX = isPortrait ? width / 900 : width / 1600;
+    const scaleY = isPortrait ? height / 1600 : height / 900;
+
+    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
+    return scale;
   }
-
-  const width = Math.min(...widths);
-  const height = Math.min(...heights);
-  const isPortrait = height > width;
-
-  const scaleX = isPortrait ? width / 900 : width / 1600;
-  const scaleY = isPortrait ? height / 1600 : height / 900;
-
-  const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
-  return scale;
-}
 

@@ -72,11 +72,16 @@ function getContainerXml(args) {
 					<lido-text id="drop8"  value="${args.correct8}" tab-index="8" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
 					</lido-text>
 				</lido-cell>
+
+				<lido-cell layout="row" visible="true" delay-visible="2650" width="landscape.70%, portrait.88%" y="landscape.40%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
+					<lido-text id="option1" value="${args.option1}" tab-index="5" flexible-width="false" visible="true" bg-color="#FCF3B1" onEntry="this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="150px" height="90px" string="${args.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+
 				</lido-cell>
 				<lido-cell layout="wrap" visible="true" width="landscape.38%, portrait.88%" y="landscape.58%, portrait.62%" x="landscape.4%,portrait.0px" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
 					<lido-text id="option1" show-speak-icon="true" value="${args.option1}" tab-index="9"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';  " width="auto" height="84px" string="${args.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>
 					<lido-text id="option2" show-speak-icon="true" value="${args.option2}" tab-index="10"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84px" string="${args.option2}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+
 					</lido-text>
 					<lido-text id="option3" show-speak-icon="true" value="${args.option3}" tab-index="11"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84px" string="${args.option3}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
 					</lido-text>

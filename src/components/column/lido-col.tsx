@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element, State } from '@stencil/core';
-import { convertUrlToRelative, handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
+import { attachSpeakIcon, convertUrlToRelative, handlingChildElements, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
 
 /**
  * @component LidoCol
@@ -18,7 +18,7 @@ import { convertUrlToRelative, handlingChildElements, initEventsForElement, pars
 export class LidoCol {
   /**
    * Controls whether the speak icon should appear directly on the top right corner of targeted element.
-  */
+   */
   @Prop() showSpeakIcon: boolean = false;
   /**
    * The unique identifier for the column component.
@@ -178,10 +178,9 @@ export class LidoCol {
   componentDidLoad() {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
-    if(this.showSpeakIcon) {
-        speakIcon(this.el);
-          this.el.append(speakIcon(this.el));
-       }
+    if (this.showSpeakIcon) {
+      attachSpeakIcon(this.el, this.x, this.y);
+    }
   }
 
   /**

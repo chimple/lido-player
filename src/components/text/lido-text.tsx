@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host, State } from '@stencil/core';
-import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon } from '../../utils/utils';
+import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
 
 /**
  * @component LidoText
@@ -183,18 +183,24 @@ export class LidoText {
   @State() style: { [key: string]: string } = {};
 
   /**
+  * Delay in milliseconds to make the cell visible after mount.
+  */
+  @Prop() delayVisible: string = '';
+
+  /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the text component.
    */
   componentDidLoad() {
+    setVisibilityWithDelay(this.el, this.delayVisible);
+    
     initEventsForElement(this.el, this.type);
     // only create span element if requested
     if (this.spanType === 'words' || this.spanType === 'letters') {
       this.addSpanToText();
     }
     if (this.showSpeakIcon) {
-      speakIcon(this.el);
-      this.el.append(speakIcon(this.el));
+      attachSpeakIcon(this.el, this.x, this.y);
     }
   }
 
