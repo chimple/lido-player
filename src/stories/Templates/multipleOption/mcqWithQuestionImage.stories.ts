@@ -6,17 +6,33 @@ const meta: Meta = {
   argTypes: {
     question: { control: 'text' },
     questionImg: { control: 'file' },
+    questionAudio: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     option1: { control: 'text' },
-    audio1: { control: 'text' },
+    audio1: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     optionImg1: { control: 'file' },
-    audio2: { control: 'text' },
+    audio2: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     option2: { control: 'text' },
     optionImg2: { control: 'file' },
     option3: { control: 'text' },
-    audio3: { control: 'text' },
+    audio3: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     optionImg3: { control: 'file' },
     option4: { control: 'text' },
-    audio4: { control: 'text' },
+    audio4: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     optionImg4: { control: 'file' },
     correctAns: { control: 'text' },
   },
@@ -27,6 +43,7 @@ export const Default: StoryObj = {
   args: {
     question: 'I have less than double of 3 marbles. I have more than half of 8 marbles. How many marbles do I have?',
     questionImg: "https://aeakbcdznktpsbrfsgys.storage.supabase.co/v1/object/public/template-assets/fill-in-the-blanks/image%201.png",
+    questionAudio: '',
     option1: 'A square and a circle',
     audio1: '',
     optionImg1: '',
@@ -65,7 +82,7 @@ function getContainerXml(args) {
 
 		<lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
 			<lido-text visible="true" width="80%" height="10%" bg-color="transparent"></lido-text>
-			<lido-text tab-index="1" show-speak-icon="true" visible="true" id="lido-question" width="landscape.65%, portrait.80%" height="10%" bg-color="#FFF5BB" string="${args.question}" border-radius="16px" onEntry="this.border='1px solid black'; this.fontWeight='500'; this.padding='50px';" font-size="36px"></lido-text>
+			<lido-text tab-index="1" show-speak-icon="true" audio="${args.questionAudio}" visible="true" id="lido-question" width="landscape.65%, portrait.80%" height="10%" bg-color="#FFF5BB" string="${args.question}" border-radius="16px" onEntry="this.border='1px solid black'; this.fontWeight='500'; this.padding='50px';" font-size="36px"></lido-text>
 			<lido-cell visible="true" width="68%" height="landscape.68%, portrait.90%" bg-color="transparent" layout="landscape.row, portrait.col"  margin="landscape.0, portrait.-108px 0 0 0">
 					${questionImage}
 
