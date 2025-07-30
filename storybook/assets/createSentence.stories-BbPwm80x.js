@@ -33,11 +33,8 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
                     </lido-text>
                 </lido-cell>
 
-                <lido-cell layout="row" visible="true" delay-visible="2650" width="landscape.70%, portrait.88%" y="landscape.40%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
-                    <lido-text id="option1" value="${t.option1}" tab-index="5" flexible-width="false" visible="true" bg-color="#FCF3B1" onEntry="this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="150px" height="90px" string="${t.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
-
-                </lido-cell>
-                <lido-cell layout="wrap" visible="true" width="landscape.38%, portrait.88%" y="landscape.58%, portrait.62%" x="landscape.4%,portrait.0px" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
+                
+                <lido-cell layout="wrap" visible="true" delay-visible="2650" width="landscape.38%, portrait.88%" y="landscape.53%, portrait.62%" x="landscape.35%,portrait.5%" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
                     <lido-text id="option1" show-speak-icon="true" value="${t.option1}" tab-index="9"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';  " width="auto" height="84px" string="${t.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
                     </lido-text>
                     <lido-text id="option2" show-speak-icon="true" value="${t.option2}" tab-index="10"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84px" string="${t.option2}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
@@ -70,7 +67,7 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
             </lido-cell>
         </lido-cell>
     </lido-container>	
-    </main>`}var i,o,r;e.parameters={...e.parameters,docs:{...(i=e.parameters)==null?void 0:i.docs,source:{originalSource:`{
+    </main>`}var o,i,r;e.parameters={...e.parameters,docs:{...(o=e.parameters)==null?void 0:o.docs,source:{originalSource:`{
   args: {
     heading: 'Who is the father of the nation?',
     questionImg: ["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Mahatma-Gandhi.jpg"],
@@ -95,4 +92,4 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(r=(o=e.parameters)==null?void 0:o.docs)==null?void 0:r.source}}};const c=["CreateSentence"];export{e as CreateSentence,c as __namedExportsOrder,s as default};
+}`,...(r=(i=e.parameters)==null?void 0:i.docs)==null?void 0:r.source}}};const c=["CreateSentence"];export{e as CreateSentence,c as __namedExportsOrder,s as default};
