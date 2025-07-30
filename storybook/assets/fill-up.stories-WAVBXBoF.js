@@ -1,4 +1,4 @@
-import"./lit-element-BxxbMms4.js";import{x as p}from"./lit-html-DLYuhZ0i.js";const x={title:"Templates/FillUp",argTypes:{heading:{control:"text"},audio:{control:"file"},img:{control:"file"},option1:{control:"text"},option2:{control:"text"},option3:{control:"text"},option4:{control:"text"},answer1:{control:"text"},answer2:{control:"text"},answer3:{control:"text"},answer4:{control:"text"},text1:{control:"text"},text2:{control:"text"},text3:{control:"text"},text4:{control:"text"},text5:{control:"text"},text6:{control:"text"},text7:{control:"text"},text8:{control:"text"}}},i={args:{heading:"Fill  in  the  blanks",img:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/image%201.png"],audio:"",option1:"quick",option2:"lazy",option3:"quick1",option4:"lazy1",answer1:"quick",answer2:"lazy",answer3:"quick1",answer4:"lazy1",text1:"The",text2:"brown fox",text3:"jumped over a",text4:"dog.",text5:"The",text6:"brown fox",text7:"jumped over a",text8:"dog."},render:t=>{const a=r(t);return p`<lido-home .xmlData="${a}"></lido-home>`}};function r(t){return`
+import"./lit-element-BxxbMms4.js";import{x as p}from"./lit-html-DLYuhZ0i.js";const s={title:"Templates/FillUp",argTypes:{heading:{control:"text"},headingAudio:{control:{type:"file",accept:".mp3, .wav, .ogg, audio/*"}},img:{control:"file"},option1:{control:"text"},option1Audio:{control:{type:"file",accept:".mp3, .wav, .ogg, audio/*"}},option2:{control:"text"},option2Audio:{control:{type:"file",accept:".mp3, .wav, .ogg, audio/*"}},option3:{control:"text"},option3Audio:{control:{type:"file",accept:".mp3, .wav, .ogg, audio/*"}},option4:{control:"text"},option4Audio:{control:{type:"file",accept:".mp3, .wav, .ogg, audio/*"}},answer1:{control:"text"},answer2:{control:"text"},answer3:{control:"text"},answer4:{control:"text"},text1:{control:"text"},text2:{control:"text"},text3:{control:"text"},text4:{control:"text"},text5:{control:"text"},text6:{control:"text"},text7:{control:"text"},text8:{control:"text"},sentenceAudio:{control:{type:"file",accept:".mp3, .wav, .ogg, audio/*"}}}},i={args:{heading:"Fill  in  the  blanks",headingAudio:"",img:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/image%201.png"],option1:"quick",option1Audio:"",option2:"lazy",option2Audio:"",option3:"quick1",option3Audio:"",option4:"lazy1",option4Audio:"",answer1:"quick",answer2:"lazy",answer3:"quick1",answer4:"lazy1",text1:"The",text2:"brown fox",text3:"jumped over a",text4:"dog.",text5:"The",text6:"brown fox",text7:"jumped over a",text8:"dog.",sentenceAudio:""},render:t=>{const a=r(t);return p`<lido-home .xmlData="${a}"></lido-home>`}};function r(t){return`
    <main>
         <lido-container id="lido-container"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="${t.answer1},${t.answer2},${t.answer3},${t.answer4}" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
         <!-- Chimple Avatar -->
@@ -6,19 +6,16 @@ import"./lit-element-BxxbMms4.js";import{x as p}from"./lit-html-DLYuhZ0i.js";con
             <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
             </lido-avatar>
         </lido-cell>
-        <!-- audio -->
-        <lido-cell  id="audioSupport" audio="${t.audio}" >
-            <lido-text id="sentenceText" value="${t.text1} ${t.answer1} ${t.text2} ${t.text3} ${t.answer2} ${t.text4} ${t.text5} ${t.answer3} ${t.text6} ${t.text7} ${t.answer4} ${t.text8}" string="${t.text1} ${t.answer1} ${t.text2} ${t.text3} ${t.answer2} ${t.text4} ${t.text5} ${t.answer3} ${t.text6} ${t.text7} ${t.answer4} ${t.text8}" />
-        </lido-cell>
+
         <!--Parent cell  -->
         <lido-cell layout="col" visible="true" width="100%" height="100%" bg-color="transparent">
             <!-- heading -->
             <lido-cell   visible="true" margin="landscape.12px 0px -17px 0px, portrait.0px 0px 0px;">
-                <lido-text show-speak-icon="true" id="heading" tab-index="1" width="354px" visible="true" string="${t.heading}" font-family="'Baloo Bhai 2'" fontColor="black" font-size="landscape.36px, portrait.40px" bg-color="transparent" onEntry=" this.fontWeight='700';" margin="landscape.32px 0px 4px 0px,portrait.18px 0px 0px 0px">
+                <lido-text show-speak-icon="true" id="heading" tab-index="1" width="354px" visible="true" audio="${t.headingAudio}" string="${t.heading}" font-family="'Baloo Bhai 2'" fontColor="black" font-size="landscape.36px, portrait.40px" bg-color="transparent" onEntry=" this.fontWeight='700';" margin="landscape.32px 0px 4px 0px,portrait.18px 0px 0px 0px">
                 </lido-text>
             </lido-cell>
             <!-- fill up based on image -->
-            <lido-cell show-speak-icon="true" layout="landscape.row, portrait.col" visible="true" width="landscape.76%, portrait.69%" height="landscape.59%, portrait.74%" bg-color="white" onEntry="this.borderRadius='10px'; this.padding='8px';" margin="landscape.0 , portrait.18px 0px 0px 0px">
+            <lido-cell show-speak-icon="true" audio="${t.sentenceAudio}" layout="landscape.row, portrait.col" visible="true" width="landscape.76%, portrait.69%" height="landscape.59%, portrait.74%" bg-color="white" onEntry="this.borderRadius='10px'; this.padding='8px';" margin="landscape.0 , portrait.18px 0px 0px 0px">
                 <!-- image -->
                 <lido-image id="image1" disable-edit="true" visible="true" src="${t.img}" width="landscape.43%, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 59px 0px 0px , portrait. 0">
                 </lido-image>
@@ -43,13 +40,13 @@ import"./lit-element-BxxbMms4.js";import{x as p}from"./lit-html-DLYuhZ0i.js";con
                 
             </lido-cell>
             <lido-cell layout="landscape.row, portrait.wrap" childElementsLength="4" onEntry="this.gap='28px';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true" margin="landscape.6px 383px 74px 0px, portrait.34px 128px 0px -113px">
-                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option1" value="${t.option1}" tab-index="14" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="${t.option1}" fontColor="black" font-size="40px"   type="drag">
+                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" audio="${t.option1Audio}" id="option1" value="${t.option1}" tab-index="14" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="${t.option1}" fontColor="black" font-size="40px"   type="drag">
                 </lido-text>
-                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option2" value="${t.option2}" tab-index="15" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400'; " width="auto" height="landscape.87px, portrait.91px" string="${t.option2}" fontColor="black" font-size="40px"  type="drag">
+                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" audio="${t.option2Audio}" id="option2" value="${t.option2}" tab-index="15" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400'; " width="auto" height="landscape.87px, portrait.91px" string="${t.option2}" fontColor="black" font-size="40px"  type="drag">
                 </lido-text>
-                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option3" value="${t.option3}" tab-index="16" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px'; this.fontWeight='400'; " width="auto" height="landscape.87px, portrait.91px" string="${t.option3}" fontColor="black" font-size="40px" type="drag">
+                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" audio="${t.option3Audio}" id="option3" value="${t.option3}" tab-index="16" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px'; this.fontWeight='400'; " width="auto" height="landscape.87px, portrait.91px" string="${t.option3}" fontColor="black" font-size="40px" type="drag">
                 </lido-text>
-                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" id="option4" value="${t.option4}" tab-index="17" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="${t.option4}" fontColor="black" font-size="40px"   type="drag">
+                <lido-text show-speak-icon="true" font-family="'Baloo Bhai 2'" audio="${t.option4Audio}" id="option4" value="${t.option4}" tab-index="17" visible="true" bg-color="#fcf3b1" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="${t.option4}" fontColor="black" font-size="40px"   type="drag">
                 </lido-text>
             </lido-cell>
             
@@ -57,30 +54,35 @@ import"./lit-element-BxxbMms4.js";import{x as p}from"./lit-html-DLYuhZ0i.js";con
     </lido-container>
     </main>
 
-    `}var e,o,n;i.parameters={...i.parameters,docs:{...(e=i.parameters)==null?void 0:e.docs,source:{originalSource:`{
+    `}var o,e,n;i.parameters={...i.parameters,docs:{...(o=i.parameters)==null?void 0:o.docs,source:{originalSource:`{
   args: {
-    heading: "Fill  in  the  blanks",
-    img: ["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/image%201.png"],
-    audio: "",
-    option1: "quick",
-    option2: "lazy",
-    option3: "quick1",
-    option4: "lazy1",
-    answer1: "quick",
-    answer2: "lazy",
-    answer3: "quick1",
-    answer4: "lazy1",
-    text1: "The",
-    text2: "brown fox",
-    text3: "jumped over a",
-    text4: "dog.",
-    text5: "The",
-    text6: "brown fox",
-    text7: "jumped over a",
-    text8: "dog."
+    heading: 'Fill  in  the  blanks',
+    headingAudio: '',
+    img: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/image%201.png'],
+    option1: 'quick',
+    option1Audio: '',
+    option2: 'lazy',
+    option2Audio: '',
+    option3: 'quick1',
+    option3Audio: '',
+    option4: 'lazy1',
+    option4Audio: '',
+    answer1: 'quick',
+    answer2: 'lazy',
+    answer3: 'quick1',
+    answer4: 'lazy1',
+    text1: 'The',
+    text2: 'brown fox',
+    text3: 'jumped over a',
+    text4: 'dog.',
+    text5: 'The',
+    text6: 'brown fox',
+    text7: 'jumped over a',
+    text8: 'dog.',
+    sentenceAudio: ''
   },
   render: args => {
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(n=(o=i.parameters)==null?void 0:o.docs)==null?void 0:n.source}}};const d=["Blanks"];export{i as Blanks,d as __namedExportsOrder,x as default};
+}`,...(n=(e=i.parameters)==null?void 0:e.docs)==null?void 0:n.source}}};const x=["Blanks"];export{i as Blanks,x as __namedExportsOrder,s as default};
