@@ -178,6 +178,11 @@ export class LidoContainer {
    */
   @Prop() showNextButton: string = 'false';
 
+    /**
+  * Delay in milliseconds to make the cell visible after mount.
+  */
+  @Prop() delayVisible: string = '';
+
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
 
