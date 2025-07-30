@@ -1,7 +1,7 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage } from '../../utils/utils';
+import { clearLocalStorage, calculateScale } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { number } from 'mathjs';
 import { executeActions } from '../../utils/utils';
@@ -159,6 +159,12 @@ export class LidoHome {
     if (this.height != '') {
       this.updateBackgroundImage();
     }
+
+    this.scaleNavbarContainer(); // new navbar scaling
+
+    window.addEventListener('resize', () => {
+      this.scaleNavbarContainer(); // re-scale navbar on resize
+    });
   }
 
   updateBackgroundImage() {
@@ -181,6 +187,9 @@ export class LidoHome {
     });
     window.removeEventListener(PrevContainerKey, () => {
       this.PrevContainerKey();
+    });
+    window.removeEventListener('resize', () => {
+      this.scaleNavbarContainer(); // clean up
     });
   }
 
@@ -331,6 +340,37 @@ export class LidoHome {
       }
     }
   };
+  private scaleNavbarContainer() {
+    setTimeout(() => {
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
+      if (!navBar) return;
+
+      if ((window.innerWidth === 1600 && window.innerHeight === 900) || (window.innerWidth === 900 && window.innerHeight === 1600)) {
+        const exit_and_audio_margin = document.querySelectorAll<HTMLElement>('.lido-exit-button, #main-audio');
+        exit_and_audio_margin.forEach(el => {
+          el.style.marginLeft = '10px';
+          el.style.marginRight = '10px';
+        });
+      }
+      if (window.innerWidth > window.innerHeight) {
+        navBar.style.top = '6%';
+      } else {
+        navBar.style.top = '3.5%';
+      }
+
+      // Apply the scale to the navbar
+      navBar.style.transform = `translate(-50%, -50%)`;
+      navBar.style.visibility = 'visible';
+      console.log('navbar child : ', navBar.children);
+
+      Array.from(navBar.children).forEach(el => {
+        const item = el as HTMLElement;
+        item.style.transform = `scale(${calculateScale()})`;
+      });
+
+      navBar.style.width = window.outerWidth + 'px';
+    }, 100);
+  }
 
   /**
    * Renders navigation dots for each container, indicating the progress of the user.
@@ -356,11 +396,13 @@ export class LidoHome {
           </div>
 
           {this.containers.map((_, index) => (
+            <div class="parent_dots">
             <span
               class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
               onClick={() => this.jumpToContainer(index)}
               style={style}
             ></span>
+            </div>
           ))}
           <div id="lido-arrow-right" onClick={(event) => {
             console.log('Target:', event.target);         // What was clicked
@@ -371,7 +413,6 @@ export class LidoHome {
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
           </div>
         </div>
-
         <div id="main-audio" onClick={() => this.btnpopup()}>
           <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
         </div>
@@ -403,6 +444,7 @@ export class LidoHome {
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
 
         {/* Render navigation dots below the container */}
+
         {this.showDotsandbtn && this.renderDots()}
 
         {/* Exit button */}

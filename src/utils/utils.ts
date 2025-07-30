@@ -1,4 +1,16 @@
-import { ActivityScoreKey, DragSelectedMapKey, DragMapKey, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction, DropHasDrag, DropLength } from './constants';
+import {
+  ActivityScoreKey,
+  DragSelectedMapKey,
+  DragMapKey,
+  SelectedValuesKey,
+  DropMode,
+  DropToAttr,
+  DropTimeAttr,
+  LidoContainer,
+  DropAction,
+  DropHasDrag,
+  DropLength,
+} from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -158,7 +170,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
 
         case 'cellBorderAnimate': {
           const value = action.value;
-          if(value && targetElement) {
+          if (value && targetElement) {
             applyBorderToClickableCell(targetElement as HTMLElement, value);
           }
           break;
@@ -171,7 +183,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           }
           break;
         }
-          
+
         case 'slideAnimation': {
           slideAnimation();
           break;
@@ -558,7 +570,6 @@ export async function speakText(text: string, targetElement?: HTMLElement): Prom
 
     setTimeout(() => {
       const utterance = new SpeechSynthesisUtterance(text);
-
       utterance.onend = () => {
         resolve(true); // Resolve when speech is completed
       };
@@ -772,8 +783,6 @@ const getElementsForQueries = (query: string) => {
   return sortedDragSelectedElements;
 };
 
-
-
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
 
@@ -839,7 +848,7 @@ export const clearLocalStorage = () => {
   localStorage.removeItem(SelectedValuesKey);
   localStorage.removeItem(DropHasDrag);
   localStorage.removeItem(DropLength);
-}
+};
 
 
 /**
@@ -869,33 +878,32 @@ export const setVisibilityWithDelay = async (element: HTMLElement, delayVisible:
 // apply border to the clickable cell
 export const applyBorderToClickableCell = (cell: HTMLElement, color: string) => {
   if (!cell) return;
-  
+
   if (!color) {
     color = 'green'; // Default color if none is provided
-  } 
+  }
 
   // Calculate the shadow based on the cell's height
-  const elementShadow = cell.offsetHeight * 0.08;  // 8% of the cell height
-  const redRing = `0 0 0 6px ${color}`;  // 6px red ring around the cell
+  const elementShadow = cell.offsetHeight * 0.08; // 8% of the cell height
+  const redRing = `0 0 0 6px ${color}`; // 6px red ring around the cell
   // Adjust the drop shadow to be below the cell
-  const dropShadow = `0 ${elementShadow}px 10px rgba(0, 0, 0, 0.25)`;  // 10px shadow below the cell
+  const dropShadow = `0 ${elementShadow}px 10px rgba(0, 0, 0, 0.25)`; // 10px shadow below the cell
 
-  const shadow = `${redRing}, ${dropShadow}`;  // Combine the shadows
+  const shadow = `${redRing}, ${dropShadow}`; // Combine the shadows
 
-  cell.style.boxShadow = shadow;  // Apply the shadow
+  cell.style.boxShadow = shadow; // Apply the shadow
   cell.style.setProperty('box-shadow', shadow, 'important'); // enforce priority
-
-}
+};
 
 // apply shake animation to the cell
 // value can be 'scaled-shake', 'vertical-shake', 'horizontal-shake', 'strong-shake', 'diagonal-shake'
-export const  vibrateCell = async (cell: HTMLElement,value: string) : Promise<void> => {
-  if(!cell) return;
-  
+export const vibrateCell = async (cell: HTMLElement, value: string): Promise<void> => {
+  if (!cell) return;
+
   if (!value) {
     value = 'horizontal-shake'; // Default animation type if none is provided
   }
-  
+
   const animationType = value;
 
   // Create the class name
@@ -908,5 +916,25 @@ export const  vibrateCell = async (cell: HTMLElement,value: string) : Promise<vo
 
   // Remove the class after the animation completes
   cell.classList.remove(className);
-}
+};
+
+  export function calculateScale() {
+    const widths = [window.innerWidth];
+    const heights = [window.innerHeight];
+
+    if (window.screen?.width) {
+      widths.push(window.screen.width);
+      heights.push(window.screen.height);
+    }
+
+    const width = Math.min(...widths);
+    const height = Math.min(...heights);
+    const isPortrait = height > width;
+
+    const scaleX = isPortrait ? width / 900 : width / 1600;
+    const scaleY = isPortrait ? height / 1600 : height / 900;
+
+    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
+    return scale;
+  }
 

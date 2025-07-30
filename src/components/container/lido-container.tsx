@@ -1,6 +1,7 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement,calculateScale } from '../../utils/utils';
 import { string } from 'mathjs';
+
 
 /**
  * @component LidoContainer
@@ -170,18 +171,17 @@ export class LidoContainer {
   /**
    * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showPrevButton: string = "false";
+  @Prop() showPrevButton: string = 'false';
 
   /**
    * Indicates whether the next button should be displayed. Expected values: "true" or "false".
    */
-  @Prop() showNextButton: string = "false";
+  @Prop() showNextButton: string = 'false';
 
-  /**
+    /**
   * Delay in milliseconds to make the cell visible after mount.
   */
   @Prop() delayVisible: string = '';
-
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -210,53 +210,13 @@ export class LidoContainer {
    *
    * @param container The container element to be scaled.
    */
+  
   scaleContainer(container: HTMLElement) {
-    const widths = [window.innerWidth];
-    const heights = [window.innerHeight];
-
-    if (window.screen?.width) {
-      widths.push(window.screen.width);
-      heights.push(window.screen.height);
-    }
-
-    const width = Math.min(...widths);
-    const height = Math.min(...heights); // Get the smallest height
-
-    const isPortrait = height > width; // Check if the device is in portrait mode
-
-    let scaleX: number;
-    let scaleY: number;
-
-    if (isPortrait) {
-      // Portrait Mode: Scale based on portrait reference size (e.g., 900x1600)
-      scaleX = width / 900;
-      scaleY = height / 1600;
-    } else {
-      // Landscape Mode: Scale based on landscape reference size (e.g., 1600x900)
-      scaleX = width / 1600;
-      scaleY = height / 900;
-    }
-    const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling    
-
-
-
     // Center the container and apply scaling
-    container.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    container.style.transform = `translate(-50%, -50%) scale(${calculateScale()})`;
     container.style.left = '50%';
     container.style.top = '50%';
     container.style.position = 'absolute'; // Ensure proper positioning
-
-
-    setTimeout(() => {
-      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
-      console.log('navBar', navBar);
-
-      if (navBar) {
-        navBar.style.width = `${container.offsetWidth - 25}px`;
-        navBar.style.transform = `translate(-50%, -50%) scale(${scale})`;//ensure proper scaling
-        navBar.style.visibility = 'visible';
-      }
-    }, 100);
     this.screenOrientation();
   }
 
@@ -268,6 +228,7 @@ export class LidoContainer {
       this.el.style.height = '900px';
       this.el.style.width = '1600px';
     }
+    
   }
 
   /**
@@ -277,8 +238,6 @@ export class LidoContainer {
    * - Adds event listeners for `resize` and `load` to rescale the container on window size changes.
    */
   componentDidLoad() {
-    setVisibilityWithDelay(this.el, this.delayVisible);
-    
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
     document.body.style.backgroundColor = this.bgColor;
