@@ -1,10 +1,8 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale } from '../../utils/utils';
+import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
-import { number } from 'mathjs';
-import { executeActions } from '../../utils/utils';
 
 /**
  * @component LidoHome
@@ -314,19 +312,31 @@ export class LidoHome {
   };
 
   private async btnpopup() {
+    setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
 
     const container = document.getElementById(LidoContainer);
     const allele = container.querySelectorAll('*');
+
     for (const el of Array.from(allele)) {
+      if (getCancelBtnPopup()) break;
+
       const tabIndex = el.getAttribute('tab-index');
       const htmlel = el as HTMLElement;
-      if (tabIndex && number(tabIndex) > 0) {
+
+      if (tabIndex && Number(tabIndex) > 0) {
         await AudioPlayer.getI().play(htmlel);
+
+        if (getCancelBtnPopup()) {
+          await AudioPlayer.getI().stop();
+          break;
+        }
+
         await new Promise(resolve => setTimeout(resolve, 300));
       }
     }
   }
+
   popUpClick = (comment: string) => {
     const alertElement = this.el.querySelector('.lido-alert-popup');
     this.exitFlag = false;
@@ -386,30 +396,36 @@ export class LidoHome {
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
-          <div id="lido-arrow-left" onClick={(event) => {
-            console.log('Target:', event.target);         // What was clicked
-            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
-            console.log('✅ Button clicked - prevBtn action triggered');
-                executeActions("this.nextBtn='true'",event.currentTarget as HTMLElement);
-              }}>
+          <div
+            id="lido-arrow-left"
+            onClick={event => {
+              console.log('Target:', event.target); // What was clicked
+              console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+              console.log('✅ Button clicked - prevBtn action triggered');
+              executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
+            }}
+          >
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" />
           </div>
 
           {this.containers.map((_, index) => (
             <div class="parent_dots">
-            <span
-              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-              onClick={() => this.jumpToContainer(index)}
-              style={style}
-            ></span>
+              <span
+                class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+                onClick={() => this.jumpToContainer(index)}
+                style={style}
+              ></span>
             </div>
           ))}
-          <div id="lido-arrow-right" onClick={(event) => {
-            console.log('Target:', event.target);         // What was clicked
-            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
-            console.log('✅ Button clicked - nextBtn action triggered');
-                executeActions("this.nextBtn='true'",event.currentTarget as HTMLElement);
-              }}>
+          <div
+            id="lido-arrow-right"
+            onClick={event => {
+              console.log('Target:', event.target); // What was clicked
+              console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+              console.log('✅ Button clicked - nextBtn action triggered');
+              executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
+            }}
+          >
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
           </div>
         </div>
