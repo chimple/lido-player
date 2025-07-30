@@ -390,11 +390,13 @@ export class LidoHome {
           </div>
 
           {this.containers.map((_, index) => (
+            <div class="parent_dots">
             <span
               class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
               onClick={() => this.jumpToContainer(index)}
               style={style}
             ></span>
+            </div>
           ))}
           <div id="lido-arrow-right">
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" onTouch="this.nextBtn='true';" />
