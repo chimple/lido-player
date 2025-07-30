@@ -84,7 +84,7 @@ function getContainerXml(args){
 				<!-- text -->
 
 				
-				<lido-cell layout="flex" visible="true" height="landscape.100%,portrait.50%" width="landscape.50%, portrait.97%" onEntry="this.align-content='center'; this.gap='32px';this.display='ruby';" margin="landscape.9px 40px 0px 0px, portrait.33px 0px 0px 0px">
+				<lido-cell layout="flex" visible="true" height="landscape.100%,portrait.50%" width="landscape.50%, portrait.97%" onEntry="this.align-content='center'; this.gap='32px';this.display='ruby';" margin="landscape.9px 40px 0px 0px, portrait.33px 0px 0px 32px">
 					<lido-text tab-index="2" font-family="'Baloo Bhai 2'" visible="true" font-size="40px" y="-10px" string="${args.text1}" bg-color="transparent" onEntry="this.position='relative'; this.fontWeight='400';this.display='inline'; this.padding='0px 20px 0px 0px'; "></lido-text>
 					<lido-text tab-index="3" drop-attr="stretch" id="drop1" disable-edit="true" visible="true" width="164px" height="landscape.73px,portrait.77px" value="${args.answer1}"  type="drop" is-allow-only-one-drop="true" drop-Attr="stretch" onEntry="this.border-radius='10px';this.box-shoadow=''; this.margin-right='35px';" ></lido-text>
 					<lido-text tab-index="4" font-family="'Baloo Bhai 2'" visible="true" font-size="40px" y="-10px" string="${args.text2}" bg-color="transparent" onEntry="this.position='relative';this.display='inline';this.boxShadow='0 0 0'; this.padding='0px 20px 0px 0px';"></lido-text>

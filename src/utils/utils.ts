@@ -838,7 +838,7 @@ export const attachSpeakIcon = (element: HTMLElement, x: string, y: string) => {
     icon.style.marginLeft = x;
     icon.style.marginTop = y;
   }
-  element.prepend(speakIconElement);
+  element.append(speakIconElement);
 };
 
 export const clearLocalStorage = () => {
