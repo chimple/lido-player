@@ -507,11 +507,10 @@ export const validateObjectiveStatus = async () => {
       const attach = container.getAttribute('appendToDropOnCompletion');
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
-        await executeActions(onCorrect, container);
-        if (attach === 'true') {
+         if (attach === 'true') {
           appendingDragElementsInDrop();
         }
-      }
+        await executeActions(onCorrect, container); }
       triggerNextContainer();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
