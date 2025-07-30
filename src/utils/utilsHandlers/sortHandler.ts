@@ -115,7 +115,7 @@ export function enableReorderDrag(element: HTMLElement): void {
       element.style.opacity = '0.8';
       element.style.cursor = 'grabbing';
       element.style.position = 'absolute';
-      element.style.zIndex = '1000';
+      element.style.zIndex = '9999';
       element.style.touchAction = 'none';
       element.style.transition = 'none';
     }
@@ -162,7 +162,7 @@ export function enableReorderDrag(element: HTMLElement): void {
     if (elementType === 'option') {
       const category = findMostoverlappedElement(element, 'category');
       const sameElArr = Array.from(container.querySelectorAll(`[value="${element.getAttribute('value')}"]`));
-      const divEl = sameElArr.find(el => el !== element) as HTMLElement;
+      const divEl = sameElArr.find(el => el !== element && el.tagName === 'DIV') as HTMLElement;
 
       if (category) {
         if (dummy) {
@@ -326,7 +326,7 @@ const resetElementStyles = (el: HTMLElement): void => {
   el.style.cursor = 'move';
   el.style.zIndex = '';
   el.style.transform = '';
-  el.style.position = 'relative';
+  el.style.position = '';
   el.style.left = '';
   el.style.top = '';
 };

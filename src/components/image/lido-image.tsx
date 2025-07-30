@@ -1,5 +1,5 @@
 import { Component, Prop, h, Element, Host, getAssetPath, State } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, parseProp, speakIcon } from '../../utils/utils';
+import {attachSpeakIcon, convertUrlToRelative, initEventsForElement, parseProp, speakIcon, setVisibilityWithDelay } from '../../utils/utils';
 import CssFilter from 'css-filter-converter';
 import tinyColor from 'tinycolor2';
 /**
@@ -177,10 +177,17 @@ export class LidoImage {
   @State() style: { [key: string]: string };
 
   /**
+  * Delay in milliseconds to make the cell visible after mount.
+  */
+  @Prop() delayVisible: string = '';
+
+  /**
    * Lifecycle method that runs after the component has been loaded into the DOM.
    * It initializes custom events based on the `type` of the image component.
    */
   componentDidLoad() {
+  setVisibilityWithDelay(this.el, this.delayVisible);
+    
     initEventsForElement(this.el, this.type);
 
     if (this.filter !== '') {
@@ -190,8 +197,7 @@ export class LidoImage {
       }
     }
     if (this.showSpeakIcon) {
-      speakIcon(this.el);
-      this.el.append(speakIcon(this.el));
+      attachSpeakIcon(this.el, this.x, this.y);
     }
   }
 
