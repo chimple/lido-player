@@ -6,19 +6,34 @@ const meta: Meta = {
   argTypes: {
     question: { control: 'text' },
     questionImg: { control: 'file' },
-    questionAudio: { control: 'file'},
+    questionAudio: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     option1: { control: 'text' },
     option1Img: { control: 'file' },
-    option1Audio: { control: 'file'},
+    option1Audio: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     option2: { control: 'text' },
     option2Img: { control: 'file' },
-    option2Audio: { control: 'file' },
+    option2Audio: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     option3: { control: 'text' },
     option3Img: { control: 'file' },
-    option3Audio: { control: 'file' },
+    option3Audio: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     option4: { control: 'text' },
     option4Img: { control: 'file' },
-    option4Audio: { control: 'file' },
+    option4Audio: {control: {
+        type: 'file',
+        accept: '.mp3, .wav, .ogg, audio/*'
+      }},
     correctObjective: { control: 'text' }
   },
 };
