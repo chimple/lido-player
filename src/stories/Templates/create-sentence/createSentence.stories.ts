@@ -138,7 +138,7 @@ function getContainerXml(args) {
 				</lido-cell>
 
 				</lido-cell>
-				<lido-cell layout="landscape.flex,portrait.wrap" delay-visible="2650" visible="true" width="landscape.86%, portrait.88%" y="landscape.65%, portrait.62%" x="landscape.4%,portrait.0px" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
+				<lido-cell layout="landscape.flex,portrait.wrap" visible="true" width="landscape.86%, portrait.88%" y="landscape.65%, portrait.62%" x="landscape.4%,portrait.0px" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
 
 
 					<lido-text id="option1" show-speak-icon="true" audio="${args.option1Audio}" value="${args.option1}" tab-index="9"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';  " width="auto" height="84px" string="${args.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
