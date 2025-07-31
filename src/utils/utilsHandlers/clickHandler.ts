@@ -163,3 +163,4 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   element.style.setProperty('--btn-shadow-color', tinycolor(backGroundColor).darken(17).toString());
   element.classList.add('click-element');
 }
+

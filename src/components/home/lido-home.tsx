@@ -391,7 +391,11 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
-        <div class="lido-exit-button" onClick={() => (this.exitFlag = true)}>
+        <div class="lido-exit-button popup
+        -button" onClick={() => {
+          this.exitFlag = true;
+          AudioPlayer.getI().stop();
+        }}>
           <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
@@ -429,7 +433,7 @@ export class LidoHome {
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
           </div>
         </div>
-        <div id="main-audio" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
           <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
         </div>
       </div>
@@ -465,24 +469,29 @@ export class LidoHome {
 
         {/* Exit button */}
         {this.exitFlag && (
-          <div class="lido-alert-popup">
-            <lido-cell
-              class="lido-alert-content"
-              visible="true"
-              layout="col"
-              width="400px"
-              height="300px"
-              bg-color="#fff"
-              border-radius="30px"
-              onEntry="this.border='4px solid #F34D08';"
-            >
-              <lido-text visible="true" string="Are you sure you want to exit the game?" width="90%" font-size="36px"></lido-text>
-              <lido-cell visible="true" layout="row" width="80%">
-                <lido-text visible="true" string="Cancel" font-size="36px" class="cancel-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
-                <lido-text visible="true" string="Yes" font-size="36px" class="yes-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
+          <div class="lido-alert-parent">
+            <div class="lido-alert-popup">
+              <lido-cell
+                class="lido-alert-content"
+                visible="true"
+                layout="col"
+                width="720px"
+                height="360px"
+                bg-color="#fff"
+                border-radius="16px"
+                onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)';"
+
+              >
+                {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
+                <lido-text visible="true" string="Do you want to exit?" width="622px" height="57px" class="popup-exit-text" font-size="40px" onEntry="this.margin-bottom =' -36px';" ></lido-text>
+                <lido-cell visible="true" layout="row" width="80%" class="btn-cell">
+                  <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" margin="0px 50px 0px 0px" class="popup-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' fontFamily="Baloo Bhai 2" font-weight="700" bgColor='white' border-radius="16px"  ></lido-text>
+                  <lido-text visible="true" string="KEEP PLAYING" width='280px' height='105px' font-size="24px" class=" popup-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' font-family="Baloo Bhai 2" font-weight="700" bgColor='#F34D08' border-radius="16px" ></lido-text>
+                </lido-cell>
               </lido-cell>
-            </lido-cell>
+            </div>
           </div>
+
         )}
 
         {/* Show completion message if all containers have been displayed */}
