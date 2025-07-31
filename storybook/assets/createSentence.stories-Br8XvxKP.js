@@ -5,7 +5,9 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
         </lido-cell>
         <lido-cell id="row1" layout="col" height="100%" width="100%" visible="true" bg-Color="transparent">
             
+
             <lido-text  show-speak-icon="true"  margin="60px 0px -139px 0px"  visible="true" bg-color="transparent" y="landscape.30px, portrait.79px" onEntry="this.padding='0px 45px'; this.fontWeight='600';  " audio="${t.headingAudio}" width="auto" height="5%" string="${t.heading}" font-family="'Baloo 2', serif" font-size="36px" z="2" >
+
                     </lido-text>
             <!-- Truck -->
             <lido-cell id="col" layout="col" disable-edit="true" value="pos" aria-hidden="true" x="0" y="0" z="0" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" width="100%" height="100%" onEntry="">
@@ -15,26 +17,27 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
                     <lido-image width="landscape.16%, portrait.32%" y="landscape.17%, portrait.26%" x="landscape.51%, portrait.35%" z="2" id="image2" disable-edit="true" visible="true" src="${t.questionImg}" onEntry="">
                     </lido-image>
                     <lido-cell layout="wrap" visible="true" width="landscape.50%, portrait.88%" y="landscape.48%, portrait.48%" x="landscape.35%,portrait.7%" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='45px';" bg-color="transparent">
-                    <lido-text id="drop1" drop-attr="stretch"  value="${t.correct1}" tab-index="2" is-allow-only-one-drop="true" visible="true"  onEntry="this.background='transparent';  this.borderRadius='15px'; " width="150px" height="80px"   type="drop">
+                    <lido-text id="drop1" drop-attr="stretch"  value="${t.correct1}" tab-index="1" is-allow-only-one-drop="true" visible="true"  onEntry="this.background='transparent';  this.borderRadius='15px'; " width="150px" height="80px"   type="drop">
                     </lido-text>
-                    <lido-text id="drop2"  drop-attr="stretch" value="${t.correct2}" tab-index="3" is-allow-only-one-drop="true"  visible="true" onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
+                    <lido-text id="drop2"  drop-attr="stretch" value="${t.correct2}" tab-index="2" is-allow-only-one-drop="true"  visible="true" onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
                     </lido-text>
-                    <lido-text id="drop3"  drop-attr="stretch" value="${t.correct3}" tab-index="4" is-allow-only-one-drop="true"  visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
+                    <lido-text id="drop3"  drop-attr="stretch" value="${t.correct3}" tab-index="3" is-allow-only-one-drop="true"  visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
                     </lido-text>
-                    <lido-text id="drop4"  drop-attr="stretch"  value="${t.correct4}" tab-index="5" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
+                    <lido-text id="drop4"  drop-attr="stretch"  value="${t.correct4}" tab-index="4" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
                     </lido-text>
-                    <lido-text id="drop5"  drop-attr="stretch" value="${t.correct5}" tab-index="6" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
+                    <lido-text id="drop5"  drop-attr="stretch" value="${t.correct5}" tab-index="5" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
                     </lido-text>
-                    <lido-text id="drop6"  drop-attr="stretch" value="${t.correct6}" tab-index="7" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
+                    <lido-text id="drop6"  drop-attr="stretch" value="${t.correct6}" tab-index="6" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
                     </lido-text>
-                    <lido-text id="drop7"  drop-attr="stretch" value="${t.correct7}" tab-index="8" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
+                    <lido-text id="drop7"  drop-attr="stretch" value="${t.correct7}" tab-index="7" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
                     </lido-text>
-                    <lido-text id="drop8"  drop-attr="stretch"  value="${t.correct8}" tab-index="9" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
+                    <lido-text id="drop8"  drop-attr="stretch"  value="${t.correct8}" tab-index="8" is-allow-only-one-drop="true" visible="true"  onEntry=" this.background='transparent'; this.borderRadius='15px'; " width="150px" height="80px"   z="2" type="drop">
                     </lido-text>
                 </lido-cell>
 
                 </lido-cell>
-                <lido-cell delay-visible="2650" layout="landscape.flex,portrait.wrap" visible="true" width="landscape.86%, portrait.88%" y="landscape.65%, portrait.62%" x="landscape.4%,portrait.0px" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
+                <lido-cell layout="landscape.flex,portrait.wrap" visible="true" width="landscape.86%, portrait.88%" y="landscape.65%, portrait.62%" x="landscape.4%,portrait.0px" z="2" onEntry="this.gridTemplateColumns = 'repeat(4, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.position='relative';this.gap='40px';">
+
 
                     <lido-text id="option1" show-speak-icon="true" audio="${t.option1Audio}" value="${t.option1}" tab-index="9"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800';  " width="auto" height="84px" string="${t.option1}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
                     </lido-text>
@@ -52,6 +55,7 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
                     <lido-text id="option7" show-speak-icon="true" audio="${t.option7Audio}" value="${t.option7}" tab-index="15"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84px" string="${t.option7}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
                     </lido-text>
                     <lido-text id="option8" show-speak-icon="true" audio="${t.option8Audio}" value="${t.option8}" tab-index="16"  visible="true" bg-color="#FCF3B1" onEntry="this.padding='0px 40px';this.borderRadius='25px'; this.boxShadow='unset'; this.fontWeight='800'; " width="auto" height="84px" string="${t.option8}" font-family="'Baloo 2', serif" font-size="24px" z="2" type="drag">
+
                     </lido-text>
                 </lido-cell>
                 <lido-cell layout="row" visible="true" width="landscape.70%, portrait.88%" y="landscape.21%, portrait.42%" x="0%" z="2" onEntry="this.position='relative'">
