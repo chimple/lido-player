@@ -1,10 +1,8 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale } from '../../utils/utils';
+import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
-import { number } from 'mathjs';
-import { executeActions } from '../../utils/utils';
 
 /**
  * @component LidoHome
@@ -314,19 +312,31 @@ export class LidoHome {
   };
 
   private async btnpopup() {
+    setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
 
     const container = document.getElementById(LidoContainer);
     const allele = container.querySelectorAll('*');
+
     for (const el of Array.from(allele)) {
+      if (getCancelBtnPopup()) break;
+
       const tabIndex = el.getAttribute('tab-index');
       const htmlel = el as HTMLElement;
-      if (tabIndex && number(tabIndex) > 0) {
+
+      if (tabIndex && Number(tabIndex) > 0) {
         await AudioPlayer.getI().play(htmlel);
+
+        if (getCancelBtnPopup()) {
+          await AudioPlayer.getI().stop();
+          break;
+        }
+
         await new Promise(resolve => setTimeout(resolve, 300));
       }
     }
   }
+
   popUpClick = (comment: string) => {
     const alertElement = this.el.querySelector('.lido-alert-popup');
     this.exitFlag = false;
@@ -381,39 +391,49 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
-        <div class="lido-exit-button" onClick={() => (this.exitFlag = true)}>
+        <div class="lido-exit-button popup
+        -button" onClick={() => {
+          this.exitFlag = true;
+          AudioPlayer.getI().stop();
+        }}>
           <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
-          <div id="lido-arrow-left" onClick={(event) => {
-            console.log('Target:', event.target);         // What was clicked
-            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
-            console.log('✅ Button clicked - prevBtn action triggered');
-                executeActions("this.nextBtn='true'",event.currentTarget as HTMLElement);
-              }}>
+          <div
+            id="lido-arrow-left"
+            onClick={event => {
+              console.log('Target:', event.target); // What was clicked
+              console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+              console.log('✅ Button clicked - prevBtn action triggered');
+              executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
+            }}
+          >
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" />
           </div>
 
           {this.containers.map((_, index) => (
             <div class="parent_dots">
-            <span
-              class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
-              onClick={() => this.jumpToContainer(index)}
-              style={style}
-            ></span>
+              <span
+                class={`lido-dot ${index < this.currentContainerIndex ? 'completed' : index === this.currentContainerIndex ? 'current' : ''}`}
+                onClick={() => this.jumpToContainer(index)}
+                style={style}
+              ></span>
             </div>
           ))}
-          <div id="lido-arrow-right" onClick={(event) => {
-            console.log('Target:', event.target);         // What was clicked
-            console.log('Current Target:', event.currentTarget); // Where the onClick is bound
-            console.log('✅ Button clicked - nextBtn action triggered');
-                executeActions("this.nextBtn='true'",event.currentTarget as HTMLElement);
-              }}>
+          <div
+            id="lido-arrow-right"
+            onClick={event => {
+              console.log('Target:', event.target); // What was clicked
+              console.log('Current Target:', event.currentTarget); // Where the onClick is bound
+              console.log('✅ Button clicked - nextBtn action triggered');
+              executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
+            }}
+          >
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
           </div>
         </div>
-        <div id="main-audio" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
           <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
         </div>
       </div>
@@ -449,24 +469,29 @@ export class LidoHome {
 
         {/* Exit button */}
         {this.exitFlag && (
-          <div class="lido-alert-popup">
-            <lido-cell
-              class="lido-alert-content"
-              visible="true"
-              layout="col"
-              width="400px"
-              height="300px"
-              bg-color="#fff"
-              border-radius="30px"
-              onEntry="this.border='4px solid #F34D08';"
-            >
-              <lido-text visible="true" string="Are you sure you want to exit the game?" width="90%" font-size="36px"></lido-text>
-              <lido-cell visible="true" layout="row" width="80%">
-                <lido-text visible="true" string="Cancel" font-size="36px" class="cancel-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
-                <lido-text visible="true" string="Yes" font-size="36px" class="yes-btn" onClick={() => this.popUpClick('cancel')}></lido-text>
+          <div class="lido-alert-parent">
+            <div class="lido-alert-popup">
+              <lido-cell
+                class="lido-alert-content"
+                visible="true"
+                layout="col"
+                width="720px"
+                height="360px"
+                bg-color="#fff"
+                border-radius="16px"
+                onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)';"
+
+              >
+                {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
+                <lido-text visible="true" string="Do you want to exit?" width="622px" height="57px" class="popup-exit-text" font-size="40px" onEntry="this.margin-bottom =' -36px';" ></lido-text>
+                <lido-cell visible="true" layout="row" width="80%" class="btn-cell">
+                  <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" margin="0px 50px 0px 0px" class="popup-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' fontFamily="Baloo Bhai 2" font-weight="700" bgColor='white' border-radius="16px"  ></lido-text>
+                  <lido-text visible="true" string="KEEP PLAYING" width='280px' height='105px' font-size="24px" class=" popup-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' font-family="Baloo Bhai 2" font-weight="700" bgColor='#F34D08' border-radius="16px" ></lido-text>
+                </lido-cell>
               </lido-cell>
-            </lido-cell>
+            </div>
           </div>
+
         )}
 
         {/* Show completion message if all containers have been displayed */}
