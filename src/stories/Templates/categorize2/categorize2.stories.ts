@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 const meta: Meta = {
+
   title: 'Templates/Categorize2',
   argTypes: {
     heading: { control: 'text' },
@@ -87,16 +88,17 @@ export const Categ: StoryObj = {
     correct3: 'कनखजूरा,कनखजूरा2',
   },
 
-  render: args => {
-    const xml = getContainerXml(args);
-    return html`<lido-home .xmlData="${xml}"></lido-home>`;
-  },
+
+	render: args => {
+		const xml = getContainerXml(args);
+		return html`<lido-home .xmlData="${xml}"></lido-home>`;
+	},
 };
 function getContainerXml(args) {
-  const formatCorrect = (str: string) => (str.includes(',') ? `(${str.split(',').join('|')})` : str);
+	const formatCorrect = (str: string) => (str.includes(',') ? `(${str.split(',').join('|')})` : str);
 
-  const objective = `${formatCorrect(args.correct1)},${formatCorrect(args.correct2)},${formatCorrect(args.correct3)}`;
-  return `
+	const objective = `${formatCorrect(args.correct1)},${formatCorrect(args.correct2)},${formatCorrect(args.correct3)}`;
+	return `
   <main>
    <lido-container id="lido-container" show-next-button="true" show-drop-border="false" tabIndex="0"  value="mainContainer1"   bg-Color="#FFF"  height="100%" width="100%" visible="true" objective="${objective}" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-allow-only-correct="false"  > 
 		
@@ -129,31 +131,37 @@ function getContainerXml(args) {
 			<!-- dragElements -->
 			<lido-cell layout="landscape.row,portrait.wrap" z="0" visible="true" type="optionArea"  height="landscape.32%,portrait.38%" width="landscape.99%,portrait.98%" bg-Color="#FEEDE6"  margin="landscape.-33px 0px 32px 0px, portrait.23px 0px 18px 0px" onEntry=" this.border='1px solid #FAB89C';this.overflow=' hidden'; this.gap='25px'; this.align-items='center'; this.justify-content='center';this.border-radius='6px';">
 
-				<lido-cell layout="col" show-speak-icon="true" audio="${args.option1Audio}" x="29px" y="-221px"  z="1" onTouch=""  visible="true" type="option"  tab-index="6" id="i1"  value="${args.option1}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0'; this.box-sizing='unset'; this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
-					<lido-image visible="true"    height="145px" width="145px" bgColor="transparent"  src="${args.image1}" onEntry="this.flex=' 0 0 auto'; this.boxShadow='unset';this.transition = 'transform 0.5s ease';" ></lido-image>
-					<lido-text visible="true"  height="31px" width="145px" string="${args.option1}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>
-				</lido-cell>
-				<lido-cell layout="col" onTouch=""  show-speak-icon="true" audio="${args.option2Audio}" x="29px" y="-221px"  visible="true" type="option"   tab-index="7" id="i2"  value="${args.option2}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
-					<lido-image visible="true"   height="145px" width="145px" bgColor="transparent"  src="${args.image2}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"></lido-image>
-					<lido-text visible="true"  height="31px" width="145px" string="${args.option2}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>
-				</lido-cell>
-				<lido-cell layout="col"  onTouch="" show-speak-icon="true" audio="${args.option3Audio}" x="29px" y="-221px"  visible="true" type="option"  tab-index="8" id="i3"  value="${args.option3}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
-					<lido-image visible="true"   height="145px" width="145px" bgColor="transparent"  src="${args.image3}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';" z="5"></lido-image>
-					<lido-text visible="true"  height="31px" width="145px" string="${args.option3}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>
-				</lido-cell>
-				<lido-cell layout="col" onTouch="" show-speak-icon="true" audio="${args.option4Audio}" x="29px" y="-221px"  visible="true" type="option"  tab-index="9" id="i4"  value="${args.option4}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
-					<lido-image visible="true"  height="145px" width="145px" bgColor="transparent"  src="${args.image4}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"  z="5"></lido-image>
-					<lido-text visible="true" onTouch=""   height="31px" width="145px" string="${args.option4}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>
-				</lido-cell>
-				<lido-cell layout="col" onTouch="" show-speak-icon="true" audio="${args.option5Audio}" x="29px" y="-221px" visible="true" type="option"  tab-index="10" id="i5"  value="${args.option5}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
-					<lido-image visible="true"   height="145px" width="145px" bgColor="transparent"  src="${args.image5}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"  z="5"></lido-image>
-					<lido-text visible="true" onTouch=""   height="31px" width="145px" string="${args.option5}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>
-				</lido-cell>
-				<lido-cell layout="col" onTouch="" show-speak-icon="true" audio="${args.option6Audio}" x="29px" y="-221px"  visible="true" type="option"  tab-index="11" id="i6"  value="${args.option6}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
+				${args.image1.length === 0 && args.option1.length === 0 ? '' : `<lido-cell layout="col" show-speak-icon="true"  audio="${args.option1Audio}" x="29px" y="-221px"  z="1" onTouch=""  visible="true" type="option"  tab-index="6" id="i1"  value="${args.option1}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0'; this.box-sizing='unset'; this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
+					${args.image1.length === 0 ? '' : `<lido-image visible="true"    height="145px" width="145px" bgColor="transparent"  src="${args.image1}" onEntry="this.flex=' 0 0 auto'; this.boxShadow='unset';this.transition = 'transform 0.5s ease';" ></lido-image>`}
+					
+					${args.option1.length === 0 ? '' : `<lido-text visible="true"  height="31px" width="145px" string="${args.option1}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>`}				
+				</lido-cell>`}
+				${args.image2.length ===0 &&  args.option2.length === 0 ? '' : `<lido-cell layout="col" onTouch=""  show-speak-icon="true" audio="${args.option2Audio}" x="29px" y="-221px"  visible="true" type="option"   tab-index="7" id="i2"  value="${args.option2}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
+					${args.image2.length === 0 ? '' : ` <lido-image visible="true"   height="145px" width="145px" bgColor="transparent"  src="${args.image2}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"></lido-image>`}
+					${args.option2.length === 0 ? '' : ` <lido-text visible="true"  height="31px" width="145px" string="${args.option2}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>`}
+				</lido-cell>`}
 
-					<lido-image visible="true"  height="145px" width="145px" bgColor="transparent"  src="${args.image6}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"  z="5"></lido-image>
-					<lido-text visible="true" onTouch=""  height="31px" width="145px" string="${args.option6}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>
-				</lido-cell>	
+
+				${args.image3.length ===0 &&  args.option3.length === 0 ? '' : `<lido-cell layout="col"  onTouch="" show-speak-icon="true" audio="${args.option3Audio}" x="29px" y="-221px"  visible="true" type="option"  tab-index="8" id="i3"  value="${args.option3}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
+					${args.image3.length === 0 ? '' : `<lido-image visible="true"   height="145px" width="145px" bgColor="transparent"  src="${args.image3}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';" z="5"></lido-image>`}
+					${args.option3.length === 0 ? '' : `<lido-text visible="true"  height="31px" width="145px" string="${args.option3}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>`}
+				</lido-cell>`}
+
+				${args.image4.length ===0 &&  args.option4.length === 0 ? '' : `<lido-cell layout="col" onTouch="" show-speak-icon="true" audio="${args.option4Audio}" x="29px" y="-221px"  visible="true" type="option"  tab-index="9" id="i4"  value="${args.option4}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
+					${args.image4.length === 0 ? '' : `<lido-image visible="true"  height="145px" width="145px" bgColor="transparent"  src="${args.image4}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"  z="5"></lido-image>`}
+					${args.option4.length === 0 ? '' : `<lido-text visible="true" onTouch=""   height="31px" width="145px" string="${args.option4}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>`}
+				</lido-cell>`}
+
+				${args.image5.length ===0 &&  args.option5.length === 0 ? '' : `<lido-cell layout="col" onTouch="" show-speak-icon="true" audio="${args.option5Audio}" x="29px" y="-221px" visible="true" type="option"  tab-index="10" id="i5"  value="${args.option5}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
+					${args.image5.length === 0 ? '' : `<lido-image visible="true"   height="145px" width="145px" bgColor="transparent"  src="${args.image5}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"  z="5"></lido-image>`}
+					${args.option5.length === 0 ? '' : `<lido-text visible="true" onTouch=""   height="31px" width="145px" string="${args.option5}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>1`}
+				</lido-cell>`}
+
+				${args.image6.length ===0 &&  args.option6.length === 0 ? '' : `<lido-cell layout="col" onTouch="" show-speak-icon="true" audio="${args.option6Audio}" x="29px" y="-221px"  visible="true" type="option"  tab-index="11" id="i6"  value="${args.option6}" height="217px" width="149px" bg-Color="white" onEntry="this.padding='0px';this.flex-shrink='0';this.box-sizing='unset';this.align-items='center';this.justify-content='center';this.border-radius='6px';this. box-shadow=' 0px 8px 0px -2px rgba(0, 0, 0, 0.1)'">
+					${args.image6.length === 0 ? '' : `<lido-image visible="true"  height="145px" width="145px" bgColor="transparent"  src="${args.image6}" onEntry="this.flex=' 0 0 auto';this.boxShadow='unset';this.transition = 'transform 0.5s ease';"  z="5"></lido-image>`}
+					${args.option6.length === 0 ? '' : `<lido-text visible="true" onTouch=""  height="31px" width="145px" string="${args.option6}" font-family="'Baloo Bhai 2'" font-size="32px" margin="0px 0px 0px 0px" onEntry="this.border-radius='0px'; this.fontWeight='500';" bg-Color="white"></lido-text>`}
+				</lido-cell>`}
+
 			</lido-cell>
 		</lido-cell>
 	</lido-container>
