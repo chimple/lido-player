@@ -169,7 +169,7 @@ function getContainerXml(args) {
 			
 			<lido-cell visible="true" margin="20px 0px 0px 0px" bg-color="transparent" layout="landscape.row,portrait.col" height="landscape.50%,portrait.96%" width="landscape.100%,portrait.100%" onEntry="this.gap='10px';">
 				
-				<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="">
+				${(args.dropimg1.length=== 0 && args.droptext1.length === 0) ? '':`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell id="image1" show-speak-icon="true" audio="${args.drop1Audio}" value="${args.correct1}" tab-index="1" height="landscape.270px,portrait.240px" width="landscape.200px,portrait.180px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; this.borderRadius='8px';">
 							${
@@ -182,9 +182,9 @@ function getContainerXml(args) {
 							
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
-				<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
+				${(args.dropimg2.length=== 0 && args.droptext2.length === 0) ? '':`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell id="image2" show-speak-icon="true" audio="${args.drop2Audio}" value="${args.correct2}" tab-index="2" isAllowOnlyOneDrop="true" disable-edit="true" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
 							${
@@ -196,9 +196,9 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
-				<lido-cell layout="row" margin="landscape.50px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='5px';">
+				${(args.dropimg3.length=== 0 && args.droptext3.length === 0) ? '':`<lido-cell layout="row" margin="landscape.50px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='5px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell type="drop" show-speak-icon="true" audio="${args.drop3Audio}" id="image3" tab-index="3" isAllowOnlyOneDrop="true" disable-edit="true" value="${args.correct3}" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
 							${
@@ -210,10 +210,10 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
 
-				<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
+				${(args.dropimg4.length=== 0 && args.droptext4.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
 						<lido-cell id="image4" show-speak-icon="true" audio="${args.drop4Audio}" value="${args.correct4}" isAllowOnlyOneDrop="true" disable-edit="true" tab-index="4" height="landscape.270px,portrait.240px" width="landscape.200px,portrait.178px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
 							${
@@ -225,9 +225,9 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
-				<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
+				${(args.dropimg5.length=== 0 && args.droptext5.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
 						<lido-cell type="drop" show-speak-icon="true" audio="${args.drop5Audio}" id="image5" value="${args.correct5}" tab-index="5" isAllowOnlyOneDrop="true" disable-edit="true" width="landscape.200px,portrait.178px" height="landscape.268px,portrait.240px" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
 							${
@@ -239,14 +239,14 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 			</lido-cell>
 
 
 
 
 			<lido-cell visible="true" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" bg-color="transparent" layout="landscape.row,portrait.col" height="landscape.40%,portrait.96%" width="100%" onEntry="">
-				<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="">
+				${(args.dragimg1.length=== 0 && args.dragtext1.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent">
 						<lido-cell border-radius="8px"  show-speak-icon="true" audio="${args.drag1Audio}" id="option1" value="${args.option1}" tab-index="6" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" type="drag" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';">
 							${
@@ -258,9 +258,9 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
-				<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
+				${(args.dragimg2.length=== 0 && args.dragtext2.length === 0) ? '':`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell border-radius="8px" show-speak-icon="true" audio="${args.drag2Audio}" id="option2" value="${args.option2}" tab-index="7" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" type="drag" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.justifyContent='center'; ">
 							${
@@ -272,9 +272,9 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
-					<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
+				${(args.dragimg3.length=== 0 && args.dragtext3.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
 						<lido-cell border-radius="8px" show-speak-icon="true" id="option3" audio="${args.drag3Audio}" value="${args.option3}" tab-index="8" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" type="drag" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; ">
 							${
@@ -286,9 +286,9 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
-				<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
+				${(args.dragimg4.length=== 0 && args.dragtext4.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
 						<lido-cell border-radius="8px" show-speak-icon="true" id="option4" audio="${args.drag4Audio}" value="${args.option4}" tab-index="9" height="landscape.270px,portrait.240px" width="landscape.200px,portrait.178px" type="drag" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; this.justifyContent='flex-start'; ">
 							${
@@ -300,9 +300,9 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 
-					<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
+				${(args.dragimg5.length=== 0 && args.dragtext5.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='2px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell border-radius="8px" show-speak-icon="true" id="option5" audio="${args.drag5Audio}" value="${args.option5}" tab-index="10" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" type="drag" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; ">
 							${
@@ -314,7 +314,7 @@ function getContainerXml(args) {
 							}
 						</lido-cell>
 					</lido-cell>
-				</lido-cell>
+				</lido-cell>`}
 			</lido-cell>
 		</lido-cell>
 	</lido-container>
