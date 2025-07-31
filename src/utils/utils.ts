@@ -429,14 +429,8 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       }
     }
   });
-  const onTransitionEnd = (e: TransitionEvent) => {
-    if (e.propertyName === 'transform') {
-      dragElement.removeEventListener('transitionend', onTransitionEnd);
-      handleShowCheck();
-    }
-  };
 
-  dragElement.addEventListener('transitionend', onTransitionEnd);
+  handleShowCheck();
 }
 
 const storeActivityScore = (score: number) => {
