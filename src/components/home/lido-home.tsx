@@ -40,7 +40,7 @@ export class LidoHome {
   /**
    * The height of the container (CSS value).
    */
-  @Prop() height: string = '';
+  @Prop() height: string = '100px';
 
   @Element() el: HTMLElement;
 
@@ -173,14 +173,8 @@ export class LidoHome {
     container.style.backgroundPosition = bgImageSrc ? `bottom` : 'none';
     setTimeout(() => {
       const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
+      navBar.classList.add('nav-for-lanai');
       container.append(navBar);
-      navBar.style.visibility = 'visible';
-      navBar.style.position = 'absolute';
-      navBar.style.top = '0%';
-      navBar.style.left = '0%';
-      navBar.style.maxWidth = 'none';
-      navBar.style.width = '100%';
-      navBar.style.height = 'auto';
     }, 50);
   }
   /**

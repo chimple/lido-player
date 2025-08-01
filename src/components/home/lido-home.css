@@ -268,3 +268,12 @@
   border-radius: 16px;
   box-shadow: 0 8px 0 #F34D08;
 }
+.nav-for-lanai{
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  max-width: none;
+  width: 100%;
+  height: auto;
+  visibility: visible;
+}
