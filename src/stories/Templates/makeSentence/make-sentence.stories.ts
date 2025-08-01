@@ -30,9 +30,9 @@ function getContainerXml(args) {
     	<lido-container id="lido-container" objective="${objective}" tab-index="1" visible="true" bg-color="#B1BEFD" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="false" show-check="true">
       <!-- Chimple Avatar -->
       <lido-pos id="pos1" disable-edit="true" value="pos1" height="350px" width="350px" x="1170px" y="105px" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
-        <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+        <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="350px" width="350px" src="/assets/images/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
         </lido-avatar>
-        <lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bg-color="transparent" width="186px" height="20px" x="77px" y="305px" alt-text="{shadowImage}">
+        <lido-image id="image1" disable-edit="true" value="image1" visible="true" src="/assets/images/Shadow.png" bg-color="transparent" width="186px" height="20px" x="77px" y="305px" alt-text="{shadowImage}">
         </lido-image>
       </lido-pos>
 

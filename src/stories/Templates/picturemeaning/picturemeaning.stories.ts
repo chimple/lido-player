@@ -133,7 +133,7 @@ function getContainerXml(args) {
     <lido-container id="lido-container" tab-index="1" value="mainContainer" bg-color="transparent" objective="${args.objective4}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/Underwater.png" height="100%" width="100%" onCorrect="option7.speak='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true">
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="avatar-cell" disable-edit="true" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.591px, portrait.1274px" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
-            <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="Chimple Character">
+            <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="/assets/images/chimplecharacter.riv" alt-text="Chimple Character">
             </lido-avatar>
         </lido-cell>
 
