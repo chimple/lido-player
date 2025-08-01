@@ -9,7 +9,7 @@ export default meta;
 export const DefaultGame: StoryObj = {
   args: {
     bgImage: "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//Underwater.png",
-    avatarSrc: "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv",
+    avatarSrc: "/assets/images/chimplecharacter.riv",
 
     colHeader1Text: "ug",
     colHeader2Text: "ad",

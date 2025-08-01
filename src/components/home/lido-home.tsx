@@ -384,15 +384,8 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
-        <div
-          class="lido-exit-button popup
-        -button"
-          onClick={() => {
-            this.exitFlag = true;
-            AudioPlayer.getI().stop();
-          }}
-        >
-          <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
+        <div class="lido-exit-button" onClick={() => (this.exitFlag = true)}>
+          <lido-image src="/assets/images/Close_icon.png"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
@@ -426,8 +419,8 @@ export class LidoHome {
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
-          <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
+        <div id="main-audio" onClick={() => this.btnpopup()}>
+          <lido-image visible="true" src="/assets/images/Audio_icon.png"></lido-image>
         </div>
       </div>
     );

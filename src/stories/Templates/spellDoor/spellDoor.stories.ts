@@ -31,7 +31,7 @@ function getContainerXml(args) {
 				<lido-text visible="false" id="correctWord" onEntry="this.display='none';" string="${args.correct1}${args.correct2}${args.correct3}" ></lido-text>
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" value="pos2" height="305px" width="227px" x="landscape.1400px, portrait.575px" y="landscape.591px, portrait.0px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
-			<lido-avatar id="lido-avatar" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+			<lido-avatar id="lido-avatar" visible="true" height="462px" width="356px" src="/assets/images/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 			</lido-avatar>
 		</lido-cell>
 		<lido-cell layout="landscape.row, portrait.col" visible="true" width="landscape.75%, portrait.76%" margin="landscape.0%, portrait.71% 0 0 0" height="landscape.57%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent';">

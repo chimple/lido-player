@@ -58,7 +58,7 @@ function getContainerXml(args) {
       <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="-50px" y="500px" aria-hidden="true" z="1" bg-color="transparent" visible="true">
         <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px"
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv"
+          src="/assets/images/chimplecharacter.riv"
           alt-text="{chimpleCharacterRive}">
         </lido-avatar>
       </lido-cell>

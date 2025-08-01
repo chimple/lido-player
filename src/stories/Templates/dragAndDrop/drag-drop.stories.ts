@@ -48,9 +48,9 @@ function getContainerXml(args) {
 				</lido-pos>
 				<!-- Chimple Avatar -->
 				<lido-pos id="pos1" disable-edit="true" value="pos1" height="350px" width="350px" x="landscape.1260px, portrait.265px" y="landscape.530px, portrait.835px" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="this.animation='rightToPlace 2.5s linear';">
-					<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="350px" width="350px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+					<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="350px" width="350px" src="/assets/images/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 					</lido-avatar>
-					<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bg-color="transparent" width="186px" height="20px" x="77px" y="305px" alt-text="{shadowImage}">
+					<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="/assets/images/Shadow.png" bg-color="transparent" width="186px" height="20px" x="77px" y="305px" alt-text="{shadowImage}">
 					</lido-image>
 				</lido-pos>
 				<!-- Background -->

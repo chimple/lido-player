@@ -297,7 +297,7 @@ function getContainerXml(args: Args) {
         visible="true"
         height="350px"
         width="350px"
-        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv"
+        src="/assets/images/chimplecharacter.riv"
         altText="chimpleCharacterRive"
         bgColor="transparent"
       ></lido-avatar>
@@ -306,7 +306,7 @@ function getContainerXml(args: Args) {
         disableEdit="true"
         value="image1"
         visible="true"
-        src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png"
+        src="/assets/images/Shadow.png"
         bgColor="transparent"
         width="186px"
         height="40px"

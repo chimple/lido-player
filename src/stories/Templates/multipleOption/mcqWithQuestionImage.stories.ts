@@ -74,9 +74,9 @@ function getContainerXml(args) {
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="300px" width="300px" x="landscape.1330px, portrait.653px" y="landscape.590px, portrait.1280px" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">
-			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" bg-color="transparent">
+			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="/assets/images/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" bg-color="transparent">
 			</lido-avatar>
-			<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bg-color="transparent" width="186px" height="40px" x="55px" y="248px" alt-text="{shadowImgae}">
+			<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="/assets/images/Shadow.png" bg-color="transparent" width="186px" height="40px" x="55px" y="248px" alt-text="{shadowImgae}">
 			</lido-image>
 		</lido-cell>
 
