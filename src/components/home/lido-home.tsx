@@ -154,10 +154,10 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    if (!this.height || this.height != '') {
-      this.updateBackgroundImage();
-    } else {
+    if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
       this.scaleNavbarContainer();
+    } else {
+      this.updateBackgroundImage();
     }
 
     window.addEventListener('resize', () => {
