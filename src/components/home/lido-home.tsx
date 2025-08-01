@@ -1,7 +1,7 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
 import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions } from '../../utils/utils';
+import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 
 /**
