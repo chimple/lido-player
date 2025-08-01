@@ -154,7 +154,7 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    if (this.height != '') {
+    if (this.height != '' && this.height != '0px') {
       this.updateBackgroundImage();
     }
 
