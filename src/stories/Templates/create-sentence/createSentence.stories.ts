@@ -106,7 +106,7 @@ function getContainerXml(args) {
 			<lido-text id="sentenceText" string="${args.correct}"/>
 		</lido-cell>
 		<lido-cell id="row1" layout="col" height="100%" width="100%" visible="true" bg-Color="transparent">
-			<lido-text></lido
+			
 
 			<lido-text  show-speak-icon="true" tab-index="1" margin="60px 0px -139px 0px"  visible="true" bg-color="transparent" y="landscape.30px, portrait.79px" onEntry="this.padding='0px 45px'; this.fontWeight='600';  " audio="${args.headingAudio}" width="auto" height="5%" string="${args.heading}" font-family="'Baloo 2', serif" font-size="36px" z="2" >
 
