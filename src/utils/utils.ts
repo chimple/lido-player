@@ -830,6 +830,7 @@ export const speakIcon = (targetElement: HTMLElement) => {
 export const attachSpeakIcon = async (element: HTMLElement, x: string, y: string) => {
   const speakIconElement = speakIcon(element);
   if (element['type'] === 'option') {
+    speakIconElement.style.zIndex = "9999";
     const icon = speakIconElement.firstChild as HTMLElement;
     icon.style.marginLeft = x;
     icon.style.marginTop = y;
