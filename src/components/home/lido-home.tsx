@@ -154,11 +154,11 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    if (this.height != '') {
+    if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
+      this.scaleNavbarContainer();
+    } else {
       this.updateBackgroundImage();
     }
-
-    this.scaleNavbarContainer(); // new navbar scaling
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
@@ -171,8 +171,12 @@ export class LidoHome {
     document.body.style.background = 'none';
     container.style.backgroundImage = bgImageSrc ? `url(${bgImageSrc})` : 'none';
     container.style.backgroundPosition = bgImageSrc ? `bottom` : 'none';
+    setTimeout(() => {
+      const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
+      navBar.classList.add('nav-for-lanai');
+      container.append(navBar);
+    }, 50);
   }
-
   /**
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
    */
@@ -390,11 +394,14 @@ export class LidoHome {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
       <div id="lido-dot-indicator" class="lido-dot-container">
-        <div class="lido-exit-button popup
-        -button" onClick={() => {
-          this.exitFlag = true;
-          AudioPlayer.getI().stop();
-        }}>
+        <div
+          class="lido-exit-button popup
+        -button"
+          onClick={() => {
+            this.exitFlag = true;
+            AudioPlayer.getI().stop();
+          }}
+        >
           <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
@@ -479,18 +486,53 @@ export class LidoHome {
                 bg-color="#fff"
                 border-radius="16px"
                 onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)';"
-
               >
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
-                <lido-text visible="true" string="Do you want to exit?" width="622px" height="57px" class="popup-exit-text" font-size="40px" onEntry="this.margin-bottom =' -36px';" ></lido-text>
+                <lido-text
+                  visible="true"
+                  string="Do you want to exit?"
+                  width="622px"
+                  height="57px"
+                  class="popup-exit-text"
+                  font-size="40px"
+                  onEntry="this.margin-bottom =' -36px';"
+                ></lido-text>
                 <lido-cell visible="true" layout="row" width="80%" class="btn-cell">
-                  <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" margin="0px 50px 0px 0px" class="popup-button" onClick={() => this.popUpClick('exit')} borderRadius='16px' onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' fontFamily="Baloo Bhai 2" font-weight="700" bgColor='white' border-radius="16px"  ></lido-text>
-                  <lido-text visible="true" string="KEEP PLAYING" width='280px' height='105px' font-size="24px" class=" popup-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' font-family="Baloo Bhai 2" font-weight="700" bgColor='#F34D08' border-radius="16px" ></lido-text>
+                  <lido-text
+                    visible="true"
+                    string="EXIT"
+                    width="240px"
+                    height="105px"
+                    font-size="24px"
+                    margin="0px 50px 0px 0px"
+                    class="popup-button"
+                    onClick={() => this.popUpClick('exit')}
+                    borderRadius="16px"
+                    onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";'
+                    fontFamily="Baloo Bhai 2"
+                    font-weight="700"
+                    bgColor="white"
+                    border-radius="16px"
+                  ></lido-text>
+                  <lido-text
+                    visible="true"
+                    string="KEEP PLAYING"
+                    width="280px"
+                    height="105px"
+                    font-size="24px"
+                    class=" popup-button"
+                    onClick={() => this.popUpClick('cancel')}
+                    borderRadius="16px"
+                    onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";'
+                    font-family="Baloo Bhai 2"
+                    font-weight="700"
+                    bgColor="#F34D08"
+                    border-radius="16px"
+                  ></lido-text>
                 </lido-cell>
               </lido-cell>
             </div>
           </div>
-
         )}
 
         {/* Show completion message if all containers have been displayed */}
