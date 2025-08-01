@@ -50,11 +50,6 @@ export class LidoHome {
   @State() currentContainerIndex: number = this.initialIndex;
 
   /**
-   * Boolean that controls the display of the completion message after all containers have been viewed.
-   */
-  @State() showCompletionMessage: boolean = false;
-
-  /**
    * Boolean that controls the visibility of the exit confirmation popup.
    * This is set to true when the user attempts to exit the game.
    */
@@ -86,17 +81,12 @@ export class LidoHome {
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex >= this.containers.length - 1) {
-      // Show the completion message if all containers have been viewed
-      this.showCompletionMessage = true;
       // const event = new CustomEvent('gameCompleted');
       // window.dispatchEvent(event);
       dispatchGameCompletedEvent();
 
       this.currentContainerIndex = 0;
-      // Hide the completion message after 3 seconds
-      setTimeout(() => {
-        this.showCompletionMessage = false;
-      }, 3000);
+      
     }
     // Reset the containers array to trigger a re-render
     this.containers = [...this.containers];
@@ -408,11 +398,8 @@ export class LidoHome {
           {/* Navigation arrows and dots for container navigation */}
           <div
             id="lido-arrow-left"
-            onClick={event => {
-              console.log('Target:', event.target); // What was clicked
-              console.log('Current Target:', event.currentTarget); // Where the onClick is bound
-              console.log('✅ Button clicked - prevBtn action triggered');
-              executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
+            onClick={() => {
+              triggerPrevcontainer();
             }}
           >
             <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" />
@@ -534,9 +521,6 @@ export class LidoHome {
             </div>
           </div>
         )}
-
-        {/* Show completion message if all containers have been displayed */}
-        {this.showCompletionMessage && <div class="lido-snackbar">All containers have been displayed!</div>}
       </Host>
     );
   }

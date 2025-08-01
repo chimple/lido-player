@@ -839,6 +839,7 @@ export const attachSpeakIcon = async (element: HTMLElement, x: string, y: string
 };
 
 export const clearLocalStorage = () => {
+  AudioPlayer.getI().stop()
   localStorage.removeItem(DragSelectedMapKey);
   localStorage.removeItem(DragMapKey);
   localStorage.removeItem(SelectedValuesKey);
