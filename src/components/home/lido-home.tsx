@@ -341,11 +341,11 @@ export class LidoHome {
     const alertElement = this.el.querySelector('.lido-alert-popup');
     this.exitFlag = false;
     if (alertElement) {
-      if (comment === 'cancel') {
-        alertElement.remove();
-      } else {
+      if (comment === 'exit') {
         dispatchGameExitEvent();
         clearLocalStorage();
+        alertElement.remove();
+      } else {
         alertElement.remove();
       }
     }
@@ -371,7 +371,6 @@ export class LidoHome {
       // Apply the scale to the navbar
       navBar.style.transform = `translate(-50%, -50%)`;
       navBar.style.visibility = 'visible';
-      console.log('navbar child : ', navBar.children);
 
       Array.from(navBar.children).forEach(el => {
         const item = el as HTMLElement;
@@ -485,7 +484,7 @@ export class LidoHome {
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
                 <lido-text visible="true" string="Do you want to exit?" width="622px" height="57px" class="popup-exit-text" font-size="40px" onEntry="this.margin-bottom =' -36px';" ></lido-text>
                 <lido-cell visible="true" layout="row" width="80%" class="btn-cell">
-                  <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" margin="0px 50px 0px 0px" class="popup-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' fontFamily="Baloo Bhai 2" font-weight="700" bgColor='white' border-radius="16px"  ></lido-text>
+                  <lido-text visible="true" string="EXIT" width='240px' height='105px' font-size="24px" margin="0px 50px 0px 0px" class="popup-button" onClick={() => this.popUpClick('exit')} borderRadius='16px' onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' fontFamily="Baloo Bhai 2" font-weight="700" bgColor='white' border-radius="16px"  ></lido-text>
                   <lido-text visible="true" string="KEEP PLAYING" width='280px' height='105px' font-size="24px" class=" popup-button" onClick={() => this.popUpClick('cancel')} borderRadius='16px' onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";' font-family="Baloo Bhai 2" font-weight="700" bgColor='#F34D08' border-radius="16px" ></lido-text>
                 </lido-cell>
               </lido-cell>

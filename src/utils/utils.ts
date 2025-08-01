@@ -429,6 +429,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       }
     }
   });
+
   handleShowCheck();
 }
 
@@ -505,17 +506,14 @@ export const validateObjectiveStatus = async () => {
     }
     if (res) {
       const attach = container.getAttribute('appendToDropOnCompletion');
-      if (attach === 'true') {
-        appendingDragElementsInDrop();
-      }
+
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
-
-         if (attach === 'true') {
+        if (attach === 'true') {
           appendingDragElementsInDrop();
         }
-        await executeActions(onCorrect, container); }
-
+        await executeActions(onCorrect, container);
+      }
       triggerNextContainer();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
