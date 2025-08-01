@@ -101,12 +101,12 @@ export const CreateSentence: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-	<lido-container id="lido-container" is-allow-only-correct="true" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5},${args.correct6},${args.correct7},${args.correct8}" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="" onCorrect="this.sleep='1000';speak-con.speak='true';lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false"  appendToDropOnCompletion="true">
+	<lido-container id="lido-container" is-allow-only-correct="true" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5},${args.correct6},${args.correct7},${args.correct8}" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" visible="true" audio="" onCorrect="lido-avatar.avatarAnimate='Success'; pos5.animation='placeToLeft 2.5s linear';pos2.animation='placeToLeft 2.5s linear'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false"  appendToDropOnCompletion="true">
 		<lido-cell visible="false" id="speak-con">
 			<lido-text id="sentenceText" string="${args.correct}"/>
 		</lido-cell>
 		<lido-cell id="row1" layout="col" height="100%" width="100%" visible="true" bg-Color="transparent">
-			
+			<lido-text></lido
 
 			<lido-text  show-speak-icon="true" tab-index="1" margin="60px 0px -139px 0px"  visible="true" bg-color="transparent" y="landscape.30px, portrait.79px" onEntry="this.padding='0px 45px'; this.fontWeight='600';  " audio="${args.headingAudio}" width="auto" height="5%" string="${args.heading}" font-family="'Baloo 2', serif" font-size="36px" z="2" >
 
