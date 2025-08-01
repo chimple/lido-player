@@ -40,7 +40,7 @@ export class LidoHome {
   /**
    * The height of the container (CSS value).
    */
-  @Prop() height: string = '100px';
+  @Prop() height: string = '';
 
   @Element() el: HTMLElement;
 
