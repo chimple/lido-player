@@ -166,7 +166,7 @@ export class LidoRow {
     initEventsForElement(this.el, this.type);
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     if (this.showSpeakIcon) {
-      attachSpeakIcon(this.el, this.x, this.y);
+      attachSpeakIcon(this.el);
     }
   }
 
