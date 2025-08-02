@@ -166,7 +166,7 @@ export class LidoRandom {
       });
     }, 50);
     if (this.showSpeakIcon) {
-      attachSpeakIcon(this.el, this.x, this.y);
+      attachSpeakIcon(this.el);
     }
   }
 

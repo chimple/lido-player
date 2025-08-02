@@ -819,28 +819,35 @@ export const speakIcon = (targetElement: HTMLElement) => {
     setCancelBtnPopup(false); // Reset cancel state
   });
 
-  if (targetElement['type'] === 'option') {
-    speakIcon.style.position = 'unset';
-    return parentDiv;
-  }
   targetElement.style.position = 'relative';
   return speakIcon;
 };
 
-export const attachSpeakIcon = async (element: HTMLElement, x: string, y: string) => {
-  const speakIconElement = speakIcon(element);
+export const attachSpeakIcon = async (element: HTMLElement) => {
+  let speakIconElement = speakIcon(element);
+
   if (element['type'] === 'option') {
-    speakIconElement.style.zIndex = "9999";
-    const icon = speakIconElement.firstChild as HTMLElement;
-    icon.style.marginLeft = x;
-    icon.style.marginTop = y;
+    element.style.position = 'unset';
+    const speakDiv = document.createElement('div');
+    speakDiv.className = element.className;
+    speakDiv.style.position = 'relative';
+    speakDiv.style.backgroundColor = 'transparent';
+    speakDiv.style.padding = '0';
+    speakDiv.style.width = '100%';
+    speakDiv.style.height = '100%';
+    Array.from(element.children).forEach(child => {
+      speakDiv.appendChild(child);
+    });
+    speakDiv.appendChild(speakIconElement);
+    speakIconElement.style.position = 'absolute';
+    speakIconElement = speakDiv as HTMLDivElement;
   }
 
-  element.append(speakIconElement);
+  element.appendChild(speakIconElement);
 };
 
 export const clearLocalStorage = () => {
-  AudioPlayer.getI().stop()
+  AudioPlayer.getI().stop();
   localStorage.removeItem(DragSelectedMapKey);
   localStorage.removeItem(DragMapKey);
   localStorage.removeItem(SelectedValuesKey);
