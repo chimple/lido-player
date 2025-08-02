@@ -144,11 +144,11 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    // if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
+    if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
       this.scaleNavbarContainer();
-    // } else {
-    //   this.updateBackgroundImage();
-    // }
+    } else {
+      this.updateBackgroundImage();
+    }
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
@@ -346,6 +346,9 @@ export class LidoHome {
   };
 
   private scaleNavbarContainer() {
+    if(this.height){
+      return;
+    }
     setTimeout(() => {
       const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
       if (!navBar) return;
