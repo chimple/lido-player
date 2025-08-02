@@ -38,6 +38,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let initialY = 0;
   let clone: HTMLElement | null = null;
   let duplicateElement: HTMLElement = null;
+  let mutationFlag = false;
 
   // Fetch the container element
   const container = document.getElementById(LidoContainer) as HTMLElement;
@@ -131,10 +132,12 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       initialY = 0;
     }
 
-    // const rect1 = container.getBoundingClientRect();
-    // const rect2 = element.getBoundingClientRect();
-    // verticalDistance = rect1.top - rect2.top;
-    // horizontalDistance = rect1.left - rect2.left;
+    if (mutationFlag) {
+      const rect1 = container.getBoundingClientRect();
+      const rect2 = element.getBoundingClientRect();
+      verticalDistance = rect1.top - rect2.top;
+      horizontalDistance = rect1.left - rect2.left;
+    }
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
@@ -150,11 +153,16 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         verticalDistance = rect1.top - rect2.top;
         horizontalDistance = rect1.left - rect2.left;
       }
+
+      if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
+        mutationFlag = true;
+      }
     }
   });
 
   // Configure the observer to watch for attribute changes
   const observerConfig = {
+    childList: true,
     attributes: true, // Monitor attribute changes
     attributeFilter: ['style'], // Only observe changes to the 'style' attribute
   };
@@ -316,7 +324,6 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         }
       }
     }
-
 
     // if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Stretch) {
     //   const computedStyle = window.getComputedStyle(element);
