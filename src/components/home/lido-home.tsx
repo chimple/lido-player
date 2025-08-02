@@ -136,6 +136,7 @@ export class LidoHome {
       clearLocalStorage();
     });
   }
+
   @State() showDotsandbtn: boolean = false;
   componentDidLoad() {
     setTimeout(() => {
@@ -143,11 +144,11 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
+    // if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
       this.scaleNavbarContainer();
-    } else {
-      this.updateBackgroundImage();
-    }
+    // } else {
+    //   this.updateBackgroundImage();
+    // }
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
@@ -455,11 +456,8 @@ export class LidoHome {
       <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
-
         {/* Render navigation dots below the container */}
-
-        {this.showDotsandbtn && this.renderDots()}
-
+        {this.renderDots()}
         {/* Exit button */}
         {this.exitFlag && (
           <div class="lido-alert-parent">
