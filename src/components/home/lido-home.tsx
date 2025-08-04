@@ -300,6 +300,7 @@ export class LidoHome {
       if (nextbtn !== 'true') {
         rightbtn.style.visibility = 'hidden';
       } else {
+        rightbtn.style.pointerEvents = 'auto';
         rightbtn.style.visibility = 'visible';
       }
     }, 100);

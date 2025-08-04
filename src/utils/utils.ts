@@ -138,6 +138,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
         case 'nextBtn': {
+          targetElement.style.pointerEvents = 'none';
           validateObjectiveStatus();
           break;
         }
