@@ -138,7 +138,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
         case 'nextBtn': {
-          targetElement.style.pointerEvents = 'none';
+          const container = document.getElementById(LidoContainer) as HTMLElement;
+          if (container.getAttribute('is-continue-on-correct') !== 'true') {
+            targetElement.style.pointerEvents = 'none';
+          }
           validateObjectiveStatus();
           break;
         }
