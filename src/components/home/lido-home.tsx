@@ -86,7 +86,6 @@ export class LidoHome {
       dispatchGameCompletedEvent();
 
       this.currentContainerIndex = 0;
-      
     }
     // Reset the containers array to trigger a re-render
     this.containers = [...this.containers];
@@ -372,7 +371,7 @@ export class LidoHome {
       });
 
       navBar.style.width = window.outerWidth + 'px';
-    }, 100);
+    }, 700);
   }
 
   /**
