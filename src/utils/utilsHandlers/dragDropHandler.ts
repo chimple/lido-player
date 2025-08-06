@@ -403,6 +403,7 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
     const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
     const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
     dragElement.style.transition = 'transform 0.5s ease';
+   dragElement.style.transform = 'translate(0, 0)';
     if (cloneDragElement) {
       dragElement.style.transform = 'translate(0,0)';
       
@@ -511,16 +512,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   const container = document.getElementById(LidoContainer) as HTMLElement;
 if (!dropElement) {
-  dragElement.style.transition = 'transform 0.5s ease';
-  dragElement.style.transform = 'translate(0, 0)';
-  handleResetDragElement( dragElement,dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+    handleResetDragElement( dragElement,dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
   return;
 }
 const dropTabIndex = dropElement.getAttribute('tab-index');
 
 if ( dropHasDrag[dropTabIndex]?.isFull) {
-  dragElement.style.transition = 'transform 0.5s ease';
-  dragElement.style.transform = 'translate(0, 0)';
   handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
   return;
 }
@@ -666,7 +663,7 @@ if ( dropHasDrag[dropTabIndex]?.isFull) {
       }
     }
   }
-if (!dropElement) {
+if (!dropElement ) {
   handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
   return;
 }
