@@ -166,9 +166,9 @@ function getContainerXml(args) {
 			</lido-cell>
 				<!-- avatar -->
 			<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.408px,portrait.327px" width="landscape.311px,portrait.294px" x="landscape.85%, portrait.640px" y="landscape.43%, portrait.172px" aria-hidden="true" z="-13" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
-				<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"   src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+				<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"   src="/assets/images/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 				</lido-avatar>
-				<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bg-color="transparent" width="186px" height="20px" x="landscape.61px,portrait.103px" y="landscape.315px,portrait.353px" alt-text="{shadowImage}">
+				<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="/assets/images/Shadow.png" bg-color="transparent" width="186px" height="20px" x="landscape.61px,portrait.103px" y="landscape.315px,portrait.353px" alt-text="{shadowImage}">
 				</lido-image>
 			
 			</lido-cell>

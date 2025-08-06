@@ -151,7 +151,7 @@ function getContainerXml(args: RocketArgs) {
     
       <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disable-edit="true" tab-index="2" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.-60px, portrait.250px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
-        <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+        <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="/assets/images/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
         </lido-avatar>
       </lido-cell>
 

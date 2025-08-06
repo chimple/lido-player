@@ -33,12 +33,12 @@ export const PhonicTractor: StoryObj = {
 function getContainerXml(args) {
   return `
     <main>
-	<lido-container id="lido-container" appendToDropOnCompletion="true" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png"  bg-color="transparent" objective="${args.answer1},${args.answer2},${args.answer3}" height="100%" width="100%" visible="true" show-check="false" is-continue-on-correct="true" after-drop="false" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000';  b1.animation='placeToLeft 2s linear' ;  this.sleep='2000';" onEntry="this.justifyContent='space-around'; "  onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"   > 
+	<lido-container id="lido-container" appendToDropOnCompletion="true" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png"  bg-color="transparent" objective="${args.answer1},${args.answer2},${args.answer3}" height="100%" width="100%" visible="true" show-check="false" is-continue-on-correct="true" after-drop="false" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000';  b1.animation='placeToLeft 2s linear' ;  this.sleep='2000';" onEntry="this.justifyContent='space-around';"  onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"   > 
 	    <!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.576px" y="landscape.591px, portrait.236px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
-			<lido-avatar id="lido-avatar" disable-edit="true" visible="true"  height="462px"  width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+			<lido-avatar id="lido-avatar" disable-edit="true" visible="true"  height="462px"  width="356px" src="/assets/images/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 			</lido-avatar>
-			<lido-image id="image" disable-edit="true" value="image" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bg-color="transparent" width="186px" height="20px" x="landscape.7px, portrait.77px" y="landscape.305px, portrait.365px" alt-text="{shadowImage}">
+			<lido-image id="image" disable-edit="true" value="image" visible="true" src="/assets/images/Shadow.png" bg-color="transparent" width="186px" height="20px" x="landscape.7px, portrait.77px" y="landscape.305px, portrait.365px" alt-text="{shadowImage}">
 			</lido-image>
 		</lido-cell>
 		<!-- parent cell -->
@@ -51,12 +51,12 @@ function getContainerXml(args) {
 			<!-- tractor -->
 			<lido-cell layout="row" id="b1" visible="true" width="landscape.80%, portrait.849px" height="landscape.303px, portrait.30%" bg-color="transparent" onEntry=" alignItems='center';this.animation='rightToPlace 3s linear';" margin="landscape.200px 0px 60px 0px, portrait.192px -366px -318px -366px" >
 				<!-- tractor head -->
-				<lido-image id="img2" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_head.png" height="landscape.154px, portrait.154px" width="197px"  onEntry=""  margin="landscape.92px -17px 0px 73px, portrait.40px -157px 0px -62px">
+				<lido-image id="img2" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_head.png" height="landscape.154px, portrait.154px" width="197px"  onEntry=""  margin="landscape.140px -17px 0px 73px, portrait.70px -185px 0px -25px">
 				</lido-image>
 				<!-- drop and 1st trolley -->
-				<lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" margin="landscape.68px 97px 0px -41px, portrait.0px -142px 0px 151px">
+				<lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" margin="landscape.68px 97px 0px -41px, portrait.0px -50px 0px 151px">
 					<lido-text id="t1" type="drop" tab-index="2" bg-color="transparent" height="132px" width="132px" value="${args.answer1}" is-allow-only-one-drop="true" margin="-25px 0px 16px 0px" onEntry=" this.borderRadius='6px';"></lido-text>
-					<lido-image id="img4" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 0px" >
+					<lido-image id="img4" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px -25px 0px 0px" >
 					</lido-image>
 					
 				</lido-cell>
@@ -65,8 +65,8 @@ function getContainerXml(args) {
 				
 				<!-- drop and trolley -->
 					<lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" margin="landscape.68px 171px 0px -171px, portrait.0px 0px 0px 0px">
-						<lido-text id="t2" type="drop" bg-color="transparent" tab-index="3" height="132px" width="132px" value="${args.answer2}" is-allow-only-one-drop="true"  margin="landscape.-25px 0px 16px 0px, portrait.-25px 0px 16px 180px"  onEntry=" this.borderRadius='6px';"></lido-text>
-						<lido-image id="img6" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px -89px 0px 0px" >
+						<lido-text id="t2" type="drop" bg-color="transparent" tab-index="3" height="132px" width="132px" value="${args.answer2}" is-allow-only-one-drop="true" margin="landscape.-25px 0px 16px 5px, portrait.-25px -60px 16px 30px"  onEntry=" this.borderRadius='6px';"></lido-text>
+						<lido-image id="img6" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px"  margin="landscape.0px 0px 0px 0px, portrait.0px -105px 0px -5px" >
 						</lido-image>
 					</lido-cell>
 				
@@ -80,7 +80,7 @@ function getContainerXml(args) {
 				
 			</lido-cell>
 			<!-- options -->
-			<lido-cell layout="wrap" width="80%" height="150px" visible="true" bg-color="transparent" margin="landscape.-143px -701px 251px 0px, portrait.36px -102px -25px 0px">
+			<lido-cell layout="wrap" width="80%" height="150px" visible="true" delay-visible="3000" bg-color="transparent" margin="landscape.-143px -701px 251px 0px, portrait.36px -102px -25px 0px">
 				<lido-text id="option1" tab-index="5" width="132px"  height="132px" value="${args.option1}"  visible="true" string="${args.option1}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';this.borderRadius='10px';"  margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px"  border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png" onTouch=""  >
 				</lido-text>
 				<lido-text id="option2" tab-index="6" height="132px" width="132px" visible="true" value="${args.option2}" string="${args.option2}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';this.borderRadius='10px';"   margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png" onTouch="" >
