@@ -183,8 +183,8 @@ export class LidoText {
   @State() style: { [key: string]: string } = {};
 
   /**
-  * Delay in milliseconds to make the cell visible after mount.
-  */
+   * Delay in milliseconds to make the cell visible after mount.
+   */
   @Prop() delayVisible: string = '';
 
   /**
@@ -193,14 +193,14 @@ export class LidoText {
    */
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);
-    
+
     initEventsForElement(this.el, this.type);
     // only create span element if requested
     if (this.spanType === 'words' || this.spanType === 'letters') {
       this.addSpanToText();
     }
     if (this.showSpeakIcon) {
-      attachSpeakIcon(this.el, this.x, this.y);
+      attachSpeakIcon(this.el);
     }
   }
 

@@ -171,7 +171,7 @@ export class LidoWrap {
       this.el.classList.add('lido-flex');
     }
     if (this.showSpeakIcon) {
-      attachSpeakIcon(this.el, this.x, this.y);
+      attachSpeakIcon(this.el);
     }
   }
 

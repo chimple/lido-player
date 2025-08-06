@@ -136,6 +136,7 @@ export class LidoHome {
       clearLocalStorage();
     });
   }
+
   @State() showDotsandbtn: boolean = false;
   componentDidLoad() {
     setTimeout(() => {
@@ -143,11 +144,11 @@ export class LidoHome {
     }, 10);
     this.updateArrowVisibility();
 
-    if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
+    // if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
       this.scaleNavbarContainer();
-    } else {
-      this.updateBackgroundImage();
-    }
+    // } else {
+    //   this.updateBackgroundImage();
+    // }
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
@@ -299,6 +300,7 @@ export class LidoHome {
       if (nextbtn !== 'true') {
         rightbtn.style.visibility = 'hidden';
       } else {
+        rightbtn.style.pointerEvents = 'auto';
         rightbtn.style.visibility = 'visible';
       }
     }, 100);
@@ -343,6 +345,7 @@ export class LidoHome {
       }
     }
   };
+
   private scaleNavbarContainer() {
     setTimeout(() => {
       const navBar = document.querySelector('.lido-dot-container') as HTMLElement;
@@ -447,11 +450,8 @@ export class LidoHome {
       <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
-
         {/* Render navigation dots below the container */}
-
-        {this.showDotsandbtn && this.renderDots()}
-
+        {this.renderDots()}
         {/* Exit button */}
         {this.exitFlag && (
           <div class="lido-alert-parent">
@@ -460,8 +460,8 @@ export class LidoHome {
                 class="lido-alert-content"
                 visible="true"
                 layout="col"
-                width="720px"
-                height="360px"
+                width="340px"
+                height="210px"
                 bg-color="#fff"
                 border-radius="16px"
                 onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)';"
@@ -470,19 +470,19 @@ export class LidoHome {
                 <lido-text
                   visible="true"
                   string="Do you want to exit?"
-                  width="622px"
-                  height="57px"
+                  width="294px"
+                  height="38px"
                   class="popup-exit-text"
-                  font-size="40px"
+                  font-size="22px"
                   onEntry="this.margin-bottom =' -36px';"
                 ></lido-text>
-                <lido-cell visible="true" layout="row" width="80%" class="btn-cell">
+                <lido-cell visible="true" layout="row" width="294px" class="btn-cell">
                   <lido-text
                     visible="true"
                     string="EXIT"
-                    width="240px"
-                    height="105px"
-                    font-size="24px"
+                    width="92px"
+                    height="53px"
+                    font-size="16px"
                     margin="0px 50px 0px 0px"
                     class="popup-button"
                     onClick={() => this.popUpClick('exit')}
@@ -496,10 +496,10 @@ export class LidoHome {
                   <lido-text
                     visible="true"
                     string="KEEP PLAYING"
-                    width="280px"
-                    height="105px"
-                    font-size="24px"
-                    class=" popup-button"
+                    width="155px"
+                    height="53px"
+                    font-size="16px"
+                    class="popup-button"
                     onClick={() => this.popUpClick('cancel')}
                     borderRadius="16px"
                     onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";'

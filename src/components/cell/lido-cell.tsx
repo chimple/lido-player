@@ -1,5 +1,5 @@
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import {attachSpeakIcon, handlingChildElements, initEventsForElement, setVisibilityWithDelay, parseProp, speakIcon } from '../../utils/utils';
+import { attachSpeakIcon, handlingChildElements, initEventsForElement, setVisibilityWithDelay, parseProp, speakIcon } from '../../utils/utils';
 import { max } from 'mathjs';
 
 /**
@@ -212,11 +212,10 @@ export class LidoCell {
    * It initializes events for the column based on the provided type.
    */
   componentDidLoad() {
-
     setVisibilityWithDelay(this.el, this.delayVisible);
 
     initEventsForElement(this.el, this.type);
-    
+
     handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength);
     // Select all direct child elements of the component
     // const slotElements = this.el.querySelectorAll('.lido-random > *');
@@ -264,7 +263,7 @@ export class LidoCell {
       }
     }, 50);
     if (this.showSpeakIcon) {
-      attachSpeakIcon(this.el, this.x, this.y);
+      attachSpeakIcon(this.el);
     }
   }
 
@@ -302,8 +301,8 @@ export class LidoCell {
         ? parseProp(this.layout, orientation) === 'wrap'
           ? 'grid'
           : parseProp(this.layout, orientation) === 'pos' || parseProp(this.layout, orientation) === 'random'
-            ? 'block'
-            : 'flex'
+          ? 'block'
+          : 'flex'
         : 'none',
       'flexDirection': this.flexDirection ? parseProp(this.flexDirection, orientation) : '',
       'alignItems': this.alignItems ? parseProp(this.alignItems, orientation) : '',
