@@ -510,6 +510,21 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   const container = document.getElementById(LidoContainer) as HTMLElement;
+if (!dropElement) {
+  dragElement.style.transition = 'transform 0.5s ease';
+  dragElement.style.transform = 'translate(0, 0)';
+  handleResetDragElement( dragElement,dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+  return;
+}
+const dropTabIndex = dropElement.getAttribute('tab-index');
+
+if ( dropHasDrag[dropTabIndex]?.isFull) {
+  dragElement.style.transition = 'transform 0.5s ease';
+  dragElement.style.transform = 'translate(0, 0)';
+  handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
+  return;
+}
+
   const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
   if (isAllowOnlyCorrect) {
   if (!dropElement) {
