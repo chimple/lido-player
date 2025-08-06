@@ -200,7 +200,6 @@ export class LidoSlideFill {
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);
     initEventsForElement(this.el, this.type);
-
     this.updateFill();
     this.addRulerNumbers();
   }

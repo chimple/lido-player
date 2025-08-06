@@ -618,6 +618,10 @@ export namespace Components {
          */
         "tabIndex": number;
         /**
+          * Defines the type of the component, which can be used for conditional logic or styling purposes.
+         */
+        "type": string;
+        /**
           * Value associated with the text element, typically used for internal logic or tracking.
          */
         "value": string;
@@ -2452,6 +2456,10 @@ declare namespace LocalJSX {
           * Tab index for keyboard navigation.
          */
         "tabIndex"?: number;
+        /**
+          * Defines the type of the component, which can be used for conditional logic or styling purposes.
+         */
+        "type"?: string;
         /**
           * Value associated with the text element, typically used for internal logic or tracking.
          */
