@@ -79,7 +79,6 @@ export const slideAnimation = async () => {
   container.style.pointerEvents = '';
 };
 
-
 export function slidingWithScaling(element: HTMLElement): void {
   let overlapElement = false;
   let isDragging = false;
@@ -174,9 +173,10 @@ export function slidingWithScaling(element: HTMLElement): void {
       dy = (event.touches[0].clientY - startY) / parentElementScale;
     }
 
-    // Calculate the new position considering scaling
-    const newLeft = initialX + dx;
-    const newTop = initialY + dy;
+    const speedMultiplier = 1.5;
+
+    const newLeft = initialX + dx * speedMultiplier;
+    const newTop = initialY + dy * speedMultiplier;
 
     // Get the dimensions and scale-corrected position of the container and element
     const containerRect = parentElement.getBoundingClientRect();
@@ -210,6 +210,8 @@ export function slidingWithScaling(element: HTMLElement): void {
         const parent2 = mostOverlappedElement.parentElement;
 
         if (parent1 && parent2) {
+          mostOverlappedElement.style.transform = 'translate(0, 0)';
+          mostOverlappedElement.style.transition = '';
           // Temporarily detach both elements
           const elementPlaceholder = document.createComment('element-placeholder');
           const overlappedPlaceholder = document.createComment('overlapped-placeholder');
@@ -217,8 +219,10 @@ export function slidingWithScaling(element: HTMLElement): void {
           parent2.replaceChild(overlappedPlaceholder, mostOverlappedElement);
           // Swap the elements
           parent1.replaceChild(mostOverlappedElement, elementPlaceholder);
+
           parent2.replaceChild(element, overlappedPlaceholder);
           element.style.transform = 'translate(0, 0)';
+          element.style.transition = '';
 
           // Recalculate starting points for the swapped element
           startX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
