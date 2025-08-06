@@ -1,7 +1,11 @@
+import { AudioPlayer } from '../audioPlayer';
 import { LidoContainer } from '../constants';
 import { executeActions, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
+import { stopHighlightForSpeakingElement } from './highlightHandler';
 
 export async function handleElementClick(element: HTMLElement) {
+  AudioPlayer.getI().play(element);
+  stopHighlightForSpeakingElement(element);
   element.style.animation = 'none';
   handleFloatElementPosition(element);
   const container = document.getElementById(LidoContainer) as HTMLElement;

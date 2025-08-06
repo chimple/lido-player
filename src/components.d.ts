@@ -1220,6 +1220,14 @@ export namespace Components {
     }
     interface LidoSlideFill {
         /**
+          * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor": string;
+        /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius": string;
+        /**
           * Delay in milliseconds to make the cell visible after mount.
          */
         "delayVisible": string;
@@ -1236,9 +1244,17 @@ export namespace Components {
          */
         "fillDirection": string;
         /**
+          * CSS height of the component (e.g., "300px", "100%")
+         */
+        "height": string;
+        /**
           * Unique identifier for the component instance
          */
         "id": string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "margin": string;
         /**
           * Maximum value shown on the ruler (used for number generation)
          */
@@ -1252,6 +1268,14 @@ export namespace Components {
          */
         "numberType": string;
         /**
+          * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+         */
+        "onEntry": string;
+        /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding": string;
+        /**
           * Enables slider interaction (currently unused in logic, can be used to toggle slider UI)
          */
         "slider": boolean;
@@ -1260,9 +1284,29 @@ export namespace Components {
          */
         "src": string;
         /**
+          * Defines the type of the component, which can be used for conditional logic or specific styling.
+         */
+        "type": string;
+        /**
+          * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
+         */
+        "visible": boolean | string;
+        /**
           * CSS width of the component (e.g., "300px", "100%")
          */
         "width": string;
+        /**
+          * X-axis (horizontal) position of the image within its container (CSS value, e.g., '10px', '5vw').
+         */
+        "x": string;
+        /**
+          * Y-axis (vertical) position of the image within its container (CSS value, e.g., '10px', '5vh').
+         */
+        "y": string;
+        /**
+          * Z-index for stacking order of the image relative to other elements.
+         */
+        "z": string;
     }
     /**
      * @component LidoText
@@ -3011,6 +3055,14 @@ declare namespace LocalJSX {
     }
     interface LidoSlideFill {
         /**
+          * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
+         */
+        "bgColor"?: string;
+        /**
+          * CSS filter to apply border radius to the image. Example: '10px' for  images.
+         */
+        "borderRadius"?: string;
+        /**
           * Delay in milliseconds to make the cell visible after mount.
          */
         "delayVisible"?: string;
@@ -3027,9 +3079,17 @@ declare namespace LocalJSX {
          */
         "fillDirection"?: string;
         /**
+          * CSS height of the component (e.g., "300px", "100%")
+         */
+        "height"?: string;
+        /**
           * Unique identifier for the component instance
          */
         "id"?: string;
+        /**
+          * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "margin"?: string;
         /**
           * Maximum value shown on the ruler (used for number generation)
          */
@@ -3043,6 +3103,14 @@ declare namespace LocalJSX {
          */
         "numberType"?: string;
         /**
+          * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+         */
+        "onEntry"?: string;
+        /**
+          * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+         */
+        "padding"?: string;
+        /**
           * Enables slider interaction (currently unused in logic, can be used to toggle slider UI)
          */
         "slider"?: boolean;
@@ -3051,9 +3119,29 @@ declare namespace LocalJSX {
          */
         "src"?: string;
         /**
+          * Defines the type of the component, which can be used for conditional logic or specific styling.
+         */
+        "type"?: string;
+        /**
+          * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
+         */
+        "visible"?: boolean | string;
+        /**
           * CSS width of the component (e.g., "300px", "100%")
          */
         "width"?: string;
+        /**
+          * X-axis (horizontal) position of the image within its container (CSS value, e.g., '10px', '5vw').
+         */
+        "x"?: string;
+        /**
+          * Y-axis (vertical) position of the image within its container (CSS value, e.g., '10px', '5vh').
+         */
+        "y"?: string;
+        /**
+          * Z-index for stacking order of the image relative to other elements.
+         */
+        "z"?: string;
     }
     /**
      * @component LidoText
