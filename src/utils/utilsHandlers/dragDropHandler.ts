@@ -410,6 +410,7 @@ export function handleResetDragElement(dragElement: HTMLElement,dropElement: HTM
     const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
     const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
     dragElement.style.transition = 'transform 0.5s ease';
+   dragElement.style.transform = 'translate(0, 0)';
     if (cloneDragElement) {
       dragElement.style.transform = 'translate(0,0)';
       
@@ -517,6 +518,17 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   const container = document.getElementById(LidoContainer) as HTMLElement;
+if (!dropElement) {
+    handleResetDragElement( dragElement,dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+  return;
+}
+const dropTabIndex = dropElement.getAttribute('tab-index');
+
+if ( dropHasDrag[dropTabIndex]?.isFull) {
+  handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
+  return;
+}
+
   const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
   if (isAllowOnlyCorrect) {
   if (!dropElement) {
@@ -658,7 +670,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
     }
   }
-if (!dropElement) {
+if (!dropElement ) {
   handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData,dragSelectedData,dropSelectedData);
   return;
 }
