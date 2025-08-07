@@ -552,7 +552,8 @@ export function convertUrlToRelative(url: string): string {
   if (url?.startsWith('http') || url?.startsWith('blob')) {
     return url;
   } else if (baseUrl) {
-    return baseUrl + url;
+    const newUrl = !url.startsWith('/') ? url : url.substring(1);
+    return baseUrl + (baseUrl.endsWith('/') ? newUrl : '/' + newUrl);
   } else {
     return getAssetPath(url);
   }

@@ -1,5 +1,5 @@
 import { Component, h, Host, Prop, State, Element, Watch } from '@stencil/core';
-import { convertUrlToRelative, setVisibilityWithDelay } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, parseProp, setVisibilityWithDelay } from '../../utils/utils';
 import * as math from 'mathjs';
 
 @Component({
@@ -17,6 +17,54 @@ export class LidoSlideFill {
    * CSS width of the component (e.g., "300px", "100%")
    */
   @Prop() width: string;
+
+  /**
+   * CSS height of the component (e.g., "300px", "100%")
+   */
+  @Prop() height: string;
+
+  /**
+   * X-axis (horizontal) position of the image within its container (CSS value, e.g., '10px', '5vw').
+   */
+  @Prop() x: string;
+
+  /**
+   * Y-axis (vertical) position of the image within its container (CSS value, e.g., '10px', '5vh').
+   */
+  @Prop() y: string;
+
+  /**
+   * Z-index for stacking order of the image relative to other elements.
+   */
+  @Prop() z: string;
+
+  /**
+   * Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').
+   */
+  @Prop() bgColor: string;
+
+  /**
+   * Controls the visibility of the image component. If `true`, the image is visible; otherwise, it is hidden.
+   */
+  @Prop() visible: boolean | string;
+
+  /**
+   * CSS margin value applied to each child element inside the container.
+   * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() margin: string;
+
+  /**
+   * CSS padding value applied to each child element inside the container.
+   * Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+   */
+  @Prop() padding: string = '';
+
+  /**
+   * CSS filter to apply border radius to the image.
+   * Example: '10px' for  images.
+   */
+  @Prop() borderRadius: string = '0px';
 
   /**
    * Fill amount to display inside the SVG rect.
@@ -63,11 +111,29 @@ export class LidoSlideFill {
   @Prop() fillDirection: string;
 
   /**
+   * Defines the type of the component, which can be used for conditional logic or specific styling.
+   */
+  @Prop() type: string = '';
+
+  /**
+   * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+   */
+  @Prop() onEntry: string = '';
+
+  /**
    * Internal state to hold the SVG content after fetching and processing
    */
   @State() svgContent: string = '';
 
+  /**
+   * Reference to the HTML element representing this `lido-slide-fill` component.
+   */
   @Element() el: HTMLElement;
+
+  /**
+   * Stores the dynamic style properties for the component, allowing runtime updates to styling.
+   */
+  @State() style: { [key: string]: string };
 
   /**
    * Delay in milliseconds to make the cell visible after mount.
@@ -77,8 +143,21 @@ export class LidoSlideFill {
   private originalHeight: number = null;
   private originalY: number = null;
 
+  /**
+   * Lifecycle method that runs before the component is rendered.
+   * Initializes styles and sets up event listeners for resize and load events.
+   */
   async componentWillLoad() {
     await this.renderSVG();
+    this.updateStyles();
+
+    window.addEventListener('resize', this.updateStyles.bind(this)); // Update on screen rotation
+    window.addEventListener('load', this.updateStyles.bind(this)); // Update on screen rotation
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateStyles.bind(this));
+    window.removeEventListener('load', this.updateStyles.bind(this));
   }
 
   @Watch('src')
@@ -119,10 +198,28 @@ export class LidoSlideFill {
   }
 
   componentDidLoad() {
-     setVisibilityWithDelay(this.el, this.delayVisible);
-    
+    setVisibilityWithDelay(this.el, this.delayVisible);
+    initEventsForElement(this.el, this.type);
     this.updateFill();
     this.addRulerNumbers();
+  }
+
+  updateStyles() {
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      height: parseProp(this.height, orientation),
+      width: parseProp(this.width, orientation),
+      backgroundColor: parseProp(this.bgColor, orientation),
+      top: parseProp(this.y, orientation),
+      left: parseProp(this.x, orientation),
+      zIndex: this.z,
+      display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: parseProp(this.margin, orientation),
+      padding: parseProp(this.padding, orientation),
+      borderRadius: this.borderRadius,
+    };
   }
 
   @Watch('fill')
@@ -243,11 +340,13 @@ export class LidoSlideFill {
         fill={this.fill}
         fillDirection={this.fillDirection}
         slider={this.slider}
-        style={{ width: this.width }}
+        style={this.style}
         min={this.min}
         max={this.max}
         division={this.division}
         numberType={this.numberType}
+        onEntry={this.onEntry}
+        type={this.type}
       >
         <div innerHTML={this.svgContent} class="svg-element"></div>
       </Host>
