@@ -74,7 +74,7 @@ function getContainerXml(args) {
 				${trolleyCells}
 			</lido-cell>
 			<!-- options -->
-			<lido-cell layout="landscape.row, portrait.wrap" width="80%" height="landscpe.275px, portrait.150px" visible="true" delay-visible="3000" bg-color="transparent" onEntry="this.gap=35px; this.justify-content='center';" >
+			<lido-cell layout="landscape.row,portrait.wrap" width="80%" height="landscpe.275px, portrait.150px" visible="true" delay-visible="3000" bg-color="transparent" onEntry="this.gap=35px; this.justify-content='center';" >
 				${optionCells}				
 			</lido-cell>	
 		</lido-cell>	
