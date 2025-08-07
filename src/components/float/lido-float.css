@@ -9,10 +9,9 @@
 
 @keyframes float-up {
     from {
-        top: 900px;
+        top: 150vh;
     }
     to {
         top: -400px;
-        /* transform: translateY(-120vh); */
     }
 }

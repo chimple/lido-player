@@ -15,6 +15,7 @@
 | `id`           | `id`            | Unique identifier for the text element.                                                                 | `string`  | `''`        |
 | `onEntry`      | `on-entry`      | Event handler triggered when the text component is entered (useful for animations or logic on entry).   | `string`  | `''`        |
 | `tabIndex`     | `tab-index`     | Tab index for keyboard navigation.                                                                      | `number`  | `0`         |
+| `type`         | `type`          | Defines the type of the component, which can be used for conditional logic or styling purposes.         | `string`  | `undefined` |
 | `value`        | `value`         | Value associated with the text element, typically used for internal logic or tracking.                  | `string`  | `''`        |
 | `visible`      | `visible`       | Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden. | `boolean` | `false`     |
 | `width`        | `width`         | The width of the float element (CSS value, e.g., '100px', '50%').                                       | `string`  | `undefined` |
