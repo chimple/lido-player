@@ -476,7 +476,7 @@ export class LidoHome {
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
                 <lido-text
                   visible="true"
-                  string="Do you want to exit?"
+                  string="Quer sair?"
                   width="294px"
                   height="38px"
                   class="popup-exit-text"
@@ -486,7 +486,7 @@ export class LidoHome {
                 <lido-cell visible="true" layout="row" width="294px" class="btn-cell">
                   <lido-text
                     visible="true"
-                    string="EXIT"
+                    string="Sair"
                     width="92px"
                     height="53px"
                     font-size="16px"
@@ -502,7 +502,7 @@ export class LidoHome {
                   ></lido-text>
                   <lido-text
                     visible="true"
-                    string="KEEP PLAYING"
+                    string="Continuar a jogar"
                     width="155px"
                     height="53px"
                     font-size="16px"
