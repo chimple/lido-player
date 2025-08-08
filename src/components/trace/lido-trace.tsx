@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer,speakIcon, setVisibilityWithDelay } from '../../utils/utils';
+import { convertUrlToRelative, executeActions, triggerNextContainer,speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
 import { LidoContainer, TraceMode } from '../../utils/constants';
 
 // Enum for different tracing modes
@@ -123,6 +123,8 @@ export class LidoTrace {
 
   @Element() el!: HTMLElement;
 
+  @State() style: { [key: string]: string } = {};
+
   @State() fileIndex: number = -1;
   @State() isDragging: boolean = false;
   @State() activePointerId: number | null = null;
@@ -172,13 +174,19 @@ export class LidoTrace {
   }
 
   componentWillLoad() {
+
+    this.updateStyles();
+
+    window.addEventListener('resize', this.updateStyles.bind(this));
+    window.addEventListener('load', this.updateStyles.bind(this));
+
     this.svgUrls = this.svgSource.split(';').map(s => s.trim());
     this.currentSvgIndex = 0;
     this.initializeSVG();
-     if(this.showSpeakIcon) {
+    if(this.showSpeakIcon) {
       speakIcon(this.el);
-       this.el.append(speakIcon(this.el));
-           }
+      this.el.append(speakIcon(this.el));
+    }
   }
 
   /** ───────────────────────────────────────────────────────────
@@ -801,17 +809,20 @@ export class LidoTrace {
     }
   }
 
+  updateStyles() {
+      const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+      this.style = {
+        'height': parseProp(this.height, orientation),
+        'width': parseProp(this.width, orientation),
+        'top': parseProp(this.y, orientation),
+        'left': parseProp(this.x, orientation),
+        'zIndex': this.z,
+        'position': 'absolute',
+      };
+    }
+
 
   render() {
-    const style = {
-      height: this.height,
-      width: this.width,
-      top: this.y,
-      left: this.x,
-      zIndex: this.z,
-      // position: 'absolute' as const,
-    };
-
     return (
 
       <Host
@@ -819,12 +830,12 @@ export class LidoTrace {
         id={this.id}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
-        style={style}
+        style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
       >
-        <div style={{ height: this.height, width: this.width }} id="lido-svgContainer"></div>
+        <div style={this.style} id="lido-svgContainer"></div>
       </Host>
     );
   }

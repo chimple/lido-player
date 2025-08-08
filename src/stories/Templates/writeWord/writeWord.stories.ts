@@ -101,8 +101,8 @@ function getContainerXml(args : WriteWordArgs) {
                     </lido-cell>
 
                     <!-- trace element -->
-                    <lido-cell layout="pos" id="pos2" disable-edit="true" value="pos2" height="landscape.500px, portrait.500px" width="landscape.550px, portrait.600px" x="landscape.530px, portrait.175px" y="landscape.330px, portrait.475px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="trace1.visibility='visible'; this.flex-shrink='0';">
-                        <lido-trace id="trace1" animationTrace="true" highlightTextId="txt1" tabIndex="2" value="a" visible="true" svg-source="${traceImage1}; ${traceImage2}; ${traceImage3}" onCorrect="" mode="${traceMode}" z="1" x="25px" y="25px" width="495px" height="495px" altText="{backgroundImage}">
+                    <lido-cell layout="pos" id="pos2" disable-edit="true" value="pos2" height="landscape.500px, portrait.500px" width="landscape.550px, portrait.550px" x="landscape.510px, portrait.75px" y="landscape.305px, portrait.475px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="trace1.visibility='visible'; this.flex-shrink='0';">
+                        <lido-trace id="trace1" animationTrace="true" highlightTextId="txt1" tabIndex="2" value="a" visible="true" svg-source="${traceImage1}; ${traceImage2}; ${traceImage3}" onCorrect="" mode="${traceMode}" z="1" x="25px" y="25px" width="landscape.500px, portrait.675px" height="landscape.500px, portrait.500px" altText="{backgroundImage}">
                         </lido-trace>
                     </lido-cell>
             </lido-container>

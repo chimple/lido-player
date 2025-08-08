@@ -80,7 +80,7 @@ function getContainerXml(args: WriteCardArgs){
                     </lido-cell>
 
                     <lido-cell layout="col" visible="true" width="landscape.725px, portrait.725px"  height="landscape.725px, portrait.725px" bg-color="white"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" margin="landscape.0px 0px 0px 0px, portrait.0px 0px 250px 0px">
-                        <lido-trace id="image2" tabIndex="2" value="a" visible="true" svg-source="${traceImage}" onCorrect=""  mode="${traceMode}" z="1" x="" y="" width="700px" height="700px" onEntry="" alt-text="{backgroundImage}">
+                        <lido-trace id="image2" tabIndex="2" value="a" visible="true" svg-source="${traceImage}" onCorrect=""  mode="${traceMode}" z="1" x="landscape.225px, portrait.55px" y="landscape.65px, portrait.175px" width="landscape.700px,portrait.700px" height="landscape.700px,portrait.700px" onEntry="" alt-text="{backgroundImage}">
                         </lido-trace>
                     </lido-cell>
 
