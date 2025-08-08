@@ -189,6 +189,11 @@ export class LidoTrace {
     }
   }
 
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateStyles.bind(this));
+    window.removeEventListener('load', this.updateStyles.bind(this));
+  }
+
   /** ───────────────────────────────────────────────────────────
    *  Idle‑timer helpers
    *  ─────────────────────────────────────────────────────────── */
