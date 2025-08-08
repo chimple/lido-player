@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
-type flashCardargs = {
+type flashCardArgs = {
     
     flashCardImage: string[];
     frontSlot: 'front' | 'back';
@@ -10,8 +10,8 @@ type flashCardargs = {
     backText: string;
 };
 
-const meta: Meta<flashCardargs> = {
-    title: 'Templates/flashCard',
+const meta: Meta<flashCardArgs> = {
+    title: 'Templates/writeCard',
     argTypes: {
         
         flashCardImage: { control: 'file', name: 'Flash Card Image URL', multiple: true },
@@ -40,13 +40,13 @@ export const flashCard: StoryObj = {
         backText: "I am a colour. I am mentioned in the poem along with Yellow and Blue. My name starts with the letter 'R'. Who am I?",
     },
 
-    render: (args : flashCardargs) => {
+    render: (args : flashCardArgs) => {
         const xml = getContainerXml(args);
         return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
     }
 }
 
-function getContainerXml(args: flashCardargs){
+function getContainerXml(args: flashCardArgs){
    
     const flashCardImage = args.flashCardImage[0];
     const frontSlot = args.frontSlot;

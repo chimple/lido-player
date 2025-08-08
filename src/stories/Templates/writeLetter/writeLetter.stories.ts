@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
-type WriteCardArgs = {
+type WriteLetterArgs = {
     traceImage: string[];
     traceMode: 'noFlow' | 'showFlow' | 'freeTrace' | 'blindTracing' | 'blindFreeTrace';
     flashCardImage: string[];
@@ -11,8 +11,8 @@ type WriteCardArgs = {
     backText: string;
 };
 
-const meta: Meta<WriteCardArgs> = {
-    title: 'Templates/writeCard',
+const meta: Meta<WriteLetterArgs> = {
+    title: 'Templates/writeLetter',
     argTypes: {
         traceImage: { control: 'file', name: 'Trace Image URL', multiple: true },
         traceMode: { control: 'select', options: ['noFlow', 'showFlow', 'freeTrace', 'blindTracing', 'blindFreeTrace'], name: 'Trace Mode' },
@@ -43,13 +43,13 @@ export const WriteCard: StoryObj = {
         backText: "I am a colour. I am mentioned in the poem along with Yellow and Blue. My name starts with the letter 'R'. Who am I?",
     },
 
-    render: (args : WriteCardArgs) => {
+    render: (args : WriteLetterArgs) => {
         const xml = getContainerXml(args);
         return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
     }
 }
 
-function getContainerXml(args: WriteCardArgs){
+function getContainerXml(args: WriteLetterArgs){
     const traceImage = args.traceImage[0];
     const traceMode = args.traceMode;
     const flashCardImage = args.flashCardImage[0];
