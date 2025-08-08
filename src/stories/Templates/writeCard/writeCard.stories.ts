@@ -32,7 +32,7 @@ const meta: Meta<writeCardArgs> = {
 
 export default meta;
 
-export const flashCard: StoryObj = {
+export const writeCard: StoryObj = {
     args: {
         frontSlot: "front",
         backSlot: "back",
