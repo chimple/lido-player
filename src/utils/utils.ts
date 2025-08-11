@@ -220,11 +220,27 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       }
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
+      dummyElement.style.width = element.style.width;
+      dummyElement.style.height = element.style.height;
+      dummyElement.style.margin = element.style.margin;
+      const keyframes = `
+      @keyframes widthDecrease {
+        0% { width: ${dragElement.style.width}; height: ${dragElement.style.height}; margin: ${dragElement.style.margin}; }
+        100% { width: 0px; height: 0px; margin: 0px;}
+      }
+    `;
       dropElement.parentElement.append(element);
-      console.log(dropElement, dropElement.parentElement);
-      // dropElement.style.position = 'relative';
+      const styleSheet = document.styleSheets[0];
+      styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+      dummyElement.style.animation = `widthDecrease 0.5s`;
       dragElement.style.position = 'absolute';
       dragElement.style.zIndex = '1';
+
+      dummyElement.addEventListener('animationend', () => {
+        dummyElement.style.width = '0px';
+        dummyElement.style.height = '0px';
+        dummyElement.style.margin = '0px';
+      })
 
       const dropRect = dropElement.getBoundingClientRect();
       const dragRect = dragElement.getBoundingClientRect();
