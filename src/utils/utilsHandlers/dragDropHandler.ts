@@ -639,6 +639,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
 
       // Check for overlaps and highlight only the most overlapping element
+      if (dropElement && !dropHasDrag[dropTabIndex]?.isFull) {
       let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
       const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
 
@@ -672,7 +673,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         });
         return;
       }
-    }
+      }}
   }
   if (!dropElement) {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
