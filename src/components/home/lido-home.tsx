@@ -254,6 +254,7 @@ export class LidoHome {
       'lido-cell': <lido-cell {...props}>{children}</lido-cell>,
       'lido-slide-fill': <lido-slide-fill {...props}>{children}</lido-slide-fill>,
       'lido-float': <lido-float {...props}>{children}</lido-float>,
+      'lido-keyboard': <lido-keyboard {...props}>{children}</lido-keyboard>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning

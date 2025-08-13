@@ -212,35 +212,43 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
   if (isAppend || isInfinite) {
     setTimeout(() => {
       dragElement.style.transform = 'translate(0,0)';
-      dragElement.style.transition = 'none';
+      dragElement.style.transition = '';
 
       let dummyElement = document.createElement('div') as HTMLElement;
       if (isInfinite) {
         dummyElement = cloneElementWithComputedStyles(dragElement);
+        dummyElement.classList.remove('dropped');
+        dummyElement.removeAttribute('drop-to');
+        dummyElement.removeAttribute('drop-time');
       }
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
-      dummyElement.style.width = element.style.width;
-      dummyElement.style.height = element.style.height;
-      dummyElement.style.margin = element.style.margin;
+
       const keyframes = `
       @keyframes widthDecrease {
         0% { width: ${dragElement.style.width}; height: ${dragElement.style.height}; margin: ${dragElement.style.margin}; }
         100% { width: 0px; height: 0px; margin: 0px;}
       }
     `;
+
+      if (!isInfinite) {
+        dummyElement.style.width = element.style.width;
+        dummyElement.style.height = element.style.height;
+        dummyElement.style.margin = element.style.margin;
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+        dummyElement.style.animation = `widthDecrease 0.5s`;
+        dummyElement.addEventListener('animationend', () => {
+          dummyElement.style.width = '0px';
+          dummyElement.style.height = '0px';
+          dummyElement.style.margin = '0px';
+        });
+      }
+
       dropElement.parentElement.append(element);
-      const styleSheet = document.styleSheets[0];
-      styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-      dummyElement.style.animation = `widthDecrease 0.5s`;
+
       dragElement.style.position = 'absolute';
       dragElement.style.zIndex = '1';
-
-      dummyElement.addEventListener('animationend', () => {
-        dummyElement.style.width = '0px';
-        dummyElement.style.height = '0px';
-        dummyElement.style.margin = '0px';
-      })
 
       const dropRect = dropElement.getBoundingClientRect();
       const dragRect = dragElement.getBoundingClientRect();
@@ -267,8 +275,6 @@ function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
   clone = clone.firstChild as HTMLElement;
   clone.setAttribute('height', originalEl.style.height);
   clone.setAttribute('width', originalEl.style.width);
-  console.log('src : ', originalEl.getAttribute('src'));
-
   return clone;
 }
 
