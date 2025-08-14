@@ -1,4 +1,8 @@
 <main>
+<lido-container objective="C" is-continue-on-correct="true" drop-action="infinite-drop" >
+	<lido-text visible="true" string="Drag the letters to the correct boxes." font-family="'Baloo Bhai 2'" font-size="36px" bg-color="transparent" margin="0 0 20px 0" type="drop"></lido-text>
+	<lido-keyboard visible="true" keys="A,B-disable,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,Space,X,Y,Z" type="click" width="1000px" height="300px" keyboard-input="true"></lido-keyboard>
+</lido-container>
 
 <lido-container  id="lido-container" show-drop-border="false" tabIndex="1" is-continue-on-correct="true" objective="i1,i2" bgImage="" bgColor="grey" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="false" visible="true">
     	<lido-image  id="img1" disableEdit="true"  visible="true" width="landscape.68%,portrait.134%" margin="landscape.-5px 0px 188px,portrait.-5px 0px 188px -133px" height="landscape.59%,portrait.53%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/puzzles-asset/gaezzle_bg.jpg" z="0"  onEntry="this.backgroundImage='none';" > 
