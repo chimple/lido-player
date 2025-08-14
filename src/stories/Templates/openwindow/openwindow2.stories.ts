@@ -11,7 +11,6 @@ type OpenWindowArgs = {
   objective: string;
   heading: string;
   backgroundImage: string[];
-  letterBackgroundImage: string[];
   choice1Text: string;
   choice1ImageUrl: string[];
   choice2Text: string;
@@ -19,12 +18,11 @@ type OpenWindowArgs = {
 };
 
 const meta: Meta<OpenWindowArgs> = {
-  title: 'Templates/OpenWindowUI',
+  title: 'Templates/OpenWindowUI2',
   argTypes: {
     objective: { control: 'text' },
     heading: { control: 'text' },
     backgroundImage: { control: 'file', name: 'Background Image URL', multiple: true },
-    letterBackgroundImage: { control: 'file', name: 'Letter Background Image URL', multiple: true },
     choice1Text: { control: 'text', name: 'Choice 1 Text' },
     choice1ImageUrl: { control: 'file', name: 'Choice 1 Image URL', multiple: true },
     choice2Text: { control: 'text', name: 'Choice 2 Text' },
@@ -34,7 +32,6 @@ const meta: Meta<OpenWindowArgs> = {
     objective: 'city',
     heading: 'CITY',
     backgroundImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/Spring.png'],
-    letterBackgroundImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/letter_bg.png'],
     choice1Text: 'city',
     choice1ImageUrl: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/city.png'],
     choice2Text: 'sun',
@@ -72,17 +69,6 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
     },
   ];
 
-  const headingLettersXml = args.heading
-    .split('')
-    .map(
-      (char, i) => `
-        <lido-text id="heading${i + 1}" tab-index="${i + 2}" flexible-width="false" visible="true" border-image="${args.letterBackgroundImage}" bg-color="transparent" width="180px" height="210px" string="${char}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
-        onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
-        </lido-text>
-      `,
-    )
-    .join('\n');
-
   const choicesXml = choices
     .map(
       choice => `
@@ -94,21 +80,15 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
     )
     .join('\n');
 
-  const speakLettersSequence = args.heading
-    .split('')
-    .map((_, i) => `heading${i + 1}.speak='true'; this.sleep='500';`)
-    .join(' ');
-  const speakSequence = `heading0.speak='true'; this.sleep='800'; ${speakLettersSequence}`;
+  const speakSequence = `heading.speak='true'; this.sleep='800';`;
 
   return `
   <main>
     <lido-container id="lido-container" tab-index="1" bg-image="${args.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
-      <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="this.gap='45px';">
-        <lido-cell layout="row" visible="false">
-          <lido-text id="heading0" string="${args.objective}">
-          </lido-text>
-        </lido-cell>
-        ${headingLettersXml}
+      <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="">
+        <lido-text id="heading" tab-index="2" visible="true" border-image="" bg-color="transparent" width="350px" height="210px" string="${args.heading}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
+        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
+        </lido-text>
 		  </lido-cell>
       <lido-cell layout="row" visible="true" width="75%" height="25%" bg-color="transparent" margin="5%">
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.620px, portrait.270px" y="landscape.440px, portrait.1200px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.padding-right=100px">
@@ -118,16 +98,14 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
           </lido-avatar>
         </lido-cell>
         ${choicesXml}
-      </lido-cell>
+      	</lido-cell>
     </lido-container>
 
     <lido-container id="lido-container" tab-index="1" bg-image="${args.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
-      <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="this.gap='45px';">
-        <lido-cell layout="row" visible="false">
-          <lido-text id="heading0" string="${args.objective}">
-          </lido-text>
-        </lido-cell>
-        ${headingLettersXml}
+      <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="">
+        <lido-text id="heading" tab-index="2" visible="true" border-image="" bg-color="transparent" width="350px" height="210px" string="${args.heading}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
+        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
+        </lido-text>
 		  </lido-cell>
       <lido-cell layout="row" visible="true" width="75%" height="25%" bg-color="transparent" margin="5%">
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.620px, portrait.270px" y="landscape.440px, portrait.1200px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.padding-right=100px">
@@ -137,8 +115,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
           </lido-avatar>
         </lido-cell>
         ${choicesXml}
-      </lido-cell>
+      	</lido-cell>
     </lido-container>
-  </main>
-  `;
+  </main>`;
 }

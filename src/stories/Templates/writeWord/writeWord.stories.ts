@@ -3,36 +3,36 @@ import {html} from 'lit';
 
 
 type WriteWordArgs = {
-    traceImage1: string;
-    traceImage2: string;
-    traceImage3: string;
+    traceImage1: string[];
+    traceImage2: string[];
+    traceImage3: string[];
     traceMode: 'noFlow' | 'showFlow' | 'freeTrace' | 'blindTracing' | 'blindFreeTrace';
     highlightedText: string;
-    topDisplayImage: string;
-    bottomDisplayImage: string;
+    topDisplayImage: string[];
+    bottomDisplayImage: string[];
     spanType: 'letters' | 'words';
 }
 
 const meta: Meta<WriteWordArgs> = {
     title: 'Templates/writeWord',
     argTypes: {
-        traceImage1: { control: 'text', name: 'Trace1 Image URL', multiple: true },
-        traceImage2: { control: 'text', name: 'Trace2 Image URL', multiple: true },
-        traceImage3: { control: 'text', name: 'Trace3 Image URL', multiple: true },
+        traceImage1: { control: 'file', name: 'Trace Image URL', multiple: true },
+        traceImage2: { control: 'file', name: 'Trace Image URL', multiple: true },
+        traceImage3: { control: 'file', name: 'Trace Image URL', multiple: true },
         traceMode: { control: 'select', options: ['noFlow', 'showFlow', 'freeTrace', 'blindTracing', 'blindFreeTrace'], name: 'Trace Mode' },
         highlightedText: { control: 'text', name: 'Highlighted Text' },
-        topDisplayImage: { control: 'text', name: 'Top Display Image URL', multiple: true },
-        bottomDisplayImage: { control: 'text', name: 'Bottom Display Image URL', multiple: true },
+        topDisplayImage: { control: 'file', name: 'Top Display Image URL', multiple: true },
+        bottomDisplayImage: { control: 'file', name: 'Bottom Display Image URL', multiple: true },
         spanType: { control: 'select', options: ['letters', 'words'], name: 'Text Highlight Type' },
     },
     args: {
-        traceImage1: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg',
-        traceImage2: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg',
-        traceImage3: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg',
+        traceImage1: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg'],
+        traceImage2: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg'],
+        traceImage3: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg'],
         traceMode: 'showFlow',
         highlightedText: 'bug',
-        topDisplayImage: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/questionBg.png',
-        bottomDisplayImage: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/traceBackground.png',
+        topDisplayImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/questionBg.png'],
+        bottomDisplayImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/traceBackground.png'],
         spanType: 'letters',
     }
 }
@@ -41,7 +41,7 @@ export default meta;
 
 export const WriteWord: StoryObj = {
     args: {
-        highlightedText: 'bug',
+        highlightedText: "bug",
         spanType: "letters"
     },
 
@@ -88,8 +88,8 @@ function getContainerXml(args : WriteWordArgs) {
 
                     <!-- text-element -->
                     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.80px, portrait.80px" width="landscape.297px, portrait.297px" x="landscape.650px, portrait.300px" y="landscape.125px, portrait.190px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="">
-                        <lido-text id="txt1" tab-index="2" span-type="${spanType}" show-speak-icon="true" audio="" width="inherit" height="inherit" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
-                        </lido-text>
+                        <lido-text id="txt1" tab-index="2" span-type="${spanType}" show-speak-icon="true" audio="" width="297px" height="80px" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
+                        </lido-text>                        
                     </lido-cell>
 
                     <lido-cell layout="col" visible="true" width="landscape.70%, portrait.70%" height="landscape.84%, portrait.60%" bg-color="transparent" margin="landscape.-35px 0px -35px 0px, portrait.-400px 0px -40px 0px" onEntry="this.padding='4px 0px 16px 0px';">
