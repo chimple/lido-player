@@ -25,14 +25,14 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
              <lido-text id="drop${a}" drop-attr="stretch" visible="true" type="drop" tab-index="${a++}" value="${t.slice(1)}"   height="130px"  width="130px" onEntry="this.flex-shrink='0';">
               </lido-text>
                `:t.startsWith("@")?`
-         <lido-text  id="text${a}"  tab-index="${a++}"   height="130px"  width="130px"  visible="true"  value="${t.slice(1)}"  string="${t.slice(1)}"  font-family="'Baloo Bhai 2'"  font-color="white"   type="text" font-size="landscape.96px, portrait.96px"   bg-color="transparent"    onEntry="this.fontWeight='600'; this.borderRadius='10px'; this.flex-shrink='0';"   margin="landscape.113px 0px 112px 0px, portrait.0px 0px 0px 0px"  border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png">
+         <lido-text  id="text${a}" audio="" tab-index="${a++}"   height="130px"  width="130px"  visible="true"  value="${t.slice(1)}"  string="${t.slice(1)}"  font-family="'Baloo Bhai 2'"  font-color="white"   type="text" font-size="104px"   bg-color="transparent"    onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';"   margin="landscape.113px 0px 112px 0px, portrait.0px 0px 0px 0px"  border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png">
         </lido-text>
         `:"").join("")}
       </lido-cell>
 
             <lido-cell layout="landscape.row, portrait.row" width="landscape.auto, portrait.95%" height="landscape.43%, portrait.22%" child-elements-length="11" margin="landscape.0px,portrait.0px 25px 0px 0px" onEntry="this.gap='20px ';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true">
                  ${l.map(t=>`
-          <lido-text id="option${a}" tab-index="${a++}"  height="130px" width="130px" visible="true" value="${t}" string="${t}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="landscape.96px, portrait.96px"  bg-color="transparent"  onEntry="this.fontWeight='600'; this.borderRadius='10px'; this.flex-shrink='0';" margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png">
+          <lido-text id="option${a}" audio="" tab-index="${a++}"  height="130px" width="130px" visible="true" value="${t}" string="${t}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="104px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png">
           </lido-text>
         `).join("")}
                 
