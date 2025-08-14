@@ -87,7 +87,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
     <lido-container id="lido-container" tab-index="1" bg-image="${args.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
       <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="">
         <lido-text id="heading" tab-index="2" visible="true" border-image="" bg-color="transparent" width="350px" height="210px" string="${args.heading}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
-        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';">
+        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
         </lido-text>
 		  </lido-cell>
       <lido-cell layout="row" visible="true" width="75%" height="25%" bg-color="transparent" margin="5%">
@@ -104,7 +104,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
     <lido-container id="lido-container" tab-index="1" bg-image="${args.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
       <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="">
         <lido-text id="heading" tab-index="2" visible="true" border-image="" bg-color="transparent" width="350px" height="210px" string="${args.heading}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
-        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';">
+        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
         </lido-text>
 		  </lido-cell>
       <lido-cell layout="row" visible="true" width="75%" height="25%" bg-color="transparent" margin="5%">
