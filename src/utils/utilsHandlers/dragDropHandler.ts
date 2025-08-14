@@ -191,26 +191,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     const newLeft = initialX + dx;
     const newTop = initialY + dy;
 
-    // Get the dimensions and scale-corrected position of the container and element
-    const containerRect = container.getBoundingClientRect();
-    const elementRect = element.getBoundingClientRect();
-
-    const numbers = element.style.transform.match(/-?\d+(\.\d+)?/g);
-    const result = numbers.map(Number);
-    const initialElementLeftPx = elementRect.left / containerScale - result[0];
-    const initialElementTopPx = elementRect.top - result[1];
-
-    const maxRight = containerRect.width / containerScale - Math.abs(horizontalDistance / containerScale) - elementRect.width / containerScale;
-    const maxLeft = containerRect.left - initialElementLeftPx;
-    const maxTop = containerRect.top - initialElementTopPx;
-    // const maxBottom = containerRect.height / containerScale - Math.abs(verticalDistance / containerScale) - elementRect.height / containerScale;
-    const maxBottom = containerRect.bottom - initialElementTopPx - elementRect.height / containerScale;
-
-    const newLeftClamp = newLeft + initialElementLeftPx <= containerRect.left ? maxLeft : Math.min(newLeft, maxRight);
-    const newTopClamp = newTop + initialElementTopPx <= containerRect.top ? maxTop : Math.min(newTop, maxBottom);
-
-    // Apply transform with translation within boundaries
-    element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
+    // Apply transform with translation without boundaries
+    element.style.transform = `translate(${newLeft}px, ${newTop}px)`;
 
     // Check for overlaps and highlight only the most overlapping element
     let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'drop');
@@ -413,13 +395,13 @@ export function handleResetDragElement(
   dragSelectedData?: string,
   dropSelectedData?: string,
 ): void {
-
   dragElement.classList.remove('dropped');
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
   const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
   dragElement.style.transition = 'transform 0.5s ease';
   dragElement.style.transform = 'translate(0, 0)';
+  if (container.getAttribute('drop-action') === 'infinite-drop') return;
   if (cloneDragElement) {
     dragElement.style.transform = 'translate(0,0)';
 
