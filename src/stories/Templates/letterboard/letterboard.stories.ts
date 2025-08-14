@@ -26,7 +26,7 @@ export const letterBoard: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
- <lido-container id="lido-container" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+ <lido-container id="lido-container" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.417px,portrait.363px" width="landscape.280px,portrait.340px" x="landscape.1360px, portrait.597px" y="landscape.637px, portrait.1370px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			
@@ -98,7 +98,7 @@ function getContainerXml(args) {
 			</lido-cell>
 			</lido-cell>
 			
-			<lido-cell layout="landscape.col,portrait.row" visible="true" height="landscape.71%,portrait.185px" width="landscape.12%,portrait.71%" bg-color="transparent" onEntry="  this.animation='rightToPlace 2.7s linear';" margin="landscape.-280px 102px 0px -73px,portrait.-108px 0px 151px -50px">
+			<lido-cell layout="landscape.col,portrait.row" visible="true" height="landscape.71%,portrait.185px" width="landscape.12%,portrait.71%" bg-color="transparent" onEntry="  this.animation='rightToPlace 2.5s linear';" margin="landscape.-270px 102px 0px -73px,portrait.-108px 0px 151px -50px">
 				<lido-text visible="true" audio="" onTouch="this.speak='true';" type="drag" id="drag1" tab-index="29" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.letter1}" string="${args.letter1}" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#CF1565';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
 				</lido-text>
 				<lido-text visible="true" audio="" onTouch="this.speak='true';" type="drag" id="drag2" tab-index="30" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.letter2}" string="${args.letter2}" margin="landscape.0 0 127px 0,portrait.0 135px 0 0" onEntry="this.color='#409F5C';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white';">
