@@ -15,7 +15,7 @@ type RocketArgs = {
 };
 
 const meta: Meta<RocketArgs> = {
-  title: 'Templates/Rocket',
+  title: 'Templates/RocketGame',
   argTypes: {
     correct1: {
       control: 'object',
