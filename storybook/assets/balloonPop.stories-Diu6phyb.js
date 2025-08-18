@@ -10,7 +10,7 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
       onCorrect="lido-slide-fill.fill-slide='${e.Increment}'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
       onInCorrect="lido-slide-fill.fill-slide='${e.Decrement}'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
       is-continue-on-correct="true" show-check="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png">
-        
+        <lido-text tab-index="1" visible="false" string="Pop the ${e.objective} balloon"></lido-text>
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="-50px" y="landscape.560px, portrait.1220px" aria-hidden="true" z="1" bg-color="transparent" visible="true">
             <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
