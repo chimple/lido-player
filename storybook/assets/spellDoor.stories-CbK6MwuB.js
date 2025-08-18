@@ -20,7 +20,7 @@ import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";con
         </lido-cell>
 
         <lido-cell bg-color="transparent" layout="landscape.col, portrait.col" width="landscape.auto, portrait.100%" height="landscape.43%, portrait.50%" onEntry="this.animation='bottomToPlace 1.5s linear'; this.align-items='center'; this.justify-content='space-between';" margin="landscape.-72px 0px 0px 0px, portrait.-14% 0px 7%" visible="true" >
-            <lido-cell  layout="landscape.row, portrait.row"  width="landscape.auto, portrait.75%"  height="landscape.43%, portrait.53%" margin="landscape.0px,portrait.0px 220px 0px 0px" child-elements-length="11"  onEntry="this.gap='13px'; this.gridTemplateColumns='repeat(2, 1fr)'; this.gridTemplateRows='repeat(2, 1fr)';"  visible="true">
+            <lido-cell  layout="landscape.row, portrait.row"  width="landscape.auto, portrait.75%"  height="landscape.43%, portrait.53%" margin="landscape.0px,portrait.0px 0px 0px 0px" child-elements-length="11"  onEntry="this.gap='13px';this.justifyContent='center'; this.gridTemplateColumns='repeat(2, 1fr)'; this.gridTemplateRows='repeat(2, 1fr)';"  visible="true">
             ${e.options.map(t=>t.startsWith("#")?`
              <lido-text id="drop${a}" drop-attr="stretch" visible="true" type="drop" tab-index="${a++}" value="${t.slice(1)}"   height="130px"  width="130px" onEntry="this.flex-shrink='0';">
               </lido-text>
