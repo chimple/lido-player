@@ -232,7 +232,7 @@ export class LidoText {
       fontSize: parseProp(this.fontSize, orientation),
       fontFamily: this.fontFamily,
       color: parseProp(this.fontColor, orientation),
-      display: parseProp(`${this.visible}`, orientation) ? 'flex' : 'none', // Toggle visibility
+      display: parseProp(`${this.visible}`, orientation) === "true" ? 'flex' : 'none', // Toggle visibility
       borderImage: `url(${borderImg})`,
       borderImageSlice: borderImg ? '0 fill' : '',
       margin: parseProp(this.margin, orientation),

@@ -9,7 +9,7 @@
 
 @keyframes float-up {
     from {
-        top: 150vh;
+        top: var(--el-top);
     }
     to {
         top: -400px;
