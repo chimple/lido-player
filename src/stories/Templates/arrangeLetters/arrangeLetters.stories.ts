@@ -5,15 +5,8 @@ const meta: Meta = {
   title: 'Templates/arrangeLetters',
   argTypes: {
    image: { control: 'file' },
-   option1:{ control: 'text' },
-   option2:{ control: 'text' },
-    option3:{ control: 'text' },
-    option4:{ control: 'text' },
-    option5: { control: 'text' },
-    option6:{ control: 'text' },
-    option7:{ control: 'text' },
-    option8:{ control: 'text' },
-    option9:{ control: 'text' },
+   options: { control: 'object' },
+   answers: { control: 'object' },
   },
 };
 export default meta;
