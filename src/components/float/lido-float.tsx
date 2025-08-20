@@ -65,6 +65,12 @@ export class LidoFloat {
   @Prop() delayVisible: string = '';
 
   /**
+   * Direction of the float element's movement (e.g., 'leftToRight', 'bottomToTop').
+   * This can be used to control the animation or positioning of the float elements.
+   */
+  @Prop() floatDirection: string = 'bottomToTop';
+
+  /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
   @State() style: { [key: string]: string };
@@ -107,8 +113,8 @@ export class LidoFloat {
   updateStyles() {
     const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
     this.style = {
-      height: parseProp(this.height, orientation),
-      width: parseProp(this.width, orientation),
+      height: this.floatDirection !== 'leftToRight' ? "100%" : parseProp(this.height, orientation),
+      width: this.floatDirection === 'leftToRight' ? "100%" : parseProp(this.width, orientation),
       backgroundColor: parseProp(this.bgColor, orientation),
       zIndex: this.z,
       display: this.visible ? 'flex' : 'none',
@@ -117,7 +123,7 @@ export class LidoFloat {
 
   render() {
     return (
-      <Host class="lido-float" id={this.id} tab-index={this.tabIndex} style={this.style} onEntry={this.onEntry}>
+      <Host class="lido-float" float-direction={this.floatDirection} id={this.id} tab-index={this.tabIndex} style={this.style} onEntry={this.onEntry}>
         <slot></slot>
       </Host>
     );
