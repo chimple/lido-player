@@ -63,7 +63,7 @@ function getContainerXml(args) {
 			${args.options
           .map(
             (option, index) => `	
-			<lido-cell visible="true" tab-index="${index+1}" layout="col" bg-color="white" width="landscape.116px, portrait.116px" height="landscape.100px, portrait.78px" value="${option}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';this.flex-shrink='0';">
+			<lido-cell visible="true" tab-index="${index+1}" audio="" layout="col" bg-color="white" width="landscape.116px, portrait.116px" height="landscape.100px, portrait.78px" value="${option}" type="slide" onTouch="this.speak='true';" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';this.flex-shrink='0';">
 					<lido-cell visible="true" layout="pos" width="landscape.44px,portrait.39px" height="landscape.44px,portrait.39px" z="1">
 						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
 					</lido-cell>
