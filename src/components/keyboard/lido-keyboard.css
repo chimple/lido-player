@@ -14,11 +14,12 @@ input[type="text"] {
   font-size: 30px;
   font-weight: 600;
   padding-left: 20px;
-  width: 400px;
+  width: 300px;
   height: 70px;
   border: 2px solid;
-  background: #8080803b;
+  background: whitesmoke;
   border-radius: 20px;
+  text-align: center;
 }
 
 .keyboard-wrapper {

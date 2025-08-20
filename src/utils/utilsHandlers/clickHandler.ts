@@ -24,14 +24,14 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
-    const lido_buttons= element.getAttribute('id');
-    if(lido_buttons==='lido-arrow-left' || lido_buttons==='lido-arrow-right')
-    {
+    const lido_buttons = element.getAttribute('id');
+    if (lido_buttons === 'lido-arrow-left' || lido_buttons === 'lido-arrow-right') {
       return;
     }
     AudioPlayer.getI().stop();
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');
+
     const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
     const showCheck = container.getAttribute('show-check') === 'true';
 
@@ -40,6 +40,8 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       await validateObjectiveStatus();
       return;
     }
+
+    if(container['objective'].length === 0)return;
 
     // element.style.border = '2px solid yellow';
     // element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
@@ -53,7 +55,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
 
     const isActivated = element.classList.contains('lido-element-selected');
     let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
-
+    
     if (objective.length === 1) {
       localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
       const isCorrect = objective.includes(element['value']);
@@ -154,13 +156,15 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }, 50);
     }
   });
+  clickableElementStyle(element);
+}
+
+const clickableElementStyle = (element: HTMLElement) => {
   const elementShadow = element.offsetHeight * 0.08;
-  ;
   const backGroundColor = element.style?.backgroundColor || '#FFB742';
   element.style.setProperty('--btn-bg-color', backGroundColor);
   element.style.setProperty('--btn-shadow-px', `0px ${elementShadow}px 0px`);
   element.style.setProperty('--btn-active', `${elementShadow}px`);
   element.style.setProperty('--btn-shadow-color', tinycolor(backGroundColor).darken(17).toString());
   element.classList.add('click-element');
-}
-
+};

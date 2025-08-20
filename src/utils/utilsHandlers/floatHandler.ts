@@ -18,7 +18,6 @@ export async function handleElementClick(element: HTMLElement) {
   const fillElement = container.querySelector('.lido-slide-fill') as HTMLElement;
 
   if (!fillElement) {
-    console.error(`No fill element found with class: lido-slide-fill`);
     return;
   }
 
@@ -42,33 +41,48 @@ export async function handleElementClick(element: HTMLElement) {
 let entryValue = 0;
 export function handleFloatElementPosition(element: HTMLElement) {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-
   if (!container) {
     console.error(`No container found with id: lido-container`);
     return;
   }
+
   const floatContainer = container.querySelector('.lido-float') as HTMLElement;
   if (!floatContainer) return;
-  const containerWidth = floatContainer.offsetWidth;
 
-  if (element.getAttribute('data-entry') !== 'true') {
+  const direction = floatContainer.getAttribute('float-direction') || 'bottomToTop';
+
+  const delay = Math.random() * 5;
+
+  const isFirstEntry = element.getAttribute('data-entry') !== 'true';
+  if (isFirstEntry) {
     element.setAttribute('data-entry', 'true');
     entryValue += 10;
-    element.style.left = `${entryValue}%`;
-  } else {
-    const randomLeft = Math.floor(Math.random() * (containerWidth - element.clientWidth));
-    element.style.left = `${randomLeft}px`;
   }
 
   element.style.position = 'absolute';
-  element.style.top = document.body.offsetHeight + element.offsetHeight * 2 + 'px';
 
-  element.style.setProperty('--el-top', `${document.body.offsetHeight + element.offsetHeight * 2}px`);
+  if (direction === 'leftToRight') {
+    const containerHeight = floatContainer.offsetHeight;
 
-  const duration = 5 + Math.random() * 5;
-  const delay = Math.random() * 5;
+    element.style.left = 'unset';
+    element.style.right = `${window.innerWidth + document.body.getBoundingClientRect().width}px`;
 
-  element.style.animation = `float-up ${duration}s linear ${delay}s`;
+    element.style.top = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerHeight - element.clientHeight))}px`;
+
+    // const duration = 15 + Math.random() * 15;
+    element.style.setProperty('--el-left', element.style.right);
+    element.style.animation = `float-lr 15s linear ${delay}s`;
+  } else {
+    const containerWidth = floatContainer.offsetWidth;
+
+    element.style.left = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerWidth - element.clientWidth))}px`;
+
+    const startTop = document.body.offsetHeight + element.offsetHeight * 2;
+    element.style.top = `${startTop}px`;
+    const duration = 5 + Math.random() * 5;
+    element.style.setProperty('--el-top', `${startTop}px`);
+    element.style.animation = `float-up ${duration}s linear ${delay}s`;
+  }
 
   element.addEventListener(
     'animationend',

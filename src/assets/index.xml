@@ -1,5 +1,6 @@
 <main>
 
+
 <lido-container visible="true" objective="S,U,N,F,L,O,W,E,R" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.sleep='1000'; this.slideAnimation='true';">
 
 	<!-- Chimple Avatar -->
@@ -96,6 +97,71 @@
 		</lido-cell>
 	</lido-cell>
 
+<lido-container id="lido-container" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png">
+
+				<lido-text tab-index="1" visible="false" string="Click the bubbled Letter"></lido-text>
+        <lido-cell visible="true" layout="col" width="100%" height="100%" z="1" onEntry="this.justifyContent='space-between';" bg-color="transparent">
+					        <!-- Chimple Avatar -->
+        <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="-20px" y="landscape.230px, portrait.620px" aria-hidden="true" z="9999" bg-color="transparent" visible="true" onEntry="">
+            <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+            </lido-avatar>
+        </lido-cell>
+						<!-- Float Area -->
+						<lido-float visible="true" width="100%" height="56%" bg-color="transparent" float-direction="leftToRight" onEntry="this.pointerEvents='none';">
+								<lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="A">
+										<lido-image visible="true" src="/assets/images/Group 1.png" width="100%" height="100%" filter="#F34D08">
+										</lido-image>
+										<lido-text visible="true" height="100%" width="100%" string="A" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
+										</lido-text>
+								</lido-cell>
+								<lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="B">
+										<lido-image visible="true" src="/assets/images/Group 1.png" width="100%" height="100%" filter="#81C127">
+										</lido-image>
+										<lido-text visible="true" height="100%" width="100%" string="B" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
+										</lido-text>
+								</lido-cell>
+								<lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="C">
+										<lido-image visible="true" src="/assets/images/Group 1.png" width="100%" height="100%" filter="#FFC805">
+										</lido-image>
+										<lido-text visible="true" height="100%" width="100%" string="C" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
+										</lido-text>
+								</lido-cell>
+								<lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="D">
+										<lido-image visible="true" src="/assets/images/Group 1.png" width="100%" height="100%" filter="#F55376">
+										</lido-image>
+										<lido-text visible="true" height="100%" width="100%" string="D" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
+										</lido-text>
+								</lido-cell>
+								<lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="E">
+										<lido-image visible="true" src="/assets/images/Group 1.png" width="100%" height="100%" filter="#5D44BD">
+										</lido-image>
+										<lido-text visible="true" height="100%" width="100%" string="E" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
+										</lido-text>
+								</lido-cell>
+								
+						</lido-float>
+						<lido-keyboard 
+							visible="true" 
+							width="90%" 
+							height="44%" 
+							type="click" 
+							bg-color="#f59631" 
+							keys="A,B,C,D,E,F-disable,G-disable,H-disable,I-disable,J-disable,K-disable,L-disable,M-disable,N-disable,O-disable,P-disable,Q-disable,R-disable,S-disable,T-disable,U-disable,V-disable,W-disable,X-disable,Y-disable,Z-disable" 
+							font-size="landscape.50px, portrait.70px" 
+							onEntry="this.fontWeight='800';" 
+							font-color="white" 
+							keyboard-input="true" 
+							border-radius="10px" 
+							letter-length="5"
+							z="99999"
+							columns="landscape.10, portrait.7"
+							>
+						</lido-keyboard>
+				</lido-cell>
+        
+</lido-container>
+
+
 <lido-container id="lido-container" tab-index="1" visible="true" objective="A" onCorrect="lido-slide-fill.fill-slide='+10'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-slide-fill.fill-slide='-10%'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" show-check="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png">
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="-50px" y="landscape.560px, portrait.1220px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
@@ -117,7 +183,7 @@
 
 
 						<!-- Float Area -->
-						<lido-float visible="true" width="90%" height="100%" bg-color="transparent" float-direction="leftToRight" onEntry="">
+						<lido-float visible="true" width="90%" height="100%" bg-color="transparent" onEntry="">
 								<lido-cell visible="true" layout="col" width="250px" height="500px" bg-color="transparent" value="A">
 										<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/float/balloon.png" width="100%" height="100%" filter="violet">
 										</lido-image>
