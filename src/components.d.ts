@@ -795,49 +795,6 @@ export namespace Components {
          */
         "z": string;
     }
-    interface LidoKeyboard {
-        /**
-          * Number of columns in the keyboard layout
-         */
-        "columns": number;
-        /**
-          * Font color for key labels (e.g., "#333")
-         */
-        "fontColor"?: string;
-        /**
-          * Font family for key labels (e.g., "Arial, sans-serif")
-         */
-        "fontFamily"?: string;
-        /**
-          * Font size for key labels (e.g., "16px")
-         */
-        "fontSize"?: string;
-        "gap": string;
-        /**
-          * Height of each key button (e.g., "40px")
-         */
-        "height"?: string;
-        /**
-          * Indicates whether the keyboard input is enabled. When set to `true`, the component will respond to keyboard events.
-         */
-        "keyboardInput": boolean;
-        /**
-          * Comma-separated list of keys, optionally with status (e.g., "A,B-disable,C")
-         */
-        "keys": string;
-        /**
-          * Callback function when a key is entered
-         */
-        "onEntry"?: string;
-        /**
-          * Type of the key (can be used for custom logic or styling)
-         */
-        "type"?: string;
-        /**
-          * Width of each key button (e.g., "40px")
-         */
-        "width"?: string;
-    }
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -1772,12 +1729,6 @@ declare global {
         prototype: HTMLLidoImageElement;
         new (): HTMLLidoImageElement;
     };
-    interface HTMLLidoKeyboardElement extends Components.LidoKeyboard, HTMLStencilElement {
-    }
-    var HTMLLidoKeyboardElement: {
-        prototype: HTMLLidoKeyboardElement;
-        new (): HTMLLidoKeyboardElement;
-    };
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -1882,7 +1833,6 @@ declare global {
         "lido-float": HTMLLidoFloatElement;
         "lido-home": HTMLLidoHomeElement;
         "lido-image": HTMLLidoImageElement;
-        "lido-keyboard": HTMLLidoKeyboardElement;
         "lido-pos": HTMLLidoPosElement;
         "lido-random": HTMLLidoRandomElement;
         "lido-root": HTMLLidoRootElement;
@@ -2683,49 +2633,6 @@ declare namespace LocalJSX {
           * Z-index for stacking order of the image relative to other elements.
          */
         "z"?: string;
-    }
-    interface LidoKeyboard {
-        /**
-          * Number of columns in the keyboard layout
-         */
-        "columns"?: number;
-        /**
-          * Font color for key labels (e.g., "#333")
-         */
-        "fontColor"?: string;
-        /**
-          * Font family for key labels (e.g., "Arial, sans-serif")
-         */
-        "fontFamily"?: string;
-        /**
-          * Font size for key labels (e.g., "16px")
-         */
-        "fontSize"?: string;
-        "gap"?: string;
-        /**
-          * Height of each key button (e.g., "40px")
-         */
-        "height"?: string;
-        /**
-          * Indicates whether the keyboard input is enabled. When set to `true`, the component will respond to keyboard events.
-         */
-        "keyboardInput"?: boolean;
-        /**
-          * Comma-separated list of keys, optionally with status (e.g., "A,B-disable,C")
-         */
-        "keys"?: string;
-        /**
-          * Callback function when a key is entered
-         */
-        "onEntry"?: string;
-        /**
-          * Type of the key (can be used for custom logic or styling)
-         */
-        "type"?: string;
-        /**
-          * Width of each key button (e.g., "40px")
-         */
-        "width"?: string;
     }
     /**
      * @component LidoPos
@@ -3579,7 +3486,6 @@ declare namespace LocalJSX {
         "lido-float": LidoFloat;
         "lido-home": LidoHome;
         "lido-image": LidoImage;
-        "lido-keyboard": LidoKeyboard;
         "lido-pos": LidoPos;
         "lido-random": LidoRandom;
         "lido-root": LidoRoot;
@@ -3644,7 +3550,6 @@ declare module "@stencil/core" {
              * events such as touch, match, and entry events.
              */
             "lido-image": LocalJSX.LidoImage & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
-            "lido-keyboard": LocalJSX.LidoKeyboard & JSXBase.HTMLAttributes<HTMLLidoKeyboardElement>;
             /**
              * @component LidoPos
              * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
