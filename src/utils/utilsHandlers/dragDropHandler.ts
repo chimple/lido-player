@@ -1,6 +1,6 @@
-import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
+import { calculateScale, countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer } from '../constants';
+import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -374,18 +374,34 @@ function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElemen
   if (!targetElement || !dragElement || !container) return;
   const dropRect = targetElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
-  const containerScale = getElementScale(container); // Assuming you have this function
+  if (container.getAttribute('drop-action') === DropAction.InfiniteDrop) {
+    const style = window.getComputedStyle(dragElement);
+    const matrix = new DOMMatrixReadOnly(style.transform);
+    const currentX = matrix.m41 || 0;
+    const currentY = matrix.m42 || 0;
 
-  const dropCenterX = dropRect.left + dropRect.width / 2;
-  const dropCenterY = dropRect.top + dropRect.height / 2;
-  const dragCenterX = dragRect.left + dragRect.width / 2;
-  const dragCenterY = dragRect.top + dragRect.height / 2;
+    const dx = dropRect.left - dragRect.left;
+    const dy = dropRect.top - dragRect.top;
 
-  const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-  const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+    const finalX = currentX + dx * (1 / calculateScale());
+    const finalY = currentY + dy * (1 / calculateScale());
 
-  dragElement.style.transition = transition;
-  dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+    dragElement.style.transition = 'transform 0.5s ease';
+    dragElement.style.transform = `translate(${finalX}px, ${finalY}px)`;
+  } else {
+    const containerScale = getElementScale(container); // Assuming you have this function
+
+    const dropCenterX = dropRect.left + dropRect.width / 2;
+    const dropCenterY = dropRect.top + dropRect.height / 2;
+    const dragCenterX = dragRect.left + dragRect.width / 2;
+    const dragCenterY = dragRect.top + dragRect.height / 2;
+
+    const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+    const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+    dragElement.style.transition = transition;
+    dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+  }
 }
 export function handleResetDragElement(
   dragElement: HTMLElement,
@@ -400,22 +416,22 @@ export function handleResetDragElement(
   const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
   const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
   dragElement.style.transition = 'transform 0.5s ease';
-  dragElement.style.transform = 'translate(0, 0)';
-  if (container.getAttribute('drop-action') === 'infinite-drop') return;
   if (cloneDragElement) {
-    dragElement.style.transform = 'translate(0,0)';
-
-    animateDragToTarget(dragElement, dropElement, container);
+    animateDragToTarget(dragElement, cloneDragElement, container);
     setTimeout(() => {
-      cloneDragElement.style.width = dragElement.style.width;
-      cloneDragElement.style.height = dragElement.style.height;
+
+      if (container.getAttribute('drop-action') === DropAction.InfiniteDrop) {
+        dragElement.style.width = cloneDragElement.style.width;
+        dragElement.style.height = cloneDragElement.style.height;
+      } else {
+        cloneDragElement.style.width = dragElement.style.width;
+        cloneDragElement.style.height = dragElement.style.height;
+      }
+
       dragElement.style.transform = 'translate(0,0)';
       dragElement.style.position = 'unset';
       cloneDragElement.replaceWith(dragElement);
-    }, 250);
-
-    dragElement.style.position = 'unset';
-    cloneDragElement.replaceWith(dragElement);
+    }, 500);
   } else {
     dragElement.style.transform = 'translate(0,0)';
   }
@@ -526,22 +542,21 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     const isCorrect = dropElement['value'].includes(dragElement['value']);
 
     if (!isCorrect) {
-    const localStorageKey = `${LidoContainer}_dropData`; 
+      const localStorageKey = `${LidoContainer}_dropData`;
       dragElement.style.transition = 'transform 0.5s ease';
       animateDragToTarget(dragElement, dropElement, container);
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
         const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
         if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
-        dropHasDrag[oldDropIndex].isFull = false;
-        delete dragToDropMap[dragElement.getAttribute('data-id')];
-        const stored = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
-        delete stored[oldDropIndex];
-        localStorage.setItem(localStorageKey, JSON.stringify(stored));
-      }
-    handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData, dragSelectedData,dropSelectedData);
-    
-      }, 500);
+          dropHasDrag[oldDropIndex].isFull = false;
+          delete dragToDropMap[dragElement.getAttribute('data-id')];
+          const stored = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
+          delete stored[oldDropIndex];
+          localStorage.setItem(localStorageKey, JSON.stringify(stored));
+        }
+        handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+      }, 100);
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
         childs.forEach(item => {
@@ -632,40 +647,41 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
       // Check for overlaps and highlight only the most overlapping element
       if (dropElement && !dropHasDrag[dropTabIndex]?.isFull) {
-      let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
+        let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
+        const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
 
-      if (mostOverlappedElement && isAllowOnlyOneDrop) {
-        dragElement.style.transform = 'translate(0,0)';
-        dragElement.style.transition = 'transform 0.5s ease';
+        if (mostOverlappedElement && isAllowOnlyOneDrop) {
+          dragElement.style.transform = 'translate(0,0)';
+          dragElement.style.transition = 'transform 0.5s ease';
 
-        const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-        allElements.forEach(otherElement => {
-          const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-          const storedTabIndexes = Object.keys(dropObject).map(Number);
-          if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
-            if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+          const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+          allElements.forEach(otherElement => {
+            const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+            const storedTabIndexes = Object.keys(dropObject).map(Number);
+            if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
+              if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+                if (otherElement.tagName.toLowerCase() === 'lido-text') {
+                  otherElement.style.border = ''; // Reset border
+                  otherElement.style.backgroundColor = 'transparent'; // Reset background color
+                }
+                if (otherElement.tagName.toLowerCase() === 'lido-image') {
+                  otherElement.style.opacity = '0';
+                }
+              }
+            } else {
               if (otherElement.tagName.toLowerCase() === 'lido-text') {
                 otherElement.style.border = ''; // Reset border
-                otherElement.style.backgroundColor = 'transparent'; // Reset background color
+                otherElement.style.backgroundColor = ''; // Reset background color
               }
-              if (otherElement.tagName.toLowerCase() === 'lido-image') {
-                otherElement.style.opacity = '0';
+              if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
+                otherElement.style.opacity = '1';
               }
             }
-          } else {
-            if (otherElement.tagName.toLowerCase() === 'lido-text') {
-              otherElement.style.border = ''; // Reset border
-              otherElement.style.backgroundColor = ''; // Reset background color
-            }
-            if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
-              otherElement.style.opacity = '1';
-            }
-          }
-        });
-        return;
+          });
+          return;
+        }
       }
-      }}
+    }
   }
   if (!dropElement) {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
@@ -710,7 +726,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   dragToDropMap.set(dragElement, dropElement);
 
   // Add pulse and highlight effect for a successful match
-  const isCorrect = dropElement['value'].includes(dragElement['value']);
+  const isCorrect = (dropElement['value'].toLowerCase()).includes((dragElement['value']).toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
   if (isCorrect) {
     // Perform actions if onMatch is defined
@@ -859,8 +875,6 @@ async function onClickDragElement(element) {
   removeHighlight(element);
 
   if (currentTransform && currentTransform !== 'none' && currentTransform !== 'matrix(1, 0, 0, 1, 0, 0)') {
-    dragEl.style.transition = 'transform 0.5s ease';
-    dragEl.style.transform = 'translate(0px, 0px)';
     onElementDropComplete(dragEl, null);
     return;
   }

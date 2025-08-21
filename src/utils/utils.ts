@@ -216,11 +216,17 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 
       let dummyElement = document.createElement('div') as HTMLElement;
       if (isInfinite) {
-        dummyElement = cloneElementWithComputedStyles(dragElement);
-        dummyElement.classList.remove('dropped');
-        dummyElement.removeAttribute('drop-to');
-        dummyElement.removeAttribute('drop-time');
+        const allDummy = container.querySelectorAll(`[id=${dragElement.id}]`);
+        if (allDummy.length === 1) {
+          dummyElement = cloneElementWithComputedStyles(dragElement);
+          dummyElement.classList.remove('dropped');
+          dummyElement.removeAttribute('drop-to');
+          dummyElement.removeAttribute('drop-time');
+          dragElement.style.width = dropElement.style.width;
+          dragElement.style.height = dropElement.style.height;
+        }
       }
+
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
 
@@ -275,6 +281,7 @@ function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
   clone = clone.firstChild as HTMLElement;
   clone.setAttribute('height', originalEl.style.height);
   clone.setAttribute('width', originalEl.style.width);
+  clone.setAttribute('visible', 'true');
   return clone;
 }
 
