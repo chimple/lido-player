@@ -69,7 +69,7 @@ export class LidoKeyboard {
   @Prop() keyboardInput: boolean = false;
 
   /** Number of columns in the keyboard layout (default: "10") */
-  @Prop() columns: string = "10";
+  @Prop() columns: string = '10';
 
   /** Total number of letters required for completion */
   @Prop() letterLength: number;
@@ -87,31 +87,29 @@ export class LidoKeyboard {
   @Element() el: HTMLElement;
 
   async inputValidation(e) {
+    if (this.type !== 'click') return;
     let selcetedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || '';
     selcetedValue = this.inputString;
     localStorage.setItem(SelectedValuesKey, JSON.stringify(selcetedValue));
 
     const container = document.getElementById(LidoContainer) as HTMLElement;
+
     const value = (e.target as HTMLElement).getAttribute('value');
     const bubbleValues = container.querySelectorAll(`[value= '${value}']`);
     const filteredElement = Array.from(bubbleValues).find(el => !el.className.includes('key-button')) as HTMLElement;
     this.inputString = value;
     let isOverlapping: boolean;
-    if(filteredElement){
+    if (filteredElement) {
       const bodyRect = document.body.getBoundingClientRect();
       const elemRect = filteredElement.getBoundingClientRect();
-      isOverlapping =
-      elemRect.left < bodyRect.right &&
-      elemRect.right > bodyRect.left &&
-      elemRect.top < bodyRect.bottom &&
-      elemRect.bottom > bodyRect.top;
+      isOverlapping = elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
     }
     if (isOverlapping) {
       filteredElement.style.animation = 'none';
       this.numberOfClick++;
       if (this.numberOfClick === this.letterLength) {
         const onCorrrect = container.getAttribute('onCorrect');
-        container.style.pointerEvents = "none";
+        container.style.pointerEvents = 'none';
         await executeActions(onCorrrect, this.el);
         triggerNextContainer();
       } else {
@@ -127,9 +125,11 @@ export class LidoKeyboard {
 
   componentDidLoad() {
     const container = document.getElementById(LidoContainer) as HTMLElement;
+
     if (container.getAttribute('drop-action') === DropAction.InfiniteDrop) {
       const buttons = this.el.querySelectorAll('.key-button');
       const firstButton = buttons[0] as HTMLButtonElement;
+
       buttons.forEach((button: HTMLButtonElement) => {
         button.style.width = firstButton.offsetWidth + 'px';
         button.style.height = firstButton.offsetHeight + 'px';
@@ -169,7 +169,7 @@ export class LidoKeyboard {
       padding: parseProp(this.padding, orientation),
       borderRadius: parseProp(this.borderRadius, orientation),
       columns: parseProp(`${this.columns}`, orientation),
-      gap: parseProp(this.gap, orientation)
+      gap: parseProp(this.gap, orientation),
     };
   }
 
@@ -254,7 +254,7 @@ export class LidoKeyboard {
                 string={label}
                 onEntry={this.onEntry}
                 border-radius={this.style.borderRadius}
-                value={label}
+                value={label.toLowerCase()}
                 type={this.type}
                 class={`key-button${isDisabled ? ' disabled' : ''}`}
                 onClick={() => {
