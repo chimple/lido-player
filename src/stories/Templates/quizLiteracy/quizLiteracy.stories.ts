@@ -75,7 +75,7 @@ function getContainerXml(args) {
 </lido-cell>
 
 
-		<lido-cell layout="flex" visible="true" margin="landscape.0px,portrait.-424px 0px 407px 0px" width="100%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
+		<lido-cell layout="flex" visible="true" margin="landscape.0px,portrait.-424px 0px 407px 0px" width="landscape.100%,portrait.77%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
              ${args.options
           .map(
             (option) => `
