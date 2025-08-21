@@ -1,6 +1,7 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
 import { convertUrlToRelative, executeActions, triggerNextContainer,speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
 import { LidoContainer, TraceMode } from '../../utils/constants';
+import { svg } from 'lit';
 
 // Enum for different tracing modes
 
@@ -39,6 +40,13 @@ export class LidoTrace {
    * This is used to track which SVG is currently being traced.
    */
   @State() currentSvgIndex: number = 0;
+
+  /**
+   * Specifies whether the component is currently in a moving state.
+   * This can be used to control animations or transitions.
+   * Defaults to `false`.
+  */
+  @Prop() moving: boolean = false;
 
   /**
    * A custom string value associated with the component for additional data or identification.
@@ -164,7 +172,13 @@ export class LidoTrace {
     };
 
     const url = this.svgUrls[this.currentSvgIndex];
+    console.log("Loading SVG from URL:", url);
+    if (!url || url.trim() === '') {
+      console.error("No SVG URL provided or index out of bounds.");
+      return;
+    }
     const svgText = await this.fetchSVG(url);
+    console.log("SVG fetched successfully\n");
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
   }
@@ -176,17 +190,18 @@ export class LidoTrace {
   componentWillLoad() {
 
     this.updateStyles();
-
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
 
     this.svgUrls = this.svgSource.split(';').map(s => s.trim());
+    console.log("svgUrls", this.svgUrls);
     this.currentSvgIndex = 0;
-    this.initializeSVG();
+    console.log("curentSvgIndex", this.currentSvgIndex);
     if(this.showSpeakIcon) {
       speakIcon(this.el);
       this.el.append(speakIcon(this.el));
     }
+    this.initializeSVG();
   }
 
   disconnectedCallback() {
@@ -252,6 +267,8 @@ export class LidoTrace {
 
   // Fetch the SVG file asynchronously
   async fetchSVG(url: string): Promise<string> {
+  
+    console.log(`Fetching SVG from: ${url}`);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch SVG (${url}): ${response.statusText}`);
@@ -598,10 +615,9 @@ export class LidoTrace {
     // this.resetIdleTimer(state); // ← keep timer alive
   }
 
-  moving = false;
   // Move to the next container after completing the current SVG
   async moveToNextContainer() {
-    if (this.moving) return; // Prevent multiple calls
+    if(this.moving) return; // Prevent multiple calls
     this.moving = true; // Set moving to true to prevent re-entrance
 
     if(this.highlightTextId) {
@@ -611,6 +627,7 @@ export class LidoTrace {
       await this.playTraceAnimation();
     }
 
+    console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
     if(this.currentSvgIndex < this.svgUrls.length - 1)
     {
        this.currentSvgIndex++;
@@ -693,8 +710,8 @@ export class LidoTrace {
       if (state.svg) {
         this.cleanupPreviousSVG(state);
       }
-
-      const svgText = await this.fetchSVG(convertUrlToRelative(this.svgSource));
+      
+      const svgText = await this.fetchSVG(convertUrlToRelative(this.svgSource.split(';').map(s => s.trim())[this.currentSvgIndex]));
 
       this.insertSVG(svgText);
 
