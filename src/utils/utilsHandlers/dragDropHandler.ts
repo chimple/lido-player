@@ -541,7 +541,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
     handleResetDragElement(dragElement,dropElement,dropHasDrag,selectedValueData, dragSelectedData,dropSelectedData);
     
-      }, 500);
+      }, 100);
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
         childs.forEach(item => {

@@ -8,10 +8,19 @@
 }
 
 @keyframes float-up {
-    from {
-        top: 150vh;
-    }
-    to {
-        top: -400px;
-    }
+  from {
+    top: var(--el-top);
+  }
+  to {
+    top: -500px;
+  }
+}
+
+@keyframes float-lr {
+  from {
+    right: var(--el-left);
+  }
+  to {
+    right: -500px;
+  }
 }
