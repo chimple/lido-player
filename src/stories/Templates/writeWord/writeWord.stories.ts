@@ -16,9 +16,9 @@ type WriteWordArgs = {
 const meta: Meta<WriteWordArgs> = {
     title: 'Templates/writeWord',
     argTypes: {
-        traceImage1: { control: 'file', name: 'Trace Image URL', multiple: true },
-        traceImage2: { control: 'file', name: 'Trace Image URL', multiple: true },
-        traceImage3: { control: 'file', name: 'Trace Image URL', multiple: true },
+        traceImage1: { control: 'file', name: 'Trace Image 1 URL', multiple: true },
+        traceImage2: { control: 'file', name: 'Trace Image 2 URL', multiple: true },
+        traceImage3: { control: 'file', name: 'Trace Image 3 URL', multiple: true },
         traceMode: { control: 'select', options: ['noFlow', 'showFlow', 'freeTrace', 'blindTracing', 'blindFreeTrace'], name: 'Trace Mode' },
         highlightedText: { control: 'text', name: 'Highlighted Text' },
         topDisplayImage: { control: 'file', name: 'Top Display Image URL', multiple: true },
@@ -42,37 +42,31 @@ export default meta;
 export const WriteWord: StoryObj = {
     args: {
         highlightedText: "bug",
-        spanType: "letters"
+        spanType: "letters",
     },
 
     render: (args: WriteWordArgs) => {
         const xml = getContainerXml(args);
         return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
     },
-
-    parameters: {
-        controls: {
-            exclude: ['height', 'width', 'x', 'y', 'z', 'bg-Color', 'visible', 'onEntry'],
-        },
-        actions: { argTypesRegex: '^on[A-Z].*' },
-    },
-
 }
 
 function getContainerXml(args : WriteWordArgs) {    
-    const traceImage1 = args.traceImage1;
-    const traceImage2 = args.traceImage2;
-    const traceImage3 = args.traceImage3;
+    const traceImage1 = args.traceImage1[0];
+    const traceImage2 = args.traceImage2[0];
+    const traceImage3 = args.traceImage3[0];
     const traceMode = args.traceMode;
     const text = args.highlightedText;
-    const topDisplayImage = args.topDisplayImage;
-    const bottomDisplayImage = args.bottomDisplayImage;
+    const topDisplayImage = args.topDisplayImage[0];
+    const bottomDisplayImage = args.bottomDisplayImage[0];
     const spanType = args.spanType;
 
     if (!traceImage1 || !traceImage2 || !traceImage3) {
         console.error('Trace image is missing');
         return '';
     }
+    console.log("SVG Source:", `${traceImage1}; ${traceImage2}; ${traceImage3}`);
+
     
     return `
         <main>
