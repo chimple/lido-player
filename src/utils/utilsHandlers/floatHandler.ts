@@ -3,6 +3,7 @@ import { LidoContainer } from '../constants';
 import { executeActions, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
 import { stopHighlightForSpeakingElement } from './highlightHandler';
 
+let fillCompleted = false;
 export async function handleElementClick(element: HTMLElement) {
   AudioPlayer.getI().play(element);
   stopHighlightForSpeakingElement(element);
@@ -17,7 +18,6 @@ export async function handleElementClick(element: HTMLElement) {
   const fillElement = container.querySelector('.lido-slide-fill') as HTMLElement;
 
   if (!fillElement) {
-    console.error(`No fill element found with class: lido-slide-fill`);
     return;
   }
 
@@ -27,33 +27,62 @@ export async function handleElementClick(element: HTMLElement) {
     const onCorrect = container['onCorrect'];
     await executeActions(onCorrect, container);
     const fillValue = JSON.parse(fillElement['fill']);
-    if (fillValue !== 100) return;
-    triggerNextContainer();
+
+    if (fillValue === 100 && !fillCompleted) {
+      fillCompleted = true;
+      triggerNextContainer();
+    }
   } else {
     const onInCorrect = container['onInCorrect'];
     await executeActions(onInCorrect, container);
   }
 }
 
+let entryValue = 0;
 export function handleFloatElementPosition(element: HTMLElement) {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-
   if (!container) {
     console.error(`No container found with id: lido-container`);
     return;
   }
+
   const floatContainer = container.querySelector('.lido-float') as HTMLElement;
   if (!floatContainer) return;
-  const containerWidth = floatContainer.offsetWidth;
-  const randomLeft = Math.floor(Math.random() * (containerWidth - element.clientWidth));
+
+  const direction = floatContainer.getAttribute('float-direction') || 'bottomToTop';
+
+  const delay = Math.random() * 5;
+
+  const isFirstEntry = element.getAttribute('data-entry') !== 'true';
+  if (isFirstEntry) {
+    element.setAttribute('data-entry', 'true');
+    entryValue += 10;
+  }
 
   element.style.position = 'absolute';
-  element.style.left = `${randomLeft}px`;
-  element.style.top = '300vh';
 
-  const duration = 5 + Math.random() * 5;
-  const delay = Math.random() * 2;
-  element.style.animation = `float-up ${duration}s linear ${delay}s`;
+  if (direction === 'leftToRight') {
+    const containerHeight = floatContainer.offsetHeight;
+
+    element.style.left = 'unset';
+    element.style.right = `${window.innerWidth + document.body.getBoundingClientRect().width}px`;
+
+    element.style.top = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerHeight - element.clientHeight))}px`;
+
+    // const duration = 15 + Math.random() * 15;
+    element.style.setProperty('--el-left', element.style.right);
+    element.style.animation = `float-lr 15s linear ${delay}s`;
+  } else {
+    const containerWidth = floatContainer.offsetWidth;
+
+    element.style.left = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerWidth - element.clientWidth))}px`;
+
+    const startTop = document.body.offsetHeight + element.offsetHeight * 2;
+    element.style.top = `${startTop}px`;
+    const duration = 5 + Math.random() * 5;
+    element.style.setProperty('--el-top', `${startTop}px`);
+    element.style.animation = `float-up ${duration}s linear ${delay}s`;
+  }
 
   element.addEventListener(
     'animationend',

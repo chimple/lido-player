@@ -602,6 +602,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * Direction of the float element's movement (e.g., 'leftToRight', 'bottomToTop'). This can be used to control the animation or positioning of the float elements.
+         */
+        "floatDirection": string;
+        /**
           * The height of the float element (CSS value, e.g., '100px', '50%').
          */
         "height": string;
@@ -797,9 +801,17 @@ export namespace Components {
     }
     interface LidoKeyboard {
         /**
-          * Number of columns in the keyboard layout
+          * Background color for each key button
          */
-        "columns": number;
+        "bgColor": string;
+        /**
+          * Border radius for key buttons (e.g., "8px")
+         */
+        "borderRadius": string;
+        /**
+          * Number of columns in the keyboard layout (default: "10")
+         */
+        "columns": string;
         /**
           * Font color for key labels (e.g., "#333")
          */
@@ -812,6 +824,9 @@ export namespace Components {
           * Font size for key labels (e.g., "16px")
          */
         "fontSize"?: string;
+        /**
+          * Gap between key buttons (default: "10px")
+         */
         "gap": string;
         /**
           * Height of each key button (e.g., "40px")
@@ -826,17 +841,45 @@ export namespace Components {
          */
         "keys": string;
         /**
-          * Callback function when a key is entered
+          * Total number of letters required for completion
+         */
+        "letterLength": number;
+        /**
+          * Margin around the keyboard container
+         */
+        "margin"?: string;
+        /**
+          * Custom callback function when a key is entered
          */
         "onEntry"?: string;
         /**
-          * Type of the key (can be used for custom logic or styling)
+          * Padding inside the keyboard container
+         */
+        "padding"?: string;
+        /**
+          * Type of key interaction (e.g., "click", "drag")
          */
         "type"?: string;
+        /**
+          * Whether the keyboard is visible ("true" / "false")
+         */
+        "visible"?: string;
         /**
           * Width of each key button (e.g., "40px")
          */
         "width"?: string;
+        /**
+          * X position (left) of the keyboard
+         */
+        "x"?: string;
+        /**
+          * Y position (top) of the keyboard
+         */
+        "y"?: string;
+        /**
+          * Z-index for stacking order
+         */
+        "z"?: string;
     }
     /**
      * @component LidoPos
@@ -2491,6 +2534,10 @@ declare namespace LocalJSX {
          */
         "delayVisible"?: string;
         /**
+          * Direction of the float element's movement (e.g., 'leftToRight', 'bottomToTop'). This can be used to control the animation or positioning of the float elements.
+         */
+        "floatDirection"?: string;
+        /**
           * The height of the float element (CSS value, e.g., '100px', '50%').
          */
         "height"?: string;
@@ -2686,9 +2733,17 @@ declare namespace LocalJSX {
     }
     interface LidoKeyboard {
         /**
-          * Number of columns in the keyboard layout
+          * Background color for each key button
          */
-        "columns"?: number;
+        "bgColor"?: string;
+        /**
+          * Border radius for key buttons (e.g., "8px")
+         */
+        "borderRadius"?: string;
+        /**
+          * Number of columns in the keyboard layout (default: "10")
+         */
+        "columns"?: string;
         /**
           * Font color for key labels (e.g., "#333")
          */
@@ -2701,6 +2756,9 @@ declare namespace LocalJSX {
           * Font size for key labels (e.g., "16px")
          */
         "fontSize"?: string;
+        /**
+          * Gap between key buttons (default: "10px")
+         */
         "gap"?: string;
         /**
           * Height of each key button (e.g., "40px")
@@ -2715,17 +2773,45 @@ declare namespace LocalJSX {
          */
         "keys"?: string;
         /**
-          * Callback function when a key is entered
+          * Total number of letters required for completion
+         */
+        "letterLength"?: number;
+        /**
+          * Margin around the keyboard container
+         */
+        "margin"?: string;
+        /**
+          * Custom callback function when a key is entered
          */
         "onEntry"?: string;
         /**
-          * Type of the key (can be used for custom logic or styling)
+          * Padding inside the keyboard container
+         */
+        "padding"?: string;
+        /**
+          * Type of key interaction (e.g., "click", "drag")
          */
         "type"?: string;
+        /**
+          * Whether the keyboard is visible ("true" / "false")
+         */
+        "visible"?: string;
         /**
           * Width of each key button (e.g., "40px")
          */
         "width"?: string;
+        /**
+          * X position (left) of the keyboard
+         */
+        "x"?: string;
+        /**
+          * Y position (top) of the keyboard
+         */
+        "y"?: string;
+        /**
+          * Z-index for stacking order
+         */
+        "z"?: string;
     }
     /**
      * @component LidoPos
