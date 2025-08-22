@@ -89,8 +89,8 @@ function getContainerXml(args) {
       ${args.questionImg === '' || args.questionImg.length <= 0 ? '' : `<lido-image visible="true" height="30%" bg-color="white" src="${args.questionImg}"></lido-image>`}
 			
 			<!-- Slide Elements -->
-			<lido-cell visible="true" layout="landscape.row, portrait.col" width="landscape.75%, portrait.35%" height="landscape.40%, portrait.90%" bg-color="#FBCAB5" border-radius="landscape.16px 16px 0 0, portrait.0 16px 16px 0" onEntry="this.padding='60px 40px';">
-				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option1.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+			<lido-cell visible="true" layout="landscape.row, portrait.col" width="landscape.64%, portrait.26%" height="landscape.40%, portrait.90%" bg-color="#FBCAB5" border-radius="landscape.16px 16px 0 0, portrait.0 16px 16px 0" onEntry="this.flex-shrink='0';this.padding='60px 40px';this.gap='37px';">
+				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.182px, portrait.154px" height="landscape.85%, portrait.17%" value="${args.option1.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.flex-shrink='0';this.border='2px solid #CACACA'; this.paddingTop='50px';">
 					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
 						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
 					</lido-cell>
@@ -98,8 +98,8 @@ function getContainerXml(args) {
 					
 					<lido-text visible="true" string="${args.option1}" audio="${args.option1Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
 				</lido-cell>
-				<lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png" margin="landscape.100px 0 0 0, portrait.0 100px 0 0"></lido-image>
-				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option2.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+				
+				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.182px, portrait.154px" height="landscape.85%, portrait.17%" value="${args.option2.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.flex-shrink='0'; this.border='2px solid #CACACA'; this.paddingTop='50px';">
 					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
 						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
 					</lido-cell>
@@ -107,8 +107,8 @@ function getContainerXml(args) {
 					
 					<lido-text visible="true" string="${args.option2}" audio="${args.option2Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
 				</lido-cell>
-				<lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png"></lido-image>
-				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option3.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+				
+				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.182px, portrait.154px" height="landscape.85%, portrait.17%" value="${args.option3.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry=" this.flex-shrink='0';this.border='2px solid #CACACA'; this.paddingTop='50px';">
 					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
 						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
 					</lido-cell>
@@ -116,8 +116,8 @@ function getContainerXml(args) {
 					
 					<lido-text visible="true" string="${args.option3}" audio="${args.option3Audio}" font-size="24px" onEntry="this.fontWeight='800'; this.textAlign='left'; this.lineHeight='26px';"></lido-text>
 				</lido-cell>
-				<lido-image visible="true" bg-color="transparent" transform="landscape., portrait.rotate(90deg)" width="landscape.8%,portrait." height="landscape.20%, portrait.5%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/arrow.png" margin="landscape.0 0 100px 0, portrait.0 0 0 100px"></lido-image>
-				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.15%, portrait.48%" height="landscape.85%, portrait.17%" value="${args.option4.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.border='2px solid #CACACA'; this.paddingTop='50px';">
+				
+				<lido-cell show-speak-icon="true" visible="true" layout="col" bg-color="white" width="landscape.182px, portrait.154px" height="landscape.85%, portrait.17%" value="${args.option4.toLowerCase()}" type="slide" onTouch="" border-radius="6px" onEntry="this.flex-shrink='0';this.border='2px solid #CACACA'; this.paddingTop='50px';">
 					<lido-cell visible="true" layout="pos" width="48px" height="48px" z="1">
 						<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/reordertemp/Reorder%20button.png"></lido-image>
 					</lido-cell>
