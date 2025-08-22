@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
 const meta: Meta = {
-  title: 'Templates/PictureMeaning2',
+  title: 'Templates/PictureMeaningCocos',
 };
 export default meta;
 
