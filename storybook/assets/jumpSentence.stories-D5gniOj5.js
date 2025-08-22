@@ -13,7 +13,7 @@ import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";con
       onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" 
       is-continue-on-correct="true" bg-color="transparent" 
       bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" 
-      drop-action="infinite-drop">
+      drop-action="infinite-drop" is-allow-only-correct="true">
 
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" 
         height="landscape.500px, portrait.600px" width="landscape.350px, portrait.450px" 
