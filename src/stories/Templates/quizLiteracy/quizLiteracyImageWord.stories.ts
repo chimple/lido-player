@@ -28,7 +28,7 @@ export const quizLiteracyImageWord: StoryObj = {
 
 function getContainerXml(args) {
     let tabCounter = 1;
-    const answers = Array.isArray(args.answers) ? args.answers : [args.answers];
+ 
 
   return `<main>
    <lido-container id="lido-container" value="maincontainer" visible="true" objective="${args.answers}"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png"  onEntry="" is-Continue-On-Correct="true" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
@@ -39,48 +39,25 @@ function getContainerXml(args) {
 		</lido-image>
 	</lido-cell>
 	<lido-cell layout="col" visible="true" bg-Color="transparent" width="90%" height="68%">
-		<lido-cell layout="flex" visible="true" width="100%" height="300px" bg-Color="transparent"
+		<lido-cell layout="flex" margin="landscape.0px,portrait.-215px 0px 0px 0px" visible="true" width="100%" height="300px" bg-Color="transparent"
   onEntry="this.align-items='center'; this.justify-content='center';">
 
-   ${answers
-    .filter(Boolean)
-    .map((answer) => {
-    if (!answer) return ""; // skip empty answers
-
-    const isImage = answer.startsWith("http") || /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(answer);
-
-    if (!isImage) {
-      // Render text
-      return `
-        <lido-text visible="true" id="answer${tabCounter}"  
-          tab-index="${tabCounter++}" font-size="140px"
-          bg-color="#FFF5BB" border-radius="12px"
-          font-color="black" height="200px" width="auto"
-          string="${answer}" margin="landscape.0px,portrait.-131px 0px 0px 0px" value="${answer}" type="text"
-          onEntry="this.border='6px solid #FFB612';this.font-weight='500';this.padding='0px 64px';">
-        </lido-text>`;
-    } else {
-      // Render image
-      return `
-        <lido-cell visible="true" height="400px" width="400px" border-radius="7px"
+        <lido-cell visible="true" height="400px" width="400px" value="${args.answers}" border-radius="7px"
           bg-color="white" margin="landscape.-70px 0px 0px 0px, portrait.0px 0px 0px 0px"
           onEntry="this.display='flex'; this.align-items='center'; this.justifyContent='center';">
           <lido-image visible="true"
             width="landscape.400px,portrait.400px"
             height="landscape.400px,portrait.400px"
             border-radius="7px" bg-color="white"
-            src="${answer}">
+            src="${args.image}">
           </lido-image>
-        </lido-cell>`;
-    }
-  })
-  .join("")
-}
+        </lido-cell>
+   
 
 </lido-cell>
 
 
-		<lido-cell layout="flex" visible="true" margin="landscape.0px,portrait.-424px 0px 407px 0px" width="landscape.100%,portrait.100%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
+		<lido-cell layout="flex" visible="true" margin="landscape.0px,portrait.-34px 0px 364px" width="landscape.67%,portrait.100%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
             
             <lido-text visible="true" audio="" show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
