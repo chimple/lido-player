@@ -35,7 +35,7 @@ function getContainerXml(args) {
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.290px,portrait.476px" width="landscape.278px,portrait.467px" x="landscape.78%, portrait.24%" y="landscape.228px, portrait.66%" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" bg-color="transparent">
 		</lido-avatar>
-		<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bg-color="transparent" width="165px" height="30px" x="landscape.54px,portrait.125px" y="landscape.239px,portrait.400px" alt-text="{shadowImgae}">
+		<lido-image id="image1" disable-edit="true" value="image1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/Shadow.png" bg-color="transparent" width="landscape.165px,portrait.200px" height="landscape.30px,portrait.48px" x="landscape.54px,portrait.125px" y="landscape.239px,portrait.400px" alt-text="{shadowImgae}">
 		</lido-image>
 	</lido-cell>
 	<lido-cell layout="col" visible="true" bg-Color="transparent" width="90%" height="68%">

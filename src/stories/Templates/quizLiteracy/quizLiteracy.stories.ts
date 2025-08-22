@@ -5,7 +5,10 @@ import { text } from 'stream/consumers';
 const meta: Meta = {
   title: 'Templates/quizLiteracy',
   argTypes: {
-  options: { control: 'object' },
+  option1: { control: 'text' },
+  option2: { control: 'text' }, 
+  option3: { control: 'text' },
+  option4: { control: 'text' },
   text: { control: 'text' },
   answers: { control: 'text' },
  
@@ -15,7 +18,11 @@ export default meta;
 
 export const quizLiteracy: StoryObj = {
   args: {
-   options: ['n','a','f','b'],
+   option1:"n",
+   option2:"a",
+    option3:"f",
+    option4:"b",
+
    text:"n",
    answers: "n",
    image:"https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/template/audioIcon.png",
@@ -68,15 +75,16 @@ function getContainerXml(args) {
 
 
 		<lido-cell layout="flex" visible="true"  margin="landscape.0px,portrait.-424px 0px 407px 0px" width="landscape.100%,portrait.77%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
-             ${args.options
-          .map(
-            (option) => `
-            <lido-text visible="true" audio=""  show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="140px" border-radius="12px" font-color="black" height="205px" width="auto" string="${option}" value="${option}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+             
+            <lido-text visible="true" audio=""  show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="140px" border-radius="12px" font-color="black" height="205px" width="auto" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-            `
-          ,
-          )
-          .join('')}
+              <lido-text visible="true" audio=""  show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="140px" border-radius="12px" font-color="black" height="205px" width="auto" string="${args.option2}" value="${args.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            </lido-text>
+              <lido-text visible="true" audio=""  show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="140px" border-radius="12px" font-color="black" height="205px" width="auto" string="${args.option3}" value="${args.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            </lido-text>
+              <lido-text visible="true" audio=""  show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="140px" border-radius="12px" font-color="black" height="205px" width="auto" string="${args.option4}" value="${args.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            </lido-text>
+            
 			
 		</lido-cell>
 
