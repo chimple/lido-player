@@ -414,12 +414,13 @@ export function handleResetDragElement(
   dragElement.classList.remove('dropped');
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
-  const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item) as HTMLElement;
+  const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item && !item.classList.contains('dropped')) as HTMLElement;
   dragElement.style.transition = 'transform 0.5s ease';
   if (cloneDragElement) {
     animateDragToTarget(dragElement, cloneDragElement, container);
     setTimeout(() => {
       if (container.getAttribute('drop-action') === DropAction.InfiniteDrop) {
+        dragElement.removeAttribute('hasDummy');
         dragElement.style.width = cloneDragElement.style.width;
         dragElement.style.height = cloneDragElement.style.height;
       } else {
@@ -436,8 +437,8 @@ export function handleResetDragElement(
   }
   let currentDrop = dragToDropMap.get(dragElement);
   if (currentDrop) {
-    dragElement.removeAttribute(DropToAttr);
     dragToDropMap.delete(dragElement);
+
     updateDropBorder(currentDrop);
     if (currentDrop?.getAttribute('drop-attr')?.toLowerCase() === DropMode.Stretch) {
       const originalWidth = currentDrop.getAttribute('data-original-width');
@@ -467,21 +468,14 @@ export function handleResetDragElement(
   }
   if (dragSelectedData) {
     let dragSelected = JSON.parse(dragSelectedData);
-    let dropSelected = JSON.parse(dropSelectedData);
-    for (const key in dragSelected) {
-      if (dragSelected[key].includes(dragElement['value'])) {
-        for (const key in dropSelected) {
-          if (dropSelected[key].includes(dragElement.id)) {
-            delete dropSelected[key];
-          }
-        }
-
-        delete dragSelected[key];
-      }
+    const dragPreDropElement = container.querySelector(`#${dragElement.getAttribute(DropToAttr)}`);
+    if (dragPreDropElement) {
+      delete dragSelected[dragPreDropElement.getAttribute('tab-index')];
     }
 
     localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
-    // localStorage.setItem(DragMapKey, JSON.stringify(dropSelected));
+    dragElement.removeAttribute(DropToAttr);
+    updateDropBorder(currentDrop);
   }
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
@@ -538,7 +532,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
-    const isCorrect = dropElement['value'].includes(dragElement['value']);
+    const isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
@@ -572,12 +566,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
-          
+
           div.classList.add('after-drop-popup-container');
           const hasType = dragElement.nextElementSibling;
 
           // Remove from old parents
-          if (hasType && hasType.getAttribute("type") === 'drag') {
+          if (hasType && hasType.getAttribute('type') === 'drag') {
             dragElement.remove();
             dropElement.remove();
           } else {
@@ -631,7 +625,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       dropElement.style.width = `${dragWidth}px`;
     }
 
-    dragElement.classList.add('dropped');
     if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
       if (isisFull) {
@@ -644,12 +637,13 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       if (dragSelectedData) {
         let dragSelected = JSON.parse(dragSelectedData);
         for (const key in dragSelected) {
-          if (dragSelected[key].includes(dragElement['value'])) {
+          if (dragSelected[key].includes(dragElement['value']) && dragElement.classList.contains('dropped')) {
             delete dragSelected[key];
           }
         }
         localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
       }
+      dragElement.classList.add('dropped');
 
       // Check for overlaps and highlight only the most overlapping element
       if (dropElement && !dropHasDrag[dropTabIndex]?.isFull) {
@@ -756,7 +750,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 }
 
 export function updateDropBorder(element: HTMLElement): void {
-  if (!element.classList.contains('drop-element')) return;
+  if (!element || !element.classList.contains('drop-element')) return;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const showBorder = container.getAttribute('show-drop-border');
