@@ -50,13 +50,13 @@ function getContainerXml(args) {
 		  </lido-cell>
 		</lido-cell>
 		<lido-cell layout="col" visible="true"  width="landscape.100%,portrait.108%" height="216px" bg-Color="transparent" margin="landscape.0px 160px 0px -299px,portrait.0px 0px 0px 0px" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
-            <lido-text visible="true" id="option1" font-family="'Baloo Bhai 2'" tab-index="2" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            <lido-text visible="true" audio="" show-speak-icon="true" id="option1" font-family="'Baloo Bhai 2'" tab-index="2" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-			<lido-text visible="true" id="option2" font-family="'Baloo Bhai 2'" tab-index="3" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option2}" value="${args.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+			<lido-text visible="true" audio="" show-speak-icon="true" id="option2" font-family="'Baloo Bhai 2'" tab-index="3" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option2}" value="${args.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-			<lido-text visible="true" id="option3" font-family="'Baloo Bhai 2'" tab-index="4" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option3}" value="${args.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+			<lido-text visible="true" audio="" show-speak-icon="true" id="option3" font-family="'Baloo Bhai 2'" tab-index="4" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option3}" value="${args.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-			<lido-text visible="true" id="option4" font-family="'Baloo Bhai 2'" tab-index="5" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option4}" value="${args.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+			<lido-text visible="true" audio="" show-speak-icon="true" id="option4" font-family="'Baloo Bhai 2'" tab-index="5" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option4}" value="${args.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
 		</lido-cell>
 

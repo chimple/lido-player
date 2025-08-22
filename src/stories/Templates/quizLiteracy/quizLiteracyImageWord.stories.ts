@@ -82,13 +82,13 @@ function getContainerXml(args) {
 
 		<lido-cell layout="flex" visible="true" margin="landscape.0px,portrait.-424px 0px 407px 0px" width="landscape.100%,portrait.100%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
             
-            <lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            <lido-text visible="true" audio="" show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-             <lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option2}" value="${args.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+             <lido-text visible="true" audio="" show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option2}" value="${args.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-             <lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option3}" value="${args.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+             <lido-text visible="true" audio="" show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option3}" value="${args.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-             <lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option4}" value="${args.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+             <lido-text visible="true" audio="" show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${args.option4}" value="${args.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
             
 			

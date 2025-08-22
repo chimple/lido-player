@@ -49,7 +49,7 @@ function getContainerXml(args) {
       return `
         <lido-text visible="true" id="answer${tabCounter}"  
           tab-index="${tabCounter++}" font-size="140px"
-          bg-color="#FFF5BB" border-radius="12px"
+          bg-color="#FFF5BB" audio="" border-radius="12px"
           font-color="black" height="200px" width="auto"
           string="${answer}" margin="landscape.0px,portrait.-131px 0px 0px 0px" value="${answer}" type="text"
           onEntry="this.border='6px solid #FFB612';this.font-weight='500';this.padding='0px 64px';">
@@ -60,7 +60,7 @@ function getContainerXml(args) {
         <lido-cell visible="true" height="400px" width="400px" border-radius="7px"
           bg-color="white" margin="landscape.-70px 0px 0px 0px, portrait.0px 0px 0px 0px"
           onEntry="this.display='flex'; this.align-items='center'; this.justifyContent='center';">
-          <lido-image visible="true"
+          <lido-image audio="" visible="true"
             width="landscape.400px,portrait.400px"
             height="landscape.400px,portrait.400px"
             border-radius="7px" bg-color="white"
@@ -75,11 +75,11 @@ function getContainerXml(args) {
 </lido-cell>
 
 
-		<lido-cell layout="flex" visible="true" margin="landscape.0px,portrait.-424px 0px 407px 0px" width="landscape.100%,portrait.77%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
+		<lido-cell layout="flex" visible="true"  margin="landscape.0px,portrait.-424px 0px 407px 0px" width="landscape.100%,portrait.77%" height="216px" bg-Color="transparent" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
              ${args.options
           .map(
             (option) => `
-            <lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="140px" border-radius="12px" font-color="black" height="205px" width="auto" string="${option}" value="${option}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            <lido-text visible="true" audio="" show-speak-icon="true" id="drag${tabCounter}" tab-index="${tabCounter++}" font-size="140px" border-radius="12px" font-color="black" height="205px" width="auto" string="${option}" value="${option}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
             `
           ,
