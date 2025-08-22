@@ -6,7 +6,7 @@ import"./lit-element-BxxbMms4.js";import{x as u}from"./lit-html-DLYuhZ0i.js";con
       </lido-text>
     `).join("");return`
   <main> 
-      <lido-container id="lido-container" objective="${t.correct1}, ${t.correct2}, ${t.correct3}" appendToDropOnCompletion="true" tab-index="1" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s linear'; this.sleep='2000';" show-check="false" bg-image="${t.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false">
+      <lido-container id="lido-container" objective="${t.correct1}, ${t.correct2}, ${t.correct3}" appendToDropOnCompletion="true" show-drop-border="false" tab-index="1" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s linear'; this.sleep='2000';" show-check="false" bg-image="${t.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false">
           <lido-cell layout="pos" id="pos1" disable-edit="true" tab-index="2" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.-60px, portrait.250px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
               <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
               </lido-avatar>

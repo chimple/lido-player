@@ -1,4 +1,4 @@
-import"./lit-element-BxxbMms4.js";import{x as h}from"./lit-html-DLYuhZ0i.js";const u={title:"Templates/writeWord",argTypes:{traceImage1:{control:"file",name:"Trace Image URL",multiple:!0},traceImage2:{control:"file",name:"Trace Image URL",multiple:!0},traceImage3:{control:"file",name:"Trace Image URL",multiple:!0},traceMode:{control:"select",options:["noFlow","showFlow","freeTrace","blindTracing","blindFreeTrace"],name:"Trace Mode"},highlightedText:{control:"text",name:"Highlighted Text"},topDisplayImage:{control:"file",name:"Top Display Image URL",multiple:!0},bottomDisplayImage:{control:"file",name:"Bottom Display Image URL",multiple:!0},spanType:{control:"select",options:["letters","words"],name:"Text Highlight Type"}},args:{traceImage1:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"],traceImage2:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"],traceImage3:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"],traceMode:"showFlow",highlightedText:"bug",topDisplayImage:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/questionBg.png"],bottomDisplayImage:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/traceBackground.png"],spanType:"letters"}},a={args:{highlightedText:"bug",spanType:"letters"},render:e=>{const t=x(e);return h`<lido-home xml-data="${t}" xmlData="${t}"></lido-home>`},parameters:{controls:{exclude:["height","width","x","y","z","bg-Color","visible","onEntry"]},actions:{argTypesRegex:"^on[A-Z].*"}}};function x(e){const t=e.traceImage1,r=e.traceImage2,i=e.traceImage3,l=e.traceMode,n=e.highlightedText,c=e.topDisplayImage,d=e.bottomDisplayImage,g=e.spanType;return!t||!r||!i?(console.error("Trace image is missing"),""):`
+import"./lit-element-BxxbMms4.js";import{x as h}from"./lit-html-DLYuhZ0i.js";const b={title:"Templates/writeWord",argTypes:{traceImage1:{control:"file",name:"Trace Image 1 URL",multiple:!0},traceImage2:{control:"file",name:"Trace Image 2 URL",multiple:!0},traceImage3:{control:"file",name:"Trace Image 3 URL",multiple:!0},traceMode:{control:"select",options:["noFlow","showFlow","freeTrace","blindTracing","blindFreeTrace"],name:"Trace Mode"},highlightedText:{control:"text",name:"Highlighted Text"},topDisplayImage:{control:"file",name:"Top Display Image URL",multiple:!0},bottomDisplayImage:{control:"file",name:"Bottom Display Image URL",multiple:!0},spanType:{control:"select",options:["letters","words"],name:"Text Highlight Type"}},args:{traceImage1:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"],traceImage2:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"],traceImage3:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"],traceMode:"showFlow",highlightedText:"bug",topDisplayImage:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/questionBg.png"],bottomDisplayImage:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/traceBackground.png"],spanType:"letters"}},a={args:{highlightedText:"bug",spanType:"letters"},render:e=>{const t=m(e);return h`<lido-home xml-data="${t}" xmlData="${t}"></lido-home>`}};function m(e){const t=e.traceImage1[0],r=e.traceImage2[0],i=e.traceImage3[0],l=e.traceMode,n=e.highlightedText,c=e.topDisplayImage[0],d=e.bottomDisplayImage[0],g=e.spanType;return!t||!r||!i?(console.error("Trace image is missing"),""):(console.log("SVG Source:",`${t}; ${r}; ${i}`),`
         <main>
             <lido-container id="lido-container" tab-index="1" objective="writeWord" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 
@@ -31,7 +31,7 @@ import"./lit-element-BxxbMms4.js";import{x as h}from"./lit-html-DLYuhZ0i.js";con
                     </lido-cell>
             </lido-container>
         </main>
-    `}var o,s,p;a.parameters={...a.parameters,docs:{...(o=a.parameters)==null?void 0:o.docs,source:{originalSource:`{
+    `)}var o,s,p;a.parameters={...a.parameters,docs:{...(o=a.parameters)==null?void 0:o.docs,source:{originalSource:`{
   args: {
     highlightedText: "bug",
     spanType: "letters"
@@ -39,13 +39,5 @@ import"./lit-element-BxxbMms4.js";import{x as h}from"./lit-html-DLYuhZ0i.js";con
   render: (args: WriteWordArgs) => {
     const xml = getContainerXml(args);
     return html\`<lido-home xml-data="\${xml}" xmlData="\${xml}"></lido-home>\`;
-  },
-  parameters: {
-    controls: {
-      exclude: ['height', 'width', 'x', 'y', 'z', 'bg-Color', 'visible', 'onEntry']
-    },
-    actions: {
-      argTypesRegex: '^on[A-Z].*'
-    }
   }
-}`,...(p=(s=a.parameters)==null?void 0:s.docs)==null?void 0:p.source}}};const y=["WriteWord"];export{a as WriteWord,y as __namedExportsOrder,u as default};
+}`,...(p=(s=a.parameters)==null?void 0:s.docs)==null?void 0:p.source}}};const y=["WriteWord"];export{a as WriteWord,y as __namedExportsOrder,b as default};
