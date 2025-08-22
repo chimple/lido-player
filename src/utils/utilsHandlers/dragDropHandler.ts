@@ -590,9 +590,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
           dropElement.classList.add('zoom-fade-in', 'after-drop-popup-drop-element');
 
-          // dragElement.style.scale = `${calculateScale()}`;
-          // dropElement.style.scale = `${calculateScale()}`;
-
           div.appendChild(dragElement);
           div.appendChild(dropElement);
 
