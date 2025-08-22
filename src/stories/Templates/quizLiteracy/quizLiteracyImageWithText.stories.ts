@@ -12,11 +12,11 @@ export default meta;
 
 export const quizLiteracyImageWithText: StoryObj = {
   args: {
-   option1:"A black bear, A black bear1.",
-   option2:"A black bear, A black bear2.",
-   option3:"A black bear, A black bear3.",
-   option4:"A black bear, A black bear4.",
-   answer: "A black bear, A black bear1.",
+   option1:"A black bear A black bear1.",
+   option2:"A black bear A black bear2.",
+   option3:"A black bear A black bear3.",
+   option4:"A black bear A black bear4.",
+   answer: "A black bear A black bear1.",
    image:['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/LetterPair/Cat.png'],
   },
 
