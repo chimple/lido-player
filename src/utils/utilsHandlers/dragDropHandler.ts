@@ -468,9 +468,9 @@ export function handleResetDragElement(
   }
   if (dragSelectedData) {
     let dragSelected = JSON.parse(dragSelectedData);
-    const dragPreDropElement = container.querySelector(`#${dragElement.getAttribute('drop-to')}`);
-    if(dragPreDropElement){
-      delete dragSelected[dragPreDropElement.getAttribute("tab-index")]
+    const dragPreDropElement = container.querySelector(`#${dragElement.getAttribute(DropToAttr)}`);
+    if (dragPreDropElement) {
+      delete dragSelected[dragPreDropElement.getAttribute('tab-index')];
     }
 
     localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
@@ -532,7 +532,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
-    const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+    const isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
@@ -750,8 +750,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 }
 
 export function updateDropBorder(element: HTMLElement): void {
-  if(!element)return;
-  if (element && !element.classList.contains('drop-element')) return;
+  if (!element || !element.classList.contains('drop-element')) return;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const showBorder = container.getAttribute('show-drop-border');
