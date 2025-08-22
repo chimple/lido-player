@@ -46,7 +46,7 @@ export class LidoTrace {
    * This can be used to control animations or transitions.
    * Defaults to `false`.
   */
-  @Prop() moving: boolean = false;
+  @State() moving: boolean = false;
 
   /**
    * A custom string value associated with the component for additional data or identification.

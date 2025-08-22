@@ -1836,11 +1836,6 @@ export namespace Components {
          */
         "mode": string;
         /**
-          * Specifies whether the component is currently in a moving state. This can be used to control animations or transitions. Defaults to `false`.
-          * @default false
-         */
-        "moving": boolean;
-        /**
           * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
          */
         "onCorrect": string;
@@ -4048,11 +4043,6 @@ declare namespace LocalJSX {
           * @default TraceMode.ShowFlow
          */
         "mode"?: string;
-        /**
-          * Specifies whether the component is currently in a moving state. This can be used to control animations or transitions. Defaults to `false`.
-          * @default false
-         */
-        "moving"?: boolean;
         /**
           * Event handler for a Correct Trace, which can be used to hide the column or trigger other custom logic.
          */
