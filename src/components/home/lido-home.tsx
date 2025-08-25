@@ -395,7 +395,7 @@ export class LidoHome {
             AudioPlayer.getI().stop();
           }}
         >
-          <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
+          <lido-image src="./Close.svg"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
@@ -405,7 +405,7 @@ export class LidoHome {
               triggerPrevcontainer();
             }}
           >
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" />
+            <lido-image src="./Previous.svg" />
           </div>
 
           {this.containers.map((_, index) => (
@@ -426,11 +426,11 @@ export class LidoHome {
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
           >
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
+            <lido-image src="./Previous.svg" />
           </div>
         </div>
         <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
-          <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
+          <lido-image visible="true" src="./AudioIcon.svg"></lido-image>
         </div>
       </div>
     );

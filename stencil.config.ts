@@ -22,6 +22,20 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
+      copy: [
+        {
+          src: 'components/home/Close.svg',
+          dest: 'build/Close.svg',
+        },
+        {
+          src: 'components/home/Previous.svg',
+          dest: 'build/Previous.svg',
+        },
+        {
+          src: 'components/home/AudioIcon.svg',
+          dest: 'build/AudioIcon.svg',
+        },
+      ],
     },
   ],
   sourceMap: false,
