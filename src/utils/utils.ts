@@ -113,6 +113,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           }
+          if(dragElement.getAttribute("hasDummy") === "true")return;
           afterDropDragHandling(dragElement, dropElement);
           break;
         }
@@ -209,6 +210,8 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
   const isAppend = container.getAttribute('drop-action') === DropAction.Move;
   const isInfinite = container.getAttribute('drop-action') === DropAction.InfiniteDrop;
 
+
+
   if (isAppend || isInfinite) {
     setTimeout(() => {
       dragElement.style.transform = 'translate(0,0)';
@@ -216,15 +219,13 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 
       let dummyElement = document.createElement('div') as HTMLElement;
       if (isInfinite) {
-        const allDummy = container.querySelectorAll(`[id=${dragElement.id}]`);
-        if (allDummy.length === 1) {
           dummyElement = cloneElementWithComputedStyles(dragElement);
           dummyElement.classList.remove('dropped');
           dummyElement.removeAttribute('drop-to');
           dummyElement.removeAttribute('drop-time');
           dragElement.style.width = dropElement.style.width;
           dragElement.style.height = dropElement.style.height;
-        }
+          dragElement.setAttribute("hasDummy", "true");
       }
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
@@ -273,8 +274,6 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 };
 
 function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
-  console.log(originalEl.outerHTML);
-
   let clone = document.createElement('div') as HTMLElement;
 
   clone.innerHTML = originalEl.outerHTML;

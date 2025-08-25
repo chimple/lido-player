@@ -85,7 +85,7 @@ export class LidoHome {
       // window.dispatchEvent(event);
       dispatchGameCompletedEvent();
 
-      this.currentContainerIndex = 0;
+      // this.currentContainerIndex = 0;
     }
     // Reset the containers array to trigger a re-render
     this.containers = [...this.containers];
