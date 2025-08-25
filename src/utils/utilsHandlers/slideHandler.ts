@@ -1,6 +1,6 @@
 import { LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
-import { executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
+import { calculateScale, executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
 import { removeHighlight } from './highlightHandler';
 
@@ -87,6 +87,9 @@ export function slidingWithScaling(element: HTMLElement): void {
   let initialX = 0;
   let initialY = 0;
   element.classList.add('drag-element');
+  let elementRect;
+  let elementLeft;
+  let elementTop;
   // slideNumbers(element);
   // Fetch the container element
   const parentElement = element.parentElement;
@@ -101,6 +104,9 @@ export function slidingWithScaling(element: HTMLElement): void {
   const onStart = (event: MouseEvent | TouchEvent): void => {
     removeHighlight(element);
     isDragging = true;
+    elementRect = element.getBoundingClientRect();
+    elementLeft = elementRect.left;
+    elementTop = elementRect.top;
 
     if (event instanceof MouseEvent) {
       startX = event.clientX;
@@ -173,7 +179,7 @@ export function slidingWithScaling(element: HTMLElement): void {
       dy = (event.touches[0].clientY - startY) / parentElementScale;
     }
 
-    const speedMultiplier = 1.5;
+    const speedMultiplier = 1 / calculateScale();
 
     const newLeft = initialX + dx * speedMultiplier;
     const newTop = initialY + dy * speedMultiplier;
@@ -206,23 +212,48 @@ export function slidingWithScaling(element: HTMLElement): void {
     // Apply styles only to the most overlapped element
     if (mostOverlappedElement) {
       if (mostOverlappedElement != element) {
+        isDragging = false;
         const parent1 = element.parentElement;
         const parent2 = mostOverlappedElement.parentElement;
 
+        const overlapRect = mostOverlappedElement.getBoundingClientRect();
+        const container = document.getElementById(LidoContainer) as HTMLElement;
+
+        const containerScale = getElementScale(container);
+
+        const dropCenterX = elementLeft + elementRect.width / 2;
+        const dropCenterY = elementTop + elementRect.height / 2;
+        const dragCenterX = overlapRect.left + overlapRect.width / 2;
+        const dragCenterY = overlapRect.top + overlapRect.height / 2;
+
+        const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
+        const scaledTop = (dropCenterY - dragCenterY) / containerScale;
+
+        mostOverlappedElement.style.transition = 'transform 0.3s ease';
+        element.style.transition = 'transform 0.3s ease';
+
+
         if (parent1 && parent2) {
-          mostOverlappedElement.style.transform = 'translate(0, 0)';
-          mostOverlappedElement.style.transition = '';
           // Temporarily detach both elements
           const elementPlaceholder = document.createComment('element-placeholder');
           const overlappedPlaceholder = document.createComment('overlapped-placeholder');
-          parent1.replaceChild(elementPlaceholder, element);
-          parent2.replaceChild(overlappedPlaceholder, mostOverlappedElement);
-          // Swap the elements
-          parent1.replaceChild(mostOverlappedElement, elementPlaceholder);
 
-          parent2.replaceChild(element, overlappedPlaceholder);
-          element.style.transform = 'translate(0, 0)';
-          element.style.transition = '';
+          // Swap the elements
+          mostOverlappedElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
+          element.style.transform = `translate(${-scaledLeft}px, ${-scaledTop}px)`;
+          setTimeout(() => {
+            parent1.replaceChild(elementPlaceholder, element);
+
+            parent2.replaceChild(overlappedPlaceholder, mostOverlappedElement);
+
+            parent1.replaceChild(mostOverlappedElement, elementPlaceholder);
+            parent2.replaceChild(element, overlappedPlaceholder);
+            mostOverlappedElement.style.transform = 'translate(0, 0)';
+            mostOverlappedElement.style.transition = '';
+
+            element.style.transform = 'translate(0, 0)';
+            element.style.transition = '';
+          }, 300);
 
           // Recalculate starting points for the swapped element
           startX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
