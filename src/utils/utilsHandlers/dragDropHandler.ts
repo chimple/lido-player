@@ -356,7 +356,7 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
     if (type === 'slide') {
       const elementArea = elementRect.width * elementRect.height;
       const otherArea = otherRect.width * otherRect.height;
-      const minRequiredOverlap = Math.min(elementArea, otherArea) * 0.8;
+      const minRequiredOverlap = Math.min(elementArea, otherArea) * 0.1;
 
       if (overlapArea >= minRequiredOverlap && overlapArea > maxOverlapArea) {
         maxOverlapArea = overlapArea;
