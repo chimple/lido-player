@@ -419,7 +419,6 @@ export function handleResetDragElement(
   if (cloneDragElement) {
     animateDragToTarget(dragElement, cloneDragElement, container);
     setTimeout(() => {
-
       if (container.getAttribute('drop-action') === DropAction.InfiniteDrop) {
         dragElement.style.width = cloneDragElement.style.width;
         dragElement.style.height = cloneDragElement.style.height;
@@ -573,11 +572,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
+          
           div.classList.add('after-drop-popup-container');
+          const hasType = dragElement.nextElementSibling;
 
           // Remove from old parents
-          dragElement.parentElement.parentElement.remove();
-          dropElement.parentElement.parentElement.remove();
+          if (hasType && hasType.getAttribute("type") === 'drag') {
+            dragElement.remove();
+            dropElement.remove();
+          } else {
+            dragElement.parentElement.parentElement.remove();
+            dropElement.parentElement.parentElement.remove();
+          }
 
           // Add animation and popup classes
           dragElement.classList.add('zoom-fade-in', 'after-drop-popup-drag-element');
@@ -726,7 +732,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   dragToDropMap.set(dragElement, dropElement);
 
   // Add pulse and highlight effect for a successful match
-  const isCorrect = (dropElement['value'].toLowerCase()).includes((dragElement['value']).toLowerCase());
+  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
   if (isCorrect) {
     // Perform actions if onMatch is defined

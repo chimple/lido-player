@@ -1,5 +1,25 @@
 <main>
 
+	<lido-container id="lido-container" is-allow-only-correct="true" objective="Uma alimentação saudável é essencial.,Devemos evitar contato com vírus.,O carro da dona violeta é amarelo." visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" dropAttr="EnableAnimation">
+				<!-- Chimple Avatar -->
+		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="300px" x="landscape.870px,portrait.300px" y="landscape.560px,portrait.1400px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="">
+				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+				</lido-avatar>
+		</lido-cell>
+		<lido-cell visible="true" layout="row" width="landscape.90%, portrait.100%" height="100%" bg-color="transparent" onEntry="this.justifyContent='space-between';">
+			<lido-cell visible="true" layout="col" width="landscape.45%, portrait.60%" height="90%" bg-color="transparent">
+				<lido-text visible="true" id="drag1" width="landscape.700px, portrait.470px" tab-index="1" audio="" string="Uma alimentação saudável é essencial." value="Uma alimentação saudável é essencial." font-size="landscape.72px, portrait.62px" font-color="black" onEntry="this.fontWeight='500'; this.lineHeight='80px';" border-radius="16px" bg-color="white" type="drag" padding="10px"></lido-text>
+				<lido-text visible="true" id="drag2" width="landscape.700px, portrait.470px" tab-index="2" audio="" string="Devemos evitar contato com vírus." value="Devemos evitar contato com vírus." font-size="landscape.72px, portrait.62px" font-color="black" onEntry="this.fontWeight='500'; this.lineHeight='80px';" border-radius="16px" bg-color="white" type="drag" padding="10px"></lido-text>
+				<lido-text visible="true" id="drag3" width="landscape.700px, portrait.470px" tab-index="3" audio="" string="O carro da dona violeta é amarelo." value="O carro da dona violeta é amarelo." font-size="landscape.72px, portrait.62px" font-color="black" onEntry="this.fontWeight='500'; this.lineHeight='80px';" border-radius="16px" bg-color="white" type="drag" padding="10px"></lido-text>
+			</lido-cell>
+			<lido-cell visible="true" layout="col" width="landscape.30%, portrait.40%" height="90%" bg-color="transparent" onEntry="this.alignItems='end';">
+				<lido-image visible="true" id="drop1" width="landscape.240px, portrait.300px" tab-index="4" audio="" height="landscape.240px, portrait.300px" type="drop" border-radius="6px" value="Uma alimentação saudável é essencial." src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/hygiene%201.png" bg-color="white"></lido-image>
+				<lido-image visible="true" id="drop2" width="landscape.240px, portrait.300px" tab-index="5" audio="" height="landscape.240px, portrait.300px" type="drop" border-radius="6px" value="Devemos evitar contato com vírus." src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/healthy_food.png" bg-color="white"></lido-image>
+				<lido-image visible="true" id="drop3" width="landscape.240px, portrait.300px" tab-index="6" audio="" height="landscape.240px, portrait.300px" type="drop" border-radius="6px" value="O carro da dona violeta é amarelo." src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/hospital_with_patients.png" bg-color="white"></lido-image>
+			</lido-cell>
+		</lido-cell>
+	</lido-container>
+
 <lido-container id="lido-container" value="maincontainer" visible="true" objective="A black bear A black bear1."  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png"  onEntry="" is-Continue-On-Correct="true" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.307px,portrait.401px" width="landscape.311px,portrait.401px" x="landscape.80%, portrait.24%" y="landscape.692px, portrait.73%" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" bg-color="transparent">
@@ -59,7 +79,6 @@
 
 	</lido-cell>
 </lido-container>
-
 
 <lido-container id="lido-container" visible="true" objective="y,o,u" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" drop-action="infinite-drop">
 
