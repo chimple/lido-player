@@ -102,7 +102,7 @@ export class LidoTrace {
   /**
    * URL for the finger hint image
    */
-  @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/finger.png';
+  @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg';
 
   /**
    * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
@@ -337,26 +337,87 @@ export class LidoTrace {
     return Array.from(svg.querySelectorAll('path, line'));
   }
 
-  // Create flow markers along the path to guide the user
-  createFlowMarkersForPath(path: SVGGeometryElement, markerCount = 10) {
-    const totalLength = path.getTotalLength();
-    const interval = totalLength / (markerCount + 1); // Space markers evenly
-    const markers: SVGPolygonElement[] = [];
-    for (let i = 1; i <= markerCount; i++) {
-      const point = path.getPointAtLength(i * interval);
-      const nextPoint = path.getPointAtLength((i + 0.5) * interval); // Slightly ahead point for direction
+  // Create a single dotted line with an arrow at the end for the entire path
+  createFlowMarkersForPath(path: SVGGeometryElement) {
 
-      // Create an arrow marker
-      const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x);
-      const arrowMarker = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-      arrowMarker.setAttribute('points', '-5,-5 0,0 -5,5');
-      arrowMarker.setAttribute('fill', 'blue');
-      arrowMarker.setAttribute('transform', `translate(${point.x},${point.y}) rotate(${(angle * 180) / Math.PI})`);
-      arrowMarker.setAttribute('class', 'lido-flow-indicator');
-      markers.push(arrowMarker);
-      path.parentNode?.appendChild(arrowMarker); // Append to the same SVG container
+    if (!path) return;
+
+    const svg = path.ownerSVGElement;
+    if (!svg) return;
+
+    // --- 1. Create the dotted line that follows the same path ---
+
+    // Create a new <path> element that will visually represent the flow (dotted line)
+    const dottedLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+    // Copy the "d" (path drawing instructions) from the original path
+    dottedLine.setAttribute('d', path.getAttribute('d') || '');
+
+
+    dottedLine.setAttribute('stroke', 'blue');
+    dottedLine.setAttribute('stroke-width', '2');
+
+    // Define a repeating pattern of dashes: "6 units on, 6 units off"
+    dottedLine.setAttribute('stroke-dasharray', '6,6'); 
+    dottedLine.setAttribute('fill', 'none');
+
+    // Add a class name for styling or later querying
+    dottedLine.setAttribute('class', 'lido-flow-indicator');
+
+    path.parentNode?.appendChild(dottedLine);
+
+    // --- 2. Ensure we only add <defs> + marker once per SVG ---
+
+    // Look for an existing <defs> section with our custom ID inside the SVG
+    let defs = svg.querySelector('defs#lido-flow-defs');
+
+    // If it doesn’t exist, create one and insert it at the top of the SVG
+    if (!defs) {
+      defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      defs.setAttribute('id', 'lido-flow-defs');
+      svg.insertBefore(defs, svg.firstChild); // defs should usually be at the beginning
     }
-    return markers;
+
+    // --- 3. Create a unique marker for this path ---
+
+    const uniqueId = `arrow-${Math.random().toString(36)}`;
+
+    // Create the <marker> element that defines the arrowhead
+    const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+
+
+    marker.setAttribute('id', uniqueId);
+
+    // Set the width/height of the marker viewport (10x10 units)
+    marker.setAttribute('markerWidth', '10');
+    marker.setAttribute('markerHeight', '10');
+
+    // Reference point inside the marker (where the path will attach to arrow)
+    marker.setAttribute('refX', '5');
+    marker.setAttribute('refY', '5');
+
+    // Automatically rotate arrowhead to match the path direction
+    marker.setAttribute('orient', 'auto');
+
+    // Scale the marker relative to the stroke width of the path
+    marker.setAttribute('markerUnits', 'strokeWidth');
+
+    // --- Create the arrow shape itself ---
+
+    const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+    // Define the arrowhead shape using SVG path commands
+    arrowPath.setAttribute('d', 'M0,0 L10,5 L0,10 L2,5 Z'); 
+
+    arrowPath.setAttribute('fill', 'blue');
+    marker.appendChild(arrowPath);
+    defs.appendChild(marker);
+
+    // --- 4. Attach the arrow marker to the end of the dotted line  ---
+  
+    dottedLine.setAttribute('marker-end', `url(#${uniqueId})`);
+
+    return dottedLine;
   }
 
   // Show or hide flow indicators based on mode
@@ -426,8 +487,8 @@ export class LidoTrace {
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
-    circle.setAttribute('r', `calc(${strokeWidth || 10} / 2)`); // Radius of the draggable circle
-    circle.setAttribute('fill', 'red');
+    circle.setAttribute('r', `calc(${strokeWidth || 10} / 3)`); // Radius of the draggable circle
+    circle.setAttribute('fill', '#81C127');
     state.svg?.appendChild(circle);
     state.circle = circle;
 

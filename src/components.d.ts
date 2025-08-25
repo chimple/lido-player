@@ -1812,7 +1812,7 @@ export namespace Components {
         "delayVisible": string;
         /**
           * URL for the finger hint image
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/finger.png'
+          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg'
          */
         "fingerHintUrl": string;
         /**
@@ -4020,7 +4020,7 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * URL for the finger hint image
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/finger.png'
+          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg'
          */
         "fingerHintUrl"?: string;
         /**
