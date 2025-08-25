@@ -25,7 +25,7 @@ svg {
 
 #lido-draggableCircle {
   cursor: pointer;
-  fill: red;
+  fill: #81C127;
   transition: fill 0.2s, r 0.2s;
 }
 
@@ -68,6 +68,13 @@ button {
 
 .lido-trace-path-green {
   /* stroke: green !important; */
+}
+
+.lido-flow-indicator {
+  stroke: blue;
+  stroke-width: 2;
+  stroke-dasharray: 6, 6; /* Uniform dotted line */
+  fill: none;
 }
 
 .lido-trace {
