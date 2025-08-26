@@ -232,7 +232,6 @@ export function slidingWithScaling(element: HTMLElement): void {
         mostOverlappedElement.style.transition = 'transform 0.3s ease';
         element.style.transition = 'transform 0.3s ease';
 
-
         if (parent1 && parent2) {
           // Temporarily detach both elements
           const elementPlaceholder = document.createComment('element-placeholder');
@@ -278,10 +277,12 @@ export function slidingWithScaling(element: HTMLElement): void {
     element.style.cursor = 'move';
     element.style.transform = 'translate(0, 0)';
 
-    if (overlapElement) {
-      slideCompleted(element);
-      overlapElement = false;
-    }
+    setTimeout(() => {
+      if (overlapElement) {
+        slideCompleted(element);
+        overlapElement = false;
+      }
+    }, 300);
   };
   // Initialize draggable element styles
   element.style.cursor = 'move';
