@@ -460,7 +460,7 @@ export class LidoHome {
     }
 
     return (
-      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length}>
+      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length} style={style} >
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
         {/* Render navigation dots below the container */}
