@@ -113,7 +113,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           } else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           }
-          if(dragElement.getAttribute("hasDummy") === "true")return;
+          if (dragElement.getAttribute('hasDummy') === 'true') return;
           afterDropDragHandling(dragElement, dropElement);
           break;
         }
@@ -210,8 +210,6 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
   const isAppend = container.getAttribute('drop-action') === DropAction.Move;
   const isInfinite = container.getAttribute('drop-action') === DropAction.InfiniteDrop;
 
-
-
   if (isAppend || isInfinite) {
     setTimeout(() => {
       dragElement.style.transform = 'translate(0,0)';
@@ -219,13 +217,13 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 
       let dummyElement = document.createElement('div') as HTMLElement;
       if (isInfinite) {
-          dummyElement = cloneElementWithComputedStyles(dragElement);
-          dummyElement.classList.remove('dropped');
-          dummyElement.removeAttribute('drop-to');
-          dummyElement.removeAttribute('drop-time');
-          dragElement.style.width = dropElement.style.width;
-          dragElement.style.height = dropElement.style.height;
-          dragElement.setAttribute("hasDummy", "true");
+        dummyElement = cloneElementWithComputedStyles(dragElement);
+        dummyElement.classList.remove('dropped');
+        dummyElement.removeAttribute('drop-to');
+        dummyElement.removeAttribute('drop-time');
+        dragElement.style.width = dropElement.style.width;
+        dragElement.style.height = dropElement.style.height;
+        dragElement.setAttribute('hasDummy', 'true');
       }
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
@@ -547,15 +545,16 @@ export const validateObjectiveStatus = async () => {
         await executeActions(onCorrect, container);
       }
       triggerNextContainer();
+      await calculateScore();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
       await executeActions(onInCorrect, container);
       const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
       if (!isContinueOnCorrect) {
         triggerNextContainer();
+        await calculateScore();
       }
     }
-    await calculateScore();
   }
 };
 
