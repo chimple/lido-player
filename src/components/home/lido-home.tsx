@@ -47,7 +47,7 @@ export class LidoHome {
   /**
    * Current index of the container being displayed.
    */
-  @State() currentContainerIndex: number = this.initialIndex;
+  @State() currentContainerIndex: number | null = this.initialIndex;
 
   /**
    * Boolean that controls the visibility of the exit confirmation popup.
@@ -84,7 +84,7 @@ export class LidoHome {
       // const event = new CustomEvent('gameCompleted');
       // window.dispatchEvent(event);
       dispatchGameCompletedEvent();
-      this.currentContainerIndex = 0;
+      this.currentContainerIndex = null;
     }
     // Reset the containers array to trigger a re-render
     this.containers = [...this.containers];
@@ -286,6 +286,7 @@ export class LidoHome {
   private updateArrowVisibility = () => {
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
+      if(!containerElement)return;
       const prevbtn = containerElement.getAttribute('show-prev-button');
       const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
