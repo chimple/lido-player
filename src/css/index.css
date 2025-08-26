@@ -88,7 +88,7 @@ body {
   flex-direction: row-reverse;
   align-items: center;
   justify-content: center !important;
-  gap: 145px;
+  gap: 80px;
 }
 
 /* Drag element inside popup */

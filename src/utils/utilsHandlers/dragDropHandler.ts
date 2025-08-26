@@ -566,9 +566,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
-
           div.classList.add('after-drop-popup-container');
           const hasType = dragElement.nextElementSibling;
+          dragElement.style.scale = `1`
+          dropElement.style.scale = `1`
 
           // Remove from old parents
           if (hasType && hasType.getAttribute('type') === 'drag') {
