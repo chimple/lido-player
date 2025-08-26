@@ -566,9 +566,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
-
           div.classList.add('after-drop-popup-container');
           const hasType = dragElement.nextElementSibling;
+          dragElement.style.scale = `1`
+          dropElement.style.scale = `1`
 
           // Remove from old parents
           if (hasType && hasType.getAttribute('type') === 'drag') {
@@ -589,17 +590,17 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
           dropElement.classList.remove('empty');
 
-          setTimeout(() => {
-            dragElement.classList.remove('zoom-fade-in');
-            dropElement.classList.remove('zoom-fade-in');
+          // setTimeout(() => {
+          //   dragElement.classList.remove('zoom-fade-in');
+          //   dropElement.classList.remove('zoom-fade-in');
 
-            dragElement.classList.add('zoom-fade-out');
-            dropElement.classList.add('zoom-fade-out');
+          //   dragElement.classList.add('zoom-fade-out');
+          //   dropElement.classList.add('zoom-fade-out');
 
-            setTimeout(() => {
-              div.remove();
-            }, 800); // match animation duration
-          }, 2000); // stay for 2 seconds
+          //   setTimeout(() => {
+          //     div.remove();
+          //   }, 800); // match animation duration
+          // }, 2000); // stay for 2 seconds
         }, 250);
       }
     }
