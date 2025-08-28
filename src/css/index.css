@@ -9,6 +9,11 @@ body {
   height: 100vh;
 }
 
+/* Prevent any field selection  */
+* {
+  user-select: none;
+}
+
 .lido-disable-check-button {
   pointer-events: none;
   background-color: #9393935c !important;

@@ -272,6 +272,7 @@ export class LidoContainer {
       left: '50%',
       transform: 'translate(-50%, -50%)', // Centering the container
       margin: this.margin,
+      userSelect: 'none',  // Prevent any field selection 
     };
     console.log('🚀 ~ LidoContainer ~ canplay:', this.canplay);
 

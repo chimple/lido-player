@@ -3,6 +3,7 @@ import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, Pr
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
+import { use } from 'react';
 
 /**
  * @component LidoHome
@@ -454,8 +455,12 @@ export class LidoHome {
       return <div>Please provide XML data.</div>;
     }
 
+    const style = {
+      userSelect: 'none', // Prevent any field selection 
+    }
+
     return (
-      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length}>
+      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length} style={style} >
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
         {/* Render navigation dots below the container */}
