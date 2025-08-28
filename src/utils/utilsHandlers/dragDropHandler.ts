@@ -28,6 +28,11 @@ export function enableOptionArea(element: HTMLElement) {
   });
 }
 
+let isDraggingDisabled = false;
+export const setDraggingDisabled = (disabled: boolean) => {
+  isDraggingDisabled = disabled;
+};
+export const getDraggingDisabled = () => isDraggingDisabled;
 export function enableDraggingWithScaling(element: HTMLElement): void {
   let isDragging = false;
   let isClicked = false;
@@ -52,6 +57,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+     if (isDraggingDisabled) {
+     isDragging = false;
+    return; 
+  }
     AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
@@ -172,6 +181,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
     if (!isDragging) return;
+    if (isDraggingDisabled) {
+     isDragging = false;
+    return; 
+  }
     isClicked = false;
     element.style.transition = 'none';
     const containerScale = getElementScale(container);
@@ -549,7 +562,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           localStorage.setItem(localStorageKey, JSON.stringify(stored));
         }
         handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
-      }, 100);
+      }, 500);
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
         childs.forEach(item => {
