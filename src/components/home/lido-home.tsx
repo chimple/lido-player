@@ -9,7 +9,10 @@ import {
   DropHasDrag,
   GameExitKey,
   LidoContainer,
-  ConstNavIcons,
+  exitUrl,
+  prevUrl,
+  nextUrl,
+  speakUrl,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer } from '../../utils/utils';
@@ -158,10 +161,10 @@ export class LidoHome {
    */
   componentWillLoad() {
     this.navBarIcons = {
-      exit: this.exitButtonUrl || ConstNavIcons.exit,
-      prev: this.prevButtonUrl || ConstNavIcons.prev,
-      next: this.nextButtonUrl || ConstNavIcons.next,
-      speak: this.speakerButtonUrl || ConstNavIcons.speak,
+      exit: this.exitButtonUrl || exitUrl,
+      prev: this.prevButtonUrl || prevUrl,
+      next: this.nextButtonUrl || nextUrl,
+      speak: this.speakerButtonUrl || speakUrl
     };
     // Listen for 'NextContainerKey' event to transition between containers
     window.addEventListener(NextContainerKey, () => {
@@ -186,7 +189,7 @@ export class LidoHome {
   }
 
   @State() showDotsandbtn: boolean = false;
-  async componentDidLoad() {
+  componentDidLoad() {
     setTimeout(() => {
       this.showDotsandbtn = true;
     }, 10);
@@ -198,7 +201,7 @@ export class LidoHome {
     //   this.updateBackgroundImage();
     // }
 
-    await this.handleIcons();
+    this.handleIcons();
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
@@ -217,10 +220,10 @@ export class LidoHome {
     };
 
     this.navBarIcons = {
-      exit: `${await checkUrl(this.exitButtonUrl, ConstNavIcons.exit)}`,
-      prev: `${await checkUrl(this.prevButtonUrl, ConstNavIcons.prev)}`,
-      next: `${await checkUrl(this.nextButtonUrl, ConstNavIcons.next)}`,
-      speak: `${await checkUrl(this.speakerButtonUrl, ConstNavIcons.speak)}`,
+      exit: `${await checkUrl(this.exitButtonUrl, exitUrl)}`,
+      prev: `${await checkUrl(this.prevButtonUrl, prevUrl)}`,
+      next: `${await checkUrl(this.nextButtonUrl, nextUrl)}`,
+      speak: `${await checkUrl(this.speakerButtonUrl, speakUrl)}`,
     };
   }
 
