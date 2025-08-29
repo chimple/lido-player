@@ -896,27 +896,20 @@ export const appendingDragElementsInDrop = () => {
       const drop = dropElement as HTMLElement;
       const container = document.getElementById(LidoContainer) as HTMLElement;
       const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
-      if (isAllowOnlyCorrect === true) {
-        if (drop['value'] === drag['value']) {
-          // Get original dimensions of the drag element
-          const originalWidth = drag.offsetWidth;
-          const originalHeight = drag.offsetHeight;
-
+      if(isAllowOnlyCorrect === true) 
+      {
+        if (drop['value'] === drag['value']) 
+        {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
-
-          resizeDragAndDropElementsForRocket(drag, drop, originalWidth, originalHeight);
         }
-      } else {
-        if (drop['value'].includes(drag['value'])) {
-          // Get original dimensions of the drag element
-          const originalWidth = drag.offsetWidth;
-          const originalHeight = drag.offsetHeight;
-
+      } 
+      else 
+      {
+        if (drop['value'].includes(drag['value'])) 
+        {                    
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
-
-          resizeDragAndDropElementsForRocket(drag, drop, originalWidth, originalHeight);
         }
       }
     });
@@ -939,35 +932,4 @@ export const reduceSizeToOriginal = () => {
       }
     }
   });
-};
-
-export const resizeDragAndDropElementsForRocket = (drag: HTMLElement, drop: HTMLElement, width: number, height: number) => {
-  const container = document.getElementById(LidoContainer) as HTMLElement;
-  if (!container) return;
-
-  const Rocket = document.getElementById('fullRrocket') as HTMLElement;
-  if (!Rocket) return;
-
-  // Get the scale of the container
-  const containerScale = getElementScale(container);
-
-  // Hide child image inside lido-image
-  const childImage = drop.querySelector('img');
-  if (childImage) {
-    // Set the opacity to 1 for the drop element
-    drop.style.opacity = '1';
-
-    // Hide child image inside lido-image
-    childImage.remove(); // remove the child image
-
-    // Ensure dropped lido-text remains visible
-    const childText = drop.querySelector('lido-text');
-    if (childText) {
-      childText.style.opacity = '1';
-    }
-
-    //  Ensure dropped text retains its original size
-    drag.style.width = `${width / containerScale}px`;
-    drag.style.height = `${height}px`;
-  }
 };
