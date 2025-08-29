@@ -40,6 +40,30 @@ export class LidoRoot {
   @Prop() baseUrl: string = '';
 
   /**
+   * Custom URL for the Exit button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() exitButtonUrl: string;
+
+  /**
+   * Custom URL for the Previous button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() prevButtonUrl: string;
+
+  /**
+   * Custom URL for the Next button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() nextButtonUrl: string;
+
+  /**
+   * Custom URL for the Speaker button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() speakerButtonUrl: string;
+
+  /**
    * State variable to hold the XML data fetched from the specified path or URL.
    */
   @State() xmlData: string;
@@ -90,6 +114,6 @@ export class LidoRoot {
     }
 
     // Once the XML data is loaded, pass it to the `lido-home` component
-    return <lido-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl}></lido-home>;
+    return <lido-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
   }
 }

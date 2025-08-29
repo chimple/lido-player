@@ -387,34 +387,19 @@ function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElemen
   if (!targetElement || !dragElement || !container) return;
   const dropRect = targetElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
-  if (container.getAttribute('drop-action') === DropAction.InfiniteDrop) {
-    const style = window.getComputedStyle(dragElement);
-    const matrix = new DOMMatrixReadOnly(style.transform);
-    const currentX = matrix.m41 || 0;
-    const currentY = matrix.m42 || 0;
+  const style = window.getComputedStyle(dragElement);
+  const matrix = new DOMMatrixReadOnly(style.transform);
+  const currentX = matrix.m41 || 0;
+  const currentY = matrix.m42 || 0;
 
-    const dx = dropRect.left - dragRect.left;
-    const dy = dropRect.top - dragRect.top;
+  const dx = dropRect.left - dragRect.left;
+  const dy = dropRect.top - dragRect.top;
 
-    const finalX = currentX + dx * (1 / calculateScale());
-    const finalY = currentY + dy * (1 / calculateScale());
+  const finalX = currentX + dx * (1 / calculateScale());
+  const finalY = currentY + dy * (1 / calculateScale());
 
-    dragElement.style.transition = 'transform 0.5s ease';
-    dragElement.style.transform = `translate(${finalX}px, ${finalY}px)`;
-  } else {
-    const containerScale = getElementScale(container); // Assuming you have this function
-
-    const dropCenterX = dropRect.left + dropRect.width / 2;
-    const dropCenterY = dropRect.top + dropRect.height / 2;
-    const dragCenterX = dragRect.left + dragRect.width / 2;
-    const dragCenterY = dragRect.top + dragRect.height / 2;
-
-    const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-    const scaledTop = (dropCenterY - dragCenterY) / containerScale;
-
-    dragElement.style.transition = transition;
-    dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-  }
+  dragElement.style.transition = 'transform 0.5s ease';
+  dragElement.style.transform = `translate(${finalX}px, ${finalY}px)`;
 }
 export function handleResetDragElement(
   dragElement: HTMLElement,
@@ -581,8 +566,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           container.append(div);
           div.classList.add('after-drop-popup-container');
           const hasType = dragElement.nextElementSibling;
-          dragElement.style.scale = `1`
-          dropElement.style.scale = `1`
+          dragElement.style.scale = `1`;
+          dropElement.style.scale = `1`;
 
           // Remove from old parents
           if (hasType && hasType.getAttribute('type') === 'drag') {
@@ -911,10 +896,8 @@ export const appendingDragElementsInDrop = () => {
       const drop = dropElement as HTMLElement;
       const container = document.getElementById(LidoContainer) as HTMLElement;
       const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
-      if(isAllowOnlyCorrect === true) 
-      {
-        if (drop['value'] === drag['value']) 
-        {
+      if (isAllowOnlyCorrect === true) {
+        if (drop['value'] === drag['value']) {
           // Get original dimensions of the drag element
           const originalWidth = drag.offsetWidth;
           const originalHeight = drag.offsetHeight;
@@ -922,14 +905,10 @@ export const appendingDragElementsInDrop = () => {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
 
-          resizeDragAndDropElementsForRocket(drag,drop,originalWidth,originalHeight);
-        
+          resizeDragAndDropElementsForRocket(drag, drop, originalWidth, originalHeight);
         }
-      } 
-      else 
-      {
-        if (drop['value'].includes(drag['value'])) 
-        {                    
+      } else {
+        if (drop['value'].includes(drag['value'])) {
           // Get original dimensions of the drag element
           const originalWidth = drag.offsetWidth;
           const originalHeight = drag.offsetHeight;
@@ -937,8 +916,7 @@ export const appendingDragElementsInDrop = () => {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
 
-          resizeDragAndDropElementsForRocket(drag,drop,originalWidth,originalHeight);
-          
+          resizeDragAndDropElementsForRocket(drag, drop, originalWidth, originalHeight);
         }
       }
     });
@@ -963,37 +941,33 @@ export const reduceSizeToOriginal = () => {
   });
 };
 
-export const resizeDragAndDropElementsForRocket = (drag : HTMLElement,drop :HTMLElement,width : number, height : number) => {
+export const resizeDragAndDropElementsForRocket = (drag: HTMLElement, drop: HTMLElement, width: number, height: number) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  if(!container) return;
+  if (!container) return;
 
-  const Rocket = document.getElementById("fullRrocket") as HTMLElement;
-  if(!Rocket) return;
+  const Rocket = document.getElementById('fullRrocket') as HTMLElement;
+  if (!Rocket) return;
 
   // Get the scale of the container
   const containerScale = getElementScale(container);
 
   // Hide child image inside lido-image
   const childImage = drop.querySelector('img');
-  if(childImage) 
-  {      
+  if (childImage) {
     // Set the opacity to 1 for the drop element
     drop.style.opacity = '1';
 
     // Hide child image inside lido-image
     childImage.remove(); // remove the child image
-  
+
     // Ensure dropped lido-text remains visible
     const childText = drop.querySelector('lido-text');
-    if (childText) 
-    {
+    if (childText) {
       childText.style.opacity = '1';
     }
 
     //  Ensure dropped text retains its original size
-    drag.style.width = `${width/containerScale}px`;
+    drag.style.width = `${width / containerScale}px`;
     drag.style.height = `${height}px`;
   }
-}
-
-
+};
