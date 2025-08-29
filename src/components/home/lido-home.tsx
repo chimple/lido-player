@@ -157,6 +157,12 @@ export class LidoHome {
    * between containers and parses the XML data into containers.
    */
   componentWillLoad() {
+    this.navBarIcons = {
+      exit: this.exitButtonUrl || ConstNavIcons.exit,
+      prev: this.prevButtonUrl || ConstNavIcons.prev,
+      next: this.nextButtonUrl || ConstNavIcons.next,
+      speak: this.speakerButtonUrl || ConstNavIcons.speak,
+    };
     // Listen for 'NextContainerKey' event to transition between containers
     window.addEventListener(NextContainerKey, () => {
       this.NextContainerKey();
@@ -180,7 +186,7 @@ export class LidoHome {
   }
 
   @State() showDotsandbtn: boolean = false;
-  componentDidLoad() {
+  async componentDidLoad() {
     setTimeout(() => {
       this.showDotsandbtn = true;
     }, 10);
@@ -192,7 +198,7 @@ export class LidoHome {
     //   this.updateBackgroundImage();
     // }
 
-    this.handleIcons();
+    await this.handleIcons();
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
