@@ -2,15 +2,11 @@ import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 type RocketArgs = {
-  correct1: string;
-  correct2: string;
-  correct3: string;
+  correct: string[];
   options: string[];
   TextBackgroundImage: string[];
   letterBoardText: string;
-  dropImage1: string[];
-  dropImage2: string[];
-  dropImage3: string[];
+  dropImage: string[];
   backgroundImage: string[];
   colors: string[];
 };
@@ -18,20 +14,10 @@ type RocketArgs = {
 const meta: Meta<RocketArgs> = {
   title: 'Templates/RocketGame',
   argTypes: {
-    correct1: {
+    correct: {
       control: 'object',
-      description: 'correct letter',
-      defaultValue: 'h',
-    },
-    correct2: {
-      control: 'object',
-      description: 'correct letter',
-      defaultValue: 'i',
-    },
-    correct3: {
-      control: 'object',
-      description: 'correct letter',
-      defaultValue: 't',
+      description: 'Array of correct letter',
+      defaultValue: ['h', 'i', 't'],
     },
     options: {
       control: 'object',
@@ -49,22 +35,10 @@ const meta: Meta<RocketArgs> = {
       description: 'The word to display (e.g. "HIT")',
       defaultValue: 'HIT',
     },
-    dropImage1: {
+    dropImage: {
       control: 'file',
-      description: 'Drop slot for first letter',
+      description: 'Drop slot for letter',
       defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg',
-      multiple: true,
-    },
-    dropImage2: {
-      control: 'file',
-      description: 'Drop slot for second letter',
-      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg',
-      multiple: true,
-    },
-    dropImage3: {
-      control: 'file',
-      description: 'Drop slot for third letter',
-      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg',  
       multiple: true,
     },
     backgroundImage: {
@@ -80,15 +54,11 @@ const meta: Meta<RocketArgs> = {
     },
   },
   args: {
-    correct1: 'h',
-    correct2: 'i',
-    correct3: 't',
+    correct: ['h', 'i', 't'],
     options: ['k', 'q', 'd', 'x', 'a', 'p', 'g', 'l', 'w', 'i', 'f', 'm', 'e', 'z', 'j', 'o', 'b', 'n', 'h', 't', 's', 'v', 'r', 'c', 'y', 'u'],
     TextBackgroundImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/hit_img_1.png'],
     letterBoardText: 'HIT',
-    dropImage1: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg'],
-    dropImage2: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg'],
-    dropImage3: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg'],
+    dropImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg'],
     backgroundImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Background_Sky.png'],
     colors: ['#F34D08', '#81C127', '#FFC805', '#F55376', '#5D44BD'],
   },
@@ -106,41 +76,46 @@ export const Rocket: StoryObj<RocketArgs> = {
 function getContainerXml(args: RocketArgs) {
 
   // Extract letters from correct array
-  const firstRowLetters = args.options.slice(0, 13);
-  const secondRowLetters = args.options.slice(13);
-  const firstRowStart = 16;
-  const secondRowStart = firstRowStart + firstRowLetters.length + 1;
+  const drags = args.options.slice(0);
+  const indexStart = 16;
   const pickedColors = args.colors;
 
+  // ✅ Dynamic objective
+  const objective = args.correct.join(",");
+
+  // ✅ Wing positioning based on DROP elements
+  const dropCount = args.correct.length;
+
+  // wing dynamic positions
+  const wingXLandscape =  26 + dropCount * 9;
+  const wingXPortrait  =  31 + dropCount * 9;
+
+  // create drop elements
+  const dropElements = args.correct.map((letter, index) => {
+    const marginleft = index === 0 ? -75 : 0;
+    return `
+      <lido-image value="${letter}" string="${letter}" is-slice="true" onEntry="this.padding='0px'; this.margin-left='${marginleft}px'; this.margin-top='24px'; this.display='flex';" bg-color="transparent" id="drop-image${index + 1}" disable-edit="true" type="drop" tab-index="${9 + index}" visible="true" src="${args.dropImage}" height="landscape.150px, portrait.150px" width="landscape.150px, portrait.150px">
+      </lido-image>
+    `;
+  }).join('');
+
   // Create drag elements for first row
-  const firstRowElements = firstRowLetters
+  const dragElements = drags
     .map((letter, index) => {
       //const pickedColorIndex = Math.floor(Math.random(0,100) * pickedColors.length);
       const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
       return `
-      <lido-text bg-color="${color}" string="${letter}" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/sounds/${letter}.mp3" onTouch="this.speak='true';" onEntry="this.padding='0px'; this.boxShadow='none !important';" font-size="100px" font-color="white" font-family="Baloo Bhai 2" id="${letter}" visible="true" value="${letter}" tab-index="${firstRowStart + index}" dropAttr="infinite-drop" type="drag" disable-edit="true" height="landscape.160px, portrait.200px" width="landscape.6%, portrait.10%">
+      <lido-text bg-color="${color}" string="${letter}" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/sounds/${letter}.mp3" onTouch="this.speak='true';" onEntry="this.padding='0px'; this.boxShadow='none !important';" font-size="75px" font-color="white" font-family="Baloo Bhai 2" id="${letter}" visible="true" value="${letter}" tab-index="${indexStart + index}" type="drag" disable-edit="true" height="landscape.125px, portrait.150px" width="landscape.100%, portrait.95%">
       </lido-text>
     `;
     })
     .join('');
-
-  // Create drag elements for second row
-  const secondRowElements = secondRowLetters
-    .map((letter, index) => {
-      // used random color from the pickedColors array
-      const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
-      return `
-      <lido-text bg-color="${color}" string="${letter}" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/sounds/${letter}.mp3" onTouch="this.speak='true';" onEntry="this.padding='0px'; this.boxShadow='none !important';" font-size="100px" font-color="white" font-family="Baloo Bhai 2" id="${letter}" visible="true" value="${letter}" tab-index="${secondRowStart + index}" dropAttr="infinite-drop" type="drag" disable-edit="true" height="landscape.160px, portrait.200px" width="landscape.6%, portrait.10%">
-      </lido-text>
-    `;
-    })
-    .join('');
-
   
   return `
   <main> 
-      <lido-container id="lido-container" objective="${args.correct1}, ${args.correct2}, ${args.correct3}" appendToDropOnCompletion="true" show-drop-border="false" tab-index="1" is-allow-only-correct="true" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 3s linear'; this.sleep='2000';" show-check="false" bg-image="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false">
-          <lido-cell layout="pos" id="pos1" disable-edit="true" tab-index="2" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.-60px, portrait.250px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
+       
+      <lido-container id="lido-container" objective="${objective}" show-drop-border="false" tab-index="1" is-allow-only-correct="true" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s 1s linear'; this.sleep='4000';" show-check="false" bg-image="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false" drop-action="infinite-drop">
+          <lido-cell layout="pos" id="pos1" disable-edit="true" tab-index="2" value="pos2" height="305px" width="227px" x="landscape.1270px, portrait.541px" y="landscape.-60px, portrait.250px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
               <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
               </lido-avatar>
           </lido-cell>
@@ -149,32 +124,31 @@ function getContainerXml(args: RocketArgs) {
               </lido-image>
               <lido-image id="hit_img" tab-index="5" height="170px" width="100%" y="landscape.124%, portrait.360px" x="landscape.-42%, portrait.-36%" disable-edit="true" visible="true" src="${args.TextBackgroundImage}">
               </lido-image>
-              <lido-text id="heading" tab-index="6" visible="true" string="${args.letterBoardText}" font-family="'Baloo Bhai 2'" font-color="#fafafa" font-size="landscape.9rem, portrait.10rem" bg-color="transparent" onEntry="this.fontWeight='700';" y="landscape.100%, portrait.18rem" x="landscape.23%, portrait.35%">
+              <lido-text id="heading" tab-index="6" visible="true" string="${args.letterBoardText}" font-family="'Baloo Bhai 2'" font-color="#fafafa" font-size="landscape.9rem, portrait.10rem" bg-color="transparent" onEntry="this.fontWeight='700'; this.justify-content='center'; this.align-item='center';" y="landscape.100%, portrait.18rem" x="landscape.23%, portrait.35%">
               </lido-text>
           </lido-cell>
-          <lido-cell display="flex" grid-gap="10" onEntry="this.position='absolute'; this.display='flex';" y="landscape.33%, portrait.43%" x="landscape.28%, portrait.9%" tab-index="7" id="fullRrocket">
-              <lido-image bg-color="transparent" height="landscape.200px, portrait.225px" id="rockethead_bg_wordnote" tab-index="8" width="landscape.25%, portrait.30%" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethead_bg_wordnote.png" margin="landscape.0px 0px 0px 0px, portrait.0">
+
+          <lido-cell display="flex" grid-gap="10" onEntry="this.position='absolute'; this.display='flex';" y="landscape.33%, portrait.40%" tab-index="7" id="fullRrocket">
+              <lido-image bg-color="transparent" height="landscape.200px, portrait.200px" id="rockethead_bg_wordnote" tab-index="8" width="landscape.400px, portrait.400px" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethead_bg_wordnote.png" margin="landscape.0px 0px 0px 0px, portrait.0">
               </lido-image>
-              <lido-image value="${args.correct1}" string="${args.correct1}" onEntry="this.padding='0px'; this.margin-left='-21px'; this.margin-top='24px';" bg-color="transparent" id="drop-image1" disable-edit="true" type="drop" tab-index="9" visible="true" src="${args.dropImage1}" height="landscape.158px, portrait.180px" width="landscape.9%, portrait.11%" margin="0">
+			  
+              ${dropElements}
+
+              <lido-image onEntry="this.position='absolute'; this.padding='0px';" height="225px" width="27%"  x="landscape.${wingXLandscape}%, portrait.${wingXPortrait}%" y="landscape.-53%, portrait.-50%" tab-index="12" bg-color="transparent" id="wings-image1" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethandle_bg_wordnote.png" margin="0">
               </lido-image>
-              <lido-image value="${args.correct2}" string="${args.correct2}" onEntry="this.padding='0px'; this.margin-top='24px';" tab-index="10" bg-color="transparent" id="drop-image2" disable-edit="true" type="drop" visible="true" src="${args.dropImage2}" height="landscape.158px, portrait.180px" width="landscape.9%, portrait.11%">
+              <lido-image onEntry="this.position='absolute'; this.padding='0px';" height="225px" width="27%" x="landscape.${wingXLandscape}%, portrait.${wingXPortrait}%" y="landscape.42%, portrait.38%" tab-index="13" bg-color="transparent" id="wings-image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/rockethandle_bg_wordnote%201.png" margin="0">
               </lido-image>
-              <lido-image value="${args.correct3}" string="${args.correct3}" onEntry="this.padding='0px'; this.margin-top='24px';" tab-index="11" bg-color="transparent" id="drop-image3" disable-edit="true" type="drop" visible="true" src="${args.dropImage3}" height="landscape.158px, portrait.180px" width="landscape.9%, portrait.11%">
-              </lido-image>
-              <lido-image onEntry="this.position='absolute'; this.padding='0px';" height="225px" width="27%" y="landscape.-48%, portrait.-39%" x="landscape.40%, portrait.48%" tab-index="12" bg-color="transparent" id="wings-image1" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethandle_bg_wordnote.png" margin="0">
-              </lido-image>
-              <lido-image onEntry="this.position='absolute'; this.padding='0px';" y="landscape.40%, portrait.40%" x="landscape.40%, portrait.48%" height="225px" width="27%" tab-index="13" bg-color="transparent" id="wings-image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/rockethandle_bg_wordnote%201.png" margin="0">
-              </lido-image>
-              <lido-image height="landscape.210px, portrait.210px" width="landscape.10%, portrait.10%" onEntry="this.zIndex='9';" bg-color="transparent" id="rocket-end" disable-edit="true" tab-index="14" margin="landscape. 0px -5% 0px -28px, portrait.5px -5% 0px -15px " src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rocketend_bg_wordnote.png">
+
+              <lido-image height="landscape.200px, portrait.205px" width="landscape.10%, portrait.10%" onEntry="this.zIndex='9';" bg-color="transparent" id="rocket-end" disable-edit="true" tab-index="14" margin="landscape. 0px -5% 0px -28px, portrait.5px -5% 0px -15px " src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rocketend_bg_wordnote.png">
               </lido-image>
               <lido-image onEntry="this.padding='0px';" height="220px" width="25%" tab-index="15" bg-color="transparent" disable-edit="true" id="fire_image1" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Fire.png" margin="0">
               </lido-image>
           </lido-cell>
-          <lido-cell disable-edit="true" layout="row" aria-hidden="true" visible="true" height="landscape.130px, portrait.0px" margin="landscape.35% 0px 0px 0px, portrait.130% 0px 0px 0px" onEntry="this.z-index='9px'; this.justify-content='center'; this.padding='10px';" bg-color="transparent" justifyContent="space-evenly" width="100%" tab-index="29" id="first_alphabetRow" gap="landscape.4px, portrait.0px">
-              ${firstRowElements}
-          </lido-cell>
-          <lido-cell layout="row" aria-hidden="true" visible="true" onEntry="this.z-index='9px'; this.padding='10px'; this.justify-content='center';" bg-color="transparent" justifyContent="space-evenly" width="100%" tab-index="43" id="second_alphabetRow" gap="landscape.4px, portrait.0px" margin="landscape.0px 0px 0px 0px, portrait.90px 0px 0px 0px">
-              ${secondRowElements}
+
+
+          
+          <lido-cell disable-edit="true" layout="wrap" aria-hidden="true" visible="true" width="100%" height="landscape.50px, portrait.0px" margin="landscape.20% 0px 0px 0px, portrait.35% 0px 0px 0px" onEntry="this.place-items='center'; this.padding='0px'; this.gridTemplateColumns='repeat(auto-fill, minmax(111px, auto))';   this.gridTemplateRows='repeat(auto-fit, 146px)';  this.flexWrap='wrap';" bg-color="transparent"  tab-index="29" id="drag-wrap" gap="landscape.4px, portrait.5px">
+              ${dragElements}
           </lido-cell>
     </lido-container>
   </main>`;
