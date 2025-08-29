@@ -1,6 +1,6 @@
 import { convertUrlToRelative, speakText } from './utils';
 import { highlightSpeakingElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
-
+import{setDraggingDisabled}from './utilsHandlers/dragDropHandler';
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;
@@ -56,6 +56,7 @@ export class AudioPlayer {
       console.log('🚀 Playing audio:', this.audioElement.src);
 
       try {
+        setDraggingDisabled(true);
         await this.audioElement.play();
         highlightSpeakingElement(targetElement);
 
@@ -63,6 +64,7 @@ export class AudioPlayer {
           this.audioElement.onended = () => {
             stopHighlightForSpeakingElement(targetElement);
             resolve();
+            setDraggingDisabled(false);
           };
         });
       } catch (error) {
@@ -75,6 +77,7 @@ export class AudioPlayer {
         highlightSpeakingElement(targetElement);
         await speakText(targetElement.textContent, targetElement);
         stopHighlightForSpeakingElement(targetElement);
+        setDraggingDisabled(false);
       } catch (error) {
         console.log('🚀 TTS Error:', error);
       }

@@ -3,17 +3,42 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
 import { dispatchClickEvent } from '../customEvents';
 import tinycolor from 'tinycolor2';
+import { setDraggingDisabled } from './dragDropHandler';
 
 export function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
   const onTouch = element.getAttribute('onTouch');
   if (!onTouch) return;
-  element.onclick = async () => {
-    console.log('🚀 ~ element.onclick= ~ onTouch:', onTouch);
-    if (!onTouch) return;
-    await executeActions(onTouch, element);
+
+  let onholdTimer: NodeJS.Timeout;
+  let onholdTriggered = false; 
+  const onholdTime = 1000; 
+
+  const playAudio = async () => {
+    onholdTriggered = true; 
+    setDraggingDisabled(true); 
+    await AudioPlayer.getI().play(element);
   };
+
+  const onPointerDown = () => {
+    onholdTriggered = false;
+    onholdTimer = setTimeout(playAudio, onholdTime);
+  };
+
+  const onPointerUp = async () => {
+    clearTimeout(onholdTimer);
+    if (!onholdTriggered && onTouch) {
+      await executeActions(onTouch, element);
+    }
+  };
+
+  element.addEventListener('pointerdown', onPointerDown);
+  element.addEventListener('pointerup', onPointerUp);
+  element.addEventListener('pointerleave', () => {
+    clearTimeout(onholdTimer);
+  });
 }
+
 
 export function addClickListenerForClickType(element: HTMLElement): void {
   handlingElementFlexibleWidth(element, 'click');
