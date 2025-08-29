@@ -550,7 +550,14 @@ export const validateObjectiveStatus = async () => {
         }
         await executeActions(onCorrect, container);
       }
-      triggerNextContainer();
+      if(container.getAttribute("dropAttr") === "EnableAnimation"){
+        setTimeout(() => {
+          triggerNextContainer();
+        },2000)
+      } else {
+        triggerNextContainer()
+      }
+      
       await calculateScore();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');

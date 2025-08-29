@@ -72,8 +72,8 @@ function getContainerXml(args) {
       </lido-cell>
 
       <lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
-        <lido-text visible="landscape.false, portrait.true" width="100%" height="30%"></lido-text>
-        <lido-cell visible="true" layout="row" width="landscape.80%, portrait.90%" height="landscape.50%, portrait.40%" bg-color="transparent">
+        <lido-text visible="true" width="100%" height="landscape.20%,portrait.30%"></lido-text>
+        <lido-cell visible="true" layout="row" width="landscape.80%, portrait.90%" height="landscape.50%, portrait.30%" bg-color="transparent" onEntry="this.alignItems='flex-start';">
           <lido-cell visible="true" tab-index="1" audio="" layout="flex" width="auto" height="auto" gap="20px">
             ${dropCellsXml}
           </lido-cell>
