@@ -1,4 +1,4 @@
-import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const m={title:"Templates/Phonic-tractor",argTypes:{text1:{control:"text"},options:{control:"object"},answers:{control:"object"}}},a={args:{text1:"fox",options:["f","o","x"],answers:["f","o","x"]},render:i=>{const t=h(i);return x`<lido-home .xmlData="${t}"></lido-home>`}};function h(i){let t=1;const{text1:n,options:l=[],answers:o=[]}=i,c=o.map(e=>`
+import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const u={title:"Templates/Phonic-tractor",argTypes:{text1:{control:"text"},options:{control:"object"},answers:{control:"object"}}},a={args:{text1:"fox",options:["f","o","x"],answers:["f","o","x"]},render:i=>{const t=h(i);return x`<lido-home .xmlData="${t}"></lido-home>`}};function h(i){let t=1;const{text1:n,options:l=[],answers:o=[]}=i,c=o.map(e=>`
         <!-- drop and trolley -->
         <lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" >
             <lido-text id="drop${t}" type="drop" tab-index="${t++}" bg-color="transparent" height="132px" width="132px" value="${e}" is-allow-only-one-drop="true" margin="-25px 0px 16px 0px" onEntry=" this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';">
@@ -7,7 +7,7 @@ import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const m=
             </lido-image>
         </lido-cell>
       `).join(""),d=l.map(e=>`
-        <lido-text id="option${t}" tab-index="${t++}" width="132px"  height="132px" value="${e}"  visible="true" string="${e}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';this.borderRadius='10px';"  margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px"  border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png" onTouch="" show-speak-icon="true" >
+        <lido-text id="option${t}" tab-index="${t++}" width="132px"  height="132px" value="${e}"  visible="true" string="${e}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';this.borderRadius='10px';"  margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px"  border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png" onTouch="this.speak='true';" show-speak-icon="true" >
         </lido-text>
       `).join("");return`
     <main>
@@ -23,7 +23,7 @@ import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const m=
         <!-- parent cell -->
         <lido-cell layout="col" visible="true" width="100%" height="100%"  bg-color="transparent" margin="landscape.-38px 0px -122px 0px, portrait.0px 0px 0px 0px">
             <!-- question -->
-            <lido-image visible="true" id="img1" height="140px" width="361px"  disable-edit="true" is-slice="true" bg-color="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/board.png" margin="landscape.42px 0px -126px 0px, portrait.-58px 0px 60px 0px" show-speak-icon="true" >
+            <lido-image visible="true" onTouch="this.speak='true';" id="img1" height="140px" width="361px"  disable-edit="true" is-slice="true" bg-color="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/board.png" margin="landscape.42px 0px -126px 0px, portrait.-58px 0px 60px 0px" show-speak-icon="true" >
                 <lido-text id="heading"  tab-index="1" height="100px"  visible="true" string="${n}" font-family="'Baloo Bhai 2'" font-color="white" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';"   margin="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 0px" >
                 </lido-text>
             </lido-image>
@@ -52,4 +52,4 @@ import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const m=
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(s=(p=a.parameters)==null?void 0:p.docs)==null?void 0:s.source}}};const u=["PhonicTractor"];export{a as PhonicTractor,u as __namedExportsOrder,m as default};
+}`,...(s=(p=a.parameters)==null?void 0:p.docs)==null?void 0:s.source}}};const m=["PhonicTractor"];export{a as PhonicTractor,m as __namedExportsOrder,u as default};
