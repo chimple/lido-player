@@ -27,13 +27,13 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
 
         <lido-cell layout="landscape.wrap,portrait.col" visible="true" margin="landscape.0px,portrait.214px 0px 271px" width="landscape.67%,portrait.100%" height="216px" bg-Color="transparent" onEntry=" this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';this.align-items='center'; this.justify-content='center'; this.gap='40px';">
             
-            <lido-text visible="true" audio="" show-speak-icon="true" id="drag${e}" tab-index="${e++}" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.border='5px solid red';this.vibrate='horizontal-shake';" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${t.option1}" value="${t.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            <lido-text visible="true" audio=""  id="drag${e}" tab-index="${e++}" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" string="${t.option1}" value="${t.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-             <lido-text visible="true" audio="" show-speak-icon="true" id="drag${e}" tab-index="${e++}" font-size="80px" border-radius="12px" font-color="black" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.border='5px solid red';this.vibrate='horizontal-shake';" height="148px" width="auto" string="${t.option2}" value="${t.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+             <lido-text visible="true" audio=""  id="drag${e}" tab-index="${e++}" font-size="80px" border-radius="12px" font-color="black" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" height="148px" width="auto" string="${t.option2}" value="${t.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-             <lido-text visible="true" audio="" show-speak-icon="true" id="drag${e}" tab-index="${e++}" font-size="80px" border-radius="12px" font-color="black" height="148px" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.border='5px solid red';this.vibrate='horizontal-shake';" width="auto" string="${t.option3}" value="${t.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+             <lido-text visible="true" audio=""  id="drag${e}" tab-index="${e++}" font-size="80px" border-radius="12px" font-color="black" height="148px" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" width="auto" string="${t.option3}" value="${t.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-             <lido-text visible="true" audio="" show-speak-icon="true" id="drag${e}" tab-index="${e++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.border='5px solid red';this.vibrate='horizontal-shake';" string="${t.option4}" value="${t.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+             <lido-text visible="true" audio=""  id="drag${e}" tab-index="${e++}" font-size="80px" border-radius="12px" font-color="black" height="148px" width="auto" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" string="${t.option4}" value="${t.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
             
             
@@ -41,7 +41,7 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
 
     </lido-cell>
 </lido-container>
-  </main>`}var o,r,a;i.parameters={...i.parameters,docs:{...(o=i.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  </main>`}var o,a,r;i.parameters={...i.parameters,docs:{...(o=i.parameters)==null?void 0:o.docs,source:{originalSource:`{
   args: {
     option1: "Hippopotamus",
     option2: "Elephant",
@@ -54,4 +54,4 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(a=(r=i.parameters)==null?void 0:r.docs)==null?void 0:a.source}}};const c=["quizLiteracyImageWord"];export{c as __namedExportsOrder,d as default,i as quizLiteracyImageWord};
+}`,...(r=(a=i.parameters)==null?void 0:a.docs)==null?void 0:r.source}}};const c=["quizLiteracyImageWord"];export{c as __namedExportsOrder,d as default,i as quizLiteracyImageWord};

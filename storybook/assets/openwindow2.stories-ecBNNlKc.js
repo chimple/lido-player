@@ -9,7 +9,7 @@ import"./lit-element-BxxbMms4.js";import{x as c}from"./lit-html-DLYuhZ0i.js";con
     <lido-container id="lido-container" tab-index="1" bg-image="${e.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${t} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${t}" objective="${e.objective}" >
       <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="">
         <lido-text id="heading" tab-index="2" visible="true" border-image="" bg-color="transparent" width="350px" height="210px" string="${e.heading}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
-        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
+        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';"  audio="">
         </lido-text>
           </lido-cell>
       <lido-cell layout="row" visible="true" width="75%" height="25%" bg-color="transparent" margin="5%">
@@ -26,7 +26,7 @@ import"./lit-element-BxxbMms4.js";import{x as c}from"./lit-html-DLYuhZ0i.js";con
     <lido-container id="lido-container" tab-index="1" bg-image="${e.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${t} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${t}" objective="${e.objective}" >
       <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="">
         <lido-text id="heading" tab-index="2" visible="true" border-image="" bg-color="transparent" width="350px" height="210px" string="${e.heading}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
-        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
+        onEntry="this.borderRadius='6px'; this.boxShadow='unset'; this.fontWeight='800';"  audio="">
         </lido-text>
           </lido-cell>
       <lido-cell layout="row" visible="true" width="75%" height="25%" bg-color="transparent" margin="5%">
@@ -39,7 +39,7 @@ import"./lit-element-BxxbMms4.js";import{x as c}from"./lit-html-DLYuhZ0i.js";con
         ${r}
         </lido-cell>
     </lido-container>
-  </main>`}var s,l,n;i.parameters={...i.parameters,docs:{...(s=i.parameters)==null?void 0:s.docs,source:{originalSource:`{
+  </main>`}var l,s,n;i.parameters={...i.parameters,docs:{...(l=i.parameters)==null?void 0:l.docs,source:{originalSource:`{
   args: {
     objective: "mom",
     heading: "MOM",
@@ -50,4 +50,4 @@ import"./lit-element-BxxbMms4.js";import{x as c}from"./lit-html-DLYuhZ0i.js";con
     const xml = getOpenWindowXml(args);
     return html\`<lido-home xml-data="\${xml}" .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(n=(l=i.parameters)==null?void 0:l.docs)==null?void 0:n.source}}};const b=["OpenWindow"];export{i as OpenWindow,b as __namedExportsOrder,g as default};
+}`,...(n=(s=i.parameters)==null?void 0:s.docs)==null?void 0:n.source}}};const b=["OpenWindow"];export{i as OpenWindow,b as __namedExportsOrder,g as default};
