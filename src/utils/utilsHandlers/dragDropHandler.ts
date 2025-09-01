@@ -57,10 +57,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
-     if (isDraggingDisabled) {
-     isDragging = false;
-    return; 
-  }
+    if (isDraggingDisabled) {
+      isDragging = false;
+      return;
+    }
     AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
@@ -182,9 +182,9 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   const onMove = (event: MouseEvent | TouchEvent): void => {
     if (!isDragging) return;
     if (isDraggingDisabled) {
-     isDragging = false;
-    return; 
-  }
+      isDragging = false;
+      return;
+    }
     isClicked = false;
     element.style.transition = 'none';
     const containerScale = getElementScale(container);
@@ -565,12 +565,16 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           const div = document.createElement('div');
           container.append(div);
           div.classList.add('after-drop-popup-container');
-          const hasType = dragElement.nextElementSibling;
+
           dragElement.style.scale = `1`;
           dropElement.style.scale = `1`;
 
+          const allDragElements = container.querySelectorAll('[type="drag"]');
+          const dragParents = Array.from(allDragElements).map(el => el.parentElement);
+          const allSameParent = dragParents.every(parent => parent === dragElement.parentElement);
+
           // Remove from old parents
-          if (hasType && hasType.getAttribute('type') === 'drag') {
+          if (allSameParent) {
             dragElement.remove();
             dropElement.remove();
           } else {
@@ -896,18 +900,13 @@ export const appendingDragElementsInDrop = () => {
       const drop = dropElement as HTMLElement;
       const container = document.getElementById(LidoContainer) as HTMLElement;
       const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
-      if(isAllowOnlyCorrect === true) 
-      {
-        if (drop['value'] === drag['value']) 
-        {
+      if (isAllowOnlyCorrect === true) {
+        if (drop['value'] === drag['value']) {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
         }
-      } 
-      else 
-      {
-        if (drop['value'].includes(drag['value'])) 
-        {                    
+      } else {
+        if (drop['value'].includes(drag['value'])) {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
         }
