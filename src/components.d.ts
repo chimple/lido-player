@@ -406,6 +406,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "exitButtonUrl": string;
+        /**
           * The height of the container (CSS value).
          */
         "height": string;
@@ -425,6 +429,10 @@ export namespace Components {
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
         "margin": string;
+        /**
+          * Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "nextButtonUrl": string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
          */
@@ -446,6 +454,10 @@ export namespace Components {
          */
         "onTouch": string;
         /**
+          * Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "prevButtonUrl": string;
+        /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck": boolean;
@@ -461,6 +473,10 @@ export namespace Components {
           * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
          */
         "showPrevButton": string;
+        /**
+          * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "speakerButtonUrl": string;
         /**
           * TabIndex for keyboard navigation.
          */
@@ -2370,6 +2386,10 @@ declare namespace LocalJSX {
          */
         "delayVisible"?: string;
         /**
+          * Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "exitButtonUrl"?: string;
+        /**
           * The height of the container (CSS value).
          */
         "height"?: string;
@@ -2389,6 +2409,10 @@ declare namespace LocalJSX {
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
         "margin"?: string;
+        /**
+          * Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "nextButtonUrl"?: string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
          */
@@ -2410,6 +2434,10 @@ declare namespace LocalJSX {
          */
         "onTouch"?: string;
         /**
+          * Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "prevButtonUrl"?: string;
+        /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
          */
         "showCheck"?: boolean;
@@ -2425,6 +2453,10 @@ declare namespace LocalJSX {
           * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
          */
         "showPrevButton"?: string;
+        /**
+          * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
+         */
+        "speakerButtonUrl"?: string;
         /**
           * TabIndex for keyboard navigation.
          */

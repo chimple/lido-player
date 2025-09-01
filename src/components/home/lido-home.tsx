@@ -164,7 +164,7 @@ export class LidoHome {
       exit: this.exitButtonUrl || exitUrl,
       prev: this.prevButtonUrl || prevUrl,
       next: this.nextButtonUrl || nextUrl,
-      speak: this.speakerButtonUrl || speakUrl
+      speak: this.speakerButtonUrl || speakUrl,
     };
     // Listen for 'NextContainerKey' event to transition between containers
     window.addEventListener(NextContainerKey, () => {
@@ -209,21 +209,33 @@ export class LidoHome {
   }
 
   private async handleIcons() {
-    const checkUrl = async (url?: string, fallback?: string) => {
-      if (!url) return fallback ?? false;
+    const checkUrl = async (url?: string, containerUrl?: string, fallback?: string) => {
+      if (!url && !containerUrl) return fallback ?? false;
       try {
-        const res = await fetch(url);
-        return res.ok ? url : fallback ?? false;
+        let res = await fetch(url);
+        if (res.ok && url) {
+          return url;
+        } else {
+          if (!containerUrl) return fallback ?? false;
+          res = await fetch(containerUrl);
+          return res.ok ? containerUrl : fallback ?? false;
+        }
       } catch {
         return fallback ?? false;
       }
     };
 
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    const containerExit = container.getAttribute('exit-button-url');
+    const containerPrev = container.getAttribute('prev-button-url');
+    const containerNext = container.getAttribute('next-button-url');
+    const containerSpeak = container.getAttribute('speak-button-url');
+
     this.navBarIcons = {
-      exit: `${await checkUrl(this.exitButtonUrl, exitUrl)}`,
-      prev: `${await checkUrl(this.prevButtonUrl, prevUrl)}`,
-      next: `${await checkUrl(this.nextButtonUrl, nextUrl)}`,
-      speak: `${await checkUrl(this.speakerButtonUrl, speakUrl)}`,
+      exit: `${await checkUrl(this.exitButtonUrl, containerExit, exitUrl)}`,
+      prev: `${await checkUrl(this.prevButtonUrl, containerPrev, prevUrl)}`,
+      next: `${await checkUrl(this.nextButtonUrl, containerNext, nextUrl)}`,
+      speak: `${await checkUrl(this.speakerButtonUrl, containerSpeak, speakUrl)}`,
     };
   }
 
