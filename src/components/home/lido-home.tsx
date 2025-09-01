@@ -17,8 +17,6 @@ import {
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
-import { use } from 'react';
-import { boolean } from 'mathjs';
 
 /**
  * @component LidoHome
