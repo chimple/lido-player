@@ -1,7 +1,6 @@
 import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement,calculateScale } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, calculateScale } from '../../utils/utils';
 import { string } from 'mathjs';
-
 
 /**
  * @component LidoContainer
@@ -164,6 +163,30 @@ export class LidoContainer {
   @Prop() margin: string = '';
 
   /**
+   * Custom URL for the Exit button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() exitButtonUrl: string;
+
+  /**
+   * Custom URL for the Previous button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() prevButtonUrl: string;
+
+  /**
+   * Custom URL for the Next button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() nextButtonUrl: string;
+
+  /**
+   * Custom URL for the Speaker button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() speakerButtonUrl: string;
+
+  /**
    * Reference to the HTML element that represents this container component.
    */
   @Element() el: HTMLElement;
@@ -178,9 +201,9 @@ export class LidoContainer {
    */
   @Prop() showNextButton: string = 'false';
 
-    /**
-  * Delay in milliseconds to make the cell visible after mount.
-  */
+  /**
+   * Delay in milliseconds to make the cell visible after mount.
+   */
   @Prop() delayVisible: string = '';
 
   convertToPixels(height: string, parentElement = document.body) {
@@ -210,7 +233,7 @@ export class LidoContainer {
    *
    * @param container The container element to be scaled.
    */
-  
+
   scaleContainer(container: HTMLElement) {
     // Center the container and apply scaling
     container.style.transform = `translate(-50%, -50%) scale(${calculateScale()})`;
@@ -228,7 +251,6 @@ export class LidoContainer {
       this.el.style.height = '900px';
       this.el.style.width = '1600px';
     }
-    
   }
 
   /**
@@ -272,7 +294,7 @@ export class LidoContainer {
       left: '50%',
       transform: 'translate(-50%, -50%)', // Centering the container
       margin: this.margin,
-      userSelect: 'none',  // Prevent any field selection 
+      userSelect: 'none', // Prevent any field selection
     };
     console.log('🚀 ~ LidoContainer ~ canplay:', this.canplay);
 
@@ -299,6 +321,10 @@ export class LidoContainer {
         show-next-button={`${this.showNextButton}`}
         show-drop-border={`${this.showDropBorder}`}
         bg-image={this.bgImage}
+        exit-button-url={this.exitButtonUrl} 
+        prev-button-url={this.prevButtonUrl} 
+        next-button-url={this.nextButtonUrl} 
+        speaker-button-url={this.speakerButtonUrl}
       >
         <slot />
       </Host>

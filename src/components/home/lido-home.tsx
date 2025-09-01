@@ -1,9 +1,24 @@
 import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
-import { DragSelectedMapKey, DragMapKey, SelectedValuesKey, NextContainerKey, PrevContainerKey, DropLength, DropHasDrag, GameExitKey, LidoContainer } from '../../utils/constants';
+import {
+  DragSelectedMapKey,
+  DragMapKey,
+  SelectedValuesKey,
+  NextContainerKey,
+  PrevContainerKey,
+  DropLength,
+  DropHasDrag,
+  GameExitKey,
+  LidoContainer,
+  exitUrl,
+  prevUrl,
+  nextUrl,
+  speakUrl,
+} from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { use } from 'react';
+import { boolean } from 'mathjs';
 
 /**
  * @component LidoHome
@@ -42,6 +57,36 @@ export class LidoHome {
    * The height of the container (CSS value).
    */
   @Prop() height: string = '';
+
+  /**
+   * Custom URL for the Exit button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() exitButtonUrl: string;
+
+  /**
+   * Custom URL for the Previous button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() prevButtonUrl: string;
+
+  /**
+   * Custom URL for the Next button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() nextButtonUrl: string;
+
+  /**
+   * Custom URL for the Speaker button icon.
+   * Falls back to the default icon if not provided or invalid.
+   */
+  @Prop() speakerButtonUrl: string;
+
+  /**
+   * Stores the resolved navigation bar icons.
+   * Each key will hold either a valid custom URL or the default ConstNavIcons URL.
+   */
+  @State() navBarIcons: { exit: string; prev: string; next: string; speak: string };
 
   @Element() el: HTMLElement;
 
@@ -115,6 +160,12 @@ export class LidoHome {
    * between containers and parses the XML data into containers.
    */
   componentWillLoad() {
+    this.navBarIcons = {
+      exit: this.exitButtonUrl || exitUrl,
+      prev: this.prevButtonUrl || prevUrl,
+      next: this.nextButtonUrl || nextUrl,
+      speak: this.speakerButtonUrl || speakUrl,
+    };
     // Listen for 'NextContainerKey' event to transition between containers
     window.addEventListener(NextContainerKey, () => {
       this.NextContainerKey();
@@ -145,14 +196,47 @@ export class LidoHome {
     this.updateArrowVisibility();
 
     // if (this.height == '' || this.height === '0' || this.height === '0px' || this.height === '0%') {
-      this.scaleNavbarContainer();
+    this.scaleNavbarContainer();
     // } else {
     //   this.updateBackgroundImage();
     // }
 
+    this.handleIcons();
+
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
     });
+  }
+
+  private async handleIcons() {
+    const checkUrl = async (url?: string, containerUrl?: string, fallback?: string) => {
+      if (!url && !containerUrl) return fallback ?? false;
+      try {
+        let res = await fetch(url);
+        if (res.ok && url) {
+          return url;
+        } else {
+          if (!containerUrl) return fallback ?? false;
+          res = await fetch(containerUrl);
+          return res.ok ? containerUrl : fallback ?? false;
+        }
+      } catch {
+        return fallback ?? false;
+      }
+    };
+
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    const containerExit = container.getAttribute('exit-button-url');
+    const containerPrev = container.getAttribute('prev-button-url');
+    const containerNext = container.getAttribute('next-button-url');
+    const containerSpeak = container.getAttribute('speak-button-url');
+
+    this.navBarIcons = {
+      exit: `${await checkUrl(this.exitButtonUrl, containerExit, exitUrl)}`,
+      prev: `${await checkUrl(this.prevButtonUrl, containerPrev, prevUrl)}`,
+      next: `${await checkUrl(this.nextButtonUrl, containerNext, nextUrl)}`,
+      speak: `${await checkUrl(this.speakerButtonUrl, containerSpeak, speakUrl)}`,
+    };
   }
 
   updateBackgroundImage() {
@@ -287,7 +371,7 @@ export class LidoHome {
   private updateArrowVisibility = () => {
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
-      if(!containerElement)return;
+      if (!containerElement) return;
       const prevbtn = containerElement.getAttribute('show-prev-button');
       const nextbtn = containerElement.getAttribute('show-next-button');
       const rightbtn = this.el.querySelector('#lido-arrow-right') as HTMLElement;
@@ -396,7 +480,7 @@ export class LidoHome {
             AudioPlayer.getI().stop();
           }}
         >
-          <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg"></lido-image>
+          <lido-image src={this.navBarIcons.exit}></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
@@ -406,7 +490,7 @@ export class LidoHome {
               triggerPrevcontainer();
             }}
           >
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg" />
+            <lido-image src={this.navBarIcons.prev} />
           </div>
 
           {this.containers.map((_, index) => (
@@ -427,11 +511,11 @@ export class LidoHome {
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
           >
-            <lido-image src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg" />
+            <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
         <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
-          <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"></lido-image>
+          <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
     );
@@ -456,11 +540,11 @@ export class LidoHome {
     }
 
     const style = {
-      userSelect: 'none', // Prevent any field selection 
-    }
+      userSelect: 'none', // Prevent any field selection
+    };
 
     return (
-      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length} style={style} >
+      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length} style={style}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
         {/* Render navigation dots below the container */}

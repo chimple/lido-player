@@ -387,34 +387,19 @@ function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElemen
   if (!targetElement || !dragElement || !container) return;
   const dropRect = targetElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
-  if (container.getAttribute('drop-action') === DropAction.InfiniteDrop) {
-    const style = window.getComputedStyle(dragElement);
-    const matrix = new DOMMatrixReadOnly(style.transform);
-    const currentX = matrix.m41 || 0;
-    const currentY = matrix.m42 || 0;
+  const style = window.getComputedStyle(dragElement);
+  const matrix = new DOMMatrixReadOnly(style.transform);
+  const currentX = matrix.m41 || 0;
+  const currentY = matrix.m42 || 0;
 
-    const dx = dropRect.left - dragRect.left;
-    const dy = dropRect.top - dragRect.top;
+  const dx = dropRect.left - dragRect.left;
+  const dy = dropRect.top - dragRect.top;
 
-    const finalX = currentX + dx * (1 / calculateScale());
-    const finalY = currentY + dy * (1 / calculateScale());
+  const finalX = currentX + dx * (1 / calculateScale());
+  const finalY = currentY + dy * (1 / calculateScale());
 
-    dragElement.style.transition = 'transform 0.5s ease';
-    dragElement.style.transform = `translate(${finalX}px, ${finalY}px)`;
-  } else {
-    const containerScale = getElementScale(container); // Assuming you have this function
-
-    const dropCenterX = dropRect.left + dropRect.width / 2;
-    const dropCenterY = dropRect.top + dropRect.height / 2;
-    const dragCenterX = dragRect.left + dragRect.width / 2;
-    const dragCenterY = dragRect.top + dragRect.height / 2;
-
-    const scaledLeft = (dropCenterX - dragCenterX) / containerScale;
-    const scaledTop = (dropCenterY - dragCenterY) / containerScale;
-
-    dragElement.style.transition = transition;
-    dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-  }
+  dragElement.style.transition = 'transform 0.5s ease';
+  dragElement.style.transform = `translate(${finalX}px, ${finalY}px)`;
 }
 export function handleResetDragElement(
   dragElement: HTMLElement,
@@ -581,8 +566,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           container.append(div);
           div.classList.add('after-drop-popup-container');
           const hasType = dragElement.nextElementSibling;
-          dragElement.style.scale = `1`
-          dropElement.style.scale = `1`
+          dragElement.style.scale = `1`;
+          dropElement.style.scale = `1`;
 
           // Remove from old parents
           if (hasType && hasType.getAttribute('type') === 'drag') {
@@ -948,5 +933,3 @@ export const reduceSizeToOriginal = () => {
     }
   });
 };
-
-
