@@ -29,19 +29,18 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
-
 export const initEventsForElement = async (element: HTMLElement, type: string) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  if (!container){
+  if (!container) {
     setTimeout(() => {
-     return initEventsForElement(element, type);
+      return initEventsForElement(element, type);
     }, 500);
     return;
-  };
+  }
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
-  const canplay = container.getAttribute('canplay');
-  if (canplay != null && canplay === 'false') return;
+  // const canplay = container.getAttribute('canplay');
+  // if (canplay != null && canplay === 'false') return;
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
@@ -550,14 +549,14 @@ export const validateObjectiveStatus = async () => {
         }
         await executeActions(onCorrect, container);
       }
-      if(container.getAttribute("dropAttr") === "EnableAnimation"){
+      if (container.getAttribute('dropAttr') === 'EnableAnimation') {
         setTimeout(() => {
           triggerNextContainer();
-        },2000)
+        }, 2000);
       } else {
-        triggerNextContainer()
+        triggerNextContainer();
       }
-      
+
       await calculateScore();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
