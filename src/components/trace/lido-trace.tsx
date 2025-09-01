@@ -1,7 +1,6 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer,speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
-import { LidoContainer, TraceMode } from '../../utils/constants';
-import { svg } from 'lit';
+import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
+import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
 
 // Enum for different tracing modes
 
@@ -14,7 +13,7 @@ import { svg } from 'lit';
 export class LidoTrace {
   /**
    * Controls whether the speak icon should appear directly on the top right corner of targeted element.
-  */
+   */
   @Prop() showSpeakIcon: boolean = false;
   /**
    * Various configuration properties for `lido-trace`
@@ -30,9 +29,9 @@ export class LidoTrace {
   @Prop() svgSource: string = '';
 
   /**
- * Array of SVG URLs to be used for tracing, separated by semicolons.
- * This allows multiple SVGs to be loaded and traced in sequence.
- */
+   * Array of SVG URLs to be used for tracing, separated by semicolons.
+   * This allows multiple SVGs to be loaded and traced in sequence.
+   */
   @State() svgUrls: string[] = [];
 
   /**
@@ -45,7 +44,7 @@ export class LidoTrace {
    * Specifies whether the component is currently in a moving state.
    * This can be used to control animations or transitions.
    * Defaults to `false`.
-  */
+   */
   @State() moving: boolean = false;
 
   /**
@@ -172,13 +171,13 @@ export class LidoTrace {
     };
 
     const url = this.svgUrls[this.currentSvgIndex];
-    console.log("Loading SVG from URL:", url);
+    console.log('Loading SVG from URL:', url);
     if (!url || url.trim() === '') {
-      console.error("No SVG URL provided or index out of bounds.");
+      console.error('No SVG URL provided or index out of bounds.');
       return;
     }
     const svgText = await this.fetchSVG(url);
-    console.log("SVG fetched successfully\n");
+    console.log('SVG fetched successfully\n');
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
   }
@@ -188,16 +187,15 @@ export class LidoTrace {
   }
 
   componentWillLoad() {
-
     this.updateStyles();
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
 
     this.svgUrls = this.svgSource.split(';').map(s => s.trim());
-    console.log("svgUrls", this.svgUrls);
+    console.log('svgUrls', this.svgUrls);
     this.currentSvgIndex = 0;
-    console.log("curentSvgIndex", this.currentSvgIndex);
-    if(this.showSpeakIcon) {
+    console.log('curentSvgIndex', this.currentSvgIndex);
+    if (this.showSpeakIcon) {
       speakIcon(this.el);
       this.el.append(speakIcon(this.el));
     }
@@ -232,7 +230,15 @@ export class LidoTrace {
     const IMG_SIZE = 40; // width & height of finger.png
 
     const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(this.fingerHintUrl));
+    const testImage = new Image();
+    testImage.onload = () => {
+      img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(this.fingerHintUrl));
+    };
+    testImage.onerror = () => {
+      img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(fingerUrl));
+    };
+    testImage.src = this.fingerHintUrl || fingerUrl;
+
     img.setAttribute('width', `${IMG_SIZE}`);
     img.setAttribute('height', `${IMG_SIZE}`);
     img.setAttribute('id', 'lido-finger-hint');
@@ -267,7 +273,6 @@ export class LidoTrace {
 
   // Fetch the SVG file asynchronously
   async fetchSVG(url: string): Promise<string> {
-  
     console.log(`Fetching SVG from: ${url}`);
     const response = await fetch(url);
     if (!response.ok) {
@@ -304,7 +309,7 @@ export class LidoTrace {
   // Insert the fetched SVG into the container and adjust viewBox
   insertSVG(svgText: string) {
     const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
-    if (!svgContainer) return
+    if (!svgContainer) return;
     svgContainer.innerHTML = svgText;
 
     // After inserting, get the SVG element
@@ -339,7 +344,6 @@ export class LidoTrace {
 
   // Create a single dotted line with an arrow at the end for the entire path
   createFlowMarkersForPath(path: SVGGeometryElement) {
-
     if (!path) return;
 
     const svg = path.ownerSVGElement;
@@ -353,12 +357,11 @@ export class LidoTrace {
     // Copy the "d" (path drawing instructions) from the original path
     dottedLine.setAttribute('d', path.getAttribute('d') || '');
 
-
     dottedLine.setAttribute('stroke', 'blue');
     dottedLine.setAttribute('stroke-width', '2');
 
     // Define a repeating pattern of dashes: "6 units on, 6 units off"
-    dottedLine.setAttribute('stroke-dasharray', '6,6'); 
+    dottedLine.setAttribute('stroke-dasharray', '6,6');
     dottedLine.setAttribute('fill', 'none');
 
     // Add a class name for styling or later querying
@@ -385,7 +388,6 @@ export class LidoTrace {
     // Create the <marker> element that defines the arrowhead
     const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
 
-
     marker.setAttribute('id', uniqueId);
 
     // Set the width/height of the marker viewport (10x10 units)
@@ -407,14 +409,14 @@ export class LidoTrace {
     const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
     // Define the arrowhead shape using SVG path commands
-    arrowPath.setAttribute('d', 'M0,0 L10,5 L0,10 L2,5 Z'); 
+    arrowPath.setAttribute('d', 'M0,0 L10,5 L0,10 L2,5 Z');
 
     arrowPath.setAttribute('fill', 'blue');
     marker.appendChild(arrowPath);
     defs.appendChild(marker);
 
     // --- 4. Attach the arrow marker to the end of the dotted line  ---
-  
+
     dottedLine.setAttribute('marker-end', `url(#${uniqueId})`);
 
     return dottedLine;
@@ -678,23 +680,22 @@ export class LidoTrace {
 
   // Move to the next container after completing the current SVG
   async moveToNextContainer() {
-    if(this.moving) return; // Prevent multiple calls
+    if (this.moving) return; // Prevent multiple calls
     this.moving = true; // Set moving to true to prevent re-entrance
 
-    if(this.highlightTextId) {
+    if (this.highlightTextId) {
       this.highlightLetter(this.currentSvgIndex);
     }
-    if(this.animationTrace) {
+    if (this.animationTrace) {
       await this.playTraceAnimation();
     }
 
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
-    if(this.currentSvgIndex < this.svgUrls.length - 1)
-    {
-       this.currentSvgIndex++;
-       await this.initializeSVG();
-       this.moving = false;
-       return;
+    if (this.currentSvgIndex < this.svgUrls.length - 1) {
+      this.currentSvgIndex++;
+      await this.initializeSVG();
+      this.moving = false;
+      return;
     }
 
     const container = document.getElementById(LidoContainer) as HTMLElement;
@@ -771,7 +772,7 @@ export class LidoTrace {
       if (state.svg) {
         this.cleanupPreviousSVG(state);
       }
-      
+
       const svgText = await this.fetchSVG(convertUrlToRelative(this.svgSource.split(';').map(s => s.trim())[this.currentSvgIndex]));
 
       this.insertSVG(svgText);
@@ -855,26 +856,25 @@ export class LidoTrace {
   }
 
   private async highlightLetter(index: number) {
-
     const container = document.getElementById(LidoContainer);
     if (!container) return;
-  
+
     // Ensure highlightTextId is set
     const textId = this.highlightTextId;
-    if(!textId) return;
+    if (!textId) return;
 
-    // Find the lido-text element by id 
+    // Find the lido-text element by id
     const textElem = document.getElementById(textId);
     if (!textElem) return;
-    
+
     // Check if the textElem has a span-type attribute
     const spanType = textElem.getAttribute('span-type');
     if (!spanType) return;
-   
+
     // Find the .lido-text-content container inside lido-text
     const content = textElem.querySelector('.lido-text-content');
     if (!content) return;
-  
+
     if (spanType === 'letters') {
       const letters = content.querySelectorAll('.text-letters');
       if (index < 0 || index >= letters.length) return;
@@ -893,21 +893,19 @@ export class LidoTrace {
   }
 
   updateStyles() {
-      const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
-      this.style = {
-        'height': parseProp(this.height, orientation),
-        'width': parseProp(this.width, orientation),
-        'top': parseProp(this.y, orientation),
-        'left': parseProp(this.x, orientation),
-        'zIndex': this.z,
-        'position': 'absolute',
-      };
-    }
-
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      height: parseProp(this.height, orientation),
+      width: parseProp(this.width, orientation),
+      top: parseProp(this.y, orientation),
+      left: parseProp(this.x, orientation),
+      zIndex: this.z,
+      position: 'absolute',
+    };
+  }
 
   render() {
     return (
-
       <Host
         class="lido-trace"
         id={this.id}
