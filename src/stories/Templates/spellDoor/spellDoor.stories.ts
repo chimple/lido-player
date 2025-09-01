@@ -71,7 +71,7 @@ function getContainerXml(args) {
            }).join('')}
       </lido-cell>
 
-			<lido-cell layout="landscape.row, portrait.row" width="landscape.auto, portrait.95%" height="landscape.43%, portrait.22%" child-elements-length="11" margin="landscape.0px,portrait.0px 25px 0px 0px" onEntry="this.justify-content='center';this.gap='20px ';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true">
+			<lido-cell layout="landscape.row, portrait.row" width="landscape.auto, portrait.95%" height="landscape.43%, portrait.22%" child-elements-length="11" margin="landscape.-96px 0px 67px 0px,portrait.0px 25px 0px 0px" onEntry="this.justify-content='center';this.gap='20px ';    this.gridTemplateColumns = 'repeat(2, 1fr)';  this.gridTemplateRows = 'repeat(2, 1fr)';" visible="true">
 				 ${drags.map((opt) => `
           <lido-text id="option${tabCounter}" audio="" tab-index="${tabCounter++}"  height="130px" width="130px" visible="true" value="${opt}" string="${opt}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="104px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png">
           </lido-text>

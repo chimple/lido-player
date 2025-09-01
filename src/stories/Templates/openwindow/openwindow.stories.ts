@@ -77,7 +77,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
     .map(
       (char, i) => `
         <lido-text id="heading${i + 1}" tab-index="${i + 2}" flexible-width="false" visible="true" border-image="${args.letterBackgroundImage}" bg-color="transparent" width="180px" height="210px" string="${char}" font-color="black" font-family="'Baloo 2', serif" font-size="146px" z="0"
-        onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';" show-speak-icon="true" audio="">
+        onEntry="this.borderRadius='unset'; this.boxShadow='unset'; this.fontWeight='800';"  audio="">
         </lido-text>
       `,
     )

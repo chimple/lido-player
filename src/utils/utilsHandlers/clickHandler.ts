@@ -8,35 +8,39 @@ import { setDraggingDisabled } from './dragDropHandler';
 export function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
   const onTouch = element.getAttribute('onTouch');
-  if (!onTouch) return;
-
-  let onholdTimer: NodeJS.Timeout;
-  let onholdTriggered = false; 
-  const onholdTime = 1000; 
+  let onholdTimer: NodeJS.Timeout | null = null;
+  let onholdTriggered = false;
+  const onholdTime = 1000;
 
   const playAudio = async () => {
-    onholdTriggered = true; 
-    setDraggingDisabled(true); 
+    onholdTriggered = true;
+    setDraggingDisabled(true);
     await AudioPlayer.getI().play(element);
+    setDraggingDisabled(false);
   };
 
-  const onPointerDown = () => {
+  const onPointerDown = (event: PointerEvent) => {
+    event.stopPropagation(); // Prevent bubbling to other elements
     onholdTriggered = false;
     onholdTimer = setTimeout(playAudio, onholdTime);
   };
 
-  const onPointerUp = async () => {
-    clearTimeout(onholdTimer);
+  const onPointerUp = async (event: PointerEvent) => {
+    event.stopPropagation();
+    clearTimeout(onholdTimer!);
+
+ 
     if (!onholdTriggered && onTouch) {
       await executeActions(onTouch, element);
     }
   };
+  const onPointerLeave = () => {
+    clearTimeout(onholdTimer!);
+  };
 
   element.addEventListener('pointerdown', onPointerDown);
   element.addEventListener('pointerup', onPointerUp);
-  element.addEventListener('pointerleave', () => {
-    clearTimeout(onholdTimer);
-  });
+  element.addEventListener('pointerleave', onPointerLeave);
 }
 
 
