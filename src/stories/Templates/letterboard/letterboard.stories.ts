@@ -26,7 +26,7 @@ export const letterBoard: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
- <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+ <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.417px,portrait.363px" width="landscape.280px,portrait.340px" x="landscape.1360px, portrait.597px" y="landscape.637px, portrait.1370px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			
@@ -34,67 +34,118 @@ function getContainerXml(args) {
 			</lido-avatar>
 			
 		</lido-cell>
-		<lido-image visible="true"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/wheel.png" height="119px" width="131px" onEntry=" this.position='relative'; this.animation='rightToPlace 2.5s linear';" x="landscape.299px, portrait.293px" y="landscape.768px, portrait.1092px" margin="">
+		<lido-image visible="true" id="tyre"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/wheel.png" height="119px" width="131px" onEntry=" this.position='relative'; this.animation='rightToPlace 2.5s linear';" x="landscape.299px, portrait.293px" y="landscape.768px, portrait.1092px" margin="">
 			</lido-image>
 		
-		<lido-cell visible="true"  layout="landscape.row,portrait.col" height="90%" width="90%" bg-Color="transparent" margin="landscape.56px 0px 0px 0px,portrait.0px" onEntry="">
+		<lido-cell visible="true" id="xx"  layout="landscape.row,portrait.col" height="90%" width="90%" bg-Color="transparent" margin="landscape.56px 0px 0px 0px,portrait.0px" onEntry="">
 			<lido-cell visible="true" id="truck" layout="row" height="90%" width="1377px" bg-Color="transparent" margin="landscape.-169px 114px 39px -195px,portrait.-115px 0px 0px 0px" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-image visible="true"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/truck.png" height="583px" width="502px" onEntry=" " margin="landscape.345px -40px 0px 55px,portrait.408px 67px -179px -107px">
 			</lido-image>
 			<lido-cell visible="true" height="landscape.100%,portrait.858px" width="landscape.858px,portrait.62%" bg-color="#F78315" margin="landscape.0px 0px 0px -18px,portrait.-124px 252px -238px -114px" onEntry=" this.place-items='center'; this.padding='0px'; this.gridTemplateColumns='repeat(auto-fill, minmax(143px, auto))';   this.gridTemplateRows='repeat(auto-fit, 146px)';  this.flexWrap='wrap';">
-				<lido-text visible="true"  type="drop" id="drop1" tab-index="2" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.answer1}" string="${args.answer1}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';  this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop2" tab-index="3" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer2}" string="${args.answer2}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop3" tab-index="4" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.answer3}" string="${args.answer3}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop4" tab-index="5" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.answer4}" string="${args.answer4}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop5" tab-index="6" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer5}" string="${args.answer5}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop6" tab-index="7" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer6}" string="${args.answer6}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop7" tab-index="8" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer7}" strin${args.answer7}="G" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop8" tab-index="9" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer8}" string="${args.answer8}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop9" tab-index="10" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer9}" str${args.answer9}ng="I" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop10" tab-index="11" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer10}" string="${args.answer10}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop11" tab-index="12" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer11}" string="${args.answer11}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop12" tab-index="13" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer12}" string="${args.answer12}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop13" tab-index="14" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer13}" string="${args.answer13}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop14" tab-index="15" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer14}" stri${args.answer14}g="N" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop15" tab-index="16" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer15}" string="${args.answer15}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop16" tab-index="17" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer16}" string="${args.answer16}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop17" tab-index="18" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer17}" string="${args.answer17}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop18" tab-index="19" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer18}" string="${args.answer18}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop19" tab-index="20" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer19}" string="${args.answer19}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop20" tab-index="21" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer20}" string="${args.answer20}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop21" tab-index="22" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer21}" string="${args.answer21}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop22" tab-index="23" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer22}" string="${args.answer22}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop23" tab-index="24" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer23}" string="${args.answer23}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop24" tab-index="25" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer24}" string="${args.answer24}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop25" tab-index="26" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer25}" string="${args.answer25}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				<lido-text visible="true" type="drop" id="drop26" tab-index="27" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer26}" string="${args.answer26}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
-				</lido-text>
-				
+				<lido-cell layout="row" visible="true"    height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop"  id="drop1" tab-index="2" height="100%" width="100%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" is-allow-only-one-drop="true" value="${args.answer1}" string="${args.answer1}" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';  this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop2" tab-index="3" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer2}" string="${args.answer2}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop3" tab-index="4" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.answer3}" string="${args.answer3}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop4" tab-index="5" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.answer4}" string="${args.answer4}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop5" tab-index="6" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer5}" string="${args.answer5}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop6" tab-index="7" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer6}" string="${args.answer6}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true"    height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop7" tab-index="8" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer7}" string="${args.answer7}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop8" tab-index="9" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer8}" string="${args.answer8}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop9" tab-index="10" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer9}" string="${args.answer9}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop10" tab-index="11" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer10}" string="${args.answer10}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+                <lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop11" tab-index="12" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer11}" string="${args.answer11}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop12" tab-index="13" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer12}" string="${args.answer12}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop13" tab-index="14" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer13}" string="${args.answer13}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop14" tab-index="15" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer14}" string="${args.answer14}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop15" tab-index="16" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer15}" string="${args.answer15}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop16" tab-index="17" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer16}" string="${args.answer16}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop17" tab-index="18" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer17}" string="${args.answer17}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop18" tab-index="19" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer18}" string="${args.answer18}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop19" tab-index="20" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer19}" string="${args.answer19}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+                <lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop20" tab-index="21" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.answer20}" string="${args.answer20}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+			    <lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop21" tab-index="22" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${args.answer21}" string="${args.answer21}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop22" tab-index="23" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer22}" string="${args.answer22}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-text visible="true" type="drop" id="drop23" tab-index="24" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer23}" string="${args.answer23}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px';this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop24" tab-index="25" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer24}" string="${args.answer24}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop25" tab-index="26" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer25}" string="${args.answer25}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>	
+				<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">	
+					<lido-text visible="true" type="drop" id="drop26" tab-index="27" height="120px" width="120px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px"  value="${args.answer26}" string="${args.answer26}" is-allow-only-one-drop="true" onEntry="this.color='#AB7552';this.fontWeight='800';this.borderRadius='10px'; this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';">
+					</lido-text>
+				</lido-cell>
 			</lido-cell>
 			</lido-cell>
 			

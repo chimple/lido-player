@@ -43,7 +43,7 @@ function getContainerXml(args) {
   const optionCells = options
     .map((option) => {
       return `
-		<lido-text id="option${tabCounter}" tab-index="${tabCounter++}" width="132px"  height="132px" value="${option}"  visible="true" string="${option}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';this.borderRadius='10px';"  margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px"  border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png" onTouch="this.speak='true';" show-speak-icon="true" >
+		<lido-text id="option${tabCounter}" tab-index="${tabCounter++}" width="132px"  height="132px" value="${option}"  visible="true" string="${option}" font-family="'Baloo Bhai 2'" font-color="white" type="drag" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';this.borderRadius='10px';"  margin="landscape.150px 0px 112px 0px, portrait.0px 0px 0px 0px"  border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/box.png" onTouch="this.speak='true';"  >
 		</lido-text>
       `;
     })
@@ -63,7 +63,7 @@ function getContainerXml(args) {
 		<!-- parent cell -->
 		<lido-cell layout="col" visible="true" width="100%" height="100%"  bg-color="transparent" margin="landscape.-38px 0px -122px 0px, portrait.0px 0px 0px 0px">
 			<!-- question -->
-			<lido-image visible="true" onTouch="this.speak='true';" id="img1" height="140px" width="361px"  disable-edit="true" is-slice="true" bg-color="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/board.png" margin="landscape.42px 0px -126px 0px, portrait.-58px 0px 60px 0px" show-speak-icon="true" >
+			<lido-image visible="true" onTouch="this.speak='true';" id="img1" height="140px" width="361px"  disable-edit="true" is-slice="true" bg-color="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/board.png" margin="landscape.42px 0px -126px 0px, portrait.-58px 0px 60px 0px"  >
 				<lido-text id="heading"  tab-index="1" height="100px"  visible="true" string="${text1}" font-family="'Baloo Bhai 2'" font-color="white" font-size="landscape.96px, portrait.96px" bg-color="transparent" onEntry="  this.fontWeight='600';"   margin="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 0px" >
 				</lido-text>
 			</lido-image>
