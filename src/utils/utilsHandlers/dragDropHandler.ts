@@ -414,6 +414,7 @@ export function handleResetDragElement(
   const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
   const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item && !item.classList.contains('dropped')) as HTMLElement;
   dragElement.style.transition = 'transform 0.5s ease';
+
   if (cloneDragElement) {
     animateDragToTarget(dragElement, cloneDragElement, container);
     setTimeout(() => {
@@ -608,15 +609,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
   }
 
-  if (dragElement) {
-    if (dropElement) {
-      dragElement.setAttribute(DropToAttr, dropElement?.id);
-    } else {
-      dragElement.removeAttribute(DropToAttr);
-    }
-    dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
-  }
-
   if (dropElement) {
     if (dropElement.getAttribute('drop-attr') === 'stretch') {
       if (!dropElement.hasAttribute('data-original-width')) {
@@ -641,12 +633,25 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         let dragSelected = JSON.parse(dragSelectedData);
         for (const key in dragSelected) {
           if (dragSelected[key].includes(dragElement['value']) && dragElement.classList.contains('dropped')) {
-            delete dragSelected[key];
+            const preDropId = dragElement.getAttribute('drop-to');
+            const preDrop = container.querySelector(`#${preDropId}`) as HTMLElement;
+            const preDropIndex = preDrop.getAttribute('tab-index');
+            if(preDropIndex){
+              delete dragSelected[preDropIndex];
+            }
           }
         }
         localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
       }
       dragElement.classList.add('dropped');
+      if (dragElement) {
+        if (dropElement) {
+          dragElement.setAttribute(DropToAttr, dropElement?.id);
+        } else {
+          dragElement.removeAttribute(DropToAttr);
+        }
+        dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
+      }
 
       // Check for overlaps and highlight only the most overlapping element
       if (dropElement && !dropHasDrag[dropTabIndex]?.isFull) {
