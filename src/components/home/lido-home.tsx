@@ -13,6 +13,7 @@ import {
   prevUrl,
   nextUrl,
   speakUrl,
+  ActivityScoreKey,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer } from '../../utils/utils';
@@ -117,6 +118,8 @@ export class LidoHome {
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
       this.currentContainerIndex = index;
+      console.log("container index ; ", this.currentContainerIndex);
+      
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex < this.containers.length - 1) {
@@ -127,6 +130,7 @@ export class LidoHome {
     } else if (this.currentContainerIndex >= this.containers.length - 1) {
       // const event = new CustomEvent('gameCompleted');
       // window.dispatchEvent(event);
+      localStorage.removeItem(ActivityScoreKey)
       dispatchGameCompletedEvent();
       this.currentContainerIndex = null;
     }
@@ -164,6 +168,12 @@ export class LidoHome {
       next: this.nextButtonUrl || nextUrl,
       speak: this.speakerButtonUrl || speakUrl,
     };
+
+    if(this.currentContainerIndex === 0){
+      localStorage.removeItem(ActivityScoreKey);
+      clearLocalStorage();
+    }
+
     // Listen for 'NextContainerKey' event to transition between containers
     window.addEventListener(NextContainerKey, () => {
       this.NextContainerKey();
@@ -182,6 +192,7 @@ export class LidoHome {
 
     // Remove stored values in localStorage when the page is about to be unloaded
     window.addEventListener('beforeunload', () => {
+      AudioPlayer.getI().stop();
       clearLocalStorage();
     });
   }
@@ -422,6 +433,8 @@ export class LidoHome {
     if (alertElement) {
       if (comment === 'exit') {
         dispatchGameExitEvent();
+        AudioPlayer.getI().stop();
+        localStorage.removeItem(ActivityScoreKey);
         clearLocalStorage();
         alertElement.remove();
       } else {
