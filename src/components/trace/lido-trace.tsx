@@ -900,7 +900,7 @@ export class LidoTrace {
       top: parseProp(this.y, orientation),
       left: parseProp(this.x, orientation),
       zIndex: this.z,
-      position: 'absolute',
+      // position: 'absolute',
     };
   }
 
