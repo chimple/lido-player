@@ -490,7 +490,7 @@ export class LidoTrace {
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
     circle.setAttribute('r', `calc(${strokeWidth || 10} / 3)`); // Radius of the draggable circle
-    circle.setAttribute('fill', '#81C127');
+    circle.setAttribute('fill', '#CF1565'); // fill the color for the circle 
     state.svg?.appendChild(circle);
     state.circle = circle;
 
