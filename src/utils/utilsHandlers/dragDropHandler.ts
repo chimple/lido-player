@@ -57,10 +57,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
-     if (isDraggingDisabled) {
-     isDragging = false;
-    return; 
-  }
+    if (isDraggingDisabled) {
+      isDragging = false;
+      return;
+    }
     AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
@@ -182,9 +182,9 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   const onMove = (event: MouseEvent | TouchEvent): void => {
     if (!isDragging) return;
     if (isDraggingDisabled) {
-     isDragging = false;
-    return; 
-  }
+      isDragging = false;
+      return;
+    }
     isClicked = false;
     element.style.transition = 'none';
     const containerScale = getElementScale(container);
@@ -414,6 +414,7 @@ export function handleResetDragElement(
   const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
   const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item && !item.classList.contains('dropped')) as HTMLElement;
   dragElement.style.transition = 'transform 0.5s ease';
+
   if (cloneDragElement) {
     animateDragToTarget(dragElement, cloneDragElement, container);
     setTimeout(() => {
@@ -565,12 +566,16 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           const div = document.createElement('div');
           container.append(div);
           div.classList.add('after-drop-popup-container');
-          const hasType = dragElement.nextElementSibling;
+
           dragElement.style.scale = `1`;
           dropElement.style.scale = `1`;
 
+          const allDragElements = container.querySelectorAll('[type="drag"]');
+          const dragParents = Array.from(allDragElements).map(el => el.parentElement);
+          const allSameParent = dragParents.every(parent => parent === dragElement.parentElement);
+
           // Remove from old parents
-          if (hasType && hasType.getAttribute('type') === 'drag') {
+          if (allSameParent) {
             dragElement.remove();
             dropElement.remove();
           } else {
@@ -604,15 +609,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
   }
 
-  if (dragElement) {
-    if (dropElement) {
-      dragElement.setAttribute(DropToAttr, dropElement?.id);
-    } else {
-      dragElement.removeAttribute(DropToAttr);
-    }
-    dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
-  }
-
   if (dropElement) {
     if (dropElement.getAttribute('drop-attr') === 'stretch') {
       if (!dropElement.hasAttribute('data-original-width')) {
@@ -637,12 +633,25 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         let dragSelected = JSON.parse(dragSelectedData);
         for (const key in dragSelected) {
           if (dragSelected[key].includes(dragElement['value']) && dragElement.classList.contains('dropped')) {
-            delete dragSelected[key];
+            const preDropId = dragElement.getAttribute('drop-to');
+            const preDrop = container.querySelector(`#${preDropId}`) as HTMLElement;
+            const preDropIndex = preDrop.getAttribute('tab-index');
+            if(preDropIndex){
+              delete dragSelected[preDropIndex];
+            }
           }
         }
         localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
       }
       dragElement.classList.add('dropped');
+      if (dragElement) {
+        if (dropElement) {
+          dragElement.setAttribute(DropToAttr, dropElement?.id);
+        } else {
+          dragElement.removeAttribute(DropToAttr);
+        }
+        dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
+      }
 
       // Check for overlaps and highlight only the most overlapping element
       if (dropElement && !dropHasDrag[dropTabIndex]?.isFull) {
@@ -896,18 +905,13 @@ export const appendingDragElementsInDrop = () => {
       const drop = dropElement as HTMLElement;
       const container = document.getElementById(LidoContainer) as HTMLElement;
       const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
-      if(isAllowOnlyCorrect === true) 
-      {
-        if (drop['value'] === drag['value']) 
-        {
+      if (isAllowOnlyCorrect === true) {
+        if (drop['value'] === drag['value']) {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
         }
-      } 
-      else 
-      {
-        if (drop['value'].includes(drag['value'])) 
-        {                    
+      } else {
+        if (drop['value'].includes(drag['value'])) {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
         }
