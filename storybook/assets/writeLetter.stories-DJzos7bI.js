@@ -16,7 +16,7 @@ import"./lit-element-BxxbMms4.js";import{x as h}from"./lit-html-DLYuhZ0i.js";con
                     <lido-cell  layout="col" visible="true" width="landscpae.27.5% , portrait.100%" height="landscpae.100% , portrait.27.5%" bg-color="transparent">
                     </lido-cell>
 
-                    <lido-cell tab-index="2" layout="col" show-speak-icon="true" audio="" visible="true" width="landscape.725px, portrait.725px"  height="landscape.725px, portrait.725px" bg-color="white"  onEntry="this.border-radius='6px'; this.flex-shrink='0';">
+                    <lido-cell tab-index="2" layout="col" show-speak-icon="true" audio="" visible="true" width="landscape.725px, portrait.725px"  height="landscape.725px, portrait.725px" bg-color="#0A2C45"  onEntry="this.border-radius='6px'; this.flex-shrink='0';">
                         <lido-trace id="image2" tab-index="3" value="a" visible="true" svg-source="${e}" onCorrect=""  mode="${n}" z="1" x="25px" y="25px" width="landscape.700px,portrait.700px" height="landscape.700px,portrait.700px" onEntry="" alt-text="{backgroundImage}">
                         </lido-trace>
                     </lido-cell>
