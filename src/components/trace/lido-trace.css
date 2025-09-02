@@ -25,7 +25,7 @@ svg {
 
 #lido-draggableCircle {
   cursor: pointer;
-  fill: #81C127;
+  fill: #CF1565;
   transition: fill 0.2s, r 0.2s;
 }
 
