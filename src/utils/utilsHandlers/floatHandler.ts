@@ -45,6 +45,7 @@ export function handleFloatElementPosition(element: HTMLElement) {
     console.error(`No container found with id: lido-container`);
     return;
   }
+  stopHighlightForSpeakingElement(element);
 
   const floatContainer = container.querySelector('.lido-float') as HTMLElement;
   if (!floatContainer) return;
