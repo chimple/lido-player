@@ -32,7 +32,7 @@ const meta: Meta<WriteWordArgs> = {
         traceMode: 'showFlow',
         highlightedText: 'bug',
         topDisplayImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/questionBg.png'],
-        bottomDisplayImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/traceBackground.png'],
+        bottomDisplayImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/tracing%20bg.png'],
         spanType: 'letters',
     }
 }
