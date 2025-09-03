@@ -87,14 +87,14 @@ function getContainerXml(args: RocketArgs) {
   const dropCount = args.correct.length;
 
   // wing dynamic positions
-  const wingXLandscape =  26 + dropCount * 9;
+  const wingXLandscape = 46 + dropCount * 4;
   const wingXPortrait  =  31 + dropCount * 9;
 
   // create drop elements
   const dropElements = args.correct.map((letter, index) => {
-    const marginleft = index === 0 ? -75 : 0;
+    const marginleft = index === 0 ? -60 : 0;
     return `
-      <lido-image value="${letter}" string="${letter}" is-slice="true" onEntry="this.padding='0px'; this.margin-left='${marginleft}px'; this.margin-top='24px'; this.display='flex';" bg-color="transparent" id="drop-image${index + 1}" disable-edit="true" type="drop" tab-index="${9 + index}" visible="true" src="${args.dropImage}" height="landscape.150px, portrait.150px" width="landscape.150px, portrait.150px">
+      <lido-image value="${letter}" string="${letter}" is-slice="true" onEntry="this.padding='0px'; this.margin-left='${marginleft}px'; this.margin-top='8px';" bg-color="transparent" id="drop-image${index + 1}" disable-edit="true" type="drop" tab-index="${9 + index}" visible="true" src="${args.dropImage}" height="landscape.150px, portrait.150px" width="landscape.150px, portrait.150px">
       </lido-image>
     `;
   }).join('');
@@ -128,20 +128,20 @@ function getContainerXml(args: RocketArgs) {
               </lido-text>
           </lido-cell>
 
-          <lido-cell display="flex" grid-gap="10" onEntry="this.position='absolute'; this.display='flex';" y="landscape.33%, portrait.40%" tab-index="7" id="fullRrocket">
+          <lido-cell layout="row" onEntry="this.position='absolute'; this.justify-content='center'; this.align-item='center';" y="landscape.20%, portrait.40%" tab-index="7" id="fullRrocket" bg-color="transparent" height="landscape.445px, portrait.275px" width="100%" visible="true">
               <lido-image bg-color="transparent" height="landscape.200px, portrait.200px" id="rockethead_bg_wordnote" tab-index="8" width="landscape.400px, portrait.400px" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethead_bg_wordnote.png" margin="landscape.0px 0px 0px 0px, portrait.0">
               </lido-image>
 			  
               ${dropElements}
 
-              <lido-image onEntry="this.position='absolute'; this.padding='0px';" height="225px" width="27%"  x="landscape.${wingXLandscape}%, portrait.${wingXPortrait}%" y="landscape.-53%, portrait.-50%" tab-index="12" bg-color="transparent" id="wings-image1" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethandle_bg_wordnote.png" margin="0">
+              <lido-image onEntry="this.position='absolute'; this.padding='0px';" height="225px" width="27%"  x="landscape.${wingXLandscape}%, portrait.${wingXPortrait}%" y="landscape.0%, portrait.-24%" tab-index="12" bg-color="transparent" id="wings-image1" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethandle_bg_wordnote.png" margin="0">
               </lido-image>
-              <lido-image onEntry="this.position='absolute'; this.padding='0px';" height="225px" width="27%" x="landscape.${wingXLandscape}%, portrait.${wingXPortrait}%" y="landscape.42%, portrait.38%" tab-index="13" bg-color="transparent" id="wings-image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/rockethandle_bg_wordnote%201.png" margin="0">
+              <lido-image onEntry="this.position='absolute'; this.padding='0px';" height="225px" width="27%" x="landscape.${wingXLandscape}%, portrait.${wingXPortrait}%" y="landscape.51%, portrait.45%" tab-index="13" bg-color="transparent" id="wings-image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/rockethandle_bg_wordnote%201.png" margin="0">
               </lido-image>
 
-              <lido-image height="landscape.200px, portrait.205px" width="landscape.10%, portrait.10%" onEntry="this.zIndex='9';" bg-color="transparent" id="rocket-end" disable-edit="true" tab-index="14" margin="landscape. 0px -5% 0px -28px, portrait.5px -5% 0px -15px " src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rocketend_bg_wordnote.png">
+              <lido-image height="landscape.200px, portrait.200px" width="landscape.6%, portrait.6%" onEntry="this.zIndex='9';" bg-color="transparent" id="rocket-end" disable-edit="true" tab-index="14" margin="landscape.0px -2% 0px -35px, portrait.0px -2% 0px -35px" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rocketend_bg_wordnote.png">
               </lido-image>
-              <lido-image onEntry="this.padding='0px';" height="220px" width="25%" tab-index="15" bg-color="transparent" disable-edit="true" id="fire_image1" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Fire.png" margin="0">
+              <lido-image onEntry="this.padding='0px';" height="220px" width="15%" tab-index="15" bg-color="transparent" disable-edit="true" id="fire_image1" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Fire.png">
               </lido-image>
           </lido-cell>
 
