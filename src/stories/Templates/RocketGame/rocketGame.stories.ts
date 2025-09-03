@@ -88,13 +88,13 @@ function getContainerXml(args: RocketArgs) {
 
   // wing dynamic positions
   const wingXLandscape = 46 + dropCount * 4;
-  const wingXPortrait  =  31 + dropCount * 9;
+  const wingXPortrait  =  (dropCount<=3 ? 52 + dropCount * 4 : 56 + dropCount * 4);
 
   // create drop elements
   const dropElements = args.correct.map((letter, index) => {
     const marginleft = index === 0 ? -60 : 0;
     return `
-      <lido-image value="${letter}" string="${letter}" is-slice="true" onEntry="this.padding='0px'; this.margin-left='${marginleft}px'; this.margin-top='8px';" bg-color="transparent" id="drop-image${index + 1}" disable-edit="true" type="drop" tab-index="${9 + index}" visible="true" src="${args.dropImage}" height="landscape.150px, portrait.150px" width="landscape.150px, portrait.150px">
+      <lido-image value="${letter}" string="${letter}" is-slice="true" onEntry="this.padding='0px'; this.margin-left='${marginleft}px'; this.margin-top='8px';" bg-color="transparent" id="drop-image${index + 1}" disable-edit="true" type="drop" tab-index="${9 + index}" visible="true" src="${args.dropImage}" height="landscape.150px, portrait.150px" width="landscape.150px, portrait.125px">
       </lido-image>
     `;
   }).join('');
@@ -128,8 +128,8 @@ function getContainerXml(args: RocketArgs) {
               </lido-text>
           </lido-cell>
 
-          <lido-cell layout="row" onEntry="this.position='absolute'; this.justify-content='center'; this.align-item='center';" y="landscape.20%, portrait.40%" tab-index="7" id="fullRrocket" bg-color="transparent" height="landscape.445px, portrait.275px" width="100%" visible="true">
-              <lido-image bg-color="transparent" height="landscape.200px, portrait.200px" id="rockethead_bg_wordnote" tab-index="8" width="landscape.400px, portrait.400px" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethead_bg_wordnote.png" margin="landscape.0px 0px 0px 0px, portrait.0">
+          <lido-cell layout="row" onEntry="this.position='absolute'; this.justify-content='center'; this.align-items='center';" y="landscape.20%, portrait.40%" tab-index="7" id="fullRrocket" bg-color="transparent" height="landscape.445px, portrait.275px" width="100%" visible="true">
+              <lido-image bg-color="transparent" height="landscape.160px, portrait.160px" id="rockethead_bg_wordnote" tab-index="8" width="landscape.350px, portrait.350px" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/rockethead_bg_wordnote.png" margin="landscape.0px 0px 0px 0px, portrait.0">
               </lido-image>
 			  
               ${dropElements}
