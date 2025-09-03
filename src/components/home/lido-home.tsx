@@ -193,6 +193,7 @@ export class LidoHome {
     // Remove stored values in localStorage when the page is about to be unloaded
     window.addEventListener('beforeunload', () => {
       AudioPlayer.getI().stop();
+      localStorage.removeItem(ActivityScoreKey);
       clearLocalStorage();
     });
   }
