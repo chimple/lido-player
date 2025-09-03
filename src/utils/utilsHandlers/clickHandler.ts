@@ -20,20 +20,29 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   };
 
   const onPointerDown = (event: PointerEvent) => {
-    event.stopPropagation(); // Prevent bubbling to other elements
+    event.stopPropagation();
     onholdTriggered = false;
-    onholdTimer = setTimeout(playAudio, onholdTime);
+    onholdTimer = setTimeout(() => {
+      playAudio();
+    }, onholdTime);
   };
 
   const onPointerUp = async (event: PointerEvent) => {
-    event.stopPropagation();
     clearTimeout(onholdTimer!);
 
- 
     if (!onholdTriggered && onTouch) {
       await executeActions(onTouch, element);
+    } else if (!onTouch) {
+      if (['category', 'option'].includes(element.getAttribute('type') || '')) {
+        element.dispatchEvent(
+          new MouseEvent('click', { bubbles: true, cancelable: true })
+        );
+      }
     }
+
+    setDraggingDisabled(false);
   };
+
   const onPointerLeave = () => {
     clearTimeout(onholdTimer!);
   };
@@ -42,6 +51,7 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   element.addEventListener('pointerup', onPointerUp);
   element.addEventListener('pointerleave', onPointerLeave);
 }
+
 
 
 export function addClickListenerForClickType(element: HTMLElement): void {
