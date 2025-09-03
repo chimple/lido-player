@@ -27,7 +27,7 @@ export async function handleElementClick(element: HTMLElement) {
     const onCorrect = container['onCorrect'];
     await executeActions(onCorrect, container);
     
-    let fillValue = JSON.parse(fillElement['fill']);
+    const fillValue = JSON.parse(fillElement['fill']);
 
     if (fillValue === 100 && !fillCompleted) {
       fillCompleted = true;
@@ -87,6 +87,7 @@ export function handleFloatElementPosition(element: HTMLElement) {
     const duration = 5 + Math.random() * 5;
     element.style.setProperty('--el-top', `${startTop}px`);
     element.style.animation = `float-up ${duration}s linear ${delay}s`;
+    element.id = 'removeShadow';
   }
 
   element.addEventListener(

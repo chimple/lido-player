@@ -16,6 +16,10 @@
   }
 }
 
+#removeShadow {
+  box-shadow: unset !important;
+}
+
 @keyframes float-lr {
   from {
     right: var(--el-left);
