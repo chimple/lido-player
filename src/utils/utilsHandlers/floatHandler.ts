@@ -26,11 +26,15 @@ export async function handleElementClick(element: HTMLElement) {
   if (res) {
     const onCorrect = container['onCorrect'];
     await executeActions(onCorrect, container);
-    const fillValue = JSON.parse(fillElement['fill']);
+    
+    let fillValue = JSON.parse(fillElement['fill']);
 
     if (fillValue === 100 && !fillCompleted) {
       fillCompleted = true;
+      container.style.pointerEvents = 'none';
       triggerNextContainer();
+    } else {
+      fillCompleted = false;
     }
   } else {
     const onInCorrect = container['onInCorrect'];
