@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { letterBoard } from '../letterboard/letterboard.stories';
 
 type RocketArgs = {
   correct: string[];
@@ -44,7 +45,7 @@ const meta: Meta<RocketArgs> = {
     backgroundImage: {
       control: 'file',
       description: 'Main background image',
-      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Background_Sky.png',
+      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png',
       multiple: true,
     },
     colors: {
@@ -90,6 +91,10 @@ function getContainerXml(args: RocketArgs) {
   const wingXLandscape = 46 + dropCount * 4;
   const wingXPortrait  =  (dropCount<=3 ? 52 + dropCount * 4 : 56 + dropCount * 4);
 
+  // const textWidth = this.letterBoardText.length * parseFloat(this.fontSize);
+  // const parentWidth = this.parentElement.querySelector('#board_bg_wordnote').offsetWidth;
+  // const centerX = (parentWidth - textWidth) / 2;
+
   // create drop elements
   const dropElements = args.correct.map((letter, index) => {
     const marginleft = index === 0 ? -60 : 0;
@@ -119,13 +124,18 @@ function getContainerXml(args: RocketArgs) {
               <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
               </lido-avatar>
           </lido-cell>
+
+          
+          
           <lido-cell layout="pos" value="pos2" tab-index="3" id="pos2" visible="true" height="landscape.305px, portrait.auto " width="landscape.100%, portrait.100%;" y="landscape.-35%, portrait.-12%" x="landscape.23%, portrait.0%" onEntry="this.background-color='transparent'">
               <lido-image id="board_bg_wordnote" tab-index="4" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/board_bg_wordnote.png">
               </lido-image>
               <lido-image id="hit_img" tab-index="5" height="170px" width="100%" y="landscape.124%, portrait.360px" x="landscape.-42%, portrait.-36%" disable-edit="true" visible="true" src="${args.TextBackgroundImage}">
-              </lido-image>
-              <lido-text id="heading" tab-index="6" visible="true" string="${args.letterBoardText}" font-family="'Baloo Bhai 2'" font-color="#fafafa" font-size="landscape.9rem, portrait.10rem" bg-color="transparent" onEntry="this.fontWeight='700'; this.justify-content='center'; this.align-item='center';" y="landscape.100%, portrait.18rem" x="landscape.23%, portrait.35%">
-              </lido-text>
+                <lido-cell layout="pos" display="flex" value="pos3" tab-index="3" id="pos3" visible="true" height="landscape.265px, portrait.auto " bg-color="transparent" width="landscape.100%, portrait.100%;" onEntry="this.z-index='1'; this.align-items='center'; this.justify-content='center'; this.display='flex';" y="landscape.0%, portrait.14%" x="landscape.9%, portrait.4%">
+                  <lido-text id="heading" tab-index="6" visible="true" string="${args.letterBoardText}" font-family="'Baloo Bhai 2'" font-color="#fafafa" font-size="landscape.9rem, portrait.10rem" bg-color="transparent" onEntry="this.fontWeight='700'; this.justify-content='center'; this.align-item='center';" x="unset" y="unset">
+                  </lido-text>
+                </lido-cell>
+              </lido-image>              
           </lido-cell>
 
           <lido-cell layout="row" onEntry="this.position='absolute'; this.justify-content='center'; this.align-items='center';" y="landscape.20%, portrait.40%" tab-index="7" id="fullRrocket" bg-color="transparent" height="landscape.445px, portrait.275px" width="100%" visible="true">
