@@ -176,7 +176,7 @@ export class LidoTrace {
       console.error('No SVG URL provided or index out of bounds.');
       return;
     }
-    const svgText = await this.fetchSVG(url);
+    const svgText = await this.fetchSVG(convertUrlToRelative(url));
     console.log('SVG fetched successfully\n');
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
@@ -237,7 +237,7 @@ export class LidoTrace {
     testImage.onerror = () => {
       img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(fingerUrl));
     };
-    testImage.src = this.fingerHintUrl || fingerUrl;
+    testImage.src = convertUrlToRelative(this.fingerHintUrl || fingerUrl);
 
     img.setAttribute('width', `${IMG_SIZE}`);
     img.setAttribute('height', `${IMG_SIZE}`);
