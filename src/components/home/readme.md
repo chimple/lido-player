@@ -9,6 +9,7 @@
 
 | Property           | Attribute            | Description                                                                                         | Type      | Default     |
 | ------------------ | -------------------- | --------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `avatarUrl`        | `avatar-url`         | URL for the avatar Rive file.                                                                       | `string`  | `undefined` |
 | `baseUrl`          | `base-url`           | Base URL for the containers.                                                                        | `string`  | `''`        |
 | `canplay`          | `canplay`            | Boolean that controls the playability of the game.                                                  | `boolean` | `true`      |
 | `exitButtonUrl`    | `exit-button-url`    | Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.     | `string`  | `undefined` |

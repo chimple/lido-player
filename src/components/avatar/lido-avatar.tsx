@@ -1,7 +1,9 @@
 import { Component, Host, h, Prop, Element, getAssetPath } from '@stencil/core';
 import { Rive } from '@rive-app/canvas';
 import { RiveService } from '../../utils/rive-service';
-import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay} from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay } from '../../utils/utils';
+import { LidoContainer } from '../../utils/constants';
+import { log } from 'mathjs';
 
 /**
  * @component LidoAvatar
@@ -126,8 +128,8 @@ export class LidoAvatar {
   @Element() el: HTMLElement;
 
   /**
-    * Delay in milliseconds to make the cell visible after mount.
-    */
+   * Delay in milliseconds to make the cell visible after mount.
+   */
   @Prop() delayVisible: string = '';
 
   /**
@@ -152,13 +154,40 @@ export class LidoAvatar {
    * The animation surface is resized to fit the canvas, and the instance is stored in the service.
    */
   initializeRive = rivSrc => {
+    const homeElement = document?.querySelector('lido-home') as HTMLElement;
+    let rivUrl;
+    if (homeElement) {
+      const homeUrl = homeElement.getAttribute('avatar-url');
+      if (homeUrl) {
+        rivUrl = convertUrlToRelative(homeUrl);
+      }
+    }
+
     const riveService = RiveService.getInstance();
     const canvas = this.el.querySelector('canvas');
     this.riveInstance = new Rive({
-      src: rivSrc,
+      src: rivUrl ? rivUrl : rivSrc,
       canvas: canvas,
       stateMachines: 'Idle',
       autoplay: true,
+      onLoadError: error => {
+        console.log('Rive failed to load:', error);
+        if (rivUrl !== this.src) {
+          this.riveInstance = new Rive({
+            src: rivSrc,
+            canvas: canvas,
+            stateMachines: 'Idle',
+            autoplay: true,
+            onLoadError: err => {
+              console.log('Fallback Rive failed to load:', err);
+            },
+            onLoad: () => {
+              this.riveInstance.resizeDrawingSurfaceToCanvas();
+              riveService.setRiveInstance(this.riveInstance);
+            },
+          });
+        }
+      },
       onLoad: () => {
         this.riveInstance.resizeDrawingSurfaceToCanvas();
         riveService.setRiveInstance(this.riveInstance);

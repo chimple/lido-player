@@ -82,6 +82,11 @@ export class LidoHome {
   @Prop() speakerButtonUrl: string;
 
   /**
+   * URL for the avatar Rive file.
+   */
+  @Prop() avatarUrl: string;
+
+  /**
    * Stores the resolved navigation bar icons.
    * Each key will hold either a valid custom URL or the default ConstNavIcons URL.
    */
@@ -118,8 +123,8 @@ export class LidoHome {
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
       this.currentContainerIndex = index;
-      console.log("container index ; ", this.currentContainerIndex);
-      
+      console.log('container index ; ', this.currentContainerIndex);
+
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex < this.containers.length - 1) {
@@ -130,7 +135,7 @@ export class LidoHome {
     } else if (this.currentContainerIndex >= this.containers.length - 1) {
       // const event = new CustomEvent('gameCompleted');
       // window.dispatchEvent(event);
-      localStorage.removeItem(ActivityScoreKey)
+      localStorage.removeItem(ActivityScoreKey);
       dispatchGameCompletedEvent();
       this.currentContainerIndex = null;
     }
@@ -169,7 +174,7 @@ export class LidoHome {
       speak: this.speakerButtonUrl || speakUrl,
     };
 
-    if(this.currentContainerIndex === 0){
+    if (this.currentContainerIndex === 0) {
       localStorage.removeItem(ActivityScoreKey);
       clearLocalStorage();
     }
