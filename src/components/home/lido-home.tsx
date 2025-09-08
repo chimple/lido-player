@@ -16,7 +16,7 @@ import {
   ActivityScoreKey,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer } from '../../utils/utils';
+import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 
 /**
@@ -124,7 +124,6 @@ export class LidoHome {
       // Move to the next container
       this.currentContainerIndex = index;
       console.log('container index ; ', this.currentContainerIndex);
-
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex < this.containers.length - 1) {
@@ -225,26 +224,29 @@ export class LidoHome {
 
   private async handleIcons() {
     const checkUrl = async (url?: string, containerUrl?: string, fallback?: string) => {
-      if (!url && !containerUrl) return fallback ?? false;
-      try {
-        let res = await fetch(url);
-        if (res.ok && url) {
-          return url;
-        } else {
-          if (!containerUrl) return fallback ?? false;
-          res = await fetch(containerUrl);
-          return res.ok ? containerUrl : fallback ?? false;
-        }
-      } catch {
-        return fallback ?? false;
-      }
+      // if (!url && !containerUrl) return fallback ?? false;
+      if (url) return convertUrlToRelative(url);
+      if (containerUrl) return convertUrlToRelative(containerUrl);
+      return fallback ?? false;
+      // try {
+      //   let res = await fetch(url);
+      //   if (res.ok && url) {
+      //     return url;
+      //   } else {
+      //     if (!containerUrl) return fallback ?? false;
+      //     res = await fetch(containerUrl);
+      //     return res.ok ? containerUrl : fallback ?? false;
+      //   }
+      // } catch {
+      //   return fallback ?? false;
+      // }
     };
 
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const containerExit = container.getAttribute('exit-button-url');
     const containerPrev = container.getAttribute('prev-button-url');
     const containerNext = container.getAttribute('next-button-url');
-    const containerSpeak = container.getAttribute('speak-button-url');
+    const containerSpeak = container.getAttribute('speak-button-url') ?? container.getAttribute('speaker-button-url');
 
     this.navBarIcons = {
       exit: `${await checkUrl(this.exitButtonUrl, containerExit, exitUrl)}`,
