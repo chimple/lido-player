@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { letterBoard } from '../letterboard/letterboard.stories';
 
 type RocketArgs = {
   correct: string[];
@@ -90,10 +89,6 @@ function getContainerXml(args: RocketArgs) {
   // wing dynamic positions
   const wingXLandscape = 46 + dropCount * 4;
   const wingXPortrait  =  (dropCount<=3 ? 52 + dropCount * 4 : 56 + dropCount * 4);
-
-  // const textWidth = this.letterBoardText.length * parseFloat(this.fontSize);
-  // const parentWidth = this.parentElement.querySelector('#board_bg_wordnote').offsetWidth;
-  // const centerX = (parentWidth - textWidth) / 2;
 
   // create drop elements
   const dropElements = args.correct.map((letter, index) => {
