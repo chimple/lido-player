@@ -115,6 +115,9 @@ export class LidoHome {
    * If the last container is reached, it shows a completion message.
    */
   NextContainerKey = (index?: number | undefined) => {
+
+    console.log("index : ",index, "currentContainerIndex : ", this.currentContainerIndex, "containers length : ", this.containers.length, this.containers);
+    
     // console.log("👉 NextContainerKey CALLED with index:", index);
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
@@ -214,6 +217,7 @@ export class LidoHome {
     // } else {
     //   this.updateBackgroundImage();
     // }
+    this.currentContainerIndex =  0;
 
     this.handleIcons();
 
