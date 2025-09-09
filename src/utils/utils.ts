@@ -194,6 +194,16 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
+        case 'highlightCount': {
+          const value = action.value;
+          if (value && targetElement) {
+            console.log('highlightStar action triggered');
+            console.log('Target Element:', targetElement);
+            await HighlightStarsOneByOne(targetElement as HTMLElement, value);
+          }
+          break;
+        }
+
         case 'slideAnimation': {
           slideAnimation();
           break;
@@ -993,4 +1003,39 @@ export function setCancelBtnPopup(value: boolean) {
 
 export function getCancelBtnPopup(): boolean {
   return cancelBtnPopupState;
+}
+
+export const HighlightStarsOneByOne = async (element: HTMLElement, value: string): Promise<void> => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return; 
+  if (!element) return;
+  if (!value) return;
+
+  // Dynamically find the parent row of stars
+  const starRow = container.querySelector('[type="wrap"]');
+
+  const stars = starRow ? Array.from(starRow.querySelectorAll<HTMLElement>('lido-image')) : [];
+
+  for (const star of stars) {
+    // Highlight the star
+    star.classList.add('lido-glow');
+
+    // Find the hidden text child inside star
+    const textEl = star.querySelector('lido-text');
+
+    if (textEl) {
+      // Trigger audio by setting speak="true"
+      textEl.setAttribute('speak', 'true');
+      await AudioPlayer.getI().play(textEl);
+    }
+    // Fade out the star (disappear)
+    star.style.opacity = '0';
+    star.style.visibility = 'hidden';
+    
+    // Wait for the transition to complete before removing the element
+    await new Promise(resolve => setTimeout(resolve,200));
+
+    // Remove the highlight
+    star.classList.remove('lido-glow');
+  }
 }
