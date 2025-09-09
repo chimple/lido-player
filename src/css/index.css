@@ -231,3 +231,8 @@ body {
   will-change: transform;
 }
 
+.lido-glow {
+  animation: glowPulse 1s infinite alternate;
+  transition: opacity 0.5s ease-in-out;
+}
+
