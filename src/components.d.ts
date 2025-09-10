@@ -666,6 +666,10 @@ export namespace Components {
      */
     interface LidoHome {
         /**
+          * URL for the avatar Rive file.
+         */
+        "avatarUrl": string;
+        /**
           * Base URL for the containers.
          */
         "baseUrl": string;
@@ -697,6 +701,10 @@ export namespace Components {
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
         "speakerButtonUrl": string;
+        /**
+          * Unique identifier for the component instance. If not provided, a UUID is generated to ensure uniqueness.
+         */
+        "uuid": string;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
          */
@@ -2646,6 +2654,10 @@ declare namespace LocalJSX {
      */
     interface LidoHome {
         /**
+          * URL for the avatar Rive file.
+         */
+        "avatarUrl"?: string;
+        /**
           * Base URL for the containers.
          */
         "baseUrl"?: string;
@@ -2677,6 +2689,10 @@ declare namespace LocalJSX {
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
         "speakerButtonUrl"?: string;
+        /**
+          * Unique identifier for the component instance. If not provided, a UUID is generated to ensure uniqueness.
+         */
+        "uuid"?: string;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
          */
