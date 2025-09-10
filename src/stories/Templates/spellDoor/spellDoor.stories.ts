@@ -42,13 +42,13 @@ function getContainerXml(args) {
 		</lido-cell>
 		<lido-cell layout="landscape.row, portrait.col" visible="true" width="landscape.75%, portrait.76%" margin="landscape.0%, portrait.71% 0 0 0" height="landscape.57%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent';">
 			<!-- image -->
-			<lido-image id="image0" visible="true" z="100" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/hut1_image_spelling.png" width="landscape.80%, portrait.100%" height="landscape.80%, portrait.62%" >
+			<lido-image id="image0" visible="true" z="100" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/hut1_image_spelling.png" width="landscape.50%, portrait.100%" height="landscape.83%, portrait.62%" >
 			</lido-image>
-			<lido-cell layout="pos" id="pos3" visible="true" width="landscape.60%, portrait.76%" x="landscape.31%, portrait.31%" y="landscape.0%, portrait.35%" height="landscape.54%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent'" >
+			<lido-cell layout="pos" id="pos3" visible="true" width="landscape.29%, portrait.76%" x="landscape.35%, portrait.31%" y="landscape.16%, portrait.35%" height="landscape.35%, portrait.60%" onEntry="this.borderRadius='10px'; this.padding='8px'; this.backgroundColor='transparent'" >
 				<!-- image -->
-				<lido-image id="image1" visible="true"  x="landscape.6%, portrait.-3%" y="landscape.25%, portrait.29%" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/shutter1_image_spelling.png" width="landscape.50%, portrait.56%" height="landscape.69%, portrait.36%" >
+				<lido-image id="image1" visible="true"  x="landscape.0%, portrait.-3%" y="landscape.0%, portrait.29%" src="https://media.githubusercontent.com/media/chimple/bahama/master/assets/games/spelldoor/textures/shutter1_image_spelling.png" width="landscape.100%, portrait.56%" height="landscape.100%, portrait.36%" >
 				</lido-image>
-				<lido-image id="image2" visible="true" x="landscape.12%, portrait.-5%" y="landscape.2%, portrait.20%" src="${args.image}" width="landscape.39%, portrait.60%" height="landscape.100%, portrait.50%" >
+				<lido-image id="image2" visible="true" x="landscape.0%, portrait.-5%" y="landscape.0%, portrait.20%" src="${args.image}" width="landscape.100%, portrait.60%" height="landscape.100%, portrait.50%" >
 				</lido-image>
 			</lido-cell>
 		</lido-cell>

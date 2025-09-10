@@ -1,7 +1,5 @@
 import {
   ActivityScoreKey,
-  DragSelectedMapKey,
-  DragMapKey,
   SelectedValuesKey,
   DropMode,
   DropToAttr,
@@ -24,6 +22,7 @@ import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 const gameScore = new GameScore();
+// const runtimeActivityScores: Record<string, number> = {}; // activity index -> score
 
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
@@ -401,35 +400,26 @@ const calculateScore = () => {
   gameScore.wrongMoves = 0;
 };
 
-export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
-  const container = document.getElementById(LidoContainer) as HTMLElement;
-  if (!container) return;
-  await executeActions("this.alignMatch='true'", dropElement, dragElement);
+export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
+  const map: Record<string, string[]> = {};
+  const draggedEls = document.querySelectorAll<HTMLElement>(`[${DropToAttr}]`);
+  draggedEls.forEach(dragEl => {
+    const to = dragEl.getAttribute(DropToAttr);
+    if (!to) return;
+    const dropEl = document.getElementById(to);
+    if (!dropEl) return;
+    const tabIndex = dropEl.getAttribute('tab-index') ?? to;
+    if (!map[tabIndex]) map[tabIndex] = [];
+    const value = dragEl.getAttribute('value') ?? (dragEl as any).value ?? '';
+    map[tabIndex].push(value);
+  });
+  return map;
+}
 
-  let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
-  const tabindex = dropElement.getAttribute('tab-index');
-
-  if (!dragScore[tabindex]) {
-    dragScore[tabindex] = [];
-  }
-
-  dragScore[tabindex].push(dragElement['value']);
-
-  localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
-
-  //localStorage
-  let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');
-  const index = dropElement.getAttribute('tab-index');
-  if (!drag[index]) {
-    drag[index] = [];
-  }
-  drag[index].push(dragElement.id);
-  // localStorage.setItem(DragMapKey, JSON.stringify(drag));
-
-  const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
-
-  const sortedValues = sortedKeys.reduce((acc, key) => {
-    const values = dragScore[key];
+export function getSortedValuesArrayFromMap(map: Record<string, string[]>): string[] {
+  const sortedKeys = Object.keys(map).sort((a, b) => parseInt(a) - parseInt(b));
+  const sortedValues = sortedKeys.reduce((acc: string[], key) => {
+    const values = map[key];
     if (values.length > 1) {
       acc.push(`(${values.join('|')})`);
     } else {
@@ -437,13 +427,31 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     }
     return acc;
   }, []);
+  return sortedValues;
+}
+export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return;
+  await executeActions("this.alignMatch='true'", dropElement, dragElement);
 
-  localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+  // ensure dragged element has drop-to and drop-time (source of truth)
+  if (dragElement && dropElement) {
+    const dropId = dropElement.id || dropElement.getAttribute('tab-index') || '';
+    if (dropId) {
+      dragElement.setAttribute(DropToAttr, dropId);
+      dragElement.setAttribute(DropTimeAttr, String(Date.now()));
+    }
+  }
+
+ 
+  const dragScore = buildDragSelectedMapFromDOM();
+  const sortedValues = getSortedValuesArrayFromMap(dragScore);
+  container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
+
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+  const storedTabIndexes = Object.keys(dragScore).map(Number);
   allElements.forEach(otherElement => {
-    const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-    const storedTabIndexes = Object.keys(dropObject).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -497,7 +505,7 @@ const storeActivityScore = (score: number) => {
 export const handleShowCheck = () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const objectiveString = container['objective'];
-  const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
+  const selectValues = container.getAttribute(SelectedValuesKey) ?? '';
 
   const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
 
@@ -530,7 +538,7 @@ export const validateObjectiveStatus = async () => {
     triggerNextContainer();
     return;
   } else {
-    const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
+    const objectiveArray = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
     let res;
     const additionalCheck = container.getAttribute('equationCheck');
     if (!!additionalCheck) {
@@ -890,13 +898,17 @@ export const attachSpeakIcon = async (element: HTMLElement) => {
   element.appendChild(speakIconElement);
 };
 
-export const clearLocalStorage = () => {
-  localStorage.removeItem(DragSelectedMapKey);
-  localStorage.removeItem(DragMapKey);
-  localStorage.removeItem(SelectedValuesKey);
-  localStorage.removeItem(DropHasDrag);
-  localStorage.removeItem(DropLength);
-};
+// export const clearLocalStorage = () => {
+//   document.querySelectorAll<HTMLElement>(`[${DropToAttr}]`).forEach(el => {
+//     el.removeAttribute(DropToAttr);
+//     el.removeAttribute(DropTimeAttr);
+//   });
+//   const container = document.getElementById(LidoContainer) as HTMLElement;
+//   if (container) {
+//     container.removeAttribute(SelectedValuesKey);
+//   }
+  
+// };
 
 /**
  * Applies a delay to the element's visibility based on `delayVisible`.
