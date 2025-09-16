@@ -32,8 +32,8 @@
   background-repeat: no-repeat;
 }
 
-.slot-deactive {
-  background-color: var(--deactive-bg-color);
+.slot-inactive {
+  background-color: var(--inactive-bg-color);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

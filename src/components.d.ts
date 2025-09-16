@@ -951,10 +951,6 @@ export namespace Components {
          */
         "cols": number;
         /**
-          * Background color for inactive slots
-         */
-        "deactiveBgColor": string;
-        /**
           * Number of slots to pre-fill as active by default
          */
         "defualtFill": number;
@@ -962,6 +958,10 @@ export namespace Components {
           * Height of the slot container
          */
         "height": string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor": string;
         /**
           * Show row index numbers on the left side
          */
@@ -3024,10 +3024,6 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
-          * Background color for inactive slots
-         */
-        "deactiveBgColor"?: string;
-        /**
           * Number of slots to pre-fill as active by default
          */
         "defualtFill"?: number;
@@ -3035,6 +3031,10 @@ declare namespace LocalJSX {
           * Height of the slot container
          */
         "height"?: string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor"?: string;
         /**
           * Show row index numbers on the left side
          */

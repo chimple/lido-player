@@ -38,7 +38,7 @@ export class LidoMathMatrix {
   @Prop() activeBgColor: string = 'red';
 
   /** Background color for inactive slots */
-  @Prop() deactiveBgColor: string = 'transparent';
+  @Prop() inactiveBgColor: string = 'transparent';
 
   /** Border style applied to each slot */
   @Prop() border: string = '2px solid green';
@@ -76,7 +76,7 @@ export class LidoMathMatrix {
     slotElements.forEach((el, i) => {
       const slot = el as HTMLElement;
       slot.style.setProperty('--active-bg-color', this.activeBgColor);
-      slot.style.setProperty('--deactive-bg-color', this.deactiveBgColor);
+      slot.style.setProperty('--inactive-bg-color', this.inactiveBgColor);
 
       this.clickable ? (slot.style.pointerEvents = '') : (slot.style.pointerEvents = 'none');
       slot.style.border = this.border;
@@ -155,13 +155,13 @@ export class LidoMathMatrix {
       const slotEl = el as HTMLElement;
       if (i < index) {
         slotEl.classList.add('slot-active');
-        slotEl.classList.remove('slot-deactive');
+        slotEl.classList.remove('slot-inactive');
         if (this.matrixImage) {
           slotEl.style.setProperty('--bg-image', `url(${convertUrlToRelative(this.matrixImage)})`);
         }
       } else {
         slotEl.classList.remove('slot-active');
-        slotEl.classList.add('slot-deactive');
+        slotEl.classList.add('slot-inactive');
       }
     });
   }
@@ -180,7 +180,7 @@ export class LidoMathMatrix {
                 <div class="leftIndex">{++colIndex}</div>
               ) : (
                 <div
-                  class={`slot slot-${slotNumber++} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-deactive'}`}
+                  class={`slot slot-${slotNumber++} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
                   onClick={() => this.handleClickSlot(event.target as HTMLElement)}
                   key={`slot-${rowIndex}-${colIndex}`}
                   style={{ borderRadius: this.style.borderRadius }}

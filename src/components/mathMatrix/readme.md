@@ -16,9 +16,9 @@
 | `bottomIndex`       | `bottom-index`        | Show row index numbers on the bottom side                        | `boolean` | `false`             |
 | `clickable`         | `clickable`           | Enable/disable click interactions on the slots                   | `boolean` | `true`              |
 | `cols`              | `cols`                | Number of columns in the matrix                                  | `number`  | `5`                 |
-| `deactiveBgColor`   | `deactive-bg-color`   | Background color for inactive slots                              | `string`  | `'transparent'`     |
 | `defualtFill`       | `defualt-fill`        | Number of slots to pre-fill as active by default                 | `number`  | `0`                 |
 | `height`            | `height`              | Height of the slot container                                     | `string`  | `'100%'`            |
+| `inactiveBgColor`   | `inactive-bg-color`   | Background color for inactive slots                              | `string`  | `'transparent'`     |
 | `leftIndex`         | `left-index`          | Show row index numbers on the left side                          | `boolean` | `false`             |
 | `margin`            | `margin`              | Margin around the matrix container                               | `string`  | `undefined`         |
 | `matrixImage`       | `matrix-image`        | Image source used inside the slots                               | `string`  | `undefined`         |
