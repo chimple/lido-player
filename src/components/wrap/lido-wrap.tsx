@@ -154,6 +154,11 @@ export class LidoWrap {
    */
   @Prop() margin: string = '';
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
+
   /**
    * Stores the dynamic style properties for the component, allowing runtime updates to styling.
    */
@@ -221,6 +226,7 @@ export class LidoWrap {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        disableSpeak={this.disableSpeak}
       >
         {/* Slot for child elements */}
         <slot />

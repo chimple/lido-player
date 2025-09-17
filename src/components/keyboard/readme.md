@@ -12,6 +12,7 @@
 | `bgColor`       | `bg-color`       | Background color for each key button                                                                                | `string`  | `''`        |
 | `borderRadius`  | `border-radius`  | Border radius for key buttons (e.g., "8px")                                                                         | `string`  | `''`        |
 | `columns`       | `columns`        | Number of columns in the keyboard layout (default: "10")                                                            | `string`  | `'10'`      |
+| `disableSpeak`  | `disable-speak`  | When set to true, disables the speak functionality of long press for this component and its children.               | `boolean` | `false`     |
 | `fontColor`     | `font-color`     | Font color for key labels (e.g., "#333")                                                                            | `string`  | `undefined` |
 | `fontFamily`    | `font-family`    | Font family for key labels (e.g., "Arial, sans-serif")                                                              | `string`  | `undefined` |
 | `fontSize`      | `font-size`      | Font size for key labels (e.g., "16px")                                                                             | `string`  | `undefined` |

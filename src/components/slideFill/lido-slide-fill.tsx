@@ -140,6 +140,11 @@ export class LidoSlideFill {
    */
   @Prop() delayVisible: string = '';
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
+
   private originalHeight: number = null;
   private originalY: number = null;
 
@@ -347,6 +352,7 @@ export class LidoSlideFill {
         numberType={this.numberType}
         onEntry={this.onEntry}
         type={this.type}
+        disable-speak={this.disableSpeak}
       >
         <div innerHTML={this.svgContent} class="svg-element"></div>
       </Host>

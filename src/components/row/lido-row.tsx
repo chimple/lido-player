@@ -158,6 +158,11 @@ export class LidoRow {
    */
   @Prop() margin: string = '';
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
+
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
    * It initializes custom events based on the `type` of the row component.
@@ -219,6 +224,7 @@ export class LidoRow {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        disable-speak={this.disableSpeak}
       >
         {/* Slot for child elements */}
         <slot />

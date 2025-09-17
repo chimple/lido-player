@@ -129,6 +129,11 @@ export class LidoFlash {
    */
   @Prop() margin: string = '';
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
+
   /* ---------  Element & internal state --------- */
   @Element() el: HTMLElement;
   @State() style: { [key: string]: string } = {};
@@ -207,6 +212,7 @@ export class LidoFlash {
         onEntry={this.onEntry}
         type={this.type}
         onClick={this.handleFlip}
+        disable-speak={this.disableSpeak}
       >
         <div class={`card ${this.flipped ? 'flipped' : ''}`}>
           {/* Front face */}
