@@ -1,6 +1,6 @@
 import { AudioPlayer } from '../audioPlayer';
 import { LidoContainer } from '../constants';
-import { executeActions, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
+import { calculateScore, executeActions, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
 import { stopHighlightForSpeakingElement } from './highlightHandler';
 
 let fillCompleted = false;
@@ -33,6 +33,7 @@ export async function handleElementClick(element: HTMLElement) {
       fillCompleted = true;
       container.style.pointerEvents = 'none';
       triggerNextContainer();
+      calculateScore();
     } else {
       fillCompleted = false;
     }
