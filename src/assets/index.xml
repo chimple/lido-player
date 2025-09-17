@@ -1,8 +1,14 @@
 <main>
 	
-	<lido-container id="lido-container" visible="true" objective="y,o,u" onEntry="sentenceText.speak='true';" onCorrect="lido-avatar.avatarAnimate='Success';sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"  is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" drop-action="infinite-drop">
+
+	<lido-container visible="true" show-next-button="true">
+		<lido-math-matrix visible="true" rows="10" cols="10" top-index="true" left-index="true" bottom-index="true" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="7" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+	</lido-container>
+
+<lido-container id="lido-container" visible="true" objective="y,o,u" onEntry="sentenceText.speak='true';" onCorrect="lido-avatar.avatarAnimate='Success';sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"  is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" drop-action="infinite-drop">
 	<!-- <lido-text id="sentenceSpoken" string="you are tall" value="you are tall" visible="false" onEntry="this.speak='true';"></lido-text> -->
 
+	
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.500px, portrait.600px" width="landscape.350px, portrait.450px" x="landscape.1275px,portrait.230px" y="landscape.90px, portrait.0px" aria-hidden="true" z="9999" bg-color="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 			</lido-avatar>
