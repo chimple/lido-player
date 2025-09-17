@@ -78,7 +78,7 @@ function getContainerXml(args : WriteNumberArgs) {
     
     return `
         <main>
-            <lido-container id="lido-container" objective="writeNumber" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true">
+            <lido-container id="lido-container" objective="writeNumber" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true">
 
                 <!-- Chimple Avatar -->
                 <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1279px, portrait.230px" y="landscape.375px, portrait.1010px" ariaHidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
@@ -102,12 +102,12 @@ function getContainerXml(args : WriteNumberArgs) {
 
                 <!-- trace cell -->
                 <lido-cell layout="pos" id="pos1" visible="true" width="landscape.740px, portrait.740px"  height="landscape.477px, portrait.477px" bg-color="transparent"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" x="landscape.430px, portrait.75px" y="landscape.205px, portrait.315px">
-                    <lido-trace id="image2" tab-index="3" value="a" visible="true" highlight-text-id="txt1" svgSource="${traceImage1}; ${traceImage2}" onCorrect="this.highlightCount='true';"  mode="${traceMode}" z="1" x="" y="" width="740px" height="477px" onEntry="" alt-text="{backgroundImage}">
+                    <lido-trace id="image2" tab-index="3" value="a" visible="true" highlight-text-id="txt1" svgSource="${traceImage1}; ${traceImage2}" onCorrect="star-row.HighlightStarsOneByOne='true';"  mode="${traceMode}" z="1" x="" y="" width="740px" height="477px" alt-text="{backgroundImage}">
                     </lido-trace>
                 </lido-cell>
 
 
-                <lido-cell layout="wrap" type="wrap" id="star-row" width="landscape.50%, portrait.80%" height="landscape.160px, portrait.200px" visible="true" bg-color="transparent" y="landscape.500px, portrait.485px" margin="landscape.560px 0px -100px 0px, portrait.225px 0px -100px 0px" onEntry="this.grid-template-columns='repeat(auto-fill, minmax(135px, auto))'; this.justify-content='center'; this.align-items='center';">
+                <lido-cell layout="wrap" id="star-row" width="landscape.50%, portrait.80%" height="landscape.160px, portrait.200px" visible="true" bg-color="transparent" y="landscape.500px, portrait.485px" margin="landscape.560px 0px -100px 0px, portrait.225px 0px -100px 0px" onEntry="this.grid-template-columns='repeat(auto-fill, minmax(135px, auto))'; this.justify-content='center'; this.align-items='center';">
                     ${starCells}
                 </lido-cell>
 
