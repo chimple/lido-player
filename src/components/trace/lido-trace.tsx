@@ -691,7 +691,9 @@ export class LidoTrace {
     }
 
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
+    const delay = 1000; // milliseconds
     if (this.currentSvgIndex < this.svgUrls.length - 1) {
+      await new Promise(resolve => setTimeout(resolve, delay));
       this.currentSvgIndex++;
       await this.initializeSVG();
       this.moving = false;
