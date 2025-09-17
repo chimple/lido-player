@@ -194,12 +194,28 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-        case 'highlightCount': {
+        case 'highlightStarsAndDisapper': {
           const value = action.value;
           if (value && targetElement) {
             console.log('highlightStar action triggered');
             console.log('Target Element:', targetElement);
             await HighlightStarsOneByOne(targetElement as HTMLElement, value);
+          }
+          break;
+        }
+
+        case 'boxAnimationOneByOne': {
+          const value = action.value;
+          if (value && targetElement) {
+            await animateBoxCells(targetElement as HTMLElement, value);
+          }
+          break;
+        }
+
+        case 'questionBoxAnimate' : {
+          const value = action.value;
+          if (value && targetElement) {
+            await questionBoxAnimation(targetElement as HTMLElement, value)
           }
           break;
         }
@@ -402,7 +418,7 @@ export const storingEachActivityScore = (flag: boolean) => {
   console.log('Wrong Moves : ', gameScore.wrongMoves);
 };
 
-const calculateScore = () => {
+export const calculateScore = () => {
   const rightMoves = gameScore.rightMoves;
   const wrongMoves = gameScore.wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
@@ -1005,37 +1021,126 @@ export function getCancelBtnPopup(): boolean {
   return cancelBtnPopupState;
 }
 
+export function generateUUIDFallback() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+
 export const HighlightStarsOneByOne = async (element: HTMLElement, value: string): Promise<void> => {
-  const container = document.getElementById(LidoContainer) as HTMLElement;
-  if (!container) return; 
   if (!element) return;
   if (!value) return;
 
   // Dynamically find the parent row of stars
-  const starRow = container.querySelector('[type="wrap"]');
-
-  const stars = starRow ? Array.from(starRow.querySelectorAll<HTMLElement>('lido-image')) : [];
+  const stars = Array.from(element.children) as HTMLElement[];
+  console.log('starRow', stars);
 
   for (const star of stars) {
     // Highlight the star
     star.classList.add('lido-glow');
 
-    // Find the hidden text child inside star
-    const textEl = star.querySelector('lido-text');
+    // Play star sound
+    await AudioPlayer.getI().play(star);
 
-    if (textEl) {
-      // Trigger audio by setting speak="true"
-      textEl.setAttribute('speak', 'true');
-      await AudioPlayer.getI().play(textEl);
-    }
     // Fade out the star (disappear)
     star.style.opacity = '0';
     star.style.visibility = 'hidden';
-    
-    // Wait for the transition to complete before removing the element
-    await new Promise(resolve => setTimeout(resolve,200));
+
+    await new Promise(resolve => setTimeout(resolve, 300)); // Wait for fade-out to complete
 
     // Remove the highlight
     star.classList.remove('lido-glow');
   }
 }
+
+export const animateBoxCells = async (element: HTMLElement, value: string) : Promise<void> => {
+  if (!element) return;
+  if (!value) return;
+
+  // Select all cells with the attribute type="box"
+  const boxCells = Array.from(element.children) as HTMLElement[];
+  console.log('boxCells', boxCells);
+  if (!boxCells) return;
+
+  boxCells.forEach(cell => {
+    // Reset any previous styles
+    cell.style.visibility = 'hidden';
+  });
+
+  // Animate each cell one by one
+  for (const cell of boxCells) {
+
+    cell.style.visibility = 'visible';
+    cell.style.opacity = '1';
+    // Apply the "come from top" animation
+    cell.classList.add('lido-box-highlight');
+
+    // Delay for each cell to come one after another
+    await new Promise(resolve => setTimeout(resolve, 600)); // Adjust delay as needed
+
+    cell.classList.remove('lido-box-highlight');
+  }
+
+  // After all cells have come down, apply the bounce animation
+  for (const cell of boxCells) {
+
+    // Apply the bounce animation
+    // cell.style.transition = 'transform 0.5s ease';
+    // cell.style.transform = 'scale(1.3)'; // Scale up slightly
+
+    // play the text child inside cell
+    await AudioPlayer.getI().play(cell);
+
+    // await new Promise(resolve => setTimeout(resolve, 200)); // Delay for the bounce
+    // cell.style.transform = 'scale(1)'; // Return to normal size
+
+    // // Wait for the bounce animation to complete
+    // await new Promise(resolve => setTimeout(resolve, 500));
+  }
+};
+
+export const questionBoxAnimation = async (element: HTMLElement, value: string) : Promise<void> => {
+  if (!element) return;
+  if (!value) return;
+
+  // Select all drag elements and drop elements
+  const dragElements = Array.from(element.querySelectorAll("[type='drag']")) as HTMLElement[];
+
+  // Ensure all drag childrens which is dropped disappear
+  dragElements.forEach(dragElement => {
+    if(dragElement.hasAttribute('drop-to')){
+      dragElement.style.transition = 'opacity 0.5s ease';
+      dragElement.style.opacity = '0'; // Fade out
+
+      setTimeout(() => {
+        dragElement.remove() // Remove from view after fade-out
+      }, 500); 
+    }
+  });
+
+  // Reveal all drop childrens which is hidden
+  const dropElements = Array.from(element.querySelectorAll("[type='drop']")) as HTMLElement[];
+  let check = false;
+  dropElements.forEach(dropEl => {
+    const dropVal = dropEl.getAttribute("value");
+    if (dropVal && dropEl.innerText.trim() === "?") {
+      dropEl.innerText = dropVal;
+      if(dropElements.length > 1 && check==false)
+      {
+        if(window.innerWidth > window.innerHeight)
+        {
+          dropEl.style.marginRight = "-45px"
+        }
+        else
+        {
+          dropEl.style.marginRight = "-65px"
+        }
+        check = true;
+      }
+    }
+  });
+}
+

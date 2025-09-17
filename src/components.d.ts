@@ -783,6 +783,10 @@ export namespace Components {
      */
     interface LidoHome {
         /**
+          * URL for the avatar Rive file.
+         */
+        "avatarUrl": string;
+        /**
           * Base URL for the containers.
           * @default ''
          */
@@ -818,6 +822,10 @@ export namespace Components {
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
         "speakerButtonUrl": string;
+        /**
+          * Unique identifier for the component instance. If not provided, a UUID is generated to ensure uniqueness.
+         */
+        "uuid": string;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
           * @default ''
@@ -1050,6 +1058,84 @@ export namespace Components {
           * Z-index for stacking order
          */
         "z"?: string;
+    }
+    interface LidoMathMatrix {
+        /**
+          * Background color for active slots
+         */
+        "activeBgColor": string;
+        /**
+          * If true, only active slots are visible; inactive ones are hidden
+         */
+        "activeOnlyVisible": boolean;
+        /**
+          * Border style applied to each slot
+         */
+        "border": string;
+        /**
+          * Border radius for each slot
+         */
+        "borderRadius": string;
+        /**
+          * Show row index numbers on the bottom side
+         */
+        "bottomIndex": boolean;
+        /**
+          * Enable/disable click interactions on the slots
+         */
+        "clickable": boolean;
+        /**
+          * Number of columns in the matrix
+         */
+        "cols": number;
+        /**
+          * Number of slots to pre-fill as active by default
+         */
+        "defualtFill": number;
+        /**
+          * Height of the slot container
+         */
+        "height": string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor": string;
+        /**
+          * Show row index numbers on the left side
+         */
+        "leftIndex": boolean;
+        /**
+          * Margin around the matrix container
+         */
+        "margin": string;
+        /**
+          * Image source used inside the slots
+         */
+        "matrixImage": string;
+        /**
+          * Padding inside the matrix container
+         */
+        "padding": string;
+        /**
+          * Number of rows in the matrix
+         */
+        "rows": number;
+        /**
+          * Show column index numbers on the top side
+         */
+        "topIndex": boolean;
+        /**
+          * Controls visibility of the matrix (string "true" or "false")
+         */
+        "visible": string;
+        /**
+          * Width of the slot container
+         */
+        "width": string;
+        /**
+          * Z-index value for the matrix container
+         */
+        "z": string;
     }
     /**
      * @component LidoPos
@@ -2145,6 +2231,12 @@ declare global {
         prototype: HTMLLidoKeyboardElement;
         new (): HTMLLidoKeyboardElement;
     };
+    interface HTMLLidoMathMatrixElement extends Components.LidoMathMatrix, HTMLStencilElement {
+    }
+    var HTMLLidoMathMatrixElement: {
+        prototype: HTMLLidoMathMatrixElement;
+        new (): HTMLLidoMathMatrixElement;
+    };
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -2250,6 +2342,7 @@ declare global {
         "lido-home": HTMLLidoHomeElement;
         "lido-image": HTMLLidoImageElement;
         "lido-keyboard": HTMLLidoKeyboardElement;
+        "lido-math-matrix": HTMLLidoMathMatrixElement;
         "lido-pos": HTMLLidoPosElement;
         "lido-random": HTMLLidoRandomElement;
         "lido-root": HTMLLidoRootElement;
@@ -3039,6 +3132,10 @@ declare namespace LocalJSX {
      */
     interface LidoHome {
         /**
+          * URL for the avatar Rive file.
+         */
+        "avatarUrl"?: string;
+        /**
           * Base URL for the containers.
           * @default ''
          */
@@ -3074,6 +3171,10 @@ declare namespace LocalJSX {
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
         "speakerButtonUrl"?: string;
+        /**
+          * Unique identifier for the component instance. If not provided, a UUID is generated to ensure uniqueness.
+         */
+        "uuid"?: string;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
           * @default ''
@@ -3304,6 +3405,84 @@ declare namespace LocalJSX {
         "y"?: string;
         /**
           * Z-index for stacking order
+         */
+        "z"?: string;
+    }
+    interface LidoMathMatrix {
+        /**
+          * Background color for active slots
+         */
+        "activeBgColor"?: string;
+        /**
+          * If true, only active slots are visible; inactive ones are hidden
+         */
+        "activeOnlyVisible"?: boolean;
+        /**
+          * Border style applied to each slot
+         */
+        "border"?: string;
+        /**
+          * Border radius for each slot
+         */
+        "borderRadius"?: string;
+        /**
+          * Show row index numbers on the bottom side
+         */
+        "bottomIndex"?: boolean;
+        /**
+          * Enable/disable click interactions on the slots
+         */
+        "clickable"?: boolean;
+        /**
+          * Number of columns in the matrix
+         */
+        "cols"?: number;
+        /**
+          * Number of slots to pre-fill as active by default
+         */
+        "defualtFill"?: number;
+        /**
+          * Height of the slot container
+         */
+        "height"?: string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor"?: string;
+        /**
+          * Show row index numbers on the left side
+         */
+        "leftIndex"?: boolean;
+        /**
+          * Margin around the matrix container
+         */
+        "margin"?: string;
+        /**
+          * Image source used inside the slots
+         */
+        "matrixImage"?: string;
+        /**
+          * Padding inside the matrix container
+         */
+        "padding"?: string;
+        /**
+          * Number of rows in the matrix
+         */
+        "rows"?: number;
+        /**
+          * Show column index numbers on the top side
+         */
+        "topIndex"?: boolean;
+        /**
+          * Controls visibility of the matrix (string "true" or "false")
+         */
+        "visible"?: string;
+        /**
+          * Width of the slot container
+         */
+        "width"?: string;
+        /**
+          * Z-index value for the matrix container
          */
         "z"?: string;
     }
@@ -4314,6 +4493,7 @@ declare namespace LocalJSX {
         "lido-home": LidoHome;
         "lido-image": LidoImage;
         "lido-keyboard": LidoKeyboard;
+        "lido-math-matrix": LidoMathMatrix;
         "lido-pos": LidoPos;
         "lido-random": LidoRandom;
         "lido-root": LidoRoot;
@@ -4379,6 +4559,7 @@ declare module "@stencil/core" {
              */
             "lido-image": LocalJSX.LidoImage & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
             "lido-keyboard": LocalJSX.LidoKeyboard & JSXBase.HTMLAttributes<HTMLLidoKeyboardElement>;
+            "lido-math-matrix": LocalJSX.LidoMathMatrix & JSXBase.HTMLAttributes<HTMLLidoMathMatrixElement>;
             /**
              * @component LidoPos
              * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
