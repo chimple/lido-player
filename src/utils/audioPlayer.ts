@@ -1,6 +1,7 @@
 import { convertUrlToRelative, speakText } from './utils';
 import { highlightSpeakingElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import{setDraggingDisabled}from './utilsHandlers/dragDropHandler';
+
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;

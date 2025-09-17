@@ -14,6 +14,7 @@
 | `audio`        | `audio`         | URL or identifier for an audio file associated with the shape.                                                                             | `string`  | `''`       |
 | `bgColor`      | `bg-color`      | Background color of the shape (CSS color value, e.g., '#FFFFFF', 'blue'). This is ignored for polygons.                                    | `string`  | `''`       |
 | `delayVisible` | `delay-visible` | Delay in milliseconds to make the cell visible after mount.                                                                                | `string`  | `''`       |
+| `disableSpeak` | `disable-speak` | When set to true, disables the speak functionality of long press for this component and its children.                                      | `boolean` | `false`    |
 | `height`       | `height`        | The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.                                                   | `string`  | `'auto'`   |
 | `id`           | `id`            | Unique identifier for the shape element.                                                                                                   | `string`  | `''`       |
 | `margin`       | `margin`        | CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.). | `string`  | `''`       |
