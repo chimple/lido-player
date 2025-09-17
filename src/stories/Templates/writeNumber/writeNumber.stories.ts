@@ -69,8 +69,7 @@ function getContainerXml(args : WriteNumberArgs) {
     const starCells = starList
     .map((index) => {
       return `
-		<lido-image id="star${index}" audio="" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/fly1%201.png" width="landscape.100px, portrait.140px" visible="true" height="landscape.75px, portrait.92px">
-            <lido-text id="star-audio" string="${index}" tab-index="${tabCounter}" audio="" visible="false"></lido-text>
+		<lido-image id="star${index}" tab-index=${tabCounter++} audio="" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/fly1%201.png" width="landscape.100px, portrait.140px" visible="true" height="landscape.75px, portrait.92px">
         </lido-image>
       `;
     })
@@ -81,7 +80,7 @@ function getContainerXml(args : WriteNumberArgs) {
             <lido-container id="lido-container" objective="writeNumber" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true">
 
                 <!-- Chimple Avatar -->
-                <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1279px, portrait.230px" y="landscape.375px, portrait.1010px" ariaHidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
+                <lido-cell layout="pos" id="pos1" disable-edit="true" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1279px, portrait.230px" y="landscape.375px, portrait.1010px" ariaHidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
                     <lido-avatar id="lido-avatar" disable-edit="true" visible="true"  height="inherit"  width="inherit" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" onEntry="">
                     </lido-avatar>
                     <lido-image id="image" disable-edit="true" value="image" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bg-color="transparent" width="inherit" height="27px" x="landscape.-7px, portrait.-7px" y="landscape.450px, portrait.535px" alt-text="{shadowImage}">
@@ -89,7 +88,7 @@ function getContainerXml(args : WriteNumberArgs) {
                 </lido-cell>
 
                 <!-- text-element -->
-                <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.80px, portrait.80px" width="landscape.297px, portrait.297px" x="landscape.645px, portrait.300px" y="landscape.90px, portrait.105px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.font-weight='600';">
+                <lido-cell layout="pos" id="pos2" disable-edit="true" height="landscape.80px, portrait.80px" width="landscape.297px, portrait.297px" x="landscape.645px, portrait.300px" y="landscape.90px, portrait.105px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.font-weight='600';">
                     <lido-text id="txt1" tab-index="2" span-type="${spanType}"  audio="" width="297px" height="80px" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
                     </lido-text>                        
                 </lido-cell>
@@ -101,7 +100,7 @@ function getContainerXml(args : WriteNumberArgs) {
                 </lido-cell>
 
                 <!-- trace cell -->
-                <lido-cell layout="pos" id="pos1" visible="true" width="landscape.740px, portrait.740px"  height="landscape.477px, portrait.477px" bg-color="transparent"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" x="landscape.430px, portrait.75px" y="landscape.205px, portrait.315px">
+                <lido-cell layout="pos" id="pos3" visible="true" width="landscape.740px, portrait.740px"  height="landscape.477px, portrait.477px" bg-color="transparent"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" x="landscape.430px, portrait.75px" y="landscape.205px, portrait.315px">
                     <lido-trace id="image2" tab-index="3" value="a" visible="true" highlight-text-id="txt1" svgSource="${traceImage1}; ${traceImage2}" onCorrect="star-row.HighlightStarsOneByOne='true';"  mode="${traceMode}" z="1" x="" y="" width="740px" height="477px" alt-text="{backgroundImage}">
                     </lido-trace>
                 </lido-cell>

@@ -236,3 +236,6 @@ body {
   transition: opacity 0.5s ease-in-out;
 }
 
+.lido-box-highlight {
+  animation: topToPlace 0.3s linear;
+}
