@@ -392,7 +392,7 @@ export const storingEachActivityScore = (flag: boolean) => {
   console.log('Wrong Moves : ', gameScore.wrongMoves);
 };
 
-const calculateScore = () => {
+export const calculateScore = () => {
   const rightMoves = gameScore.rightMoves;
   const wrongMoves = gameScore.wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
@@ -993,4 +993,12 @@ export function setCancelBtnPopup(value: boolean) {
 
 export function getCancelBtnPopup(): boolean {
   return cancelBtnPopupState;
+}
+
+export function generateUUIDFallback() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }

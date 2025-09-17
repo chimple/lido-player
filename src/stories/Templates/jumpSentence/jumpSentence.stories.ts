@@ -43,7 +43,8 @@ function getContainerXml(args) {
           : `<lido-text visible="true" width="auto" height="120px" 
         value="${cell.value}" string="${cell.value}" font-size="80px" bg-color="#5F1A29" 
         font-color="white" padding="0 20px" border-radius="10px" 
-        onEntry="this.fontWeight='600';">
+        onEntry="this.fontWeight='600';"
+        >
       </lido-text>`
     )
     .join('');
@@ -55,8 +56,8 @@ function getContainerXml(args) {
 
   return `<main>
     <lido-container id="lido-container" visible="true" objective="${objective}" 
-      onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" 
-      onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" 
+      onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" 
+      onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';"
       is-continue-on-correct="true" bg-color="transparent" 
       bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" 
       drop-action="infinite-drop" is-allow-only-correct="true">
@@ -74,7 +75,7 @@ function getContainerXml(args) {
       <lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
         <lido-text visible="true" width="100%" height="landscape.20%,portrait.30%"></lido-text>
         <lido-cell visible="true" layout="row" width="landscape.80%, portrait.90%" height="landscape.50%, portrait.30%" bg-color="transparent" onEntry="this.alignItems='flex-start';">
-          <lido-cell visible="true" tab-index="1" audio="" layout="flex" width="auto" height="auto" gap="20px">
+          <lido-cell visible="true" id="sentenceText" tab-index="1" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/fill-upAudio.mp3" layout="flex" width="auto" height="auto" gap="20px">
             ${dropCellsXml}
           </lido-cell>
         </lido-cell>
