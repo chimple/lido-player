@@ -1,5 +1,8 @@
 <main>
 	
+	<lido-container visible="true" show-next-button="true">
+		<lido-math-matrix visible="true" rows="10" cols="10" top-index="true" left-index="true" bottom-index="true" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="7" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+	</lido-container>
 
 	<lido-container id="lido-container" show-next-button="true" show-drop-border="false" tabIndex="1"  value="mainContainer1"   bg-Color="#FFF"  height="100%" width="100%" visible="true" objective="(झींगुर|मक्खी),(मकड़ी|मकड़ी-2),(कनखजूरा|कनखजूरा2)" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-allow-only-correct="false"   > 
 		
