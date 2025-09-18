@@ -26,7 +26,7 @@ import"./lit-element-BxxbMms4.js";import{x as h}from"./lit-html-DLYuhZ0i.js";con
 
                     <!-- trace element -->
                     <lido-cell layout="pos" id="pos2" disable-edit="true" value="pos2" height="landscape.500px, portrait.500px" width="landscape.550px, portrait.550px" x="landscape.510px, portrait.75px" y="landscape.305px, portrait.475px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="trace1.visibility='visible'; this.flex-shrink='0';">
-                        <lido-trace id="trace1"  audio="" animationTrace="true" highlightTextId="txt1" tab-index="3" value="a" visible="true" svg-source="${t}; ${r}; ${i}" onCorrect="" mode="${l}" z="1" x="25px" y="25px" width="landscape.500px, portrait.675px" height="landscape.500px, portrait.500px" altText="{backgroundImage}">
+                        <lido-trace id="trace1"  audio="" animationTrace="true" highlightTextId="txt1" tab-index="3" value="a" visible="true" svg-source="${t}; ${r}; ${i}" onCorrect="txt1.speak='true';" mode="${l}" z="1" x="25px" y="25px" width="landscape.500px, portrait.675px" height="landscape.500px, portrait.500px" altText="{backgroundImage}">
                         </lido-trace>
                     </lido-cell>
             </lido-container>
