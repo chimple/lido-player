@@ -884,8 +884,8 @@ export class LidoTrace {
       if (letter) 
       {
         letter.classList.add('letter-highlight');
-        letter.setAttribute('speak', 'true');
-        await AudioPlayer.getI().play(letter);
+        // letter.setAttribute('speak', 'true');
+        // await AudioPlayer.getI().play(letter);
       }
     }
 
@@ -897,8 +897,8 @@ export class LidoTrace {
       if (word) 
       {
         word.classList.add('word-highlight');
-        word.setAttribute('speak', 'true');
-        await AudioPlayer.getI().play(word);
+        // word.setAttribute('speak', 'true');
+        // await AudioPlayer.getI().play(word);
       }
     }
   }
