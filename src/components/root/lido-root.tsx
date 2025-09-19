@@ -64,6 +64,11 @@ export class LidoRoot {
   @Prop() speakerButtonUrl: string;
 
   /**
+   * URL for the avatar Rive file.
+   */
+  @Prop() avatarUrl: string;
+
+  /**
    * State variable to hold the XML data fetched from the specified path or URL.
    */
   @State() xmlData: string;
@@ -114,6 +119,6 @@ export class LidoRoot {
     }
 
     // Once the XML data is loaded, pass it to the `lido-home` component
-    return <lido-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
+    return <lido-home avatar-url={this.avatarUrl} initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
   }
 }
