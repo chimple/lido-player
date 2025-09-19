@@ -921,6 +921,84 @@ export namespace Components {
          */
         "z"?: string;
     }
+    interface LidoMathMatrix {
+        /**
+          * Background color for active slots
+         */
+        "activeBgColor": string;
+        /**
+          * If true, only active slots are visible; inactive ones are hidden
+         */
+        "activeOnlyVisible": boolean;
+        /**
+          * Border style applied to each slot
+         */
+        "border": string;
+        /**
+          * Border radius for each slot
+         */
+        "borderRadius": string;
+        /**
+          * Show row index numbers on the bottom side
+         */
+        "bottomIndex": boolean;
+        /**
+          * Enable/disable click interactions on the slots
+         */
+        "clickable": boolean;
+        /**
+          * Number of columns in the matrix
+         */
+        "cols": number;
+        /**
+          * Number of slots to pre-fill as active by default
+         */
+        "defualtFill": number;
+        /**
+          * Height of the slot container
+         */
+        "height": string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor": string;
+        /**
+          * Show row index numbers on the left side
+         */
+        "leftIndex": boolean;
+        /**
+          * Margin around the matrix container
+         */
+        "margin": string;
+        /**
+          * Image source used inside the slots
+         */
+        "matrixImage": string;
+        /**
+          * Padding inside the matrix container
+         */
+        "padding": string;
+        /**
+          * Number of rows in the matrix
+         */
+        "rows": number;
+        /**
+          * Show column index numbers on the top side
+         */
+        "topIndex": boolean;
+        /**
+          * Controls visibility of the matrix (string "true" or "false")
+         */
+        "visible": string;
+        /**
+          * Width of the slot container
+         */
+        "width": string;
+        /**
+          * Z-index value for the matrix container
+         */
+        "z": string;
+    }
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -1877,6 +1955,12 @@ declare global {
         prototype: HTMLLidoKeyboardElement;
         new (): HTMLLidoKeyboardElement;
     };
+    interface HTMLLidoMathMatrixElement extends Components.LidoMathMatrix, HTMLStencilElement {
+    }
+    var HTMLLidoMathMatrixElement: {
+        prototype: HTMLLidoMathMatrixElement;
+        new (): HTMLLidoMathMatrixElement;
+    };
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -1982,6 +2066,7 @@ declare global {
         "lido-home": HTMLLidoHomeElement;
         "lido-image": HTMLLidoImageElement;
         "lido-keyboard": HTMLLidoKeyboardElement;
+        "lido-math-matrix": HTMLLidoMathMatrixElement;
         "lido-pos": HTMLLidoPosElement;
         "lido-random": HTMLLidoRandomElement;
         "lido-root": HTMLLidoRootElement;
@@ -2909,6 +2994,84 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
+    interface LidoMathMatrix {
+        /**
+          * Background color for active slots
+         */
+        "activeBgColor"?: string;
+        /**
+          * If true, only active slots are visible; inactive ones are hidden
+         */
+        "activeOnlyVisible"?: boolean;
+        /**
+          * Border style applied to each slot
+         */
+        "border"?: string;
+        /**
+          * Border radius for each slot
+         */
+        "borderRadius"?: string;
+        /**
+          * Show row index numbers on the bottom side
+         */
+        "bottomIndex"?: boolean;
+        /**
+          * Enable/disable click interactions on the slots
+         */
+        "clickable"?: boolean;
+        /**
+          * Number of columns in the matrix
+         */
+        "cols"?: number;
+        /**
+          * Number of slots to pre-fill as active by default
+         */
+        "defualtFill"?: number;
+        /**
+          * Height of the slot container
+         */
+        "height"?: string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor"?: string;
+        /**
+          * Show row index numbers on the left side
+         */
+        "leftIndex"?: boolean;
+        /**
+          * Margin around the matrix container
+         */
+        "margin"?: string;
+        /**
+          * Image source used inside the slots
+         */
+        "matrixImage"?: string;
+        /**
+          * Padding inside the matrix container
+         */
+        "padding"?: string;
+        /**
+          * Number of rows in the matrix
+         */
+        "rows"?: number;
+        /**
+          * Show column index numbers on the top side
+         */
+        "topIndex"?: boolean;
+        /**
+          * Controls visibility of the matrix (string "true" or "false")
+         */
+        "visible"?: string;
+        /**
+          * Width of the slot container
+         */
+        "width"?: string;
+        /**
+          * Z-index value for the matrix container
+         */
+        "z"?: string;
+    }
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -3778,6 +3941,7 @@ declare namespace LocalJSX {
         "lido-home": LidoHome;
         "lido-image": LidoImage;
         "lido-keyboard": LidoKeyboard;
+        "lido-math-matrix": LidoMathMatrix;
         "lido-pos": LidoPos;
         "lido-random": LidoRandom;
         "lido-root": LidoRoot;
@@ -3843,6 +4007,7 @@ declare module "@stencil/core" {
              */
             "lido-image": LocalJSX.LidoImage & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
             "lido-keyboard": LocalJSX.LidoKeyboard & JSXBase.HTMLAttributes<HTMLLidoKeyboardElement>;
+            "lido-math-matrix": LocalJSX.LidoMathMatrix & JSXBase.HTMLAttributes<HTMLLidoMathMatrixElement>;
             /**
              * @component LidoPos
              * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.

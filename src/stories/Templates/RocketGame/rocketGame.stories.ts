@@ -44,7 +44,7 @@ const meta: Meta<RocketArgs> = {
     backgroundImage: {
       control: 'file',
       description: 'Main background image',
-      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Background_Sky.png',
+      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png',
       multiple: true,
     },
     colors: {
@@ -114,18 +114,23 @@ function getContainerXml(args: RocketArgs) {
   return `
   <main> 
        
-      <lido-container id="lido-container" objective="${objective}" show-drop-border="false" tab-index="1" is-allow-only-correct="true" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s 1s linear'; this.sleep='4000';" show-check="false" bg-image="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false" drop-action="infinite-drop">
+      <lido-container id="lido-container" objective="${objective}" show-drop-border="false" tab-index="1" is-allow-only-correct="true" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s 1s linear'; this.sleep='1000'; heading.speak='true'; " show-check="false" bg-image="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false" drop-action="infinite-drop">
           <lido-cell layout="pos" id="pos1" disable-edit="true" tab-index="2" value="pos2" height="305px" width="227px" x="landscape.1270px, portrait.541px" y="landscape.-60px, portrait.250px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
               <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
               </lido-avatar>
           </lido-cell>
+
+          
+          
           <lido-cell layout="pos" value="pos2" tab-index="3" id="pos2" visible="true" height="landscape.305px, portrait.auto " width="landscape.100%, portrait.100%;" y="landscape.-35%, portrait.-12%" x="landscape.23%, portrait.0%" onEntry="this.background-color='transparent'">
               <lido-image id="board_bg_wordnote" tab-index="4" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/board_bg_wordnote.png">
               </lido-image>
               <lido-image id="hit_img" tab-index="5" height="170px" width="100%" y="landscape.124%, portrait.360px" x="landscape.-42%, portrait.-36%" disable-edit="true" visible="true" src="${args.TextBackgroundImage}">
-              </lido-image>
-              <lido-text id="heading" tab-index="6" visible="true" string="${args.letterBoardText}" font-family="'Baloo Bhai 2'" font-color="#fafafa" font-size="landscape.9rem, portrait.10rem" bg-color="transparent" onEntry="this.fontWeight='700'; this.justify-content='center'; this.align-item='center';" y="landscape.100%, portrait.18rem" x="landscape.23%, portrait.35%">
-              </lido-text>
+                <lido-cell layout="pos" display="flex" value="pos3" tab-index="3" id="pos3" visible="true" height="landscape.265px, portrait.auto " bg-color="transparent" width="landscape.100%, portrait.100%;" onEntry="this.z-index='1'; this.align-items='center'; this.justify-content='center'; this.display='flex';" y="landscape.0%, portrait.14%" x="landscape.9%, portrait.4%">
+                  <lido-text id="heading" tab-index="6" visible="true" string="${args.letterBoardText}" font-family="'Baloo Bhai 2'" font-color="#fafafa" font-size="landscape.9rem, portrait.10rem" bg-color="transparent" onEntry="this.fontWeight='700'; this.justify-content='center'; this.align-item='center'; this.speak='true';" x="unset" y="unset">
+                  </lido-text>
+                </lido-cell>
+              </lido-image>              
           </lido-cell>
 
           <lido-cell layout="row" onEntry="this.position='absolute'; this.justify-content='center'; this.align-items='center';" y="landscape.20%, portrait.40%" tab-index="7" id="fullRrocket" bg-color="transparent" height="landscape.445px, portrait.275px" width="100%" visible="true">
