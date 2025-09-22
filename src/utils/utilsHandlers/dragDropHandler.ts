@@ -532,7 +532,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       return;
     }
     const isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
-
+    
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
       dragElement.style.transition = 'transform 0.5s ease';
@@ -740,6 +740,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     // Perform actions if onMatch is defined
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {
+      await executeActions("this.alignMatch='true'", dropElement, dragElement);
       await executeActions(onCorrect, dropElement, dragElement);
     }
   } else {
