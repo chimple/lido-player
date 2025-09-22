@@ -1,6 +1,7 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
 import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
 import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
+import { AudioPlayer } from '../../utils/audioPlayer';
 
 // Enum for different tracing modes
 
@@ -879,16 +880,26 @@ export class LidoTrace {
       const letters = content.querySelectorAll('.text-letters');
       if (index < 0 || index >= letters.length) return;
       // Highlight the current letter keeping the previous ones highlighted
-      const letter = letters[index];
-      if (letter) letter.classList.add('letter-highlight');
+      const letter = letters[index] as HTMLElement;
+      if (letter) 
+      {
+        letter.classList.add('letter-highlight');
+        // letter.setAttribute('speak', 'true');
+        // await AudioPlayer.getI().play(letter);
+      }
     }
 
     if (spanType === 'words') {
       const words = content.querySelectorAll('.text-words');
       if (index < 0 || index >= words.length) return;
       // Highlight the current word keeping the previous ones highlighted
-      const word = words[index];
-      if (word) word.classList.add('word-highlight');
+      const word = words[index] as HTMLElement;
+      if (word) 
+      {
+        word.classList.add('word-highlight');
+        // word.setAttribute('speak', 'true');
+        // await AudioPlayer.getI().play(word);
+      }
     }
   }
 
