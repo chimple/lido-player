@@ -558,6 +558,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
           }
         });
       }
+      storingEachActivityScore(false);
       return;
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
