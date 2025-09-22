@@ -41,7 +41,7 @@ export const numberBoard: StoryObj = {
       "16"
     ],
     answers: [
-      "2",
+      "1",
       "2",
       "3",
       "4",
