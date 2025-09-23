@@ -1,32 +1,32 @@
 <main>
 	
-
 	<lido-container visible="true" show-next-button="true">
 		<lido-math-matrix visible="true" rows="10" cols="10" top-index="true" left-index="true" bottom-index="true" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="7" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
 	</lido-container>
+	<lido-container id="lido-container" disableSpeak="true" show-next-button="true" objective="writeLetter" tabIndex="1"  value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" height="100%" width="100%" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="fasle" afterDrop="false">
 
-<lido-container id="lido-container" visible="true" objective="y,o,u" onEntry="sentenceText.speak='true';" onCorrect="lido-avatar.avatarAnimate='Success';sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"  is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" drop-action="infinite-drop">
-	<!-- <lido-text id="sentenceSpoken" string="you are tall" value="you are tall" visible="false" onEntry="this.speak='true';"></lido-text> -->
-
-	
-	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.500px, portrait.600px" width="landscape.350px, portrait.450px" x="landscape.1275px,portrait.230px" y="landscape.90px, portrait.0px" aria-hidden="true" z="9999" bg-color="transparent" visible="true" onEntry="">
-			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+		<!-- Chimple Avatar -->
+		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.-24px, portrait.465px" y="landscape.360px, portrait.1010px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0';">
+			<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="inherit"  width="inherit" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}" onEntry="">
 			</lido-avatar>
-	</lido-cell>
+			<lido-image id="image" disableEdit="true" value="image" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bgColor="transparent" width="inherit" height="27px" x="landscape.-7px, portrait.-7px" y="landscape.450px, portrait.535px" altText="{shadowImage}">
+			</lido-image>
+		</lido-cell>
 
-	<lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
-		<lido-text visible="landscape.false, portrait.true" width="100%" height="30%"></lido-text>
-		<lido-cell visible="true" layout="row" width="landscape.80%, portrait.90%" height="landscape.50%, portrait.40%" bg-color="transparent">
-			<lido-cell id="sentenceText" visible="true" tab-index="1" audio="" layout="flex" width="auto" height="auto" gap="20px"   onEntry="">
-				<lido-text visible="true" tab-index="2" id="drop1" width="120px" height="120px" type="drop" value="y" bg-color="rgb(83 44 50 / 40%)" border-radius="10px"></lido-text>
-				<lido-text visible="true" tab-index="3" id="drop2" width="120px" height="120px" type="drop" value="o" bg-color="rgb(83 44 50 / 40%)" border-radius="10px"></lido-text>
-				<lido-text visible="true" tab-index="4" id="drop3" width="120px" height="120px" type="drop" value="u" bg-color="rgb(83 44 50 / 40%)" border-radius="10px"></lido-text>
-				<lido-text audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/fill-upAudio.mp3" visible="true" width="auto" height="120px" string="ARE TALL" value="ARE TALL" font-size="80px" bg-color="#5F1A29" font-color="white" padding="0 20px" border-radius="10px" onEntry="this.fontWeight='600';"></lido-text>
+		<!-- parent cell -->
+		<lido-cell layout="landscape.row, portrait.col" visible="true" width="100%" height="100%" bgColor="transparent">
+			<lido-cell layout="col" visible="true" width="landscpae.27.5% , portrait.100%" height="landscpae.100% , portrait.27.5%" bgColor="transparent">
+			</lido-cell>
+
+			<lido-cell layout="col" visible="true" width="landscape.725px, portrait.725px"  height="landscape.725px, portrait.725px" bgColor="white"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" margin="landscape.0px 0px 0px 0px, portrait.0px 0px 250px 0px">
+				<lido-trace id="image2" string="a" tabIndex="2" value="a" visible="true" svgSource="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"  mode="showFlow" z="1" x="" y="" onCorrect="this.speak='true';" width="700px" height="700px" onEntry="" altText="{backgroundImage}">
+				</lido-trace>
+			</lido-cell>
+
+			<lido-cell layout="col" visible="true" width="landscpae.27.5% , portrait.100%" height="landscpae.100% , portrait.27.5%" bgColor="transparent">
 			</lido-cell>
 		</lido-cell>
-		<lido-keyboard visible="true" bg-color="#5F1A29" font-color="white" font-size="80px" keys="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" width="90%" height="landscape.45%,portrait.35%" type="drag" border-radius="10px" columns="landscape.10, portrait.7"></lido-keyboard>
-	</lido-cell>
-</lido-container>
+	</lido-container>
 
 
 	
@@ -168,7 +168,8 @@
 	</lido-cell>
 </lido-container>
 
-<lido-container id="lido-container" visible="true" objective="y,o,u" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" drop-action="infinite-drop">
+	<lido-container id="lido-container" visible="true" objective="y,o,u" onEntry="sentenceText.speak='true';" onCorrect="lido-avatar.avatarAnimate='Success';sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"  is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" drop-action="infinite-drop">
+	<!-- <lido-text id="sentenceSpoken" string="you are tall" value="you are tall" visible="false" onEntry="this.speak='true';"></lido-text> -->
 
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.500px, portrait.600px" width="landscape.350px, portrait.450px" x="landscape.1275px,portrait.230px" y="landscape.90px, portrait.0px" aria-hidden="true" z="9999" bg-color="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
@@ -178,11 +179,11 @@
 	<lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
 		<lido-text visible="landscape.false, portrait.true" width="100%" height="30%"></lido-text>
 		<lido-cell visible="true" layout="row" width="landscape.80%, portrait.90%" height="landscape.50%, portrait.40%" bg-color="transparent">
-			<lido-cell visible="true" tab-index="1" audio="" layout="flex" width="auto" height="auto" gap="20px" onEntry="">
+			<lido-cell id="sentenceText" visible="true" tab-index="1" audio="" layout="flex" width="auto" height="auto" gap="20px"   onEntry="">
 				<lido-text visible="true" tab-index="2" id="drop1" width="120px" height="120px" type="drop" value="y" bg-color="rgb(83 44 50 / 40%)" border-radius="10px"></lido-text>
 				<lido-text visible="true" tab-index="3" id="drop2" width="120px" height="120px" type="drop" value="o" bg-color="rgb(83 44 50 / 40%)" border-radius="10px"></lido-text>
 				<lido-text visible="true" tab-index="4" id="drop3" width="120px" height="120px" type="drop" value="u" bg-color="rgb(83 44 50 / 40%)" border-radius="10px"></lido-text>
-				<lido-text visible="true" width="auto" height="120px" string="ARE TALL" value="ARE TALL" font-size="80px" bg-color="#5F1A29" font-color="white" padding="0 20px" border-radius="10px" onEntry="this.fontWeight='600';"></lido-text>
+				<lido-text audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/fill-upAudio.mp3" visible="true" width="auto" height="120px" string="ARE TALL" value="ARE TALL" font-size="80px" bg-color="#5F1A29" font-color="white" padding="0 20px" border-radius="10px" onEntry="this.fontWeight='600';"></lido-text>
 			</lido-cell>
 		</lido-cell>
 		<lido-keyboard visible="true" bg-color="#5F1A29" font-color="white" font-size="80px" keys="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" width="90%" height="landscape.45%,portrait.35%" type="drag" border-radius="10px" columns="landscape.10, portrait.7"></lido-keyboard>
@@ -420,6 +421,7 @@
 						</lido-cell>
 
 </lido-container>
+
 <lido-container id="lido-container" is-allow-only-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/spelldoor/Background_Spring.png" objective="S,E,A" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect=" lido-avatar.avatarAnimate='Success';  correctWord.speak='true';  this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 				<lido-text visible="false" id="correctWord" onEntry="this.display='none';" string="sea" ></lido-text>
 		<!-- Chimple Avatar -->
@@ -843,7 +845,7 @@
 
   
   
-	<lido-container id="lido-container" show-next-button="true" objective="writeLetter" tabIndex="1"  value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" height="100%" width="100%" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="fasle" afterDrop="false">
+	<lido-container id="lido-container" disableSpeak="true" show-next-button="true" objective="writeLetter" tabIndex="1"  value="mainContainer1" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" height="100%" width="100%" bgColor="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="fasle" afterDrop="false">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.-24px, portrait.465px" y="landscape.360px, portrait.1010px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0';">
@@ -859,7 +861,7 @@
 			</lido-cell>
 
 			<lido-cell layout="col" visible="true" width="landscape.725px, portrait.725px"  height="landscape.725px, portrait.725px" bgColor="white"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" margin="landscape.0px 0px 0px 0px, portrait.0px 0px 250px 0px">
-				<lido-trace id="image2" tabIndex="2" value="a" visible="true" svgSource="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg" onCorrect=""  mode="showFlow" z="1" x="" y="" width="700px" height="700px" onEntry="" altText="{backgroundImage}">
+				<lido-trace id="image2" string="a" tabIndex="2" value="a" visible="true" svgSource="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg"  mode="showFlow" z="1" x="" y="" onCorrect="this.speak='true';" width="700px" height="700px" onEntry="" altText="{backgroundImage}">
 				</lido-trace>
 			</lido-cell>
 
