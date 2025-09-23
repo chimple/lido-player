@@ -531,8 +531,16 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
-    const isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
-    
+    // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+
+    let isCorrect;
+
+    if(parseInt(dragElement.getAttribute('value'))){
+      isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
+    } else {
+      isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+    }
+
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
       dragElement.style.transition = 'transform 0.5s ease';

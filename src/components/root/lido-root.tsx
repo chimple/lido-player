@@ -63,6 +63,8 @@ export class LidoRoot {
    */
   @Prop() speakerButtonUrl: string;
 
+  
+
   /**
    * URL for the avatar Rive file.
    */

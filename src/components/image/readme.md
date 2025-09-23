@@ -13,6 +13,7 @@
 | `bgColor`       | `bg-color`        | Background color for the container of the image (CSS color value, e.g., '#FFFFFF', 'blue').                                                  | `string`            | `undefined` |
 | `borderRadius`  | `border-radius`   | CSS filter to apply border radius to the image. Example: '10px' for  images.                                                                 | `string`            | `'0px'`     |
 | `delayVisible`  | `delay-visible`   | Delay in milliseconds to make the cell visible after mount.                                                                                  | `string`            | `''`        |
+| `disableSpeak`  | `disable-speak`   | When set to true, disables the speak functionality of long press for this component and its children.                                        | `boolean`           | `false`     |
 | `filter`        | `filter`          | CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'         | `string`            | `''`        |
 | `height`        | `height`          | The height of the image component (CSS value, e.g., '100px', '50%').                                                                         | `string`            | `undefined` |
 | `id`            | `id`              | Unique identifier for the text element.                                                                                                      | `string`            | `undefined` |
