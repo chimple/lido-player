@@ -188,6 +188,11 @@ export class LidoText {
   @Prop() delayVisible: string = '';
 
   /**
+   * When set to true, disables the speak functionality of long press for this component and its children.
+   */
+  @Prop() disableSpeak: boolean = false;
+
+  /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the text component.
    */
@@ -291,6 +296,7 @@ export class LidoText {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         span-type={this.spanType}
+        disable-speak={this.disableSpeak}
       >
         {this.spanType !== '' ? <div class="lido-text-content">{this.string}</div> : this.string}
       </Host>

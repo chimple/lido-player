@@ -63,6 +63,8 @@ export class LidoRoot {
    */
   @Prop() speakerButtonUrl: string;
 
+  
+
   /**
    * State variable to hold the XML data fetched from the specified path or URL.
    */

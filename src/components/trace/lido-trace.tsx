@@ -129,6 +129,11 @@ export class LidoTrace {
    */
   @Prop() delayVisible: string = '';
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
+
   @Element() el!: HTMLElement;
 
   @State() style: { [key: string]: string } = {};
@@ -926,6 +931,7 @@ export class LidoTrace {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
+        disable-speak={this.disableSpeak}
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>
