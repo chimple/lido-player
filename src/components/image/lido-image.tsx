@@ -181,6 +181,11 @@ export class LidoImage {
    */
   @Prop() delayVisible: string = '';
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
+
   /**
    * Lifecycle method that runs after the component has been loaded into the DOM.
    * It initializes custom events based on the `type` of the image component.
@@ -281,6 +286,7 @@ export class LidoImage {
           onCorrect={this.onCorrect}
           onInCorrect={this.onInCorrect}
           onEntry={this.onEntry}
+          disable-speak={this.disableSpeak}
         >
           <img class="lido-image" src={convertUrlToRelative(this.src)} alt="" style={this.style} />
         </Host>

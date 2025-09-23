@@ -164,6 +164,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
           * @default ''
          */
@@ -634,6 +638,10 @@ export namespace Components {
          */
         "direction": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * The Display CSS property.
          */
         "display"?: string;
@@ -867,6 +875,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
           * @default ''
          */
@@ -987,6 +999,10 @@ export namespace Components {
           * @default '10'
          */
         "columns": string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
         /**
           * Font color for key labels (e.g., "#333")
          */
@@ -1448,6 +1464,10 @@ export namespace Components {
          */
         "direction": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * Sets the CSS display property for the component. Accepts any valid CSS display value (e.g., 'block', 'flex', 'grid', 'none').
          */
         "display"?: string;
@@ -1565,6 +1585,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
           * @default 'auto'
          */
@@ -1670,6 +1694,10 @@ export namespace Components {
           * @default ''
          */
         "delayVisible": string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
         /**
           * Number of divisions or segments to split the ruler path into
           * @default 5
@@ -1797,6 +1825,10 @@ export namespace Components {
           * @default ''
          */
         "delayVisible": string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
         /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
           * @default ''
@@ -1945,6 +1977,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * URL for the finger hint image
           * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg'
          */
@@ -2045,6 +2081,10 @@ export namespace Components {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength": number;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
         /**
           * Enables flex layout mode for the container. If set to `"true"`, the component will use a flex layout (`display: flex`) instead of the default grid layout (`display: grid`). Additionally, the `lido-wrap` class will be replaced with `lido-flex` to allow custom flex-specific styling.
          */
@@ -2512,6 +2552,10 @@ declare namespace LocalJSX {
           * @default ''
          */
         "delayVisible"?: string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
         /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
           * @default ''
@@ -2983,6 +3027,10 @@ declare namespace LocalJSX {
          */
         "direction"?: string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
+        /**
           * The Display CSS property.
          */
         "display"?: string;
@@ -3216,6 +3264,10 @@ declare namespace LocalJSX {
          */
         "delayVisible"?: string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
+        /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
           * @default ''
          */
@@ -3336,6 +3388,10 @@ declare namespace LocalJSX {
           * @default '10'
          */
         "columns"?: string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
         /**
           * Font color for key labels (e.g., "#333")
          */
@@ -3797,6 +3853,10 @@ declare namespace LocalJSX {
          */
         "direction"?: string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
+        /**
           * Sets the CSS display property for the component. Accepts any valid CSS display value (e.g., 'block', 'flex', 'grid', 'none').
          */
         "display"?: string;
@@ -3914,6 +3974,10 @@ declare namespace LocalJSX {
          */
         "delayVisible"?: string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
+        /**
           * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
           * @default 'auto'
          */
@@ -4019,6 +4083,10 @@ declare namespace LocalJSX {
           * @default ''
          */
         "delayVisible"?: string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
         /**
           * Number of divisions or segments to split the ruler path into
           * @default 5
@@ -4146,6 +4214,10 @@ declare namespace LocalJSX {
           * @default ''
          */
         "delayVisible"?: string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
         /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
           * @default ''
@@ -4294,6 +4366,10 @@ declare namespace LocalJSX {
          */
         "delayVisible"?: string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
+        /**
           * URL for the finger hint image
           * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg'
          */
@@ -4394,6 +4470,10 @@ declare namespace LocalJSX {
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
          */
         "childElementsLength"?: number;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
         /**
           * Enables flex layout mode for the container. If set to `"true"`, the component will use a flex layout (`display: flex`) instead of the default grid layout (`display: grid`). Additionally, the `lido-wrap` class will be replaced with `lido-flex` to allow custom flex-specific styling.
          */
