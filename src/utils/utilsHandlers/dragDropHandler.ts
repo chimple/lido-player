@@ -1,4 +1,4 @@
-import { calculateScale, countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
+import { calculateScale,equationCheck , countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
@@ -475,6 +475,7 @@ export function handleResetDragElement(
     localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
     dragElement.removeAttribute(DropToAttr);
     updateDropBorder(currentDrop);
+    updateBalanceOnDrop(dragElement, dropElement);
   }
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
@@ -696,6 +697,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     return;
   }
 
+  updateBalanceOnDrop(dragElement, dropElement); 
   if (dragSelectedData) {
     let currentDrop = dragToDropMap.get(dragElement);
     if (currentDrop) {
@@ -937,3 +939,48 @@ export const reduceSizeToOriginal = () => {
     }
   });
 };
+export function updateBalanceOnDrop(dragElement: HTMLElement, dropElement?: HTMLElement) {
+  const balanceEl = document.querySelector('lido-balance') as any;
+  if (!balanceEl) return;
+  const leftDrag = Array.from(document.querySelectorAll('[drop-to^="lefthandle"]')) as HTMLElement[];
+  const rightDrag = Array.from(document.querySelectorAll('[drop-to^="righthandle"]')) as HTMLElement[];
+
+  balanceEl.leftVal = calculateValue(leftDrag, balanceEl.operation);
+  balanceEl.rightVal = calculateValue(rightDrag, balanceEl.operation);
+
+  console.log("leftpan:", balanceEl.leftVal, "rightpan:", balanceEl.rightVal);
+  if (balanceEl.updateTilt) {
+    balanceEl.updateTilt(balanceEl.leftVal, balanceEl.rightVal);
+  }
+}
+
+
+function calculateValue(elements: HTMLElement[], operation: string): number {
+  if (elements.length === 0) return 0;
+  if (operation === "count") {
+    return elements.length;
+  }
+  const expr = elements
+    .map(el => el.getAttribute("value") || "0")
+    .join(
+      operation === "add" || operation === "+" ? " + " :
+      operation === "subtract" || operation === "-" ? " - " :
+      operation === "multiply" || operation === "*" ? " * " :
+      operation === "divide" || operation === "/" ? " / " : " + "
+    );
+
+  try {
+    const res = equationCheck(expr) as number | boolean;
+
+    if (typeof res === "number") {
+      return res;
+    } else if (typeof res === "boolean") {
+      return res ? 1 : 0;
+    } else {
+      return parseFloat(expr) || 0;
+    }
+  } catch (e) {
+    console.warn("invalid exp", expr);
+    return 0;
+  }
+}

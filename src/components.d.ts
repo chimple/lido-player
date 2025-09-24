@@ -96,6 +96,29 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoBalance {
+        "balanceSymbol": string;
+        "fill": string;
+        "handlerimage": string;
+        "height": string;
+        "hideSymbol": () => Promise<void>;
+        "margin": string;
+        "maxTilt": number;
+        "onEntry": string;
+        "operation": string;
+        "padding": string;
+        "pivotimage": string;
+        "revealSymbol": () => Promise<void>;
+        "scaleimage": string;
+        "showSymbol": boolean;
+        "tilt": number;
+        "updateTilt": (leftVal: number, rightVal: number) => Promise<void>;
+        "visible": boolean | string;
+        "width": string;
+        "x": string;
+        "y": string;
+        "z": string;
+    }
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -1788,6 +1811,12 @@ declare global {
         prototype: HTMLLidoAvatarElement;
         new (): HTMLLidoAvatarElement;
     };
+    interface HTMLLidoBalanceElement extends Components.LidoBalance, HTMLStencilElement {
+    }
+    var HTMLLidoBalanceElement: {
+        prototype: HTMLLidoBalanceElement;
+        new (): HTMLLidoBalanceElement;
+    };
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -1966,6 +1995,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "lido-avatar": HTMLLidoAvatarElement;
+        "lido-balance": HTMLLidoBalanceElement;
         "lido-cell": HTMLLidoCellElement;
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
@@ -2074,6 +2104,26 @@ declare namespace LocalJSX {
         /**
           * The z-index of the column to control stacking order.
          */
+        "z"?: string;
+    }
+    interface LidoBalance {
+        "balanceSymbol"?: string;
+        "fill"?: string;
+        "handlerimage"?: string;
+        "height"?: string;
+        "margin"?: string;
+        "maxTilt"?: number;
+        "onEntry"?: string;
+        "operation"?: string;
+        "padding"?: string;
+        "pivotimage"?: string;
+        "scaleimage"?: string;
+        "showSymbol"?: boolean;
+        "tilt"?: number;
+        "visible"?: boolean | string;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
         "z"?: string;
     }
     /**
@@ -3754,6 +3804,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "lido-avatar": LidoAvatar;
+        "lido-balance": LidoBalance;
         "lido-cell": LidoCell;
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
@@ -3786,6 +3837,7 @@ declare module "@stencil/core" {
              * This component initializes and manages a Rive animation inside a canvas element.
              */
             "lido-avatar": LocalJSX.LidoAvatar & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
+            "lido-balance": LocalJSX.LidoBalance & JSXBase.HTMLAttributes<HTMLLidoBalanceElement>;
             /**
              * @component LidoCell
              * A flexible UI cell component configurable via props like size, position, visibility,
