@@ -404,7 +404,7 @@ export const calculateScore = () => {
 export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
-  await executeActions("this.alignMatch='true'", dropElement, dragElement);
+  // await executeActions("this.alignMatch='true'", dropElement, dragElement);
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
   const tabindex = dropElement.getAttribute('tab-index');
