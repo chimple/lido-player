@@ -44,7 +44,7 @@ const meta: Meta<RocketArgs> = {
     backgroundImage: {
       control: 'file',
       description: 'Main background image',
-      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Background_Sky.png',
+      defaultValue: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png',
       multiple: true,
     },
     colors: {
