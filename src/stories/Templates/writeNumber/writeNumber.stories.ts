@@ -101,7 +101,7 @@ function getContainerXml(args : WriteNumberArgs) {
 
                 <!-- trace cell -->
                 <lido-cell layout="pos" id="pos3" visible="true" width="landscape.740px, portrait.740px"  height="landscape.477px, portrait.477px" bg-color="transparent"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" x="landscape.430px, portrait.75px" y="landscape.205px, portrait.315px">
-                    <lido-trace id="image2" tab-index="3" value="a" visible="true" highlight-text-id="txt1" svgSource="${traceImage1}; ${traceImage2}" onCorrect="star-row.HighlightStarsOneByOne='true';"  mode="${traceMode}" z="1" x="" y="" width="740px" height="477px" alt-text="{backgroundImage}">
+                    <lido-trace id="image2" tab-index="3" value="a" visible="true" highlightTextId="txt1" svgSource="${traceImage1}; ${traceImage2}" onCorrect="star-row.highlightStarsAndDisapper='true';"  mode="${traceMode}" z="1" x="" y="" width="740px" height="477px" alt-text="{backgroundImage}">
                     </lido-trace>
                 </lido-cell>
 
