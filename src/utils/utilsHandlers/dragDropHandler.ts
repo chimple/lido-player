@@ -740,7 +740,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     // Perform actions if onMatch is defined
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {
-      await executeActions("this.alignMatch='true'", dropElement, dragElement);
+      // await executeActions("this.alignMatch='true'", dropElement, dragElement);
       await executeActions(onCorrect, dropElement, dragElement);
     }
   } else {
