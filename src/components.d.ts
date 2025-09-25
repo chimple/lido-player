@@ -97,26 +97,80 @@ export namespace Components {
         "z": string;
     }
     interface LidoBalance {
+        /**
+          * Balance symbol shown when `showSymbol` is true. Default: "=".
+         */
         "balanceSymbol": string;
+        /**
+          * Fill color applied to all loaded SVGs (pivot, scale, handler). Defaults to "brown".
+         */
         "fill": string;
+        /**
+          * URL of the handler (side stands / hooks) image for the balance.
+         */
         "handlerimage": string;
+        /**
+          * CSS height of the component (responsive values allowed). Default: "auto".
+         */
         "height": string;
         "hideSymbol": () => Promise<void>;
+        /**
+          * CSS margin applied to the outer container.
+         */
         "margin": string;
+        /**
+          * Maximum allowed tilt angle (in degrees) for the balance bar.
+         */
         "maxTilt": number;
+        /**
+          * Action(s) to execute when the component enters the DOM. Example: trigger animations or audio cues.
+         */
         "onEntry": string;
+        /**
+          * Operation type used to calculate balance values. Supported: "count", "add", "subtract", etc.
+         */
         "operation": string;
+        /**
+          * CSS padding applied to the outer container.
+         */
         "padding": string;
+        /**
+          * URL of the pivot (base stand) image used in the balance visualization.
+         */
         "pivotimage": string;
         "revealSymbol": () => Promise<void>;
+        /**
+          * URL of the scale (bar) image that tilts based on the weight difference.
+         */
         "scaleimage": string;
+        /**
+          * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
+         */
         "showSymbol": boolean;
+        /**
+          * Initial tilt value of the balance. Negative = tilts left, Positive = tilts right.
+         */
         "tilt": number;
         "updateTilt": (leftVal: number, rightVal: number) => Promise<void>;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
         "visible": boolean | string;
+        /**
+          * CSS width of the component (responsive values allowed). Default: "auto".
+         */
         "width": string;
+        /**
+          * Horizontal (X-axis) offset for positioning the component. Default: "0px".
+         */
         "x": string;
+        /**
+          * Vertical (Y-axis) offset for positioning the component. Default: "0px".
+         */
         "y": string;
+        /**
+          * Z-index for stacking order of the component. Default: "0".
+         */
         "z": string;
     }
     /**
@@ -2107,23 +2161,77 @@ declare namespace LocalJSX {
         "z"?: string;
     }
     interface LidoBalance {
+        /**
+          * Balance symbol shown when `showSymbol` is true. Default: "=".
+         */
         "balanceSymbol"?: string;
+        /**
+          * Fill color applied to all loaded SVGs (pivot, scale, handler). Defaults to "brown".
+         */
         "fill"?: string;
+        /**
+          * URL of the handler (side stands / hooks) image for the balance.
+         */
         "handlerimage"?: string;
+        /**
+          * CSS height of the component (responsive values allowed). Default: "auto".
+         */
         "height"?: string;
+        /**
+          * CSS margin applied to the outer container.
+         */
         "margin"?: string;
+        /**
+          * Maximum allowed tilt angle (in degrees) for the balance bar.
+         */
         "maxTilt"?: number;
+        /**
+          * Action(s) to execute when the component enters the DOM. Example: trigger animations or audio cues.
+         */
         "onEntry"?: string;
+        /**
+          * Operation type used to calculate balance values. Supported: "count", "add", "subtract", etc.
+         */
         "operation"?: string;
+        /**
+          * CSS padding applied to the outer container.
+         */
         "padding"?: string;
+        /**
+          * URL of the pivot (base stand) image used in the balance visualization.
+         */
         "pivotimage"?: string;
+        /**
+          * URL of the scale (bar) image that tilts based on the weight difference.
+         */
         "scaleimage"?: string;
+        /**
+          * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
+         */
         "showSymbol"?: boolean;
+        /**
+          * Initial tilt value of the balance. Negative = tilts left, Positive = tilts right.
+         */
         "tilt"?: number;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
         "visible"?: boolean | string;
+        /**
+          * CSS width of the component (responsive values allowed). Default: "auto".
+         */
         "width"?: string;
+        /**
+          * Horizontal (X-axis) offset for positioning the component. Default: "0px".
+         */
         "x"?: string;
+        /**
+          * Vertical (Y-axis) offset for positioning the component. Default: "0px".
+         */
         "y"?: string;
+        /**
+          * Z-index for stacking order of the component. Default: "0".
+         */
         "z"?: string;
     }
     /**

@@ -1,16 +1,5 @@
-.check-button {
-  position: absolute;
-  top: 600px;
-  left: 50%;
-  height:100px;
-  width:100px;
-  transform: translateX(-50%);
-  padding: 5px 10px;
-  font-size: 14px;
-  cursor: pointer;
-}
 
-.balance-symbol {
+.lido-balance-symbol {
   position: relative;
   height:0px;
   left: 912px;
@@ -24,36 +13,36 @@
 }
 .lido-balance .pivot svg {
   width: 318px;
-    height: 221px;
-    position: relative;
-    top: 286px;
-    left: 307px;
-    z-index: 100;
+  height: 221px;
+  position: relative;
+  top: 286px;
+  left: 307px;
+  z-index: 100;
 }
 
 .lido-balance .scale svg {
  width: 932px;
-    height: 50px;
-    position: relative;
-    top: 121px;
-    left: -3px;
+  height: 50px;
+  position: relative;
+  top: 121px;
+  left: -3px;
 }
 
 .lido-balance .handler svg {
-width: 447px;
-height: 100px;
-    fill: brown;
-    position: relative;
-    top: 13px;
-    left: -18%;
+  width: 447px;
+  height: 100px;
+  fill: brown;
+  position: relative;
+  top: 13px;
+  left: -18%;
 }
 .lido-balance .hand svg {
-width: 447px;
-height: 100px;
-    fill: brown;
-    position: relative;
-    top: -92px;
-    left: 654px;
+  width: 447px;
+  height: 100px;
+  fill: brown;
+  position: relative;
+  top: -92px;
+  left: 654px;
 }
 
 .pivot svg path:nth-of-type(1) {

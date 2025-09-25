@@ -199,32 +199,32 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
        case 'showBalanceSymbol': {
-           const balanceEl = document.querySelector('lido-balance') as any;
-           if (!balanceEl) break;
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
           const leftVal = Number(balanceEl.leftVal ?? Number(balanceEl.dataset?.leftVal ?? 0));
           const rightVal = Number(balanceEl.rightVal ?? Number(balanceEl.dataset?.rightVal ?? 0));
           const symbol = leftVal > rightVal ? '>' : leftVal < rightVal ? '<' : '=';
           balanceEl.balanceSymbol = symbol;
           balanceEl.dataset.balanceSymbol = symbol;
-           if (balanceEl.revealSymbol) {
+          if (balanceEl.revealSymbol) {
             await balanceEl.revealSymbol();
-           } else {
-    
-           balanceEl.showSymbol = true;
-           }
-            break;
-           }
+          } else {
+            balanceEl.showSymbol = true;
+          }
+          break;
+        }
 
-          case 'hideBalanceSymbol': {
-             const balanceEl = document.querySelector('lido-balance') as any;
-             if (!balanceEl) break;
-            if (balanceEl.hideSymbol) {
-                await balanceEl.hideSymbol();
-              } else {
-                 balanceEl.showSymbol = false;
+        case 'hideBalanceSymbol': {
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
+          if (balanceEl.hideSymbol) {
+            await balanceEl.hideSymbol();
+          } 
+          else{
+              balanceEl.showSymbol = false;
               }
-                 break;
-            }
+          break;
+        }
 
         default: {
           targetElement.style[action.action] = action.value;
@@ -544,7 +544,7 @@ export const handleShowCheck = () => {
     });
     checkButton.setAttribute('data-balance-listener', 'true'); 
   }
-} else {
+  } else {
     validateObjectiveStatus();
   }
 };
