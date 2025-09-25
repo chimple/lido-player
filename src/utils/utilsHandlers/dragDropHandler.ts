@@ -861,11 +861,6 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
-    if (this.speak) {
-      console.log('this.speak:', this.speak);
-    AudioPlayer.getI().stop();
-    AudioPlayer.getI().play(selectedDragElement);
-    }
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
