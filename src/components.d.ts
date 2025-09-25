@@ -851,6 +851,170 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoKeyboard {
+        /**
+          * Background color for each key button
+         */
+        "bgColor": string;
+        /**
+          * Border radius for key buttons (e.g., "8px")
+         */
+        "borderRadius": string;
+        /**
+          * Number of columns in the keyboard layout (default: "10")
+         */
+        "columns": string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
+          * Font color for key labels (e.g., "#333")
+         */
+        "fontColor"?: string;
+        /**
+          * Font family for key labels (e.g., "Arial, sans-serif")
+         */
+        "fontFamily"?: string;
+        /**
+          * Font size for key labels (e.g., "16px")
+         */
+        "fontSize"?: string;
+        /**
+          * Gap between key buttons (default: "10px")
+         */
+        "gap": string;
+        /**
+          * Height of each key button (e.g., "40px")
+         */
+        "height"?: string;
+        /**
+          * Indicates whether the keyboard input is enabled. When set to `true`, the component will respond to keyboard events.
+         */
+        "keyboardInput": boolean;
+        /**
+          * Comma-separated list of keys, optionally with status (e.g., "A,B-disable,C")
+         */
+        "keys": string;
+        /**
+          * Total number of letters required for completion
+         */
+        "letterLength": number;
+        /**
+          * Margin around the keyboard container
+         */
+        "margin"?: string;
+        /**
+          * Custom callback function when a key is entered
+         */
+        "onEntry"?: string;
+        /**
+          * Padding inside the keyboard container
+         */
+        "padding"?: string;
+        /**
+          * Type of key interaction (e.g., "click", "drag")
+         */
+        "type"?: string;
+        /**
+          * Whether the keyboard is visible ("true" / "false")
+         */
+        "visible"?: string;
+        /**
+          * Width of each key button (e.g., "40px")
+         */
+        "width"?: string;
+        /**
+          * X position (left) of the keyboard
+         */
+        "x"?: string;
+        /**
+          * Y position (top) of the keyboard
+         */
+        "y"?: string;
+        /**
+          * Z-index for stacking order
+         */
+        "z"?: string;
+    }
+    interface LidoMathMatrix {
+        /**
+          * Background color for active slots
+         */
+        "activeBgColor": string;
+        /**
+          * If true, only active slots are visible; inactive ones are hidden
+         */
+        "activeOnlyVisible": boolean;
+        /**
+          * Border style applied to each slot
+         */
+        "border": string;
+        /**
+          * Border radius for each slot
+         */
+        "borderRadius": string;
+        /**
+          * Show row index numbers on the bottom side
+         */
+        "bottomIndex": boolean;
+        /**
+          * Enable/disable click interactions on the slots
+         */
+        "clickable": boolean;
+        /**
+          * Number of columns in the matrix
+         */
+        "cols": number;
+        /**
+          * Number of slots to pre-fill as active by default
+         */
+        "defualtFill": number;
+        /**
+          * Height of the slot container
+         */
+        "height": string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor": string;
+        /**
+          * Show row index numbers on the left side
+         */
+        "leftIndex": boolean;
+        /**
+          * Margin around the matrix container
+         */
+        "margin": string;
+        /**
+          * Image source used inside the slots
+         */
+        "matrixImage": string;
+        /**
+          * Padding inside the matrix container
+         */
+        "padding": string;
+        /**
+          * Number of rows in the matrix
+         */
+        "rows": number;
+        /**
+          * Show column index numbers on the top side
+         */
+        "topIndex": boolean;
+        /**
+          * Controls visibility of the matrix (string "true" or "false")
+         */
+        "visible": string;
+        /**
+          * Width of the slot container
+         */
+        "width": string;
+        /**
+          * Z-index value for the matrix container
+         */
+        "z": string;
+    }
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -1550,6 +1714,10 @@ export namespace Components {
          */
         "ariaLabel": string;
         /**
+          * URL or identifier for an audio file associated with the text component.
+         */
+        "audio": string;
+        /**
           * Delay in milliseconds to make the cell visible after mount.
          */
         "delayVisible": string;
@@ -1825,6 +1993,18 @@ declare global {
         prototype: HTMLLidoImageElement;
         new (): HTMLLidoImageElement;
     };
+    interface HTMLLidoKeyboardElement extends Components.LidoKeyboard, HTMLStencilElement {
+    }
+    var HTMLLidoKeyboardElement: {
+        prototype: HTMLLidoKeyboardElement;
+        new (): HTMLLidoKeyboardElement;
+    };
+    interface HTMLLidoMathMatrixElement extends Components.LidoMathMatrix, HTMLStencilElement {
+    }
+    var HTMLLidoMathMatrixElement: {
+        prototype: HTMLLidoMathMatrixElement;
+        new (): HTMLLidoMathMatrixElement;
+    };
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -1929,6 +2109,8 @@ declare global {
         "lido-float": HTMLLidoFloatElement;
         "lido-home": HTMLLidoHomeElement;
         "lido-image": HTMLLidoImageElement;
+        "lido-keyboard": HTMLLidoKeyboardElement;
+        "lido-math-matrix": HTMLLidoMathMatrixElement;
         "lido-pos": HTMLLidoPosElement;
         "lido-random": HTMLLidoRandomElement;
         "lido-root": HTMLLidoRootElement;
@@ -2786,6 +2968,170 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
+    interface LidoKeyboard {
+        /**
+          * Background color for each key button
+         */
+        "bgColor"?: string;
+        /**
+          * Border radius for key buttons (e.g., "8px")
+         */
+        "borderRadius"?: string;
+        /**
+          * Number of columns in the keyboard layout (default: "10")
+         */
+        "columns"?: string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
+        /**
+          * Font color for key labels (e.g., "#333")
+         */
+        "fontColor"?: string;
+        /**
+          * Font family for key labels (e.g., "Arial, sans-serif")
+         */
+        "fontFamily"?: string;
+        /**
+          * Font size for key labels (e.g., "16px")
+         */
+        "fontSize"?: string;
+        /**
+          * Gap between key buttons (default: "10px")
+         */
+        "gap"?: string;
+        /**
+          * Height of each key button (e.g., "40px")
+         */
+        "height"?: string;
+        /**
+          * Indicates whether the keyboard input is enabled. When set to `true`, the component will respond to keyboard events.
+         */
+        "keyboardInput"?: boolean;
+        /**
+          * Comma-separated list of keys, optionally with status (e.g., "A,B-disable,C")
+         */
+        "keys"?: string;
+        /**
+          * Total number of letters required for completion
+         */
+        "letterLength"?: number;
+        /**
+          * Margin around the keyboard container
+         */
+        "margin"?: string;
+        /**
+          * Custom callback function when a key is entered
+         */
+        "onEntry"?: string;
+        /**
+          * Padding inside the keyboard container
+         */
+        "padding"?: string;
+        /**
+          * Type of key interaction (e.g., "click", "drag")
+         */
+        "type"?: string;
+        /**
+          * Whether the keyboard is visible ("true" / "false")
+         */
+        "visible"?: string;
+        /**
+          * Width of each key button (e.g., "40px")
+         */
+        "width"?: string;
+        /**
+          * X position (left) of the keyboard
+         */
+        "x"?: string;
+        /**
+          * Y position (top) of the keyboard
+         */
+        "y"?: string;
+        /**
+          * Z-index for stacking order
+         */
+        "z"?: string;
+    }
+    interface LidoMathMatrix {
+        /**
+          * Background color for active slots
+         */
+        "activeBgColor"?: string;
+        /**
+          * If true, only active slots are visible; inactive ones are hidden
+         */
+        "activeOnlyVisible"?: boolean;
+        /**
+          * Border style applied to each slot
+         */
+        "border"?: string;
+        /**
+          * Border radius for each slot
+         */
+        "borderRadius"?: string;
+        /**
+          * Show row index numbers on the bottom side
+         */
+        "bottomIndex"?: boolean;
+        /**
+          * Enable/disable click interactions on the slots
+         */
+        "clickable"?: boolean;
+        /**
+          * Number of columns in the matrix
+         */
+        "cols"?: number;
+        /**
+          * Number of slots to pre-fill as active by default
+         */
+        "defualtFill"?: number;
+        /**
+          * Height of the slot container
+         */
+        "height"?: string;
+        /**
+          * Background color for inactive slots
+         */
+        "inactiveBgColor"?: string;
+        /**
+          * Show row index numbers on the left side
+         */
+        "leftIndex"?: boolean;
+        /**
+          * Margin around the matrix container
+         */
+        "margin"?: string;
+        /**
+          * Image source used inside the slots
+         */
+        "matrixImage"?: string;
+        /**
+          * Padding inside the matrix container
+         */
+        "padding"?: string;
+        /**
+          * Number of rows in the matrix
+         */
+        "rows"?: number;
+        /**
+          * Show column index numbers on the top side
+         */
+        "topIndex"?: boolean;
+        /**
+          * Controls visibility of the matrix (string "true" or "false")
+         */
+        "visible"?: string;
+        /**
+          * Width of the slot container
+         */
+        "width"?: string;
+        /**
+          * Z-index value for the matrix container
+         */
+        "z"?: string;
+    }
     /**
      * @component LidoPos
      * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
@@ -3485,6 +3831,10 @@ declare namespace LocalJSX {
          */
         "ariaLabel"?: string;
         /**
+          * URL or identifier for an audio file associated with the text component.
+         */
+        "audio"?: string;
+        /**
           * Delay in milliseconds to make the cell visible after mount.
          */
         "delayVisible"?: string;
@@ -3678,6 +4028,8 @@ declare namespace LocalJSX {
         "lido-float": LidoFloat;
         "lido-home": LidoHome;
         "lido-image": LidoImage;
+        "lido-keyboard": LidoKeyboard;
+        "lido-math-matrix": LidoMathMatrix;
         "lido-pos": LidoPos;
         "lido-random": LidoRandom;
         "lido-root": LidoRoot;
@@ -3742,6 +4094,8 @@ declare module "@stencil/core" {
              * events such as touch, match, and entry events.
              */
             "lido-image": LocalJSX.LidoImage & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
+            "lido-keyboard": LocalJSX.LidoKeyboard & JSXBase.HTMLAttributes<HTMLLidoKeyboardElement>;
+            "lido-math-matrix": LocalJSX.LidoMathMatrix & JSXBase.HTMLAttributes<HTMLLidoMathMatrixElement>;
             /**
              * @component LidoPos
              * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
