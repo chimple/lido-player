@@ -70,6 +70,11 @@ export class LidoTrace {
   @Prop() width: string = 'auto';
 
   /**
+   * URL or identifier for an audio file associated with the text component.
+   */
+  @Prop() audio: string = '';
+
+  /**
    * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
    */
   @Prop() x: string = '0px';
@@ -710,9 +715,8 @@ export class LidoTrace {
       return;
     }
 
-    const container = document.getElementById(LidoContainer) as HTMLElement;
-    if (container && this.onCorrect) {
-      await executeActions(this.onCorrect, container);
+    if (this.el && this.onCorrect) {
+      await executeActions(this.onCorrect, this.el);
     }
     triggerNextContainer();
   }
@@ -949,6 +953,7 @@ export class LidoTrace {
       <Host
         class="lido-trace"
         id={this.id}
+        audio={this.audio}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         style={this.style}
@@ -956,6 +961,7 @@ export class LidoTrace {
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
         disable-speak={this.disableSpeak}
+
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>
