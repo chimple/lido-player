@@ -138,6 +138,10 @@ export class LidoShape {
    */
   @Prop() delayVisible: string = '';
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
 
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
@@ -178,6 +182,7 @@ export class LidoShape {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        disable-speak={this.disableSpeak}
       >
         {/* Slot for any child elements */}
       </Host>

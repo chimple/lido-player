@@ -206,6 +206,10 @@ export class LidoCell {
    * Delay in milliseconds to make the cell visible after mount.
    */
   @Prop() delayVisible: string = '';
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
 
   /**
    * This lifecycle hook is called after the component is rendered in the DOM.
@@ -328,6 +332,7 @@ export class LidoCell {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
         flex-direction={this.flexDirection}
+        disable-speak={this.disableSpeak}
       >
         {/* Slot for child elements */}
         <slot />

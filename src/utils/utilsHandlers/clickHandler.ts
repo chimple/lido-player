@@ -7,6 +7,15 @@ import { setDraggingDisabled } from './dragDropHandler';
 
 export function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
+   const container = document.getElementById('lido-container') as HTMLElement;
+    // const container = element.closest('lido-container') as HTMLElement;
+  if (container && container.getAttribute('disableSpeak') === 'true') {
+    return;
+  }
+
+  // if (element.closest('[disableSpeak="true"]')) {
+  //   return;
+  // }
   const onTouch = element.getAttribute('onTouch');
   let onholdTimer: NodeJS.Timeout | null = null;
   let onholdTriggered = false;
