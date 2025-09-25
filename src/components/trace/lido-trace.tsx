@@ -887,7 +887,7 @@ export class LidoTrace {
     if (!textElem) return;
 
     // Extract audio URLs from the trace element's audio attribute
-    const audioList = this.audio;
+    const audioList = this.audio; 
     if(!audioList) return;
 
     this.audioUrls = audioList.split(';').map(s => s.trim());
