@@ -69,7 +69,7 @@ function getContainerXml(args : WriteNumberArgs) {
     const starCells = starList
     .map((index) => {
       return `
-		<lido-image id="star${index}" tab-index=${tabCounter++} audio="" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/fly1%201.png" width="landscape.100px, portrait.140px" visible="true" height="landscape.75px, portrait.92px">
+        <lido-image id="star${index}" tab-index="${tabCounter++}" audio="" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/fly1%201.png" width="landscape.100px, portrait.140px" visible="true" height="landscape.75px, portrait.92px">
         </lido-image>
       `;
     })
