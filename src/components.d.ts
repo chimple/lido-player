@@ -1972,6 +1972,10 @@ export namespace Components {
          */
         "ariaLabel": string;
         /**
+          * URL or identifier for an audio file associated with the text component.
+         */
+        "audio": string;
+        /**
           * Delay in milliseconds to make the cell visible after mount.
           * @default ''
          */
@@ -4360,6 +4364,10 @@ declare namespace LocalJSX {
           * @default ''
          */
         "ariaLabel"?: string;
+        /**
+          * URL or identifier for an audio file associated with the text component.
+         */
+        "audio"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
           * @default ''

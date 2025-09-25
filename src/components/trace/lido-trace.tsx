@@ -36,6 +36,12 @@ export class LidoTrace {
   @State() svgUrls: string[] = [];
 
   /**
+   * Array of audio URLs to be played when tracing is completed, separated by semicolons.
+   * This allows multiple audio files to be loaded and played in sequence.
+  */
+  @State() audioUrls: string[] = [];  
+
+  /**
    * Index of the currently active SVG in the `svgUrls` array.
    * This is used to track which SVG is currently being traced.
    */
@@ -62,6 +68,11 @@ export class LidoTrace {
    * Specifies the width of the component container, accepts any valid CSS width value (e.g., `"100px"`, `"50%"`).
    */
   @Prop() width: string = 'auto';
+
+  /**
+   * URL or identifier for an audio file associated with the text component.
+   */
+  @Prop() audio: string = '';
 
   /**
    * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
@@ -706,9 +717,8 @@ export class LidoTrace {
       return;
     }
 
-    const container = document.getElementById(LidoContainer) as HTMLElement;
-    if (container && this.onCorrect) {
-      await executeActions(this.onCorrect, container);
+    if (this.el && this.onCorrect) {
+      await executeActions(this.onCorrect, this.el);
     }
     triggerNextContainer();
   }
@@ -867,6 +877,9 @@ export class LidoTrace {
     const container = document.getElementById(LidoContainer);
     if (!container) return;
 
+    const traceElement = this.el;
+    if(!traceElement) return;
+
     // Ensure highlightTextId is set
     const textId = this.highlightTextId;
     if (!textId) return;
@@ -874,6 +887,13 @@ export class LidoTrace {
     // Find the lido-text element by id
     const textElem = document.getElementById(textId);
     if (!textElem) return;
+
+    // Extract audio URLs from the trace element's audio attribute
+    const audioList = traceElement.getAttribute('audio');
+    if(!audioList) return;
+
+    this.audioUrls = audioList.split(';').map(s => s.trim());
+    console.log('audioUrls', this.audioUrls);
 
     // Check if the textElem has a span-type attribute
     const spanType = textElem.getAttribute('span-type');
@@ -891,8 +911,13 @@ export class LidoTrace {
       if (letter) 
       {
         letter.classList.add('letter-highlight');
-        // letter.setAttribute('speak', 'true');
-        // await AudioPlayer.getI().play(letter);
+        
+        if(this.audioUrls[this.currentSvgIndex])
+        {
+          console.log('Playing audio:', this.audioUrls[this.currentSvgIndex]);
+          const audio = new Audio(this.audioUrls[this.currentSvgIndex]);
+          await audio.play();
+        }
       }
     }
 
@@ -904,8 +929,11 @@ export class LidoTrace {
       if (word) 
       {
         word.classList.add('word-highlight');
-        // word.setAttribute('speak', 'true');
-        // await AudioPlayer.getI().play(word);
+        if(this.audioUrls[this.currentSvgIndex])
+        {
+          const audio = new Audio(this.audioUrls[this.currentSvgIndex]);
+          await audio.play();
+        }
       }
     }
   }
@@ -927,6 +955,7 @@ export class LidoTrace {
       <Host
         class="lido-trace"
         id={this.id}
+        audio={this.audio}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         style={this.style}
@@ -934,6 +963,7 @@ export class LidoTrace {
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
         disable-speak={this.disableSpeak}
+
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>
