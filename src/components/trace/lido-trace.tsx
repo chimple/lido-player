@@ -913,7 +913,7 @@ export class LidoTrace {
         if(this.audioUrls[this.currentSvgIndex])
         {
           console.log('Playing audio:', this.audioUrls[this.currentSvgIndex]);
-          const audio = new Audio(this.audioUrls[this.currentSvgIndex]);
+          const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
         }
       }
@@ -929,7 +929,7 @@ export class LidoTrace {
         word.classList.add('word-highlight');
         if(this.audioUrls[this.currentSvgIndex])
         {
-          const audio = new Audio(this.audioUrls[this.currentSvgIndex]);
+          const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
         }
       }
