@@ -61,7 +61,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       isDragging = false;
       return;
     }
-    AudioPlayer.getI().stop();
+    // AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
     isClicked = true;
