@@ -61,7 +61,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       isDragging = false;
       return;
     }
-    AudioPlayer.getI().stop();
+    // AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
     isClicked = true;
@@ -744,20 +744,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
-  if (isCorrect) {
-    // Perform actions if onMatch is defined
-    const onCorrect = dropElement.getAttribute('onCorrect');
-    if (onCorrect) {
-      await executeActions("this.alignMatch='true'", dropElement, dragElement);
-      await executeActions(onCorrect, dropElement, dragElement);
-    }
-  } else {
-    const onInCorrect = dropElement.getAttribute('onInCorrect');
-
-    await executeActions(onInCorrect, dropElement, dragElement);
-
-    // showWrongAnswerAnimation([dropElement, dragElement]);
-  }
   storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
   await onActivityComplete(dragElement, dropElement);

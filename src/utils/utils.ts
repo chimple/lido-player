@@ -101,6 +101,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const container = document.getElementById(LidoContainer) as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
+         console.log("logg alinmatch");         
 
           const dropRect = dropElement.getBoundingClientRect();
           const dragRect = dragElement.getBoundingClientRect();
@@ -431,6 +432,19 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
+    if (dragElement && dropElement) {
+  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  if (isCorrect) {
+    const onCorrect = dropElement.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, dropElement, dragElement);
+    }
+  } else {
+    const onInCorrect = dropElement.getAttribute('onInCorrect');
+
+    await executeActions(onInCorrect, dropElement, dragElement);
+
+  }}
 
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
   const tabindex = dropElement.getAttribute('tab-index');
