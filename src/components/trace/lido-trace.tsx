@@ -502,11 +502,11 @@ export class LidoTrace {
   setupDraggableCircle(state: any) {
     const firstPathStart = state.paths[0].getPointAtLength(0);
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');
+    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');    
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
-    circle.setAttribute('r', `calc(${strokeWidth || 10} / 3)`); // Radius of the draggable circle
+    circle.setAttribute('r', `calc(20)`); // Radius of the draggable circle
     circle.setAttribute('fill', '#CF1565'); // fill the color for the circle 
     state.svg?.appendChild(circle);
     state.circle = circle;
