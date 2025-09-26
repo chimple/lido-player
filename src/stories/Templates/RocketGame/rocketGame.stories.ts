@@ -119,9 +119,6 @@ function getContainerXml(args: RocketArgs) {
               <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
               </lido-avatar>
           </lido-cell>
-
-          
-          
           <lido-cell layout="pos" value="pos2" tab-index="3" id="pos2" visible="true" height="landscape.305px, portrait.auto " width="landscape.100%, portrait.100%;" y="landscape.-35%, portrait.-12%" x="landscape.23%, portrait.0%" onEntry="this.background-color='transparent'">
               <lido-image id="board_bg_wordnote" tab-index="4" disable-edit="true" visible="true" src="https://media.githubusercontent.com/media/chimple/bahama/refs/heads/master/assets/games/rocket/textures/board_bg_wordnote.png">
               </lido-image>
