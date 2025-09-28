@@ -1,33 +1,8 @@
-import { calculateScale, countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
+import { calculateScale, countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
-
-export function buildDropHasDragFromDOM(): Record<string, { drop: string; isFull: boolean }> {
-  const dropHasDrag: Record<string, { drop: string; isFull: boolean }> = {};
-
-  const dropElements = document.querySelectorAll<HTMLElement>("[type='drop']");
-
-  dropElements.forEach(drop => {
-    const tabIndex = drop.getAttribute("tab-index") || drop.id; // fallback to id
-    const assignedDrag = document.querySelector<HTMLElement>(`[${DropToAttr}="${drop.id}"]`);
-
-    const isFull = !!assignedDrag;
-    drop.setAttribute("is-full", String(isFull));
-
-    dropHasDrag[tabIndex] = {
-      drop: drop.id,
-      isFull
-    };
-  });
-
-  return dropHasDrag;
-}
-
-
-
-
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
@@ -86,7 +61,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       isDragging = false;
       return;
     }
-    AudioPlayer.getI().stop();
+    // AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
     isClicked = true;
@@ -238,7 +213,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
     // Reset styles for all elements
     allElements.forEach(otherElement => {
-      const dropObject = buildDragSelectedMapFromDOM();
+      const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
         if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
@@ -295,7 +270,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
     allElements.forEach(otherElement => {
       allElements.forEach(otherElement => {
-        const dropObject = buildDragSelectedMapFromDOM();
+        const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
         const storedTabIndexes = Object.keys(dropObject).map(Number);
         if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
           if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
@@ -480,16 +455,15 @@ export function handleResetDragElement(
     let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
     if (prevDropItem) {
       prevDropItem.isFull = false;
-      currentDrop.setAttribute('is-full', 'false');
+      localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
     }
     dragToDropMap.delete(dragElement);
-    // dropElement.setAttribute(DropHasDrag, JSON.stringify(dropHasDrag));
   }
 
   if (selectedValueData) {
     let selectedValue = JSON.parse(selectedValueData);
     selectedValue = selectedValue.filter(value => value != dragElement['value']);
-    container.setAttribute(SelectedValuesKey, JSON.stringify(selectedValue));
+    localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
   }
   if (dragSelectedData) {
     let dragSelected = JSON.parse(dragSelectedData);
@@ -498,14 +472,14 @@ export function handleResetDragElement(
       delete dragSelected[dragPreDropElement.getAttribute('tab-index')];
     }
 
-    container.setAttribute(DragSelectedMapKey, JSON.stringify(dragSelected));
+    localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
     dragElement.removeAttribute(DropToAttr);
     updateDropBorder(currentDrop);
   }
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
   allElements.forEach(otherElement => {
-    const dropObject = buildDragSelectedMapFromDOM();
+    const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
     const storedTabIndexes = Object.keys(dropObject).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
@@ -531,51 +505,57 @@ export function handleResetDragElement(
   handleShowCheck();
 }
 
-export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement | null): Promise<void> {
-  const container = document.getElementById(LidoContainer) as HTMLElement;
-  const selectedValueData = container.getAttribute(SelectedValuesKey) ?? "[]";
-  const dragSelectedData = JSON.stringify(buildDragSelectedMapFromDOM());
+export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
+  const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
+  const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-  const dropHasDrag = buildDropHasDragFromDOM();
-  const resetDrag = () => {
-    handleResetDragElement(dragElement,dropElement, buildDropHasDragFromDOM(), selectedValueData,dragSelectedData,dropSelectedData);
-  };
+
+  let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!dropElement) {
-    const prevDropId = dragElement.getAttribute(DropToAttr);
-    if (prevDropId) {
-      const prevDrop = document.getElementById(prevDropId) as HTMLElement;
-      if (prevDrop?.hasAttribute("data-original-width")) {
-        prevDrop.style.width = prevDrop.getAttribute("data-original-width")!;
-      }
-    }
-
-    dragElement.removeAttribute(DropToAttr);
-    dragElement.removeAttribute(DropTimeAttr);
-    dragElement.classList.remove("dropped");
-
-    buildDropHasDragFromDOM();
-    resetDrag();
+    handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
     return;
   }
   const dropTabIndex = dropElement.getAttribute('tab-index');
 
   if (dropHasDrag[dropTabIndex]?.isFull) {
-    resetDrag();
+    handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
     return;
   }
 
   const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
   if (isAllowOnlyCorrect) {
-    const isCorrect = dropElement.getAttribute("value")?.toLowerCase().includes(dragElement.getAttribute("value")?.toLowerCase() ?? "");
+    if (!dropElement) {
+      dragElement.style.transition = 'transform 0.5s ease';
+      dragElement.style.transform = 'translate(0, 0)';
+      handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+      return;
+    }
+    // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+
+    let isCorrect;
+
+    if(parseInt(dragElement.getAttribute('value'))){
+      isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
+    } else {
+      isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+    }
 
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
       dragElement.style.transition = 'transform 0.5s ease';
       animateDragToTarget(dragElement, dropElement, container);
       setTimeout(() => {
-        dragElement.style.transform = "translate(0, 0)";
-        buildDropHasDragFromDOM();
-        resetDrag();
+        dragElement.style.transform = 'translate(0, 0)';
+        const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
+        if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
+          dropHasDrag[oldDropIndex].isFull = false;
+          delete dragToDropMap[dragElement.getAttribute('data-id')];
+          const stored = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
+          delete stored[oldDropIndex];
+          localStorage.setItem(localStorageKey, JSON.stringify(stored));
+        }
+        handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       }, 500);
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
@@ -637,63 +617,137 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
   }
 
-  const prevDropId = dragElement.getAttribute(DropToAttr);
-  if (prevDropId && prevDropId !== dropElement.id) {
-    const prevDrop = document.getElementById(prevDropId) as HTMLElement;
-    if (prevDrop?.hasAttribute("data-original-width")) {
-      prevDrop.style.width = prevDrop.getAttribute("data-original-width")!;
+  if (dropElement) {
+    if (dropElement.getAttribute('drop-attr') === 'stretch') {
+      if (!dropElement.hasAttribute('data-original-width')) {
+        const computedStyle = window.getComputedStyle(dropElement);
+        dropElement.setAttribute('data-original-width', computedStyle.width);
+      }
+
+      const dragWidth = dragElement.offsetWidth;
+      dropElement.style.width = `${dragWidth}px`;
     }
-    dragElement.removeAttribute(DropToAttr);
-  }
+
+    if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
+      const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
+      if (isisFull) {
+        isisFull.isFull = true;
+      } else {
+        console.warn('No matching drop item found for', dropElement);
+      }
+      localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+
+      if (dragSelectedData) {
+        let dragSelected = JSON.parse(dragSelectedData);
+        for (const key in dragSelected) {
+          if (dragSelected[key].includes(dragElement['value']) && dragElement.classList.contains('dropped')) {
+            const preDropId = dragElement.getAttribute('drop-to');
+            const preDrop = container.querySelector(`#${preDropId}`) as HTMLElement;
+            const preDropIndex = preDrop.getAttribute('tab-index');
+            if(preDropIndex){
+              delete dragSelected[preDropIndex];
+            }
+          }
+        }
+        localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+      }
+      dragElement.classList.add('dropped');
+      if (dragElement) {
+        if (dropElement) {
+          dragElement.setAttribute(DropToAttr, dropElement?.id);
+        } else {
+          dragElement.removeAttribute(DropToAttr);
+        }
         dragElement.setAttribute(DropTimeAttr, new Date().getTime().toString());
-  if (dropElement.getAttribute("drop-attr") === "stretch") {
-    if (!dropElement.hasAttribute("data-original-width")) {
-      const computedStyle = window.getComputedStyle(dropElement);
-      dropElement.setAttribute("data-original-width", computedStyle.width);
+      }
+
+      // Check for overlaps and highlight only the most overlapping element
+      if (dropElement && !dropHasDrag[dropTabIndex]?.isFull) {
+        let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
+        const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
+
+        if (mostOverlappedElement && isAllowOnlyOneDrop) {
+          dragElement.style.transform = 'translate(0,0)';
+          dragElement.style.transition = 'transform 0.5s ease';
+
+          const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+          allElements.forEach(otherElement => {
+            const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+            const storedTabIndexes = Object.keys(dropObject).map(Number);
+            if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
+              if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+                if (otherElement.tagName.toLowerCase() === 'lido-text') {
+                  otherElement.style.border = ''; // Reset border
+                  otherElement.style.backgroundColor = 'transparent'; // Reset background color
+                }
+                if (otherElement.tagName.toLowerCase() === 'lido-image') {
+                  otherElement.style.opacity = '0';
+                }
+              }
+            } else {
+              if (otherElement.tagName.toLowerCase() === 'lido-text') {
+                otherElement.style.border = ''; // Reset border
+                otherElement.style.backgroundColor = ''; // Reset background color
+              }
+              if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
+                otherElement.style.opacity = '1';
+              }
+            }
+          });
+          return;
+        }
+      }
     }
-    dropElement.style.width = `${dragElement.offsetWidth}px`;
+  }
+  if (!dropElement) {
+    handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+    return;
   }
 
-  // --- Assign new drop ---
-  dragElement.classList.add("dropped");
-  dragElement.setAttribute(DropToAttr, dropElement.id);
-  dragElement.setAttribute(DropTimeAttr, Date.now().toString());
+  if (dragSelectedData) {
+    let currentDrop = dragToDropMap.get(dragElement);
+    if (currentDrop) {
+      let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
+      if (prevDropItem) {
+        prevDropItem.isFull = false;
+        localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+        reduceSizeToOriginal();
+      }
+    }
+    //accepting identical
+    // let dragSelected = JSON.parse(dragSelectedData);
+    // for (const key in dragSelected) {
+    //   if (dragSelected[key].includes(dragElement.id)) {
+    //     delete dragSelected[key];
+    //   }
+    // }
+    // localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
+  }
+  let dropLength = JSON.parse(localStorage.getItem(DropLength)) || 0;
+  dropLength += 1;
+  localStorage.setItem(DropLength, JSON.stringify(dropLength));
+
+  if (dropLength === countPatternWords(dropElement['value'])) {
+    const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
+    if (isisFull) {
+      isisFull.isFull = true;
+    } else {
+      console.warn('No matching drop item found for', dropElement);
+    }
+    localStorage.setItem(DropHasDrag, JSON.stringify(dropHasDrag));
+    dropLength = 0;
+    localStorage.setItem(DropLength, JSON.stringify(dropLength));
+  }
+
   dragToDropMap.set(dragElement, dropElement);
 
-  // --- Dispatch events, actions, scoring ---
-  const isCorrect = dropElement["value"]
-    .toLowerCase()
-    .includes(dragElement["value"].toLowerCase());
+  // Add pulse and highlight effect for a successful match
+  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
-
-  if (isCorrect) {
-    const onCorrect = dropElement.getAttribute("onCorrect");
-    if (onCorrect) await executeActions(onCorrect, dropElement, dragElement);
-  } else {
-    const onInCorrect = dropElement.getAttribute("onInCorrect");
-    if (onInCorrect) await executeActions(onInCorrect, dropElement, dragElement);
-  }
-
   storingEachActivityScore(isCorrect);
-  dragElement.style.opacity = "1";
+  dragElement.style.opacity = '1';
   await onActivityComplete(dragElement, dropElement);
 
-  // --- Finally resync all drop states ---
-  buildDropHasDragFromDOM();
-
-  // --- Update borders live ---
-  document.querySelectorAll<HTMLElement>(".drop-element").forEach(updateDropBorder);
-}
-
-
-
-
-
-
-// --- Helper to reset drop borders ---
-function updateAllDropBorders(container: HTMLElement) {
-  
-  
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
 }
@@ -722,7 +776,7 @@ export function handleDropElement(element: HTMLElement): void {
   // let nextIndex = Object.keys(dropHas).length; // Get next index
   // dropHas[nextIndex] = { drop: element, isFull: false };
   element.classList.add('drop-element');
-  let dropHas = buildDropHasDragFromDOM();
+  let dropHas = JSON.parse(localStorage.getItem(DropHasDrag) || '{}');
   const tabIndex = element.getAttribute('tab-index');
 
   if (typeof dropHas !== 'object' || dropHas === null) {
@@ -731,7 +785,7 @@ export function handleDropElement(element: HTMLElement): void {
 
   if (!dropHas[tabIndex]) {
     dropHas[tabIndex] = { drop: element.id, isFull: false };
-    // localStorage.setItem(DropHasDrag, JSON.stringify(dropHas));
+    localStorage.setItem(DropHasDrag, JSON.stringify(dropHas));
   }
 
   element.onclick = () => {
@@ -814,23 +868,18 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
 export const dragToDropMap = new Map<HTMLElement, HTMLElement | null>();
 async function onClickDragElement(element) {
-  const dropElements = buildDropHasDragFromDOM();
+  AudioPlayer.getI().stop();
+  const dropElements = JSON.parse(localStorage.getItem(DropHasDrag) || '{}') as Record<string, { drop: string; isFull: boolean }>;
   const dragEl = element;
   if (!dragEl) {
     console.error('Element not found');
     return;
   }
+  const currentTransform = getComputedStyle(dragEl).transform;
   removeHighlight(element);
 
-  const currentDrop = dragToDropMap.get(dragEl);
-  if (currentDrop) {
-    const container = document.getElementById(LidoContainer) as HTMLElement;
-    const selectedValueData = container.getAttribute(SelectedValuesKey) ?? '[]';
-    const dragSelectedData = JSON.stringify(buildDragSelectedMapFromDOM());
-    const dropSelectedData = localStorage.getItem(DragMapKey);
-    const dropHasDrag = buildDropHasDragFromDOM();
-
-    handleResetDragElement(dragEl, currentDrop, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+  if (currentTransform && currentTransform !== 'none' && currentTransform !== 'matrix(1, 0, 0, 1, 0, 0)') {
+    onElementDropComplete(dragEl, null);
     return;
   }
 
@@ -869,7 +918,7 @@ export const appendingDragElementsInDrop = () => {
 
 export const reduceSizeToOriginal = () => {
   const dropItems = document.querySelectorAll("[type='drop']");
-  let dropHasDrag = buildDropHasDragFromDOM();
+  let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   if (!dropHasDrag || !dropItems) return;
   dropItems.forEach(dropElement => {
     const drop = dropElement as HTMLElement;
