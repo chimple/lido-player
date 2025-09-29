@@ -509,7 +509,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-
+  console.log("dragggedddd elem", {value: dragElement.getAttribute("value")});
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!dropElement) {
@@ -746,10 +746,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
   storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
-  await onActivityComplete(dragElement, dropElement);
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
+   await onActivityComplete(dragElement, dropElement);
 }
 
 export function updateDropBorder(element: HTMLElement): void {
