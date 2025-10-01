@@ -913,6 +913,7 @@ export const appendingDragElementsInDrop = () => {
           drop.appendChild(drag);
         }
       }
+      drag.style.pointerEvents = 'none';
     });
   });
 };
