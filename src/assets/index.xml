@@ -1,5 +1,53 @@
 <main>
-	
+<lido-container id="lido-container" is-allow-only-correct="true" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="rectangle,rombus" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/Spring.png" custom-style="#drop1, #drop2{border: none !important;}"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; answer.visible='false';  lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear';  truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';" >
+			<!-- Chimple Avatar -->
+		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="300px" x="landscape.1200px,portrait.10px" y="landscape.500px,portrait.230px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry=" this.animation='rightToPlace 2.5s linear';">
+				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+				</lido-avatar>
+		</lido-cell>
+
+		<!-- truck -->
+		<lido-cell visible="true" id="truck" layout="row" height="landscape.60%, portrait.60%" width="landscape.100%, portrait.100%" bg-color="transparent"  onEntry=" this.animation='rightToPlace 2.5s linear';" onCorrect="" >
+		  
+		  <lido-cell visible="true" layout="row" bg-color="transparent" gap="0px"   margin="landscape.220px 0px 0px 0px,portrait.977px 0px 0px -200px">
+			<lido-text id="question" visible="false" string="complete the pattern using the blocks given below" value="complete the pattern using the blocks given below" onEntry="this.sleep='2000';this.speak='true';"></lido-text>
+			<lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/train1.m4a" onEntry="this.speak='true';"></lido-text>
+			
+			<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/truck_bg_soundtrain.png" width="landscape.220px,portrait.250px" padding="0px" margin="72px 0px 0px 0px"></lido-image>
+			
+			<lido-cell id="block1" visible="true" width="landscape.400px,portrait.250px" layout="col" bg-color="transparent" margin="landscape.0px 0px 0px -65px,portrait.97px 0px 0px 0px"  >
+				<lido-cell visible="true" layout="row" bg-color="transparent" margin="landscape.180px 0px -130px 0px,portrait.95px 0px 0px 0px" gap="15px">
+					<lido-image id="img1" visible="true" value="rectangle" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/Group%2047093.png" width="landscape.140px,portrait.120px" type="" ></lido-image>
+					<lido-image id="img2" visible="true" value="rombus" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/Group%2047094.png" width="landscape.140px,portrait.120px" type=""></lido-image>
+				</lido-cell>
+				<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/trolly_drop_soundtrain_2block.png" margin="landscape.0,portrait.-88px 0px 0px 0px" width="landscape.350px,portrait.350"></lido-image>
+			</lido-cell>
+
+			<lido-cell id="block2" visible="true" width="landscape.400px,portrait.250px" layout="col" bg-color="transparent" margin="landscape.0px 0px 0px -65px,portrait.97px 0px 0px 0px"  >
+				<lido-cell visible="true" layout="row" bg-color="transparent" margin="landscape.180px 0px -130px 0px,portrait.95px 0px 0px 0px" gap="15px">
+					<lido-image id="img3" visible="true" value="rectangle" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/Group%2047093.png" width="landscape.140px,portrait.120px" type=""></lido-image>
+					<lido-image id="img4" visible="true" value="rombus" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/Group%2047094.png" width="landscape.140px,portrait.120px" type=""></lido-image>
+				</lido-cell>
+				<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/trolly_drop_soundtrain_2block.png" margin="landscape.0,portrait.-88px 0px 0px 0px" width="landscape.350px,portrait.350"></lido-image>
+			</lido-cell>
+
+			<lido-cell id="block3" visible="true" width="landscape.400px,portrait.250px" layout="col" bg-color="transparent" margin="landscape.0px 0px 0px -65px,portrait.97px 0px 0px 0px"  >
+				<lido-cell visible="true" layout="row" bg-color="transparent" margin="landscape.180px 0px -130px 0px,portrait.95px 0px 0px 0px" gap="15px">
+					<lido-image id="drop1" visible="true" tab-index="1" value="rectangle" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/box_answer_soundtrain_trans.png" width="landscape.140px,portrait.120px" onCorrect="lido-avatar.avatarAnimate='Success'" onInCorrect="lido-avatar.avatarAnimate='Fail'"  type="drop"></lido-image>
+					<lido-image id="drop2"  visible="true" tab-index="2" value="rombus" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/box_answer_soundtrain_trans.png" width="landscape.140px,portrait.120px" onCorrect="lido-avatar.avatarAnimate='Success'" onInCorrect="lido-avatar.avatarAnimate='Fail'"  type="drop"></lido-image>
+				</lido-cell>
+				<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/trolly_drop_soundtrain_2block.png" margin="landscape.0,portrait.-88px 0px 0px 0px" width="landscape.350px,portrait.350"></lido-image>
+			</lido-cell>
+		</lido-cell>
+		</lido-cell>
+		<!-- options -->
+		<lido-cell visible="true" id="answer" layout="row" height="landscape.40%,portrait.40%" width="landscape.50%,portrait.50%" bg-color="transparent" onEntry="this.alignItems='center';this.justify-content='space-around';this.animation='rightToPlace 2.5s linear'" >
+			<lido-image id="drg1"  width="landscape.140px,portrait.120px" value="rectangle" visible="true" tab-index="1" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/Group%2047093.png" bg-Color="transparent" onEntry="" type="drag"  ></lido-image>
+			<lido-image id="drg2"  width="landscape.140px,portrait.120px" value="rombus" visible="true" tab-index="2" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/Group%2047094.png" bg-Color="transparent" onEntry="" type="drag"  ></lido-image>
+			<lido-image id="drg3"  width="landscape.140px,portrait.120px" value="rectangle" visible="true" tab-index="3" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/Group%2047093.png" bg-Color="transparent" onEntry="" type="drag"  ></lido-image>
+			</lido-cell>	
+	</lido-container>	
+
 	<lido-container visible="true" show-next-button="true">
 		<lido-math-matrix visible="true" rows="10" cols="10" top-index="true" left-index="true" bottom-index="true" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="7" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
 	</lido-container>
