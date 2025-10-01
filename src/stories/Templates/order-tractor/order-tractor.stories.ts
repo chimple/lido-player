@@ -29,7 +29,6 @@ export const OrderTractor: StoryObj = {
   },
 };
 function getContainerXml(args) {
-// ${args.answer1, args.answer2, args.answer3, args.answer4, args.answer5}
   return `
     <main>
 	<lido-container id="lido-container" is-allow-only-correct="true" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="${[args.answer1, args.answer2, args.answer3, args.answer4, args.answer5].join(',')}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/Spring.png" custom-style="#drop1, #drop2,#drop3,#drop4,#drop5{border: none !important;}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';  lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear';  truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true'; this.sleep='1000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" >
