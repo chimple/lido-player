@@ -601,7 +601,7 @@ export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
-  if (url?.startsWith('http') || url?.startsWith('blob')) {
+  if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
   } else if (baseUrl) {
     const newUrl = !url.startsWith('/') ? url : url.substring(1);
