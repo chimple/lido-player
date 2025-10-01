@@ -61,7 +61,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       isDragging = false;
       return;
     }
-    // AudioPlayer.getI().stop();
+    AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
     isClicked = true;
@@ -180,6 +180,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   observer.observe(container, observerConfig);
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
+    console.log("moved");    
     if (!isDragging) return;
     if (isDraggingDisabled) {
       isDragging = false;
@@ -547,15 +548,15 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       animateDragToTarget(dragElement, dropElement, container);
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
-        const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
-        if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
-          dropHasDrag[oldDropIndex].isFull = false;
-          delete dragToDropMap[dragElement.getAttribute('data-id')];
-          const stored = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
-          delete stored[oldDropIndex];
-          localStorage.setItem(localStorageKey, JSON.stringify(stored));
-        }
-        handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+        // const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
+        // if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
+        //   dropHasDrag[oldDropIndex].isFull = false;
+        //   delete dragToDropMap[dragElement.getAttribute('data-id')];
+        //   const stored = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
+        //   delete stored[oldDropIndex];
+        //   localStorage.setItem(localStorageKey, JSON.stringify(stored));
+        // }
+        // handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       }, 500);
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
