@@ -570,6 +570,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       return;
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
+      container.style.pointerEvents = "none";
       if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
         setTimeout(() => {
           const div = document.createElement('div');
@@ -611,6 +612,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
             setTimeout(() => {
               div.remove();
+              container.style.pointerEvents = 'auto';
             }, 800); // match animation duration
           }, 2000); // stay for 2 seconds
         }, 250);
