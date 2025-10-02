@@ -528,6 +528,7 @@ export const handleShowCheck = () => {
   }
 };
 
+ const body = document.body;
 export const validateObjectiveStatus = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
@@ -555,6 +556,7 @@ export const validateObjectiveStatus = async () => {
     if (res) {
       const attach = container.getAttribute('appendToDropOnCompletion');
 
+      body.style.pointerEvents = 'none';
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
         if (attach === 'true') {
@@ -584,6 +586,7 @@ export const validateObjectiveStatus = async () => {
 };
 
 export const triggerNextContainer = () => {
+  body.style.pointerEvents = 'auto';
   AudioPlayer.getI().stop();
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
