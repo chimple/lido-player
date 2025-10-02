@@ -61,7 +61,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       isDragging = false;
       return;
     }
-    AudioPlayer.getI().stop();
+    // AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
     isClicked = true;
@@ -868,6 +868,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
 export const dragToDropMap = new Map<HTMLElement, HTMLElement | null>();
 async function onClickDragElement(element) {
+  AudioPlayer.getI().stop();
   const dropElements = JSON.parse(localStorage.getItem(DropHasDrag) || '{}') as Record<string, { drop: string; isFull: boolean }>;
   const dragEl = element;
   if (!dragEl) {

@@ -1,5 +1,6 @@
 <main>
 
+
 <lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="7" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1267px, portrait.541px" y="landscape.587px, portrait.1304px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
@@ -34,6 +35,7 @@
 			
 		</lido-cell>
 	</lido-container>	
+
 
 <lido-container id="lido-container" is-allow-only-correct="true" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="rectangle,rombus" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/Spring.png" custom-style="#drop1, #drop2{border: none !important;}"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; answer.visible='false';  lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear';  truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';" >
 			<!-- Chimple Avatar -->

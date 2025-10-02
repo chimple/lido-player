@@ -708,7 +708,9 @@ export class LidoTrace {
     }
 
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
+    const delay = 1000; // milliseconds
     if (this.currentSvgIndex < this.svgUrls.length - 1) {
+      await new Promise(resolve => setTimeout(resolve, delay));
       this.currentSvgIndex++;
       await this.initializeSVG();
       this.moving = false;
@@ -887,7 +889,7 @@ export class LidoTrace {
     if (!textElem) return;
 
     // Extract audio URLs from the trace element's audio attribute
-    const audioList = traceElement.getAttribute('audio');
+    const audioList = this.audio; 
     if(!audioList) return;
 
     this.audioUrls = audioList.split(';').map(s => s.trim());
@@ -913,7 +915,7 @@ export class LidoTrace {
         if(this.audioUrls[this.currentSvgIndex])
         {
           console.log('Playing audio:', this.audioUrls[this.currentSvgIndex]);
-          const audio = new Audio(this.audioUrls[this.currentSvgIndex]);
+          const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
         }
       }
@@ -929,7 +931,7 @@ export class LidoTrace {
         word.classList.add('word-highlight');
         if(this.audioUrls[this.currentSvgIndex])
         {
-          const audio = new Audio(this.audioUrls[this.currentSvgIndex]);
+          const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
         }
       }
