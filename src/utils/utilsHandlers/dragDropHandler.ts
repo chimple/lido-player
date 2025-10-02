@@ -570,8 +570,9 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       return;
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
-      container.style.pointerEvents = "none";
+      
       if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
+        container.style.pointerEvents = "none";
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
