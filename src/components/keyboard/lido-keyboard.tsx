@@ -74,6 +74,11 @@ export class LidoKeyboard {
   /** Total number of letters required for completion */
   @Prop() letterLength: number;
 
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
+
   /** Tracks the number of keys clicked by the user */
   @State() numberOfClick: number = 0;
 
@@ -261,6 +266,7 @@ export class LidoKeyboard {
                   this.inputString += string;
                   this.inputValidation(event);
                 }}
+                disable-speak={this.disableSpeak}
               />
             );
           })}

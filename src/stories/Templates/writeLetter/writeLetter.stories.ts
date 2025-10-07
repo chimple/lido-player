@@ -64,7 +64,7 @@ function getContainerXml(args: WriteLetterArgs){
     return `
         <main>
 
-            <lido-container  id="lido-container" objective="writeLetter" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" height="100%" width="100%" bg-Color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+            <lido-container  id="lido-container" disableSpeak="true" objective="writeLetter" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" height="100%" width="100%" bg-Color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 
                 <!-- Chimple Avatar -->
                 <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.-24px, portrait.465px" y="landscape.360px, portrait.1025px" aria-hidden="true" z="1" bg-Color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
@@ -80,7 +80,7 @@ function getContainerXml(args: WriteLetterArgs){
                     </lido-cell>
 
                     <lido-cell tab-index="2" layout="col" show-speak-icon="true" audio="" visible="true" width="landscape.725px, portrait.725px"  height="landscape.725px, portrait.725px" bg-color="#0A2C45"  onEntry="this.border-radius='6px'; this.flex-shrink='0';">
-                        <lido-trace id="image2" tab-index="3" value="a" visible="true" svg-source="${traceImage}" onCorrect=""  mode="${traceMode}" z="1" x="25px" y="25px" width="landscape.700px,portrait.700px" height="landscape.700px,portrait.700px" onEntry="" alt-text="{backgroundImage}">
+                        <lido-trace id="image2" tab-index="3" value="a" visible="true" svg-source="${traceImage}" onCorrect="this.speak='true';"  mode="${traceMode}" z="1" x="25px" y="25px" width="landscape.700px,portrait.700px" height="landscape.700px,portrait.700px" alt-text="{backgroundImage}">
                         </lido-trace>
                     </lido-cell>
 

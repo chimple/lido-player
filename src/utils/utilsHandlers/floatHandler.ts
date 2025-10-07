@@ -1,6 +1,6 @@
 import { AudioPlayer } from '../audioPlayer';
 import { LidoContainer } from '../constants';
-import { executeActions, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
+import { calculateScale, calculateScore, executeActions, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
 import { stopHighlightForSpeakingElement } from './highlightHandler';
 
 let fillCompleted = false;
@@ -33,6 +33,7 @@ export async function handleElementClick(element: HTMLElement) {
       fillCompleted = true;
       container.style.pointerEvents = 'none';
       triggerNextContainer();
+      calculateScore();
     } else {
       fillCompleted = false;
     }
@@ -58,11 +59,11 @@ export function handleFloatElementPosition(element: HTMLElement) {
 
   const delay = Math.random() * 5;
 
-  const isFirstEntry = element.getAttribute('data-entry') !== 'true';
-  if (isFirstEntry) {
-    element.setAttribute('data-entry', 'true');
-    entryValue += 10;
-  }
+  // const isFirstEntry = element.getAttribute('data-entry') !== 'true';
+  // if (isFirstEntry) {
+  //   element.setAttribute('data-entry', 'true');
+  //   entryValue += 10;
+  // }
 
   element.style.position = 'absolute';
 
@@ -72,7 +73,8 @@ export function handleFloatElementPosition(element: HTMLElement) {
     element.style.left = 'unset';
     element.style.right = `${window.innerWidth + document.body.getBoundingClientRect().width}px`;
 
-    element.style.top = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerHeight - element.clientHeight))}px`;
+    // element.style.top = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerHeight - element.clientHeight))}px`;
+    element.style.top = `${Math.floor(Math.random() * (containerHeight - element.clientHeight))}px`;
 
     // const duration = 15 + Math.random() * 15;
     element.style.setProperty('--el-left', element.style.right);
@@ -80,9 +82,10 @@ export function handleFloatElementPosition(element: HTMLElement) {
   } else {
     const containerWidth = floatContainer.offsetWidth;
 
-    element.style.left = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerWidth - element.clientWidth))}px`;
+    // element.style.left = isFirstEntry ? `${entryValue}%` : `${Math.floor(Math.random() * (containerWidth - element.clientWidth))}px`;
+    element.style.left = `${Math.floor(Math.random() * (containerWidth - element.clientWidth))}px`;
 
-    const startTop = document.body.offsetHeight + element.offsetHeight * 2;
+    const startTop = document.body.offsetHeight + element.offsetHeight * (1/calculateScale());
     element.style.top = `${startTop}px`;
     const duration = 5 + Math.random() * 5;
     element.style.setProperty('--el-top', `${startTop}px`);

@@ -180,6 +180,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   observer.observe(container, observerConfig);
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
+    console.log("moved");    
     if (!isDragging) return;
     if (isDraggingDisabled) {
       isDragging = false;
@@ -510,7 +511,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-
+  console.log("dragggedddd elem", {value: dragElement.getAttribute("value")});
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!dropElement) {
@@ -532,7 +533,15 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
-    const isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+    // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+
+    let isCorrect;
+
+    if(parseInt(dragElement.getAttribute('value'))){
+      isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
+    } else {
+      isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+    }
 
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
@@ -540,15 +549,15 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       animateDragToTarget(dragElement, dropElement, container);
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
-        const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
-        if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
-          dropHasDrag[oldDropIndex].isFull = false;
-          delete dragToDropMap[dragElement.getAttribute('data-id')];
-          const stored = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
-          delete stored[oldDropIndex];
-          localStorage.setItem(localStorageKey, JSON.stringify(stored));
-        }
-        handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+        // const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
+        // if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
+        //   dropHasDrag[oldDropIndex].isFull = false;
+        //   delete dragToDropMap[dragElement.getAttribute('data-id')];
+        //   const stored = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
+        //   delete stored[oldDropIndex];
+        //   localStorage.setItem(localStorageKey, JSON.stringify(stored));
+        // }
+        // handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       }, 500);
       if (dragElement['type'] === 'option') {
         const childs = Array.from(container.querySelectorAll(`[value="${dragElement['value']}"]`));
@@ -562,7 +571,9 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       return;
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
+      
       if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
+        container.style.pointerEvents = "none";
         setTimeout(() => {
           const div = document.createElement('div');
           container.append(div);
@@ -603,6 +614,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
             setTimeout(() => {
               div.remove();
+              container.style.pointerEvents = 'auto';
             }, 800); // match animation duration
           }, 2000); // stay for 2 seconds
         }, 250);
@@ -738,25 +750,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
-  if (isCorrect) {
-    // Perform actions if onMatch is defined
-    const onCorrect = dropElement.getAttribute('onCorrect');
-    if (onCorrect) {
-      await executeActions(onCorrect, dropElement, dragElement);
-    }
-  } else {
-    const onInCorrect = dropElement.getAttribute('onInCorrect');
-
-    await executeActions(onInCorrect, dropElement, dragElement);
-
-    // showWrongAnswerAnimation([dropElement, dragElement]);
-  }
   storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
-  await onActivityComplete(dragElement, dropElement);
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
+   await onActivityComplete(dragElement, dropElement);
 }
 
 export function updateDropBorder(element: HTMLElement): void {
@@ -875,6 +874,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
 export const dragToDropMap = new Map<HTMLElement, HTMLElement | null>();
 async function onClickDragElement(element) {
+  AudioPlayer.getI().stop();
   const dropElements = JSON.parse(localStorage.getItem(DropHasDrag) || '{}') as Record<string, { drop: string; isFull: boolean }>;
   const dragEl = element;
   if (!dragEl) {
@@ -918,6 +918,7 @@ export const appendingDragElementsInDrop = () => {
           drop.appendChild(drag);
         }
       }
+      drag.style.pointerEvents = 'none';
     });
   });
 };

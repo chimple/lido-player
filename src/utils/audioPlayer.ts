@@ -1,6 +1,7 @@
 import { convertUrlToRelative, speakText } from './utils';
 import { highlightSpeakingElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import{setDraggingDisabled}from './utilsHandlers/dragDropHandler';
+
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;
@@ -76,7 +77,8 @@ export class AudioPlayer {
       try {
         highlightSpeakingElement(targetElement);
         await speakText(targetElement.textContent, targetElement);
-        stopHighlightForSpeakingElement(targetElement);
+        const highlightedElements = document.querySelectorAll('.speaking-highlight');
+        highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));        
         setDraggingDisabled(false);
       } catch (error) {
         console.log('🚀 TTS Error:', error);

@@ -18,6 +18,7 @@ import {
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
+import { generateUUIDFallback } from '../../utils/utils';
 
 /**
  * @component LidoHome
@@ -82,6 +83,16 @@ export class LidoHome {
   @Prop() speakerButtonUrl: string;
 
   /**
+   * URL for the avatar Rive file.
+   */
+  @Prop() avatarUrl: string;
+
+  /** Unique identifier for the component instance.
+   * If not provided, a UUID is generated to ensure uniqueness.
+   */
+  @Prop() uuid: string = generateUUIDFallback();
+
+  /**
    * Stores the resolved navigation bar icons.
    * Each key will hold either a valid custom URL or the default ConstNavIcons URL.
    */
@@ -110,6 +121,17 @@ export class LidoHome {
    * If the last container is reached, it shows a completion message.
    */
   NextContainerKey = (index?: number | undefined) => {
+    console.log(
+      '🚀 ~ LidoHome ~ NextContainerKey ~',
+      'ths uuid',
+      this.uuid,
+      'doc uuid',
+      document.querySelector('lido-home').getAttribute('uuid'),
+      'are both equal : ',
+      this.uuid === document.querySelector('lido-home')?.getAttribute('uuid'),
+    );
+    if (this.uuid !== document.querySelector('lido-home')?.getAttribute('uuid')) return;
+
     // console.log("👉 NextContainerKey CALLED with index:", index);
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
@@ -209,6 +231,7 @@ export class LidoHome {
     // } else {
     //   this.updateBackgroundImage();
     // }
+    this.currentContainerIndex = 0;
 
     this.handleIcons();
 
@@ -352,6 +375,7 @@ export class LidoHome {
       'lido-float': <lido-float {...props}>{children}</lido-float>,
       'lido-keyboard': <lido-keyboard {...props}>{children}</lido-keyboard>,
       'lido-balance': <lido-balance {...props}>{children}</lido-balance>,
+      'lido-math-matrix': <lido-math-matrix {...props}>{children}</lido-math-matrix>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning
@@ -441,6 +465,7 @@ export class LidoHome {
         localStorage.removeItem(ActivityScoreKey);
         clearLocalStorage();
         alertElement.remove();
+        this.currentContainerIndex = 0;
       } else {
         alertElement.remove();
       }
@@ -559,7 +584,7 @@ export class LidoHome {
     };
 
     return (
-      <Host class="lido-home" index={this.currentContainerIndex} totalIndex={this.containers.length} style={style}>
+      <Host class="lido-home" uuid={this.uuid} index={this.currentContainerIndex} totalIndex={this.containers.length} style={style}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
         {/* Render navigation dots below the container */}

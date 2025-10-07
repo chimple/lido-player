@@ -1,6 +1,7 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
 import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
 import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
+import { AudioPlayer } from '../../utils/audioPlayer';
 
 // Enum for different tracing modes
 
@@ -35,6 +36,12 @@ export class LidoTrace {
   @State() svgUrls: string[] = [];
 
   /**
+   * Array of audio URLs to be played when tracing is completed, separated by semicolons.
+   * This allows multiple audio files to be loaded and played in sequence.
+  */
+  @State() audioUrls: string[] = [];  
+
+  /**
    * Index of the currently active SVG in the `svgUrls` array.
    * This is used to track which SVG is currently being traced.
    */
@@ -61,6 +68,11 @@ export class LidoTrace {
    * Specifies the width of the component container, accepts any valid CSS width value (e.g., `"100px"`, `"50%"`).
    */
   @Prop() width: string = 'auto';
+
+  /**
+   * URL or identifier for an audio file associated with the text component.
+   */
+  @Prop() audio: string = '';
 
   /**
    * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
@@ -127,6 +139,11 @@ export class LidoTrace {
    * Delay in milliseconds to make the cell visible after mount.
    */
   @Prop() delayVisible: string = '';
+
+   /**
+     * When set to true, disables the speak functionality of long press for this component and its children.
+     */
+    @Prop() disableSpeak: boolean = false;
 
   @Element() el!: HTMLElement;
 
@@ -485,11 +502,11 @@ export class LidoTrace {
   setupDraggableCircle(state: any) {
     const firstPathStart = state.paths[0].getPointAtLength(0);
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');
+    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');    
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
-    circle.setAttribute('r', `calc(${strokeWidth || 10} / 3)`); // Radius of the draggable circle
+    circle.setAttribute('r', `calc(20)`); // Radius of the draggable circle
     circle.setAttribute('fill', '#CF1565'); // fill the color for the circle 
     state.svg?.appendChild(circle);
     state.circle = circle;
@@ -698,9 +715,8 @@ export class LidoTrace {
       return;
     }
 
-    const container = document.getElementById(LidoContainer) as HTMLElement;
-    if (container && this.onCorrect) {
-      await executeActions(this.onCorrect, container);
+    if (this.el && this.onCorrect) {
+      await executeActions(this.onCorrect, this.el);
     }
     triggerNextContainer();
   }
@@ -859,6 +875,9 @@ export class LidoTrace {
     const container = document.getElementById(LidoContainer);
     if (!container) return;
 
+    const traceElement = this.el;
+    if(!traceElement) return;
+
     // Ensure highlightTextId is set
     const textId = this.highlightTextId;
     if (!textId) return;
@@ -866,6 +885,13 @@ export class LidoTrace {
     // Find the lido-text element by id
     const textElem = document.getElementById(textId);
     if (!textElem) return;
+
+    // Extract audio URLs from the trace element's audio attribute
+    const audioList = this.audio; 
+    if(!audioList) return;
+
+    this.audioUrls = audioList.split(';').map(s => s.trim());
+    console.log('audioUrls', this.audioUrls);
 
     // Check if the textElem has a span-type attribute
     const spanType = textElem.getAttribute('span-type');
@@ -879,16 +905,34 @@ export class LidoTrace {
       const letters = content.querySelectorAll('.text-letters');
       if (index < 0 || index >= letters.length) return;
       // Highlight the current letter keeping the previous ones highlighted
-      const letter = letters[index];
-      if (letter) letter.classList.add('letter-highlight');
+      const letter = letters[index] as HTMLElement;
+      if (letter) 
+      {
+        letter.classList.add('letter-highlight');
+        
+        if(this.audioUrls[this.currentSvgIndex])
+        {
+          console.log('Playing audio:', this.audioUrls[this.currentSvgIndex]);
+          const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
+          await audio.play();
+        }
+      }
     }
 
     if (spanType === 'words') {
       const words = content.querySelectorAll('.text-words');
       if (index < 0 || index >= words.length) return;
       // Highlight the current word keeping the previous ones highlighted
-      const word = words[index];
-      if (word) word.classList.add('word-highlight');
+      const word = words[index] as HTMLElement;
+      if (word) 
+      {
+        word.classList.add('word-highlight');
+        if(this.audioUrls[this.currentSvgIndex])
+        {
+          const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
+          await audio.play();
+        }
+      }
     }
   }
 
@@ -909,12 +953,15 @@ export class LidoTrace {
       <Host
         class="lido-trace"
         id={this.id}
+        audio={this.audio}
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
+        disable-speak={this.disableSpeak}
+
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>

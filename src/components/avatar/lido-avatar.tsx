@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, Element, getAssetPath } from '@stencil/core';
-import { Rive } from '@rive-app/canvas';
+import { Rive, RuntimeLoader } from '@rive-app/canvas';
 import { RiveService } from '../../utils/rive-service';
 import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay} from '../../utils/utils';
 
@@ -135,6 +135,8 @@ export class LidoAvatar {
    * It initializes events for the column based on the provided type.
    */
   async componentDidLoad() {
+    RuntimeLoader.setWasmUrl(getAssetPath("./rive.wasm"));
+
     setVisibilityWithDelay(this.el, this.delayVisible);
 
     initEventsForElement(this.el, this.type);

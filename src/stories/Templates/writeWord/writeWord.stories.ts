@@ -80,14 +80,15 @@ function getContainerXml(args : WriteWordArgs) {
                         </lido-image>
                     </lido-cell>
 
-                    <!-- text-element -->
-                    <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.80px, portrait.80px" width="landscape.297px, portrait.297px" x="landscape.650px, portrait.300px" y="landscape.125px, portrait.190px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="">
-                        <lido-text id="txt1" tab-index="2" span-type="${spanType}"  audio="" width="297px" height="80px" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
-                        </lido-text>                        
-                    </lido-cell>
+                    
 
                     <lido-cell layout="col" visible="true" width="landscape.70%, portrait.70%" height="landscape.84%, portrait.60%" bg-color="transparent" margin="landscape.-35px 0px -35px 0px, portrait.-400px 0px -40px 0px" onEntry="this.padding='4px 0px 16px 0px';">
                         <lido-image visible="true" src="${topDisplayImage}" z="1" width="landscape.570px, portrait.570px" height="landscape.225px, portrait.225px" onEntry="this.flex-shrink='0';" altText="{image1}">
+                            <!-- text-element -->
+                            <lido-cell layout="pos" display="flex" id="pos1" disable-edit="true" value="pos1" height="landscape.80px, portrait.80px" width="landscape.525px, portrait.525px" x="landscape.545px, portrait.300px" y="landscape.125px, portrait.190px" aria-hidden="true" bg-color="transparent" visible="true"  onEntry="this.z-index='2'; this.align-items='center'; this.justify-content='center'; this.display='flex';">
+                                <lido-text id="txt1" tab-index="2" span-type="${spanType}"  audio="" width="525px" height="80px" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0'; this.fontWeight='600';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black"  color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
+                                </lido-text>                        
+                            </lido-cell>
                         </lido-image>
 
                         <lido-image visible="true" src="${bottomDisplayImage}" z="1" width="landscape.574px, portrait.760px" height="landscape.574px, portrait.760px" onEntry="this.flex-shrink='0';" altText="{image1}">
@@ -96,7 +97,7 @@ function getContainerXml(args : WriteWordArgs) {
 
                     <!-- trace element -->
                     <lido-cell layout="pos" id="pos2" disable-edit="true" value="pos2" height="landscape.500px, portrait.500px" width="landscape.550px, portrait.550px" x="landscape.510px, portrait.75px" y="landscape.305px, portrait.475px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="trace1.visibility='visible'; this.flex-shrink='0';">
-                        <lido-trace id="trace1"  audio="" animationTrace="true" highlightTextId="txt1" tab-index="3" value="a" visible="true" svg-source="${traceImage1}; ${traceImage2}; ${traceImage3}" onCorrect="" mode="${traceMode}" z="1" x="25px" y="25px" width="landscape.500px, portrait.675px" height="landscape.500px, portrait.500px" altText="{backgroundImage}">
+                        <lido-trace id="trace1"  audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Audios/B.wav; https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Audios/U.wav; https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Audios/G.wav" animationTrace="true" highlightTextId="txt1" tab-index="3" value="a" visible="true" svg-source="${traceImage1}; ${traceImage2}; ${traceImage3}" onCorrect="this.sleep='2000'; txt1.speak='true';" mode="${traceMode}" z="1" x="25px" y="25px" width="landscape.500px, portrait.675px" height="landscape.500px, portrait.500px" altText="{backgroundImage}">
                         </lido-trace>
                     </lido-cell>
             </lido-container>
