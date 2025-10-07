@@ -531,30 +531,24 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
-    // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
     let isCorrect;    
 
     const dragValue = dragElement.getAttribute('value')?.trim() || "";
     const dropValue = dropElement.getAttribute('value')?.trim() || "";
 
-    if (!dragValue || !dropValue) {
-      isCorrect = false;      
-    }     
-    else if (!isNaN(Number(dragValue)) && !isNaN(Number(dropValue))) {
-      // 🟩 Normal numeric strict match
-      isCorrect = Number(dragValue) === Number(dropValue);
-    } else {
-      // 🟩 Text or general includes match
-      if (parseInt(dragElement.getAttribute('value'))) {
-        // for numeric-like text values (like "1", "23")
-        isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
+    if (Number(dragValue)) {
+      const dragNum = Number(dragValue);
+      if (dropValue.includes(',')) {
+        const dropNums = dropValue.split(',');
+        isCorrect = dropNums.some(num => Number(num) === dragNum);
       } else {
-        // for pure text values
-        isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
-      }
+        isCorrect = Number(dropValue) === dragNum;
+      } 
+    } 
+    else {
+      isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
     }
-
 
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
