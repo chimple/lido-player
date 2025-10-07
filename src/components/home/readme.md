@@ -68,6 +68,8 @@ graph TD;
   lido-home --> lido-slide-fill
   lido-home --> lido-float
   lido-home --> lido-keyboard
+  lido-home --> lido-balance
+  lido-home --> lido-math-matrix
   lido-keyboard --> lido-text
   lido-root --> lido-home
   style lido-home fill:#f9f,stroke:#333,stroke-width:4px
