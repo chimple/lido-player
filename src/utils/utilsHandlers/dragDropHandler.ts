@@ -540,14 +540,17 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
     if (Number(dragValue)) {
       const dragNum = Number(dragValue);
+      //array of numbers
       if (dropValue.includes(',')) {
         const dropNums = dropValue.split(',');
         isCorrect = dropNums.some(num => Number(num) === dragNum);
       } else {
+        //single number
         isCorrect = Number(dropValue) === dragNum;
       } 
     } 
     else {
+      //strings
       isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
     }
 
