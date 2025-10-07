@@ -24,14 +24,7 @@ export default meta;
 export const rowBlock: StoryObj = {
   args: {
     numbers: ["970","971","972","973","@974","975","976","977","@978","979","980","981","982","@983","984","985","986","@987","988","989","990","991","992","993","@994","995", "996", "997", "@998", "999",],
-    answers: [
-        "974",
-        "978",
-        "983",
-        "987",
-        "994",
-        "998"
-    ],
+    answers: ["974", "978", "983", "987", "994", "998"],
 	dragColors: ['#CF1565', '#AD3184', '#F55376', '#81C127', '#5D44BD'],
 	numColors: ['#FFE99B', '#FBCAB5'],
   },
@@ -97,7 +90,7 @@ function getContainerXml(args) {
             </lido-cell>		
 
             <!--drag elements-->
-            <lido-cell id="numberBlocks" visible="true" tab-index="32" audio="" width="landscape.90%, portrait.50%" height="landscape.50%, portrait.100%" onEntry="this.animation='rightToPlace 2.5s linear'" layout="landscape.col, portrait.col" bg-color="transparent" display="flex" flex-direction="landscape.row, portrait.col" margin="landscape.0px 0px 0px -130px, portrait.0px 0px 0px 0px" gap="landscape.0px, portrait.10px" padding="landscape.0px 0px 0px 0px, portrait.0px 60px 0px 0px">
+            <lido-cell id="numberBlocks" visible="true" tab-index="32" audio="" width="landscape.90%, portrait.50%" height="landscape.50%, portrait.100%" onEntry="this.animation='rightToPlace 2.5s linear'" layout="landscape.col, portrait.col" bg-color="transparent" display="flex" flex-direction="landscape.row, portrait.col" margin="landscape.0px 0px 0px -130px, portrait.0px 0px 0px 0px" gap="landscape.0px, portrait.10px" padding="landscape.0px 0px 0px 0px, portrait.0px 0px 0px 20px">
                     ${DragCells}				    
             </lido-cell>
 
