@@ -406,20 +406,6 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
-    if (dragElement && dropElement) {
-  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
-  if (isCorrect) {
-    const onCorrect = dropElement.getAttribute('onCorrect');
-    if (onCorrect) {
-      await executeActions(onCorrect, dropElement, dragElement);
-    }
-  } else {
-    const onInCorrect = dropElement.getAttribute('onInCorrect');
-
-    await executeActions(onInCorrect, dropElement, dragElement);
-
-  }}
-
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
   const tabindex = dropElement.getAttribute('tab-index');
 
@@ -453,6 +439,19 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   }, []);
 
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+    if (dragElement && dropElement) {
+  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  if (isCorrect) {
+    const onCorrect = dropElement.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, dropElement, dragElement);
+    }
+  } else {
+    const onInCorrect = dropElement.getAttribute('onInCorrect');
+
+    await executeActions(onInCorrect, dropElement, dragElement);
+
+  }}
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
   allElements.forEach(otherElement => {
@@ -529,6 +528,7 @@ export const handleShowCheck = () => {
   }
 };
 
+ const body = document.body;
 export const validateObjectiveStatus = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
@@ -556,6 +556,7 @@ export const validateObjectiveStatus = async () => {
     if (res) {
       const attach = container.getAttribute('appendToDropOnCompletion');
 
+      body.style.pointerEvents = 'none';
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
         if (attach === 'true') {
@@ -585,6 +586,7 @@ export const validateObjectiveStatus = async () => {
 };
 
 export const triggerNextContainer = () => {
+  body.style.pointerEvents = 'auto';
   AudioPlayer.getI().stop();
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
@@ -602,7 +604,7 @@ export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
-  if (url?.startsWith('http') || url?.startsWith('blob')) {
+  if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
   } else if (baseUrl) {
     const newUrl = !url.startsWith('/') ? url : url.substring(1);
