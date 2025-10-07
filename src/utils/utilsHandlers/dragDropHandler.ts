@@ -533,13 +533,28 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     }
     // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
-    let isCorrect;
+    let isCorrect;    
 
-    if(parseInt(dragElement.getAttribute('value'))){
-      isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
+    const dragValue = dragElement.getAttribute('value')?.trim() || "";
+    const dropValue = dropElement.getAttribute('value')?.trim() || "";
+
+    if (!dragValue || !dropValue) {
+      isCorrect = false;      
+    }     
+    else if (!isNaN(Number(dragValue)) && !isNaN(Number(dropValue))) {
+      // 🟩 Normal numeric strict match
+      isCorrect = Number(dragValue) === Number(dropValue);
     } else {
-      isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+      // 🟩 Text or general includes match
+      if (parseInt(dragElement.getAttribute('value'))) {
+        // for numeric-like text values (like "1", "23")
+        isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
+      } else {
+        // for pure text values
+        isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+      }
     }
+
 
     if (!isCorrect) {
       const localStorageKey = `${LidoContainer}_dropData`;
