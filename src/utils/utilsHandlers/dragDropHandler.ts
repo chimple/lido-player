@@ -532,14 +532,26 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
-    // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
-    let isCorrect;
+    let isCorrect;    
 
-    if(parseInt(dragElement.getAttribute('value'))){
-      isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
-    } else {
-      isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+    const dragValue = dragElement.getAttribute('value')?.trim() || "";
+    const dropValue = dropElement.getAttribute('value')?.trim() || "";
+
+    if (Number(dragValue)) {
+      const dragNum = Number(dragValue);
+      //array of numbers
+      if (dropValue.includes(',')) {
+        const dropNums = dropValue.split(',');
+        isCorrect = dropNums.some(num => Number(num) === dragNum);
+      } else {
+        //single number
+        isCorrect = Number(dropValue) === dragNum;
+      } 
+    } 
+    else {
+      //strings
+      isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
     }
 
     if (!isCorrect) {
