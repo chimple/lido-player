@@ -427,13 +427,19 @@ export class LidoHome {
       }
     }, 100);
   };
-  private areAllDropsFilled(): boolean {
-    const drops = Array.from(document.querySelectorAll('[type="drop"]'));
-    const drags = Array.from(document.querySelectorAll('[type="drag"]'))
-    
-      return drags.some(drag => drag.getAttribute('drop-to') !==null);
-    
-  }
+    private areAllDropsFilled(): boolean {
+      const drops = Array.from(document.querySelectorAll('[type="drop"]'));
+      const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to')); 
+      console.log('drops', drops);
+      console.log('drags', drags);
+      
+      
+      return drops.every(drop => {
+         const dropId = drop.id;
+        return drags.some(drag => drag.getAttribute('drop-to') === dropId);
+        });
+    }
+
 
 
   private async btnpopup() {
