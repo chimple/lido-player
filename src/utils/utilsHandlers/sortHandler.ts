@@ -193,9 +193,7 @@ export function enableReorderDrag(element: HTMLElement): void {
       } else {
         if (element.parentElement['type'] !== 'category') {
           executeActions('this.alignMatch=true', divEl, element);
-          setTimeout(() => {
-            divEl.replaceWith(element);
-          }, 0);
+          divEl.replaceWith(element);
         } else {
           const categoryElement = element.parentElement;
           const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
