@@ -1,5 +1,5 @@
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
-import { executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
+import { calculateScale, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
 let preOverlap: HTMLElement;
 
 function getElementScale(element: HTMLElement): number {
@@ -125,7 +125,7 @@ export function enableReorderDrag(element: HTMLElement): void {
     event.preventDefault();
 
     const containerRect = container.getBoundingClientRect();
-    const containerScale = getElementScale(container);
+    const containerScale = calculateScale();
 
     const newLeft = (point.clientX - containerRect.left - offsetXInElement) / containerScale;
     const newTop = (point.clientY - containerRect.top - offsetYInElement) / containerScale;
@@ -195,7 +195,7 @@ export function enableReorderDrag(element: HTMLElement): void {
           executeActions('this.alignMatch=true', divEl, element);
           setTimeout(() => {
             divEl.replaceWith(element);
-          }, 500);
+          }, 0);
         } else {
           const categoryElement = element.parentElement;
           const dragValues = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};

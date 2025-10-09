@@ -188,7 +188,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }
     isClicked = false;
     element.style.transition = 'none';
-    const containerScale = getElementScale(container);
+    const containerScale = calculateScale();
 
     let dx = 0;
     let dy = 0;
