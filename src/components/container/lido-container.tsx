@@ -206,6 +206,11 @@ export class LidoContainer {
    */
   @Prop() delayVisible: string = '';
 
+  /**
+    * When set to true, disables the speak functionality of long press for this component and its children.
+  */
+  @Prop() disableSpeak: boolean = false;
+
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
 
@@ -325,6 +330,7 @@ export class LidoContainer {
         prev-button-url={this.prevButtonUrl} 
         next-button-url={this.nextButtonUrl} 
         speaker-button-url={this.speakerButtonUrl}
+        disable-speak={this.disableSpeak}
       >
         <slot />
       </Host>
