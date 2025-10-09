@@ -428,9 +428,14 @@ export class LidoHome {
     }, 100);
   };
   private areAllDropsFilled(): boolean {
-    const drops = document.querySelectorAll('[type="drop"]');
-    return Array.from(drops).every(drop => drop.getAttribute('drop-filled') === 'filled');
+    const drops = Array.from(document.querySelectorAll('[type="drop"]'));
+    const drags = Array.from(document.querySelectorAll('[type="drag"]'))
+    return drops.every(drop => {
+      const dropId = drop.id;
+      return drags.some(drag => drag.getAttribute('drop-to') !==null);
+    });
   }
+
 
   private async btnpopup() {
     setCancelBtnPopup(false);
