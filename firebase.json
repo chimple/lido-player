@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "public": "www",
+      "site": "lido-player-dev",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    }
+  ]
+}
