@@ -27,7 +27,7 @@
 .slot-active {
   background-color: var(--active-bg-color);
   background-image: var(--bg-image);
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }

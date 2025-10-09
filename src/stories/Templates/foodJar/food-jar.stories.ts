@@ -45,7 +45,7 @@ function getContainerXml(args) {
 		</lido-cell>
 
 		<!-- drop elements -->
-		<lido-cell visible="true" id="answer" layout="row" height="landscape.30%,portrait.40%" width="landscape.80%,portrait.100%" bg-color="transparent" onEntry="this.alignItems='center';" margin="landscape.0,portrait.130px 0px 0px 0px">
+		<lido-cell visible="true" id="answer" layout="row" height="landscape.30%,portrait.40%" width="landscape.80%,portrait.100%" bg-color="transparent" onEntry="this.alignItems='center';" margin="landscape.0,portrait.0px 0px 0px 0px">
 			<lido-image id="drop1"  width="landscape.300px,portrait.200px" height="landscape.200px,portrait.200px" value="${args.firstNum}" visible="true" tab-index="1" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/FoodJar/smalljargrey_equation.png" bg-Color="transparent" onEntry="" type="drop"  onCorrect="lido-avatar.avatarAnimate='Success'"></lido-image>
 			<lido-image id="drop2"  width="landscape.300px,portrait.200px" height="landscape.200px,portrait.200px" value="${args.operator}" visible="true" tab-index="2" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/FoodJar/smalljargrey_equation.png" bg-Color="transparent" onEntry="" type="drop"  onCorrect="lido-avatar.avatarAnimate='Success'" ></lido-image>
 			<lido-image id="drop3"  width="landscape.300px,portrait.200px" height="landscape.200px,portrait.200px" value="${args.secondNum}" visible="true" tab-index="3" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/FoodJar/smalljargrey_equation.png" bg-Color="transparent" onEntry="" type="drop" onCorrect="lido-avatar.avatarAnimate='Success'" ></lido-image>
