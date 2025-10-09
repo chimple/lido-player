@@ -14,6 +14,7 @@ export const ElementClickKey = 'lidoElementClick';
 export const DropLength = 'dropLength';
 export const DropHasDrag = 'dropHasDrag';
 export const DropToAttr = 'drop-to';
+export const DropEleFilled="drop-filled";
 export const DropTimeAttr = 'drop-time';
 export const LidoContainer = 'lido-container';
 

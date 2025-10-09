@@ -16,7 +16,7 @@ import {
   ActivityScoreKey,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative } from '../../utils/utils';
+import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 
@@ -427,6 +427,10 @@ export class LidoHome {
       }
     }, 100);
   };
+  private areAllDropsFilled(): boolean {
+    const drops = document.querySelectorAll('[type="drop"]');
+    return Array.from(drops).every(drop => drop.getAttribute('drop-filled') === 'filled');
+  }
 
   private async btnpopup() {
     setCancelBtnPopup(false);
@@ -451,6 +455,17 @@ export class LidoHome {
 
         await new Promise(resolve => setTimeout(resolve, 300));
       }
+    }
+    if (this.areAllDropsFilled()) {
+      const objectiveString = container['objective']; 
+      const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) || '[]');
+      const res = matchStringPattern(objectiveString, objectiveArray);
+      console.log('Resultt', res);
+      if (res) {
+       triggerNextContainer(); 
+      }
+    } else {
+      console.log('Not yet filled ');
     }
   }
 

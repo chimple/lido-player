@@ -1,6 +1,6 @@
 import { calculateScale, countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
+import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropEleFilled, DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -437,9 +437,11 @@ export function handleResetDragElement(
   }
   let currentDrop = dragToDropMap.get(dragElement);
   if (currentDrop) {
+    
     dragToDropMap.delete(dragElement);
 
     updateDropBorder(currentDrop);
+    currentDrop.removeAttribute('drop-filled');
     if (currentDrop?.getAttribute('drop-attr')?.toLowerCase() === DropMode.Stretch) {
       const originalWidth = currentDrop.getAttribute('data-original-width');
 
@@ -634,6 +636,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   }
 
   if (dropElement) {
+       dropElement.setAttribute('drop-filled', 'filled');
     if (dropElement.getAttribute('drop-attr') === 'stretch') {
       if (!dropElement.hasAttribute('data-original-width')) {
         const computedStyle = window.getComputedStyle(dropElement);
@@ -781,9 +784,11 @@ export function updateDropBorder(element: HTMLElement): void {
 
   if (dragSelectedElements.length > 0) {
     element.classList.add('filled');
+    element.setAttribute('drop-filled', 'filled'); 
     element.classList.remove('empty');
   } else {
     element.classList.add('empty');
+    element.removeAttribute('drop-filled');
     element.classList.remove('filled');
   }
 }
