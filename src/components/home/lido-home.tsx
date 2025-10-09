@@ -430,10 +430,9 @@ export class LidoHome {
   private areAllDropsFilled(): boolean {
     const drops = Array.from(document.querySelectorAll('[type="drop"]'));
     const drags = Array.from(document.querySelectorAll('[type="drag"]'))
-    return drops.every(drop => {
-      const dropId = drop.id;
+    
       return drags.some(drag => drag.getAttribute('drop-to') !==null);
-    });
+    
   }
 
 

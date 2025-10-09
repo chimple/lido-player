@@ -176,6 +176,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     attributeFilter: ['style'], // Only observe changes to the 'style' attribute
   };
 
+  
   // Start observing the element
   observer.observe(container, observerConfig);
 
