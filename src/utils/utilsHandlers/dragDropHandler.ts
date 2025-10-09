@@ -1,6 +1,6 @@
 import { calculateScale, countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
+import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr,  DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -176,6 +176,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     attributeFilter: ['style'], // Only observe changes to the 'style' attribute
   };
 
+  
   // Start observing the element
   observer.observe(container, observerConfig);
 
@@ -437,6 +438,7 @@ export function handleResetDragElement(
   }
   let currentDrop = dragToDropMap.get(dragElement);
   if (currentDrop) {
+    
     dragToDropMap.delete(dragElement);
 
     updateDropBorder(currentDrop);
