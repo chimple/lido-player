@@ -110,7 +110,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       dispatchClickEvent(element, isCorrect);
       if (isCorrect) {
         const onCorrect = element.getAttribute('onCorrect');
-        // element.style.pointerEvents = 'none';
+        element.style.pointerEvents = 'none';
         await executeActions(onCorrect, element);
       } else {
         const onInCorrect = element.getAttribute('onInCorrect');
