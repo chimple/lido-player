@@ -18,7 +18,7 @@ import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling,updateBalanceOnDrop, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
@@ -29,7 +29,7 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
-export const initEventsForElement = async (element: HTMLElement, type: string) => {
+export const initEventsForElement = async (element: HTMLElement, type?: string) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) {
     setTimeout(() => {
@@ -197,6 +197,33 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
 
         case 'slideAnimation': {
           slideAnimation();
+          break;
+        }
+       case 'showBalanceSymbol': {
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
+          const leftVal = Number(balanceEl.leftVal ?? Number(balanceEl.dataset?.leftVal ?? 0));
+          const rightVal = Number(balanceEl.rightVal ?? Number(balanceEl.dataset?.rightVal ?? 0));
+          const symbol = leftVal > rightVal ? '>' : leftVal < rightVal ? '<' : '=';
+          balanceEl.balanceSymbol = symbol;
+          balanceEl.dataset.balanceSymbol = symbol;
+          if (balanceEl.revealSymbol) {
+            await balanceEl.revealSymbol();
+          } else {
+            balanceEl.showSymbol = true;
+          }
+          break;
+        }
+
+        case 'hideBalanceSymbol': {
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
+          if (balanceEl.hideSymbol) {
+            await balanceEl.hideSymbol();
+          } 
+          else{
+              balanceEl.showSymbol = false;
+              }
           break;
         }
 
@@ -514,7 +541,7 @@ export const handleShowCheck = () => {
 
   const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
 
-  if (!selectValues || countPatternWords(selectValues) !== countPatternWords(objectiveString)) {
+  if (!selectValues || countPatternWords(selectValues) < countPatternWords(objectiveString)) {
     executeActions("this.addClass='lido-disable-check-button'", checkButton);
     return;
   }
@@ -523,6 +550,13 @@ export const handleShowCheck = () => {
 
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
+  if (!checkButton.hasAttribute('data-balance-listener')) {
+    checkButton.addEventListener('click', async function onClick() {
+      await executeActions("this.showBalanceSymbol='true'", checkButton);
+      checkButton.removeEventListener('click', onClick);
+    });
+    checkButton.setAttribute('data-balance-listener', 'true'); 
+  }
   } else {
     validateObjectiveStatus();
   }
