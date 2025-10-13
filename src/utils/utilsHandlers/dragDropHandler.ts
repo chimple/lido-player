@@ -470,9 +470,11 @@ export function handleResetDragElement(
   }
   if (dragSelectedData) {
     let dragSelected = JSON.parse(dragSelectedData);
-    const dragPreDropElement = container.querySelector(`#${dragElement.getAttribute(DropToAttr)}`);
-    if (dragPreDropElement) {
-      delete dragSelected[dragPreDropElement.getAttribute('tab-index')];
+    const dragValue = dragElement.getAttribute('value');  
+  for (const key in dragSelected) {
+    dragSelected[key] = dragSelected[key].filter((v: string) => v !== dragValue);
+    if (dragSelected[key].length === 0) 
+      delete dragSelected[key];
     }
 
     localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
@@ -520,8 +522,9 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     return;
   }
   const dropTabIndex = dropElement.getAttribute('tab-index');
+  const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
 
-  if (dropHasDrag[dropTabIndex]?.isFull) {
+  if (isAllowOnlyOneDrop && dropHasDrag[dropTabIndex]?.isFull) {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
     return;
   }
