@@ -16,7 +16,7 @@ import {
   ActivityScoreKey,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative } from '../../utils/utils';
+import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 
@@ -429,6 +429,20 @@ export class LidoHome {
       }
     }, 100);
   };
+    private areAllDropsFilled(): boolean {
+      const drops = Array.from(document.querySelectorAll('[type="drop"]'));
+      const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to')); 
+      console.log('drops', drops);
+      console.log('drags', drags);
+      
+      
+      return drops.every(drop => {
+         const dropId = drop.id;
+        return drags.some(drag => drag.getAttribute('drop-to') === dropId);
+        });
+    }
+
+
 
   private async btnpopup() {
     setCancelBtnPopup(false);
@@ -453,6 +467,17 @@ export class LidoHome {
 
         await new Promise(resolve => setTimeout(resolve, 300));
       }
+    }
+    if (this.areAllDropsFilled()) {
+      const objectiveString = container['objective']; 
+      const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) || '[]');
+      const res = matchStringPattern(objectiveString, objectiveArray);
+      console.log('Resultt', res);
+      if (res) {
+       triggerNextContainer(); 
+      }
+    } else {
+      console.log('Not yet filled ');
     }
   }
 

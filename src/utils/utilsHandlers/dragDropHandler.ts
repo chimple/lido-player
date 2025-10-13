@@ -1,6 +1,6 @@
 import { calculateScale,equationCheck , countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
+import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr,  DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
 
@@ -176,6 +176,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     attributeFilter: ['style'], // Only observe changes to the 'style' attribute
   };
 
+  
   // Start observing the element
   observer.observe(container, observerConfig);
 
@@ -188,7 +189,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }
     isClicked = false;
     element.style.transition = 'none';
-    const containerScale = getElementScale(container);
+    const containerScale = calculateScale();
 
     let dx = 0;
     let dy = 0;
@@ -437,6 +438,7 @@ export function handleResetDragElement(
   }
   let currentDrop = dragToDropMap.get(dragElement);
   if (currentDrop) {
+    
     dragToDropMap.delete(dragElement);
 
     updateDropBorder(currentDrop);
@@ -533,14 +535,26 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
-    // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
-    let isCorrect;
+    let isCorrect;    
 
-    if(parseInt(dragElement.getAttribute('value'))){
-      isCorrect = dropElement.getAttribute('value').includes(dragElement.getAttribute('value'));
-    } else {
-      isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
+    const dragValue = dragElement.getAttribute('value')?.trim() || "";
+    const dropValue = dropElement.getAttribute('value')?.trim() || "";
+
+    if (Number(dragValue)) {
+      const dragNum = Number(dragValue);
+      //array of numbers
+      if (dropValue.includes(',')) {
+        const dropNums = dropValue.split(',');
+        isCorrect = dropNums.some(num => Number(num) === dragNum);
+      } else {
+        //single number
+        isCorrect = Number(dropValue) === dragNum;
+      } 
+    } 
+    else {
+      //strings
+      isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
     }
 
     if (!isCorrect) {
