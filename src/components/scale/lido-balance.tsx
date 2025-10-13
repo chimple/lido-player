@@ -1,5 +1,5 @@
 import { Component, h, Host, Prop, Element, State,  Method ,Watch} from '@stencil/core';
-import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
+import { initEventsForElement, convertUrlToRelative, parseProp } from '../../utils/utils';
 
 @Component({
   tag: 'lido-balance',
@@ -40,7 +40,7 @@ export class LidoBalance {
   /**
    * Maximum allowed tilt angle (in degrees) for the balance bar.
    */
-  @Prop() maxTilt: number = 8;
+  @Prop() maxTilt: number = 9.5;
 
   /**
    * Action(s) to execute when the component enters the DOM.
@@ -248,7 +248,7 @@ export class LidoBalance {
   }
 
 
- private animateBalance() {
+  private animateBalance() {
   const rotate = () => {
     let targetAngle = (this.tiltf / 5) * this.maxTilt;
 
@@ -264,23 +264,23 @@ export class LidoBalance {
       this.scaleEl.style.transform = `rotate(${this.currentAngle}deg)`;
       this.scaleEl.style.transformOrigin = '50% 80%';
     }
-  if (this.leftParentEl && this.rightParentEl) {
-  const maxOffset = 60; 
-  const offset = (this.currentAngle / this.maxTilt) * maxOffset;
-
-  this.leftParentEl.style.transform = `translateY(${-offset}px)`;
-  this.rightParentEl.style.transform = `translateY(${offset}px)`;
-  
-  }
-  if (this.leftHandleEl && this.rightHandleEl) {
+    if (this.leftParentEl && this.rightParentEl) {
       const maxOffset = 60; 
+      const offset = (this.currentAngle / this.maxTilt) * maxOffset;
+
+      this.leftParentEl.style.transform = `translateY(${-offset}px)`;
+      this.rightParentEl.style.transform = `translateY(${offset}px)`;
+  
+    }
+    if (this.leftHandleEl && this.rightHandleEl) {
+      const isPortrait = window.innerHeight > window.innerWidth;
+      const maxOffset = isPortrait ? 40 : 60; 
       const offset = (this.currentAngle / this.maxTilt) * maxOffset;
       this.leftHandleEl.style.transform = `translateY(${-offset}px)`;
       this.rightHandleEl.style.transform = `translateY(${offset}px)`;
-  }
+    }
   this.animationFrameId = requestAnimationFrame(rotate);
   };
-
   rotate();
  }
 
@@ -302,16 +302,18 @@ export class LidoBalance {
   render() {
     return (
       <Host 
-       onEntry={this.onEntry}
-       class="lido-balance" tilt={this.tilt.toString()} operation={this.operation.toString()}>
-        <div innerHTML={this.pivotSvg} id="pivotimg" class="pivot"></div>
-        <div innerHTML={this.scaleSvg} class="scale" ref={(el) => (this.scaleEl = el as HTMLElement)}></div>
-        <div innerHTML={this.handlerSvg} class="handler"  ref={(el) => (this.leftHandleEl = el as HTMLElement)}  ></div> 
-        <div innerHTML={this.handlerSvg} class="hand" ref={(el) => (this.rightHandleEl = el as HTMLElement)} ></div> 
-        <div id="balanceSymbol" class="lido-balance-symbol" aria-hidden={!this.showSymbol}>
-          {this.showSymbol ? this.balanceSymbol : ''}
+        onEntry={this.onEntry}
+        class="lido-balance"
+        tilt={this.tilt.toString()} 
+        operation={this.operation.toString()}>
+        <div id="lidobalancewrapper"  class="balance-wrapper" style={this.style}>
+          <div innerHTML={this.pivotSvg} id="pivotimg" class="pivot"></div>
+          <div innerHTML={this.scaleSvg} id="scaleimg" class="scale" ref={(el) => (this.scaleEl = el as HTMLElement)}></div>
+          <div innerHTML={this.handlerSvg} id="handlerimg" class="handler" ref={(el) => (this.leftHandleEl = el as HTMLElement)}></div> 
+          <div innerHTML={this.handlerSvg} id="handimg" class="hand" ref={(el) => (this.rightHandleEl = el as HTMLElement)}></div> 
+          <div id="balanceSymbol" class="lido-balance-symbol" aria-hidden={!this.showSymbol}>{this.showSymbol ? this.balanceSymbol : ''}</div>
         </div>
-     </Host>
+      </Host>
     );
   }
 }

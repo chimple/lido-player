@@ -48,6 +48,7 @@
 - [lido-keyboard](../keyboard)
 - [lido-balance](../scale)
 - [lido-math-matrix](../mathMatrix)
+- [lido-calculator](../calculator)
 
 ### Graph
 ```mermaid
@@ -70,7 +71,10 @@ graph TD;
   lido-home --> lido-keyboard
   lido-home --> lido-balance
   lido-home --> lido-math-matrix
+  lido-home --> lido-calculator
   lido-keyboard --> lido-text
+  lido-calculator --> lido-cell
+  lido-calculator --> lido-text
   lido-root --> lido-home
   style lido-home fill:#f9f,stroke:#333,stroke-width:4px
 ```

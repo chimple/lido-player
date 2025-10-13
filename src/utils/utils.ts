@@ -550,13 +550,15 @@ export const handleShowCheck = () => {
 
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
+    const balanceEl = document.querySelector('lido-balance') as any;
+    if (balanceEl) {
   if (!checkButton.hasAttribute('data-balance-listener')) {
     checkButton.addEventListener('click', async function onClick() {
       await executeActions("this.showBalanceSymbol='true'", checkButton);
       checkButton.removeEventListener('click', onClick);
     });
     checkButton.setAttribute('data-balance-listener', 'true'); 
-  }
+  }}
   } else {
     validateObjectiveStatus();
   }

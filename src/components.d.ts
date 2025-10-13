@@ -173,6 +173,44 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoCalculator {
+        /**
+          * Background color for the calculator container
+         */
+        "bgColor": string;
+        /**
+          * Height of the calculator component (default: '711px')
+         */
+        "height": string;
+        /**
+          * Objective or identifier for activity-based logic or validation
+         */
+        "objective": string;
+        /**
+          * Code or actions to execute when the component is first rendered
+         */
+        "onEntry": string;
+        /**
+          * Icon URL for the pen image shown on the calculator UI
+         */
+        "penIcon": string;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
+        "visible": boolean | string;
+        /**
+          * Width of the calculator component (default: '479px')
+         */
+        "width": string;
+        /**
+          * X-position of the calculator (can be px, %, etc.)
+         */
+        "x": string;
+        /**
+          * Y-position of the calculator (can be px, %, etc.)
+         */
+        "y": string;
+    }
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -1980,6 +2018,10 @@ export namespace Components {
         "z": string;
     }
 }
+export interface LidoCalculatorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLLidoCalculatorElement;
+}
 declare global {
     /**
      * @component LidoAvatar
@@ -2000,6 +2042,23 @@ declare global {
     var HTMLLidoBalanceElement: {
         prototype: HTMLLidoBalanceElement;
         new (): HTMLLidoBalanceElement;
+    };
+    interface HTMLLidoCalculatorElementEventMap {
+        "onOk": boolean;
+    }
+    interface HTMLLidoCalculatorElement extends Components.LidoCalculator, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLLidoCalculatorElementEventMap>(type: K, listener: (this: HTMLLidoCalculatorElement, ev: LidoCalculatorCustomEvent<HTMLLidoCalculatorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLLidoCalculatorElementEventMap>(type: K, listener: (this: HTMLLidoCalculatorElement, ev: LidoCalculatorCustomEvent<HTMLLidoCalculatorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLLidoCalculatorElement: {
+        prototype: HTMLLidoCalculatorElement;
+        new (): HTMLLidoCalculatorElement;
     };
     /**
      * @component LidoCell
@@ -2186,6 +2245,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "lido-avatar": HTMLLidoAvatarElement;
         "lido-balance": HTMLLidoBalanceElement;
+        "lido-calculator": HTMLLidoCalculatorElement;
         "lido-cell": HTMLLidoCellElement;
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
@@ -2370,6 +2430,48 @@ declare namespace LocalJSX {
           * Z-index for stacking order of the component. Default: "0".
          */
         "z"?: string;
+    }
+    interface LidoCalculator {
+        /**
+          * Background color for the calculator container
+         */
+        "bgColor"?: string;
+        /**
+          * Height of the calculator component (default: '711px')
+         */
+        "height"?: string;
+        /**
+          * Objective or identifier for activity-based logic or validation
+         */
+        "objective"?: string;
+        /**
+          * Code or actions to execute when the component is first rendered
+         */
+        "onEntry"?: string;
+        /**
+          * Event emitted when user confirms or completes an action (e.g., pressing OK)
+         */
+        "onOnOk"?: (event: LidoCalculatorCustomEvent<boolean>) => void;
+        /**
+          * Icon URL for the pen image shown on the calculator UI
+         */
+        "penIcon"?: string;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
+        "visible"?: boolean | string;
+        /**
+          * Width of the calculator component (default: '479px')
+         */
+        "width"?: string;
+        /**
+          * X-position of the calculator (can be px, %, etc.)
+         */
+        "x"?: string;
+        /**
+          * Y-position of the calculator (can be px, %, etc.)
+         */
+        "y"?: string;
     }
     /**
      * @component LidoCell
@@ -4180,6 +4282,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "lido-avatar": LidoAvatar;
         "lido-balance": LidoBalance;
+        "lido-calculator": LidoCalculator;
         "lido-cell": LidoCell;
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
@@ -4214,6 +4317,7 @@ declare module "@stencil/core" {
              */
             "lido-avatar": LocalJSX.LidoAvatar & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
             "lido-balance": LocalJSX.LidoBalance & JSXBase.HTMLAttributes<HTMLLidoBalanceElement>;
+            "lido-calculator": LocalJSX.LidoCalculator & JSXBase.HTMLAttributes<HTMLLidoCalculatorElement>;
             /**
              * @component LidoCell
              * A flexible UI cell component configurable via props like size, position, visibility,
