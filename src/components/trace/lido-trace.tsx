@@ -153,6 +153,9 @@ export class LidoTrace {
   @State() isDragging: boolean = false;
   @State() activePointerId: number | null = null;
 
+  // Counter for throttling free trace updates
+  @State() freeTraceUpdateCounter = 0;
+
   /** ───────────────────────────────────────────────────────────
    *  NEW: idle‑timer + finger‑hint state
    *  ─────────────────────────────────────────────────────────── */
@@ -175,8 +178,8 @@ export class LidoTrace {
       circle: null as SVGCircleElement | null,
       paths: [] as SVGGeometryElement[],
       svg: null as SVGSVGElement | null,
-      proximityThreshold: 100, // General proximity threshold
-      freeTraceProximityThreshold: 50, // Reduced proximity threshold for free trace
+      proximityThreshold: 375, // Increased general proximity threshold (was 100)
+      freeTraceProximityThreshold: 350, // Increased proximity for free trace (was 50)
       rafId: null as number | null,
       pointerMoveEvent: null as PointerEvent | null,
       activePointerId: null as number | null,
@@ -582,6 +585,16 @@ export class LidoTrace {
       y: parseFloat(state.circle.getAttribute('cy')!),
     };
 
+    // Only update if pointer moved a minimum distance (to reduce unnecessary updates)
+    const MOVE_THRESHOLD = 1; // px
+    if (state.lastPointerPos) {
+      const dx = pointerPos.x - state.lastPointerPos.x;
+      const dy = pointerPos.y - state.lastPointerPos.y;
+      if (dx * dx + dy * dy < MOVE_THRESHOLD * MOVE_THRESHOLD) {
+        return;
+      }
+    }
+
     const currentPath = state.paths[state.currentPathIndex];
     if (!currentPath) {
       console.error('No valid path found at the current index');
@@ -614,58 +627,85 @@ export class LidoTrace {
 
     // For free trace mode and blind free trace mode, allow free drawing only if within the reduced proximity threshold
     if (state.mode === TraceMode.FreeTrace || state.mode === TraceMode.BlindFreeTrace) {
+      // Throttle: Only update every 2nd event (for reducing excessive dom updates)
+      this.freeTraceUpdateCounter = (this.freeTraceUpdateCounter || 0) + 1;
+      if (this.freeTraceUpdateCounter % 2 !== 0) {
+        return;
+      }
+
       // Initialize the currentFreePath array if it's not created
       if (!state.currentFreePath) {
         state.currentFreePath = [];
       }
 
-      // Create a new path element if it's the first trace for the current path index
+      // Create a new polyline element if it's the first trace for the current path index
       if (!state.currentFreePath[state.currentPathIndex]) {
-        const newPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        // newPath.setAttribute('stroke', 'green');
+        const newPolyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
         const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');
-        newPath.setAttribute('stroke-width', strokeWidth);
-        newPath.setAttribute('fill', 'none');
-        newPath.setAttribute('stroke-linecap', 'round');
-        newPath.setAttribute('stroke', 'lightgreen');
-        // Start the new path at the current pointer position
-        newPath.setAttribute('d', `M${pointerPos.x},${pointerPos.y}`);
-        state.svg?.appendChild(newPath);
-        state.currentFreePath[state.currentPathIndex] = newPath;
-
+        newPolyline.setAttribute('stroke-width', strokeWidth);
+        newPolyline.setAttribute('fill', 'none');
+        newPolyline.setAttribute('stroke-linecap', 'round');
+        newPolyline.setAttribute('stroke', 'lightgreen');
+        newPolyline.setAttribute('points', `${pointerPos.x},${pointerPos.y}`);
+        state.svg?.appendChild(newPolyline);
+        state.currentFreePath[state.currentPathIndex] = newPolyline;
+        // Store points array for this polyline
+        state.currentFreePolylinePoints = state.currentFreePolylinePoints || [];
+        state.currentFreePolylinePoints[state.currentPathIndex] = [
+          { x: pointerPos.x, y: pointerPos.y }
+        ];
         // Reset lastPointerPos for the new path
         state.lastPointerPos = pointerPos;
+        // Add a points counter to limit path growth
+        state.freeTracePointsCount = 1;
+
       }
 
-      // Get the previous position to draw a smooth curve
-      const previousPos = state.lastPointerPos || pointerPos;
+      // Limit the number of points in the free trace path for performance
+      const MAX_FREE_TRACE_POINTS = 10;
+      state.freeTracePointsCount = (state.freeTracePointsCount || 1) + 1;
+      if (state.freeTracePointsCount > MAX_FREE_TRACE_POINTS) {
+        // If limit reached, skip adding more points
+        return;
+      }
 
-      // Create a quadratic curve from the previous point to the current point
-      const newPathData = state.currentFreePath[state.currentPathIndex].getAttribute('d');
-      const midPointX = (previousPos.x + pointerPos.x) / 2;
-      const midPointY = (previousPos.y + pointerPos.y) / 2;
-      const updatedPathData = `${newPathData} Q ${previousPos.x},${previousPos.y} ${midPointX},${midPointY}`;
-
-      // Update the path's 'd' attribute with the new curve
-      state.currentFreePath[state.currentPathIndex].setAttribute('d', updatedPathData);
+      // Add the new point to the polyline's points array
+      state.currentFreePolylinePoints = state.currentFreePolylinePoints || [];
+      let pointsArr = state.currentFreePolylinePoints[state.currentPathIndex] || [];
+      pointsArr.push({ x: pointerPos.x, y: pointerPos.y });
+      state.currentFreePolylinePoints[state.currentPathIndex] = pointsArr;
+      // Update the polyline's points attribute
+      const pointsStr = pointsArr.map(pt => `${pt.x},${pt.y}`).join(' ');
+      (state.currentFreePath[state.currentPathIndex] as SVGPolylineElement).setAttribute('points', pointsStr);
 
       // Move the draggable circle with the freehand trace
       state.circle.setAttribute('cx', pointerPos.x.toString());
       state.circle.setAttribute('cy', pointerPos.y.toString());
 
-      // Make sure the red dot (circle) is always on top
-      state.svg?.appendChild(state.circle); // This moves the circle to the last child, making it the topmost
+      // Only re-append if not already children list
+      const childNodes = state.svg?.childNodes;
+      let circleFound = false;
+      for (let i = 0; i < (childNodes?.length || 0); i++) {
+        const child = childNodes?.item(i) as SVGElement;
+        if (child && child.tagName === 'circle') {
+          circleFound = true;
+          break; // No need to continue once found
+        }
+      }
+      // If not found, append the circle
+      if (!circleFound && state.circle) {
+        state.svg?.appendChild(state.circle);
+      }
 
       // Update the last pointer position
       state.lastPointerPos = pointerPos;
 
-      const currentPathLength = currentPath.getTotalLength();
-      const distanceToEnd = currentPathLength - closestPoint.length;
-
-      // If close to the end of the path, move to the next path
-      if (distanceToEnd < 5) {
+      // For polyline, estimate the end by number of points (not path length)
+      if (pointsArr.length >= MAX_FREE_TRACE_POINTS) {
         this.moveToNextPath(state);
         state.currentFreePath[state.currentPathIndex] = null; // Reset free path for next path
+        state.currentFreePolylinePoints[state.currentPathIndex] = [];
+        state.freeTracePointsCount = 0;
       }
 
       // this.resetIdleTimer(state); // ← keep timer alive
@@ -675,21 +715,57 @@ export class LidoTrace {
     // In normal modes, allow movement and drawing only within the general proximity threshold
     if (state.isDragging && closestPoint.length >= state.lastLength) {
       state.lastLength = closestPoint.length;
-      state.circle.setAttribute('cx', closestPoint.x.toString());
-      state.circle.setAttribute('cy', closestPoint.y.toString());
+      // Only update the circle if it moved enough
+      if (Math.abs(closestPoint.x - circlePos.x) > MOVE_THRESHOLD || Math.abs(closestPoint.y - circlePos.y) > MOVE_THRESHOLD) {
+        state.circle.setAttribute('cx', closestPoint.x.toString());
+        state.circle.setAttribute('cy', closestPoint.y.toString());
+      }
 
-      // Make sure the red dot (circle) is always on top
-      state.svg?.appendChild(state.circle); // This moves the circle to the last child, making it the topmost
+      // Only re-append if not already children list
+      const childNodes = state.svg?.childNodes;
+      let circleFound = false;
+      for (let i = 0; i < (childNodes?.length || 0); i++) {
+        const child = childNodes?.item(i) as SVGElement;
+        if (child && child.tagName === 'circle') {
+          circleFound = true;
+          break; // No need to continue once found
+        }
+      }
+      // If not found, append the circle
+      if (!circleFound && state.circle) {
+        state.svg?.appendChild(state.circle);
+      }
 
       currentPath.greenPath?.setAttribute('stroke-dashoffset', (state.totalPathLength - state.lastLength).toString());
-    }
 
-    // Check if the current path is completed
-    if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex < state.paths.length - 1) {
-      this.moveToNextPath(state);
-    } else if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex === state.paths.length - 1) {
-      //   this.loadAnotherSVG(state, true);
-      this.moveToNextContainer();
+      // Completion logic for closed paths: only allow completion if almost all points are traced
+      const COMPLETION_THRESHOLD = 0.90; // 90% of the path must be traced
+      let percentComplete = state.lastLength / state.totalPathLength;
+      let startPoint = currentPath.getPointAtLength(0);
+      let endPoint = currentPath.getPointAtLength(currentPath.getTotalLength());
+      let pathIsClosed = this.getDistanceSquared(startPoint, endPoint) < 200; // threshold for overlap
+      console.log('lastLength, totalPathLength', state.lastLength, state.totalPathLength);
+      console.log('percentComplete', percentComplete);
+      console.log('startPoint, endPoint', startPoint, endPoint);
+      console.log('distance squared between start & end:', this.getDistanceSquared(startPoint, endPoint));
+      console.log('pathIsClosed:', pathIsClosed);
+
+      if (pathIsClosed && state.totalPathLength > 50) {
+        if (percentComplete >= COMPLETION_THRESHOLD) {
+          if (state.currentPathIndex < state.paths.length - 1) {
+            this.moveToNextPath(state);
+          } else if (state.currentPathIndex === state.paths.length - 1) {
+            this.moveToNextContainer();
+          }
+        }
+      } else {
+        // For open paths, allow completion if near the end
+        if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex < state.paths.length - 1) {
+          this.moveToNextPath(state);
+        } else if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex === state.paths.length - 1) {
+          this.moveToNextContainer();
+        }
+      }
     }
 
     // this.resetIdleTimer(state); // ← keep timer alive
@@ -697,12 +773,13 @@ export class LidoTrace {
 
   // Move to the next container after completing the current SVG
   async moveToNextContainer() {
+    this.isDragging = false;
     if (this.moving) return; // Prevent multiple calls
     this.moving = true; // Set moving to true to prevent re-entrance
 
     if (this.highlightTextId) {
       this.highlightLetter(this.currentSvgIndex);
-    }
+    } 
     if (this.animationTrace) {
       await this.playTraceAnimation();
     }
@@ -717,9 +794,13 @@ export class LidoTrace {
       return;
     }
 
+    console.log('onCorrect:', this.onCorrect);
+    console.log('el :', this.el);
+
     if (this.el && this.onCorrect) {
       await executeActions(this.onCorrect, this.el);
     }
+    console.log('All SVGs completed, hiding component.');
     triggerNextContainer();
   }
 
@@ -739,14 +820,14 @@ export class LidoTrace {
     return dx * dx + dy * dy;
   }
 
-  // Find the closest point on the given path to the specified point using two-pass sampling
+  // Find the closest point on the given path to the specified point using two-pass sampling (optimized)
   getClosestPointOnPath(pathNode: SVGGeometryElement, point: { x: number; y: number }) {
     const pathLength = pathNode.getTotalLength();
     let closestPoint = { x: 0, y: 0, length: 0 };
     let minDistanceSquared = Infinity;
 
-    // First pass: coarse sampling
-    const coarseStep = 20; // Increased step for better performance
+    // Optimized: Increase coarse steps for better performance
+    const coarseStep = 40; // was 20
     let coarseClosestPoint = { x: 0, y: 0, length: 0 };
     let coarseMinDistanceSquared = Infinity;
 
@@ -765,7 +846,7 @@ export class LidoTrace {
     }
 
     // Second pass: fine sampling around coarseClosestPoint
-    const fineStep = 2; // Increased step to reduce computations
+    const fineStep = 6; // was 2
     const searchStart = Math.max(coarseClosestPoint.length - coarseStep, 0);
     const searchEnd = Math.min(coarseClosestPoint.length + coarseStep, pathLength);
 
