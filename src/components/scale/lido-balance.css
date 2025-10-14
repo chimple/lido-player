@@ -1,0 +1,114 @@
+#lidobalancewrapper {
+  position: relative;
+  height: 500px;
+  width: 876px;
+  top: 20%;
+  left: -91px;
+  z-index: 0;
+}
+
+.lido-balance-symbol {
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5vw;     
+  font-weight: bold;
+  color: black;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@media (orientation: portrait) {
+  #pivotimg {
+  position: absolute;
+  height:auto;
+  width: 23%;
+  bottom: 18%;     
+  left: 38%;
+  z-index: 100;
+    
+  }
+}
+
+
+@media (orientation: landscape) {
+  #pivotimg {
+    position: absolute;
+    height:auto;
+    width: 23%;
+    bottom: 8%;     
+  left: 38%;
+  z-index: 100;
+  }
+}
+
+.lido-balance .pivot svg {
+  width: 100%;
+  height: auto;
+}
+
+
+#scaleimg {
+  position: absolute;
+  width: 73%;
+  height: auto;
+  top: 61%;
+  left: 14%;
+  z-index: 90;
+}
+.lido-balance .scale svg {
+  width: 100%;
+  height: auto;
+}
+
+@media (orientation: landscape) {
+#handlerimg {
+  position: absolute;
+  width: 35%;
+  height: auto;
+  top:49%;
+  left: 2%;
+}}
+@media (orientation:portrait ) {
+#handlerimg {
+  position: absolute;
+  width: 35%;
+  height: auto;
+  top:53%;
+  left: 2%;
+}}
+.lido-balance .handler svg {
+  width: 100%;
+  height: auto;
+  fill: brown;
+}
+
+@media (orientation: landscape) {
+#handimg {
+  position: absolute;
+  width: 35%;
+  height: auto;
+  top: 49%;
+  right: 2%;
+}}
+@media (orientation:portrait) {
+#handimg {
+  position: absolute;
+  width: 35%;
+  height: auto;
+  top: 53%;
+  right: 2%;
+}}
+.lido-balance .hand svg {
+  width: 100%;
+  height: auto;
+  fill: brown;
+}
+
+.pivot svg path:nth-of-type(1) {
+  fill: brown;
+}
+.pivot svg path[d^="M78.9414"] {
+  fill: white;
+}
