@@ -1,4 +1,4 @@
-import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus } from '../utils';
+import { countPatternWords,memoryStorage, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
 import { dispatchClickEvent } from '../customEvents';
@@ -102,10 +102,10 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     // element.style.boxShadow = '';
 
     const isActivated = element.classList.contains('lido-element-selected');
-    let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
+    let selectedValue = memoryStorage[SelectedValuesKey] || [];
     
     if (objective.length === 1) {
-      localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
+      memoryStorage[SelectedValuesKey] = [element['value']];
       const isCorrect = objective.includes(element['value']);
       dispatchClickEvent(element, isCorrect);
       if (isCorrect) {
@@ -134,9 +134,9 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       executeActions(element.getAttribute('onEntry'), element);
 
       selectedValue = selectedValue.filter(item => item != element['value']);
-      localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+      memoryStorage[SelectedValuesKey] = selectedValue;
 
-      let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      let multiOptionScore =memoryStorage[DragSelectedMapKey] || {};
       const valueToRemove = element['value'];
       const keyToRemove = Object.keys(multiOptionScore).find(key => multiOptionScore[key].includes(valueToRemove));
 
@@ -145,10 +145,10 @@ export function addClickListenerForClickType(element: HTMLElement): void {
         if (multiOptionScore[keyToRemove].length === 0) {
           delete multiOptionScore[keyToRemove];
         }
-        localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+       memoryStorage[DragSelectedMapKey] = multiOptionScore;
         const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
         const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
-        localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+        memoryStorage[SelectedValuesKey] = sortedValues;
       }
 
       if (showCheck && selectedValue.length === 0) {
@@ -159,16 +159,16 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       element.classList.add('lido-element-selected');
       const valueToFind = element['value'];
       const key = Object.keys(objective).find(key => objective[key] === valueToFind);
-      let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      let multiOptionScore = memoryStorage[DragSelectedMapKey] || {};
       if (!key) {
         multiOptionScore[objective.length + selectedValue.length] = [valueToFind];
       } else {
         multiOptionScore[key] = [valueToFind];
       }
-      localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+      memoryStorage[DragSelectedMapKey] = multiOptionScore;
       const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
       const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
-      localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+      memoryStorage[SelectedValuesKey] =  sortedValues;
 
       const isCorrect = objective.includes(element['value']);
       dispatchClickEvent(element, isCorrect);

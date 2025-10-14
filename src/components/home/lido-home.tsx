@@ -16,7 +16,7 @@ import {
   ActivityScoreKey,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
+import { clearmemoryStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 
@@ -135,7 +135,7 @@ export class LidoHome {
     // console.log("👉 NextContainerKey CALLED with index:", index);
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
-    clearLocalStorage();
+    clearmemoryStorage();
 
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
@@ -165,7 +165,7 @@ export class LidoHome {
     if (this.currentContainerIndex <= 0) return;
 
     // Clear selected values from localStorage on container transition
-    clearLocalStorage();
+    clearmemoryStorage();
 
     // Move to the previous container
     this.currentContainerIndex--;
@@ -192,7 +192,7 @@ export class LidoHome {
 
     if (this.currentContainerIndex === 0) {
       localStorage.removeItem(ActivityScoreKey);
-      clearLocalStorage();
+      clearmemoryStorage();
     }
 
     // Listen for 'NextContainerKey' event to transition between containers
@@ -215,7 +215,7 @@ export class LidoHome {
     window.addEventListener('beforeunload', () => {
       AudioPlayer.getI().stop();
       localStorage.removeItem(ActivityScoreKey);
-      clearLocalStorage();
+      clearmemoryStorage();
     });
   }
 
@@ -487,7 +487,7 @@ export class LidoHome {
         dispatchGameExitEvent();
         AudioPlayer.getI().stop();
         localStorage.removeItem(ActivityScoreKey);
-        clearLocalStorage();
+        clearmemoryStorage();
         alertElement.remove();
         this.currentContainerIndex = 0;
       } else {

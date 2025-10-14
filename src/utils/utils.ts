@@ -402,11 +402,18 @@ export const calculateScore = () => {
   gameScore.wrongMoves = 0;
 };
 
+ export const memoryStorage: Record<string, any> = {
+  [DragSelectedMapKey]: {},
+  [DragMapKey]: {},
+  [SelectedValuesKey]: [],
+  [DropHasDrag]: {},
+  [DropLength]: {}
+};
 export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
-  let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
+  let dragScore =  memoryStorage[DragSelectedMapKey];
   const tabindex = dropElement.getAttribute('tab-index');
 
   if (!dragScore[tabindex]) {
@@ -415,7 +422,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
   dragScore[tabindex].push(dragElement['value']);
 
-  localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
+ memoryStorage[DragSelectedMapKey] = dragScore;
 
   //localStorage
   let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');
@@ -438,7 +445,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     return acc;
   }, []);
 
-  localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+  memoryStorage[SelectedValuesKey] = sortedValues;
     if (dragElement && dropElement) {
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   if (isCorrect) {
@@ -455,7 +462,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
   allElements.forEach(otherElement => {
-    const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+    const dropObject =  memoryStorage[DragSelectedMapKey];
     const storedTabIndexes = Object.keys(dropObject).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
@@ -510,7 +517,7 @@ const storeActivityScore = (score: number) => {
 export const handleShowCheck = () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const objectiveString = container['objective'];
-  const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
+  const selectValues = memoryStorage[SelectedValuesKey]?.join(',') ?? '';
 
   const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
 
@@ -544,7 +551,7 @@ export const validateObjectiveStatus = async () => {
     triggerNextContainer();
     return;
   } else {
-    const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
+    const objectiveArray =  memoryStorage[SelectedValuesKey] ?? [];
     let res;
     const additionalCheck = container.getAttribute('equationCheck');
     if (!!additionalCheck) {
@@ -906,12 +913,12 @@ export const attachSpeakIcon = async (element: HTMLElement) => {
   element.appendChild(speakIconElement);
 };
 
-export const clearLocalStorage = () => {
-  localStorage.removeItem(DragSelectedMapKey);
-  localStorage.removeItem(DragMapKey);
-  localStorage.removeItem(SelectedValuesKey);
-  localStorage.removeItem(DropHasDrag);
-  localStorage.removeItem(DropLength);
+export const clearmemoryStorage = () => {
+   memoryStorage[DragSelectedMapKey] = {};
+  memoryStorage[DragMapKey] = {};
+  memoryStorage[SelectedValuesKey] = [];
+  memoryStorage[DropHasDrag] = {};
+  memoryStorage[DropLength] = {};
 };
 
 /**
