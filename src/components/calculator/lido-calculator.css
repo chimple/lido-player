@@ -7,47 +7,25 @@
   padding: 2%;
   box-sizing: border-box;         
 }
-.btn-special{
+.lido-calculator-btn-special{
   background-color:#014D4D !important;
   --btn-shadow-color: #0a2f2f !important;
 }
 
-.btn-default {
+.lido-calculator-btn-default {
   background-color: #029A9A !important;
   color: #000;
   --btn-shadow-color: #0f4242 !important ; 
 }
 
-.display-wrapper {
-  position: relative;
-  flex: 0 0 15%; 
-  margin-bottom: 2%;
-}
-
-.top-section-column {
-  display: flex;
-  flex-direction: column;  
-  align-items: center;     
-  gap: 10px;               
-  flex: 0 0 auto;
-  margin-bottom: 10px;
-}
-
-#lido-penIcon {
+#lido-calculator-penIcon {
   --btn-bg-color: #FB7038 !important;   
   --btn-shadow-px: 0 8px 0 !important;  
   --btn-shadow-color: #D74B12 !important; 
   border-radius: 5px !important;
 }
 
-.top-right-icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-  z-index: 10; 
-}
-.displayParent{
+.lido-calculator-displayParent{
   width: 89%;
   height: 107px;
   background-color: rgb(68, 186, 186);;
@@ -58,7 +36,7 @@
   align-items: end;
 }
 
-.display {
+.lido-calculator-display {
   width: 97%;
   height: 94px;
   background: #029A9A;
@@ -75,7 +53,7 @@
   margin: 0 0px -6px auto;
 }
 
-.buttons {
+.lido-calculator-buttons {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -87,7 +65,7 @@
   position: relative;
   top: -1%;   
 }
-.buttons lido-text {
+.lido-calculator-buttons lido-text {
   display: flex !important;                
   justify-content: center;     
   align-items: center;          
@@ -103,6 +81,6 @@
   box-sizing: border-box;
   transition: transform 0.1s;
 }
-.buttons lido-text:active {
+.lido-calculator-buttons lido-text:active {
   transform: scale(0.95);
 }

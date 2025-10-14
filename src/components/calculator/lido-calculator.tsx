@@ -124,19 +124,19 @@ export class LidoCalculator {
       <Host onEntry={this.onEntry}>
         <div id="lidoCalculator" style={{ width: this.width, height: this.height, backgroundColor: this.bgColor,left:this.x, top:this.y }}>
           <lido-cell visible="true" height="94px" width="60px">
-            <lido-text visible="true" id="lido-penIcon" type="click" height="80px" x="176%" width="96px" onEntry="this.position='relative';" class="top-icon">
+            <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="176%" width="96px" onEntry="this.position='relative';" class="top-icon">
               <img src={this.penIcon} alt="pen" style={{ width: '100%', height: '100%' }} />
             </lido-text>
           </lido-cell>
 
-          <div class="displayParent">
-            <div class="display">{this.displayValue}</div>
+          <div class="lido-calculator-displayParent">
+            <div class="lido-calculator-display">{this.displayValue}</div>
           </div>
 
-          <div class="buttons">{numbers.map(num => (
+          <div class="lido-calculator-buttons">{numbers.map(num => (
            <lido-text string={num} visible="true" type="click" class={{
-        'btn-special': num === '←' || num === 'OK',
-        'btn-default': num !== '←' && num !== 'OK'
+        'lido-calculator-btn-special': num === '←' || num === 'OK',
+        'lido-calculator-btn-default': num !== '←' && num !== 'OK'
       }} onClick={() => this.handleClick(num)}></lido-text>
             ))}
           </div>
