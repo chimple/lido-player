@@ -283,8 +283,6 @@ export class LidoBalance {
   };
   rotate();
  }
-
-
   updateStyles() {
     const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
     this.style = {
