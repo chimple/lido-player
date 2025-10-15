@@ -1,6 +1,6 @@
 import { LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
-import { calculateScale, executeActions,memoryStorage, handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
+import { calculateScale, executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
 import { removeHighlight } from './highlightHandler';
 
@@ -296,14 +296,15 @@ export function slidingWithScaling(element: HTMLElement): void {
 }
 
 const slideCompleted = (slideElement: HTMLElement) => {
-  const slideArr = memoryStorage[SelectedValuesKey] || [];
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const slideArr = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
   const allSlideElements = document.querySelectorAll("[type='slide']");
 
   let index = 0;
   allSlideElements.forEach(item => {
     slideArr[index++] = item['value'];
   });
- memoryStorage[SelectedValuesKey] = slideArr;
+ container.setAttribute(SelectedValuesKey, JSON.stringify(slideArr));
 
   const objectiveString = document.getElementById(LidoContainer)['objective'];
   const objectiveArray = objectiveString.split(',');

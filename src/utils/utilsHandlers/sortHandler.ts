@@ -1,6 +1,6 @@
-import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
+import { DragSelectedMapKey, LidoContainer, SelectedValuesKey,DropToAttr } from '../constants';
 
-import { calculateScale, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore,memoryStorage } from '../utils';
+import {calculateScale,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
 
 let preOverlap: HTMLElement;
 
@@ -200,12 +200,12 @@ export function enableReorderDrag(element: HTMLElement): void {
           }, 500);
         } else {
           const categoryElement = element.parentElement;
-          const dragValues = memoryStorage[DragSelectedMapKey] || {};
+          const dragValues = buildDragSelectedMapFromDOM();
           const tabKey = categoryElement.getAttribute('tab-index');
           const targetValue = element['value'];
           if (dragValues[tabKey]) {
             dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
-            memoryStorage[DragSelectedMapKey] = dragValues;
+            // localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
           }
           optionArea.scrollTo({
             top: optionArea.scrollHeight,
@@ -214,6 +214,7 @@ export function enableReorderDrag(element: HTMLElement): void {
 
           optionArea.appendChild(element);
           element.classList.remove('dropped');
+           element.removeAttribute('drop-to');
           if (dummy) {
             dummy.remove();
           }
@@ -254,12 +255,12 @@ export function enableReorderDrag(element: HTMLElement): void {
           category = categoryArr[0] as HTMLElement;
         }
       if (element.parentElement.getAttribute('type') === 'category') {
-        const dragValues = memoryStorage[DragSelectedMapKey] || {};
+        const dragValues = buildDragSelectedMapFromDOM();
         const tabKey = category.getAttribute('tab-index');
         const targetValue = element['value'];
         if (dragValues[tabKey]) {
           dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
-          memoryStorage[DragSelectedMapKey] = dragValues;
+          // localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
         }
 
         const dummy = createDummyElement(element);
@@ -274,6 +275,7 @@ export function enableReorderDrag(element: HTMLElement): void {
           resetElementStyles(element);
           dummy.replaceWith(element);
            element.classList.remove('dropped');
+            element.removeAttribute('drop-to');
         }, 100);
         return;
       } else {
@@ -422,14 +424,15 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
 
 // Drop Completed
 const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
+  console.log("worddrop");  
   const container = document.getElementById(LidoContainer);
   const objective = container.getAttribute('objective');
   const objectiveArray = objective.split(',');
 
-  let wordArray = memoryStorage[SelectedValuesKey] || [];
+  let wordArray = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
   const wordBlock = block.children;
   wordArray = Array.from(wordBlock).map(child => child.getAttribute('value'));
-  memoryStorage[SelectedValuesKey] = wordArray;
+  container.setAttribute(SelectedValuesKey, JSON.stringify(wordArray));
 
   const elementIndex = wordArray.indexOf(element['value']);
   if (elementIndex >= 0) {
@@ -447,7 +450,8 @@ const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
 
 async function onDropToCategory(dragElement: HTMLElement, categoryElement: HTMLElement) {
   dragElement.classList.add('dropped');
-  let dragSelected = memoryStorage[DragSelectedMapKey] || {};
+  
+  let dragSelected = buildDragSelectedMapFromDOM();
   let elementArr = dragSelected[categoryElement.getAttribute('tab-index')];
 
   if (Array.isArray(elementArr)) {
@@ -460,7 +464,9 @@ async function onDropToCategory(dragElement: HTMLElement, categoryElement: HTMLE
       dragSelected[key].splice(index, 1);
     }
   }
-
-  memoryStorage[DragSelectedMapKey] = dragSelected;
+    if (categoryElement?.id) {
+      dragElement.setAttribute(DropToAttr, categoryElement.id);
+    }
+  // localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragSelected));
   await onActivityComplete(dragElement, categoryElement);
 }
