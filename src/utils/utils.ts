@@ -479,7 +479,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
  const sortedValues = getSortedValuesArrayFromMap(dragScore);
  container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
- container.setAttribute(DragSelectedMapKey, JSON.stringify(dragScore));
+ 
 
   //localStorage
   let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');

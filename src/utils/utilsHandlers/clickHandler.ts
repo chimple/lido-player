@@ -142,7 +142,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
         if (multiOptionScore[keyToRemove].length === 0) {
           delete multiOptionScore[keyToRemove];
         }
-        container.setAttribute(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+        
         const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
         const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
         container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
@@ -162,7 +162,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       } else {
         multiOptionScore[key] = [valueToFind];
       }
-      container.setAttribute(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+      
       const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
       const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
       container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
