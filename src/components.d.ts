@@ -478,6 +478,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.
          */
         "exitButtonUrl": string;
@@ -2897,6 +2901,10 @@ declare namespace LocalJSX {
           * @default ''
          */
         "delayVisible"?: string;
+        /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
         /**
           * Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.
          */
