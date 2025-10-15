@@ -375,6 +375,7 @@ export class LidoHome {
       'lido-float': <lido-float {...props}>{children}</lido-float>,
       'lido-keyboard': <lido-keyboard {...props}>{children}</lido-keyboard>,
       'lido-math-matrix': <lido-math-matrix {...props}>{children}</lido-math-matrix>,
+      'lido-calculator': <lido-calculator {...props}>{children}</lido-calculator>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning
