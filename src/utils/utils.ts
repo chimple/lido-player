@@ -29,7 +29,7 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
-export const initEventsForElement = async (element: HTMLElement, type: string) => {
+export const initEventsForElement = async (element: HTMLElement, type?: string) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) {
     setTimeout(() => {

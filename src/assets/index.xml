@@ -1,4 +1,214 @@
 <main>
+
+<lido-container visible="true" id="lido-container"   bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="11"  is-continue-on-correct="true" show-Check="true" onCorrect="text4.speak='true';this.sleep='4000';" drop-action="move">
+	<lido-calculator visible="true" height="711px" width="479px" y="10%" onEntry="this.position='relative';" ></lido-calculator>
+ 	<lido-cell layout="row" visible="true" height="100px" width="500px" x="landscape.-32%,portrait.0" y="landscape.-41%,portrait.10%" onEntry="this.position='relative';">
+    	<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text id="text2" visible="true"  value="+" height="80%" type="text" width="70%" string="+">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text3" value="6" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="6" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text4" value="hello how are you" tab-index="15" visible="false" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="hello how are you" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+	
+    </lido-cell>	
+</lido-container>
+	<lido-container visible="true" drop-action="move" id="lido-container"   show-Check="true"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   objective=""  equationCheck="$#lefthandle,+,$#balanceSymbol,$#righthandle" is-continue-on-correct="true">
+		<!-- <lido-cell visible="true" width="80%" heigth="500px" bg-color="red"> -->
+		<lido-balance visible="true" height="500px" width="landscape.1300px,portrait.876px" tilt="0" operation="count" x="landscape.0px,portrait.-8px" y="landscape.20%,portrait.20%" onEntry="this.position='relative';">
+		</lido-balance>
+		<!-- </lido-cell> -->
+		<!-- Check Button -->
+			<lido-pos id="pos1" disable-edit="true" value="pos1" height="70px" width="150px" x="landscape.1324px,portrait.639px" y="landscape.105px,portrait.293px" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+				<lido-text id="lido-checkButton" visible="true" bg-color="#5b5bd3" width="150px" height="70px" string="Check" type="click" font-family="'Baloo 2', serif" font-size="30px" font-color="white" onEntry="this.fontWeight='800'; this.addClass='lido-disable-check-button';">
+				</lido-text>
+			</lido-pos>
+		<lido-cell layout="row" visible="true" id="leftparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-280px,portrait.-254px" x="landscape.-415px,portrait.-293px" onEntry="this.position='relative';this.gap='15px';">
+			<lido-text id="lefthandle" type="drop"  tab-index="1" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text>
+			<!-- <lido-text id="lefthandle1" type="drop"  tab-index="3" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text> -->
+			
+			
+		</lido-cell>
+		<lido-cell layout="row" visible="true" id="rightparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-388px,portrait.-361px" x="landscape.380px,portrait.254px" onEntry="this.position='relative';this.gap='15px';">	
+		    <lido-text id="righthandle"  type="drop" tab-index="2" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text>
+			 <!-- <lido-text id="righthandle1"  type="drop" tab-index="4" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text> -->
+		
+		   
+		</lido-cell> 
+		 <lido-cell layout="row" bg-Color="transparent" id="dragParent"  visible="true"  width="landscape.50%,portrait.60%" height="200px" onEntry="this.position='relative';">
+	    	<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option2" value="6" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="6" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option3" value="4" tab-index="16" visible="true" bg-color="#fcf3b1" x="58%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="4" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option4" value="1" tab-index="17" visible="true" bg-color="#fcf3b1" x="78%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="1" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+		</lido-cell>	
+    </lido-container> 
+
+<lido-container visible="true" id="lido-container"   bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="11"  is-continue-on-correct="true" show-Check="true" onCorrect="text4.speak='true';this.sleep='4000';" drop-action="move">
+	<lido-calculator visible="true" height="711px" width="479px" y="10%" onEntry="this.position='relative';" ></lido-calculator>
+ 	<lido-cell layout="row" visible="true" height="100px" width="500px" x="landscape.-32%,portrait.0" y="landscape.-41%,portrait.10%" onEntry="this.position='relative';">
+    	<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text id="text2" visible="true"  value="+" height="80%" type="text" width="70%" string="+">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text3" value="6" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="6" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text4" value="hello how are you" tab-index="15" visible="false" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="hello how are you" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+	
+    </lido-cell>	
+</lido-container>
+	<lido-container visible="true" drop-action="move" id="lido-container"   show-Check="true"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   objective=""  equationCheck="$#lefthandle,+,$#balanceSymbol,$#righthandle" is-continue-on-correct="true">
+		<!-- <lido-cell visible="true" width="80%" heigth="500px" bg-color="red"> -->
+		<lido-balance visible="true" height="500px" width="landscape.1300px,portrait.876px" tilt="0" operation="count" x="landscape.0px,portrait.-8px" y="landscape.20%,portrait.20%" onEntry="this.position='relative';">
+		</lido-balance>
+		<!-- </lido-cell> -->
+		<!-- Check Button -->
+			<lido-pos id="pos1" disable-edit="true" value="pos1" height="70px" width="150px" x="landscape.1324px,portrait.639px" y="landscape.105px,portrait.293px" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+				<lido-text id="lido-checkButton" visible="true" bg-color="#5b5bd3" width="150px" height="70px" string="Check" type="click" font-family="'Baloo 2', serif" font-size="30px" font-color="white" onEntry="this.fontWeight='800'; this.addClass='lido-disable-check-button';">
+				</lido-text>
+			</lido-pos>
+		<lido-cell layout="row" visible="true" id="leftparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-280px,portrait.-254px" x="landscape.-415px,portrait.-293px" onEntry="this.position='relative';this.gap='15px';">
+			<lido-text id="lefthandle" type="drop"  tab-index="1" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text>
+			<!-- <lido-text id="lefthandle1" type="drop"  tab-index="3" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text> -->
+			
+			
+		</lido-cell>
+		<lido-cell layout="row" visible="true" id="rightparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-388px,portrait.-361px" x="landscape.380px,portrait.254px" onEntry="this.position='relative';this.gap='15px';">	
+		    <lido-text id="righthandle"  type="drop" tab-index="2" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text>
+			 <!-- <lido-text id="righthandle1"  type="drop" tab-index="4" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text> -->
+		
+		   
+		</lido-cell> 
+		 <lido-cell layout="row" bg-Color="transparent" id="dragParent"  visible="true"  width="landscape.50%,portrait.60%" height="200px" onEntry="this.position='relative';">
+	    	<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option2" value="6" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="6" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option3" value="4" tab-index="16" visible="true" bg-color="#fcf3b1" x="58%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="4" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option4" value="1" tab-index="17" visible="true" bg-color="#fcf3b1" x="78%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="1" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+		</lido-cell>	
+    </lido-container> 
+
+<lido-container visible="true" id="lido-container"   bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="11"  is-continue-on-correct="true" show-Check="true" onCorrect="text4.speak='true';this.sleep='4000';" drop-action="move">
+	<lido-calculator visible="true" height="711px" width="479px" y="10%" onEntry="this.position='relative';" ></lido-calculator>
+ 	<lido-cell layout="row" visible="true" height="100px" width="500px" x="landscape.-32%,portrait.0" y="landscape.-41%,portrait.10%" onEntry="this.position='relative';">
+    	<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text id="text2" visible="true"  value="+" height="80%" type="text" width="70%" string="+">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text3" value="6" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="6" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text4" value="hello how are you" tab-index="15" visible="false" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="hello how are you" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+	
+    </lido-cell>	
+</lido-container>
+	<lido-container visible="true" drop-action="move" id="lido-container"   show-Check="true"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   objective=""  equationCheck="$#lefthandle,+,$#balanceSymbol,$#righthandle" is-continue-on-correct="true">
+		<!-- <lido-cell visible="true" width="80%" heigth="500px" bg-color="red"> -->
+		<lido-balance visible="true" height="500px" width="landscape.1300px,portrait.876px" tilt="0" operation="count" x="landscape.0px,portrait.-8px" y="landscape.20%,portrait.20%" onEntry="this.position='relative';">
+		</lido-balance>
+		<!-- </lido-cell> -->
+		<!-- Check Button -->
+			<lido-pos id="pos1" disable-edit="true" value="pos1" height="70px" width="150px" x="landscape.1324px,portrait.639px" y="landscape.105px,portrait.293px" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+				<lido-text id="lido-checkButton" visible="true" bg-color="#5b5bd3" width="150px" height="70px" string="Check" type="click" font-family="'Baloo 2', serif" font-size="30px" font-color="white" onEntry="this.fontWeight='800'; this.addClass='lido-disable-check-button';">
+				</lido-text>
+			</lido-pos>
+		<lido-cell layout="row" visible="true" id="leftparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-280px,portrait.-254px" x="landscape.-415px,portrait.-293px" onEntry="this.position='relative';this.gap='15px';">
+			<lido-text id="lefthandle" type="drop"  tab-index="1" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text>
+			<!-- <lido-text id="lefthandle1" type="drop"  tab-index="3" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text> -->
+			
+			
+		</lido-cell>
+		<lido-cell layout="row" visible="true" id="rightparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-388px,portrait.-361px" x="landscape.380px,portrait.254px" onEntry="this.position='relative';this.gap='15px';">	
+		    <lido-text id="righthandle"  type="drop" tab-index="2" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text>
+			 <!-- <lido-text id="righthandle1"  type="drop" tab-index="4" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text> -->
+		
+		   
+		</lido-cell> 
+		 <lido-cell layout="row" bg-Color="transparent" id="dragParent"  visible="true"  width="landscape.50%,portrait.60%" height="200px" onEntry="this.position='relative';">
+	    	<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option2" value="6" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="6" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option3" value="4" tab-index="16" visible="true" bg-color="#fcf3b1" x="58%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="4" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option4" value="1" tab-index="17" visible="true" bg-color="#fcf3b1" x="78%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="1" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+		</lido-cell>	
+    </lido-container> 
+
+
+<lido-container visible="true" id="lido-container" objective="" equationCheck="$#text1,$#text2,$#text3" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png"   is-continue-on-correct="true" show-Check="true" onCorrect="text4.speak='true';this.sleep='2000';" >
+ 	<lido-calculator id="calci"  height="711px"  width="479px"  y="10%" onEntry="this.position='relative';" ></lido-calculator>
+	<lido-cell layout="row" visible="true" height="100px" width="310px" x="landscape.-32%,portrait.0" y="landscape.-43%,portrait.10%" onEntry="this.position='relative';">
+		<lido-text  font-family="'Baloo Bhai 2'" audio=""  id="text1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text id="text2" font-family="'Baloo Bhai 2'" visible="true"  font-size="40px" onEntry="this.font-weight='600';" value="+" height="80%" type="text" width="70%" string="+">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text3" value="7" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="7" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+		<lido-text  font-family="'Baloo Bhai 2'" audio="" id="text4" value="hello how are you" tab-index="15" visible="false" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="50px" height="landscape.87px, portrait.91px" string="hello how are you" fontColor="black" font-size="40px"   type="text">
+		</lido-text>
+	</lido-cell>		
+</lido-container>
+
+
+<lido-container visible="true" drop-action="move" id="lido-container"   show-Check="true"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"   objective=""  equationCheck="$#lefthandle,+,$#balanceSymbol,$#righthandle" is-continue-on-correct="true">
+		<!-- <lido-cell visible="true" width="80%" heigth="500px" bg-color="red"> -->
+		<lido-balance visible="true" height="500px" width="landscape.1300px,portrait.876px" tilt="0" operation="count" x="landscape.0px,portrait.-8px" y="landscape.20%,portrait.20%" onEntry="this.position='relative';">
+		</lido-balance>
+		<!-- </lido-cell> -->
+		<!-- Check Button -->
+			<lido-pos id="pos1" disable-edit="true" value="pos1" height="70px" width="150px" x="landscape.1324px,portrait.639px" y="landscape.105px,portrait.293px" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
+				<lido-text id="lido-checkButton" visible="true" bg-color="#5b5bd3" width="150px" height="70px" string="Check" type="click" font-family="'Baloo 2', serif" font-size="30px" font-color="white" onEntry="this.fontWeight='800'; this.addClass='lido-disable-check-button';">
+				</lido-text>
+			</lido-pos>
+		<lido-cell layout="row" visible="true" id="leftparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-280px,portrait.-254px" x="landscape.-415px,portrait.-293px" onEntry="this.position='relative';this.gap='15px';">
+			<lido-text id="lefthandle" type="drop"  tab-index="1" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text>
+			<!-- <lido-text id="lefthandle1" type="drop"  tab-index="3" bg-color="transparent" height="100px" width="100px" value="" is-allow-only-one-drop="false"  onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+			</lido-text> -->
+			
+			
+		</lido-cell>
+		<lido-cell layout="row" visible="true" id="rightparent" heigth="auto" width="auto" bg-Color="transparent" y="landscape.-388px,portrait.-361px" x="landscape.380px,portrait.254px" onEntry="this.position='relative';this.gap='15px';">	
+		    <lido-text id="righthandle"  type="drop" tab-index="2" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text>
+			 <!-- <lido-text id="righthandle1"  type="drop" tab-index="4" is-allow-only-one-drop="false" bg-color="transparent" height="100px" width="100px" value="" onEntry=" this.position='relative';this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';" y="" x="">
+		    </lido-text> -->
+		
+		   
+		</lido-cell> 
+		 <lido-cell layout="row" bg-Color="transparent" id="dragParent"  visible="true"  width="landscape.50%,portrait.60%" height="200px" onEntry="this.position='relative';">
+	    	<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option1" value="5" tab-index="14" visible="true" bg-color="#fcf3b1" x="0%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="5" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option2" value="6" tab-index="15" visible="true" bg-color="#fcf3b1" x="34%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="6" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option3" value="4" tab-index="16" visible="true" bg-color="#fcf3b1" x="58%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="4" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+			<lido-text  font-family="'Baloo Bhai 2'" audio="" id="option4" value="1" tab-index="17" visible="true" bg-color="#fcf3b1" x="78%" y="0%" onEntry="this.padding='0px 48px'; this.borderRadius='24px';  this.fontWeight='400';" width="auto" height="landscape.87px, portrait.91px" string="1" fontColor="black" font-size="40px"   type="drag">
+			</lido-text>
+		</lido-cell>	
+    </lido-container> 
 <lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Spring.png" objective="correct" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" custom-style="#dropEle{border: none !important} #drag1,#drag2,#drag3{box-shadow: none !important}">
 	<!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1px, portrait.20px" y="landscape.5px, portrait.318px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
