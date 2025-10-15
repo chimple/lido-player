@@ -32,7 +32,7 @@ const meta: Meta<QuestionBoardArgs> = {
         backgroundImagePlusSign1: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png'],
         backgroundImagePlusSign2: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png'],
         backgroundImageMultiplicationSign: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png'],
-        expressionText: '5 + <2> = 7',
+        expressionText: '5 + 2 = 7',
         options: [5, 7, 12, 18],
         optionText: 'tables',
         objective: '7',
@@ -44,9 +44,7 @@ export default meta;
 export const QuestionBoard: StoryObj = {
     args: {
         questionBoardText: "The library has 5 more tables than the school office. The school office has 2 tables. How many tables does the library have?",
-        expressionText: "4 X <3> = 12",
         optionText: "tables",
-        objective: "12",
         options: [5, 7, 12, 18]
     },
 
