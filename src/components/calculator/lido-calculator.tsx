@@ -109,9 +109,6 @@ export class LidoCalculator {
         isCorrect = false;
       }
     }
-     const formattedValue = Number(userInput).toLocaleString('en-IN'); // or 'en-US' if you prefer
-  this.displayValue = formattedValue;
-  this.updateValueAttr();
     this.onOk.emit(isCorrect);
 
     if (isCorrect) {
