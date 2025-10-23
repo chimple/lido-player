@@ -21,6 +21,7 @@ i5.revealImageValue='true';this.sleep='2000';" bg-image="https://aeakbcdznktpsbr
 			<lido-text visible="true" bg-color="#60DADA"  height="100px" width="456px" margin="0px" string="How many??" onEntry="this.border='5px solid #029A9A';this.border-radius='10px';this.font-size='40px';this.font-weight='600';" > </lido-text>
 			<lido-calculator visible="true" height="650px" y="26px" width="456px"  onEntry="this.position='relative';" ></lido-calculator>
  		</lido-cell>
+		</lido-cell>
 	</lido-container>	
 <lido-container id="question-board-container" disableSpeak="true" objective="7" tabIndex="1"  value="questionBoard" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; background-animation-plus-minus-1.opacity='1'; background-animation-plus-minus-2.opacity='1'; background-animation-multiplication.opacity='1'; this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
 
