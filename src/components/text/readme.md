@@ -48,12 +48,14 @@
 
 ### Used by
 
+ - [lido-calculator](../calculator)
  - [lido-home](../home)
  - [lido-keyboard](../keyboard)
 
 ### Graph
 ```mermaid
 graph TD;
+  lido-calculator --> lido-text
   lido-home --> lido-text
   lido-keyboard --> lido-text
   style lido-text fill:#f9f,stroke:#333,stroke-width:4px
