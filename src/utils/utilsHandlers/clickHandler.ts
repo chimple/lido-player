@@ -117,8 +117,9 @@ export function addClickListenerForClickType(element: HTMLElement): void {
         await executeActions(onInCorrect, element);
         // showWrongAnswerAnimation([element]);
       }
-      let calciEl=document.querySelector('#lidoCalculator') as any; 
-      if(!calciEl){
+      // const calciEl=document.querySelector('#lidoCalculator') as any; 
+      const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      if(!isInsideCalculator){
       storingEachActivityScore(isCorrect);
       }
       handleShowCheck();

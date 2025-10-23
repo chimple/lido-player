@@ -1023,13 +1023,17 @@ function calculateValue(elements: HTMLElement[], operation: string): number {
   if (operation === "count") {
     return elements.length;
   }
+  const ADD = ["add", "+"] ;
+  const SUBTRACT = ["subtract", "-"] ;
+  const MULTIPLY = ["multiply", "*"] ;
+  const DIVIDE = ["divide", "/"];
   const expr = elements
     .map(el => el.getAttribute("value") || "0")
     .join(
-      operation === "add" || operation === "+" ? " + " :
-      operation === "subtract" || operation === "-" ? " - " :
-      operation === "multiply" || operation === "*" ? " * " :
-      operation === "divide" || operation === "/" ? " / " : " + "
+      ADD.includes(operation) ? " + " :
+      SUBTRACT.includes(operation) ? " - " :
+      MULTIPLY.includes(operation) ? " * " :
+      DIVIDE.includes(operation) ? " / " : " + "
     );
 
   try {

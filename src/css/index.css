@@ -239,7 +239,7 @@ body {
 .lido-box-highlight {
   animation: topToPlace 0.3s linear;
 }
-.Displayhiddenvalue {
+.lido-display-hiddenvalue {
   position: absolute;
   top: 0;
   left: 0;

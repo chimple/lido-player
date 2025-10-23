@@ -1223,7 +1223,7 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
   if (!imageEl) return;
   const value = imageEl.getAttribute('value');
   if (!value) return;
-  let valueElement = imageEl.querySelector('.Displayhiddenvalue') as HTMLElement;
+  let valueElement = imageEl.querySelector('.lido-display-hiddenvalue') as HTMLElement;
   if (!valueElement) {
     valueElement = document.createElement('div');
     valueElement.classList.add('Displayhiddenvalue');
