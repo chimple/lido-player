@@ -117,7 +117,10 @@ export function addClickListenerForClickType(element: HTMLElement): void {
         await executeActions(onInCorrect, element);
         // showWrongAnswerAnimation([element]);
       }
+      let calciEl=document.querySelector('#lidoCalculator') as any; 
+      if(!calciEl){
       storingEachActivityScore(isCorrect);
+      }
       handleShowCheck();
       return;
     }
