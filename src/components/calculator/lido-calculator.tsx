@@ -1,5 +1,5 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
-import { parseProp,executeActions,equationCheck } from '../../utils/utils';
+import { parseProp,executeActions,equationCheck,storingEachActivityScore } from '../../utils/utils';
 import { NextContainerKey,LidoContainer } from '../../utils/constants';
 
 @Component({
@@ -112,9 +112,15 @@ export class LidoCalculator {
     this.onOk.emit(isCorrect);
 
     if (isCorrect) {
+      storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
       window.dispatchEvent(new CustomEvent(NextContainerKey));
+    }
+    else{
+      storingEachActivityScore(isCorrect);
+      const onInCorrect = container?.getAttribute('onInCorrect') || '';
+      await executeActions(onInCorrect, container);
     }
   }
 
@@ -122,8 +128,7 @@ export class LidoCalculator {
     const numbers = ['1','2','3','4','5','6','7','8','9','←','0','OK'];
 
     return (
-      <Host onEntry={this.onEntry}>
-        <div id="lidoCalculator" style={{ width: this.width, height: this.height, backgroundColor: this.bgColor,left:this.x, top:this.y }}>
+      <Host onEntry={this.onEntry} id="lidoCalculator" style={{ width: this.width, height: this.height, backgroundColor: this.bgColor,left:this.x, top:this.y }}>
           <lido-cell visible="true" height="94px" width="60px">
             <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="176%" width="96px" onEntry="this.position='relative';" class="top-icon">
               <img src={this.penIcon} alt="pen" style={{ width: '100%', height: '100%' }} />
@@ -140,7 +145,6 @@ export class LidoCalculator {
         'lido-calculator-btn-default': num !== '←' && num !== 'OK'
       }} onClick={() => this.handleClick(num)}></lido-text>
             ))}
-          </div>
         </div>
       </Host>
     );
