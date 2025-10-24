@@ -377,6 +377,7 @@ export class LidoHome {
       'lido-float': <lido-float {...props}>{children}</lido-float>,
       'lido-keyboard': <lido-keyboard {...props}>{children}</lido-keyboard>,
       'lido-math-matrix': <lido-math-matrix {...props}>{children}</lido-math-matrix>,
+      'lido-balance': <lido-balance {...props}>{children}</lido-balance>,
       'lido-calculator': <lido-calculator {...props}>{children}</lido-calculator>,
     };
 

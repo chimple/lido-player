@@ -123,6 +123,12 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           targetElement.style.transform = currentTransform !== 'none' ? `${currentTransform} ${action.value}` : action.value;
           break;
         }
+        case 'revealImageValue': {
+          if (targetElement) {
+            revealImageValue(targetElement); // call your function here
+          }
+          break;
+        }
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
@@ -253,6 +259,35 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           slideAnimation();
           break;
         }
+        case 'showBalanceSymbol': {
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
+          const leftVal = Number(balanceEl.leftVal ?? Number(balanceEl.dataset?.leftVal ?? 0));
+          const rightVal = Number(balanceEl.rightVal ?? Number(balanceEl.dataset?.rightVal ?? 0));
+          const symbol = leftVal > rightVal ? '>' : leftVal < rightVal ? '<' : '=';
+          balanceEl.balanceSymbol = symbol;
+          balanceEl.dataset.balanceSymbol = symbol;
+          if (balanceEl.revealSymbol) {
+            await balanceEl.revealSymbol();
+          } else {
+            balanceEl.showSymbol = true;
+          }
+          break;
+        }
+
+        case 'hideBalanceSymbol': {
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
+          if (balanceEl.hideSymbol) {
+            await balanceEl.hideSymbol();
+          } 
+          else{
+              balanceEl.showSymbol = false;
+              }
+          break;
+        }
+
+       
 
         default: {
           targetElement.style[action.action] = action.value;
@@ -566,7 +601,7 @@ export const handleShowCheck = () => {
 
   const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
 
-  if (!selectValues || countPatternWords(selectValues) !== countPatternWords(objectiveString)) {
+  if (!selectValues || countPatternWords(selectValues) < countPatternWords(objectiveString)) {
     executeActions("this.addClass='lido-disable-check-button'", checkButton);
     return;
   }
@@ -575,6 +610,15 @@ export const handleShowCheck = () => {
 
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
+    const balanceEl = document.querySelector('lido-balance') as any;
+    if (balanceEl) {
+     if (!checkButton.hasAttribute('data-balance-listener')) {
+    checkButton.addEventListener('click', async function onClick() {
+      await executeActions("this.showBalanceSymbol='true'", checkButton);
+      checkButton.removeEventListener('click', onClick);
+    });
+    checkButton.setAttribute('data-balance-listener', 'true'); 
+  }}
   } else {
     validateObjectiveStatus();
   }
@@ -1175,4 +1219,17 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
     }
   });
 }
+export const revealImageValue = (imageEl: HTMLElement): void => {
+  if (!imageEl) return;
+  const value = imageEl.getAttribute('value');
+  if (!value) return;
+  let valueElement = imageEl.querySelector('.lido-display-hiddenvalue') as HTMLElement;
+  if (!valueElement) {
+    valueElement = document.createElement('div');
+    valueElement.classList.add('Displayhiddenvalue');
+    imageEl.style.position = 'relative';
+    imageEl.appendChild(valueElement);
+  }
+  valueElement.innerText = value;
+};
 
