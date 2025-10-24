@@ -25,6 +25,34 @@ import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 const gameScore = new GameScore();
 
+export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
+  const map: Record<string, string[]> = {};
+  const draggedEls = document.querySelectorAll<HTMLElement>(`[${DropToAttr}]`);
+  draggedEls.forEach(dragEl => {
+    const to = dragEl.getAttribute(DropToAttr);
+    if (!to) return;
+    const dropEl = document.getElementById(to);
+    if (!dropEl) return;
+    const tabIndex = dropEl.getAttribute('tab-index') ?? to;
+    if (!map[tabIndex]) map[tabIndex] = [];
+    const value = dragEl.getAttribute('value') ?? (dragEl as any).value ?? '';
+    map[tabIndex].push(value);
+  });
+  return map;
+}
+export function getSortedValuesArrayFromMap(map: Record<string, string[]>): string[] {
+  const sortedKeys = Object.keys(map).sort((a, b) => parseInt(a) - parseInt(b));
+  const sortedValues = sortedKeys.reduce((acc: string[], key) => {
+    const values = map[key];
+    if (values.length > 1) {
+      acc.push(`(${values.join('|')})`);
+    } else {
+      acc.push(values[0]);
+    }
+    return acc;
+  }, []);
+  return sortedValues;
+}
 export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
@@ -93,6 +121,12 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'transform': {
           const currentTransform = window.getComputedStyle(targetElement).transform;
           targetElement.style.transform = currentTransform !== 'none' ? `${currentTransform} ${action.value}` : action.value;
+          break;
+        }
+        case 'revealImageValue': {
+          if (targetElement) {
+            revealImageValue(targetElement); // call your function here
+          }
           break;
         }
         case 'alignMatch': {
@@ -225,6 +259,35 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           slideAnimation();
           break;
         }
+        case 'showBalanceSymbol': {
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
+          const leftVal = Number(balanceEl.leftVal ?? Number(balanceEl.dataset?.leftVal ?? 0));
+          const rightVal = Number(balanceEl.rightVal ?? Number(balanceEl.dataset?.rightVal ?? 0));
+          const symbol = leftVal > rightVal ? '>' : leftVal < rightVal ? '<' : '=';
+          balanceEl.balanceSymbol = symbol;
+          balanceEl.dataset.balanceSymbol = symbol;
+          if (balanceEl.revealSymbol) {
+            await balanceEl.revealSymbol();
+          } else {
+            balanceEl.showSymbol = true;
+          }
+          break;
+        }
+
+        case 'hideBalanceSymbol': {
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (!balanceEl) break;
+          if (balanceEl.hideSymbol) {
+            await balanceEl.hideSymbol();
+          } 
+          else{
+              balanceEl.showSymbol = false;
+              }
+          break;
+        }
+
+       
 
         default: {
           targetElement.style[action.action] = action.value;
@@ -432,16 +495,26 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
+    if (dragElement && dropElement) {
+  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  if (isCorrect) {
+    const onCorrect = dropElement.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, dropElement, dragElement);
+    }
+  } else {
+    const onInCorrect = dropElement.getAttribute('onInCorrect');
+
+    await executeActions(onInCorrect, dropElement, dragElement);
+
+  }}
+
   let dragScore = JSON.parse(localStorage.getItem(DragSelectedMapKey) ?? '{}');
   const tabindex = dropElement.getAttribute('tab-index');
 
-  if (!dragScore[tabindex]) {
-    dragScore[tabindex] = [];
-  }
-
-  dragScore[tabindex].push(dragElement['value']);
-
-  localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragScore));
+ const sortedValues = getSortedValuesArrayFromMap(dragScore);
+ container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
+ 
 
   //localStorage
   let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');
@@ -453,36 +526,21 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   // localStorage.setItem(DragMapKey, JSON.stringify(drag));
 
   const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
-
-  const sortedValues = sortedKeys.reduce((acc, key) => {
-    const values = dragScore[key];
-    if (values.length > 1) {
-      acc.push(`(${values.join('|')})`);
-    } else {
-      acc.push(values[0]);
+    if (dragElement && dropElement) {
+  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  if (isCorrect) {
+    const onCorrect = dropElement.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, dropElement, dragElement);
     }
     return acc;
   }, []);
 
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
-  if (dragElement && dropElement) {
-    const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
-    if (isCorrect) {
-      const onCorrect = dropElement.getAttribute('onCorrect');
-      if (onCorrect) {
-        await executeActions(onCorrect, dropElement, dragElement);
-      }
-    } else {
-      const onInCorrect = dropElement.getAttribute('onInCorrect');
-
-      await executeActions(onInCorrect, dropElement, dragElement);
-    }
-  }
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
   allElements.forEach(otherElement => {
-    const dropObject = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
-    const storedTabIndexes = Object.keys(dropObject).map(Number);
+    const storedTabIndexes = Object.keys(dragScore).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -536,11 +594,11 @@ const storeActivityScore = (score: number) => {
 export const handleShowCheck = () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const objectiveString = container['objective'];
-  const selectValues = localStorage.getItem(SelectedValuesKey) ?? '';
+  const selectValues = container.getAttribute(SelectedValuesKey) ?? '';
 
   const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
 
-  if (!selectValues || countPatternWords(selectValues) !== countPatternWords(objectiveString)) {
+  if (!selectValues || countPatternWords(selectValues) < countPatternWords(objectiveString)) {
     executeActions("this.addClass='lido-disable-check-button'", checkButton);
     return;
   }
@@ -549,6 +607,15 @@ export const handleShowCheck = () => {
 
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
+    const balanceEl = document.querySelector('lido-balance') as any;
+    if (balanceEl) {
+     if (!checkButton.hasAttribute('data-balance-listener')) {
+    checkButton.addEventListener('click', async function onClick() {
+      await executeActions("this.showBalanceSymbol='true'", checkButton);
+      checkButton.removeEventListener('click', onClick);
+    });
+    checkButton.setAttribute('data-balance-listener', 'true'); 
+  }}
   } else {
     validateObjectiveStatus();
   }
@@ -570,7 +637,7 @@ export const validateObjectiveStatus = async () => {
     triggerNextContainer();
     return;
   } else {
-    const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];
+    const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
     let res;
     const additionalCheck = container.getAttribute('equationCheck');
     if (!!additionalCheck) {
@@ -933,13 +1000,6 @@ export const attachSpeakIcon = async (element: HTMLElement) => {
   element.appendChild(speakIconElement);
 };
 
-export const clearLocalStorage = () => {
-  localStorage.removeItem(DragSelectedMapKey);
-  localStorage.removeItem(DragMapKey);
-  localStorage.removeItem(SelectedValuesKey);
-  localStorage.removeItem(DropHasDrag);
-  localStorage.removeItem(DropLength);
-};
 
 /**
  * Applies a delay to the element's visibility based on `delayVisible`.
@@ -1160,4 +1220,17 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
     }
   });
 }
+export const revealImageValue = (imageEl: HTMLElement): void => {
+  if (!imageEl) return;
+  const value = imageEl.getAttribute('value');
+  if (!value) return;
+  let valueElement = imageEl.querySelector('.lido-display-hiddenvalue') as HTMLElement;
+  if (!valueElement) {
+    valueElement = document.createElement('div');
+    valueElement.classList.add('Displayhiddenvalue');
+    imageEl.style.position = 'relative';
+    imageEl.appendChild(valueElement);
+  }
+  valueElement.innerText = value;
+};
 

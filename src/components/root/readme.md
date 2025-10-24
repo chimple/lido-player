@@ -47,7 +47,10 @@ graph TD;
   lido-home --> lido-float
   lido-home --> lido-keyboard
   lido-home --> lido-math-matrix
+  lido-home --> lido-calculator
   lido-keyboard --> lido-text
+  lido-calculator --> lido-cell
+  lido-calculator --> lido-text
   style lido-root fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
