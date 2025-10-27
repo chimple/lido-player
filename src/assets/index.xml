@@ -1,5 +1,34 @@
 <main>
 
+<lido-container visible="true" show-next-button="true" dropAttr="math-matrix" objective="slot-1,slot-2,slot-3,slot-4,slot-5" onCorrect="" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="red">
+
+	<lido-cell visible="true" layout="row" height="900px" width="1600px" onEntry="this.justifyContent='unset';">
+		<lido-cell visible="true" layout="pos" x="0" y="0" z="1">
+			<lido-image visible="true" width="1500px" height="900px" x="185px" y='20px' src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/CheckerBlock/truck.svg"></lido-image>
+			<lido-math-matrix id="matrix3" visible="true" width="1400px" height="700px" x="865px" y="22px" rows="10" cols="10" top-index="false" left-index="false" bottom-index="false" active-only-visible="false" defualtFill="100" text="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100" active-bg-color="#deb3f2" clickable="false" type="checkerBlock"></lido-math-matrix>
+			<lido-math-matrix id="matrix1" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="1" type="drop" value="slot-1" clickable="false" ></lido-math-matrix>
+			<lido-math-matrix id="matrix2" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="2" type="drop" value="slot-2" clickable="false"></lido-math-matrix>
+			<lido-math-matrix id="matrix3" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="3" type="drop" value="slot-3" clickable="false"></lido-math-matrix>
+			<lido-math-matrix id="matrix4" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="4" type="drop" value="slot-4" clickable="false"></lido-math-matrix>
+			<lido-math-matrix id="matrix5" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="5" type="drop" value="slot-5" clickable="false"></lido-math-matrix>
+			
+		</lido-cell>
+
+		<lido-cell visible="true" layout="col" width="25%" height="90%" bg-color="transparent" z="2">
+			<lido-cell visible="true" layout="random" width="100%" height="100%" bg-color="transparent">
+				<lido-math-matrix id="matrix9" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="9" type="drag" value="slot-1" clickable="false"></lido-math-matrix>
+				<lido-math-matrix id="matrix10" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="10" type="drag" value="slot-2" clickable="false"></lido-math-matrix>
+				<lido-math-matrix id="matrix11" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="11" type="drag" value="slot-3" clickable="false"></lido-math-matrix>
+				<lido-math-matrix id="matrix12" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="12" type="drag" value="slot-4" clickable="false"></lido-math-matrix>
+				<lido-math-matrix id="matrix13" visible="true" width="1600px" height="900px" rows="1" cols="1" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="13" type="drag" value="slot-5" clickable="false"></lido-math-matrix>
+			</lido-cell>
+		</lido-cell>
+		
+		
+	</lido-cell>
+	
+</lido-container>
+
 <lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000'; i1.revealImageValue='true';this.sleep='1000';i2.revealImageValue='true';this.sleep='1000';i3.revealImageValue='true';this.sleep='1000';i4.revealImageValue='true';  this.sleep='1000'; 
 i5.revealImageValue='true';this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="5"  is-continue-on-correct="true" show-Check="true"   >
 	<!-- Chimple Avatar -->

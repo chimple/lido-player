@@ -23,6 +23,7 @@ import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utils
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
+import { handlingMatrix } from './utilsHandlers/matrixHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -96,6 +97,10 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
     }
     case 'optionArea': {
       enableOptionArea(element);
+      break;
+    }
+    case 'checkerBlock': {
+      handlingMatrix(element);
       break;
     }
     default:
@@ -629,6 +634,7 @@ export const validateObjectiveStatus = async () => {
   if (!container) return;
   const objectiveString = container['objective'];
 
+
   if (objectiveString == null || objectiveString.length === 0) {
     const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
@@ -639,7 +645,7 @@ export const validateObjectiveStatus = async () => {
     triggerNextContainer();
     return;
   } else {
-    const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
+    const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey)) ?? [];    
     let res;
     const additionalCheck = container.getAttribute('equationCheck');
     if (!!additionalCheck) {
