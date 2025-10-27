@@ -1,28 +1,96 @@
 <main>
 
-<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000'; i1.revealImageValue='true';this.sleep='1000';i2.revealImageValue='true';this.sleep='1000';i3.revealImageValue='true';this.sleep='1000';i4.revealImageValue='true';  this.sleep='1000'; 
-i5.revealImageValue='true';this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="5"  is-continue-on-correct="true" show-Check="true"   >
-	<!-- Chimple Avatar -->
-	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.37%, portrait.20px" y="landscape.48%, portrait.318px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
-		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
-		</lido-avatar>
-	</lido-cell>
-	<lido-cell layout="row" visible="true"  width="90%" height="90%" bg-color="transparent" >
-		<lido-cell layout="col" visible="true" margin="0px 117px 0px -117px" onEntry="this.animation='topToPlace 1.5s linear';" height="751px" width="500px" bg-color="transparent"  >
+<lido-container id="lido-container" show-drop-border="false" appendToDropOnCompletion="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="1,2,3,4,5,6,7,8,9,10" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+		<!-- Chimple Avatar -->
+		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.417px,portrait.363px" width="landscape.280px,portrait.340px" x="landscape.1360px, portrait.597px" y="landscape.637px, portrait.1370px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
+			
+			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+			</lido-avatar>
+			
+		</lido-cell>
+		<lido-image visible="true" id="tyre" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/wheel.png" height="119px" width="131px" onEntry=" this.position='relative'; this.animation='rightToPlace 2.5s linear';" x="landscape.299px, portrait.293px" y="landscape.768px, portrait.1092px" margin="">
+			</lido-image>
 		
-			<lido-image value="1" type="text" margin="0px 100px 0px 0px"  id="i1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_01.png"  height="120px" width="120px"></lido-image>	
-			<lido-image value="2" type="text" margin="0px 80px 0px 0px" id="i2" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_02.png"  height="120px" width="120px"></lido-image>
-			<lido-image value="3" type="text" margin="-80px -214px 0px 0px"  id="i3" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_05.png" height="120px" width="120px"></lido-image>
-			<lido-image value="4" type="text" margin="-66px 367px 0px 0px" id="i4" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_04.png" height="120px" width="120px"></lido-image>
-			<lido-image value="5" type="text" margin="0px -180px 0px 0px" id="i5" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_03.png" height="120px" width="120px"></lido-image>			
- 	
-		</lido-cell>
-		<lido-cell layout="col" visible="true" margin="0px" height="751px" width="500px" bg-color="transparent"  >
-			<lido-text visible="true" bg-color="#60DADA"  height="100px" width="456px" margin="0px" string="How many??" onEntry="this.border='5px solid #029A9A';this.border-radius='10px';this.font-size='40px';this.font-weight='600';" > </lido-text>
-			<lido-calculator visible="true" height="650px" y="26px" width="456px"  onEntry="this.position='relative';" ></lido-calculator>
- 		</lido-cell>
-		</lido-cell>
-	</lido-container>	
+		<lido-cell visible="true" id="xx"  layout="landscape.row,portrait.col" height="90%" width="90%" bg-Color="transparent" margin="landscape.56px 0px 0px 0px,portrait.0px" onEntry="">
+			<lido-cell visible="true" id="truck" layout="row" height="90%" width="1377px" bg-Color="transparent" margin="landscape.-169px 114px 39px -195px,portrait.-115px 0px 0px 0px" onEntry="this.animation='rightToPlace 2.5s linear';">
+			<lido-image visible="true"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/truck.png" height="583px" width="502px" onEntry=" " margin="landscape.345px -40px 0px 55px,portrait.408px 67px -179px -107px">
+			</lido-image>
+			<lido-cell visible="true" height="landscape.100%,portrait.858px" width="landscape.858px,portrait.62%" bg-color="#F78315" margin="landscape.0px 0px 0px -18px,portrait.-124px 252px -238px -114px" onEntry=" this.place-items='center';this.gap='1px'; this.padding='0px'; this.gridTemplateColumns='repeat(auto-fill, minmax(143px, auto))';   this.gridTemplateRows='repeat(auto-fit, 362px)';  this.flexWrap='wrap';">
+				<lido-cell id="drop1" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="1" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="1" value="1" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop3" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px"  height="landscape.345px,portrai.3500px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="2" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="2" value="2" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop4" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="3" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="3" value="3" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop5" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="4" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="4" value="4" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop6" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="5" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="5" value="5" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>	
+				<lido-cell id="drop7" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="6" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="6" value="6" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop8" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="7" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="7" value="7" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop9" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="8" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="8" value="8" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop10" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="9" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="9" value="9" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+				<lido-cell id="drop2" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="10" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="10" value="10" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+				</lido-cell>
+					
+				
+			</lido-cell>
+			</lido-cell>
+			
+			<lido-cell layout="landscape.col,portrait.row" visible="true" height="landscape.71%,portrait.185px" width="landscape.12%,portrait.71%" bg-color="transparent" onEntry="  this.animation='rightToPlace 2.7s linear';" margin="landscape.-280px 102px 0px -73px,portrait.-108px 0px 151px -50px">
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag1" tab-index="29" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="1" string="1" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#CF1565';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag2" tab-index="30" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="2" string="2" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#409F5C';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag3" tab-index="31" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="3" string="3" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#02C1C1';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag4" tab-index="32" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="4" string="4" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#AD3184';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag5" tab-index="33" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="5" string="5" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#F55376';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag6" tab-index="34" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="6" string="6" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#81C127';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag5" tab-index="35" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="7" string="7" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#5D44BD';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag8" tab-index="36" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="8" string="8" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#CF1565';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag9" tab-index="37" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="9" string="9" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#AD3184';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+				<lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag10" tab-index="38" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="10" string="10" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='#F55376';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
+				</lido-text>
+
+				
+			</lido-cell>
+			</lido-cell>
+			
+		
+</lido-container>
+
+<lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Spring.png" objective="correct" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" custom-style="#dropEle{border: none !important} #drag1,#drag2,#drag3,#drag4{box-shadow: none !important}">
 <lido-container id="question-board-container" disableSpeak="true" objective="7" tabIndex="1"  value="questionBoard" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; background-animation-plus-minus-1.opacity='1'; background-animation-plus-minus-2.opacity='1'; background-animation-multiplication.opacity='1'; this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
 
 		<!-- Chimple Avatar -->
@@ -87,6 +155,7 @@ i5.revealImageValue='true';this.sleep='2000';" bg-image="https://aeakbcdznktpsbr
 
 
 <lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Spring.png" objective="correct" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" custom-style="#dropEle{border: none !important} #drag1,#drag2,#drag3{box-shadow: none !important}">
+
 	<!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1px, portrait.20px" y="landscape.5px, portrait.318px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
@@ -96,13 +165,14 @@ i5.revealImageValue='true';this.sleep='2000';" bg-image="https://aeakbcdznktpsbr
 	<lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/train1%20(1).m4a" onEntry="this.speak='true';"></lido-text>
     <lido-image id="truck"  height="60%" width="landscape.100%,portrait.200%" visible="true"  bg-Color="transparent" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/train.svg" margin="landscape.14px 0px 0px 0px,portrait.452px 0px 0px 0px" onEntry="this.animation='rightToPlace 2.5s linear';" onCorrect="this.animation='placeToLeft 2.5s linear';"></lido-image>
 		<lido-cell id="imgs" visible="true" x="landscape.-158px,portrait.0" y="landscape.-495px,portrait.-652px" layout="row" height="80%" width="landscape.35%,portrait.70%" bg-color="transparent" margin="landscape.-115px 0px 0px 345px,portrait.0px 0px 0px 95px" onEntry="this.position='relative';this.animation='rightToPlace 2.5s linear';" onCorrect="this.animation='placeToLeft 2.5s linear';">
-		   	<lido-image id="qn" height="landscape.320px,portrait.320px" value="correct" width="landscape.320px,portrait.320px" tab-index="2" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047094.png"></lido-image>
-		   	<lido-image id="dropEle" height="landscape.320px,portrait.320px" value="correct" width="landscape.320px,portrait.320px" tab-index="1" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/card_shadow.png" type="drop"></lido-image>
+		   	<lido-image id="qn" height="landscape.250px,portrait.250px" value="correct" width="landscape.250px,portrait.250px" tab-index="2" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047094.png"></lido-image>
+		   	<lido-image id="dropEle" height="landscape.250px,portrait.250px" value="correct" width="landscape.250px,portrait.250px" tab-index="1" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/card_shadow.png" type="drop"></lido-image>
 		</lido-cell>
 	<lido-cell id="dragEle" visible="true" layout="row" width="100%" height="40%" bg-color="transparent" margin="landscape.-580px 0px 50px 0px,portrait.-532px 0px 162px 0px" onEntry="this.animation='rightToPlace 2.5s linear';" onCorrect="this.animation='placeToLeft 2.5s linear';">
-	   	<lido-image id="drag1" height="landscape.320px,portrait.320px" width="landscape.320px,portrait.320px" tab-index="1" value="wrong" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047093.png" type="drag"></lido-image>
-		<lido-image id="drag2" height="landscape.320px,portrait.320px" width="landscape.320px,portrait.320px" tab-index="2" value="correct" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047094.png" type="drag"></lido-image>
-		<lido-image id="drag3" height="landscape.320px,portrait.320px" width="landscape.320px,portrait.320px" tab-index="3" value="wrong" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047095.png" type="drag"></lido-image>
+	   	<lido-image id="drag1" height="landscape.250px,portrait.250px" width="landscape.250px,portrait.250px" tab-index="1" value="wrong" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047093.png" type="drag"></lido-image>
+		<lido-image id="drag2" height="landscape.250px,portrait.250px" width="landscape.250px,portrait.250px" tab-index="2" value="correct" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047094.png" type="drag"></lido-image>
+		<lido-image id="drag3" height="landscape.250px,portrait.250px" width="landscape.250px,portrait.250px" tab-index="3" value="wrong" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047095.png" type="drag"></lido-image>
+		<lido-image id="drag4" height="landscape.250px,portrait.250px" width="landscape.250px,portrait.250px" tab-index="4" value="wrong" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Group%2047095.png" type="drag"></lido-image>
 	</lido-cell>
 
 </lido-container>
