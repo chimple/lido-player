@@ -149,6 +149,7 @@ export class LidoCalculator {
         window.dispatchEvent(new CustomEvent(NextContainerKey));
       }
     }
+    
     else{
       this.displayValue = userInput;
       storingEachActivityScore(isCorrect);

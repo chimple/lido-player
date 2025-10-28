@@ -1,10 +1,6 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { index } from 'mathjs';
 
-type TextColors = {
-  colors: string[];
-};
 
 const meta: Meta = {
   title: 'Templates/nimbleTable',
