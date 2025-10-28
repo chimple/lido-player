@@ -1,4 +1,4 @@
-import { countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus } from '../utils';
+import { countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus, triggerNextContainer } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
 import { dispatchClickEvent } from '../customEvents';
@@ -61,8 +61,6 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   element.addEventListener('pointerleave', onPointerLeave);
 }
 
-
-
 export function addClickListenerForClickType(element: HTMLElement): void {
   handlingElementFlexibleWidth(element, 'click');
   element.style.cursor = 'pointer';
@@ -72,6 +70,11 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
+    const container1 = document.getElementById('lido-container') as HTMLElement;      
+    if (container1.getAttribute("action") === "scroll") {
+      scrollAction(element);
+      return;
+    }
     const lido_buttons = element.getAttribute('id');
     if (lido_buttons === 'lido-arrow-left' || lido_buttons === 'lido-arrow-right') {
       return;
@@ -91,16 +94,6 @@ export function addClickListenerForClickType(element: HTMLElement): void {
 
     if(container['objective'].length === 0)return;
 
-    // element.style.border = '2px solid yellow';
-    // element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
-
-    // element.style.transition = 'transform 0.2s ease, border 0.5s ease';
-    // element.style.transform = 'scale(1.1)';
-
-    // element.style.transform = 'scale(1)';
-    // element.style.border = '';
-    // element.style.boxShadow = '';
-
     const isActivated = element.classList.contains('lido-element-selected');
     let selectedValue = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
     
@@ -119,11 +112,19 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }
       // const calciEl=document.querySelector('#lidoCalculator') as any; 
       const isInsideCalculator = element.closest('#lidoCalculator') !== null;
-      if(!isInsideCalculator){
+      if(!isInsideCalculator){ 
       storingEachActivityScore(isCorrect);
       }
       handleShowCheck();
       return;
+    } 
+    else{  
+      const isCorrect = objective.includes(element['value']);
+      const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      if(!isInsideCalculator){
+      storingEachActivityScore(isCorrect);
+      }
+      handleShowCheck();
     }
 
     if (showCheck) {
@@ -183,11 +184,12 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }
       storingEachActivityScore(isCorrect);
     }
-
+    const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      if(!isInsideCalculator){
     if (!showCheck && countPatternWords(objective) === countPatternWords(selectedValue)) {
       validateObjectiveStatus();
     }
-  };
+  }};
   element.addEventListener('click', onClick);
 
   // using pointerup and pointerdown - for handling mouse and touch events combined
@@ -220,3 +222,81 @@ const clickableElementStyle = (element: HTMLElement) => {
   element.style.setProperty('--btn-shadow-color', tinycolor(backGroundColor).darken(17).toString());
   element.classList.add('click-element');
 };
+
+
+const checkEquation = (container)=>{   
+  const okButton = container.querySelector("#btn-11") as HTMLElement;
+  const calculatorValue=  container.querySelector("#lidoCalculator").getAttribute("value");
+  const allCalculateTypes = document.querySelectorAll("[type='calculate']");    
+  const activeCell = allCalculateTypes[0] as HTMLElement;
+  
+  if(calculatorValue === activeCell["value"]){
+      // ✅ Disable OK button immediately to prevent double click
+      okButton.style.pointerEvents = 'none';
+
+      const equation = activeCell["string"];
+      const answer = activeCell.getAttribute('value');
+
+      setTimeout(() => {
+        activeCell.innerHTML = equation.replaceAll("?", `${answer}`);  
+      }, 800);  
+      
+      setTimeout(() => {
+        const element2 =  container.querySelector("#dummy112") as HTMLElement;
+        element2.innerHTML = activeCell.innerHTML; 
+                      
+        const keyframes = `
+        @keyframes widthDecrease {
+          0% { background-color: ${activeCell.style.backgroundColor}; height: ${activeCell.style.height}; margin: ${activeCell.style.margin}; ${activeCell.innerHTML=""}}
+          100% { background-color: transparent ;height: 0px; margin: 0px;}
+        }`;  
+
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+        activeCell.style.animation = `widthDecrease 0.5s`;
+
+        activeCell.addEventListener('animationend', () => {
+          activeCell.style.height = '0px';
+          activeCell.style.margin = '0px';
+          activeCell.style.backgroundColor = 'transparent';
+          activeCell.remove();   
+
+          // ✅ Re-enable OK only when the next equation is ready
+          const nextActive = document.querySelector("[type='calculate']");
+          if (nextActive) {
+            okButton.style.pointerEvents = 'auto';
+          }
+
+        });
+
+        if(allCalculateTypes.length === 1){
+          setTimeout(() => {
+            triggerNextContainer(); 
+          }, 2000);
+        }
+      }, 1300);      
+  } else {
+    return;
+  }  
+}
+
+
+const scrollAction = (element)=>{
+  const container = document.getElementById('lido-container') as HTMLElement;
+  const okButton = container.querySelector("#btn-11") as HTMLElement;
+  const calculatorValue=  container.querySelector("#lidoCalculator").getAttribute("value");
+  const allCalculateTypes = document.querySelectorAll("[type='calculate']");    
+  const activeCell = allCalculateTypes[0] as HTMLElement;
+  
+  const element1 =  container.querySelector("#dummy111") as HTMLElement;
+  const element2 =  container.querySelector("#dummy112") as HTMLElement;   
+
+  if(element.id === okButton.id){
+    if(element2.innerHTML.length > 0 && (calculatorValue === activeCell["value"])){
+      setTimeout(() => {
+        element1.innerHTML = element2.innerHTML;
+      }, 1300);
+    }  
+    checkEquation(container); 
+  }
+}

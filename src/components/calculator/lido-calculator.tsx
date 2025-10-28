@@ -65,7 +65,6 @@ export class LidoCalculator {
         this.objective = (container.getAttribute('objective') || '').replace('=', '').trim();
       }
     }
-    console.log('Calculator objective:', this.objective);
      this.updateValueAttr();
   }
   private handleClick(value: string) {
@@ -93,9 +92,39 @@ export class LidoCalculator {
     const container = this.el.closest('lido-container') as HTMLElement;
     if (!container) return;
 
-    if (this.objective && this.objective !== '') {
+    if (this.objective && this.objective.length === 1) {
       isCorrect = userInput === this.objective;
     } 
+
+    else if (this.objective && this.objective.length > 1 && this.objective.includes(',')) {
+        // Create a duplicate (mutable) version
+        let duplicateObjective = this.objective;  // Keep original reference
+        let objectives = duplicateObjective.split(',').map(obj => Number(obj.trim()));
+
+        const userValue = Number(userInput);
+
+        // Check and remove the first matching occurrence
+        for (let i = 0; i <= objectives.length; i++) {
+          if (userValue === objectives[i]) { 
+            isCorrect = true;
+            objectives.splice(i, 1); // Remove the used value
+            break;
+          } else {
+            isCorrect = false;
+            break;
+          }
+        }
+        //Convert back to string
+        duplicateObjective = objectives.join(',');
+        //Replace the original objective value in DOM
+        const container = document.getElementById('lido-container');
+        if (container) {
+          container.setAttribute('objective', duplicateObjective);
+        }
+        //update the in-memory copy
+        this.objective = duplicateObjective;
+      }
+
     else if (this.objective === '') {
       const equationAttr = container.getAttribute('equationCheck') || '';
       if (!equationAttr) return;
@@ -112,12 +141,16 @@ export class LidoCalculator {
     this.onOk.emit(isCorrect);
 
     if (isCorrect) {
+      this.displayValue = ""; 
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
-      window.dispatchEvent(new CustomEvent(NextContainerKey));
+      if(this.objective.length===0){
+        window.dispatchEvent(new CustomEvent(NextContainerKey));
+      }
     }
     else{
+      this.displayValue = userInput;
       storingEachActivityScore(isCorrect);
       const onInCorrect = container?.getAttribute('onInCorrect') || '';
       await executeActions(onInCorrect, container);
@@ -139,8 +172,8 @@ export class LidoCalculator {
             <div class="lido-calculator-display">{this.displayValue}</div>
           </div>
 
-          <div class="lido-calculator-buttons">{numbers.map(num => (
-           <lido-text string={num} visible="true" type="click" class={{
+          <div class="lido-calculator-buttons">{numbers.map((num, i) => (
+           <lido-text id={`btn-${i}`} string={num} visible="true" type="click" class={{
         'lido-calculator-btn-special': num === '←' || num === 'OK',
         'lido-calculator-btn-default': num !== '←' && num !== 'OK'
       }} onClick={() => this.handleClick(num)}></lido-text>
