@@ -1233,3 +1233,77 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
   valueElement.innerText = value;
 };
 
+export const MultiplybeedsAnimation = async (element : HTMLElement,value : Number) => {
+  if (!element) return;
+
+  const container = element.closest('lido-container') as HTMLElement | null;
+  if (!container) return;
+
+  if (element.getAttribute && element.getAttribute('data-activated') === 'true') return;
+  element.setAttribute && element.setAttribute('data-activated', 'true');
+
+  const txtEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
+  if (!txtEl) return;
+
+  const addValue = parseInt(String(value), 10) || 0;
+
+  const current = txtEl.getAttribute('string') || '';
+
+  let left = current;
+  if (left.includes('=')) left = left.split('=')[0];
+  console.log('Left part before addition:', left);
+
+  let firstMatrix = false;
+  if (!left || left.trim().length === 0) 
+  {
+    left = String(addValue);
+    firstMatrix = true;
+  } 
+  else 
+  {
+    left = `${left}+${addValue}`;
+  }
+
+  const terms = left.split('+').map(t => parseInt(t.trim(), 10) || 0);
+  const sum = terms.reduce((s, n) => s + n, 0);
+  
+  let newString : string = ""
+  if (firstMatrix == true) 
+  {
+    newString = `${left}`;
+  }
+  else
+  {
+    newString = `${left}=${sum}`;
+  }
+
+  txtEl.setAttribute('string', newString);
+  txtEl.setAttribute('value', newString);
+  txtEl.style.visibility = 'visible';
+  txtEl.style.display = '';
+
+  const matrices = Array.from(container.querySelectorAll('lido-math-matrix')) as HTMLElement[];
+  console.log('Total matrices in container:', matrices.length);
+  const idx = matrices.indexOf(element);
+
+  // Reveal the next matrix (if any) and increment the persisted counter only when we actually reveal one.
+  if (idx >= 0 && idx + 1 < matrices.length) {
+    const nextMatrix = matrices[idx + 1];
+    const parentCell = nextMatrix.closest('lido-cell') as HTMLElement | null;
+    if (parentCell) {
+      parentCell.style.opacity = '1';
+      parentCell.style.visibility = 'visible';
+    }
+  }
+
+  // If this is the last matrix in the container, trigger next-container behavior.
+  if (idx === matrices.length - 1) {
+    // run onCorrect if provided, then trigger next container
+    const onCorrect = container.getAttribute && container.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, container);
+    }
+    // trigger the next container flow
+    triggerNextContainer();
+  }
+}

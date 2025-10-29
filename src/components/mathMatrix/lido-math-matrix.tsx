@@ -1,5 +1,6 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
-import { convertUrlToRelative, parseProp } from '../../utils/utils';
+import { convertUrlToRelative, parseProp, executeActions, triggerNextContainer } from '../../utils/utils';
+import { MultiplybeedsAnimation } from '../../utils/utils';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -93,6 +94,8 @@ export class LidoMathMatrix {
 
     this.updateSlots();
     this.updateStyles();
+
+    this.applyBottomSlotClickListener(this.el);
   }
 
 
@@ -150,7 +153,7 @@ export class LidoMathMatrix {
 
   handleClickSlot(element: HTMLElement) {
     const index = parseInt(element.className.split(' ')[1].split('-')[1]);
-    const slotElements = document.querySelectorAll('.slot');
+    const slotElements = this.el.querySelectorAll('.slot');
     slotElements.forEach((el, i) => {
       const slotEl = el as HTMLElement;
       if (i < index) {
@@ -164,6 +167,36 @@ export class LidoMathMatrix {
         slotEl.classList.add('slot-inactive');
       }
     });
+  }
+
+  applyBottomSlotClickListener(element: HTMLElement) {
+    /** 
+      Attach a click listener only to the bottom-most slot in this matrix.
+      Clicking the bottom slot will trigger the container-level summary update
+      and reveal the next matrix. We mark the matrix as "activated" after
+      the first valid click to avoid double-counting.
+    **/
+    const slotElements = this.el.querySelectorAll('.slot');
+    if (slotElements.length > 0) 
+    {
+      const bottomSlot = slotElements[slotElements.length - 1] as HTMLElement;
+      if (bottomSlot) 
+      {
+        const onBottomClick = async (ev: Event) => {
+          try 
+          {
+            ev.stopPropagation();
+
+            MultiplybeedsAnimation(this.el,this.cols);
+          } 
+          catch (err) 
+          {
+            console.warn('Error handling bottom-slot click', err);
+          }
+        };
+        bottomSlot.addEventListener('click', onBottomClick);
+      }
+    }
   }
 
   render() {
@@ -181,7 +214,7 @@ export class LidoMathMatrix {
               ) : (
                 <div
                   class={`slot slot-${slotNumber++} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
-                  onClick={() => this.handleClickSlot(event.target as HTMLElement)}
+                  onClick={(ev:Event) => this.handleClickSlot(ev.currentTarget as HTMLElement)}
                   key={`slot-${rowIndex}-${colIndex}`}
                   style={{ borderRadius: this.style.borderRadius }}
                 ></div>

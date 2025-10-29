@@ -17,82 +17,102 @@ export namespace Components {
     interface LidoAvatar {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel": string;
         /**
           * Audio file URL or identifier for sound that will be associated with the column.
+          * @default ''
          */
         "audio": string;
         /**
           * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
+          * @default ''
          */
         "height": string;
         /**
           * The unique identifier for the column component.
+          * @default ''
          */
         "id": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+          * @default ''
          */
         "onTouch": string;
         /**
           * Source URL of the Rive (.riv) file
+          * @default ''
          */
         "src": string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * Defines the type of the column, which can be used for styling or specific logic handling.
+          * @default ''
          */
         "type": string;
         /**
           * The value associated with the column component. Typically used for internal logic.
+          * @default ''
          */
         "value": string;
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+          * @default false
          */
         "visible": boolean;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width": string;
         /**
           * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x": string;
         /**
           * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y": string;
         /**
           * The z-index of the column to control stacking order.
+          * @default '0'
          */
         "z": string;
     }
@@ -247,34 +267,42 @@ export namespace Components {
     interface LidoCell {
         /**
           * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+          * @default ''
          */
         "alignItems": string;
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel": string;
         /**
           * Audio file URL or identifier for sound that will be associated with the column.
+          * @default ''
          */
         "audio": string;
         /**
           * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor": string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius": string;
         /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+          * @default 9999
          */
         "childElementsLength": number;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -284,102 +312,127 @@ export namespace Components {
         "disableSpeak": boolean;
         /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
+          * @default ''
          */
         "flexDirection": string;
         /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
+          * @default '0'
          */
         "gap": string;
         /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height": string;
         /**
           * The unique identifier for the column component.
+          * @default ''
          */
         "id": string;
         /**
           * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction. - `pos`: Applies absolute positioning to children, allowing manual placement using `x` and `y` values. - `random`: Positions child elements randomly within the container using absolute positioning.  Default: `'wrap'`
+          * @default 'wrap'
          */
         "layout": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
+          * @default 9999
          */
         "maxLength": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+          * @default 0
          */
         "minLength": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+          * @default ''
          */
         "onTouch": string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding": string;
         /**
           * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
+          * @default ''
          */
         "scrollbarWidth": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * Defines the type of the column, which can be used for styling or specific logic handling.
+          * @default ''
          */
         "type": string;
         /**
           * The value associated with the column component. Typically used for internal logic.
+          * @default ''
          */
         "value": string;
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+          * @default 'false'
          */
         "visible": string;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width": string;
         /**
           * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x": string;
         /**
           * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y": string;
         /**
           * The z-index of the column to control stacking order.
+          * @default '0'
          */
         "z": string;
     }
@@ -434,10 +487,12 @@ export namespace Components {
         "id": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
@@ -446,6 +501,7 @@ export namespace Components {
         "maxLength": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
@@ -470,6 +526,7 @@ export namespace Components {
         "onTouch": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
@@ -514,42 +571,52 @@ export namespace Components {
     interface LidoContainer {
         /**
           * Enables appending the dragged element to the drop target after all correct drops are completed.
+          * @default false
          */
         "appendToDropOnCompletion": boolean;
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default 'auto'
          */
         "ariaLabel": string;
         /**
           * URL or identifier of an audio file associated with the container.
+          * @default ''
          */
         "audio": string;
         /**
           * Base URL for the container.
+          * @default ''
          */
         "baseUrl": string;
         /**
           * Background color of the container (CSS color value).
+          * @default ''
          */
         "bgColor": string;
         /**
           * The background image URL to be applied to the entire body.
+          * @default ''
          */
         "bgImage": string;
         /**
           * Boolean that controls the playability of the game.
+          * @default true
          */
         "canplay": boolean;
         /**
           * Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.
+          * @default ''
          */
         "customStyle": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -563,22 +630,27 @@ export namespace Components {
         "exitButtonUrl": string;
         /**
           * The height of the container (CSS value).
+          * @default 'auto'
          */
         "height": string;
         /**
           * Unique identifier for the container.
+          * @default ''
          */
         "id": string;
         /**
           * Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false".
+          * @default false
          */
         "isAllowOnlyCorrect": boolean;
         /**
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
+          * @default false
          */
         "isContinueOnCorrect": boolean;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
@@ -587,22 +659,27 @@ export namespace Components {
         "nextButtonUrl": string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
+          * @default ''
          */
         "objective": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the container is entered, useful for triggering animations or logic.
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler triggered when the container is touched or clicked.
+          * @default ''
          */
         "onTouch": string;
         /**
@@ -611,18 +688,22 @@ export namespace Components {
         "prevButtonUrl": string;
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
+          * @default false
          */
         "showCheck": boolean;
         /**
           * Controls whether the drop zone displays a border; true shows the border, false hides it.
+          * @default true
          */
         "showDropBorder": boolean;
         /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
+          * @default 'false'
          */
         "showNextButton": string;
         /**
           * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
+          * @default 'false'
          */
         "showPrevButton": string;
         /**
@@ -631,48 +712,59 @@ export namespace Components {
         "speakerButtonUrl": string;
         /**
           * TabIndex for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * Type of the container, which can be used for conditional logic or styling purposes.
+          * @default ''
          */
         "type": string;
         /**
           * Value assigned to the container. This can be used for logic related to this component.
+          * @default ''
          */
         "value": string;
         /**
           * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible": boolean;
         /**
           * The width of the container (CSS value).
+          * @default 'auto'
          */
         "width": string;
         /**
           * X-axis (horizontal) position of the container.
+          * @default '0px'
          */
         "x": string;
         /**
           * Y-axis (vertical) position of the container.
+          * @default '0px'
          */
         "y": string;
         /**
           * Z-index to control the stacking order of the container.
+          * @default '0'
          */
         "z": string;
     }
     interface LidoFlashCard {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel": string;
         /**
           * Audio file URL or identifier for sound that will be associated with the column.
+          * @default ''
          */
         "audio": string;
         /**
@@ -681,10 +773,12 @@ export namespace Components {
         "back": any;
         /**
           * Background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -702,6 +796,7 @@ export namespace Components {
         "display"?: string;
         /**
           * Whether the card is flipped (back side visible). `mutable` lets the component toggle itself on click; `reflect` keeps the `<lido-flash-card flipped>` attribute in sync.
+          * @default false
          */
         "flipped": boolean;
         /**
@@ -710,58 +805,72 @@ export namespace Components {
         "front": any;
         /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the column is entered, useful for triggering animations or logic.
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+          * @default ''
          */
         "onTouch": string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * Defines the type of the column, which can be used for styling or specific logic handling.
+          * @default ''
          */
         "type": string;
         /**
           * The value associated with the column component. Typically used for internal logic.
+          * @default ''
          */
         "value": string;
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+          * @default true
          */
         "visible": boolean;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width": string;
         /**
           * X-axis (horizontal) position of the column within its container (CSS value, e.g., '10px', '5%').
+          * @default '0px'
          */
         "x": string;
         /**
           * Y-axis (vertical) position of the column within its container (CSS value, e.g., '10px', '5%').
+          * @default '0px'
          */
         "y": string;
         /**
           * Z-index for stacking order of the column relative to other elements.
+          * @default '0'
          */
         "z": string;
     }
@@ -772,10 +881,12 @@ export namespace Components {
         "bgColor": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
           * Direction of the float element's movement (e.g., 'leftToRight', 'bottomToTop'). This can be used to control the animation or positioning of the float elements.
+          * @default 'bottomToTop'
          */
         "floatDirection": string;
         /**
@@ -784,14 +895,17 @@ export namespace Components {
         "height": string;
         /**
           * Unique identifier for the text element.
+          * @default ''
          */
         "id": string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry": string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
@@ -800,10 +914,12 @@ export namespace Components {
         "type": string;
         /**
           * Value associated with the text element, typically used for internal logic or tracking.
+          * @default ''
          */
         "value": string;
         /**
           * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible": boolean;
         /**
@@ -812,6 +928,7 @@ export namespace Components {
         "width": string;
         /**
           * Z-index for stacking order of the text component relative to other elements.
+          * @default '0'
          */
         "z": string;
     }
@@ -828,10 +945,12 @@ export namespace Components {
         "avatarUrl": string;
         /**
           * Base URL for the containers.
+          * @default ''
          */
         "baseUrl": string;
         /**
           * Boolean that controls the playability of the game.
+          * @default true
          */
         "canplay": boolean;
         /**
@@ -840,10 +959,12 @@ export namespace Components {
         "exitButtonUrl": string;
         /**
           * The height of the container (CSS value).
+          * @default ''
          */
         "height": string;
         /**
           * Initial index of the container being displayed.
+          * @default 0
          */
         "initialIndex": number;
         /**
@@ -865,6 +986,7 @@ export namespace Components {
         "uuid": string;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
+          * @default ''
          */
         "xmlData": string;
     }
@@ -894,10 +1016,12 @@ export namespace Components {
         "bgColor": string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -907,6 +1031,7 @@ export namespace Components {
         "disableSpeak": boolean;
         /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
+          * @default ''
          */
         "filter": string;
         /**
@@ -923,14 +1048,17 @@ export namespace Components {
         "isSlice": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
@@ -951,14 +1079,17 @@ export namespace Components {
         "onTouch": string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
           * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
+          * @default '30px'
          */
         "sliceWidth": string;
         /**
@@ -971,6 +1102,7 @@ export namespace Components {
         "tabIndex": number;
         /**
           * CSS transform property to apply transformations like rotate, scale, translate, etc. Example: 'rotate(45deg)' or 'scale(1.2)'.
+          * @default ''
          */
         "transform": string;
         /**
@@ -1005,14 +1137,17 @@ export namespace Components {
     interface LidoKeyboard {
         /**
           * Background color for each key button
+          * @default ''
          */
         "bgColor": string;
         /**
           * Border radius for key buttons (e.g., "8px")
+          * @default ''
          */
         "borderRadius": string;
         /**
           * Number of columns in the keyboard layout (default: "10")
+          * @default '10'
          */
         "columns": string;
         /**
@@ -1034,6 +1169,7 @@ export namespace Components {
         "fontSize"?: string;
         /**
           * Gap between key buttons (default: "10px")
+          * @default '10px'
          */
         "gap": string;
         /**
@@ -1042,10 +1178,12 @@ export namespace Components {
         "height"?: string;
         /**
           * Indicates whether the keyboard input is enabled. When set to `true`, the component will respond to keyboard events.
+          * @default false
          */
         "keyboardInput": boolean;
         /**
           * Comma-separated list of keys, optionally with status (e.g., "A,B-disable,C")
+          * @default ''
          */
         "keys": string;
         /**
@@ -1191,86 +1329,107 @@ export namespace Components {
     interface LidoPos {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the component.
+          * @default ''
          */
         "audio": string;
         /**
           * Background color of the component (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor": string;
         /**
           * The height of the component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height": string;
         /**
           * Unique identifier for the positional element.
+          * @default ''
          */
         "id": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler triggered when the component is touched or clicked.
+          * @default ''
          */
         "onTouch": string;
         /**
           * Tab index to support keyboard navigation within the component.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * The type of the component, used for conditional logic or specific styles.
+          * @default ''
          */
         "type": string;
         /**
           * Value assigned to the component, often used for internal logic or data tracking.
+          * @default ''
          */
         "value": string;
         /**
           * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
+          * @default false
          */
         "visible": boolean | string;
         /**
           * The width of the component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width": string;
         /**
           * X-axis (horizontal) position of the component (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x": string;
         /**
           * Y-axis (vertical) position of the component (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y": string;
         /**
           * Z-index for stacking order of the element relative to others.
+          * @default '0'
          */
         "z": string;
     }
@@ -1283,90 +1442,112 @@ export namespace Components {
     interface LidoRandom {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the component.
+          * @default ''
          */
         "audio": string;
         /**
           * Background color of the container (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor": string;
         /**
           * The height of the container (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height": string;
         /**
           * Unique identifier for the random container.
+          * @default ''
          */
         "id": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler triggered when the component is touched or clicked.
+          * @default ''
          */
         "onTouch": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * The type of the component, used for conditional logic or specific styling.
+          * @default ''
          */
         "type": string;
         /**
           * Value associated with the component, often used for internal logic.
+          * @default ''
          */
         "value": string;
         /**
           * Controls the visibility of the container. If `true`, the container is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible": boolean;
         /**
           * The width of the container (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width": string;
         /**
           * X-axis (horizontal) position of the container (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x": string;
         /**
           * Y-axis (vertical) position of the container (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y": string;
         /**
           * Z-index for stacking order of the container relative to other elements.
+          * @default '0'
          */
         "z": string;
     }
@@ -1379,10 +1560,12 @@ export namespace Components {
     interface LidoRoot {
         /**
           * Base URL for the containers.
+          * @default ''
          */
         "baseUrl": string;
         /**
           * Boolean that controls the playability of the game.
+          * @default true
          */
         "canplay": boolean;
         /**
@@ -1391,10 +1574,12 @@ export namespace Components {
         "exitButtonUrl": string;
         /**
           * Initial index of the container being displayed.
+          * @default 0
          */
         "initialIndex": number;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
@@ -1411,6 +1596,7 @@ export namespace Components {
         "speakerButtonUrl": string;
         /**
           * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
+          * @default ''
          */
         "xmlPath": string;
     }
@@ -1459,10 +1645,12 @@ export namespace Components {
         "height": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
@@ -1471,6 +1659,7 @@ export namespace Components {
         "maxLength": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
@@ -1495,6 +1684,7 @@ export namespace Components {
         "onTouch": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
@@ -1539,22 +1729,27 @@ export namespace Components {
     interface LidoShape {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the shape.
+          * @default ''
          */
         "audio": string;
         /**
           * Background color of the shape (CSS color value, e.g., '#FFFFFF', 'blue'). This is ignored for polygons.
+          * @default ''
          */
         "bgColor": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -1564,74 +1759,92 @@ export namespace Components {
         "disableSpeak": boolean;
         /**
           * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+          * @default 'auto'
          */
         "height": string;
         /**
           * Unique identifier for the shape element.
+          * @default ''
          */
         "id": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the shape is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler triggered when the shape is touched or clicked.
+          * @default ''
          */
         "onTouch": string;
         /**
           * Type of shape to render (e.g., 'circle', 'rectangle', 'polygon').
+          * @default 'circle'
          */
         "shapeType": string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * Defines the type of the shape, which can be used for conditional logic or specific styling.
+          * @default ''
          */
         "type": string;
         /**
           * Value associated with the shape, typically used for internal logic or tracking.
+          * @default ''
          */
         "value": string;
         /**
           * Controls the visibility of the shape. If `true`, the shape is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible": boolean;
         /**
           * The width of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+          * @default 'auto'
          */
         "width": string;
         /**
           * X-axis (horizontal) position of the shape (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x": string;
         /**
           * Y-axis (vertical) position of the shape (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y": string;
         /**
           * Z-index for stacking order of the shape relative to other elements.
+          * @default '0'
          */
         "z": string;
     }
@@ -1642,10 +1855,12 @@ export namespace Components {
         "bgColor": string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -1655,6 +1870,7 @@ export namespace Components {
         "disableSpeak": boolean;
         /**
           * Number of divisions or segments to split the ruler path into
+          * @default 5
          */
         "division": number;
         /**
@@ -1671,6 +1887,7 @@ export namespace Components {
         "height": string;
         /**
           * Unique identifier for the component instance
+          * @default 'lido-slide-fill'
          */
         "id": string;
         /**
@@ -1679,22 +1896,27 @@ export namespace Components {
         "margin": string;
         /**
           * Maximum value shown on the ruler (used for number generation)
+          * @default 10
          */
         "max": number;
         /**
           * Minimum value shown on the ruler (used for number generation)
+          * @default 0
          */
         "min": number;
         /**
           * Type of number to be displayed on the ruler. Can be 'integer', 'decimal', or 'fraction'.
+          * @default 'integer'
          */
         "numberType": string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry": string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding": string;
         /**
@@ -1707,6 +1929,7 @@ export namespace Components {
         "src": string;
         /**
           * Defines the type of the component, which can be used for conditional logic or specific styling.
+          * @default ''
          */
         "type": string;
         /**
@@ -1739,30 +1962,37 @@ export namespace Components {
     interface LidoText {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the text component.
+          * @default ''
          */
         "audio": string;
         /**
           * Background color of the text component (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor": string;
         /**
           * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
+          * @default ''
          */
         "borderImage"?: string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -1772,116 +2002,144 @@ export namespace Components {
         "disableSpeak": boolean;
         /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
+          * @default ''
          */
         "fontColor": string;
         /**
           * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+          * @default ''
          */
         "fontFamily": string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
+          * @default '20px'
          */
         "fontSize": string;
         /**
           * Height of the text component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height": string;
         /**
           * When set to `true`, the text will highlight while being spoken, typically used for accessibility.
+          * @default false
          */
         "highlightWhileSpeaking": boolean;
         /**
           * Unique identifier for the text element.
+          * @default ''
          */
         "id": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect": string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry": string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect": string;
         /**
           * Event handler triggered when the text component is touched or clicked.
+          * @default ''
          */
         "onTouch": string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
           * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+          * @default ''
          */
         "spanType": 'letters' | 'words' | '';
         /**
           * The string of text to be displayed in the component.
+          * @default ''
          */
         "string": string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * Defines the type of the component, which can be used for conditional logic or specific styling.
+          * @default ''
          */
         "type": string;
         /**
           * Value associated with the text element, typically used for internal logic or tracking.
+          * @default ''
          */
         "value": string;
         /**
           * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible": boolean | string;
         /**
           * Width of the text component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width": string;
         /**
           * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x": string;
         /**
           * Y-axis (vertical) position of the text component (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y": string;
         /**
           * Z-index for stacking order of the text component relative to other elements.
+          * @default '0'
          */
         "z": string;
     }
     interface LidoTrace {
         /**
           * Indicates whether to play an animation trace when the SVG is completed.
+          * @default false
          */
         "animationTrace": boolean;
         /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
+          * @default ''
          */
         "ariaHidden": string;
         /**
           * Accessible label for screen readers, providing a textual description of the component's purpose.
+          * @default ''
          */
         "ariaLabel": string;
         /**
@@ -1891,6 +2149,7 @@ export namespace Components {
         "audio": string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible": string;
         /**
@@ -1900,22 +2159,27 @@ export namespace Components {
         "disableSpeak": boolean;
         /**
           * URL for the finger hint image
+          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg'
          */
         "fingerHintUrl": string;
         /**
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
+          * @default 'auto'
          */
         "height": string;
         /**
           * Indicates whether to highlight the text associated with the SVG when the trace is completed.
+          * @default ''
          */
         "highlightTextId": string;
         /**
           * Unique identifier for this `lido-trace` component instance.
+          * @default ''
          */
         "id": string;
         /**
           * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`
+          * @default TraceMode.ShowFlow
          */
         "mode": string;
         /**
@@ -1928,34 +2192,42 @@ export namespace Components {
         "onInCorrect": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
           * Source URL or path for the SVG file used in this component.
+          * @default ''
          */
         "svgSource": string;
         /**
           * Sets the tab order of the component within the page, enabling keyboard navigation.
+          * @default 0
          */
         "tabIndex": number;
         /**
           * A custom string value associated with the component for additional data or identification.
+          * @default ''
          */
         "value": string;
         /**
           * Specifies the width of the component container, accepts any valid CSS width value (e.g., `"100px"`, `"50%"`).
+          * @default 'auto'
          */
         "width": string;
         /**
           * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
+          * @default '0px'
          */
         "x": string;
         /**
           * Defines the y-coordinate position (top offset) of the component container, using any valid CSS `top` value (e.g., `"10px"`, `"5%"`).
+          * @default '0px'
          */
         "y": string;
         /**
           * Sets the z-index of the component, controlling its stacking order on the page.
+          * @default '0'
          */
         "z": string;
     }
@@ -2005,10 +2277,12 @@ export namespace Components {
         "id": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin": string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops": number;
         /**
@@ -2017,6 +2291,7 @@ export namespace Components {
         "maxLength": number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops": number;
         /**
@@ -2041,6 +2316,7 @@ export namespace Components {
         "onTouch": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+          * @default false
          */
         "showSpeakIcon": boolean;
         /**
@@ -2337,82 +2613,102 @@ declare namespace LocalJSX {
     interface LidoAvatar {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
           * Audio file URL or identifier for sound that will be associated with the column.
+          * @default ''
          */
         "audio"?: string;
         /**
           * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
+          * @default ''
          */
         "height"?: string;
         /**
           * The unique identifier for the column component.
+          * @default ''
          */
         "id"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+          * @default ''
          */
         "onTouch"?: string;
         /**
           * Source URL of the Rive (.riv) file
+          * @default ''
          */
         "src"?: string;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * Defines the type of the column, which can be used for styling or specific logic handling.
+          * @default ''
          */
         "type"?: string;
         /**
           * The value associated with the column component. Typically used for internal logic.
+          * @default ''
          */
         "value"?: string;
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+          * @default false
          */
         "visible"?: boolean;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x"?: string;
         /**
           * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y"?: string;
         /**
           * The z-index of the column to control stacking order.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -2568,34 +2864,42 @@ declare namespace LocalJSX {
     interface LidoCell {
         /**
           * CSS align-items property to control the alignment of flex items. Example: 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'.
+          * @default ''
          */
         "alignItems"?: string;
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
           * Audio file URL or identifier for sound that will be associated with the column.
+          * @default ''
          */
         "audio"?: string;
         /**
           * The background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius"?: string;
         /**
           * The number of child elements that should be displayed inside the row. This value is dynamically adjusted based on `minLength` and `maxLength`.
+          * @default 9999
          */
         "childElementsLength"?: number;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -2605,102 +2909,127 @@ declare namespace LocalJSX {
         "disableSpeak"?: boolean;
         /**
           * CSS flex direction for the component, which can be used to control the layout of child elements. Accepts values like 'row', 'column', etc.
+          * @default ''
          */
         "flexDirection"?: string;
         /**
           * The gap between child elements inside the column (CSS value, e.g., '10px', '5px 10px'). This is applicable when the layout is set to `wrap` or `flex`.
+          * @default '0'
          */
         "gap"?: string;
         /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * The unique identifier for the column component.
+          * @default ''
          */
         "id"?: string;
         /**
           * Determines the layout behavior of the component's children.  - `wrap`: Applies a grid layout to the children, allowing them to wrap automatically in a grid format. - `flex`: Applies a flex layout with wrapping behavior (`flex-wrap`). - `col`: Arranges children in a single column using a vertical flex direction. - `row`: Arranges children in a single row using a horizontal flex direction. - `pos`: Applies absolute positioning to children, allowing manual placement using `x` and `y` values. - `random`: Positions child elements randomly within the container using absolute positioning.  Default: `'wrap'`
+          * @default 'wrap'
          */
         "layout"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
           * The maximum number of child elements that can be displayed inside the row. If `childElementsLength` exceeds this value, excess elements will be hidden.
+          * @default 9999
          */
         "maxLength"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
           * The minimum number of child elements that must be displayed inside the row. If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
+          * @default 0
          */
         "minLength"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+          * @default ''
          */
         "onTouch"?: string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding"?: string;
         /**
           * Defines the width of the scrollbar within the cell (e.g., '14px'). Defaults to '0px' if not specified, effectively hiding the scrollbar.
+          * @default ''
          */
         "scrollbarWidth"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
           * The tab index value, used to set the tab order of the column for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * Defines the type of the column, which can be used for styling or specific logic handling.
+          * @default ''
          */
         "type"?: string;
         /**
           * The value associated with the column component. Typically used for internal logic.
+          * @default ''
          */
         "value"?: string;
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+          * @default 'false'
          */
         "visible"?: string;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * The x-coordinate (left position) of the column within its container (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x"?: string;
         /**
           * The y-coordinate (top position) of the column within its container (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y"?: string;
         /**
           * The z-index of the column to control stacking order.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -2755,10 +3084,12 @@ declare namespace LocalJSX {
         "id"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
@@ -2767,6 +3098,7 @@ declare namespace LocalJSX {
         "maxLength"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
@@ -2791,6 +3123,7 @@ declare namespace LocalJSX {
         "onTouch"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
@@ -2835,42 +3168,52 @@ declare namespace LocalJSX {
     interface LidoContainer {
         /**
           * Enables appending the dragged element to the drop target after all correct drops are completed.
+          * @default false
          */
         "appendToDropOnCompletion"?: boolean;
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default 'auto'
          */
         "ariaLabel"?: string;
         /**
           * URL or identifier of an audio file associated with the container.
+          * @default ''
          */
         "audio"?: string;
         /**
           * Base URL for the container.
+          * @default ''
          */
         "baseUrl"?: string;
         /**
           * Background color of the container (CSS color value).
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * The background image URL to be applied to the entire body.
+          * @default ''
          */
         "bgImage"?: string;
         /**
           * Boolean that controls the playability of the game.
+          * @default true
          */
         "canplay"?: boolean;
         /**
           * Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.
+          * @default ''
          */
         "customStyle"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -2884,22 +3227,27 @@ declare namespace LocalJSX {
         "exitButtonUrl"?: string;
         /**
           * The height of the container (CSS value).
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * Unique identifier for the container.
+          * @default ''
          */
         "id"?: string;
         /**
           * Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false".
+          * @default false
          */
         "isAllowOnlyCorrect"?: boolean;
         /**
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
+          * @default false
          */
         "isContinueOnCorrect"?: boolean;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
@@ -2908,22 +3256,27 @@ declare namespace LocalJSX {
         "nextButtonUrl"?: string;
         /**
           * Objective or purpose of the container. Can be used for internal logic or tracking.
+          * @default ''
          */
         "objective"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the container is entered, useful for triggering animations or logic.
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when the container is touched or clicked.
+          * @default ''
          */
         "onTouch"?: string;
         /**
@@ -2932,18 +3285,22 @@ declare namespace LocalJSX {
         "prevButtonUrl"?: string;
         /**
           * Indicates whether the "Check" button should be visible or not. Expected values: "true" or "false".
+          * @default false
          */
         "showCheck"?: boolean;
         /**
           * Controls whether the drop zone displays a border; true shows the border, false hides it.
+          * @default true
          */
         "showDropBorder"?: boolean;
         /**
           * Indicates whether the next button should be displayed. Expected values: "true" or "false".
+          * @default 'false'
          */
         "showNextButton"?: string;
         /**
           * Indicates whether the previous button should be displayed. Expected values: "true" or "false".
+          * @default 'false'
          */
         "showPrevButton"?: string;
         /**
@@ -2952,48 +3309,59 @@ declare namespace LocalJSX {
         "speakerButtonUrl"?: string;
         /**
           * TabIndex for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * Type of the container, which can be used for conditional logic or styling purposes.
+          * @default ''
          */
         "type"?: string;
         /**
           * Value assigned to the container. This can be used for logic related to this component.
+          * @default ''
          */
         "value"?: string;
         /**
           * Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible"?: boolean;
         /**
           * The width of the container (CSS value).
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * X-axis (horizontal) position of the container.
+          * @default '0px'
          */
         "x"?: string;
         /**
           * Y-axis (vertical) position of the container.
+          * @default '0px'
          */
         "y"?: string;
         /**
           * Z-index to control the stacking order of the container.
+          * @default '0'
          */
         "z"?: string;
     }
     interface LidoFlashCard {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
           * Audio file URL or identifier for sound that will be associated with the column.
+          * @default ''
          */
         "audio"?: string;
         /**
@@ -3002,10 +3370,12 @@ declare namespace LocalJSX {
         "back"?: any;
         /**
           * Background color of the column (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -3023,6 +3393,7 @@ declare namespace LocalJSX {
         "display"?: string;
         /**
           * Whether the card is flipped (back side visible). `mutable` lets the component toggle itself on click; `reflect` keeps the `<lido-flash-card flipped>` attribute in sync.
+          * @default false
          */
         "flipped"?: boolean;
         /**
@@ -3031,58 +3402,72 @@ declare namespace LocalJSX {
         "front"?: any;
         /**
           * The height of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the column is entered, useful for triggering animations or logic.
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
+          * @default ''
          */
         "onTouch"?: string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * Defines the type of the column, which can be used for styling or specific logic handling.
+          * @default ''
          */
         "type"?: string;
         /**
           * The value associated with the column component. Typically used for internal logic.
+          * @default ''
          */
         "value"?: string;
         /**
           * A boolean that controls whether the column is visible (`true`) or hidden (`false`).
+          * @default true
          */
         "visible"?: boolean;
         /**
           * The width of the column component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * X-axis (horizontal) position of the column within its container (CSS value, e.g., '10px', '5%').
+          * @default '0px'
          */
         "x"?: string;
         /**
           * Y-axis (vertical) position of the column within its container (CSS value, e.g., '10px', '5%').
+          * @default '0px'
          */
         "y"?: string;
         /**
           * Z-index for stacking order of the column relative to other elements.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -3093,10 +3478,12 @@ declare namespace LocalJSX {
         "bgColor"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
           * Direction of the float element's movement (e.g., 'leftToRight', 'bottomToTop'). This can be used to control the animation or positioning of the float elements.
+          * @default 'bottomToTop'
          */
         "floatDirection"?: string;
         /**
@@ -3105,14 +3492,17 @@ declare namespace LocalJSX {
         "height"?: string;
         /**
           * Unique identifier for the text element.
+          * @default ''
          */
         "id"?: string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
@@ -3121,10 +3511,12 @@ declare namespace LocalJSX {
         "type"?: string;
         /**
           * Value associated with the text element, typically used for internal logic or tracking.
+          * @default ''
          */
         "value"?: string;
         /**
           * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible"?: boolean;
         /**
@@ -3133,6 +3525,7 @@ declare namespace LocalJSX {
         "width"?: string;
         /**
           * Z-index for stacking order of the text component relative to other elements.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -3149,10 +3542,12 @@ declare namespace LocalJSX {
         "avatarUrl"?: string;
         /**
           * Base URL for the containers.
+          * @default ''
          */
         "baseUrl"?: string;
         /**
           * Boolean that controls the playability of the game.
+          * @default true
          */
         "canplay"?: boolean;
         /**
@@ -3161,10 +3556,12 @@ declare namespace LocalJSX {
         "exitButtonUrl"?: string;
         /**
           * The height of the container (CSS value).
+          * @default ''
          */
         "height"?: string;
         /**
           * Initial index of the container being displayed.
+          * @default 0
          */
         "initialIndex"?: number;
         /**
@@ -3186,6 +3583,7 @@ declare namespace LocalJSX {
         "uuid"?: string;
         /**
           * XML data passed to the component, which is parsed and used to render various containers.
+          * @default ''
          */
         "xmlData"?: string;
     }
@@ -3215,10 +3613,12 @@ declare namespace LocalJSX {
         "bgColor"?: string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -3228,6 +3628,7 @@ declare namespace LocalJSX {
         "disableSpeak"?: boolean;
         /**
           * CSS filter to apply visual effects (e.g., blur, brightness) to the image. Example: 'blur(5px)', 'brightness(0.8)', 'grayscale(100%)'
+          * @default ''
          */
         "filter"?: string;
         /**
@@ -3244,14 +3645,17 @@ declare namespace LocalJSX {
         "isSlice"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
@@ -3272,14 +3676,17 @@ declare namespace LocalJSX {
         "onTouch"?: string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
           * Specifies the width for border-image slice (e.g., "30px", "2em"). Only used when `isSlice` is enabled.
+          * @default '30px'
          */
         "sliceWidth"?: string;
         /**
@@ -3292,6 +3699,7 @@ declare namespace LocalJSX {
         "tabIndex"?: number;
         /**
           * CSS transform property to apply transformations like rotate, scale, translate, etc. Example: 'rotate(45deg)' or 'scale(1.2)'.
+          * @default ''
          */
         "transform"?: string;
         /**
@@ -3326,14 +3734,17 @@ declare namespace LocalJSX {
     interface LidoKeyboard {
         /**
           * Background color for each key button
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * Border radius for key buttons (e.g., "8px")
+          * @default ''
          */
         "borderRadius"?: string;
         /**
           * Number of columns in the keyboard layout (default: "10")
+          * @default '10'
          */
         "columns"?: string;
         /**
@@ -3355,6 +3766,7 @@ declare namespace LocalJSX {
         "fontSize"?: string;
         /**
           * Gap between key buttons (default: "10px")
+          * @default '10px'
          */
         "gap"?: string;
         /**
@@ -3363,10 +3775,12 @@ declare namespace LocalJSX {
         "height"?: string;
         /**
           * Indicates whether the keyboard input is enabled. When set to `true`, the component will respond to keyboard events.
+          * @default false
          */
         "keyboardInput"?: boolean;
         /**
           * Comma-separated list of keys, optionally with status (e.g., "A,B-disable,C")
+          * @default ''
          */
         "keys"?: string;
         /**
@@ -3512,86 +3926,107 @@ declare namespace LocalJSX {
     interface LidoPos {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the component.
+          * @default ''
          */
         "audio"?: string;
         /**
           * Background color of the component (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * The height of the component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * Unique identifier for the positional element.
+          * @default ''
          */
         "id"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when the component is touched or clicked.
+          * @default ''
          */
         "onTouch"?: string;
         /**
           * Tab index to support keyboard navigation within the component.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * The type of the component, used for conditional logic or specific styles.
+          * @default ''
          */
         "type"?: string;
         /**
           * Value assigned to the component, often used for internal logic or data tracking.
+          * @default ''
          */
         "value"?: string;
         /**
           * Visibility flag to control whether the element is displayed (`true`) or hidden (`false`).
+          * @default false
          */
         "visible"?: boolean | string;
         /**
           * The width of the component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * X-axis (horizontal) position of the component (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x"?: string;
         /**
           * Y-axis (vertical) position of the component (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y"?: string;
         /**
           * Z-index for stacking order of the element relative to others.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -3604,90 +4039,112 @@ declare namespace LocalJSX {
     interface LidoRandom {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the component.
+          * @default ''
          */
         "audio"?: string;
         /**
           * Background color of the container (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * The height of the container (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * Unique identifier for the random container.
+          * @default ''
          */
         "id"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when the component is touched or clicked.
+          * @default ''
          */
         "onTouch"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * The type of the component, used for conditional logic or specific styling.
+          * @default ''
          */
         "type"?: string;
         /**
           * Value associated with the component, often used for internal logic.
+          * @default ''
          */
         "value"?: string;
         /**
           * Controls the visibility of the container. If `true`, the container is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible"?: boolean;
         /**
           * The width of the container (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * X-axis (horizontal) position of the container (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x"?: string;
         /**
           * Y-axis (vertical) position of the container (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y"?: string;
         /**
           * Z-index for stacking order of the container relative to other elements.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -3700,10 +4157,12 @@ declare namespace LocalJSX {
     interface LidoRoot {
         /**
           * Base URL for the containers.
+          * @default ''
          */
         "baseUrl"?: string;
         /**
           * Boolean that controls the playability of the game.
+          * @default true
          */
         "canplay"?: boolean;
         /**
@@ -3712,10 +4171,12 @@ declare namespace LocalJSX {
         "exitButtonUrl"?: string;
         /**
           * Initial index of the container being displayed.
+          * @default 0
          */
         "initialIndex"?: number;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
@@ -3732,6 +4193,7 @@ declare namespace LocalJSX {
         "speakerButtonUrl"?: string;
         /**
           * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
+          * @default ''
          */
         "xmlPath"?: string;
     }
@@ -3780,10 +4242,12 @@ declare namespace LocalJSX {
         "height"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
@@ -3792,6 +4256,7 @@ declare namespace LocalJSX {
         "maxLength"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
@@ -3816,6 +4281,7 @@ declare namespace LocalJSX {
         "onTouch"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
@@ -3860,22 +4326,27 @@ declare namespace LocalJSX {
     interface LidoShape {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the shape.
+          * @default ''
          */
         "audio"?: string;
         /**
           * Background color of the shape (CSS color value, e.g., '#FFFFFF', 'blue'). This is ignored for polygons.
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -3885,74 +4356,92 @@ declare namespace LocalJSX {
         "disableSpeak"?: boolean;
         /**
           * The height of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * Unique identifier for the shape element.
+          * @default ''
          */
         "id"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the shape is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when the shape is touched or clicked.
+          * @default ''
          */
         "onTouch"?: string;
         /**
           * Type of shape to render (e.g., 'circle', 'rectangle', 'polygon').
+          * @default 'circle'
          */
         "shapeType"?: string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * Defines the type of the shape, which can be used for conditional logic or specific styling.
+          * @default ''
          */
         "type"?: string;
         /**
           * Value associated with the shape, typically used for internal logic or tracking.
+          * @default ''
          */
         "value"?: string;
         /**
           * Controls the visibility of the shape. If `true`, the shape is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible"?: boolean;
         /**
           * The width of the shape (CSS value, e.g., '100px', '50%'). This is ignored for polygons.
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * X-axis (horizontal) position of the shape (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x"?: string;
         /**
           * Y-axis (vertical) position of the shape (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y"?: string;
         /**
           * Z-index for stacking order of the shape relative to other elements.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -3963,10 +4452,12 @@ declare namespace LocalJSX {
         "bgColor"?: string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -3976,6 +4467,7 @@ declare namespace LocalJSX {
         "disableSpeak"?: boolean;
         /**
           * Number of divisions or segments to split the ruler path into
+          * @default 5
          */
         "division"?: number;
         /**
@@ -3992,6 +4484,7 @@ declare namespace LocalJSX {
         "height"?: string;
         /**
           * Unique identifier for the component instance
+          * @default 'lido-slide-fill'
          */
         "id"?: string;
         /**
@@ -4000,22 +4493,27 @@ declare namespace LocalJSX {
         "margin"?: string;
         /**
           * Maximum value shown on the ruler (used for number generation)
+          * @default 10
          */
         "max"?: number;
         /**
           * Minimum value shown on the ruler (used for number generation)
+          * @default 0
          */
         "min"?: number;
         /**
           * Type of number to be displayed on the ruler. Can be 'integer', 'decimal', or 'fraction'.
+          * @default 'integer'
          */
         "numberType"?: string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding"?: string;
         /**
@@ -4028,6 +4526,7 @@ declare namespace LocalJSX {
         "src"?: string;
         /**
           * Defines the type of the component, which can be used for conditional logic or specific styling.
+          * @default ''
          */
         "type"?: string;
         /**
@@ -4060,30 +4559,37 @@ declare namespace LocalJSX {
     interface LidoText {
         /**
           * The ARIA hidden attribute of the container. Used for accessibility to hide the element.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * The ARIA label of the container. Used for accessibility to indicate the purpose of the element.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the text component.
+          * @default ''
          */
         "audio"?: string;
         /**
           * Background color of the text component (CSS color value, e.g., '#FFFFFF', 'blue').
+          * @default ''
          */
         "bgColor"?: string;
         /**
           * The border image of the column (CSS border-image value, e.g., 'url(border.png)', 'linear-gradient(red, blue)').
+          * @default ''
          */
         "borderImage"?: string;
         /**
           * CSS filter to apply border radius to the image. Example: '10px' for  images.
+          * @default '0px'
          */
         "borderRadius"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -4093,116 +4599,144 @@ declare namespace LocalJSX {
         "disableSpeak"?: boolean;
         /**
           * Font color for the text (CSS color value, e.g., '#000000', 'red').
+          * @default ''
          */
         "fontColor"?: string;
         /**
           * Font family for the text (CSS value, e.g., 'Arial', 'Times New Roman').
+          * @default ''
          */
         "fontFamily"?: string;
         /**
           * Font size for the text (CSS value, e.g., '16px', '1.5em').
+          * @default '20px'
          */
         "fontSize"?: string;
         /**
           * Height of the text component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * When set to `true`, the text will highlight while being spoken, typically used for accessibility.
+          * @default false
          */
         "highlightWhileSpeaking"?: boolean;
         /**
           * Unique identifier for the text element.
+          * @default ''
          */
         "id"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
           * Event handler for a Correct matching action, which can be used to hide the column or trigger other custom logic.
+          * @default ''
          */
         "onCorrect"?: string;
         /**
           * Event handler triggered when the text component is entered (useful for animations or logic on entry).
+          * @default ''
          */
         "onEntry"?: string;
         /**
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
+          * @default ''
          */
         "onInCorrect"?: string;
         /**
           * Event handler triggered when the text component is touched or clicked.
+          * @default ''
          */
         "onTouch"?: string;
         /**
           * CSS padding value applied to each child element inside the container. Accepts standard CSS padding formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "padding"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
           * Indicates whether to wrap each letter or each word of the text in a span element. This can be useful for animations or styling individual letters.
+          * @default ''
          */
         "spanType"?: 'letters' | 'words' | '';
         /**
           * The string of text to be displayed in the component.
+          * @default ''
          */
         "string"?: string;
         /**
           * Tab index for keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * Defines the type of the component, which can be used for conditional logic or specific styling.
+          * @default ''
          */
         "type"?: string;
         /**
           * Value associated with the text element, typically used for internal logic or tracking.
+          * @default ''
          */
         "value"?: string;
         /**
           * Controls the visibility of the text component. If `true`, the text is visible; otherwise, it is hidden.
+          * @default false
          */
         "visible"?: boolean | string;
         /**
           * Width of the text component (CSS value, e.g., '100px', '50%').
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
+          * @default '0px'
          */
         "x"?: string;
         /**
           * Y-axis (vertical) position of the text component (CSS value, e.g., '10px', '5vh').
+          * @default '0px'
          */
         "y"?: string;
         /**
           * Z-index for stacking order of the text component relative to other elements.
+          * @default '0'
          */
         "z"?: string;
     }
     interface LidoTrace {
         /**
           * Indicates whether to play an animation trace when the SVG is completed.
+          * @default false
          */
         "animationTrace"?: boolean;
         /**
           * Controls visibility for assistive technologies. If `"true"`, the component is hidden from screen readers.
+          * @default ''
          */
         "ariaHidden"?: string;
         /**
           * Accessible label for screen readers, providing a textual description of the component's purpose.
+          * @default ''
          */
         "ariaLabel"?: string;
         /**
@@ -4212,6 +4746,7 @@ declare namespace LocalJSX {
         "audio"?: string;
         /**
           * Delay in milliseconds to make the cell visible after mount.
+          * @default ''
          */
         "delayVisible"?: string;
         /**
@@ -4221,22 +4756,27 @@ declare namespace LocalJSX {
         "disableSpeak"?: boolean;
         /**
           * URL for the finger hint image
+          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg'
          */
         "fingerHintUrl"?: string;
         /**
           * Specifies the height of the component container, accepts any valid CSS height value (e.g., `"100px"`, `"50%"`).
+          * @default 'auto'
          */
         "height"?: string;
         /**
           * Indicates whether to highlight the text associated with the SVG when the trace is completed.
+          * @default ''
          */
         "highlightTextId"?: string;
         /**
           * Unique identifier for this `lido-trace` component instance.
+          * @default ''
          */
         "id"?: string;
         /**
           * Mode for the tracing interaction, defining how users interact with the SVG paths. Options may include `"noFlow"`, `"showFlow"`, `"freeTrace"`, `"blindTracing"`, and `"blindFreeTrace"`
+          * @default TraceMode.ShowFlow
          */
         "mode"?: string;
         /**
@@ -4249,34 +4789,42 @@ declare namespace LocalJSX {
         "onInCorrect"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
           * Source URL or path for the SVG file used in this component.
+          * @default ''
          */
         "svgSource"?: string;
         /**
           * Sets the tab order of the component within the page, enabling keyboard navigation.
+          * @default 0
          */
         "tabIndex"?: number;
         /**
           * A custom string value associated with the component for additional data or identification.
+          * @default ''
          */
         "value"?: string;
         /**
           * Specifies the width of the component container, accepts any valid CSS width value (e.g., `"100px"`, `"50%"`).
+          * @default 'auto'
          */
         "width"?: string;
         /**
           * Defines the x-coordinate position (left offset) of the component container, using any valid CSS `left` value (e.g., `"10px"`, `"5%"`).
+          * @default '0px'
          */
         "x"?: string;
         /**
           * Defines the y-coordinate position (top offset) of the component container, using any valid CSS `top` value (e.g., `"10px"`, `"5%"`).
+          * @default '0px'
          */
         "y"?: string;
         /**
           * Sets the z-index of the component, controlling its stacking order on the page.
+          * @default '0'
          */
         "z"?: string;
     }
@@ -4326,10 +4874,12 @@ declare namespace LocalJSX {
         "id"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
+          * @default ''
          */
         "margin"?: string;
         /**
           * The Maximum number of drag elements that can be dropped inside the Drop element.
+          * @default 1
          */
         "maxDrops"?: number;
         /**
@@ -4338,6 +4888,7 @@ declare namespace LocalJSX {
         "maxLength"?: number;
         /**
           * The minimum number of drag elements that must be dropped inside the Drop element.
+          * @default 1
          */
         "minDrops"?: number;
         /**
@@ -4362,6 +4913,7 @@ declare namespace LocalJSX {
         "onTouch"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
+          * @default false
          */
         "showSpeakIcon"?: boolean;
         /**
