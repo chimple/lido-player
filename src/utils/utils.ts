@@ -1233,7 +1233,7 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
   valueElement.innerText = value;
 };
 
-export const MultiplybeedsAnimation = async (element : HTMLElement,value : Number) => {
+export const MultiplyBeadsAnimation = async (element : HTMLElement,value : number) => {
   if (!element) return;
 
   const container = element.closest('lido-container') as HTMLElement | null;
@@ -1268,7 +1268,7 @@ export const MultiplybeedsAnimation = async (element : HTMLElement,value : Numbe
   const sum = terms.reduce((s, n) => s + n, 0);
   
   let newString : string = ""
-  if (firstMatrix == true) 
+  if (firstMatrix) 
   {
     newString = `${left}`;
   }

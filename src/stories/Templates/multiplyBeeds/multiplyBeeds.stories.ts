@@ -1,6 +1,5 @@
 import {Meta, StoryObj} from '@storybook/web-components';
 import {html} from 'lit';
-import { index } from 'mathjs';
 
 type MultiplyBeedsArgs = {
     matrixImage: string[];
@@ -44,7 +43,7 @@ function getContainerXml(args : MultiplyBeedsArgs) {
     const optionsCell = options.map((option: any) => {
         const bgColor = option === objective ? '#AA4A44' : '#FFB366';
         return `
-            <lido-text id="${option+1}" tab-index="${option+2}" height="70px" width="55px" visible="true"  value="${option}" string="${option}" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="${bgColor}" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+            <lido-text id="option-${option}" tab-index="${Number(option)+2}" height="70px" width="55px" visible="true"  value="${option}" string="${option}" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="${bgColor}" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
             </lido-text>
         `
     }).join('\n');

@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
-import { convertUrlToRelative, parseProp, executeActions, triggerNextContainer } from '../../utils/utils';
-import { MultiplybeedsAnimation } from '../../utils/utils';
+import { convertUrlToRelative, parseProp } from '../../utils/utils';
+import { MultiplyBeadsAnimation } from '../../utils/utils';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -95,7 +95,7 @@ export class LidoMathMatrix {
     this.updateSlots();
     this.updateStyles();
 
-    this.applyBottomSlotClickListener(this.el);
+    this.applyBottomSlotClickListener();
   }
 
 
@@ -169,7 +169,7 @@ export class LidoMathMatrix {
     });
   }
 
-  applyBottomSlotClickListener(element: HTMLElement) {
+  applyBottomSlotClickListener() {
     /** 
       Attach a click listener only to the bottom-most slot in this matrix.
       Clicking the bottom slot will trigger the container-level summary update
@@ -187,7 +187,7 @@ export class LidoMathMatrix {
           {
             ev.stopPropagation();
 
-            MultiplybeedsAnimation(this.el,this.cols);
+            MultiplyBeadsAnimation(this.el,this.cols);
           } 
           catch (err) 
           {
