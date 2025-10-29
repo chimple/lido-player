@@ -7,6 +7,7 @@ const meta: Meta = {
   argTypes: {
     equations: { control: 'object' },
     values: { control: 'object' },
+    isContinueOnCorrect: { control: 'boolean' },
   },
 };
 
@@ -24,6 +25,7 @@ export const nimbletable: StoryObj = {
       "3 + 2 = ?"
     ],
     answers: ["2", "4", "6", "8", "10", "12", "5"],
+    isContinueOnCorrect: true,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -34,14 +36,14 @@ export const nimbletable: StoryObj = {
 
 function getContainerXml(args) {
   let tabCounter = 1;
-  const { equations = [], answers = [] } = args;
+  const { equations = [], answers = [], isContinueOnCorrect = true } = args;
   
 
     const SlidingEquationCells = equations
   .map((equation, index) => {
     const answer = answers[index]; // one-to-one mapping
     return `
-      <lido-text visible="true" audio="" onTouch="this.speak='true';" type="calculate"
+      <lido-text visible="true" audio="" onTouch="" type="calculate"
         id="equation${index + 1}" tab-index="${tabCounter++}"
         height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%"
         bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="84px"
@@ -59,7 +61,7 @@ function getContainerXml(args) {
 
 
   return `<main>
- <lido-container id="lido-container" is-allow-only-correct="true" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" action="scroll">
+ <lido-container id="lido-container" is-allow-only-correct="true" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="${isContinueOnCorrect}" action="scroll">
 
    <!-- Audio -->
   <lido-text visible="false" id="audio" onEntry="this.display='none';" string="Solve the question at the third board and select the correct answer from the calculator."></lido-text>
@@ -73,22 +75,22 @@ function getContainerXml(args) {
 
 		<lido-cell visible="true" id="xx"  layout="landscape.row,portrait.col" height="90%" width="102%" bg-Color="transparent" margin="landscape.56px -56px 0px 110px,portrait.0px" onEntry="" justify-content="space-evenly">
 			  <lido-cell layout="landscape.col,portrait.col" visible="true" height="landscape.96%,portrait.51%" width="landscape.614px,portrait.68%" bg-color="rgb(158 82 15 / 97%)" onEntry="" margin="landscape.27px 0px 0px -906px,portrait.-660px 0px 18px 0px" border-radius="10px">
-            <lido-text visible="true" id="" audio="" onTouch="this.speak='true';" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.borderRadius='18px 18px 0px 0px'; this.flex-shrink='0';">
+            <lido-text visible="true" id="" audio="" onTouch="" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.borderRadius='18px 18px 0px 0px'; this.flex-shrink='0';">
             </lido-text>	
-            <lido-text visible="true" audio="" onTouch="this.speak='true';" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.flex-shrink='0';">
+            <lido-text visible="true" audio="" onTouch="" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.flex-shrink='0';">
             </lido-text>
-            <lido-text visible="true" audio="" onTouch="this.speak='true';" tab-index="${tabCounter++}" height="landscape.140px,portrait.124px" width="landscape.90%, portrait.86%" bg-Color="#9e5310" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.flex-shrink='0'; this.border = 16px solid #82420a">
+            <lido-text visible="true" audio="" onTouch="" tab-index="${tabCounter++}" height="landscape.140px,portrait.124px" width="landscape.90%, portrait.86%" bg-Color="#9e5310" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.flex-shrink='0'; this.border = 16px solid #82420a">
             </lido-text>
-            <lido-text visible="true" audio="" onTouch="this.speak='true';" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.flex-shrink='0';">
+            <lido-text visible="true" audio="" onTouch="" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.flex-shrink='0';">
             </lido-text>
-            <lido-text visible="true" audio="" onTouch="this.speak='true';" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.borderRadius='0px 0px 18px 18px'; this.flex-shrink='0';">
+            <lido-text visible="true" audio="" onTouch="" tab-index="${tabCounter++}" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="#b27641" margin="landscape.0px 0px 10px 0px,portrait.0 " onEntry="this.borderRadius='0px 0px 18px 18px'; this.flex-shrink='0';">
             </lido-text>				
 			   </lido-cell>
 
 			<lido-cell id="cellParent" layout="landscape.col,portrait.col" visible="true" height="landscape.94%,portrait.92%" width="landscape.40%,portrait.71%" bg-color="transparent" onEntry="this.position= 'fixed'; this.justifyContent='flex-start'" margin="landscape.101px 0px 0px 166px,portrait.80px 0px 0px 124px" border-radius="10px" display="flex">
-        <lido-text visible="true" audio="" onTouch="this.speak='true';" id="dummy111" class="dummy-1" tab-index="" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="88px" string="" margin="landscape.-4px 10px 22px -116px,portrait.6px 0 20px 0 " onEntry="this.color='white';this.fontWeight='500';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white'; this.justifyContent='center'" onCorrect="">
+        <lido-text visible="true" audio="" onTouch="" id="dummy111" class="dummy-1" tab-index="" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="88px" string="" margin="landscape.-4px 10px 22px -116px,portrait.6px 0 20px 0 " onEntry="this.color='white';this.fontWeight='500';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white'; this.justifyContent='center'" onCorrect="">
 				</lido-text>
-				<lido-text visible="true" audio="" onTouch="this.speak='true';" id="dummy112" class="dummy-2" tab-index="" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="88px" string="" margin="landscape.-4px 10px 22px -116px,portrait.6px 0 20px 0 " onEntry="this.color='white';this.fontWeight='500';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white'; this.justifyContent='center'" onCorrect="">
+				<lido-text visible="true" audio="" onTouch="" id="dummy112" class="dummy-2" tab-index="" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="88px" string="" margin="landscape.-4px 10px 22px -116px,portrait.6px 0 20px 0 " onEntry="this.color='white';this.fontWeight='500';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white'; this.justifyContent='center'" onCorrect="">
 				</lido-text>
         ${SlidingEquationCells}
 

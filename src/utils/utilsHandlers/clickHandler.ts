@@ -224,80 +224,132 @@ const clickableElementStyle = (element: HTMLElement) => {
 };
 
 
-const checkEquation = (container)=>{   
+// Helper to animate and remove the active equation cell
+const animateAndRemoveCell = (activeCell: HTMLElement, okButton: HTMLElement, allCalculateTypes: NodeListOf<Element>) => {
+  return new Promise<void>((resolve) => {
+    const keyframes = `
+      @keyframes widthDecrease {
+        0% { 
+          background-color: ${activeCell.style.backgroundColor};
+          height: ${activeCell.style.height};
+          margin: ${activeCell.style.margin};
+          ${activeCell.innerHTML = ""}
+        }
+        100% { background-color: transparent; height: 0px; margin: 0px; }
+      }`;
+
+    const styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+    activeCell.style.animation = `widthDecrease 0.1s`;
+
+    activeCell.addEventListener('animationend', () => {
+      activeCell.style.height = '0px';
+      activeCell.style.margin = '0px';
+      activeCell.style.backgroundColor = 'transparent';
+      activeCell.remove();
+
+      // Re-enable OK only when next equation exists
+      const nextActive = document.querySelector("[type='calculate']");
+      if (nextActive) okButton.style.pointerEvents = 'auto';
+
+      // Trigger next container if last cell
+      if (allCalculateTypes.length === 1) {
+        setTimeout(() => triggerNextContainer(), 2000);
+      }
+
+      resolve();
+    });
+  });
+};
+
+
+// Function: checks and animates equation when correct
+const checkEquation = async (container: HTMLElement) => {   
   const okButton = container.querySelector("#btn-11") as HTMLElement;
-  const calculatorValue=  container.querySelector("#lidoCalculator").getAttribute("value");
+  const calculatorValue = container.querySelector("#lidoCalculator")?.getAttribute("value");
   const allCalculateTypes = document.querySelectorAll("[type='calculate']");    
   const activeCell = allCalculateTypes[0] as HTMLElement;
+
+  const activeCellValue = Number(activeCell["value"])
+  const calculteValue = Number(calculatorValue)
   
-  if(calculatorValue === activeCell["value"]){
-      // ✅ Disable OK button immediately to prevent double click
-      okButton.style.pointerEvents = 'none';
+  if (!activeCell || calculteValue !== activeCellValue) return;
 
-      const equation = activeCell["string"];
-      const answer = activeCell.getAttribute('value');
+  // Disable OK to prevent multiple clicks
+  okButton.style.pointerEvents = 'none';
 
-      setTimeout(() => {
-        activeCell.innerHTML = equation.replaceAll("?", `${answer}`);  
-      }, 800);  
-      
-      setTimeout(() => {
-        const element2 =  container.querySelector("#dummy112") as HTMLElement;
-        element2.innerHTML = activeCell.innerHTML; 
-                      
-        const keyframes = `
-        @keyframes widthDecrease {
-          0% { background-color: ${activeCell.style.backgroundColor}; height: ${activeCell.style.height}; margin: ${activeCell.style.margin}; ${activeCell.innerHTML=""}}
-          100% { background-color: transparent ;height: 0px; margin: 0px;}
-        }`;  
+  const equation = activeCell["string"];
+  const answer = activeCell.getAttribute('value');
 
-        const styleSheet = document.styleSheets[0];
-        styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-        activeCell.style.animation = `widthDecrease 0.5s`;
+  // Replace equation after a short delay
+  await new Promise(r => setTimeout(r, 200));
+  activeCell.innerHTML = equation.replaceAll("?", calculteValue);  
 
-        activeCell.addEventListener('animationend', () => {
-          activeCell.style.height = '0px';
-          activeCell.style.margin = '0px';
-          activeCell.style.backgroundColor = 'transparent';
-          activeCell.remove();   
+  // Update dummy display after 1.3s
+  await new Promise(r => setTimeout(r, 1000));
+  const element2 = container.querySelector("#dummy112") as HTMLElement;
+  element2.innerHTML = activeCell.innerHTML;
 
-          // ✅ Re-enable OK only when the next equation is ready
-          const nextActive = document.querySelector("[type='calculate']");
-          if (nextActive) {
-            okButton.style.pointerEvents = 'auto';
-          }
+  // Animate and clean up
+  await animateAndRemoveCell(activeCell, okButton, allCalculateTypes);
+};
 
-        });
-
-        if(allCalculateTypes.length === 1){
-          setTimeout(() => {
-            triggerNextContainer(); 
-          }, 2000);
-        }
-      }, 1300);      
-  } else {
-    return;
-  }  
-}
-
-
-const scrollAction = (element)=>{
+let score=0;
+// Function: handles OK click behavior based on mode
+const scrollAction = async (element: HTMLElement) => {
   const container = document.getElementById('lido-container') as HTMLElement;
   const okButton = container.querySelector("#btn-11") as HTMLElement;
-  const calculatorValue=  container.querySelector("#lidoCalculator").getAttribute("value");
+  const calculatorValue = container.querySelector("#lidoCalculator")?.getAttribute("value");
   const allCalculateTypes = document.querySelectorAll("[type='calculate']");    
   const activeCell = allCalculateTypes[0] as HTMLElement;
+  const isContinueOnCorrect = container.getAttribute("is-continue-on-correct") === "true";
+
+  const activeCellValue = Number(activeCell["value"])
+  const calculteValue = Number(calculatorValue)
   
-  const element1 =  container.querySelector("#dummy111") as HTMLElement;
-  const element2 =  container.querySelector("#dummy112") as HTMLElement;   
+  
+  const element1 = container.querySelector("#dummy111") as HTMLElement;
+  const element2 = container.querySelector("#dummy112") as HTMLElement;
 
-  if(element.id === okButton.id){
-    if(element2.innerHTML.length > 0 && (calculatorValue === activeCell["value"])){
-      setTimeout(() => {
-        element1.innerHTML = element2.innerHTML;
-      }, 1300);
-    }  
-    checkEquation(container); 
+  if (element.id !== okButton.id) return;
+
+  // PRACTICE MODE (continue only if correct)
+  if (isContinueOnCorrect) {
+    if (element2.innerHTML.length > 0 && activeCellValue === calculteValue) {
+      setTimeout(() => { element1.innerHTML = element2.innerHTML; }, 1200);
+    }
+    await checkEquation(container);
   }
-}
 
+  // TEST MODE (store all, animate regardless of correctness)
+  else {
+    if(calculatorValue.length>0){
+      if(activeCellValue === calculteValue){
+    score++;
+    console.log("SCOREEEE", score)
+  }else{
+    if(score>0){
+      score--;
+    }
+    console.log("SCOREEEE", score)
+  }
+    if (element2.innerHTML.length > 0) {
+      setTimeout(() => { element1.innerHTML = element2.innerHTML; }, 1200);
+    }
+
+    okButton.style.pointerEvents = 'none';
+    const equation = activeCell["string"];
+
+    // Replace value visually
+    await new Promise(r => setTimeout(r, 200));
+    activeCell.innerHTML = equation.replaceAll("?", calculteValue);  
+
+    // Update dummy2 after 1.3s
+    await new Promise(r => setTimeout(r, 1000));
+    element2.innerHTML = activeCell.innerHTML; 
+
+    // Animate
+    await animateAndRemoveCell(activeCell, okButton, allCalculateTypes);
+    }
+  }
+};

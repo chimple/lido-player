@@ -70,7 +70,7 @@ export class LidoCalculator {
   private handleClick(value: string) {
     
     const MAX_LENGTH = 10;
-
+    
     if (value === 'OK') {
       this.verifyAnswer();
     } else if (value === '←') {
@@ -83,6 +83,8 @@ export class LidoCalculator {
     this.updateValueAttr();
   }
 
+  private userAnswers: Number[] = []; // store all user inputs
+  
   private async verifyAnswer() { 
     const userInput = this.displayValue.trim();
     if (!userInput) return;
@@ -96,37 +98,34 @@ export class LidoCalculator {
       isCorrect = userInput === this.objective;
     } 
 
-    else if (this.objective && this.objective.length > 1 && this.objective.includes(',')) {
-        // Create a duplicate (mutable) version
-        let duplicateObjective = this.objective;  // Keep original reference
-        let objectives = duplicateObjective.split(',').map(obj => Number(obj.trim()));
+  // --- Multiple Objectives ---
+  else if (this.objective && this.objective.includes(',')) {
+    const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
+    const objectives = this.objective.split(',').map(obj => obj.trim());
+    const currentIndex = this.userAnswers.length;
 
-        const userValue = Number(userInput);
+    // Compare current input with corresponding objective
+    if (currentIndex < objectives.length && Number(userInput) === Number(objectives[currentIndex])) {
+      isCorrect = true;
+    } else {
+      isCorrect = false;
+    }
 
-        // Check and remove the first matching occurrence
-        for (let i = 0; i <= objectives.length; i++) {
-          if (userValue === objectives[i]) { 
-            isCorrect = true;
-            objectives.splice(i, 1); // Remove the used value
-            break;
-          } else {
-            isCorrect = false;
-            break;
-          }
-        }
-        //Convert back to string
-        duplicateObjective = objectives.join(',');
-        //Replace the original objective value in DOM
-        const container = document.getElementById('lido-container');
-        if (container) {
-          container.setAttribute('objective', duplicateObjective);
-        }
-        //update the in-memory copy
-        this.objective = duplicateObjective;
+    //  Store behavior based on mode
+    if (isContinueOnCorrect) {
+      // PRACTICE MODE → store only correct answers
+      if (isCorrect) {
+        this.userAnswers.push(Number(userInput));
       }
+    } else {
+      // TEST MODE → store all user inputs
+      this.userAnswers.push(Number(userInput));
+    }
+    console.log("Array", this.userAnswers)
+  }
 
     else if (this.objective === '') {
-      const equationAttr = container.getAttribute('equationCheck') || '';
+      const equationAttr = container.getAttribute('equationCheck') || ''; 
       if (!equationAttr) return;
       try {
         const calculatedValue = equationCheck(equationAttr);
@@ -149,9 +148,9 @@ export class LidoCalculator {
         window.dispatchEvent(new CustomEvent(NextContainerKey));
       }
     }
-    
+
     else{
-      this.displayValue = userInput;
+      this.displayValue = "";
       storingEachActivityScore(isCorrect);
       const onInCorrect = container?.getAttribute('onInCorrect') || '';
       await executeActions(onInCorrect, container);
