@@ -659,10 +659,15 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
               div.remove();
               container.style.pointerEvents = 'auto';
               const objective = container.getAttribute('objective');
-             if (objective && tempVanishedValues.join(',') === objective) {
-                setTimeout(() => {
+             if (objective && tempVanishedValues.map(v => v.trim()).sort().join(',')  === objective.split(',').map(v => v.trim()).sort().join(',')) {             
+                (async() => {
+                  isCorrect=true;
+                  const onCorrect = container?.getAttribute('onCorrect') || '';
+                  
+                  await executeActions(onCorrect, container);
                    window.dispatchEvent(new CustomEvent(NextContainerKey));
-                }, 2000);
+                    tempVanishedValues.length = 0;
+                })();
              }
             }, 800); // match animation duration
           }, 2000); // stay for 2 seconds
