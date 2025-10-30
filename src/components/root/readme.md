@@ -47,6 +47,7 @@ graph TD;
   lido-home --> lido-float
   lido-home --> lido-keyboard
   lido-home --> lido-math-matrix
+  lido-home --> lido-balance
   lido-home --> lido-calculator
   lido-keyboard --> lido-text
   lido-calculator --> lido-cell
