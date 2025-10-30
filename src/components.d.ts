@@ -119,142 +119,115 @@ export namespace Components {
     interface LidoBalance {
         /**
           * Balance symbol shown when `showSymbol` is true. Default: "=".
-          * @default '='
          */
         "balanceSymbol": string;
         /**
           * Fill color applied to all loaded SVGs (pivot, scale, handler). Defaults to "brown".
-          * @default 'brown'
          */
         "fill": string;
         /**
           * URL of the handler (side stands / hooks) image for the balance.
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Stands.svg'
          */
         "handlerimage": string;
         /**
           * CSS height of the component (responsive values allowed). Default: "auto".
-          * @default 'auto'
          */
         "height": string;
         "hideSymbol": () => Promise<void>;
         /**
           * CSS margin applied to the outer container.
-          * @default ''
          */
         "margin": string;
         /**
           * Maximum allowed tilt angle (in degrees) for the balance bar.
-          * @default 9.5
          */
         "maxTilt": number;
         /**
           * Action(s) to execute when the component enters the DOM. Example: trigger animations or audio cues.
-          * @default ''
          */
         "onEntry": string;
         /**
           * Operation type used to calculate balance values. Supported: "count", "add", "subtract", etc.
-          * @default 'count'
          */
         "operation": string;
         /**
           * CSS padding applied to the outer container.
-          * @default ''
          */
         "padding": string;
         /**
           * URL of the pivot (base stand) image used in the balance visualization.
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Display%20stand.svg'
          */
         "pivotimage": string;
         "revealSymbol": () => Promise<void>;
         /**
           * URL of the scale (bar) image that tilts based on the weight difference.
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Bar.svg'
          */
         "scaleimage": string;
         /**
           * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
-          * @default false
          */
         "showSymbol": boolean;
         /**
           * Initial tilt value of the balance. Negative = tilts left, Positive = tilts right.
-          * @default 0
          */
         "tilt": number;
         "updateTilt": (leftVal: number, rightVal: number) => Promise<void>;
         /**
           * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
-          * @default false
          */
         "visible": boolean | string;
         /**
           * CSS width of the component (responsive values allowed). Default: "auto".
-          * @default 'auto'
          */
         "width": string;
         /**
           * Horizontal (X-axis) offset for positioning the component. Default: "0px".
-          * @default '0px'
          */
         "x": string;
         /**
           * Vertical (Y-axis) offset for positioning the component. Default: "0px".
-          * @default '0px'
          */
         "y": string;
         /**
           * Z-index for stacking order of the component. Default: "0".
-          * @default '0'
          */
         "z": string;
     }
     interface LidoCalculator {
         /**
           * Background color for the calculator container
-          * @default '#60DADA'
          */
         "bgColor": string;
         /**
           * Height of the calculator component (default: '711px')
-          * @default '711px'
          */
         "height": string;
         /**
           * Objective or identifier for activity-based logic or validation
-          * @default ''
          */
         "objective": string;
         /**
           * Code or actions to execute when the component is first rendered
-          * @default ''
          */
         "onEntry": string;
         /**
           * Icon URL for the pen image shown on the calculator UI
-          * @default "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/Pen--Streamline-Solar%201.svg"
          */
         "penIcon": string;
         /**
           * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
-          * @default false
          */
         "visible": boolean | string;
         /**
           * Width of the calculator component (default: '479px')
-          * @default '479px'
          */
         "width": string;
         /**
           * X-position of the calculator (can be px, %, etc.)
-          * @default '0px'
          */
         "x": string;
         /**
           * Y-position of the calculator (can be px, %, etc.)
-          * @default '0px'
          */
         "y": string;
     }
@@ -307,7 +280,6 @@ export namespace Components {
         "delayVisible": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -621,7 +593,6 @@ export namespace Components {
         "delayVisible": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -787,7 +758,6 @@ export namespace Components {
         "direction": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -981,7 +951,6 @@ export namespace Components {
         "speakerButtonUrl": string;
         /**
           * Unique identifier for the component instance. If not provided, a UUID is generated to ensure uniqueness.
-          * @default generateUUIDFallback()
          */
         "uuid": string;
         /**
@@ -1026,7 +995,6 @@ export namespace Components {
         "delayVisible": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -1152,7 +1120,6 @@ export namespace Components {
         "columns": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -1230,57 +1197,47 @@ export namespace Components {
     interface LidoMathMatrix {
         /**
           * Background color for active slots
-          * @default 'red'
          */
         "activeBgColor": string;
         /**
           * If true, only active slots are visible; inactive ones are hidden
-          * @default false
          */
         "activeOnlyVisible": boolean;
         /**
           * Border style applied to each slot
-          * @default '2px solid green'
          */
         "border": string;
         /**
           * Border radius for each slot
-          * @default '5px'
          */
         "borderRadius": string;
         /**
           * Show row index numbers on the bottom side
-          * @default false
          */
         "bottomIndex": boolean;
         /**
           * Enable/disable click interactions on the slots
-          * @default true
          */
         "clickable": boolean;
         /**
           * Number of columns in the matrix
-          * @default 5
          */
         "cols": number;
         /**
+          * Background color for inactive slots
+         */
+        "deactiveBgColor": string;
+        /**
           * Number of slots to pre-fill as active by default
-          * @default 0
          */
         "defualtFill": number;
+        "fontColor": string;
         /**
           * Height of the slot container
-          * @default '100%'
          */
         "height": string;
         /**
-          * Background color for inactive slots
-          * @default 'transparent'
-         */
-        "inactiveBgColor": string;
-        /**
           * Show row index numbers on the left side
-          * @default false
          */
         "leftIndex": boolean;
         /**
@@ -1297,24 +1254,44 @@ export namespace Components {
         "padding": string;
         /**
           * Number of rows in the matrix
-          * @default 7
          */
         "rows": number;
         /**
+          * Sets the tab index for keyboard navigation
+         */
+        "tabIndex": number;
+        /**
+          * The display text or label associated with this matrix element
+         */
+        "text": string;
+        /**
           * Show column index numbers on the top side
-          * @default false
          */
         "topIndex": boolean;
         /**
-          * Controls visibility of the matrix (string "true" or "false")
-          * @default 'false'
+          * Defines the matrix type (e.g., "drop", "slot", "answer")
+         */
+        "type": string;
+        /**
+          * The value or data associated with this matrix element
+         */
+        "value": string;
+        /**
+          * Controls the visibility of the matrix (accepts "true" or "false" as string)
          */
         "visible": string;
         /**
           * Width of the slot container
-          * @default '100%'
          */
         "width": string;
+        /**
+          * The left coordinate (in pixels or percentage) for matrix positioning
+         */
+        "x": string;
+        /**
+          * The top coordinate (in pixels or percentage) for matrix positioning
+         */
+        "y": string;
         /**
           * Z-index value for the matrix container
          */
@@ -1632,7 +1609,6 @@ export namespace Components {
         "direction": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -1754,7 +1730,6 @@ export namespace Components {
         "delayVisible": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -1865,7 +1840,6 @@ export namespace Components {
         "delayVisible": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -1997,7 +1971,6 @@ export namespace Components {
         "delayVisible": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -2144,7 +2117,6 @@ export namespace Components {
         "ariaLabel": string;
         /**
           * URL or identifier for an audio file associated with the text component.
-          * @default ''
          */
         "audio": string;
         /**
@@ -2154,7 +2126,6 @@ export namespace Components {
         "delayVisible": string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -2260,7 +2231,6 @@ export namespace Components {
         "childElementsLength": number;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak": boolean;
         /**
@@ -2715,114 +2685,92 @@ declare namespace LocalJSX {
     interface LidoBalance {
         /**
           * Balance symbol shown when `showSymbol` is true. Default: "=".
-          * @default '='
          */
         "balanceSymbol"?: string;
         /**
           * Fill color applied to all loaded SVGs (pivot, scale, handler). Defaults to "brown".
-          * @default 'brown'
          */
         "fill"?: string;
         /**
           * URL of the handler (side stands / hooks) image for the balance.
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Stands.svg'
          */
         "handlerimage"?: string;
         /**
           * CSS height of the component (responsive values allowed). Default: "auto".
-          * @default 'auto'
          */
         "height"?: string;
         /**
           * CSS margin applied to the outer container.
-          * @default ''
          */
         "margin"?: string;
         /**
           * Maximum allowed tilt angle (in degrees) for the balance bar.
-          * @default 9.5
          */
         "maxTilt"?: number;
         /**
           * Action(s) to execute when the component enters the DOM. Example: trigger animations or audio cues.
-          * @default ''
          */
         "onEntry"?: string;
         /**
           * Operation type used to calculate balance values. Supported: "count", "add", "subtract", etc.
-          * @default 'count'
          */
         "operation"?: string;
         /**
           * CSS padding applied to the outer container.
-          * @default ''
          */
         "padding"?: string;
         /**
           * URL of the pivot (base stand) image used in the balance visualization.
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Display%20stand.svg'
          */
         "pivotimage"?: string;
         /**
           * URL of the scale (bar) image that tilts based on the weight difference.
-          * @default 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Bar.svg'
          */
         "scaleimage"?: string;
         /**
           * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
-          * @default false
          */
         "showSymbol"?: boolean;
         /**
           * Initial tilt value of the balance. Negative = tilts left, Positive = tilts right.
-          * @default 0
          */
         "tilt"?: number;
         /**
           * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
-          * @default false
          */
         "visible"?: boolean | string;
         /**
           * CSS width of the component (responsive values allowed). Default: "auto".
-          * @default 'auto'
          */
         "width"?: string;
         /**
           * Horizontal (X-axis) offset for positioning the component. Default: "0px".
-          * @default '0px'
          */
         "x"?: string;
         /**
           * Vertical (Y-axis) offset for positioning the component. Default: "0px".
-          * @default '0px'
          */
         "y"?: string;
         /**
           * Z-index for stacking order of the component. Default: "0".
-          * @default '0'
          */
         "z"?: string;
     }
     interface LidoCalculator {
         /**
           * Background color for the calculator container
-          * @default '#60DADA'
          */
         "bgColor"?: string;
         /**
           * Height of the calculator component (default: '711px')
-          * @default '711px'
          */
         "height"?: string;
         /**
           * Objective or identifier for activity-based logic or validation
-          * @default ''
          */
         "objective"?: string;
         /**
           * Code or actions to execute when the component is first rendered
-          * @default ''
          */
         "onEntry"?: string;
         /**
@@ -2831,27 +2779,22 @@ declare namespace LocalJSX {
         "onOnOk"?: (event: LidoCalculatorCustomEvent<boolean>) => void;
         /**
           * Icon URL for the pen image shown on the calculator UI
-          * @default "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/Pen--Streamline-Solar%201.svg"
          */
         "penIcon"?: string;
         /**
           * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
-          * @default false
          */
         "visible"?: boolean | string;
         /**
           * Width of the calculator component (default: '479px')
-          * @default '479px'
          */
         "width"?: string;
         /**
           * X-position of the calculator (can be px, %, etc.)
-          * @default '0px'
          */
         "x"?: string;
         /**
           * Y-position of the calculator (can be px, %, etc.)
-          * @default '0px'
          */
         "y"?: string;
     }
@@ -2904,7 +2847,6 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -3218,7 +3160,6 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -3384,7 +3325,6 @@ declare namespace LocalJSX {
         "direction"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -3578,7 +3518,6 @@ declare namespace LocalJSX {
         "speakerButtonUrl"?: string;
         /**
           * Unique identifier for the component instance. If not provided, a UUID is generated to ensure uniqueness.
-          * @default generateUUIDFallback()
          */
         "uuid"?: string;
         /**
@@ -3623,7 +3562,6 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -3749,7 +3687,6 @@ declare namespace LocalJSX {
         "columns"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -3827,57 +3764,47 @@ declare namespace LocalJSX {
     interface LidoMathMatrix {
         /**
           * Background color for active slots
-          * @default 'red'
          */
         "activeBgColor"?: string;
         /**
           * If true, only active slots are visible; inactive ones are hidden
-          * @default false
          */
         "activeOnlyVisible"?: boolean;
         /**
           * Border style applied to each slot
-          * @default '2px solid green'
          */
         "border"?: string;
         /**
           * Border radius for each slot
-          * @default '5px'
          */
         "borderRadius"?: string;
         /**
           * Show row index numbers on the bottom side
-          * @default false
          */
         "bottomIndex"?: boolean;
         /**
           * Enable/disable click interactions on the slots
-          * @default true
          */
         "clickable"?: boolean;
         /**
           * Number of columns in the matrix
-          * @default 5
          */
         "cols"?: number;
         /**
+          * Background color for inactive slots
+         */
+        "deactiveBgColor"?: string;
+        /**
           * Number of slots to pre-fill as active by default
-          * @default 0
          */
         "defualtFill"?: number;
+        "fontColor"?: string;
         /**
           * Height of the slot container
-          * @default '100%'
          */
         "height"?: string;
         /**
-          * Background color for inactive slots
-          * @default 'transparent'
-         */
-        "inactiveBgColor"?: string;
-        /**
           * Show row index numbers on the left side
-          * @default false
          */
         "leftIndex"?: boolean;
         /**
@@ -3894,24 +3821,44 @@ declare namespace LocalJSX {
         "padding"?: string;
         /**
           * Number of rows in the matrix
-          * @default 7
          */
         "rows"?: number;
         /**
+          * Sets the tab index for keyboard navigation
+         */
+        "tabIndex"?: number;
+        /**
+          * The display text or label associated with this matrix element
+         */
+        "text"?: string;
+        /**
           * Show column index numbers on the top side
-          * @default false
          */
         "topIndex"?: boolean;
         /**
-          * Controls visibility of the matrix (string "true" or "false")
-          * @default 'false'
+          * Defines the matrix type (e.g., "drop", "slot", "answer")
+         */
+        "type"?: string;
+        /**
+          * The value or data associated with this matrix element
+         */
+        "value"?: string;
+        /**
+          * Controls the visibility of the matrix (accepts "true" or "false" as string)
          */
         "visible"?: string;
         /**
           * Width of the slot container
-          * @default '100%'
          */
         "width"?: string;
+        /**
+          * The left coordinate (in pixels or percentage) for matrix positioning
+         */
+        "x"?: string;
+        /**
+          * The top coordinate (in pixels or percentage) for matrix positioning
+         */
+        "y"?: string;
         /**
           * Z-index value for the matrix container
          */
@@ -4229,7 +4176,6 @@ declare namespace LocalJSX {
         "direction"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -4351,7 +4297,6 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -4462,7 +4407,6 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -4594,7 +4538,6 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -4741,7 +4684,6 @@ declare namespace LocalJSX {
         "ariaLabel"?: string;
         /**
           * URL or identifier for an audio file associated with the text component.
-          * @default ''
          */
         "audio"?: string;
         /**
@@ -4751,7 +4693,6 @@ declare namespace LocalJSX {
         "delayVisible"?: string;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**
@@ -4857,7 +4798,6 @@ declare namespace LocalJSX {
         "childElementsLength"?: number;
         /**
           * When set to true, disables the speak functionality of long press for this component and its children.
-          * @default false
          */
         "disableSpeak"?: boolean;
         /**

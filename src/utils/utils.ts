@@ -23,6 +23,7 @@ import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utils
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
+import { handlingMatrix } from './utilsHandlers/matrixHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -96,6 +97,10 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
     }
     case 'optionArea': {
       enableOptionArea(element);
+      break;
+    }
+    case 'checkerBlock': {
+      handlingMatrix(element);
       break;
     }
     default:
@@ -1248,7 +1253,7 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
   let valueElement = imageEl.querySelector('.lido-display-hiddenvalue') as HTMLElement;
   if (!valueElement) {
     valueElement = document.createElement('div');
-    valueElement.classList.add('Displayhiddenvalue');
+    valueElement.classList.add('lido-display-hiddenvalue');
     imageEl.style.position = 'relative';
     imageEl.appendChild(valueElement);
   }
