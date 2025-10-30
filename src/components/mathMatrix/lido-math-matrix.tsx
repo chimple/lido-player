@@ -193,6 +193,26 @@ export class LidoMathMatrix {
         slotEl.classList.add('slot-inactive');
       }
     });
+
+    // If the slot is the bottom-most slot for this matrix, dispatch a generic event
+    // so templates or global handlers can handle bottom-slot behaviour (e.g., MultiplyBeadsAnimation).
+    if (index === slotElements.length) {
+      try {
+        const event = new CustomEvent('math-matrix-bottom-click', {
+          detail: {
+            matrix: this.el,
+            cols: this.cols,
+            rows: this.rows,
+          },
+          bubbles: true,
+          composed: true,
+        });
+        // dispatch from the host so listeners on container or document receive it
+        (this.el as HTMLElement).dispatchEvent(event);
+      } catch (err) {
+        console.warn('Error dispatching math-matrix-bottom-click from handleClickSlot', err);
+      }
+    }
   }
 
   private getSlotData(): Record<number, { text: string; color?: string }> {
@@ -243,8 +263,8 @@ export class LidoMathMatrix {
                 <div class="leftIndex">{++colIndex}</div>
               ) : (
                 <div
-                  class={`slot slot-${slotNumber} ${this.defualtFill >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
-                  onClick={ev => this.handleClickSlot(ev.target as HTMLElement)}
+                  class={`slot slot-${slotNumber++} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
+                  onClick={(ev:Event) => this.handleClickSlot(ev.currentTarget as HTMLElement)}
                   key={`slot-${rowIndex}-${colIndex}`}
                   style={{
                     borderRadius: this.style.borderRadius,
