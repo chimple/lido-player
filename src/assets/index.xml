@@ -48,6 +48,240 @@
  </lido-container>
  
 
+<lido-container id="multiply beads" disableSpeak="true" show-drop-border="false" objective="9" tabIndex="1"  value="questionBoard" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.MultiplyBeedsAnimation='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
+
+		<!-- Chimple Avatar -->
+		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.-65px, portrait.195px" y="landscape.525px, portrait.1050px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='0';">
+			<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="inherit"  width="inherit" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}" onEntry="">
+			</lido-avatar>
+		</lido-cell>
+		
+		<!-- Question Start Section -->
+		<lido-text visible="false" id="txt1" font-family="'Baloo 2', serif" font-size="52px" font-color="black" string="click the right slot of the beeds column and count the sum of all the beeds" onEntry="this.speak='true';" >
+		</lido-text>
+
+		<!-- option Section -->
+		<lido-cell layout="row" id="option-row" aria-hidden="true" visible="true" height="landscape.10%,portrait.5%" width="landscape.95%, portrait.90%" bg-Color="transparent" margin="landscape.-690px 0px 0px 0px,portrait.-1325px 0px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center';" gap="landscape.90px,portrait.40px">
+              <lido-text id="1" tab-index="5" height="70px" width="55px" visible="true"  value="1" string="1" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="2" tab-index="7" height="70px" width="55px" visible="true"  value="2" string="2" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="3" tab-index="12" height="70px" width="55px" visible="true" value="3" string="3" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="4" tab-index="18" height="70px" width="55px" visible="true" value="4" string="4" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="5" tab-index="18" height="70px" width="55px" visible="true" value="5" string="5" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="6" tab-index="18" height="70px" width="55px" visible="true" value="6" string="6" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="7" tab-index="18" height="70px" width="55px" visible="true" value="7" string="7" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="8" tab-index="18" height="70px" width="55px" visible="true" value="8" string="8" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+			  <lido-text id="9" tab-index="18" height="70px" width="55px" visible="true" value="9" string="9" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="red" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			  </lido-text>
+        </lido-cell>
+
+		<!-- Bottom display Section -->
+		<lido-cell layout="pos" id="pos1"  value="pos1" height="landscape.150px, portrait.150px" width="landscape.1125px, portrait.900px" x="landscape.240px, portrait.0px" y="landscape.720px, portrait.1030px" ariaHidden="true" bgColor="#AA4A44" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear'; this.z-index='0';">
+			<lido-text id="answer-multiply-beeds"  value="" height="inherit" width="inherit" string="" font-size="84px" font-weight="600"  bgColor="#AA4A44" visible="true" onEntry="this.flex-shrink='0'; this.fontWeight='600'; this.textAlign='center';">
+			</lido-text>
+		</lido-cell>
+
+		<!-- Beeds Section -->
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.145px, portrait.-20px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.290px, portrait.75px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.435px, portrait.170px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.580px, portrait.265px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.725px, portrait.360px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.870px, portrait.455px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.1015px, portrait.550px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.1160px, portrait.645px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.1305px, portrait.740px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
+			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+		</lido-cell>
+
+	</lido-container>
+
+<lido-container visible="true" show-next-button="true" dropAttr="math-matrix" appendToDropOnCompletion="true" objective="slot-1,slot-2,slot-3,slot-4,slot-5" onCorrect="" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png">
+
+	<lido-cell visible="true" layout="row" height="900px" width="1600px" onEntry="this.justifyContent='unset';">
+		<lido-cell visible="true" layout="pos" x="0" y="0" z="1">
+			<lido-image visible="true" width="1500px" height="900px" x="185px" y='20px' src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/CheckerBlock/checkerBlockTruck.svg"></lido-image>
+			<lido-math-matrix id="matrix" visible="true" width="1570px" height="860px" x="800px" y="23px" rows="10" cols="10" top-index="false" left-index="false" bottom-index="false" active-only-visible="false" defualtFill="100" text="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100" border="2px solid #736e6cff" border-radius="0" active-bg-color="#d7d5d9" clickable="false" type="checkerBlock" font-color="#4f2e35"></lido-math-matrix>
+			<lido-math-matrix id="matrix1" visible="true" width="1600px" height="900px" rows="1" cols="10" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="1" type="drop" value="slot-1" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+			<lido-math-matrix id="matrix2" visible="true" width="1600px" height="900px" rows="3" cols="2" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="2" type="drop" value="slot-2" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+			<lido-math-matrix id="matrix3" visible="true" width="1600px" height="900px" rows="3" cols="3" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="3" type="drop" value="slot-3" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+			<lido-math-matrix id="matrix4" visible="true" width="1600px" height="900px" rows="2" cols="3" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="4" type="drop" value="slot-4" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+			<lido-math-matrix id="matrix5" visible="true" width="1600px" height="900px" rows="2" cols="3" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="5" type="drop" value="slot-5" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+		</lido-cell>
+
+		<lido-cell visible="true" layout="col" width="25%" height="90%" bg-color="transparent" z="2">
+			<lido-cell visible="true" layout="random" width="100%" height="100%" bg-color="transparent">
+				<lido-math-matrix id="matrix9" visible="true" width="1600px" height="900px" rows="2" cols="3" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="9" type="drag" value="slot-1" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+				<lido-math-matrix id="matrix10" visible="true" width="1600px" height="900px" rows="3" cols="2" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="10" type="drag" value="slot-2" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+				<lido-math-matrix id="matrix11" visible="true" width="1600px" height="900px" rows="3" cols="3" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="11" type="drag" value="slot-3" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+				<lido-math-matrix id="matrix12" visible="true" width="1600px" height="900px" rows="2" cols="3" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="12" type="drag" value="slot-4" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+				<lido-math-matrix id="matrix13" visible="true" width="1600px" height="900px" rows="2" cols="3" top-index="false" left-index="false" bottom-index="false" active-only-visible="true" activeBgColor="#9a3dc5ff" defualtFill="10" tab-index="13" type="drag" value="slot-5" clickable="false" border="2px solid black" font-color="white"></lido-math-matrix>
+			</lido-cell>
+		</lido-cell>
+	</lido-cell>
+</lido-container>
+
+	<lido-container visible="true" dropAttr="EnableAnimation" is-allow-only-correct="true" objective="hygine,lion,tiger,zebra" id="ldo-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" is-continue-on-correct="true">
+		<lido-cell visible="true"  onEntry="this.position='relative';" y="landscape.57%,portrait.77%">	
+				<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="360px" width="485px"  y="landscape.200px,portrait.0px" onEntry="this.position='relative';" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+				</lido-avatar>
+			</lido-cell>
+		<lido-cell layout="row" visible="true" margin="landscape.-336px 0px -49px,portrait.-103px 0px 333px 0px" bg-color="transparent" height="90%" width="landscape.84%,portrait.100%">
+			<lido-image layout="col" is-slice="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/matchBox/linematching_building1.png" visible="true" height="100%" width="landscape.30%,portrait.40%"  onEntry="this.display='grid';  this.align-items='center';this.justify-content='center';this.gap='26px';">
+				<lido-cell layout="col" visible="true" margin="0px 18px 0px -18px" bg-color="transparent" height="89%" width="100%" onEntry="this.display='flex'; align-items='center'; justify-content='space-around';">
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="1" type="drag" id="drag1" value="lion" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/lion.jpg"></lido-image>
+				</lido-image>			
+			<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="3" type="drag" id="drag3" value="zebra" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+				<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/zebra.jpg"></lido-image>
+				
+			</lido-image>
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="2" type="drag" id="drag2" value="tiger" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/tiger.jpg"></lido-image>
+				</lido-image>
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="4" type="drag" id="drag4" value="hygine" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/hygiene%201.png"></lido-image>
+				</lido-image>
+		
+				</lido-cell>
+			</lido-image>
+			
+			<lido-image layout="col" is-slice="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/matchBox/linematching_building2.png" visible="true" height="100%" width="landscape.30%,portrait.40%"  onEntry="this.display='grid';  this.align-items='center';this.justify-content='center';this.gap='26px';">
+				<lido-cell layout="col" visible="true" margin="0px 18px 0px -18px" bg-color="transparent" height="89%" width="100%" onEntry="this.display='flex'; align-items='center'; justify-content='space-around';">
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="11" type="drop" id="drop1" value="hygine" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/hygiene%201.png"></lido-image>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="12" type="drop" id="drop2" value="lion" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/lion.jpg"></lido-image>
+				</lido-image>
+			
+				
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="14" type="drop" id="drop4" value="tiger" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/tiger.jpg"></lido-image>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="15" type="drop" id="drop5" value="zebra" height="auto" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-image visible="true" height="150px" width="150px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picturemeaning/zebra.jpg"></lido-image>
+				</lido-image>
+				</lido-cell>
+			</lido-image>
+		</lido-cell>
+    </lido-container>
+
+<lido-container visible="true" dropAttr="EnableAnimation" is-allow-only-correct="true" objective="6,8,5,4,1" id="ldo-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" is-continue-on-correct="true">
+		<lido-cell visible="true"  onEntry="this.position='relative';" y="landscape.57%,portrait.77%">	
+				<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="360px" width="485px"  y="landscape.200px,portrait.0px" onEntry="this.position='relative';" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+				</lido-avatar>
+			</lido-cell>
+		<lido-cell layout="row" visible="true" margin="landscape.-336px 0px -49px,portrait.-103px 0px 333px 0px" bg-color="transparent" height="90%" width="landscape.84%,portrait.100%">
+			<lido-image layout="col" is-slice="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/matchBox/linematching_building1.png" visible="true" height="100%" width="landscape.30%,portrait.40%"  onEntry="this.display='grid';  this.align-items='center';this.justify-content='center';this.gap='26px';">
+				<lido-cell layout="col" visible="true" margin="0px 18px 0px -18px" bg-color="transparent" height="89%" width="100%" onEntry="this.display='flex'; align-items='center'; justify-content='space-around';">
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="1" type="drag" id="drag1" value="6" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix1" clickable="false" rows="3" cols="2"  defualtFill="6" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="pink" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="2" type="drag" id="drag2" value="1" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix2" clickable="false" rows="1" cols="1"  defualtFill="1" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="pink" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="3" type="drag" id="drag3" value="4" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix3" clickable="false" rows="2" cols="2"  defualtFill="4" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="pink" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				
+			</lido-image>
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="4" type="drag" id="drag4" value="8" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix4" clickable="false" rows="4" cols="2"  defualtFill="8" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="pink" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="5" type="drag" id="drag5" value="5" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix5" clickable="false" rows="5" cols="1"  defualtFill="5" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="pink" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+				</lido-cell>
+			</lido-image>
+			
+			<lido-image layout="col" is-slice="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/matchBox/linematching_building2.png" visible="true" height="100%" width="landscape.30%,portrait.40%"  onEntry="this.display='grid';  this.align-items='center';this.justify-content='center';this.gap='26px';">
+				<lido-cell layout="col" visible="true" margin="0px 18px 0px -18px" bg-color="transparent" height="89%" width="100%" onEntry="this.display='flex'; align-items='center'; justify-content='space-around';">
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="11" type="drop" id="drop1" value="6" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix11" clickable="false" rows="3" cols="2"  defualtFill="6" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="palegreen" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="12" type="drop" id="drop2" value="8" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix12" clickable="false" rows="4" cols="2"  defualtFill="8" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="palegreen" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="13" type="drop" id="drop3" value="5" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix13" clickable="false" rows="5" cols="1"  defualtFill="5" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="palegreen" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				
+			</lido-image>
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="14" type="drop" id="drop4" value="4" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix14" clickable="false" rows="2" cols="2"  defualtFill="4" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="palegreen" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+			
+				<lido-image z="10" visible="true" is-slice="true" src="https://wallpapers.com/images/featured/blank-white-7sn5o1woonmklx1h.jpg" tab-index="15" type="drop" id="drop5" value="1" height="100px" width="auto" onEntry="this.display='flex'; this.align-items='center'; this.justify-content='center';" bg-color="white">
+					<lido-math-matrix id="matrix15" clickable="false" rows="1" cols="1"  defualtFill="1" leftIndex="false" topIndex="false"  matrixImage="" activeBgColor="palegreen" inactiveBgColor="transparent"   border="2px solid black" height="150px" width="150px"
+			 		visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+				</lido-image>
+				</lido-cell>
+			</lido-image>
+		</lido-cell>
+    </lido-container>
+
+
+<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000'; i1.revealImageValue='true';this.sleep='1000';i2.revealImageValue='true';this.sleep='1000';i3.revealImageValue='true';this.sleep='1000';i4.revealImageValue='true';  this.sleep='1000'; 
+i5.revealImageValue='true';this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="5"  is-continue-on-correct="true" show-Check="true"   >
+	<!-- Chimple Avatar -->
+	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.37%, portrait.-4%" y="landscape.48%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
+		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+		</lido-avatar>
+	</lido-cell>
+	<lido-cell layout="landscape.row,portrait.col" visible="true"  width="90%" height="90%" bg-color="transparent" >
+		<lido-cell layout="col" visible="true" margin="landscape.0px 117px 0px -117px,portrait.0px" onEntry="this.animation='topToPlace 1.5s linear';" height="751px" width="500px" bg-color="transparent"  >
+		
+			<lido-image value="1" type="text" margin="0px 100px 0px 0px"  id="i1" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_01.png"  height="120px" width="120px"></lido-image>	
+			<lido-image value="2" type="text" margin="0px 80px 0px 0px" id="i2" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_02.png"  height="120px" width="120px"></lido-image>
+			<lido-image value="3" type="text" margin="-80px -214px 0px 0px"  id="i3" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_05.png" height="120px" width="120px"></lido-image>
+			<lido-image value="4" type="text" margin="-66px 367px 0px 0px" id="i4" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_04.png" height="120px" width="120px"></lido-image>
+			<lido-image value="5" type="text" margin="0px -180px 0px 0px" id="i5" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_03.png" height="120px" width="120px"></lido-image>			
+ 	
+		</lido-cell>
+		<lido-cell layout="col" visible="true" margin="landscape.0px,portrait.0px -184px 0px 0px" height="751px" width="500px" bg-color="transparent"  >
+			<lido-text visible="true" bg-color="#60DADA"  height="100px" width="456px" margin="0px" string="How many??" onEntry="this.border='5px solid #029A9A';this.border-radius='10px';this.font-size='40px';this.font-weight='600';" > </lido-text>
+			<lido-calculator visible="true" height="650px" y="26px" width="456px"  onEntry="this.position='relative';" ></lido-calculator>
+ 		</lido-cell>
+		</lido-cell>
+	</lido-container>			
 <lido-container id="lido-container" show-drop-border="false" appendToDropOnCompletion="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="1,2,3,4,5,6,7,8,9,10" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.417px,portrait.363px" width="landscape.280px,portrait.340px" x="landscape.1360px, portrait.597px" y="landscape.637px, portrait.1370px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
@@ -138,7 +372,6 @@
 		
 </lido-container>
 
-<lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/MatchingCard/Spring.png" objective="correct" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" custom-style="#dropEle{border: none !important} #drag1,#drag2,#drag3,#drag4{box-shadow: none !important}">
 <lido-container id="question-board-container" disableSpeak="true" objective="7" tabIndex="1"  value="questionBoard" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; background-animation-plus-minus-1.opacity='1'; background-animation-plus-minus-2.opacity='1'; background-animation-multiplication.opacity='1'; this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
 
 		<!-- Chimple Avatar -->
@@ -224,6 +457,14 @@
 	</lido-cell>
 
 </lido-container>
+
+<lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/FoodJar/Sky.png" objective="10,+,5,=,15" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" custom-style="#drop1, #drop2, #drop3, #drop4, #drop5{border: none !important;boxShadow: none !important;}  ">
+	<!-- Chimple Avatar -->
+	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1px, portrait.20px" y="landscape.5px, portrait.100px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
+			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+			</lido-avatar>
+	</lido-cell>
+
 
 
 <lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/FoodJar/Sky.png" objective="10,+,5,=,15" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" custom-style="#drop1, #drop2, #drop3, #drop4, #drop5{border: none !important;boxShadow: none !important;}  ">
