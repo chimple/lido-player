@@ -23,6 +23,7 @@ import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utils
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
+import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -129,6 +130,14 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           }
           break;
         }
+
+        case 'scrollCellAfterEquationSolved': {
+          if(targetElement){
+            handleSolvedEquationSubmissionAndScoreUpdate()
+          }
+          break;
+        }         
+
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
