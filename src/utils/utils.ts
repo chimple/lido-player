@@ -23,6 +23,7 @@ import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utils
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
+import { handlingMatrix } from './utilsHandlers/matrixHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -96,6 +97,10 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
     }
     case 'optionArea': {
       enableOptionArea(element);
+      break;
+    }
+    case 'checkerBlock': {
+      handlingMatrix(element);
       break;
     }
     default:

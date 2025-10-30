@@ -705,7 +705,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
             const preDropId = dragElement.getAttribute('drop-to');
             const preDrop = container.querySelector(`#${preDropId}`) as HTMLElement;
             const preDropIndex = preDrop.getAttribute('tab-index');
-            if(preDropIndex){
+            if (preDropIndex) {
               delete dragSelected[preDropIndex];
             }
           }
@@ -831,7 +831,9 @@ export function updateDropBorder(element: HTMLElement): void {
     element.classList.add('filled');
     element.classList.remove('empty');
   } else {
-    element.classList.add('empty');
+    if (!element.classList.contains('math-matrix')) {
+      element.classList.add('empty');
+    }
     element.classList.remove('filled');
   }
 }

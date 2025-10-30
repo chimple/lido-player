@@ -1086,17 +1086,18 @@ export namespace Components {
          */
         "cols": number;
         /**
+          * Background color for inactive slots
+         */
+        "deactiveBgColor": string;
+        /**
           * Number of slots to pre-fill as active by default
          */
         "defualtFill": number;
+        "fontColor": string;
         /**
           * Height of the slot container
          */
         "height": string;
-        /**
-          * Background color for inactive slots
-         */
-        "inactiveBgColor": string;
         /**
           * Show row index numbers on the left side
          */
@@ -1118,17 +1119,41 @@ export namespace Components {
          */
         "rows": number;
         /**
+          * Sets the tab index for keyboard navigation
+         */
+        "tabIndex": number;
+        /**
+          * The display text or label associated with this matrix element
+         */
+        "text": string;
+        /**
           * Show column index numbers on the top side
          */
         "topIndex": boolean;
         /**
-          * Controls visibility of the matrix (string "true" or "false")
+          * Defines the matrix type (e.g., "drop", "slot", "answer")
+         */
+        "type": string;
+        /**
+          * The value or data associated with this matrix element
+         */
+        "value": string;
+        /**
+          * Controls the visibility of the matrix (accepts "true" or "false" as string)
          */
         "visible": string;
         /**
           * Width of the slot container
          */
         "width": string;
+        /**
+          * The left coordinate (in pixels or percentage) for matrix positioning
+         */
+        "x": string;
+        /**
+          * The top coordinate (in pixels or percentage) for matrix positioning
+         */
+        "y": string;
         /**
           * Z-index value for the matrix container
          */
@@ -3352,17 +3377,18 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
+          * Background color for inactive slots
+         */
+        "deactiveBgColor"?: string;
+        /**
           * Number of slots to pre-fill as active by default
          */
         "defualtFill"?: number;
+        "fontColor"?: string;
         /**
           * Height of the slot container
          */
         "height"?: string;
-        /**
-          * Background color for inactive slots
-         */
-        "inactiveBgColor"?: string;
         /**
           * Show row index numbers on the left side
          */
@@ -3384,17 +3410,41 @@ declare namespace LocalJSX {
          */
         "rows"?: number;
         /**
+          * Sets the tab index for keyboard navigation
+         */
+        "tabIndex"?: number;
+        /**
+          * The display text or label associated with this matrix element
+         */
+        "text"?: string;
+        /**
           * Show column index numbers on the top side
          */
         "topIndex"?: boolean;
         /**
-          * Controls visibility of the matrix (string "true" or "false")
+          * Defines the matrix type (e.g., "drop", "slot", "answer")
+         */
+        "type"?: string;
+        /**
+          * The value or data associated with this matrix element
+         */
+        "value"?: string;
+        /**
+          * Controls the visibility of the matrix (accepts "true" or "false" as string)
          */
         "visible"?: string;
         /**
           * Width of the slot container
          */
         "width"?: string;
+        /**
+          * The left coordinate (in pixels or percentage) for matrix positioning
+         */
+        "x"?: string;
+        /**
+          * The top coordinate (in pixels or percentage) for matrix positioning
+         */
+        "y"?: string;
         /**
           * Z-index value for the matrix container
          */
