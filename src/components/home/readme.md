@@ -47,6 +47,7 @@
 - [lido-float](../float)
 - [lido-keyboard](../keyboard)
 - [lido-math-matrix](../mathMatrix)
+- [lido-balance](../scale)
 - [lido-calculator](../calculator)
 
 ### Graph
@@ -69,6 +70,7 @@ graph TD;
   lido-home --> lido-float
   lido-home --> lido-keyboard
   lido-home --> lido-math-matrix
+  lido-home --> lido-balance
   lido-home --> lido-calculator
   lido-keyboard --> lido-text
   lido-calculator --> lido-cell

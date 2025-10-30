@@ -94,8 +94,6 @@ export class LidoMathMatrix {
 
     this.updateSlots();
     this.updateStyles();
-
-    this.applyBottomSlotClickListener();
   }
 
 
@@ -167,34 +165,24 @@ export class LidoMathMatrix {
         slotEl.classList.add('slot-inactive');
       }
     });
-  }
 
-  applyBottomSlotClickListener() {
-    /** 
-      Attach a click listener only to the bottom-most slot in this matrix.
-      Clicking the bottom slot will trigger the container-level summary update
-      and reveal the next matrix. We mark the matrix as "activated" after
-      the first valid click to avoid double-counting.
-    **/
-    const slotElements = this.el.querySelectorAll('.slot');
-    if (slotElements.length > 0) 
-    {
-      const bottomSlot = slotElements[slotElements.length - 1] as HTMLElement;
-      if (bottomSlot) 
-      {
-        const onBottomClick = async (ev: Event) => {
-          try 
-          {
-            ev.stopPropagation();
-
-            MultiplyBeadsAnimation(this.el,this.cols);
-          } 
-          catch (err) 
-          {
-            console.warn('Error handling bottom-slot click', err);
-          }
-        };
-        bottomSlot.addEventListener('click', onBottomClick);
+    // If the slot is the bottom-most slot for this matrix, dispatch a generic event
+    // so templates or global handlers can handle bottom-slot behaviour (e.g., MultiplyBeadsAnimation).
+    if (index === slotElements.length) {
+      try {
+        const event = new CustomEvent('math-matrix-bottom-click', {
+          detail: {
+            matrix: this.el,
+            cols: this.cols,
+            rows: this.rows,
+          },
+          bubbles: true,
+          composed: true,
+        });
+        // dispatch from the host so listeners on container or document receive it
+        (this.el as HTMLElement).dispatchEvent(event);
+      } catch (err) {
+        console.warn('Error dispatching math-matrix-bottom-click from handleClickSlot', err);
       }
     }
   }

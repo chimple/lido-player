@@ -287,7 +287,29 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-       
+        case 'MultiplyBeedsAnimation': {
+          const value = action.value;
+          // This makes the behavior pluggable: templates can add their own listeners
+          // for 'math-matrix-bottom-click' to override or extend behavior.
+          if(value) {
+            document.addEventListener('math-matrix-bottom-click', async (ev: Event) => {
+              try {
+                const e = ev as CustomEvent;
+                const detail = e.detail || {};
+                const matrix = detail.matrix as HTMLElement | undefined;
+                const cols = detail.cols as number | undefined;
+                if (!matrix) return;
+                // Call the default MultiplyBeadsAnimation handler. That function already
+                // guards with data-activated to avoid double-counting.
+                await MultiplyBeadsAnimation(matrix, cols || 0);
+              } catch (err) {
+                console.warn('Default math-matrix-bottom-click handler failed', err);
+              }
+            });
+          }
+
+          break;
+        }
 
         default: {
           targetElement.style[action.action] = action.value;
@@ -1236,7 +1258,7 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
 export const MultiplyBeadsAnimation = async (element : HTMLElement,value : number) => {
   if (!element) return;
 
-  const container = element.closest('lido-container') as HTMLElement | null;
+  const container = document.getElementById(LidoContainer) as HTMLElement | null;
   if (!container) return;
 
   if (element.getAttribute && element.getAttribute('data-activated') === 'true') return;
