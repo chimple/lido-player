@@ -100,7 +100,7 @@ function getContainerXml(args) {
 			</lido-cell>
 			<!-- fill up based on image -->
 
-			<lido-cell show-speak-icon="true" audio="${args.sentenceAudio}" layout="landscape.row, portrait.col" visible="true" width="landscape.auto, portrait.69%" height="landscape.59%, portrait.auto" bg-color="white" onEntry="this.borderRadius='10px'; this.padding='8px';" margin="landscape.0 , portrait.18px 0px 0px 0px">
+			<lido-cell show-speak-icon="true" audio="${args.sentenceAudio}" layout="landscape.row, portrait.col" visible="true" width="landscape.auto, portrait.69%" height="landscape.65%, portrait.auto" bg-color="white" onEntry="this.borderRadius='10px'; this.padding='8px';" margin="landscape.0 , portrait.18px 0px 0px 0px">
 
 				<!-- image -->
 				${args.img.length === 0 ? '' : `<lido-image id="image1" disable-edit="true" visible="true" src="${args.img}" width="landscape.515px, portrait.100%" height="landscape.100%, portrait.62%" margin="landscape.0px 0px 0px 0px , portrait. 0">
