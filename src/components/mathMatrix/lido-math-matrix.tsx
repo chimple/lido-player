@@ -263,7 +263,7 @@ export class LidoMathMatrix {
                 <div class="leftIndex">{++colIndex}</div>
               ) : (
                 <div
-                  class={`slot slot-${slotNumber} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
+                  class={`slot slot-${slotNumber} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`} 
                   onClick={(ev:Event) => this.handleClickSlot(ev.currentTarget as HTMLElement)}
                   key={`slot-${rowIndex}-${colIndex}`}
                   style={{

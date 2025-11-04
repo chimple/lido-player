@@ -71,7 +71,7 @@ export const NumberPair: StoryObj = {
     dropimg3: '',
 	droptext3: 'circle',
 
-    dropimg4: '',
+    dropimg4: '', 
 	droptext4: 'square',
 
 
