@@ -1,4 +1,4 @@
-import { countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus } from '../utils';
+import { countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus, triggerNextContainer } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
 import { dispatchClickEvent } from '../customEvents';
@@ -61,8 +61,6 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   element.addEventListener('pointerleave', onPointerLeave);
 }
 
-
-
 export function addClickListenerForClickType(element: HTMLElement): void {
   handlingElementFlexibleWidth(element, 'click');
   element.style.cursor = 'pointer';
@@ -91,16 +89,6 @@ export function addClickListenerForClickType(element: HTMLElement): void {
 
     if(container['objective'].length === 0)return;
 
-    // element.style.border = '2px solid yellow';
-    // element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
-
-    // element.style.transition = 'transform 0.2s ease, border 0.5s ease';
-    // element.style.transform = 'scale(1.1)';
-
-    // element.style.transform = 'scale(1)';
-    // element.style.border = '';
-    // element.style.boxShadow = '';
-
     const isActivated = element.classList.contains('lido-element-selected');
     let selectedValue = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
     
@@ -119,11 +107,19 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }
       // const calciEl=document.querySelector('#lidoCalculator') as any; 
       const isInsideCalculator = element.closest('#lidoCalculator') !== null;
-      if(!isInsideCalculator){
+      if(!isInsideCalculator){ 
       storingEachActivityScore(isCorrect);
       }
       handleShowCheck();
       return;
+    } 
+    else{  
+      const isCorrect = objective.includes(element['value']);
+      const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      if(!isInsideCalculator){
+      storingEachActivityScore(isCorrect);
+      }
+      handleShowCheck();
     }
 
     if (showCheck) {
@@ -183,11 +179,12 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }
       storingEachActivityScore(isCorrect);
     }
-
+    const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      if(!isInsideCalculator){
     if (!showCheck && countPatternWords(objective) === countPatternWords(selectedValue)) {
       validateObjectiveStatus();
     }
-  };
+  }};
   element.addEventListener('click', onClick);
 
   // using pointerup and pointerdown - for handling mouse and touch events combined

@@ -37,15 +37,16 @@ function getContainerXml(args) {
   <main>
     <lido-container  visible="true"  id="lido-container"  onInCorrect="lido-avatar.avatarAnimate='Fail';"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='1000'; ${args.images .map((_, i) => `i${i + 1}.revealImageValue='true'; this.sleep='1000';`) .join('')} this.sleep='2000';"
     bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answer}" is-continue-on-correct="true" show-Check="false" >
-      <!-- Avatar -->
-      <lido-cell layout="pos" id="pos1" disable-edit="true" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.37%, portrait.20px" y="landscape.48%, portrait.318px" z="1" bg-color="transparent">
-        <lido-avatar id="lido-avatar" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv"></lido-avatar>
-      </lido-cell>
+<!-- Chimple Avatar -->
+	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.37%, portrait.-4%" y="landscape.48%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
+		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+		</lido-avatar>
+	</lido-cell>
 
       <!-- Main Layout -->
-      <lido-cell layout="row" visible="true" width="90%" height="90%" bg-color="transparent">
+      <lido-cell layout="landscape.row,portrait.col" visible="true" width="90%" height="90%" bg-color="transparent">
         <!-- Left column: images -->
-        <lido-cell layout="col" visible="true" margin="0px 117px 0px -117px" onEntry="this.animation='topToPlace 1.5s linear';" height="751px" width="500px" bg-color="transparent">
+        <lido-cell layout="col" visible="true" margin="landscape.0px 117px 0px -117px,portrait.0px" onEntry="this.animation='topToPlace 1.5s linear';" height="751px" width="500px" bg-color="transparent">
           ${args.images
             .map(
               (img, i) => `
@@ -55,7 +56,7 @@ function getContainerXml(args) {
         </lido-cell>
 
         <!-- Right column: text + calculator -->
-        <lido-cell layout="col" visible="true" margin="0px" height="751px" width="500px" bg-color="transparent">
+        <lido-cell layout="col" visible="true" margin="landscape.0px,portrait.0px -184px 0px 0px" height="751px" width="500px" bg-color="transparent">
           <lido-text visible="true" bg-color="#60DADA" height="100px" width="456px" margin="0px" string="${args.questionText}" onEntry="this.border='5px solid #029A9A'; this.border-radius='10px'; this.font-size='40px'; this.font-weight='600';"></lido-text>
           <lido-calculator visible="true" height="650px" y="26px" width="456px" onEntry="this.position='relative';"></lido-calculator>
         </lido-cell>

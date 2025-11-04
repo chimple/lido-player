@@ -23,6 +23,8 @@ import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utils
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
+import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler';
+import { handlingMatrix } from './utilsHandlers/matrixHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -98,6 +100,10 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
       enableOptionArea(element);
       break;
     }
+    case 'checkerBlock': {
+      handlingMatrix(element);
+      break;
+    }
     default:
       break;
   }
@@ -129,6 +135,14 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           }
           break;
         }
+
+        case 'scrollCellAfterEquationSolved': {
+          if(targetElement){
+            handleSolvedEquationSubmissionAndScoreUpdate()
+          }
+          break;
+        }         
+
         case 'alignMatch': {
           const dropElement = targetElement;
           const dragElement = element;
@@ -287,7 +301,29 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-       
+        case 'MultiplyBeedsAnimation': {
+          const value = action.value;
+          // This makes the behavior pluggable: templates can add their own listeners
+          // for 'math-matrix-bottom-click' to override or extend behavior.
+          if(value) {
+            document.addEventListener('math-matrix-bottom-click', async (ev: Event) => {
+              try {
+                const e = ev as CustomEvent;
+                const detail = e.detail || {};
+                const matrix = detail.matrix as HTMLElement | undefined;
+                const cols = detail.cols as number | undefined;
+                if (!matrix) return;
+                // Call the default MultiplyBeadsAnimation handler. That function already
+                // guards with data-activated to avoid double-counting.
+                await MultiplyBeadsAnimation(matrix, cols || 0);
+              } catch (err) {
+                console.warn('Default math-matrix-bottom-click handler failed', err);
+              }
+            });
+          }
+
+          break;
+        }
 
         default: {
           targetElement.style[action.action] = action.value;
@@ -1226,10 +1262,84 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
   let valueElement = imageEl.querySelector('.lido-display-hiddenvalue') as HTMLElement;
   if (!valueElement) {
     valueElement = document.createElement('div');
-    valueElement.classList.add('Displayhiddenvalue');
+    valueElement.classList.add('lido-display-hiddenvalue');
     imageEl.style.position = 'relative';
     imageEl.appendChild(valueElement);
   }
   valueElement.innerText = value;
 };
 
+export const MultiplyBeadsAnimation = async (element : HTMLElement,value : number) => {
+  if (!element) return;
+
+  const container = document.getElementById(LidoContainer) as HTMLElement | null;
+  if (!container) return;
+
+  if (element.getAttribute && element.getAttribute('data-activated') === 'true') return;
+  element.setAttribute && element.setAttribute('data-activated', 'true');
+
+  const txtEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
+  if (!txtEl) return;
+
+  const addValue = parseInt(String(value), 10) || 0;
+
+  const current = txtEl.getAttribute('string') || '';
+
+  let left = current;
+  if (left.includes('=')) left = left.split('=')[0];
+  console.log('Left part before addition:', left);
+
+  let firstMatrix = false;
+  if (!left || left.trim().length === 0) 
+  {
+    left = String(addValue);
+    firstMatrix = true;
+  } 
+  else 
+  {
+    left = `${left}+${addValue}`;
+  }
+
+  const terms = left.split('+').map(t => parseInt(t.trim(), 10) || 0);
+  const sum = terms.reduce((s, n) => s + n, 0);
+  
+  let newString : string = ""
+  if (firstMatrix) 
+  {
+    newString = `${left}`;
+  }
+  else
+  {
+    newString = `${left}=${sum}`;
+  }
+
+  txtEl.setAttribute('string', newString);
+  txtEl.setAttribute('value', newString);
+  txtEl.style.visibility = 'visible';
+  txtEl.style.display = '';
+
+  const matrices = Array.from(container.querySelectorAll('lido-math-matrix')) as HTMLElement[];
+  console.log('Total matrices in container:', matrices.length);
+  const idx = matrices.indexOf(element);
+
+  // Reveal the next matrix (if any) and increment the persisted counter only when we actually reveal one.
+  if (idx >= 0 && idx + 1 < matrices.length) {
+    const nextMatrix = matrices[idx + 1];
+    const parentCell = nextMatrix.closest('lido-cell') as HTMLElement | null;
+    if (parentCell) {
+      parentCell.style.opacity = '1';
+      parentCell.style.visibility = 'visible';
+    }
+  }
+
+  // If this is the last matrix in the container, trigger next-container behavior.
+  if (idx === matrices.length - 1) {
+    // run onCorrect if provided, then trigger next container
+    const onCorrect = container.getAttribute && container.getAttribute('onCorrect');
+    if (onCorrect) {
+      await executeActions(onCorrect, container);
+    }
+    // trigger the next container flow
+    triggerNextContainer();
+  }
+}
