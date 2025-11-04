@@ -64,8 +64,8 @@ function getContainerXml(args) {
     return `
 		<!-- drop --> 	
         <lido-cell id="drop${tabCounter}" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
-					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="${answer}" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
-					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="${tabCounter++}" value="${answer}" string="${answer}" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+					<lido-math-matrix  rows="2" cols="5"  defualtFill="${answer}" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
+					<lido-cell visible="true" id="drop${tabCounter}" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="${tabCounter++}" value="${answer}" string="${answer}" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
 		</lido-cell>
       `;
   }).join('');

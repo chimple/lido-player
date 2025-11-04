@@ -242,10 +242,11 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
             otherElement.style.border = ''; // Reset border
             otherElement.style.backgroundColor = 'transparent'; // Reset background color
-          }
-          if (otherElement.tagName.toLowerCase() === 'lido-image') {
-            otherElement.style.opacity = '0';
-          }
+          }if(otherElement.id !== "fistank" && otherElement.id !== "tub1" && otherElement.id !== "tub2" && otherElement.id !== "Equation2" && otherElement.id !== "Equation"){
+            if (otherElement.tagName.toLowerCase() === 'lido-image') {
+              otherElement.style.opacity = '0';
+            }
+        }
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -263,8 +264,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
         mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
       } else {
-        mostOverlappedElement.style.opacity = '0.3';
+        if(mostOverlappedElement.id !== "fistank" && mostOverlappedElement.id !== "tub1" && mostOverlappedElement.id !== "tub2" && mostOverlappedElement.id !== "Equation2" && mostOverlappedElement.id !== "Equation"){
+           mostOverlappedElement.style.opacity = '0.3';
       }
+    }
     }
   };
 
@@ -300,9 +303,11 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
               otherElement.style.border = ''; // Reset border
               otherElement.style.backgroundColor = 'transparent'; // Reset background color
             }
-            if (otherElement.tagName.toLowerCase() === 'lido-image') {
-              otherElement.style.opacity = '0';
-            }
+            if(otherElement.id !== "fistank" && otherElement.id !== "tub1" && otherElement.id !== "tub2" && otherElement.id !== "Equation2" && otherElement.id !== "Equation" ){
+              if (otherElement.tagName.toLowerCase() === 'lido-image') {
+                otherElement.style.opacity = '0';
+              }
+          }
           }
         } else {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -319,6 +324,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
+    updateMarbleAndFishTankCount();
+    updateMarbleAndFishTankCountTwo();
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
@@ -349,8 +356,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // }
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.InfiniteDrop) {
-      if (mostOverlappedElement) {
-        mostOverlappedElement.style.opacity = '0';
+      if(mostOverlappedElement.id !== "fistank" && mostOverlappedElement.id !== "tub1" && mostOverlappedElement.id !== "tub2" && mostOverlappedElement.id !== "Equation2" &&mostOverlappedElement.id !== "Equation" ){
+        if (mostOverlappedElement) {
+          mostOverlappedElement.style.opacity = '0';
+        }
       }
 
       if (element.getAttribute('value')) {
@@ -454,7 +463,7 @@ export function handleResetDragElement(
       cloneDragElement.replaceWith(dragElement);
     }, 500);
   } else {
-    dragElement.style.transform = 'translate(0,0)';
+    dragElement.style.transform = 'translate(0,0)'; //here
   }
   let currentDrop = dragToDropMap.get(dragElement);
   if (currentDrop) {
@@ -513,10 +522,12 @@ export function handleResetDragElement(
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
           otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
+        if(otherElement.id !== "fistank" && otherElement.id !== "tub1" && otherElement.id !== "tub2" && otherElement.id !== "Equation2" && otherElement.id !== "Equation" ){
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
           otherElement.style.backgroundColor = 'transparent';
         }
+      }
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
@@ -539,7 +550,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const dragSelectedData = JSON.stringify(buildDragSelectedMapFromDOM());
   const dropSelectedDataobject =  buildDragSelectedMapFromDOM();
   const dropSelectedData=JSON.stringify(dropSelectedDataobject);
-  console.log("dragggedddd elem", {value: dragElement.getAttribute("value")});
   let dropHasDrag = buildDropHasDragFromDOM();
 
   if (!dropElement) {
@@ -548,7 +558,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   }
   const dropTabIndex = dropElement.getAttribute('tab-index');
   
-  if (dropHasDrag[dropTabIndex]?.isFull) {
+  if (dropHasDrag[dropTabIndex]?.isFull && dropElement.id !== "fishTank" && dropElement.id !== "tub2" && dropElement.id !== "tub1") {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
     return;
   }
@@ -746,8 +756,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
                   otherElement.style.border = ''; // Reset border
                   otherElement.style.backgroundColor = 'transparent'; // Reset background color
                 }
-                if (otherElement.tagName.toLowerCase() === 'lido-image') {
-                  otherElement.style.opacity = '0';
+                if(otherElement.id !== "fistank" && otherElement.id !== "tub1" && otherElement.id !== "tub2" && otherElement.id !== "Equation2" && otherElement.id !== "Equation"){
+                  if (otherElement.tagName.toLowerCase() === 'lido-image') {
+                    otherElement.style.opacity = '0';
+                  }
                 }
               }
             } else {
@@ -931,6 +943,8 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
+    updateMarbleAndFishTankCount();
+    updateMarbleAndFishTankCountTwo();
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
@@ -950,6 +964,8 @@ async function onClickDragElement(element) {
 
   if (currentTransform && currentTransform !== 'none' && currentTransform !== 'matrix(1, 0, 0, 1, 0, 0)') {
     onElementDropComplete(dragEl, null);
+    updateMarbleAndFishTankCount();
+    updateMarbleAndFishTankCountTwo();
     return;
   }
 
@@ -958,6 +974,8 @@ async function onClickDragElement(element) {
     const dropEl = document.querySelector(`#${firstFalse.drop}`) as HTMLElement;
     dragEl.style.transition = 'transform 0.5s ease';
     onElementDropComplete(dragEl, dropEl);
+    updateMarbleAndFishTankCount();
+    updateMarbleAndFishTankCountTwo();
   }
 }
 
@@ -1057,4 +1075,85 @@ function calculateValue(elements: HTMLElement[], operation: string): number {
     console.warn("invalid exp", expr);
     return 0;
   }
+}
+
+function updateMarbleAndFishTankCount() {
+  const fishTank = document.getElementById("fishTank");
+  const marblesContainer = document.getElementById("marbles");
+if (!marblesContainer || !fishTank ) {
+  return;
+}
+  const displayOut = document.getElementById("displayOut").getAttribute("value"); //marbles to be dropped out
+  // New: count marbles in marblesContainer whose drop-to="fishtank"
+  let outJarCount = 0; // marbles that are dropped out
+  const allMarbles = marblesContainer.querySelectorAll('[type="drag"]');
+
+  allMarbles.forEach((marble) => {
+    const dropTo = marble.getAttribute("drop-to");
+    if (dropTo && dropTo.toLowerCase() === "fishtank") {
+      outJarCount++;
+    }
+  });
+  const dragOptions = document.getElementById("dragEle");
+  const displayans = document.getElementById("displayans");
+  if(parseInt(displayOut) === outJarCount){
+    dragOptions.style.pointerEvents = '';
+    console.log("✌️✌️✌️✌️✌️");
+    marblesContainer.style.pointerEvents = 'none';
+    displayans.style.opacity = '1';
+  }
+  let remainingMarbles = allMarbles.length - outJarCount;
+  console.log(`🟢 Marbles remaining in 1st: ${remainingMarbles}`);
+  console.log(`🟣 outJarCount in 1st: ${outJarCount}`);
+  console.log(`🟣 all in 1st: ${allMarbles.length}`);
+}
+
+function updateMarbleAndFishTankCountTwo(){
+  const tub1 = document.getElementById("tub1");
+  const tub2 = document.getElementById("tub2");
+  const marblesContainerTwo = document.getElementById("marbles2");
+
+if(!tub1 || !tub2 || !marblesContainerTwo)return;
+
+let countTub1 = 0;
+let countTub2 = 0;
+const totalMarbles = marblesContainerTwo.querySelectorAll('[type="drag"]');
+let remainingMarbles2 = totalMarbles.length;
+totalMarbles.forEach((marble) => {
+    const dropTo = marble.getAttribute("drop-to");
+    if (dropTo && dropTo.toLowerCase() === "tub1") {
+      countTub1++;
+      remainingMarbles2--;
+    }
+
+    if (dropTo && dropTo.toLowerCase() === "tub2") {
+      countTub2++;
+      remainingMarbles2--;
+    }
+
+  });
+
+  const dragOptions = document.getElementById("dragEle2");
+  const FNum = document.getElementById("FNum").getAttribute("value");
+  const SNum = document.getElementById("SNum").getAttribute("value");;
+  const avatar = document.getElementById("Equation2");
+  if(countTub1=== parseInt(FNum)){
+   tub1.removeAttribute('type')
+  }else{
+    tub1.setAttribute('type','drop')
+  }
+  if(countTub2=== parseInt(SNum)){
+   tub2.removeAttribute('type')
+  }else{
+    tub2.setAttribute('type','drop')
+  }
+  if((countTub1=== parseInt(FNum)) && (countTub2=== parseInt(SNum))){
+    dragOptions.style.pointerEvents = '';
+    executeActions("this.avatarAnimate=success",avatar)
+  }
+  
+   console.log(`🟣 all in 2st: ${totalMarbles.length}`);
+   console.log(`🟣 marbles is tub1: ${countTub1}`);
+   console.log(`🟣 marbles is tub2: ${countTub2}`);
+  console.log(`🟢 Marbles remaining outside 2nd: ${remainingMarbles2}`);
 }

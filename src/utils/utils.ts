@@ -164,7 +164,58 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
 
           if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
             dragElement.style.transform = `translate(${scaledLeft - 70}px, ${scaledTop - 70}px)`;
-          } else {
+          } 
+          else if (dropElement.id=== "fishTank" || dropElement.id === "tub1" || dropElement.id === "tub2" ) {
+            console.log("🙌🙌🙌🙌🙌🙌")
+  const dropRect = dropElement.getBoundingClientRect();
+  const dragRect = dragElement.getBoundingClientRect();
+  const scale = typeof calculateScale === 'function' ? calculateScale() : 1;
+
+  const gapX = 4;   // horizontal spacing
+  const gapY = 4;  // vertical spacing between rows
+  const itemsPerRow = 5; // how many per "row" before stacking upward
+
+  if (!dropElement.dataset.dropCount) dropElement.dataset.dropCount = "0";
+  let dropCount = parseInt(dropElement.dataset.dropCount, 10);
+
+  const dragWidth = dragRect.width / scale;
+  const dragHeight = dragRect.height / scale;
+
+  // 🧭 base (bottom-center) reference point
+  const tubCenterX = dropRect.left + dropRect.width / 2;
+  let tubBottomY;
+   if(dropElement.id === "tub1" || dropElement.id === "tub2"){
+    tubBottomY = dropRect.bottom - dragHeight - dropRect.height * 0.28;
+    }else{
+      tubBottomY = dropRect.bottom - dragHeight - dropRect.height * 0.05;
+    }
+
+  // calculate which row and column this element belongs to
+  const row = Math.floor(dropCount / itemsPerRow); // vertical stacking
+  const colInRow = dropCount % itemsPerRow;
+
+  // alternate around center horizontally
+  const side = colInRow % 2 === 0 ? 1 : -1;
+  const indexFromCenter = Math.ceil(colInRow / 2);
+
+  const offsetX = side * indexFromCenter * (dragWidth + gapX);
+  const offsetY = -row * (dragHeight + gapY); // each new row goes upward
+
+  // compute target position
+  const targetX = tubCenterX - dragWidth / 2 + offsetX;
+  const targetY = tubBottomY + offsetY;
+
+  const currentRect = dragElement.getBoundingClientRect();
+  const dx = (targetX - currentRect.left) / scale;
+  const dy = (targetY - currentRect.top) / scale;
+
+  dragElement.style.transition = 'transform 0.0 ease';
+  dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
+
+  dropElement.dataset.dropCount = String(dropCount + 1);
+}
+
+         else {
             dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
           }
           if (dragElement.getAttribute('hasDummy') === 'true') return;
@@ -576,8 +627,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
   }}
 
-
-  const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
+ const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
   allElements.forEach(otherElement => {
     const storedTabIndexes = Object.keys(dragScore).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
@@ -585,9 +635,11 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
           otherElement.style.backgroundColor = 'transparent'; // Reset background color**
         }
-        if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.opacity = '0';
-          otherElement.style.backgroundColor = 'transparent';
+        if(otherElement.id !== "fistank" && otherElement.id !== "tub1" && otherElement.id !== "tub2"&& otherElement.id !== "Equation2" && otherElement.id !== "Equation" ){
+          if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            otherElement.style.opacity = '0';
+            otherElement.style.backgroundColor = 'transparent';
+          }
         }
       }
     } else {
