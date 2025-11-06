@@ -255,3 +255,24 @@ body {
   font-family: 'Baloo Bhai 2', sans-serif;
   pointer-events: none;
 }
+
+.colorize {
+  position: relative;
+  display: inline-block;
+}
+
+.colorize::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--tint-color);
+  mix-blend-mode: multiply;
+  opacity: 0.8;
+  pointer-events: none;
+
+  /* this line ensures tint fits only in visible image area */
+  mask-image: var(--mask-url);
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
