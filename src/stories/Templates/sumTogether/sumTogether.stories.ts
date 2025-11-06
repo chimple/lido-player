@@ -105,7 +105,7 @@ function getContainerXml(args: SumTogetherArgs) {
                 </lido-text>
                 <lido-text id="operator-${sign}" tab-index="${tabCounter++}" height="295px" width="120px" visible="true"  value="${sign}" string="${sign}" font-family="'Baloo Bhai 2'" font-color="black" font-size="195px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
-                <lido-text id="${number2}" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';, this.sign='${sign}';" border-image="">
+                <lido-text id="${number2}" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
                 <lido-text id="equal" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="=" string="=" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
