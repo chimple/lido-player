@@ -122,10 +122,7 @@ function getContainerXml(args: SumTogetherArgs) {
             <!-- speaking element-->
             <lido-text id="speak-text" tab-index="5" height="100%" width="100%" visible="false" string="solve the problem by counting the teddys above and drag the correct answer" font-family="'Baloo Bhai 2'" font-color="red" font-size="75px"  bg-color="transparent" onInCorrect="" onEntry="this.opacity='0'; this.speak='true';" border-image="">
             </lido-text>
-
         </lido-container>
-
-
     </main>
   `;
 }
