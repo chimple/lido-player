@@ -1262,20 +1262,17 @@ export const MultiplyBeadsAnimation = async (element : HTMLElement,value : strin
 
   const objective = element.getAttribute('objective') as string
   if (!objective) return;
-  console.log('objective ',objective);
 
   const txtEl = element.querySelector('#answer-multiply-beeds') as HTMLElement;
   if (!txtEl) return;
 
   const left = objective.trim().split('=')[0].trim();
-  console.log('left ',left);
+  
   const right = objective.trim().split('=')[1].trim();
-  console.log('right ',right);
-
+  
   const addValue = left.split('X')[0].trim();
-  console.log('addValue ',addValue);
+
   let multiplicationFactor = Number(left.split('X')[1].trim());
-  console.log('factor ',multiplicationFactor);
 
   let newString : string = ""
   while (multiplicationFactor > 0)
