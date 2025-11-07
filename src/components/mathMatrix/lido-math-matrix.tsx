@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
-import { handlingMatrix } from '../../utils/utilsHandlers/matrixHandler';
+import { handlingMatrix,goToNextContainer } from '../../utils/utilsHandlers/matrixHandler';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -213,6 +213,9 @@ export class LidoMathMatrix {
         console.warn('Error dispatching math-matrix-bottom-click from handleClickSlot', err);
       }
     }
+
+    // trigger the next container if right slot was clicked
+    goToNextContainer(this.el,index);
   }
 
   private getSlotData(): Record<number, { text: string; color?: string }> {
@@ -263,7 +266,7 @@ export class LidoMathMatrix {
                 <div class="leftIndex">{++colIndex}</div>
               ) : (
                 <div
-                  class={`slot slot-${slotNumber++} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
+                  class={`slot slot-${slotNumber} ${this.defualtFill >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
                   onClick={(ev:Event) => this.handleClickSlot(ev.currentTarget as HTMLElement)}
                   key={`slot-${rowIndex}-${colIndex}`}
                   style={{

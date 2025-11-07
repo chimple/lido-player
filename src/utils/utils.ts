@@ -303,23 +303,8 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
 
         case 'MultiplyBeedsAnimation': {
           const value = action.value;
-          // This makes the behavior pluggable: templates can add their own listeners
-          // for 'math-matrix-bottom-click' to override or extend behavior.
-          if(value) {
-            document.addEventListener('math-matrix-bottom-click', async (ev: Event) => {
-              try {
-                const e = ev as CustomEvent;
-                const detail = e.detail || {};
-                const matrix = detail.matrix as HTMLElement | undefined;
-                const cols = detail.cols as number | undefined;
-                if (!matrix) return;
-                // Call the default MultiplyBeadsAnimation handler. That function already
-                // guards with data-activated to avoid double-counting.
-                await MultiplyBeadsAnimation(matrix, cols || 0);
-              } catch (err) {
-                console.warn('Default math-matrix-bottom-click handler failed', err);
-              }
-            });
+          if(value && targetElement) {
+            await MultiplyBeadsAnimation(targetElement, value);
           }
 
           break;
@@ -1269,77 +1254,42 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
   valueElement.innerText = value;
 };
 
-export const MultiplyBeadsAnimation = async (element : HTMLElement,value : number) => {
+export const MultiplyBeadsAnimation = async (element : HTMLElement,value : string) => {
   if (!element) return;
-
-  const container = document.getElementById(LidoContainer) as HTMLElement | null;
-  if (!container) return;
 
   if (element.getAttribute && element.getAttribute('data-activated') === 'true') return;
   element.setAttribute && element.setAttribute('data-activated', 'true');
 
-  const txtEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
+  const objective = element.getAttribute('objective') as string
+  if (!objective) return;
+  console.log('objective ',objective);
+
+  const txtEl = element.querySelector('#answer-multiply-beeds') as HTMLElement;
   if (!txtEl) return;
 
-  const addValue = parseInt(String(value), 10) || 0;
+  const left = objective.trim().split('=')[0].trim();
+  console.log('left ',left);
+  const right = objective.trim().split('=')[1].trim();
+  console.log('right ',right);
 
-  const current = txtEl.getAttribute('string') || '';
+  const addValue = left.split('X')[0].trim();
+  console.log('addValue ',addValue);
+  let multiplicationFactor = Number(left.split('X')[1].trim());
+  console.log('factor ',multiplicationFactor);
 
-  let left = current;
-  if (left.includes('=')) left = left.split('=')[0];
-  console.log('Left part before addition:', left);
-
-  let firstMatrix = false;
-  if (!left || left.trim().length === 0) 
-  {
-    left = String(addValue);
-    firstMatrix = true;
-  } 
-  else 
-  {
-    left = `${left}+${addValue}`;
-  }
-
-  const terms = left.split('+').map(t => parseInt(t.trim(), 10) || 0);
-  const sum = terms.reduce((s, n) => s + n, 0);
-  
   let newString : string = ""
-  if (firstMatrix) 
+  while (multiplicationFactor > 0)
   {
-    newString = `${left}`;
+    newString = newString + addValue + "+";
+    multiplicationFactor -= 1
   }
-  else
+  if (newString.endsWith('+')) 
   {
-    newString = `${left}=${sum}`;
+    newString = newString.slice(0, -1) + '=';
   }
 
   txtEl.setAttribute('string', newString);
   txtEl.setAttribute('value', newString);
   txtEl.style.visibility = 'visible';
   txtEl.style.display = '';
-
-  const matrices = Array.from(container.querySelectorAll('lido-math-matrix')) as HTMLElement[];
-  console.log('Total matrices in container:', matrices.length);
-  const idx = matrices.indexOf(element);
-
-  // Reveal the next matrix (if any) and increment the persisted counter only when we actually reveal one.
-  if (idx >= 0 && idx + 1 < matrices.length) {
-    const nextMatrix = matrices[idx + 1];
-    const parentCell = nextMatrix.closest('lido-cell') as HTMLElement | null;
-    if (parentCell) {
-      parentCell.style.opacity = '1';
-      parentCell.style.visibility = 'visible';
-    }
-  }
-
-  // If this is the last matrix in the container, trigger next-container behavior.
-  if (idx === matrices.length - 1) {
-    // run onCorrect if provided, then trigger next container
-    const onCorrect = container.getAttribute && container.getAttribute('onCorrect');
-    if (onCorrect) {
-      await executeActions(onCorrect, container);
-    }
-    // trigger the next container flow
-    triggerNextContainer();
-  }
 }

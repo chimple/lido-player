@@ -1,5 +1,6 @@
 import { LidoContainer } from '../constants';
 import { getElementScale } from './dragDropHandler';
+import { triggerNextContainer, storingEachActivityScore, executeActions } from '../utils';
 
 export function handlingMatrix(element: HTMLElement) {
   const container = document.querySelector(LidoContainer) as HTMLElement;
@@ -335,4 +336,56 @@ function generateDoubleSquares(count = 16) {
   }
 
   return pairs;
+}
+
+export function goToNextContainer(element: HTMLElement,index: number) {
+  const container = document.querySelector(LidoContainer) as HTMLElement;
+  if (!container) return;
+
+  const objective = container.getAttribute("objective");
+
+  let clickedSlotValue: number = 0;
+  if(objective.includes('X') && objective.includes('='))
+  {
+    clickedSlotValue =  Number(objective.trim().split('=')[1].trim());
+  }
+  else 
+  {
+    clickedSlotValue = Number(objective);
+  }
+
+  let isCorrect = false;
+  if(clickedSlotValue === index){
+    isCorrect = true;
+  }
+  if(isCorrect) {
+    if(objective.includes('X') && objective.includes('='))
+    {
+      const textEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
+      console.log('textEl ',textEl)
+      if(textEl)
+      {
+        let newString = textEl.getAttribute && textEl.getAttribute('string') as string;
+        if (newString.endsWith('='))
+        {
+          newString = newString.slice(0) + String(clickedSlotValue);
+        }
+        textEl.setAttribute('string', newString);
+        textEl.setAttribute('value', newString);
+        textEl.style.visibility = 'visible';
+        textEl.style.display = '';
+      }
+    }
+    const onCorrect = container.getAttribute('onCorrect')
+    if(onCorrect)
+    {
+      executeActions(onCorrect,element);
+    }
+    setTimeout(() => { triggerNextContainer() }, 3000);
+    storingEachActivityScore(isCorrect);
+  }
+  else {
+    storingEachActivityScore(isCorrect);
+  }
+  return;
 }
