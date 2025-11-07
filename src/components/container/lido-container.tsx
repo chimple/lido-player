@@ -193,16 +193,6 @@ export class LidoContainer {
    * @param container The container element to be scaled.
    */
   scaleContainer(container: HTMLElement) {
-    const playerContainer = document.querySelector(".player-container") as HTMLElement;
-    let scaleFactor = 0;
-    if (playerContainer) {
-      const parentWidth = playerContainer.clientWidth;
-      const parentHeight = playerContainer.clientHeight;
-      const scaleX = parentWidth / 1600;
-      const scaleY = parentHeight / 900;
-      scaleFactor = Math.min(scaleX, scaleY);
-    }
-    
     const widths = [window.innerWidth];
     const heights = [window.innerHeight];
 
@@ -232,7 +222,7 @@ export class LidoContainer {
     const scale = Math.min(scaleX, scaleY); // Ensure uniform scaling
 
     // Center the container and apply scaling
-    container.style.transform = `translate(-50%, -50%) scale(${scaleFactor != 0 ? scaleFactor : scale})`;
+    container.style.transform = `translate(-50%, -50%) scale(${scale})`;
     container.style.left = '50%';
     container.style.top = '50%';
     container.style.position = 'absolute'; // Ensure proper positioning
