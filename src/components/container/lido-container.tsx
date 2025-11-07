@@ -240,8 +240,18 @@ export class LidoContainer {
    */
 
   scaleContainer(container: HTMLElement) {
+    const playerContainer = document.querySelector(".player-container") as HTMLElement;
+    let scaleFactor = 0;
+    if (playerContainer) {
+      const parentWidth = playerContainer.clientWidth;
+      const parentHeight = playerContainer.clientHeight;
+      const scaleX = parentWidth / 1600;
+      const scaleY = parentHeight / 900;
+      scaleFactor = Math.min(scaleX, scaleY);
+    }
+
     // Center the container and apply scaling
-    container.style.transform = `translate(-50%, -50%) scale(${calculateScale()})`;
+    container.style.transform = `translate(-50%, -50%) scale(${scaleFactor != 0 ? scaleFactor : calculateScale()})`;
     container.style.left = '50%';
     container.style.top = '50%';
     container.style.position = 'absolute'; // Ensure proper positioning
