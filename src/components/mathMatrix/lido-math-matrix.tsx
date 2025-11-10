@@ -1,5 +1,6 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
+import { goToNextContainer } from '../../utils/utilsHandlers/matrixHandler'
 import { handlingMatrix } from '../../utils/utilsHandlers/matrixHandler';
 
 @Component({
@@ -9,10 +10,10 @@ import { handlingMatrix } from '../../utils/utilsHandlers/matrixHandler';
 })
 export class LidoMathMatrix {
   /** Number of rows in the matrix */
-  @Prop() rows = 7;
+  @Prop() rows = "7";
 
   /** Number of columns in the matrix */
-  @Prop() cols = 5;
+  @Prop() cols = "5";
 
   /** Number of slots to pre-fill as active by default */
   @Prop() defualtFill = 0;
@@ -34,6 +35,7 @@ export class LidoMathMatrix {
 
   /** Image source used inside the slots */
   @Prop() matrixImage: string;
+  
 
   /** Background color for active slots */
   @Prop() activeBgColor: string = 'transparent';
@@ -174,7 +176,12 @@ export class LidoMathMatrix {
       borderRadius: parseProp(this.borderRadius, orientation),
       left: parseProp(this.x, orientation),
       top: parseProp(this.y, orientation),
+      cols: parseProp(`${this.cols}`, orientation),
+      rows: parseProp(`${this.rows}`, orientation),
     };
+
+    // console.log("cols and rows : ", );
+    
   }
 
   handleClickSlot(element: HTMLElement) {
@@ -183,7 +190,7 @@ export class LidoMathMatrix {
     slotElements.forEach((el, i) => {
       const slotEl = el as HTMLElement;
       if (i < index) {
-        slotEl.classList.add('slot-active');
+        slotEl.classList.add('slot-active');        
         slotEl.classList.remove('slot-inactive');
         if (this.matrixImage) {
           slotEl.style.setProperty('--bg-image', `url(${convertUrlToRelative(this.matrixImage)})`);
@@ -201,8 +208,8 @@ export class LidoMathMatrix {
         const event = new CustomEvent('math-matrix-bottom-click', {
           detail: {
             matrix: this.el,
-            cols: this.cols,
-            rows: this.rows,
+            cols: this.style.cols,
+            rows: this.style.rows,
           },
           bubbles: true,
           composed: true,
@@ -213,6 +220,8 @@ export class LidoMathMatrix {
         console.warn('Error dispatching math-matrix-bottom-click from handleClickSlot', err);
       }
     }
+
+    goToNextContainer (element,index) //function to trigger the next container
   }
 
   private getSlotData(): Record<number, { text: string; color?: string }> {
@@ -248,28 +257,29 @@ export class LidoMathMatrix {
         type={this.type}
         value={this.value}
         tab-index={this.tabIndex}
-        rows={this.rows}
-        cols={this.cols}
+        rows={this.style.rows}
+        cols={this.style.cols}
         text={this.text}
       >
-        {Array.from({ length: this.rows + 1 }, (_, rowIndex) => (
+        {Array.from({ length: parseInt(this.style.rows)+ 1}, (_, rowIndex) => (
           <div class="slot-parent" key={`row-${rowIndex}`}>
             <div style={rowIndex === 0 && { visibility: 'hidden' }} class="topIndex">
               {rowIndex}
             </div>
 
-            {Array.from({ length: this.cols }, (_, colIndex) =>
+            {Array.from({ length: parseInt(this.style.cols) }, (_, colIndex) =>
               rowIndex === 0 ? (
                 <div class="leftIndex">{++colIndex}</div>
               ) : (
                 <div
-                  class={`slot slot-${slotNumber} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`} 
+                  class={`slot slot-${slotNumber} ${this.defualtFill >= slotNumber ? 'slot-active' : 'slot-inactive'}`} 
                   onClick={(ev:Event) => this.handleClickSlot(ev.currentTarget as HTMLElement)}
                   key={`slot-${rowIndex}-${colIndex}`}
                   style={{
                     borderRadius: this.style.borderRadius,
                     backgroundColor: slotData[slotNumber-1]?.color || '',
                   }}
+                  id={`${slotNumber}`}
                 >
                   {/* {this.text != 'false' && (slotData[slotNumber]?.text || slotNumber)} */}
                   {slotData[slotNumber-1]?.text}
@@ -279,7 +289,7 @@ export class LidoMathMatrix {
             )}
 
             <div style={rowIndex === 0 && { visibility: 'hidden' }} class="bottomIndex">
-              {this.cols * rowIndex}
+              {parseInt(this.style.cols) * rowIndex}
             </div>
           </div>
         ))}
