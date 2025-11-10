@@ -256,12 +256,12 @@ body {
   pointer-events: none;
 }
 
-.colorize {
+.lido-image-colorize {
   position: relative;
   display: inline-block;
 }
 
-.colorize::after {
+.lido-image-colorize::after {
   content: '';
   position: absolute;
   inset: 0;

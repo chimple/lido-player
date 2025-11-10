@@ -1165,7 +1165,7 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
 
 const setImageBackground = (el?: HTMLElement, color?: string) => {
     if (!el) return;
-    el.classList.add('colorize');
+    el.classList.add('lido-image-colorize');
 
     const img = el.querySelector('img') as HTMLImageElement | null;
     if (img) {
