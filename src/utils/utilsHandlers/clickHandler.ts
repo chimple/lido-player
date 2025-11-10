@@ -113,14 +113,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       handleShowCheck();
       return;
     } 
-    else{  
-      const isCorrect = objective.includes(element['value']);
-      const isInsideCalculator = element.closest('#lidoCalculator') !== null;
-      if(!isInsideCalculator){
-      storingEachActivityScore(isCorrect);
-      }
-      handleShowCheck();
-    }
+    
 
     if (showCheck) {
       checkButton.classList.remove('lido-disable-check-button');
