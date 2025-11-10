@@ -19,7 +19,7 @@
 		</lido-cell>
 
 		<!-- Beeds Section -->
-		<lido-cell layout="pos" height="landscape.950px, portrait.500px" width="landscape.575px,portrait.125px" x="landscape.475px, portrait.-20px" y="landscape.-95px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
+		<lido-cell layout="pos" height="landscape.950px, portrait.800px" width="landscape.575px,portrait.725px" x="landscape.475px, portrait.65px" y="landscape.-95px,portrait.100px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
 			<lido-math-matrix visible="true" rows="10" cols="10" top-index="true" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="#5D44BD" deactive-bg-color="black" defualt-fill="0" matrix-image="">
 			</lido-math-matrix>
 		</lido-cell>
