@@ -1256,26 +1256,24 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
 
 export const MultiplyBeadsAnimation = async (element : HTMLElement,value : string) => {
   if (!element) return;
+  if (!value) return;
 
-  const objective = element.getAttribute('objective') as string
+  const objective = element.getAttribute('objective') as string;
   if (!objective) return;
 
   const txtEl = element.querySelector('#answer-multiply-beeds') as HTMLElement;
   if (!txtEl) return;
 
-  const left = objective.trim().split('=')[0].trim();
-  
-  const right = objective.trim().split('=')[1].trim();
-  
-  const addValue = left.split('X')[0].trim();
+  const addValue = txtEl.getAttribute('value') as string;
+  if (!addValue) return;
 
-  let multiplicationFactor = Number(left.split('X')[1].trim());
+  let multiplicationFactor = Number(objective.trim())/Number(addValue.trim());
 
   let newString : string = ""
   while (multiplicationFactor > 0)
   {
     newString = newString + addValue + "+";
-    multiplicationFactor -= 1
+    multiplicationFactor -= 1;
   }
   if (newString.endsWith('+')) 
   {

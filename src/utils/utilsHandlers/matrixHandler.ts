@@ -1,6 +1,6 @@
 import { LidoContainer } from '../constants';
 import { getElementScale } from './dragDropHandler';
-import { triggerNextContainer, storingEachActivityScore, executeActions, validateObjectiveStatus } from '../utils';
+import { triggerNextContainer, storingEachActivityScore, executeActions, equationCheck } from '../utils';
 
 export function handlingMatrix(element: HTMLElement) {
   const container = document.querySelector(LidoContainer) as HTMLElement;
@@ -345,62 +345,36 @@ export async function goToNextContainer(element: HTMLElement, index: number) {
   const objectiveString = (container.getAttribute('objective') || '').trim();
   if (!objectiveString) return;
 
-  // Normalize and detect objective type
-  const trimmed = objectiveString;
-  let hasEquation = false;
   let isCorrect = false;
 
-  if (/^\d+$/.test(trimmed)) 
+  if (/^\d+$/.test(objectiveString)) 
   {
     // Case A: objective is a plain number (e.g. "5")
-    console.log('objective is numeric:', trimmed, 'index:', index);
-    isCorrect = Number(trimmed) === index;
-  } 
-  else if (trimmed.includes('=')) 
-  {
-    // Case B: objective contains an equation or RHS (e.g. "9X9=81" or "9X9 = 81")
-    hasEquation = true;
-    const parts = trimmed.split('=');
-    const objectivePart = (parts[1] || '').trim();
-    console.log('objectiveString:', trimmed, 'objectivePart:', objectivePart , 'index:', index);
-    if (objectivePart === String(index)) 
-    {
-      console.log('Matched equation objective');
-      isCorrect = true;
-    }
+    isCorrect = Number(objectiveString) === index;
   } 
   else 
   {
-    // Fallback: try to extract trailing number (e.g. "slot 81")
-    const trailing = trimmed.match(/(\d+)\s*$/);
-    if (trailing) {
-      console.log('Found trailing number in objective:', trailing[1]);
-      isCorrect = Number(trailing[1]) === index;
-    }
+    // Case B: objective is an equation or expression (e.g. "3+2=5")
+    isCorrect = equationCheck(objectiveString);
   }
 
   // Execute based on validation result
   if (isCorrect) 
   {
-    // Update display element if equation exists
-    if (hasEquation) 
+    // Update display element with the clicked index
+    const textEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
+    if (textEl) 
     {
-      const textEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
-      console.log('textEl:', textEl);
-      if (textEl) 
+      let currentString = (textEl.getAttribute('string') || '') as string;
+      // Append the clicked value to the equation display if placeholder present
+      if (currentString && currentString.endsWith('=')) 
       {
-        let currentString = (textEl.getAttribute('string') || '') as string;
-        // Append the clicked value to the equation display if placeholder present
-        if (currentString && currentString.endsWith('=')) {
-          currentString = currentString + String(index);
-        } else if (!currentString) {
-          currentString = String(index);
-        }
-        textEl.setAttribute('string', currentString);
-        textEl.setAttribute('value', currentString);
-        textEl.style.visibility = 'visible';
-        textEl.style.display = '';
-      }
+        currentString = currentString + String(index);
+      } 
+      textEl.setAttribute('string', currentString);
+      textEl.setAttribute('value', currentString);
+      textEl.style.visibility = 'visible';
+      textEl.style.display = '';
     }
 
     // Store activity score
