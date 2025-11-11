@@ -29,14 +29,14 @@ function getContainerXml(args) {
     return `
 		<!-- Questions --> 	
 		<lido-cell visible="true" id=""  layout="" height="93px" width="368px" bg-Color="transparent" onEntry="" justify-content="space-evenly" margin="landscape.0px 0px 0px -78px,portrait.44px">
-			<lido-text visible="true" id="q" audio="" onTouch="" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="#FFE99B" margin="" onEntry="this.border='5px solid #FFC805'" string="${question}" font-size="76px" font-weight="500" font-family="'Baloo Bhai 2'" onCorrect="this.speak='true'">
+			<lido-text visible="true" id="number" audio="" onTouch="" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="#FFE99B" margin="" onEntry="this.border='5px solid #FFC805'" string="${question}" font-size="76px" font-weight="500" font-family="'Baloo Bhai 2'" onCorrect="this.speak='true'">
 			</lido-text>
 		</lido-cell>
       `;
   }).join('');
 
   return `<main>
- <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" appendToDropOnCompletion="true" objective="${questions.join(',')}" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; q.speak='true'">
+ <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" appendToDropOnCompletion="true" objective="${questions.join(',')}" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; number.speak='true';  this.sleep='2000';">
 
     <!-- Audio -->
     <lido-text visible="false" id="audio123" onEntry="this.display='none'; this.speak='true';" string="Fill the matrix according to the number given in the box."></lido-text>
