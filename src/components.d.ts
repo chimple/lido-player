@@ -1211,6 +1211,10 @@ export namespace Components {
      */
     interface LidoRoot {
         /**
+          * URL for the avatar Rive file.
+         */
+        "avatarUrl": string;
+        /**
           * Base URL for the containers.
          */
         "baseUrl": string;
@@ -3327,6 +3331,10 @@ declare namespace LocalJSX {
      * The XML path can be configured via a prop.
      */
     interface LidoRoot {
+        /**
+          * URL for the avatar Rive file.
+         */
+        "avatarUrl"?: string;
         /**
           * Base URL for the containers.
          */
