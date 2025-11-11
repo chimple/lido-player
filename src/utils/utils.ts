@@ -23,7 +23,7 @@ import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utils
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
-import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler';
+import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
 const gameScore = new GameScore();
 
@@ -136,12 +136,12 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-        case 'scrollCellAfterEquationSolved': {
-          if(targetElement){
-            handleSolvedEquationSubmissionAndScoreUpdate()
-          }
-          break;
-        }         
+        case 'scrollCellAfterEquationSolved': { 
+          if(targetElement){ 
+            handleSolvedEquationSubmissionAndScoreUpdate();
+          } 
+          break; 
+        }          
 
         case 'alignMatch': {
           const dropElement = targetElement;
