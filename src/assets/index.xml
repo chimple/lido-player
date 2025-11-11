@@ -28,6 +28,7 @@
 
 
 <lido-container id="lido-container" is-allow-only-correct="true" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="2,2,5,7,10,9" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="this.scrollCellAfterEquationSolved='true';lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true">
+
 <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.718px, portrait.-8%" y="landscape.502px, portrait.73%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
