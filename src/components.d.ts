@@ -1265,7 +1265,6 @@ export namespace Components {
         "cols": number;
         /**
           * Background color for inactive slots
-          * @default 'transparent'
          */
         "deactiveBgColor": string;
         /**
@@ -1324,7 +1323,6 @@ export namespace Components {
         "value": string;
         /**
           * Controls the visibility of the matrix (accepts "true" or "false" as string)
-          * @default 'false'
          */
         "visible": string;
         /**
@@ -3887,7 +3885,6 @@ declare namespace LocalJSX {
         "cols"?: number;
         /**
           * Background color for inactive slots
-          * @default 'transparent'
          */
         "deactiveBgColor"?: string;
         /**
@@ -3946,7 +3943,6 @@ declare namespace LocalJSX {
         "value"?: string;
         /**
           * Controls the visibility of the matrix (accepts "true" or "false" as string)
-          * @default 'false'
          */
         "visible"?: string;
         /**
