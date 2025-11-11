@@ -276,7 +276,6 @@ export class LidoMathMatrix {
                     borderRadius: this.style.borderRadius,
                     backgroundColor: slotData[slotNumber-1]?.color || '',
                   }}
-                  id={`${slotNumber}`}
                 >
                   {/* {this.text != 'false' && (slotData[slotNumber]?.text || slotNumber)} */}
                   {slotData[slotNumber-1]?.text}
