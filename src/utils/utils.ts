@@ -25,6 +25,7 @@ import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
+import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -650,8 +651,9 @@ export const handleShowCheck = () => {
     if (balanceEl) {
      if (!checkButton.hasAttribute('data-balance-listener')) {
     checkButton.addEventListener('click', async function onClick() {
+    if(balanceResult && res){
       await executeActions("this.showBalanceSymbol='true'", checkButton);
-      checkButton.removeEventListener('click', onClick);
+      checkButton.removeEventListener('click', onClick);}
     });
     checkButton.setAttribute('data-balance-listener', 'true'); 
   }}
@@ -659,7 +661,7 @@ export const handleShowCheck = () => {
     validateObjectiveStatus();
   }
 };
-
+let res;
 export const validateObjectiveStatus = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
@@ -676,10 +678,14 @@ export const validateObjectiveStatus = async () => {
     return;
   } else {
     const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
-    let res;
     const additionalCheck = container.getAttribute('equationCheck');
     if (!!additionalCheck) {
+      const balanceEl = document.querySelector('lido-balance') as any;
+    if (!balanceEl) {
       res = equationCheck(additionalCheck);
+    }else{
+      res=res = balanceResult(container, objectiveString);
+    }
       console.log('🚀 ~ handleShowCheck ~ res:', res);
     } else {
       res = matchStringPattern(objectiveString, objectiveArray);
