@@ -536,6 +536,7 @@ export const validateObjectiveStatus = async () => {
 
   if (objectiveString == null || objectiveString.length === 0) {
     const onCorrect = container.getAttribute('onCorrect');
+    body.style.pointerEvents = 'none';
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
@@ -586,7 +587,6 @@ export const validateObjectiveStatus = async () => {
 };
 
 export const triggerNextContainer = () => {
-  body.style.pointerEvents = 'auto';
   AudioPlayer.getI().stop();
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);

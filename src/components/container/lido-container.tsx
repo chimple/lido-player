@@ -262,6 +262,7 @@ export class LidoContainer {
   componentDidLoad() {
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
+    document.body.style.pointerEvents = 'auto';
     document.body.style.backgroundColor = this.bgColor;
     document.body.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
     document.body.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
