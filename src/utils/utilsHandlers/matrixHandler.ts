@@ -1,7 +1,6 @@
 import { LidoContainer } from '../constants';
 import { getElementScale } from './dragDropHandler';
-import { parseProp,executeActions,equationCheck,storingEachActivityScore } from '../../utils/utils';
-import { Element } from '@stencil/core';
+
 
 
 export function handlingMatrix(element: HTMLElement) {
