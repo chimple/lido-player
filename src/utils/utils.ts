@@ -1257,9 +1257,6 @@ export const revealImageValue = (imageEl: HTMLElement): void => {
 export const MultiplyBeadsAnimation = async (element : HTMLElement,value : string) => {
   if (!element) return;
 
-  if (element.getAttribute && element.getAttribute('data-activated') === 'true') return;
-  element.setAttribute && element.setAttribute('data-activated', 'true');
-
   const objective = element.getAttribute('objective') as string
   if (!objective) return;
 

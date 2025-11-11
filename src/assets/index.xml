@@ -13,7 +13,7 @@
 		</lido-text>
 
 		<!-- Bottom display Section -->
-		<lido-cell layout="pos" id="pos2"  value="pos1" height="auto" width="landscape.815px, portrait.815px" x="landscape.775px, portrait.48px" y="landscape.300px, portrait.945px" ariaHidden="true" bgColor="transparent" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear';">
+		<lido-cell layout="pos" id="pos2"  value="pos2" height="auto" width="landscape.815px, portrait.815px" x="landscape.775px, portrait.48px" y="landscape.300px, portrait.945px" ariaHidden="true" bgColor="transparent" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear';">
 			<lido-text id="answer-multiply-beeds"  value="" height="inherit" width="inherit" string="" font-size="84px" font-weight="600" bgColor="#FFF4CD" visible="true" onEntry="this.word-wrap='break-word'; this.fontWeight='600'; this.textAlign='center';">
 			</lido-text>
 		</lido-cell>

@@ -1,6 +1,6 @@
 import { LidoContainer } from '../constants';
 import { getElementScale } from './dragDropHandler';
-import { triggerNextContainer, storingEachActivityScore, executeActions } from '../utils';
+import { triggerNextContainer, storingEachActivityScore, executeActions, validateObjectiveStatus } from '../utils';
 
 export function handlingMatrix(element: HTMLElement) {
   const container = document.querySelector(LidoContainer) as HTMLElement;
@@ -338,54 +338,96 @@ function generateDoubleSquares(count = 16) {
   return pairs;
 }
 
-export function goToNextContainer(element: HTMLElement,index: number) {
+export async function goToNextContainer(element: HTMLElement, index: number) {
   const container = document.querySelector(LidoContainer) as HTMLElement;
   if (!container) return;
 
-  const objective = container.getAttribute("objective");
+  const objectiveString = (container.getAttribute('objective') || '').trim();
+  if (!objectiveString) return;
 
-  let clickedSlotValue: number = 0;
-  if(objective.includes('X') && objective.includes('='))
+  // Normalize and detect objective type
+  const trimmed = objectiveString;
+  let hasEquation = false;
+  let isCorrect = false;
+
+  if (/^\d+$/.test(trimmed)) 
   {
-    clickedSlotValue =  Number(objective.trim().split('=')[1].trim());
-  }
+    // Case A: objective is a plain number (e.g. "5")
+    console.log('objective is numeric:', trimmed, 'index:', index);
+    isCorrect = Number(trimmed) === index;
+  } 
+  else if (trimmed.includes('=')) 
+  {
+    // Case B: objective contains an equation or RHS (e.g. "9X9=81" or "9X9 = 81")
+    hasEquation = true;
+    const parts = trimmed.split('=');
+    const objectivePart = (parts[1] || '').trim();
+    console.log('objectiveString:', trimmed, 'objectivePart:', objectivePart , 'index:', index);
+    if (objectivePart === String(index)) 
+    {
+      console.log('Matched equation objective');
+      isCorrect = true;
+    }
+  } 
   else 
   {
-    clickedSlotValue = Number(objective);
+    // Fallback: try to extract trailing number (e.g. "slot 81")
+    const trailing = trimmed.match(/(\d+)\s*$/);
+    if (trailing) {
+      console.log('Found trailing number in objective:', trailing[1]);
+      isCorrect = Number(trailing[1]) === index;
+    }
   }
 
-  let isCorrect = false;
-  if(clickedSlotValue === index){
-    isCorrect = true;
-  }
-  if(isCorrect) {
-    if(objective.includes('X') && objective.includes('='))
+  // Execute based on validation result
+  if (isCorrect) 
+  {
+    // Update display element if equation exists
+    if (hasEquation) 
     {
       const textEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
-      console.log('textEl ',textEl)
-      if(textEl)
+      console.log('textEl:', textEl);
+      if (textEl) 
       {
-        let newString = textEl.getAttribute && textEl.getAttribute('string') as string;
-        if (newString.endsWith('='))
-        {
-          newString = newString.slice(0) + String(clickedSlotValue);
+        let currentString = (textEl.getAttribute('string') || '') as string;
+        // Append the clicked value to the equation display if placeholder present
+        if (currentString && currentString.endsWith('=')) {
+          currentString = currentString + String(index);
+        } else if (!currentString) {
+          currentString = String(index);
         }
-        textEl.setAttribute('string', newString);
-        textEl.setAttribute('value', newString);
+        textEl.setAttribute('string', currentString);
+        textEl.setAttribute('value', currentString);
         textEl.style.visibility = 'visible';
         textEl.style.display = '';
       }
     }
-    const onCorrect = container.getAttribute('onCorrect')
-    if(onCorrect)
+
+    // Store activity score
+    storingEachActivityScore(true);
+
+    // Execute onCorrect handler if exists
+    const onCorrect = container.getAttribute('onCorrect');
+    if (onCorrect) 
     {
-      executeActions(onCorrect,element);
+      await executeActions(onCorrect, element);
     }
-    setTimeout(() => { triggerNextContainer() }, 3000);
-    storingEachActivityScore(isCorrect);
+
+    // Trigger next container after delay
+    setTimeout(() => {
+      triggerNextContainer();
+    }, 2000);
+  } 
+  else 
+  {
+    // Handle incorrect answer
+    storingEachActivityScore(false);
+
+    // Execute onInCorrect handler if exists
+    const onInCorrect = container.getAttribute('onInCorrect');
+    if (onInCorrect) 
+    {
+      await executeActions(onInCorrect, element);
+    }
   }
-  else {
-    storingEachActivityScore(isCorrect);
-  }
-  return;
 }
