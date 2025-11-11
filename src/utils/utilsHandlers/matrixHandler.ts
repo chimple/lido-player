@@ -1,6 +1,8 @@
 import { LidoContainer } from '../constants';
 import { getElementScale } from './dragDropHandler';
 
+
+
 export function handlingMatrix(element: HTMLElement) {
   const container = document.querySelector(LidoContainer) as HTMLElement;
   if (!container) return;
@@ -336,3 +338,4 @@ function generateDoubleSquares(count = 16) {
 
   return pairs;
 }
+
