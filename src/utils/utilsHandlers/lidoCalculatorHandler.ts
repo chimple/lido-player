@@ -106,5 +106,3 @@ export const handleSolvedEquationSubmissionAndScoreUpdate = async () => {
     }
   }
 };
-
-

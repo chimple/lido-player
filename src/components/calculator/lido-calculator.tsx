@@ -83,7 +83,7 @@ export class LidoCalculator {
     this.updateValueAttr();
   }
 
-  private userAnswers: Number[] = []; // store all user inputs
+  private userAnswers: Number[] = []; // store all calculator inputs
   
   private async verifyAnswer() { 
     const userInput = this.displayValue.trim();
@@ -99,30 +99,28 @@ export class LidoCalculator {
     } 
 
   // --- Multiple Objectives ---
-  else if (this.objective && this.objective.includes(',')) {
-    const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
-    const objectives = this.objective.split(',').map(obj => obj.trim());
-    const currentIndex = this.userAnswers.length;
-
-    // Compare current input with corresponding objective
-    if (currentIndex < objectives.length && Number(userInput) === Number(objectives[currentIndex])) {
-      isCorrect = true;
-    } else {
-      isCorrect = false;
-    }
-
+  else if (this.objective && this.objective.includes(','))  {
+    const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true'; 
+    const objectives = this.objective.split(',').map(obj => obj.trim()); 
+    const currentIndex = this.userAnswers.length; 
+    // Compare current input with corresponding objective 
+    if (currentIndex < objectives.length && Number(userInput) === Number(objectives[currentIndex])) { 
+      isCorrect = true; 
+    } else { 
+      isCorrect = false; 
+    } 
+    
     //  Store behavior based on mode
-    if (isContinueOnCorrect) {
-      // PRACTICE MODE → store only correct answers
+    if (isContinueOnCorrect) { 
+      // PRACTICE MODE → store only correct answers 
       if (isCorrect) {
         this.userAnswers.push(Number(userInput));
-      }
-    } else {
-      // TEST MODE → store all user inputs
-      this.userAnswers.push(Number(userInput));
-    }
-    console.log("Array", this.userAnswers)
-  }
+      } 
+    } else { 
+      // TEST MODE → store all user inputs 
+      this.userAnswers.push(Number(userInput)); 
+    } 
+  }   
 
     else if (this.objective === '') {
       const equationAttr = container.getAttribute('equationCheck') || ''; 
