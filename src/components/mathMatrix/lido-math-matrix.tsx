@@ -1,7 +1,5 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
-import { goToNextContainer } from '../../utils/utilsHandlers/matrixHandler'
-import { handlingMatrix } from '../../utils/utilsHandlers/matrixHandler';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -221,7 +219,6 @@ export class LidoMathMatrix {
       }
     }
 
-    goToNextContainer (element,index) //function to trigger the next container
   }
 
   private getSlotData(): Record<number, { text: string; color?: string }> {
