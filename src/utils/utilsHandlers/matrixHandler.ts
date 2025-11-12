@@ -1,6 +1,5 @@
 import { LidoContainer } from '../constants';
 import { getElementScale } from './dragDropHandler';
-import { triggerNextContainer, storingEachActivityScore, executeActions, equationCheck } from '../utils';
 
 export function handlingMatrix(element: HTMLElement) {
   const container = document.querySelector(LidoContainer) as HTMLElement;
@@ -336,72 +335,4 @@ function generateDoubleSquares(count = 16) {
   }
 
   return pairs;
-}
-
-export async function goToNextContainer(element: HTMLElement, index: number) {
-  const container = document.querySelector(LidoContainer) as HTMLElement;
-  if (!container) return;
-
-  const objectiveString = (container.getAttribute('objective') || '').trim();
-  if (!objectiveString) return;
-
-  let isCorrect = false;
-
-  if (/^\d+$/.test(objectiveString)) 
-  {
-    // Case A: objective is a plain number (e.g. "5")
-    isCorrect = Number(objectiveString) === index;
-  } 
-  else 
-  {
-    // Case B: objective is an equation or expression (e.g. "3+2=5")
-    isCorrect = equationCheck(objectiveString);
-  }
-
-  // Execute based on validation result
-  if (isCorrect) 
-  {
-    // Update display element with the clicked index
-    const textEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
-    if (textEl) 
-    {
-      let currentString = (textEl.getAttribute('string') || '') as string;
-      // Append the clicked value to the equation display if placeholder present
-      if (currentString && currentString.endsWith('=')) 
-      {
-        currentString = currentString + String(index);
-      } 
-      textEl.setAttribute('string', currentString);
-      textEl.setAttribute('value', currentString);
-      textEl.style.visibility = 'visible';
-      textEl.style.display = '';
-    }
-
-    // Store activity score
-    storingEachActivityScore(true);
-
-    // Execute onCorrect handler if exists
-    const onCorrect = container.getAttribute('onCorrect');
-    if (onCorrect) 
-    {
-      await executeActions(onCorrect, element);
-    }
-
-    // Trigger next container after delay
-    setTimeout(() => {
-      triggerNextContainer();
-    }, 2000);
-  } 
-  else 
-  {
-    // Handle incorrect answer
-    storingEachActivityScore(false);
-
-    // Execute onInCorrect handler if exists
-    const onInCorrect = container.getAttribute('onInCorrect');
-    if (onInCorrect) 
-    {
-      await executeActions(onInCorrect, element);
-    }
-  }
 }

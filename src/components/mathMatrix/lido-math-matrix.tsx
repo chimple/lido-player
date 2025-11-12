@@ -1,6 +1,5 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
-import { handlingMatrix,goToNextContainer } from '../../utils/utilsHandlers/matrixHandler';
+import { convertUrlToRelative, initEventsForElement, parseProp ,equationCheck, storingEachActivityScore, triggerNextContainer, executeActions } from '../../utils/utils';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -83,13 +82,24 @@ export class LidoMathMatrix {
   /** The top coordinate (in pixels or percentage) for matrix positioning */
   @Prop() y: string;
 
+  /** Font color for the slot text */
   @Prop() fontColor: string;
+
+  /** Current display value shown in the matrix slot */
+  @State() displayValue: string = '';
+
+  /** Holds right slot clicked values by user */
+  @State() userClickedValues: string[] = [];
 
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
 
   /** Reference to the host element of this component */
   @Element() el: HTMLElement;
+
+  private updateValue() {
+    this.el.setAttribute('value', this.displayValue);
+  }
 
   componentDidLoad() {
     const slotElements = this.el.querySelectorAll('.slot');
@@ -116,6 +126,7 @@ export class LidoMathMatrix {
 
     this.updateSlots();
     this.updateStyles();
+    this.updateValue();
   }
 
   /**
@@ -193,7 +204,13 @@ export class LidoMathMatrix {
         slotEl.classList.add('slot-inactive');
       }
     });
-
+    this.displayValue = index.toString();
+    
+    // Display the slot value/text on the clicked slot itself
+    const slotData = this.getSlotData();
+    const slotValueToDisplay = slotData[index - 1]?.text || index.toString();
+    element.textContent = slotValueToDisplay;
+    
     // If the slot is the bottom-most slot for this matrix, dispatch a generic event
     // so templates or global handlers can handle bottom-slot behaviour (e.g., MultiplyBeadsAnimation).
     if (index === slotElements.length) {
@@ -214,8 +231,118 @@ export class LidoMathMatrix {
       }
     }
 
+    this.updateValue();
+
+    this.userClickedValues.push(this.displayValue);
+
     // trigger the next container if right slot was clicked
-    goToNextContainer(this.el,index);
+    this.goToNextContainer(this.el, this.userClickedValues);
+  }
+
+  private objectiveArray: string[] = [];  
+
+  private goToNextContainer = async (el: HTMLElement, userClickedValues: string[]) => {
+
+    const container = this.el.closest('lido-container') as HTMLElement;
+    if (!container) return;
+
+    if (el.getAttribute && el.getAttribute('matrix-activated') === 'true') 
+    {
+      return;
+    }
+
+    let isCorrect = false;
+
+    const objectiveString = (container.getAttribute('objective') || '').trim();
+    this.objectiveArray = objectiveString.split(',').map(obj => obj.trim());
+
+    if (this.objectiveArray.length === 0) 
+    {
+      return;
+    }
+
+    if(this.objectiveArray.length >= userClickedValues.length) 
+    {
+        const currentIndex = this.userClickedValues.length - 1; 
+        const userInput = userClickedValues[currentIndex];
+        // Compare current input with corresponding objective 
+        if (currentIndex < this.objectiveArray.length && Number(userInput) === Number(this.objectiveArray[currentIndex])) 
+        { 
+          isCorrect = true; 
+        } 
+        else 
+        { 
+          isCorrect = false; 
+        }         
+    }   
+    else if (this.objectiveArray.length === 0) 
+    {
+        const equationAttr = container.getAttribute('equationCheck') || ''; 
+        if (!equationAttr) return;
+        try 
+        {
+          const calculatedValue = equationCheck(equationAttr);
+          isCorrect = Number(calculatedValue) === Number(userClickedValues);
+        } 
+        catch (err) 
+        {
+          isCorrect = false;
+        }
+    } 
+
+    // Execute based on validation result
+    if (isCorrect) 
+    {
+      // Update display element with the clicked index
+      const textEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
+      if (textEl) 
+      {
+        let currentString = (textEl.getAttribute('string') || '') as string;
+        // Append the clicked value to the equation display if placeholder present
+        if (currentString && currentString.endsWith('=')) 
+        {
+          currentString = currentString + String(userClickedValues[userClickedValues.length - 1]);
+        } 
+        textEl.setAttribute('string', currentString);
+        textEl.setAttribute('value', currentString);
+        textEl.style.visibility = 'visible';
+        textEl.style.display = '';
+      }
+  
+      // Store activity score
+      storingEachActivityScore(true);
+
+      // Execute onCorrect handler if exists
+      const onCorrect = container.getAttribute('onCorrect');
+      if (onCorrect) 
+      {
+        await executeActions(onCorrect, container);
+      }
+      
+      if (userClickedValues.length === this.objectiveArray.length)
+      {
+        el.setAttribute('matrix-activated', 'true');
+        // Trigger next container after delay
+        setTimeout(() => {
+          triggerNextContainer();
+        }, 2000);
+      }
+    } 
+    else 
+    {
+      // Handle incorrect answer
+      storingEachActivityScore(false);
+
+      userClickedValues.pop(); // Remove last clicked value as it was incorrect
+  
+      // Execute onInCorrect handler if exists
+      const onInCorrect = container.getAttribute('onInCorrect');
+      if (onInCorrect) 
+      {
+        await executeActions(onInCorrect, container);
+      }
+    }
+    
   }
 
   private getSlotData(): Record<number, { text: string; color?: string }> {

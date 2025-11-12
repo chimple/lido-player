@@ -1273,6 +1273,9 @@ export namespace Components {
           * @default 0
          */
         "defualtFill": number;
+        /**
+          * Font color for the slot text
+         */
         "fontColor": string;
         /**
           * Height of the slot container
@@ -3895,6 +3898,9 @@ declare namespace LocalJSX {
           * @default 0
          */
         "defualtFill"?: number;
+        /**
+          * Font color for the slot text
+         */
         "fontColor"?: string;
         /**
           * Height of the slot container
