@@ -207,9 +207,7 @@ export class LidoMathMatrix {
     this.displayValue = index.toString();
     
     // Display the slot value/text on the clicked slot itself
-    const slotData = this.getSlotData();
-    const slotValueToDisplay = slotData[index - 1]?.text || index.toString();
-    element.textContent = slotValueToDisplay;
+    element.textContent = this.displayValue;
     
     // If the slot is the bottom-most slot for this matrix, dispatch a generic event
     // so templates or global handlers can handle bottom-slot behaviour (e.g., MultiplyBeadsAnimation).
