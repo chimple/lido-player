@@ -1260,9 +1260,9 @@ export namespace Components {
         "clickable": boolean;
         /**
           * Number of columns in the matrix
-          * @default 5
+          * @default "5"
          */
-        "cols": number;
+        "cols": string;
         /**
           * Background color for inactive slots
           * @default 'transparent'
@@ -1301,9 +1301,9 @@ export namespace Components {
         "padding": string;
         /**
           * Number of rows in the matrix
-          * @default 7
+          * @default "7"
          */
-        "rows": number;
+        "rows": string;
         /**
           * Sets the tab index for keyboard navigation
          */
@@ -3885,9 +3885,9 @@ declare namespace LocalJSX {
         "clickable"?: boolean;
         /**
           * Number of columns in the matrix
-          * @default 5
+          * @default "5"
          */
-        "cols"?: number;
+        "cols"?: string;
         /**
           * Background color for inactive slots
           * @default 'transparent'
@@ -3926,9 +3926,9 @@ declare namespace LocalJSX {
         "padding"?: string;
         /**
           * Number of rows in the matrix
-          * @default 7
+          * @default "7"
          */
-        "rows"?: number;
+        "rows"?: string;
         /**
           * Sets the tab index for keyboard navigation
          */
