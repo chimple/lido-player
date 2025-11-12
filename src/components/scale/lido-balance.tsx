@@ -300,18 +300,20 @@ export class LidoBalance {
   }
   render() {
     return (
-      <Host 
+      <Host
+        id="lido-balance"        
         onEntry={this.onEntry}
         class="lido-balance"
-        tilt={this.tilt.toString()} 
+        tilt={this.tilt.toString()}
+        style={this.style} 
         operation={this.operation.toString()}>
-        <div id="lidobalancewrapper"  class="balance-wrapper" style={this.style}>
+        {/* <div   > */}
           <div innerHTML={this.pivotSvg} id="pivotimg" class="pivot"></div>
           <div innerHTML={this.scaleSvg} id="scaleimg" class="scale" ref={(el) => (this.scaleEl = el as HTMLElement)}></div>
           <div innerHTML={this.handlerSvg} id="handlerimg" class="handler" ref={(el) => (this.leftHandleEl = el as HTMLElement)}></div> 
           <div innerHTML={this.handlerSvg} id="handimg" class="hand" ref={(el) => (this.rightHandleEl = el as HTMLElement)}></div> 
           <div id="balanceSymbol" class="lido-balance-symbol" aria-hidden={!this.showSymbol}>{this.showSymbol ? this.balanceSymbol : ''}</div>
-        </div>
+        {/* </div> */}
       </Host>
     );
   }

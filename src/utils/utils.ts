@@ -25,6 +25,7 @@ import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
+import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -307,6 +308,14 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             await MultiplyBeadsAnimation(targetElement, value);
           }
 
+          break;
+        }
+
+        case 'sumTogetherAnimation' : {
+          const value = action.value;
+          if(value) {
+            SumTogetherAnimation(targetElement,value);
+          }
           break;
         }
 
@@ -635,8 +644,9 @@ export const handleShowCheck = () => {
     if (balanceEl) {
      if (!checkButton.hasAttribute('data-balance-listener')) {
     checkButton.addEventListener('click', async function onClick() {
+    if(balanceResult && res){
       await executeActions("this.showBalanceSymbol='true'", checkButton);
-      checkButton.removeEventListener('click', onClick);
+      checkButton.removeEventListener('click', onClick);}
     });
     checkButton.setAttribute('data-balance-listener', 'true'); 
   }}
@@ -644,7 +654,7 @@ export const handleShowCheck = () => {
     validateObjectiveStatus();
   }
 };
-
+let res;
 export const validateObjectiveStatus = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
@@ -661,10 +671,14 @@ export const validateObjectiveStatus = async () => {
     return;
   } else {
     const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
-    let res;
     const additionalCheck = container.getAttribute('equationCheck');
     if (!!additionalCheck) {
+      const balanceEl = document.querySelector('lido-balance') as any;
+    if (!balanceEl) {
       res = equationCheck(additionalCheck);
+    }else{
+      res=res = balanceResult(container, objectiveString);
+    }
       console.log('🚀 ~ handleShowCheck ~ res:', res);
     } else {
       res = matchStringPattern(objectiveString, objectiveArray);
@@ -1126,6 +1140,42 @@ export function generateUUIDFallback() {
   });
 }
 
+export const revealImageValue = (imageEl: HTMLElement): void => {
+  if (!imageEl) return;
+  const value = imageEl.getAttribute('value');
+  if (!value) return;
+  let valueElement = imageEl.querySelector('.lido-display-hiddenvalue') as HTMLElement;
+  if (!valueElement) {
+    valueElement = document.createElement('div');
+    valueElement.classList.add('lido-display-hiddenvalue');
+    imageEl.style.position = 'relative';
+    imageEl.appendChild(valueElement);
+  }
+  valueElement.innerText = value;
+};
+
+const setImageBackground = (el?: HTMLElement, color?: string) => {
+    if (!el) return;
+    el.classList.add('lido-image-colorize');
+
+    const img = el.querySelector('img') as HTMLImageElement | null;
+    if (img) {
+      // use same image as mask
+      el.style.setProperty('--mask-url', `url(${img.src})`);
+    }
+
+    if (color === 'red') {
+      el.style.setProperty('--tint-color', '#ff0000');
+    }
+    else if (color === 'green') {
+      el.style.setProperty('--tint-color', '#00c853')
+    }
+    else {
+      el.style.removeProperty('--tint-color');
+      el.style.removeProperty('--mask-url');
+    }
+};
+
 
 export const HighlightStarsOneByOne = async (element: HTMLElement, value: string): Promise<void> => {
   if (!element) return;
@@ -1184,18 +1234,9 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
   // After all cells have come down, apply the bounce animation
   for (const cell of boxCells) {
 
-    // Apply the bounce animation
-    // cell.style.transition = 'transform 0.5s ease';
-    // cell.style.transform = 'scale(1.3)'; // Scale up slightly
-
     // play the text child inside cell
     await AudioPlayer.getI().play(cell);
 
-    // await new Promise(resolve => setTimeout(resolve, 200)); // Delay for the bounce
-    // cell.style.transform = 'scale(1)'; // Return to normal size
-
-    // // Wait for the bounce animation to complete
-    // await new Promise(resolve => setTimeout(resolve, 500));
   }
 };
 
@@ -1240,19 +1281,6 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
     }
   });
 }
-export const revealImageValue = (imageEl: HTMLElement): void => {
-  if (!imageEl) return;
-  const value = imageEl.getAttribute('value');
-  if (!value) return;
-  let valueElement = imageEl.querySelector('.lido-display-hiddenvalue') as HTMLElement;
-  if (!valueElement) {
-    valueElement = document.createElement('div');
-    valueElement.classList.add('lido-display-hiddenvalue');
-    imageEl.style.position = 'relative';
-    imageEl.appendChild(valueElement);
-  }
-  valueElement.innerText = value;
-};
 
 export const MultiplyBeadsAnimation = async (element : HTMLElement,value : string) => {
   if (!element) return;
@@ -1284,4 +1312,116 @@ export const MultiplyBeadsAnimation = async (element : HTMLElement,value : strin
   txtEl.setAttribute('value', newString);
   txtEl.style.visibility = 'visible';
   txtEl.style.display = '';
+}
+
+export const SumTogetherAnimation = async (element : HTMLElement,value : string) => {
+  if (!element) return;
+  if (!value) return;
+
+  const container = document.getElementById(LidoContainer) as HTMLElement | null;
+  if (!container) return;
+
+  // Expecting structure: [_, TopRow, questionRow, optionRow, ...]
+  const TopRow = Array.from(element.children)[1] as HTMLElement | undefined;
+  const questionRow = Array.from(element.children)[2] as HTMLElement | undefined;
+  const optionRow = Array.from(element.children)[3] as HTMLElement | undefined;
+  if (!TopRow || !questionRow || !optionRow) return;
+
+  const topRowChildren = Array.from(TopRow.children) as HTMLElement[];
+  const questionRowChildren = Array.from(questionRow.children) as HTMLElement[];
+  const firstNumberEl = questionRowChildren[0] as HTMLElement | undefined;
+  const signElement = questionRowChildren[1] as HTMLElement | undefined;
+  const secondNumberEl = questionRowChildren[2] as HTMLElement | undefined;
+  const equalElement = questionRowChildren[3] as HTMLElement | undefined;
+  const answerElement = questionRowChildren[4] as HTMLElement | undefined;
+
+  // helper functions
+  const showElement = (el?: HTMLElement) => { 
+    if (!el) return; 
+    el.style.visibility = 'visible'; 
+    el.style.display = ''; 
+    el.style.opacity = '1';
+  };
+  const readNumber = (el?: HTMLElement) => {
+    if (!el) return 0;
+    const v = (el.getAttribute && (el.getAttribute('value') || el.getAttribute('string'))) || el.textContent || '';
+    return parseInt(String(v).trim(), 10) || 0;
+  };
+  const elementAppearance = async (flag?: boolean) => {
+    if(flag) {
+      if (firstNumberEl) { 
+        await new Promise(r => setTimeout(r, 200)); 
+        showElement(firstNumberEl); 
+      }
+      if (signElement) { 
+        await new Promise(r => setTimeout(r, 200)); 
+        showElement(signElement); 
+      }
+    }
+    else {
+      if (secondNumberEl) { 
+        await new Promise(r => setTimeout(r, 200)); 
+        showElement(secondNumberEl); 
+      }
+      if (equalElement) { 
+        await new Promise(r => setTimeout(r, 300)); 
+        showElement(equalElement); 
+      }
+      if (optionRow) { 
+        await new Promise(r => setTimeout(r, 300)); 
+        showElement(optionRow);
+      }
+      if (answerElement) { 
+        await new Promise(r => setTimeout(r, 200)); 
+        showElement(answerElement); 
+      }
+    }
+  }
+
+
+  const number1 = readNumber(firstNumberEl);
+  const number2 = readNumber(secondNumberEl);
+  const sign = ((signElement && ((signElement.getAttribute('string') || signElement.textContent) || '')).toString().trim() === '+') ? '+' : '-';
+
+
+  if (sign === '-') {
+    // '-' flow: reveal one by one then change bgColor of last B to red
+    for (let i = 0; i < topRowChildren.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 75));
+      showElement(topRowChildren[i]);
+    }
+
+    elementAppearance(true);
+
+    await new Promise(r => setTimeout(r, 500));
+    for (let k = 0; k < Math.min(number2, topRowChildren.length); k++) {
+      const idx = topRowChildren.length - 1 - k;
+      setImageBackground(topRowChildren[idx], 'red');
+      await new Promise(r => setTimeout(r, 200));
+    }
+
+    elementAppearance(false);
+  } 
+  else {
+    // '+' flow: hide all, then showElement first A, then showElement next B in green
+    
+    for (let i = 0; i < Math.min(number1, topRowChildren.length); i++) {
+      await new Promise(resolve => setTimeout(resolve, 120));
+      showElement(topRowChildren[i]);
+    }
+
+    elementAppearance(true);
+
+    await new Promise(r => setTimeout(r, 500));
+    for (let j = 0; j < Math.min(number2, Math.max(0, topRowChildren.length - number1)); j++) {
+      const idx = number1 + j;
+      if (topRowChildren[idx]) {
+        showElement(topRowChildren[idx]);
+        setImageBackground(topRowChildren[idx], 'green');
+      }
+      await new Promise(r => setTimeout(r, 80));
+    }
+    
+    elementAppearance(false);
+  }
 }
