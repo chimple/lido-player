@@ -80,7 +80,7 @@ export const initEventsForElement = async (element: HTMLElement, type: string) =
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
   const actions = parseActions(actionsString);
-
+  body.style.pointerEvents = 'none';
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
 
@@ -207,6 +207,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
       }
     }
   }
+  body.style.pointerEvents = 'auto';
 };
 
 const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElement) => {
@@ -535,8 +536,8 @@ export const validateObjectiveStatus = async () => {
   const objectiveString = container['objective'];
 
   if (objectiveString == null || objectiveString.length === 0) {
-    const onCorrect = container.getAttribute('onCorrect');
     body.style.pointerEvents = 'none';
+    const onCorrect = container.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, container);
     }
@@ -556,7 +557,6 @@ export const validateObjectiveStatus = async () => {
     }
     if (res) {
       const attach = container.getAttribute('appendToDropOnCompletion');
-
       body.style.pointerEvents = 'none';
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
