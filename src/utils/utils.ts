@@ -302,19 +302,19 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-        case 'MultiplyBeedsAnimation': {
-          const value = action.value;
-          if(value && targetElement) {
-            await MultiplyBeadsAnimation(targetElement, value);
-          }
-
-          break;
-        }
 
         case 'sumTogetherAnimation' : {
           const value = action.value;
           if(value) {
             SumTogetherAnimation(targetElement,value);
+          }
+          break;
+        }
+
+        case 'addText': {
+          const value = action.value;
+          if (value) {
+            targetElement.textContent += value;
           }
           break;
         }
@@ -954,7 +954,10 @@ export const equationCheck = (additionalCheck: string): boolean => {
 
   // 3. Join the modified parts back into one string
   const resultString = modifiedParts.join('');
+  console.log('🚀 ~ equationCheck ~ resultString:', resultString);
+  // 4. Evaluate the final string as a mathematical expression
   const finalRes = evaluate(resultString);
+  console.log('🚀 ~ equationCheck ~ finalRes:', finalRes);
   return finalRes;
 };
 
@@ -1280,38 +1283,6 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
       }
     }
   });
-}
-
-export const MultiplyBeadsAnimation = async (element : HTMLElement,value : string) => {
-  if (!element) return;
-  if (!value) return;
-
-  const objective = element.getAttribute('objective') as string;
-  if (!objective) return;
-
-  const txtEl = element.querySelector('#answer-multiply-beeds') as HTMLElement;
-  if (!txtEl) return;
-
-  const addValue = txtEl.getAttribute('value') as string;
-  if (!addValue) return;
-
-  let multiplicationFactor = Number(objective.trim())/Number(addValue.trim());
-
-  let newString : string = ""
-  while (multiplicationFactor > 0)
-  {
-    newString = newString + addValue + "+";
-    multiplicationFactor -= 1;
-  }
-  if (newString.endsWith('+')) 
-  {
-    newString = newString.slice(0, -1) + '=';
-  }
-
-  txtEl.setAttribute('string', newString);
-  txtEl.setAttribute('value', newString);
-  txtEl.style.visibility = 'visible';
-  txtEl.style.display = '';
 }
 
 export const SumTogetherAnimation = async (element : HTMLElement,value : string) => {

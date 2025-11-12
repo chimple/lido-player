@@ -86,20 +86,14 @@ export class LidoMathMatrix {
   /** Font color for the slot text */
   @Prop() fontColor: string;
 
-  /** Current display value shown in the matrix slot */
-  @State() displayValue: string = '';
-
-  /** Holds right slot clicked values by user */
-  @State() userClickedValues: string[] = [];
-
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
 
   /** Reference to the host element of this component */
   @Element() el: HTMLElement;
 
-  private updateValue() {
-    this.el.setAttribute('value', this.displayValue);
+  private updateValue(index: string) {
+    this.el.setAttribute('value', index);
   }
 
   componentDidLoad() {
@@ -127,7 +121,6 @@ export class LidoMathMatrix {
 
     this.updateSlots();
     this.updateStyles();
-    this.updateValue();
   }
 
   /**
@@ -210,10 +203,9 @@ export class LidoMathMatrix {
         slotEl.classList.add('slot-inactive');
       }
     });
-    this.displayValue = index.toString();
     
     // Display the slot value/text on the clicked slot itself
-    element.textContent = this.displayValue;
+    element.textContent = index.toString();
     
     // If the slot is the bottom-most slot for this matrix, dispatch a generic event
     // so templates or global handlers can handle bottom-slot behaviour (e.g., MultiplyBeadsAnimation).
@@ -235,17 +227,13 @@ export class LidoMathMatrix {
       }
     }
 
-    this.updateValue();
-
-    this.userClickedValues.push(this.displayValue);
+    this.updateValue(index.toString());
 
     // trigger the next container if right slot was clicked
-    this.goToNextContainer(this.el, this.userClickedValues);
-  }
+    this.goToNextContainer(this.el);
+  } 
 
-  private objectiveArray: string[] = [];  
-
-  private goToNextContainer = async (el: HTMLElement, userClickedValues: string[]) => {
+  private goToNextContainer = async (el: HTMLElement) => {
 
     const container = this.el.closest('lido-container') as HTMLElement;
     if (!container) return;
@@ -258,61 +246,38 @@ export class LidoMathMatrix {
     let isCorrect = false;
 
     const objectiveString = (container.getAttribute('objective') || '').trim();
-    this.objectiveArray = objectiveString.split(',').map(obj => obj.trim());
+    console.log("objectiveString : ", objectiveString);
 
-    if (this.objectiveArray.length === 0) 
-    {
-      return;
-    }
+    let objectiveCorrect = true;
 
-    if(this.objectiveArray.length >= userClickedValues.length) 
+    if (objectiveCorrect || objectiveString === '') 
     {
-        const currentIndex = this.userClickedValues.length - 1; 
-        const userInput = userClickedValues[currentIndex];
-        // Compare current input with corresponding objective 
-        if (currentIndex < this.objectiveArray.length && Number(userInput) === Number(this.objectiveArray[currentIndex])) 
-        { 
-          isCorrect = true; 
-        } 
-        else 
-        { 
-          isCorrect = false; 
-        }         
-    }   
-    else if (this.objectiveArray.length === 0) 
-    {
-        const equationAttr = container.getAttribute('equationCheck') || ''; 
+        const equationAttr = (container.getAttribute('equationCheck') || '').trim(); 
+        console.log("equationAttr : ", equationAttr);
         if (!equationAttr) return;
+
+        // Step 1: split by " and "
+        const parts = equationAttr.split(" and ").map(p => p.trim());
+        console.log("parts : ", parts); 
+
         try 
         {
-          const calculatedValue = equationCheck(equationAttr);
-          isCorrect = Number(calculatedValue) === Number(userClickedValues);
+          for (const part of parts) 
+          {
+            const result = equationCheck(part);
+            isCorrect = result;
+            if(!isCorrect) break;
+          }
         } 
         catch (err) 
         {
           isCorrect = false;
         }
-    } 
+    }
 
     // Execute based on validation result
     if (isCorrect) 
-    {
-      // Update display element with the clicked index
-      const textEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
-      if (textEl) 
-      {
-        let currentString = (textEl.getAttribute('string') || '') as string;
-        // Append the clicked value to the equation display if placeholder present
-        if (currentString && currentString.endsWith('=')) 
-        {
-          currentString = currentString + String(userClickedValues[userClickedValues.length - 1]);
-        } 
-        textEl.setAttribute('string', currentString);
-        textEl.setAttribute('value', currentString);
-        textEl.style.visibility = 'visible';
-        textEl.style.display = '';
-      }
-  
+    {    
       // Store activity score
       storingEachActivityScore(true);
 
@@ -322,22 +287,18 @@ export class LidoMathMatrix {
       {
         await executeActions(onCorrect, container);
       }
+
+      el.setAttribute('matrix-activated', 'true');
       
-      if (userClickedValues.length === this.objectiveArray.length)
-      {
-        el.setAttribute('matrix-activated', 'true');
-        // Trigger next container after delay
-        setTimeout(() => {
-          triggerNextContainer();
-        }, 2000);
-      }
+      // Trigger next container after delay
+      setTimeout(() => {
+        triggerNextContainer();
+      }, 200000000);
     } 
     else 
     {
       // Handle incorrect answer
       storingEachActivityScore(false);
-
-      userClickedValues.pop(); // Remove last clicked value as it was incorrect
   
       // Execute onInCorrect handler if exists
       const onInCorrect = container.getAttribute('onInCorrect');
@@ -346,7 +307,6 @@ export class LidoMathMatrix {
         await executeActions(onInCorrect, container);
       }
     }
-    
   }
 
   private getSlotData(): Record<number, { text: string; color?: string }> {
