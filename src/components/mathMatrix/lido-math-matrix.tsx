@@ -8,10 +8,10 @@ import { convertUrlToRelative, initEventsForElement, parseProp ,equationCheck, s
 })
 export class LidoMathMatrix {
   /** Number of rows in the matrix */
-  @Prop() rows = 7;
+  @Prop() rows = "7";
 
   /** Number of columns in the matrix */
-  @Prop() cols = 5;
+  @Prop() cols = "5";
 
   /** Number of slots to pre-fill as active by default */
   @Prop() defualtFill = 0;
@@ -33,6 +33,7 @@ export class LidoMathMatrix {
 
   /** Image source used inside the slots */
   @Prop() matrixImage: string;
+  
 
   /** Background color for active slots */
   @Prop() activeBgColor: string = 'transparent';
@@ -185,7 +186,12 @@ export class LidoMathMatrix {
       borderRadius: parseProp(this.borderRadius, orientation),
       left: parseProp(this.x, orientation),
       top: parseProp(this.y, orientation),
+      cols: parseProp(`${this.cols}`, orientation),
+      rows: parseProp(`${this.rows}`, orientation),
     };
+
+    // console.log("cols and rows : ", );
+    
   }
 
   handleClickSlot(element: HTMLElement) {
@@ -194,7 +200,7 @@ export class LidoMathMatrix {
     slotElements.forEach((el, i) => {
       const slotEl = el as HTMLElement;
       if (i < index) {
-        slotEl.classList.add('slot-active');
+        slotEl.classList.add('slot-active');        
         slotEl.classList.remove('slot-inactive');
         if (this.matrixImage) {
           slotEl.style.setProperty('--bg-image', `url(${convertUrlToRelative(this.matrixImage)})`);
@@ -218,8 +224,8 @@ export class LidoMathMatrix {
         const event = new CustomEvent('math-matrix-bottom-click', {
           detail: {
             matrix: this.el,
-            cols: this.cols,
-            rows: this.rows,
+            cols: this.style.cols,
+            rows: this.style.rows,
           },
           bubbles: true,
           composed: true,
@@ -378,17 +384,17 @@ export class LidoMathMatrix {
         type={this.type}
         value={this.value}
         tab-index={this.tabIndex}
-        rows={this.rows}
-        cols={this.cols}
+        rows={this.style.rows}
+        cols={this.style.cols}
         text={this.text}
       >
-        {Array.from({ length: this.rows + 1 }, (_, rowIndex) => (
+        {Array.from({ length: parseInt(this.style.rows)+ 1}, (_, rowIndex) => (
           <div class="slot-parent" key={`row-${rowIndex}`}>
             <div style={rowIndex === 0 && { visibility: 'hidden' }} class="topIndex">
               {rowIndex}
             </div>
 
-            {Array.from({ length: this.cols }, (_, colIndex) =>
+            {Array.from({ length: parseInt(this.style.cols) }, (_, colIndex) =>
               rowIndex === 0 ? (
                 <div class="leftIndex">{++colIndex}</div>
               ) : (
@@ -409,7 +415,7 @@ export class LidoMathMatrix {
             )}
 
             <div style={rowIndex === 0 && { visibility: 'hidden' }} class="bottomIndex">
-              {this.cols * rowIndex}
+              {parseInt(this.style.cols) * rowIndex}
             </div>
           </div>
         ))}

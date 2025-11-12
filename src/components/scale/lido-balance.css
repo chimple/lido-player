@@ -1,7 +1,7 @@
-#lidobalancewrapper {
+#lido-balance {
   position: relative;
   height: 500px;
-  width: 876px;
+  width: 1205px;
   top: 20%;
   left: -91px;
   z-index: 0;
@@ -9,7 +9,7 @@
 
 .lido-balance-symbol {
   position: absolute;
-  top: 66%;
+  top: 64%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 5vw;     
