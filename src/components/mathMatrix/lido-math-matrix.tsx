@@ -293,7 +293,7 @@ export class LidoMathMatrix {
       // Trigger next container after delay
       setTimeout(() => {
         triggerNextContainer();
-      }, 200000000);
+      }, 2000);
     } 
     else 
     {
