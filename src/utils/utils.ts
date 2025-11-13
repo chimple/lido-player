@@ -149,7 +149,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           if (container.getAttribute('is-continue-on-correct') !== 'true') {
             targetElement.style.pointerEvents = 'none';
           }
-          validateObjectiveStatus();
+          await validateObjectiveStatus();
           break;
         }
         case 'prevBtn': {
