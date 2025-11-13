@@ -434,7 +434,7 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   let options = new Set<string>();
 
   if (patternGroups.length == 0) { // If pattern is empty
-    return false;
+    return true;
   }
   if (patternGroups.length > 0) {
     if (arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
@@ -662,10 +662,30 @@ export const validateObjectiveStatus = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const objectiveString = container['objective'];
-
-  const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
   const additionalCheck = container.getAttribute('equationCheck');
   console.log('🚀 ~ validateObjectiveStatus ~ additionalCheck:', additionalCheck);
+  let equationGiven = false;
+  if (objectiveString == null || objectiveString.length === 0) 
+  { 
+    if(additionalCheck) 
+    {
+      equationGiven = true;
+    }
+    if(!equationGiven)
+    {
+      const onCorrect = container.getAttribute('onCorrect');
+      if (onCorrect) {
+        await executeActions(onCorrect, container);
+      }
+      storeActivityScore(100);
+      storingEachActivityScore(true);
+      triggerNextContainer();
+      return;
+    }
+  } 
+
+  const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
+  
   if (!!additionalCheck) 
   {
     const balanceEl = document.querySelector('lido-balance') as any;
