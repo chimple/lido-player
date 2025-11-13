@@ -433,6 +433,9 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   let arrIndex = 0;
   let options = new Set<string>();
 
+  if (patternGroups.length == 0) { // If pattern is empty
+    return false;
+  }
   if (patternGroups.length > 0) {
     if (arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
   }
@@ -660,56 +663,61 @@ export const validateObjectiveStatus = async () => {
   if (!container) return;
   const objectiveString = container['objective'];
 
-  if (objectiveString == null || objectiveString.length === 0) {
+  const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
+  const additionalCheck = container.getAttribute('equationCheck');
+  console.log('🚀 ~ validateObjectiveStatus ~ additionalCheck:', additionalCheck);
+  if (!!additionalCheck) 
+  {
+    const balanceEl = document.querySelector('lido-balance') as any;
+    if (!balanceEl) 
+    {
+      res = equationCheck(additionalCheck);
+    }
+    else
+    {
+      res = balanceResult(container, objectiveString);
+    }
+    console.log('🚀 ~ handleShowCheck ~ res:', res);
+  } 
+  else 
+  {
+    res = matchStringPattern(objectiveString, objectiveArray);
+  }
+  if (res) 
+  {
+    const attach = container.getAttribute('appendToDropOnCompletion');
+
     const onCorrect = container.getAttribute('onCorrect');
-    if (onCorrect) {
+    if (onCorrect) 
+    {
+      if (attach === 'true') 
+      {
+        appendingDragElementsInDrop();
+      }
       await executeActions(onCorrect, container);
     }
-    storeActivityScore(100);
-    storingEachActivityScore(true);
-    triggerNextContainer();
-    return;
-  } else {
-    const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
-    const additionalCheck = container.getAttribute('equationCheck');
-    if (!!additionalCheck) {
-      const balanceEl = document.querySelector('lido-balance') as any;
-    if (!balanceEl) {
-      res = equationCheck(additionalCheck);
-    }else{
-      res=res = balanceResult(container, objectiveString);
-    }
-      console.log('🚀 ~ handleShowCheck ~ res:', res);
-    } else {
-      res = matchStringPattern(objectiveString, objectiveArray);
-    }
-    if (res) {
-      const attach = container.getAttribute('appendToDropOnCompletion');
-
-      const onCorrect = container.getAttribute('onCorrect');
-      if (onCorrect) {
-        if (attach === 'true') {
-          appendingDragElementsInDrop();
-        }
-        await executeActions(onCorrect, container);
-      }
-      if (container.getAttribute('dropAttr') === 'EnableAnimation') {
-        setTimeout(() => {
-          triggerNextContainer();
-        }, 2000);
-      } else {
+    if (container.getAttribute('dropAttr') === 'EnableAnimation') 
+    {
+      setTimeout(() => {
         triggerNextContainer();
-      }
+      }, 2000);
+    } 
+    else 
+    {
+      triggerNextContainer();
+    }
 
+    await calculateScore();
+  } 
+  else 
+  {
+    const onInCorrect = container.getAttribute('onInCorrect');
+    await executeActions(onInCorrect, container);
+    const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
+    if (!isContinueOnCorrect) 
+    {
+      triggerNextContainer();
       await calculateScore();
-    } else {
-      const onInCorrect = container.getAttribute('onInCorrect');
-      await executeActions(onInCorrect, container);
-      const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
-      if (!isContinueOnCorrect) {
-        triggerNextContainer();
-        await calculateScore();
-      }
     }
   }
 };

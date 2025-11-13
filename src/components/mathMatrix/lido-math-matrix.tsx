@@ -1,5 +1,5 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, parseProp ,equationCheck, storingEachActivityScore, triggerNextContainer, executeActions } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, parseProp ,validateObjectiveStatus } from '../../utils/utils';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -85,6 +85,12 @@ export class LidoMathMatrix {
 
   /** Font color for the slot text */
   @Prop() fontColor: string;
+
+  /** Tracks the previously filled slot index to clear it when a new slot is clicked */
+  @State() previousFilledSlot: number = -1;
+
+  /** Reference to the previously filled slot element for clearing its text */
+  @State() previousFilledSlotElement: HTMLElement | null = null;
 
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
@@ -203,9 +209,20 @@ export class LidoMathMatrix {
         slotEl.classList.add('slot-inactive');
       }
     });
+    if (this.previousFilledSlot !== -1 )
+    {
+      // Clear the text from the previously filled slot
+      if (this.previousFilledSlotElement !== null) {
+        this.previousFilledSlotElement.textContent = '';
+      }
+    }
     
     // Display the slot value/text on the clicked slot itself
     element.textContent = index.toString();
+    
+    // Track this slot as the previously filled slot for next click
+    this.previousFilledSlot = index;
+    this.previousFilledSlotElement = element;
     
     // If the slot is the bottom-most slot for this matrix, dispatch a generic event
     // so templates or global handlers can handle bottom-slot behaviour (e.g., MultiplyBeadsAnimation).
@@ -230,84 +247,8 @@ export class LidoMathMatrix {
     this.updateValue(index.toString());
 
     // trigger the next container if right slot was clicked
-    this.goToNextContainer(this.el);
+    validateObjectiveStatus();
   } 
-
-  private goToNextContainer = async (el: HTMLElement) => {
-
-    const container = this.el.closest('lido-container') as HTMLElement;
-    if (!container) return;
-
-    if (el.getAttribute && el.getAttribute('matrix-activated') === 'true') 
-    {
-      return;
-    }
-
-    let isCorrect = false;
-
-    const objectiveString = (container.getAttribute('objective') || '').trim();
-    console.log("objectiveString : ", objectiveString);
-
-    let objectiveCorrect = true;
-
-    if (objectiveCorrect || objectiveString === '') 
-    {
-        const equationAttr = (container.getAttribute('equationCheck') || '').trim(); 
-        console.log("equationAttr : ", equationAttr);
-        if (!equationAttr) return;
-
-        // Step 1: split by " and "
-        const parts = equationAttr.split(" and ").map(p => p.trim());
-        console.log("parts : ", parts); 
-
-        try 
-        {
-          for (const part of parts) 
-          {
-            const result = equationCheck(part);
-            isCorrect = result;
-            if(!isCorrect) break;
-          }
-        } 
-        catch (err) 
-        {
-          isCorrect = false;
-        }
-    }
-
-    // Execute based on validation result
-    if (isCorrect) 
-    {    
-      // Store activity score
-      storingEachActivityScore(true);
-
-      // Execute onCorrect handler if exists
-      const onCorrect = container.getAttribute('onCorrect');
-      if (onCorrect) 
-      {
-        await executeActions(onCorrect, container);
-      }
-
-      el.setAttribute('matrix-activated', 'true');
-      
-      // Trigger next container after delay
-      setTimeout(() => {
-        triggerNextContainer();
-      }, 2000);
-    } 
-    else 
-    {
-      // Handle incorrect answer
-      storingEachActivityScore(false);
-  
-      // Execute onInCorrect handler if exists
-      const onInCorrect = container.getAttribute('onInCorrect');
-      if (onInCorrect) 
-      {
-        await executeActions(onInCorrect, container);
-      }
-    }
-  }
 
   private getSlotData(): Record<number, { text: string; color?: string }> {
     const data: Record<number, { text: string; color?: string }> = {};
