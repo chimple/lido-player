@@ -56,6 +56,33 @@
 
 
 
+	<lido-container id="multiply-beads" disableSpeak="true" show-drop-border="false" equationCheck="$#mat1,==,$#answer-multiply-beeds" objective="" tabIndex="1"  value="multiply-beads" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="answer-multiply-beeds.addText='81'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
+
+		<!-- Chimple Avatar -->
+		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.1045px, portrait.220px" y="landscape.525px, portrait.1075px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='0';">
+			<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="inherit"  width="inherit" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}" onEntry="">
+			</lido-avatar>
+		</lido-cell>
+		
+		<!-- Question Start Section -->
+		<lido-text visible="false" id="txt1" font-family="'Baloo 2', serif" font-size="52px" font-color="black" string="click the right slot of the beeds column and count the sum of all the beeds" onEntry="this.speak='true';" >
+		</lido-text>
+
+		<!-- Bottom display Section -->
+		<lido-cell layout="pos" id="pos2"  value="pos2" height="auto" width="landscape.815px, portrait.815px" x="landscape.775px, portrait.48px" y="landscape.300px, portrait.945px" ariaHidden="true" bgColor="transparent" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear';">
+			<lido-text id="answer-multiply-beeds"  value="81" height="inherit" width="inherit" string="9+9+9+9+9+9+9+9+9=" font-size="84px" font-weight="600" bgColor="#FFF4CD" visible="true" onEntry="this.word-wrap='break-word'; this.fontWeight='600'; this.textAlign='center';">
+			</lido-text>
+		</lido-cell>
+
+		<!-- Beeds Section -->
+		<lido-cell layout="pos" id="pos3"  height="landscape.1100px, portrait.900px" width="landscape.700px,portrait.825px" x="landscape.40px, portrait.15px" y="landscape.-80px,portrait.45px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
+			<lido-math-matrix id="mat1" visible="true" rows="9" cols="9" top-index="true" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="#C23E06" deactive-bg-color="#F57139" border="2px solid #F34D08" defualt-fill="0" matrix-image="">
+			</lido-math-matrix>
+		</lido-cell>
+	</lido-container>
+
+
+
 <lido-container id="lido-container" is-allow-only-correct="true" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="2,2,5,7,10,9" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="this.scrollCellAfterEquationSolved='true';lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true">
 
 <!-- Chimple Avatar -->
@@ -186,71 +213,77 @@
 <lido-container id="multiply beads" disableSpeak="true" show-drop-border="false" objective="9" tabIndex="1"  value="questionBoard" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.MultiplyBeedsAnimation='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
 
 		<!-- Chimple Avatar -->
-		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.-65px, portrait.195px" y="landscape.525px, portrait.1050px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='0';">
+		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.-80px, portrait.195px" y="landscape.175px, portrait.1085px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='0';">
 			<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="inherit"  width="inherit" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}" onEntry="">
 			</lido-avatar>
 		</lido-cell>
-		
-		<!-- Question Start Section -->
-		<lido-text visible="false" id="txt1" font-family="'Baloo 2', serif" font-size="52px" font-color="black" string="click the right slot of the beeds column and count the sum of all the beeds" onEntry="this.speak='true';" >
-		</lido-text>
 
-		<!-- option Section -->
-		<lido-cell layout="row" id="option-row" aria-hidden="true" visible="true" height="landscape.10%,portrait.5%" width="landscape.95%, portrait.90%" bg-Color="transparent" margin="landscape.-690px 0px 0px 0px,portrait.-1325px 0px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center';" gap="landscape.90px,portrait.40px">
-              <lido-text id="1" tab-index="5" height="70px" width="55px" visible="true"  value="1" string="1" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="2" tab-index="7" height="70px" width="55px" visible="true"  value="2" string="2" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="3" tab-index="12" height="70px" width="55px" visible="true" value="3" string="3" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="4" tab-index="18" height="70px" width="55px" visible="true" value="4" string="4" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="5" tab-index="18" height="70px" width="55px" visible="true" value="5" string="5" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="6" tab-index="18" height="70px" width="55px" visible="true" value="6" string="6" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="7" tab-index="18" height="70px" width="55px" visible="true" value="7" string="7" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="8" tab-index="18" height="70px" width="55px" visible="true" value="8" string="8" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="#FFB366" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-			  <lido-text id="9" tab-index="18" height="70px" width="55px" visible="true" value="9" string="9" font-family="'Baloo Bhai 2'" font-color="black" font-size="52px"  bg-color="red" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
-			  </lido-text>
-        </lido-cell>
+		<!-- top section -->
+		<lido-cell layout="landscape.row,portrait.wrap" id="question-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.5%" width="landscape.100%, portrait.106%" bg-Color="transparent" margin="landscape.100px 0px 0px 0px,portrait.-130px -65px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center';" gap="landscape.35px,portrait.5px">
+			<lido-image id="1" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_one.png" onEntry="this.opacity='0'; ">
+			</lido-image>
+			<lido-image id="2" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_two.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="3" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_three.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="4" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_four.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="5" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_five.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="6" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_six.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="7" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_seven.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="8" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_eight.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="9" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_nine.png" onEntry="this.opacity='0';">
+			</lido-image>
+			<lido-image id="10" visible="true" width="105px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/SumTogether/sum_together_ten.png" onEntry="this.opacity='0';">
+			</lido-image>
+		</lido-cell>
 
-		<!-- Bottom display Section -->
-		<lido-cell layout="pos" id="pos1"  value="pos1" height="landscape.150px, portrait.150px" width="landscape.1125px, portrait.900px" x="landscape.240px, portrait.0px" y="landscape.720px, portrait.1030px" ariaHidden="true" bgColor="#AA4A44" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear'; this.z-index='0';">
-			<lido-text id="answer-multiply-beeds"  value="" height="inherit" width="inherit" string="" font-size="84px" font-weight="600"  bgColor="#AA4A44" visible="true" onEntry="this.flex-shrink='0'; this.fontWeight='600'; this.textAlign='center';">
+		<!-- question row-->
+		<lido-cell layout="row" id="question-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.15%" width="landscape.65%, portrait.90%" bg-Color="transparent" margin="landscape.185px 0px 30px 0px,portrait.25px 0px -120px 0px" onEntry="this.z-index='1'; this.justify-content='center';" gap="landscape.90px,portrait.40px">
+			<lido-text id="10" tab-index="2" height="215px" width="120px" visible="true"  value="10" string="10" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+			</lido-text>
+			<lido-text id="11" tab-index="3" height="295px" width="120px" visible="true"  value="-" string="-" font-family="'Baloo Bhai 2'" font-color="black" font-size="195px"  bg-color="transparent" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+			</lido-text>
+			<lido-text id="12" tab-index="4" height="215px" width="120px" visible="true"  value="9" string="9" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+			</lido-text>
+			<lido-text id="13" tab-index="5" height="215px" width="120px" visible="true"  value="=" string="=" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+			</lido-text>
+			<lido-text id="15" tab-index="6" type="drop" height="245px" width="175px" visible="true"  value="1" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png">
 			</lido-text>
 		</lido-cell>
 
-		<!-- Beeds Section -->
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.145px, portrait.-20px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
+
+		<!-- option row-->
+		<lido-cell layout="landscape.row, portrait.wrap" id="question-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.5%" width="landscape.90%, portrait.106%" bg-Color="transparent" margin="landscape.65px 0px 65px 0px,portrait.-160px -65px 500px 0px" onEntry="this.z-index='1'; this.justify-content='center'; this.opacity='0';" gap="landscape.20px,portrait.5px">
+			<lido-text id="0" tab-index="0" type="drag" height="195px" width="120px" visible="true"   value="0" string="0" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="1" tab-index="7" type="drag" height="195px" width="120px" visible="true"   value="1" string="1" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="2" tab-index="8" type="drag" height="195px" width="120px" visible="true"   value="2" string="2" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="3" tab-index="9" type="drag" height="195px" width="120px" visible="true"   value="3" string="3" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="4" tab-index="10" type="drag" height="195px" width="120px" visible="true"  value="4" string="4" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="5" tab-index="11" type="drag" height="195px" width="120px" visible="true"    value="5" string="5" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="6" tab-index="12" type="drag" height="195px" width="120px" visible="true"    value="6" string="6" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="7" tab-index="13" type="drag" height="195px" width="120px" visible="true"    value="7" string="7" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="8" tab-index="14" type="drag" height="195px" width="120px" visible="true"    value="8" string="8" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
+			<lido-text id="9" tab-index="15" type="drag" height="195px" width="120px" visible="true"    value="9" string="9" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+			</lido-text>
 		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.290px, portrait.75px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.435px, portrait.170px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.580px, portrait.265px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.725px, portrait.360px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.870px, portrait.455px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.1015px, portrait.550px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.1160px, portrait.645px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
-		<lido-cell layout="pos" height="landscape.600px, portrait.775px" width="landscape.100px,portrait.125px" x="landscape.1305px, portrait.740px" y="landscape.125px,portrait.175px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='0';">
-			<lido-math-matrix visible="true" rows="1" cols="9" top-index="false" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="yellow" inactive-bg-color="black" defualt-fill="0" matrix-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Categorize/insect3.png"></lido-math-matrix>
-		</lido-cell>
+
+		<!-- speaking element-->
+		<lido-text id="speak-text" tab-index="5" height="100%" width="100%" visible="false" string="solve the problem by counting the teddys above and drag the correct answer" font-family="'Baloo Bhai 2'" font-color="red" font-size="75px"  bg-color="transparent" onInCorrect="" onEntry="this.opacity='0'; this.speak='true';" border-image="">
+		</lido-text>
 
 	</lido-container>
 

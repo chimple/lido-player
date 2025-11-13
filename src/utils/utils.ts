@@ -302,34 +302,19 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
-        case 'MultiplyBeedsAnimation': {
-          const value = action.value;
-          // This makes the behavior pluggable: templates can add their own listeners
-          // for 'math-matrix-bottom-click' to override or extend behavior.
-          if(value) {
-            document.addEventListener('math-matrix-bottom-click', async (ev: Event) => {
-              try {
-                const e = ev as CustomEvent;
-                const detail = e.detail || {};
-                const matrix = detail.matrix as HTMLElement | undefined;
-                const cols = detail.cols as number | undefined;
-                if (!matrix) return;
-                // Call the default MultiplyBeadsAnimation handler. That function already
-                // guards with data-activated to avoid double-counting.
-                await MultiplyBeadsAnimation(matrix, cols || 0);
-              } catch (err) {
-                console.warn('Default math-matrix-bottom-click handler failed', err);
-              }
-            });
-          }
-
-          break;
-        }
 
         case 'sumTogetherAnimation' : {
           const value = action.value;
           if(value) {
             SumTogetherAnimation(targetElement,value);
+          }
+          break;
+        }
+
+        case 'addText': {
+          const value = action.value;
+          if (value) {
+            targetElement.textContent += value;
           }
           break;
         }
@@ -448,6 +433,9 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
   let arrIndex = 0;
   let options = new Set<string>();
 
+  if (patternGroups.length == 0) { // If pattern is empty
+    return true;
+  }
   if (patternGroups.length > 0) {
     if (arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
   }
@@ -674,57 +662,82 @@ export const validateObjectiveStatus = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const objectiveString = container['objective'];
-
-  if (objectiveString == null || objectiveString.length === 0) {
-    const onCorrect = container.getAttribute('onCorrect');
-    if (onCorrect) {
-      await executeActions(onCorrect, container);
+  const additionalCheck = container.getAttribute('equationCheck');
+  console.log('🚀 ~ validateObjectiveStatus ~ additionalCheck:', additionalCheck);
+  let equationGiven = false;
+  if (objectiveString == null || objectiveString.length === 0) 
+  { 
+    if(additionalCheck) 
+    {
+      equationGiven = true;
     }
-    storeActivityScore(100);
-    storingEachActivityScore(true);
-    triggerNextContainer();
-    return;
-  } else {
-    const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
-    const additionalCheck = container.getAttribute('equationCheck');
-    if (!!additionalCheck) {
-      const balanceEl = document.querySelector('lido-balance') as any;
-    if (!balanceEl) {
-      res = equationCheck(additionalCheck);
-    }else{
-      res=res = balanceResult(container, objectiveString);
-    }
-      console.log('🚀 ~ handleShowCheck ~ res:', res);
-    } else {
-      res = matchStringPattern(objectiveString, objectiveArray);
-    }
-    if (res) {
-      const attach = container.getAttribute('appendToDropOnCompletion');
-
+    if(!equationGiven)
+    {
       const onCorrect = container.getAttribute('onCorrect');
       if (onCorrect) {
-        if (attach === 'true') {
-          appendingDragElementsInDrop();
-        }
         await executeActions(onCorrect, container);
       }
-      if (container.getAttribute('dropAttr') === 'EnableAnimation') {
-        setTimeout(() => {
-          triggerNextContainer();
-        }, 2000);
-      } else {
-        triggerNextContainer();
-      }
+      storeActivityScore(100);
+      storingEachActivityScore(true);
+      triggerNextContainer();
+      return;
+    }
+  } 
 
-      await calculateScore();
-    } else {
-      const onInCorrect = container.getAttribute('onInCorrect');
-      await executeActions(onInCorrect, container);
-      const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
-      if (!isContinueOnCorrect) {
-        triggerNextContainer();
-        await calculateScore();
+  const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
+  
+  if (!!additionalCheck) 
+  {
+    const balanceEl = document.querySelector('lido-balance') as any;
+    if (!balanceEl) 
+    {
+      res = equationCheck(additionalCheck);
+    }
+    else
+    {
+      res = balanceResult(container, objectiveString);
+    }
+    console.log('🚀 ~ handleShowCheck ~ res:', res);
+  } 
+  else 
+  {
+    res = matchStringPattern(objectiveString, objectiveArray);
+  }
+  if (res) 
+  {
+    const attach = container.getAttribute('appendToDropOnCompletion');
+
+    const onCorrect = container.getAttribute('onCorrect');
+    if (onCorrect) 
+    {
+      if (attach === 'true') 
+      {
+        appendingDragElementsInDrop();
       }
+      await executeActions(onCorrect, container);
+    }
+    if (container.getAttribute('dropAttr') === 'EnableAnimation') 
+    {
+      setTimeout(() => {
+        triggerNextContainer();
+      }, 2000);
+    } 
+    else 
+    {
+      triggerNextContainer();
+    }
+
+    await calculateScore();
+  } 
+  else 
+  {
+    const onInCorrect = container.getAttribute('onInCorrect');
+    await executeActions(onInCorrect, container);
+    const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
+    if (!isContinueOnCorrect) 
+    {
+      triggerNextContainer();
+      await calculateScore();
     }
   }
 };
@@ -969,7 +982,10 @@ export const equationCheck = (additionalCheck: string): boolean => {
 
   // 3. Join the modified parts back into one string
   const resultString = modifiedParts.join('');
+  console.log('🚀 ~ equationCheck ~ resultString:', resultString);
+  // 4. Evaluate the final string as a mathematical expression
   const finalRes = evaluate(resultString);
+  console.log('🚀 ~ equationCheck ~ finalRes:', finalRes);
   return finalRes;
 };
 
@@ -1295,81 +1311,6 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
       }
     }
   });
-}
-
-export const MultiplyBeadsAnimation = async (element : HTMLElement,value : number) => {
-  if (!element) return;
-
-  const container = document.getElementById(LidoContainer) as HTMLElement | null;
-  if (!container) return;
-
-  if (element.getAttribute && element.getAttribute('data-activated') === 'true') return;
-  element.setAttribute && element.setAttribute('data-activated', 'true');
-
-  const txtEl = container.querySelector('#answer-multiply-beeds') as HTMLElement;
-  if (!txtEl) return;
-
-  const addValue = parseInt(String(value), 10) || 0;
-
-  const current = txtEl.getAttribute('string') || '';
-
-  let left = current;
-  if (left.includes('=')) left = left.split('=')[0];
-  console.log('Left part before addition:', left);
-
-  let firstMatrix = false;
-  if (!left || left.trim().length === 0) 
-  {
-    left = String(addValue);
-    firstMatrix = true;
-  } 
-  else 
-  {
-    left = `${left}+${addValue}`;
-  }
-
-  const terms = left.split('+').map(t => parseInt(t.trim(), 10) || 0);
-  const sum = terms.reduce((s, n) => s + n, 0);
-  
-  let newString : string = ""
-  if (firstMatrix) 
-  {
-    newString = `${left}`;
-  }
-  else
-  {
-    newString = `${left}=${sum}`;
-  }
-
-  txtEl.setAttribute('string', newString);
-  txtEl.setAttribute('value', newString);
-  txtEl.style.visibility = 'visible';
-  txtEl.style.display = '';
-
-  const matrices = Array.from(container.querySelectorAll('lido-math-matrix')) as HTMLElement[];
-  console.log('Total matrices in container:', matrices.length);
-  const idx = matrices.indexOf(element);
-
-  // Reveal the next matrix (if any) and increment the persisted counter only when we actually reveal one.
-  if (idx >= 0 && idx + 1 < matrices.length) {
-    const nextMatrix = matrices[idx + 1];
-    const parentCell = nextMatrix.closest('lido-cell') as HTMLElement | null;
-    if (parentCell) {
-      parentCell.style.opacity = '1';
-      parentCell.style.visibility = 'visible';
-    }
-  }
-
-  // If this is the last matrix in the container, trigger next-container behavior.
-  if (idx === matrices.length - 1) {
-    // run onCorrect if provided, then trigger next container
-    const onCorrect = container.getAttribute && container.getAttribute('onCorrect');
-    if (onCorrect) {
-      await executeActions(onCorrect, container);
-    }
-    // trigger the next container flow
-    triggerNextContainer();
-  }
 }
 
 export const SumTogetherAnimation = async (element : HTMLElement,value : string) => {

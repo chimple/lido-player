@@ -1,5 +1,5 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, parseProp } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, parseProp ,validateObjectiveStatus } from '../../utils/utils';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -83,13 +83,24 @@ export class LidoMathMatrix {
   /** The top coordinate (in pixels or percentage) for matrix positioning */
   @Prop() y: string;
 
+  /** Font color for the slot text */
   @Prop() fontColor: string;
+
+  /** Tracks the previously filled slot index to clear it when a new slot is clicked */
+  @State() previousFilledSlot: number = -1;
+
+  /** Reference to the previously filled slot element for clearing its text */
+  @State() previousFilledSlotElement: HTMLElement | null = null;
 
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
 
   /** Reference to the host element of this component */
   @Element() el: HTMLElement;
+
+  private updateValue(index: string) {
+    this.el.setAttribute('value', index);
+  }
 
   componentDidLoad() {
     const slotElements = this.el.querySelectorAll('.slot');
@@ -198,7 +209,21 @@ export class LidoMathMatrix {
         slotEl.classList.add('slot-inactive');
       }
     });
-
+    if (this.previousFilledSlot !== -1 )
+    {
+      // Clear the text from the previously filled slot
+      if (this.previousFilledSlotElement !== null) {
+        this.previousFilledSlotElement.textContent = '';
+      }
+    }
+    
+    // Display the slot value/text on the clicked slot itself
+    element.textContent = index.toString();
+    
+    // Track this slot as the previously filled slot for next click
+    this.previousFilledSlot = index;
+    this.previousFilledSlotElement = element;
+    
     // If the slot is the bottom-most slot for this matrix, dispatch a generic event
     // so templates or global handlers can handle bottom-slot behaviour (e.g., MultiplyBeadsAnimation).
     if (index === slotElements.length) {
@@ -219,7 +244,11 @@ export class LidoMathMatrix {
       }
     }
 
-  }
+    this.updateValue(index.toString());
+
+    // trigger the next container if right slot was clicked
+    validateObjectiveStatus();
+  } 
 
   private getSlotData(): Record<number, { text: string; color?: string }> {
     const data: Record<number, { text: string; color?: string }> = {};
@@ -269,7 +298,7 @@ export class LidoMathMatrix {
                 <div class="leftIndex">{++colIndex}</div>
               ) : (
                 <div
-                  class={`slot slot-${slotNumber} ${this.defualtFill + 1 >= slotNumber ? 'slot-active' : 'slot-inactive'}`} 
+                  class={`slot slot-${slotNumber} ${this.defualtFill >= slotNumber ? 'slot-active' : 'slot-inactive'}`}
                   onClick={(ev:Event) => this.handleClickSlot(ev.currentTarget as HTMLElement)}
                   key={`slot-${rowIndex}-${colIndex}`}
                   style={{

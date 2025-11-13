@@ -1260,11 +1260,12 @@ export namespace Components {
         "clickable": boolean;
         /**
           * Number of columns in the matrix
-          * @default 5
+          * @default "5"
          */
-        "cols": number;
+        "cols": string;
         /**
           * Background color for inactive slots
+          * @default 'transparent'
          */
         "deactiveBgColor": string;
         /**
@@ -1272,6 +1273,9 @@ export namespace Components {
           * @default 0
          */
         "defualtFill": number;
+        /**
+          * Font color for the slot text
+         */
         "fontColor": string;
         /**
           * Height of the slot container
@@ -1297,9 +1301,9 @@ export namespace Components {
         "padding": string;
         /**
           * Number of rows in the matrix
-          * @default 7
+          * @default "7"
          */
-        "rows": number;
+        "rows": string;
         /**
           * Sets the tab index for keyboard navigation
          */
@@ -1323,6 +1327,7 @@ export namespace Components {
         "value": string;
         /**
           * Controls the visibility of the matrix (accepts "true" or "false" as string)
+          * @default 'false'
          */
         "visible": string;
         /**
@@ -3880,11 +3885,12 @@ declare namespace LocalJSX {
         "clickable"?: boolean;
         /**
           * Number of columns in the matrix
-          * @default 5
+          * @default "5"
          */
-        "cols"?: number;
+        "cols"?: string;
         /**
           * Background color for inactive slots
+          * @default 'transparent'
          */
         "deactiveBgColor"?: string;
         /**
@@ -3892,6 +3898,9 @@ declare namespace LocalJSX {
           * @default 0
          */
         "defualtFill"?: number;
+        /**
+          * Font color for the slot text
+         */
         "fontColor"?: string;
         /**
           * Height of the slot container
@@ -3917,9 +3926,9 @@ declare namespace LocalJSX {
         "padding"?: string;
         /**
           * Number of rows in the matrix
-          * @default 7
+          * @default "7"
          */
-        "rows"?: number;
+        "rows"?: string;
         /**
           * Sets the tab index for keyboard navigation
          */
@@ -3943,6 +3952,7 @@ declare namespace LocalJSX {
         "value"?: string;
         /**
           * Controls the visibility of the matrix (accepts "true" or "false" as string)
+          * @default 'false'
          */
         "visible"?: string;
         /**
