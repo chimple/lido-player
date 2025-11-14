@@ -48,7 +48,7 @@ function getContainerXml(args) {
 	</lido-cell>
 		
 		
-	<lido-cell visible="true" id="question"  layout="landscape.row,portrait.col" height="100%" width="100%" bg-Color="transparent" margin="landscape.78px 0px -16px 0px,portrait.0px" onEntry="this.justifyContent='center'">
+	<lido-cell visible="true" id=""  layout="landscape.row,portrait.col" height="100%" width="100%" bg-Color="transparent" margin="landscape.78px 0px -16px 0px,portrait.0px" onEntry="this.justifyContent='center'">
 
 		<lido-cell visible="true" id=""  layout="" height="landscape.92%,portrait.72%" width="landscape.80%,portrait.96%" bg-Color="transparent" margin="landscape.-16px 0px 0px -56px,portrait.0px 50px 0px 0px" onEntry="this.justifyContent='center'">
 			<lido-math-matrix id="mat1" visible="true" width="landscape.100%,portrait.1000px" height="landscape.860px,portrait.1700px" x="800px" y="23px" rows="landscape.12,portrait.10" cols="landscape.10,portrait.12" top-index="true" left-index="true" bottom-index="true" active-only-visible="false" defualtFill="0" border="1px solid black" border-radius="0" active-bg-color="#5D44BD" clickable="true" type="checkerBlock" font-color="#182A4F" deactive-bg-color="aliceblue" font-family="'Baloo Bhai 2'">
