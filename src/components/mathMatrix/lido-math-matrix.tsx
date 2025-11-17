@@ -14,7 +14,7 @@ export class LidoMathMatrix {
   @Prop() cols = "5";
 
   /** Number of slots to pre-fill as active by default */
-  @Prop() defualtFill = 0;
+  @Prop({ mutable: true, reflect: true }) defualtFill = 0;
 
   /** Show row index numbers on the left side */
   @Prop() leftIndex = false;
@@ -36,19 +36,18 @@ export class LidoMathMatrix {
   
 
   /** Background color for active slots */
-  @Prop() activeBgColor: string = 'transparent';
+  @Prop({ mutable: true, reflect: true }) activeBgColor: string = 'transparent';
 
-  /** Background color for inactive slots */
-  @Prop() deactiveBgColor: string = 'transparent';
+  @Prop({ mutable: true, reflect: true }) deactiveBgColor: string = 'transparent';
 
   /** Border style applied to each slot */
-  @Prop() border: string = '2px solid green';
+  @Prop({ mutable: true, reflect: true }) border: string = '2px solid green';
 
   /** Height of the slot container */
-  @Prop() height: string = '100%';
+ @Prop({ mutable: true, reflect: true }) height: string = '100%';
 
   /** Width of the slot container */
-  @Prop() width: string = '100%';
+  @Prop({ mutable: true, reflect: true }) width: string = '100%';
 
   /** Border radius for each slot */
   @Prop() borderRadius: string = '5px';
