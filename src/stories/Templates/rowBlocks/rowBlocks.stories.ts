@@ -80,7 +80,7 @@ function getContainerXml(args) {
                         const cleanValue = opt.substring(1); // removes the first character (@)
                     if (opt.startsWith('@')) {
                     return `
-                    <lido-text visible="true" class="dropping" id="drop${tabCounter}" tab-index="${tabCounter++}" width="138px" height="86px" value="${cleanValue}" string="" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="#6D8C87" border-radius="8px" onEntry="this.border='5px solid #2C3836'; this.speak='true';" type="drop" layout="row"></lido-text>
+                    <lido-text visible="true" class="dropping" id="drop${tabCounter}" tab-index="${tabCounter++}" width="138px" height="86px" value="${cleanValue}" string="" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="#6D8C87" border-radius="8px" onCorrect="lido-avatar.avatarAnimate='Success';" onEntry="this.border='5px solid #2C3836'; this.speak='true';" type="drop" layout="row"></lido-text>
                     `;   }
                     return `
                     <lido-text visible="true" id="num${tabCounter}" tab-index="${tabCounter++}" width="140px" height="94px" value="${opt}" string="${opt}" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="${index%2!==0 ? color[0] : color[1]}" border-radius="8px" onEntry="this.font-weight='500'" onTouch="this.speak='true';" margin="0px 1px 0px 0px"></lido-text>

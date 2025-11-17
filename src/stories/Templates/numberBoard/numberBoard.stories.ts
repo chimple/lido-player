@@ -38,7 +38,12 @@ export const numberBoard: StoryObj = {
       "13",
       "14",
       "15",
-      "16"
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+      
     ],
     answers: [
       "1",
@@ -61,6 +66,7 @@ export const numberBoard: StoryObj = {
       "18",
       "19",
       "20"
+      
     ],
 	colors: ['#CF1565', '#409F5C', '#02C1C1', '#AD3184', '#F55376', '#81C127', '#5D44BD'],
   },
@@ -79,8 +85,8 @@ function getContainerXml(args) {
   const DropCells = answers.map(answer => {
     return `
 		<!-- drop --> 	
-		<lido-cell layout="row" visible="true"    height="120px" width="120px" bg-Color="transparent"     onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
-			<lido-text visible="true" type="drop"  id="drop${tabCounter}" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" is-allow-only-one-drop="true" value="${answer}" string="${answer}" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';  this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';" margin-right="10px">
+		<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+			<lido-text visible="true" type="drop"  id="drop${tabCounter}" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" is-allow-only-one-drop="true" value="${answer}" string="${answer}" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';  this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';" margin-right="10px" onCorrect="lido-avatar.avatarAnimate='Success';">
 			</lido-text>
 		</lido-cell>
       `;
@@ -90,17 +96,20 @@ function getContainerXml(args) {
     .map((option) => {
 		const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
       return `
-		<lido-text visible="true" audio="" onTouch="this.speak='true';" type="drag" id="drag${tabCounter}" tab-index="${tabCounter++}" height="140px" width="160px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${option}" string="${option}" margin="landscape.0 0 105px 0,portrait.0 130px 0 0 " onEntry="this.color='${color}';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white" onCorrect="this.speak='true'; drop1.speak='true';">
+		<lido-text visible="true" audio="" onTouch="this.speak='true';" type="drag" id="drag${tabCounter}" tab-index="${tabCounter++}" height="140px" width="160px" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" value="${option}" string="${option}" margin="landscape.0 0 105px 0,portrait.0 130px 0 0 " onEntry="this.color='${color}';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white'">
 		</lido-text>
       `;
     })
     .join('');
 
   return `<main>
- <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+ <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';trainAudio.speak='true';" onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+
+ <lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/train1.m4a" onEntry="this.speak='true';"></lido-text>
 
 	<!-- Audio -->
-	<lido-text visible="false" id="audio" onEntry="this.display='none';" string="Drag the number from the right and complete the number puzzle."></lido-text>
+	<lido-text visible="false" id="audio" onEntry="this.display='none';this.sleep='2800'; this.speak='true';" string="Drag the number to its correct place and complete the number puzzle."></lido-text>
+
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.417px,portrait.363px" width="landscape.280px,portrait.340px" x="landscape.1370px, portrait.597px" y="landscape.637px, portrait.1370px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			

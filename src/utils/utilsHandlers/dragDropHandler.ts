@@ -585,6 +585,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       const localStorageKey = `${LidoContainer}_dropData`;
       dragElement.style.transition = 'transform 0.5s ease';
       animateDragToTarget(dragElement, dropElement, container);
+      executeActions("this.avatarAnimate='Fail';", dragElement);
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
 
