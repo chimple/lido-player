@@ -290,12 +290,10 @@ export function slidingWithScaling(element: HTMLElement): void {
 
   element.addEventListener('mousedown', onStart);
   element.addEventListener('touchstart', onStart);
-  element.addEventListener('click', ev => {
-    onClickDropOrDragElement(element, 'drag');
-  });
 }
 
 const slideCompleted = (slideElement: HTMLElement) => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
   const slideArr = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
   const allSlideElements = document.querySelectorAll("[type='slide']");
 
@@ -309,6 +307,11 @@ const slideCompleted = (slideElement: HTMLElement) => {
   const objectiveArray = objectiveString.split(',');
   const elementIndex = slideArr.indexOf(slideElement['value']);
   const isCorrect = matchStringPattern(slideElement['value'], [objectiveArray[elementIndex].trim()]);
-  storingEachActivityScore(isCorrect);
+
+  if(container.getAttribute('is-continue-on-correct') === 'true'){
+    storingEachActivityScore(true);
+  } else {
+    storingEachActivityScore(isCorrect);
+  }
   handleShowCheck();
 };
