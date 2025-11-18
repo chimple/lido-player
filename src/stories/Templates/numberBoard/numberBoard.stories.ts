@@ -1,15 +1,12 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
-type TextColors = {
-  colors: string[];
-};
-
 const meta: Meta = {
   title: 'Templates/numberBoard',
   argTypes: {
     options: { control: 'object' },
     answers: { control: 'object' },
+    isAllowOnlyCorrect: { control: 'boolean' },
 	colors: {
       control: 'object',
       description: 'Array of colors for the letters',
@@ -68,6 +65,7 @@ export const numberBoard: StoryObj = {
       "20"
       
     ],
+   isAllowOnlyCorrect: true,
 	colors: ['#CF1565', '#409F5C', '#02C1C1', '#AD3184', '#F55376', '#81C127', '#5D44BD'],
   },
   render: args => {
@@ -79,14 +77,14 @@ export const numberBoard: StoryObj = {
 function getContainerXml(args) {
   let tabCounter = 1;
   const pickedColors = args.colors;
-  const { options = [], answers = [] } = args;
+  const { options = [], answers = [], isAllowOnlyCorrect = true } = args;
   
 
   const DropCells = answers.map(answer => {
     return `
 		<!-- drop --> 	
 		<lido-cell layout="row" visible="true" height="120px" width="120px" bg-Color="transparent" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
-			<lido-text visible="true" type="drop"  id="drop${tabCounter}" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" is-allow-only-one-drop="true" value="${answer}" string="${answer}" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';  this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';" margin-right="10px" onCorrect="lido-avatar.avatarAnimate='Success';">
+			<lido-text visible="true" type="drop"  id="drop${tabCounter}" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="140px" is-allow-only-one-drop="true" value="${answer}" string="${answer}" onEntry="this.color='#AB7552'; this.fontWeight='800';this.borderRadius='10px';  this.textShadow = '3px 0 #853810, -3px 0 #853810, 0 3px #853810, 0 -3px #853810';" margin-right="10px" onCorrect="lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 			</lido-text>
 		</lido-cell>
       `;
@@ -103,7 +101,7 @@ function getContainerXml(args) {
     .join('');
 
   return `<main>
- <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';trainAudio.speak='true';" onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+ <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="${isAllowOnlyCorrect}" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';trainAudio.speak='true';" onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 
  <lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/train1.m4a" onEntry="this.speak='true';"></lido-text>
 
