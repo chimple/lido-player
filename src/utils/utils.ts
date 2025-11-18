@@ -442,14 +442,15 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
   if (dragElement && dropElement) {
     const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+    // storing each activity score based on isCorrect for (all drag-drop events)
+    storingEachActivityScore(isCorrect);
     if (isCorrect) {
-      const onCorrect = dropElement.getAttribute('onCorrect');
+      const onCorrect = dropElement.getAttribute('onCorrect');      
       if (onCorrect) {
         await executeActions(onCorrect, dropElement, dragElement);
       }
     } else {
       const onInCorrect = dropElement.getAttribute('onInCorrect');
-
       await executeActions(onInCorrect, dropElement, dragElement);
     }
   }
