@@ -121,9 +121,6 @@ export class LidoHome {
    */
   @State() containers: (() => any)[] = [];
 
-  connectedCallback() {
-    this.setLanguage(this.locale);
-  }
 
   @Watch('locale')
     onLangChange(newLang: string) {
@@ -389,7 +386,7 @@ export class LidoHome {
       'lido-trace': <lido-trace {...props}>{children}</lido-trace>,
       'lido-image': <lido-image {...props}>{children}</lido-image>,
       'lido-row': <lido-row {...props}>{children}</lido-row>,
-      'lido-text': <lido-text {...props} locale={this.locale} >{children}</lido-text>,
+      'lido-text': <lido-text {...props}>{children}</lido-text>,
       'lido-pos': <lido-pos {...props}>{children}</lido-pos>,
       'lido-shape': <lido-shape {...props}>{children}</lido-shape>,
       'lido-wrap': <lido-wrap {...props}>{children}</lido-wrap>,
@@ -632,7 +629,7 @@ export class LidoHome {
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
                 <lido-text
                   visible="true"
-                  string="exit_prompt"
+                  string="Do you want to exit?"
                   width="294px"
                   height="38px"
                   class="popup-exit-text"
@@ -642,7 +639,7 @@ export class LidoHome {
                 <lido-cell visible="true" layout="row" width="294px" class="btn-cell">
                   <lido-text
                     visible="true"
-                    string="exit_button"
+                    string="Exit"
                     width="92px"
                     height="53px"
                     font-size="16px"
@@ -658,7 +655,7 @@ export class LidoHome {
                   ></lido-text>
                   <lido-text
                     visible="true"
-                    string="continue_button"
+                    string="Continue playing"
                     width="155px"
                     height="53px"
                     font-size="16px"

@@ -94,7 +94,7 @@ export class LidoCalculator {
     const container = this.el.closest('lido-container') as HTMLElement;
     if (!container) return;
 
-    if (this.objective && this.objective.length === 1) {
+    if (this.objective && this.objective !='') {
       isCorrect = userInput === this.objective;
     } 
 
@@ -142,9 +142,8 @@ export class LidoCalculator {
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
-      if(this.objective.length===0){
-        window.dispatchEvent(new CustomEvent(NextContainerKey));
-      }
+      window.dispatchEvent(new CustomEvent(NextContainerKey));
+      
     }
 
     else{

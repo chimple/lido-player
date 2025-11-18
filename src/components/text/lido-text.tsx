@@ -1,6 +1,7 @@
 import { Component, Prop, h, Element, Host, State,Watch } from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
 import i18next, { t as i18t } from '../../utils/i18n';
+import { LangChangeEvent} from '../../utils/constants';
 /**
  * @component LidoText
  *
@@ -14,8 +15,6 @@ import i18next, { t as i18t } from '../../utils/i18n';
   shadow: false,
 })
 export class LidoText {
- /** Language to apply to all texts */
-  @Prop({ mutable: true }) locale: string;
   /**
    * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
    */
@@ -228,39 +227,28 @@ export class LidoText {
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
     this.updateTranslation();
-    i18next.on('languageChanged', this.languageChangedHandler);
-    this.el.addEventListener('languageChanged', this.updateTranslation.bind(this));
+    i18next.on(LangChangeEvent, this.languageChangedHandler);
+    this.el.addEventListener(LangChangeEvent, this.updateTranslation.bind(this));
   }
 
   disconnectedCallback() {
     window.removeEventListener('resize', this.updateStyles.bind(this));
     window.removeEventListener('load', this.updateStyles.bind(this));
-     i18next.off('languageChanged', this.languageChangedHandler);
+     i18next.off(LangChangeEvent, this.languageChangedHandler);
   }
   private updateTranslation() {
     const key = (this.string || '').trim();
-    const activeLang = this.locale || i18next.language || 'en';
+    const activeLang =i18next.language || 'en';
 
     if (!key) {
-      // fallback to element textContent (if desired)
-      const raw = this.el.textContent?.trim() ?? '';
-      this.translatedText = raw;
+    this.translatedText = this.el.textContent?.trim() ?? '';
       return;
     }
 
-    // If translation key exists, use it for activeLang; else fallback to raw key
-    try {
-      const exists = i18next.exists(key);
-      if (exists) {
-        // getFixedT ensures we fetch for specific language (useful if lang prop set)
-        const value = i18next.getFixedT(activeLang)(key);
-        this.translatedText = value ?? key;
-      } else {
-        // key not present in resources — show key or original string
-        this.translatedText = key;
-      }
-    } catch (err) {
-      // graceful fallback
+  try {
+    const t = i18next.getFixedT(activeLang);
+    this.translatedText = t(key); 
+    } catch {
       this.translatedText = key;
     }
   }

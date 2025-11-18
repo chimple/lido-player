@@ -224,18 +224,16 @@ export class LidoContainer {
     this.updateChildTextLanguage(langToApply);
   }
   private resolveLanguage(): string {
-    const xmlLang = this.el.getAttribute('locale');
-  if (xmlLang && xmlLang.trim()) return xmlLang;
     const rootEl = this.el.closest('lido-root') as any;
     const rootLang = rootEl?.locale || '';
-  if (rootLang && rootLang.trim()) return rootLang;
+    if (rootLang?.trim()) return rootLang;
     const homeEl = this.el.closest('lido-home') as any;
     const homeLang = homeEl?.locale || '';
-  if (homeLang && homeLang.trim()) return homeLang;
-    const containerPropLang = this.locale || '';
-   if (containerPropLang && containerPropLang.trim()) return containerPropLang;
-  const fallback = 'en';
-    return fallback;
+    if (homeLang?.trim()) return homeLang;
+    if (this.locale?.trim()) return this.locale;
+    const xmlLang = this.el.getAttribute('locale');
+    if (xmlLang?.trim()) return xmlLang;
+    return this.el.textContent?.trim();
 }
 
   convertToPixels(height: string, parentElement = document.body) {

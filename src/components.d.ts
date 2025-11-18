@@ -1780,10 +1780,6 @@ export namespace Components {
          */
         "id": string;
         /**
-          * Language to apply to all texts
-         */
-        "locale": string;
-        /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
         "margin": string;
@@ -4086,10 +4082,6 @@ declare namespace LocalJSX {
           * Unique identifier for the text element.
          */
         "id"?: string;
-        /**
-          * Language to apply to all texts
-         */
-        "locale"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */

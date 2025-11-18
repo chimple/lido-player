@@ -15,7 +15,7 @@
 | `exitButtonUrl`    | `exit-button-url`    | Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.          | `string`  | `undefined`              |
 | `height`           | `height`             | The height of the container (CSS value).                                                                 | `string`  | `''`                     |
 | `initialIndex`     | `initial-index`      | Initial index of the container being displayed.                                                          | `number`  | `0`                      |
-| `locale`           | `locale`             |                                                                                                          | `string`  | `''`                     |
+| `locale`           | `locale`             | Language to apply to all texts                                                                           | `string`  | `'te'`                   |
 | `nextButtonUrl`    | `next-button-url`    | Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.          | `string`  | `undefined`              |
 | `prevButtonUrl`    | `prev-button-url`    | Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.      | `string`  | `undefined`              |
 | `speakerButtonUrl` | `speaker-button-url` | Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.       | `string`  | `undefined`              |
