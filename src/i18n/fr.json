@@ -1,0 +1,6 @@
+{
+  "exit_prompt": "Voulez-vous quitter?",
+  "exit_button": "Quitter",
+  "continue_button": "Continuer à jouer",
+  "balancing_question":"Déposez les éléments pour correspondre au symbole donné"
+}

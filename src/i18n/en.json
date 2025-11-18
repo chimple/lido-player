@@ -1,0 +1,7 @@
+{
+  "exit_prompt": "Do you want to exit?",
+  "exit_button": "Exit",
+  "continue_button": "Continue playing",
+  "balancing_question": "Drop the elements to match the given symbol order"
+
+}

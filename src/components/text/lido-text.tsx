@@ -1,6 +1,6 @@
-import { Component, Prop, h, Element, Host, State } from '@stencil/core';
+import { Component, Prop, h, Element, Host, State,Watch } from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
-
+import i18next, { t as i18t } from '../../utils/i18n';
 /**
  * @component LidoText
  *
@@ -14,6 +14,8 @@ import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVi
   shadow: false,
 })
 export class LidoText {
+ /** Language to apply to all texts */
+  @Prop({ mutable: true }) locale: string;
   /**
    * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
    */
@@ -192,6 +194,14 @@ export class LidoText {
    */
   @Prop() disableSpeak: boolean = false;
 
+  @State() translatedText: string = '';
+
+  @Watch('locale')
+    handlePropChange() {
+      this.updateTranslation();
+    }
+  private languageChangedHandler = () => this.updateTranslation();
+
   /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the text component.
@@ -217,11 +227,42 @@ export class LidoText {
     this.updateStyles();
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
+    this.updateTranslation();
+    i18next.on('languageChanged', this.languageChangedHandler);
+    this.el.addEventListener('languageChanged', this.updateTranslation.bind(this));
   }
 
   disconnectedCallback() {
     window.removeEventListener('resize', this.updateStyles.bind(this));
     window.removeEventListener('load', this.updateStyles.bind(this));
+     i18next.off('languageChanged', this.languageChangedHandler);
+  }
+  private updateTranslation() {
+    const key = (this.string || '').trim();
+    const activeLang = this.locale || i18next.language || 'en';
+
+    if (!key) {
+      // fallback to element textContent (if desired)
+      const raw = this.el.textContent?.trim() ?? '';
+      this.translatedText = raw;
+      return;
+    }
+
+    // If translation key exists, use it for activeLang; else fallback to raw key
+    try {
+      const exists = i18next.exists(key);
+      if (exists) {
+        // getFixedT ensures we fetch for specific language (useful if lang prop set)
+        const value = i18next.getFixedT(activeLang)(key);
+        this.translatedText = value ?? key;
+      } else {
+        // key not present in resources — show key or original string
+        this.translatedText = key;
+      }
+    } catch (err) {
+      // graceful fallback
+      this.translatedText = key;
+    }
   }
 
   updateStyles() {
@@ -298,7 +339,7 @@ export class LidoText {
         span-type={this.spanType}
         disable-speak={this.disableSpeak}
       >
-        {this.spanType !== '' ? <div class="lido-text-content">{this.string}</div> : this.string}
+        {this.spanType !== '' ? <div class="lido-text-content">{this.translatedText}</div> : this.translatedText}
       </Host>
     );
   }
