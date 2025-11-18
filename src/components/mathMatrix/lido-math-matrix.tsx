@@ -83,7 +83,17 @@ export class LidoMathMatrix {
   /** The top coordinate (in pixels or percentage) for matrix positioning */
   @Prop() y: string;
 
+  /* Font color for the slot text */
   @Prop() fontColor: string;
+
+  /* Action to perform when the answer is correct */
+  @Prop() onCorrect: string;
+
+  /* Action to perform when the answer is incorrect */
+  @Prop() onInCorrect: string;
+
+  /* Action to perform when the element is entered */
+  @Prop() onEntry: string;
 
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
@@ -251,6 +261,9 @@ export class LidoMathMatrix {
         rows={this.rows}
         cols={this.cols}
         text={this.text}
+        onCorrect={this.onCorrect}
+        onInCorrect={this.onInCorrect}
+        onEntry={this.onEntry}
       >
         {Array.from({ length: this.rows + 1 }, (_, rowIndex) => (
           <div class="slot-parent" key={`row-${rowIndex}`}>

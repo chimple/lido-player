@@ -1110,6 +1110,9 @@ export namespace Components {
           * Image source used inside the slots
          */
         "matrixImage": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "onInCorrect": string;
         /**
           * Padding inside the matrix container
          */
@@ -3401,6 +3404,9 @@ declare namespace LocalJSX {
           * Image source used inside the slots
          */
         "matrixImage"?: string;
+        "onCorrect"?: string;
+        "onEntry"?: string;
+        "onInCorrect"?: string;
         /**
           * Padding inside the matrix container
          */
