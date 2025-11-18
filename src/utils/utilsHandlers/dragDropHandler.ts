@@ -321,7 +321,6 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
-    updateCount();
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
@@ -824,6 +823,9 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
+
+  executeActions("this.updateCountBlender='true';",container);
+
 }
 
 export function updateDropBorder(element: HTMLElement): void {
@@ -936,7 +938,6 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
-    updateCount();
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
@@ -956,7 +957,6 @@ async function onClickDragElement(element) {
 
   if (currentTransform && currentTransform !== 'none' && currentTransform !== 'matrix(1, 0, 0, 1, 0, 0)') {
     onElementDropComplete(dragEl, null);
-    updateCount();
     return;
   }
 
@@ -965,7 +965,6 @@ async function onClickDragElement(element) {
     const dropEl = document.querySelector(`#${firstFalse.drop}`) as HTMLElement;
     dragEl.style.transition = 'transform 0.5s ease';
     onElementDropComplete(dragEl, dropEl);
-    updateCount();
   }
 }
 
@@ -1016,42 +1015,3 @@ export const reduceSizeToOriginal = () => {
     }
   });
 };
-
-function updateCount() {
-  const allDrags = document.querySelectorAll('[type="drag"]');
-  let units = 0;
-  let tens = 0;
-  let hundreds = 0;
-  allDrags.forEach(el => {
-    const dropTo = el.getAttribute("drop-to");
-
-    if (dropTo === "unitsDrop") units++;
-    if (dropTo === "tensDrop") tens++;
-    if (dropTo === "hundredsDrop") hundreds++;
-  });
-
- const unitsValue = units * 1;
-  const tensValue = tens * 10;
-  const hundredsValue = hundreds * 100;
-  const totalValue = unitsValue + tensValue + hundredsValue;
-
-  // ✅ Update Lido Text Boxes
-  const unitsBox = document.getElementById("units");
-  const tensBox = document.getElementById("tens");
-  const hundredsBox = document.getElementById("hundreds");
- 
-  if (unitsBox) {
-    unitsBox.setAttribute("string", unitsValue.toString());
-  }
-  if (tensBox) {
-    tensBox.setAttribute("string", tensValue.toString());
-  }
-  if (hundredsBox) {
-    hundredsBox.setAttribute("string", hundredsValue.toString());
-  }
-console.log(`🟦 Units: ${units} → ${unitsValue}`);
-  console.log(`🟧 Tens: ${tens} → ${tensValue}`);
-  console.log(`🟥 Hundreds: ${hundreds} → ${hundredsValue}`);
-  console.log(`✅ Total Value = ${totalValue}`);
-
-}
