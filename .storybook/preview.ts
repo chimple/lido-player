@@ -38,7 +38,7 @@ if ((module as any)?.hot) {
     try {
       audioPlayer.destroy();
     } catch (e) {
-      // ignore
+      console.warn('Failed to destroy AudioPlayer on HMR dispose:', e);
     }
   });
 }
