@@ -26,7 +26,7 @@ export const decorators = [
     try {
       audioPlayer.stop();
     } catch (error) {
-      // Ignore errors related to AudioPlayer initialization
+      console.warn('Failed to stop audio player on story change:', error);
     }
     return Story();
   }
