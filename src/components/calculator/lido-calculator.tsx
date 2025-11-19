@@ -94,7 +94,7 @@ export class LidoCalculator {
     const container = this.el.closest('lido-container') as HTMLElement;
     if (!container) return;
 
-    if (this.objective && this.objective !='') {
+    if (this.objective && this.objective !='' && !this.objective.includes(',')) {
       isCorrect = userInput === this.objective;
     } 
 
@@ -142,7 +142,13 @@ export class LidoCalculator {
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
-      window.dispatchEvent(new CustomEvent(NextContainerKey));
+      if(onCorrect.includes('scrollCellAfterEquationSolved')){
+        if(this.objective.length===0){
+        window.dispatchEvent(new CustomEvent(NextContainerKey));
+      }
+      }else{
+        window.dispatchEvent(new CustomEvent(NextContainerKey));
+      }
       
     }
 
