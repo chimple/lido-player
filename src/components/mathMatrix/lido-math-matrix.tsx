@@ -91,6 +91,15 @@ export class LidoMathMatrix {
   /** Reference to the previously filled slot element for clearing its text */
   @State() previousFilledSlotElement: HTMLElement | null = null;
 
+  /* Action to perform when the answer is correct */
+  @Prop() onCorrect: string;
+
+  /* Action to perform when the answer is incorrect */
+  @Prop() onInCorrect: string;
+
+  /* Action to perform when the element is entered */
+  @Prop() onEntry: string;
+
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
 
@@ -285,6 +294,9 @@ export class LidoMathMatrix {
         rows={this.style.rows}
         cols={this.style.cols}
         text={this.text}
+        onCorrect={this.onCorrect}
+        onInCorrect={this.onInCorrect}
+        onEntry={this.onEntry}
       >
         {Array.from({ length: parseInt(this.style.rows)+ 1}, (_, rowIndex) => (
           <div class="slot-parent" key={`row-${rowIndex}`}>

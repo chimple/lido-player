@@ -567,7 +567,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
     let isCorrect;
-  const dragValue = dragElement.getAttribute('value')?.trim() || "";
+    const dragValue = dragElement.getAttribute('value')?.trim() || "";
     const dropValue = dropElement.getAttribute('value')?.trim() || "";
 
     if (Number(dragValue)) {
@@ -588,6 +588,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       const localStorageKey = `${LidoContainer}_dropData`;
       dragElement.style.transition = 'transform 0.5s ease';
       animateDragToTarget(dragElement, dropElement, container);
+      
+      const onInCorrect = dropElement.getAttribute('onInCorrect');
+      console.log("onincorrectttt",onInCorrect);
+
+      await executeActions(onInCorrect, dropElement, dragElement);
+      
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
 

@@ -11,6 +11,7 @@ const meta: Meta = {
   argTypes: {
     options: { control: 'object' },
     answers: { control: 'object' },
+    isAllowOnlyCorrect: { control: 'boolean' },
 	colors: {
       control: 'object',
       description: 'Array of colors for numbers',
@@ -26,6 +27,7 @@ export const rowBlock: StoryObj = {
     numbers: ["970","971","972","973","@974","975","976","977","@978","979","980","981","982","@983","984","985","986","@987","988","989","990","991","992","993","@994","995", "996", "997", "@998", "999",],
     answers: ["974", "978", "983", "987", "994", "998"],
 	dragColors: ['#CF1565', '#AD3184', '#F55376', '#81C127', '#5D44BD'],
+  isAllowOnlyCorrect: true,
 	numColors: ['#FFE99B', '#FBCAB5'],
   },
   render: args => {
@@ -36,7 +38,7 @@ export const rowBlock: StoryObj = {
 
 function getContainerXml(args) {
   let tabCounter = 1;
-  const {  answers = [], numbers = [] } = args;
+  const {  answers = [], numbers = [], isAllowOnlyCorrect = true } = args;
   
 
   const DragCells = answers
@@ -44,7 +46,7 @@ function getContainerXml(args) {
         const pickedColors = args.dragColors;
 		const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
       return `
-			<lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" width="140px" height="86px" value="${option}" string="${option}" font-color="white" font-size="76px" font-family="Baloo Bhai 2" bg-color="${color}" border-radius="8px" onEntry="this.border='5px solid ${color}'; this.font-weight='500'; this.sleep='100';this.animation='rightToPlace 3s linear';" type="drag" margin="${index%2==0? 'landscape.196px 0px 0px -52px' : 'landscape.-56px 28px 0px -60px'}, portrait.0px 0px 0px 0px" isAllowOnlyCorrect="true" onTouch="this.speak='true';" onCorrect="this.speak='true';" ></lido-text>
+			<lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" width="140px" height="86px" value="${option}" string="${option}" font-color="white" font-size="76px" font-family="Baloo Bhai 2" bg-color="${color}" border-radius="8px" onEntry="this.border='5px solid ${color}'; this.font-weight='500'; this.sleep='100';this.animation='rightToPlace 3s linear';" type="drag" margin="${index%2==0? 'landscape.196px 0px 0px -52px' : 'landscape.-56px 28px 0px -60px'}, portrait.0px 0px 0px 0px" isAllowOnlyCorrect="${isAllowOnlyCorrect}" onTouch="this.speak='true';" onCorrect="this.speak='true';" ></lido-text>
       `;
     })
     .join('');
@@ -80,7 +82,7 @@ function getContainerXml(args) {
                         const cleanValue = opt.substring(1); // removes the first character (@)
                     if (opt.startsWith('@')) {
                     return `
-                    <lido-text visible="true" class="dropping" id="drop${tabCounter}" tab-index="${tabCounter++}" width="138px" height="86px" value="${cleanValue}" string="" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="#6D8C87" border-radius="8px" onEntry="this.border='5px solid #2C3836'; this.speak='true';" type="drop" layout="row"></lido-text>
+                    <lido-text visible="true" class="dropping" id="drop${tabCounter}" tab-index="${tabCounter++}" width="138px" height="86px" value="${cleanValue}" string="" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="#6D8C87" border-radius="8px" onCorrect="lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';" onEntry="this.border='5px solid #2C3836'; this.speak='true';" type="drop" layout="row"></lido-text>
                     `;   }
                     return `
                     <lido-text visible="true" id="num${tabCounter}" tab-index="${tabCounter++}" width="140px" height="94px" value="${opt}" string="${opt}" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="${index%2!==0 ? color[0] : color[1]}" border-radius="8px" onEntry="this.font-weight='500'" onTouch="this.speak='true';" margin="0px 1px 0px 0px"></lido-text>

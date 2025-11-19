@@ -622,12 +622,8 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (onCorrect) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
-  } else {
-    const onInCorrect = dropElement.getAttribute('onInCorrect');
-
-    await executeActions(onInCorrect, dropElement, dragElement);
-
-  }}
+  }
+}
 
   let dragScore =buildDragSelectedMapFromDOM();
 
@@ -642,22 +638,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     drag[index] = [];
   }
   drag[index].push(dragElement.id);
-  // localStorage.setItem(DragMapKey, JSON.stringify(drag));
-
-  const sortedKeys = Object.keys(dragScore).sort((a, b) => parseInt(a) - parseInt(b));
-    if (dragElement && dropElement) {
-  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
-  if (isCorrect) {
-    const onCorrect = dropElement.getAttribute('onCorrect');
-    if (onCorrect) {
-      await executeActions(onCorrect, dropElement, dragElement);
-    }
-  } else {
-    const onInCorrect = dropElement.getAttribute('onInCorrect');
-
-    await executeActions(onInCorrect, dropElement, dragElement);
-
-  }}
+ 
 
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
