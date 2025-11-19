@@ -114,6 +114,11 @@ export class LidoRow {
    */
   @Prop() childElementsLength: number;
 
+    /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
+
   /**
    * The minimum number of child elements that must be displayed inside the row.
    * If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.
@@ -225,6 +230,7 @@ export class LidoRow {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
         disable-speak={this.disableSpeak}
+        onRemove={this.onRemove}
       >
         {/* Slot for child elements */}
         <slot />

@@ -125,6 +125,11 @@ export class LidoRandom {
   @Prop() margin: string = '';
 
   /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
+
+  /**
    * Reference to the HTML element representing this component.
    */
   @Element() el: HTMLElement;
@@ -199,6 +204,7 @@ export class LidoRandom {
         maxDrops={this.maxDrops}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        onRemove={this.onRemove}
       >
         {/* Slot to render child elements that will be randomly positioned */}
         <slot />

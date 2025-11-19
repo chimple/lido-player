@@ -211,6 +211,11 @@ export class LidoContainer {
   */
   @Prop() disableSpeak: boolean = false;
 
+  /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
+
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
 
@@ -331,6 +336,7 @@ export class LidoContainer {
         next-button-url={this.nextButtonUrl} 
         speaker-button-url={this.speakerButtonUrl}
         disable-speak={this.disableSpeak}
+        onRemove={this.onRemove}
       >
         <slot />
       </Host>

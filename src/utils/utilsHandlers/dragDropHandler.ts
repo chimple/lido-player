@@ -546,6 +546,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   if (!dropElement) {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+    const onRemove = dragElement.getAttribute("onRemove");
+    if (onRemove) {
+      executeActions("this.updateCountBlender='true'", dragElement);
+    }
     return;
   }
   const dropTabIndex = dropElement.getAttribute('tab-index');
@@ -829,9 +833,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
-
-  executeActions("this.updateCountBlender='true';",container);
-
 }
 
 export function updateDropBorder(element: HTMLElement): void {

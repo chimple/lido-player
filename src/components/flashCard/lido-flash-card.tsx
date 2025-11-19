@@ -133,6 +133,11 @@ export class LidoFlash {
      * When set to true, disables the speak functionality of long press for this component and its children.
      */
     @Prop() disableSpeak: boolean = false;
+  
+  /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
 
   /* ---------  Element & internal state --------- */
   @Element() el: HTMLElement;
@@ -213,6 +218,7 @@ export class LidoFlash {
         type={this.type}
         onClick={this.handleFlip}
         disable-speak={this.disableSpeak}
+        onRemove={this.onRemove}
       >
         <div class={`card ${this.flipped ? 'flipped' : ''}`}>
           {/* Front face */}

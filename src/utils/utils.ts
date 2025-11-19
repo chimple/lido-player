@@ -364,6 +364,11 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           if (hundredsBox) {
             hundredsBox.setAttribute("string", hundredsValue.toString());
           }
+          console.log(`Units = ${units} → ${unitsValue}`);
+          console.log(`Tens = ${tens} → ${tensValue}`);
+          console.log(`Hundreds = ${hundreds} → ${hundredsValue}`);
+          console.log(`✅ Total Value = ${totalValue}`);
+          break;
         }
 
         default: {
@@ -400,6 +405,7 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
+      
 
       const keyframes = `
       @keyframes widthDecrease {
@@ -1513,7 +1519,7 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
     const shiftX = dropWidth * 0.02;  // proportional (5% of width)
     const shiftY = dropHeight * 0.02; // proportional (5% of height)
 
-    const startX = dropRect.left + dropWidth * 0.28;  // 10% inside
+    const startX = dropRect.left + dropWidth * 0.36;  // 10% inside
     const startY = dropRect.top + dropHeight * -0.09; // slightly above
 
     targetX = startX + (dropCount * shiftX);

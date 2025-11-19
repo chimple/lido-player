@@ -13,6 +13,7 @@ const meta: Meta = {
     answer3: { control: 'text' },
     answer4: { control: 'text' },
     answer5: { control: 'text' },
+	isAllowOnlyCorrect: { control: 'boolean' },
   },
 };
 
@@ -21,6 +22,7 @@ export const OrderTractorAscending: StoryObj = {
   args: {
     option1: '15', option2: '14', option3: '13', option4: '12', option5: '11',
     answer1: '11', answer2: '12', answer3: '13', answer4: '14', answer5: '15',
+	isAllowOnlyCorrect: 'true',
   },
 
   render: args => {
@@ -31,7 +33,7 @@ export const OrderTractorAscending: StoryObj = {
 function getContainerXml(args) { 
   return `
     <main>
-	<lido-container id="lido-container" is-allow-only-correct="true" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="${[args.answer1, args.answer2, args.answer3, args.answer4, args.answer5].join(',')}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/Spring.png" custom-style="#drop1, #drop2,#drop3,#drop4,#drop5{border: none !important;}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear'; truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="">
+	<lido-container id="lido-container" is-allow-only-correct="${args.isAllowOnlyCorrect}" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="${[args.answer1, args.answer2, args.answer3, args.answer4, args.answer5].join(',')}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/Spring.png" custom-style="#drop1, #drop2,#drop3,#drop4,#drop5{border: none !important;}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear'; truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="">
 
 				<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="300px" x="landscape.110px,portrait.10px" y="landscape.80px,portrait.230px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">

@@ -125,6 +125,11 @@ export class LidoTrace {
    */
   @Prop() onCorrect: string;
 
+    /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
+
   /**
    * Indicates whether to highlight the text associated with the SVG when the trace is completed.
    */
@@ -963,7 +968,7 @@ export class LidoTrace {
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
         disable-speak={this.disableSpeak}
-
+        onRemove={this.onRemove}
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>

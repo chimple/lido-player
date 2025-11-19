@@ -100,6 +100,11 @@ export class LidoPos {
   @Prop() onCorrect: string = '';
 
   /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
+
+  /**
    * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
    */
   @Prop() onEntry: string = '';
@@ -185,6 +190,7 @@ export class LidoPos {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        onRemove={this.onRemove}
       >
         {/* Slot for child elements */}
         <slot />

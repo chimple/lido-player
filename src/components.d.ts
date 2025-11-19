@@ -56,6 +56,10 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
+        /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch": string;
@@ -307,6 +311,10 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
+        /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch": string;
@@ -436,6 +444,10 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
@@ -573,6 +585,10 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
+        /**
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch": string;
@@ -698,6 +714,10 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
@@ -914,6 +934,10 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
+        /**
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch": string;
@@ -1085,9 +1109,6 @@ export namespace Components {
           * Number of columns in the matrix
          */
         "cols": string;
-        /**
-          * Background color for inactive slots
-         */
         "deactiveBgColor": string;
         /**
           * Number of slots to pre-fill as active by default
@@ -1116,6 +1137,7 @@ export namespace Components {
         "onCorrect": string;
         "onEntry": string;
         "onInCorrect": string;
+        "onRemove": string;
         /**
           * Padding inside the matrix container
          */
@@ -1221,6 +1243,10 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
+        /**
           * Event handler triggered when the component is touched or clicked.
          */
         "onTouch": string;
@@ -1312,6 +1338,10 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
         /**
           * Event handler triggered when the component is touched or clicked.
          */
@@ -1472,6 +1502,10 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
+        /**
           * Event handler triggered when the row is touched or clicked.
          */
         "onTouch": string;
@@ -1575,6 +1609,10 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
         /**
           * Event handler triggered when the shape is touched or clicked.
          */
@@ -1798,6 +1836,10 @@ export namespace Components {
          */
         "onInCorrect": string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
+        /**
           * Event handler triggered when the text component is touched or clicked.
          */
         "onTouch": string;
@@ -1903,6 +1945,10 @@ export namespace Components {
           * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
          */
@@ -2011,6 +2057,10 @@ export namespace Components {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect": string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove": string;
         /**
           * Event handler triggered when the wrap container is touched or clicked.
          */
@@ -2352,6 +2402,10 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
+        /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
@@ -2604,6 +2658,10 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
+        /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
         "onTouch"?: string;
@@ -2733,6 +2791,10 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
@@ -2870,6 +2932,10 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
+        /**
           * Event handler triggered when the container is touched or clicked.
          */
         "onTouch"?: string;
@@ -2995,6 +3061,10 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
         /**
           * Event handler for a touch event, where a custom function can be triggered when the column is touched.
          */
@@ -3211,6 +3281,10 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
+        /**
           * Event handler triggered when the image is touched or clicked.
          */
         "onTouch"?: string;
@@ -3382,9 +3456,6 @@ declare namespace LocalJSX {
           * Number of columns in the matrix
          */
         "cols"?: string;
-        /**
-          * Background color for inactive slots
-         */
         "deactiveBgColor"?: string;
         /**
           * Number of slots to pre-fill as active by default
@@ -3413,6 +3484,7 @@ declare namespace LocalJSX {
         "onCorrect"?: string;
         "onEntry"?: string;
         "onInCorrect"?: string;
+        "onRemove"?: string;
         /**
           * Padding inside the matrix container
          */
@@ -3518,6 +3590,10 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
+        /**
           * Event handler triggered when the component is touched or clicked.
          */
         "onTouch"?: string;
@@ -3609,6 +3685,10 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
         /**
           * Event handler triggered when the component is touched or clicked.
          */
@@ -3769,6 +3849,10 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
+        /**
           * Event handler triggered when the row is touched or clicked.
          */
         "onTouch"?: string;
@@ -3872,6 +3956,10 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
         /**
           * Event handler triggered when the shape is touched or clicked.
          */
@@ -4095,6 +4183,10 @@ declare namespace LocalJSX {
          */
         "onInCorrect"?: string;
         /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
+        /**
           * Event handler triggered when the text component is touched or clicked.
          */
         "onTouch"?: string;
@@ -4200,6 +4292,10 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
         /**
           * Controls whether the speak icon should appear directly on the top right corner of targeted element.
          */
@@ -4308,6 +4404,10 @@ declare namespace LocalJSX {
           * Event handler for an Incorrect matching action, which can be used to trigger custom logic when the action is incorrect.
          */
         "onInCorrect"?: string;
+        /**
+          * Event handler for removing a required condition.
+         */
+        "onRemove"?: string;
         /**
           * Event handler triggered when the wrap container is touched or clicked.
          */

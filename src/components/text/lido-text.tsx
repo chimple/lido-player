@@ -134,6 +134,11 @@ export class LidoText {
   @Prop() onCorrect: string = '';
 
   /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
+
+  /**
    * The minimum number of drag elements that must be dropped inside the Drop element.
    */
   @Prop() minDrops: number = 1;
@@ -297,6 +302,7 @@ export class LidoText {
         aria-hidden={this.ariaHidden}
         span-type={this.spanType}
         disable-speak={this.disableSpeak}
+        onRemove={this.onRemove}
       >
         {this.spanType !== '' ? <div class="lido-text-content">{this.string}</div> : this.string}
       </Host>

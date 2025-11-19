@@ -167,6 +167,11 @@ export class LidoImage {
   @Prop() transform: string = '';
 
   /**
+   * Event handler for removing a required condition.
+   */
+  @Prop() onRemove: string = '';
+
+  /**
    * Reference to the HTML element that represents this image component.
    */
   @Element() el: HTMLElement;
@@ -267,6 +272,7 @@ export class LidoImage {
           onCorrect={this.onCorrect}
           onInCorrect={this.onInCorrect}
           onEntry={this.onEntry}
+          onRemove={this.onRemove}
         ></Host>
       );
     } else {

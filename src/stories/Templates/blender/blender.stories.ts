@@ -4,6 +4,7 @@ const meta: Meta = {
   title: 'Templates/blender',
   argTypes: {
     number: { control: 'text' },
+    isAllowOnlyCorrect: { control: 'boolean' },
   },
 };
 
@@ -11,6 +12,7 @@ export default meta;
 export const OrderTractor: StoryObj = {
   args: {
     number: '211',
+    isAllowOnlyCorrect: 'true',
   },
 
   render: args => {
@@ -25,7 +27,6 @@ function buildObjectiveFromNumber(num) {
   const tens = Math.floor((num % 100) / 10);
   const ones = num % 10;
 
-  // ------- OLD BUILD LOGIC (kept same) -------
   const build = (count, value) => {
     if (count === 0) return "";
     let s = "";
@@ -52,7 +53,7 @@ function getContainerXml(args) {
 
   return `
     <main>
-        <lido-container id="lido-container" visible="true" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" drop-action="infinite-drop" is-allow-only-correct="true">
+        <lido-container id="lido-container" visible="true" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" drop-action="infinite-drop" is-allow-only-correct="${args.isAllowOnlyCorrect}">
  <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1332px, portrait.-8%" y="landscape.547px, portrait.1%" aria-hidden="true" z="0" bg-color="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
@@ -70,7 +71,7 @@ function getContainerXml(args) {
 			    <lido-text id="hundreds" height="70px" width="108px" visible="true" value="000" string="000" font-family="'Baloo Bhai 2'" font-color="#182A4F" border-radius="21px" bg-color="white" font-size="52px" onInCorrect="" onEntry="this.fontWeight='800';" border-image="">
 			    </lido-text>
 			</lido-cell>
-			<lido-cell id="hundredsDrop" value="100" dropAttr="landscape.stackcascade,portrait.verticalstack" is-allow-only-one-drop="false" type="drop" tab-index="1" layout="row" bg-color="white" visible="true" height="landscape.359px,portrait.752px" width="landscape.698px,portrait.290px" onEntry="this.justifyContent='flex-start';">
+			<lido-cell id="hundredsDrop" value="100" dropAttr="landscape.stackcascade,portrait.verticalstack" is-allow-only-one-drop="false" type="drop" tab-index="1" layout="row" bg-color="white" visible="true" height="landscape.359px,portrait.752px" width="landscape.698px,portrait.290px" onEntry="this.justifyContent='flex-start';" onCorrect="this.updateCountBlender='true';">
 			</lido-cell>
 		</lido-cell>
 		<!-- Tens Place Value -->
@@ -81,7 +82,7 @@ function getContainerXml(args) {
 			    <lido-text id="tens" height="70px" width="77px" visible="true"  value="00" string="00" font-family="'Baloo Bhai 2'" font-color="#182A4F" border-radius="21px" bg-color="white" font-size="52px" onInCorrect="" onEntry="this.fontWeight='800';" border-image="">
 			    </lido-text>
 			</lido-cell>
-			<lido-cell id="tensDrop" value="10" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="2" layout="row" bg-color="white" visible="true" height="landscape.357px,portrait.752px" width="landscape.414px,portrait.290px" onEntry="this.justifyContent='flex-start';"></lido-cell>
+			<lido-cell id="tensDrop" value="10" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="2" layout="row" bg-color="white" visible="true" height="landscape.357px,portrait.752px" width="landscape.414px,portrait.290px" onEntry="this.justifyContent='flex-start';" onCorrect="this.updateCountBlender='true';"></lido-cell>
 		</lido-cell>
 		<!-- Units Place Value -->
 		<lido-cell layout="col" bg-color="transparent" visible="true" height="landscape.506.25px,portrait.1051px" width="landscape.331px,portrait.810" padding="0px">
@@ -91,14 +92,14 @@ function getContainerXml(args) {
 			    <lido-text id="units" height="70px" width="55px" visible="true"  value="0" string="0" font-family="'Baloo Bhai 2'" font-color="#182A4F" border-radius="21px" bg-color="white" font-size="52px" onInCorrect="" onEntry="this.fontWeight='800';" border-image="">
 			    </lido-text>
 			</lido-cell>
-			<lido-cell id="unitsDrop" value="1" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="3" layout="row" bg-color="white" visible="true" height="landscape.360px,portrait.752px" width="landscape.310px,portrait.290px" onEntry="this.justifyContent='flex-start';"></lido-cell>
+			<lido-cell id="unitsDrop" value="1" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="3" layout="row" bg-color="white" visible="true" height="landscape.360px,portrait.752px" width="landscape.310px,portrait.290px" onEntry="this.justifyContent='flex-start';" onCorrect="this.updateCountBlender='true';"></lido-cell>
 		</lido-cell>
 	</lido-cell>
 
 	<lido-cell layout="row" bg-color="transparent" aria-hidden="true" visible="true" height="landscape.420px,portrait.30%" width="landscape.1451px,portrait.90%"  onEntry="this.z-index='1';">
-		<lido-math-matrix id="hundredsDrag" value="100" tab-index="11" type="drag" rows="10" cols="10" defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#5D44BD" deactiveBgColor="#5D44BD" border="2px solid #4A3697" height="288px" width="35px" visible="true"></lido-math-matrix>
-		<lido-math-matrix  id="tensDrag" value="10" type="drag" tab-index="12" rows="10" cols="1"  defualtFill="10" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="35px" visible="true"></lido-math-matrix>
-		<lido-math-matrix id="unitsDrag" value="1" tab-index="13" type="drag" rows="1" cols="1"  defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="100px" visible="true"></lido-math-matrix> 
+		<lido-math-matrix id="hundredsDrag" value="100" tab-index="11" type="drag" rows="10" cols="10" defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#5D44BD" deactiveBgColor="#5D44BD" border="2px solid #4A3697" height="288px" width="35px" visible="true" onRemove="this.updateCountBlender='true';"></lido-math-matrix>
+		<lido-math-matrix  id="tensDrag" value="10" type="drag" tab-index="12" rows="10" cols="1"  defualtFill="10" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="35px" visible="true" onRemove="this.updateCountBlender='true';"></lido-math-matrix>
+		<lido-math-matrix id="unitsDrag" value="1" tab-index="13" type="drag" rows="1" cols="1"  defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="100px" visible="true" onRemove="this.updateCountBlender='true';"></lido-math-matrix> 
 	  </lido-cell>		
 	
 </lido-container>

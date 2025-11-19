@@ -28,6 +28,8 @@ export class LidoMathMatrix {
   /** Enable/disable click interactions on the slots */
   @Prop() clickable = true;
 
+  @Prop() onRemove: string = '';
+
   /** If true, only active slots are visible; inactive ones are hidden */
   @Prop() activeOnlyVisible = false;
 
@@ -297,6 +299,7 @@ export class LidoMathMatrix {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        onRemove={this.onRemove}
       >
         {Array.from({ length: parseInt(this.style.rows)+ 1}, (_, rowIndex) => (
           <div class="slot-parent" key={`row-${rowIndex}`}>
