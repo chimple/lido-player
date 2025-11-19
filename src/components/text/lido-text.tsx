@@ -1,7 +1,6 @@
 import { Component, Prop, h, Element, Host, State,Watch } from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
 import i18next, { t as i18t } from '../../utils/i18n';
-import { LangChangeEvent} from '../../utils/constants';
 /**
  * @component LidoText
  *
