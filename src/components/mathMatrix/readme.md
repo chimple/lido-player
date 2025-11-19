@@ -23,6 +23,9 @@
 | `leftIndex`         | `left-index`          | Show row index numbers on the left side                                     | `boolean` | `false`             |
 | `margin`            | `margin`              | Margin around the matrix container                                          | `string`  | `undefined`         |
 | `matrixImage`       | `matrix-image`        | Image source used inside the slots                                          | `string`  | `undefined`         |
+| `onCorrect`         | `on-correct`          |                                                                             | `string`  | `undefined`         |
+| `onEntry`           | `on-entry`            |                                                                             | `string`  | `undefined`         |
+| `onInCorrect`       | `on-in-correct`       |                                                                             | `string`  | `undefined`         |
 | `padding`           | `padding`             | Padding inside the matrix container                                         | `string`  | `undefined`         |
 | `rows`              | `rows`                | Number of rows in the matrix                                                | `string`  | `"7"`               |
 | `tabIndex`          | `tab-index`           | Sets the tab index for keyboard navigation                                  | `number`  | `undefined`         |
