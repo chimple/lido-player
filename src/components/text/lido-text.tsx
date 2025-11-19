@@ -193,14 +193,6 @@ export class LidoText {
    */
   @Prop() disableSpeak: boolean = false;
 
-  @State() translatedText: string = '';
-
-  @Watch('locale')
-    handlePropChange() {
-      this.updateTranslation();
-    }
-  private languageChangedHandler = () => this.updateTranslation();
-
   /**
    * Lifecycle hook that runs after the component is rendered in the DOM.
    * It initializes custom events based on the `type` of the text component.
@@ -226,31 +218,11 @@ export class LidoText {
     this.updateStyles();
     window.addEventListener('resize', this.updateStyles.bind(this));
     window.addEventListener('load', this.updateStyles.bind(this));
-    this.updateTranslation();
-    i18next.on(LangChangeEvent, this.languageChangedHandler);
-    this.el.addEventListener(LangChangeEvent, this.updateTranslation.bind(this));
   }
 
   disconnectedCallback() {
     window.removeEventListener('resize', this.updateStyles.bind(this));
     window.removeEventListener('load', this.updateStyles.bind(this));
-     i18next.off(LangChangeEvent, this.languageChangedHandler);
-  }
-  private updateTranslation() {
-    const key = (this.string || '').trim();
-    const activeLang =i18next.language || 'en';
-
-    if (!key) {
-    this.translatedText = this.el.textContent?.trim() ?? '';
-      return;
-    }
-
-  try {
-    const t = i18next.getFixedT(activeLang);
-    this.translatedText = t(key); 
-    } catch {
-      this.translatedText = key;
-    }
   }
 
   updateStyles() {
@@ -327,7 +299,7 @@ export class LidoText {
         span-type={this.spanType}
         disable-speak={this.disableSpeak}
       >
-        {this.spanType !== '' ? <div class="lido-text-content">{this.translatedText}</div> : this.translatedText}
+        {this.spanType !== '' ? <div class="lido-text-content"> {i18next.t(this.string)}</div> :  i18next.t(this.string)}
       </Host>
     );
   }
