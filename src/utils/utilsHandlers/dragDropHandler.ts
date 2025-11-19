@@ -938,7 +938,20 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
 export const dragToDropMap = new Map<HTMLElement, HTMLElement | null>();
 async function onClickDragElement(element) {
-  AudioPlayer.getI().stop();
+  const target = element as HTMLElement;
+
+  const audioAttr = target.getAttribute("audio");
+  const speakAttr = target.getAttribute("speak");
+
+  const hasValidAudio = audioAttr && audioAttr.trim() !== "";
+  const hasSpeak = speakAttr === "true";
+
+  // IMPORTANT: Adding guard here
+  if (hasValidAudio || hasSpeak) {
+      AudioPlayer.getI().stop();
+  }
+
+  
   const dropElements = buildDropHasDragFromDOM();
   const dragEl = element;
   if (!dragEl) {

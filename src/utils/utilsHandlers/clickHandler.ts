@@ -74,7 +74,18 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     if (lido_buttons === 'lido-arrow-left' || lido_buttons === 'lido-arrow-right') {
       return;
     }
-    AudioPlayer.getI().stop();
+    const target = element as HTMLElement;
+
+    const audioAttr = target.getAttribute("audio");
+    const speakAttr = target.getAttribute("speak");
+
+    const hasValidAudio = audioAttr && audioAttr.trim() !== "";
+    const hasSpeak = speakAttr === "true";
+
+    // IMPORTANT: Adding guard here
+    if (hasValidAudio || hasSpeak) {
+        AudioPlayer.getI().stop();
+    }
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');
 
