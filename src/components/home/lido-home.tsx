@@ -91,7 +91,7 @@ export class LidoHome {
    * If not provided, a UUID is generated to ensure uniqueness.
    */
   @Prop() uuid: string = generateUUIDFallback();
-
+        
   /**
    * Stores the resolved navigation bar icons.
    * Each key will hold either a valid custom URL or the default ConstNavIcons URL.
@@ -231,6 +231,7 @@ export class LidoHome {
     // } else {
     //   this.updateBackgroundImage();
     // }
+
     this.currentContainerIndex = 0;
 
     this.handleIcons();
