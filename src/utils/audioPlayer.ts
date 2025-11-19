@@ -84,6 +84,7 @@ export class AudioPlayer {
 
       try {
         setDraggingDisabled(true);
+        highlightSpeakingElement(targetElement);
 
         // Setup safety error handler
         this.audioElement.onerror = async () => {
@@ -91,11 +92,9 @@ export class AudioPlayer {
         };
 
         await this.audioElement.play();
-        highlightSpeakingElement(targetElement);
 
         await new Promise<void>(resolve => {
           this.audioElement.onended = () => {
-            stopHighlightForSpeakingElement(targetElement);
             this.audioElement.onended = null;  // cleanup
             setDraggingDisabled(false);
             resolve();
@@ -104,6 +103,10 @@ export class AudioPlayer {
       } 
       catch (error) {
         console.log('🚀 Audio play error:', error);
+      }
+      finally {
+        stopHighlightForSpeakingElement(targetElement);
+        setDraggingDisabled(false);
       }
     }
     // If no audio, use text-to-speech
