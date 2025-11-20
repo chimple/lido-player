@@ -943,14 +943,14 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 }
 
 export const dragToDropMap = new Map<HTMLElement, HTMLElement | null>();
-async function onClickDragElement(element) {
-  const target = element as HTMLElement;
+async function onClickDragElement(element: HTMLElement){
+  const audioAttr = element.closest("[audio]");
+  const speakAttr = element.closest("[speak='true']");
+  // audio="" should NOT trigger stop
+  // VALID conditions
+  const hasValidAudio = audioAttr && audioAttr.getAttribute("audio")?.trim() !== "";
+  const hasSpeak = speakAttr != null;
 
-  const audioAttr = target.getAttribute("audio");
-  const speakAttr = target.getAttribute("speak");
-
-  const hasValidAudio = audioAttr && audioAttr.trim() !== "";
-  const hasSpeak = speakAttr === "true";
 
   // IMPORTANT: Adding guard here
   if (hasValidAudio || hasSpeak) {
