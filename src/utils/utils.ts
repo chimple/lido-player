@@ -318,6 +318,15 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           }
           break;
         }
+        
+        case 'disableType': {
+          const dragEle = document.querySelectorAll<HTMLElement>('[type="drag"]');
+          dragEle.forEach(el => {
+            el.removeAttribute('type');
+            el.style.pointerEvents = 'none';
+          });
+          break;
+        }
 
         default: {
           targetElement.style[action.action] = action.value;
