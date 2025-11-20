@@ -35,7 +35,7 @@ import i18next from '../../utils/i18n';
 })
 export class LidoHome {
   /** Language to apply to all texts */
-  @Prop() locale?: string='';
+  @Prop() locale?: string='hi';
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */

@@ -16,7 +16,7 @@ import i18next from '../../utils/i18n';
 export class LidoRoot {
 
   /** Language to apply to all texts */
-  @Prop() locale?: string='';
+  @Prop() locale?: string='hi';
   /**
    * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
    */
