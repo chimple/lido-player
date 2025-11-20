@@ -19,6 +19,7 @@ import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameEx
 import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
+import i18next from '../../utils/i18n';
 
 /**
  * @component LidoHome
@@ -33,6 +34,8 @@ import { generateUUIDFallback } from '../../utils/utils';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
+  /** Language to apply to all texts */
+  @Prop() locale?: string='';
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -115,6 +118,20 @@ export class LidoHome {
    * Stores the list of container-rendering functions parsed from XML.
    */
   @State() containers: (() => any)[] = [];
+
+  @Watch('locale')
+  onLangChange(newLang: string) {
+    this.setLanguage(newLang);
+    // re-render all containers with updated locale
+    this.containers = [...this.containers];
+  }
+
+  private setLanguage(lang?: string) {
+    const effectiveLang = lang || i18next.language; // fallback to current
+    i18next.changeLanguage(effectiveLang);
+    // Trigger re-render of containers to update <lido-text> dynamically
+    this.containers = [...this.containers];
+  }
 
   /**
    * Event handler for transitioning to the next container in the sequence.
@@ -351,6 +368,9 @@ export class LidoHome {
         return null;
       })
       .filter(Boolean);
+    if (tagName === 'lido-text' && props.string) {
+      props.string = i18next.t(props.string); 
+    }
 
     // Map XML tags to Stencil components
     const componentMapping = {
@@ -629,7 +649,7 @@ export class LidoHome {
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
                 <lido-text
                   visible="true"
-                  string="Quer sair?"
+                  string="Do you want to exit?"
                   width="294px"
                   height="38px"
                   class="popup-exit-text"
@@ -639,7 +659,7 @@ export class LidoHome {
                 <lido-cell visible="true" layout="row" width="294px" class="btn-cell">
                   <lido-text
                     visible="true"
-                    string="Sair"
+                    string="Exit"
                     width="92px"
                     height="53px"
                     font-size="16px"
@@ -655,7 +675,7 @@ export class LidoHome {
                   ></lido-text>
                   <lido-text
                     visible="true"
-                    string="Continuar a jogar"
+                    string="Continue playing"
                     width="155px"
                     height="53px"
                     font-size="16px"

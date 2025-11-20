@@ -15,7 +15,10 @@
     "noUnusedParameters": false,
     "jsx": "react",
     "jsxFactory": "h",
-    "types": ["@stencil/core", "node", "jest", "react"]
+    "types": ["@stencil/core", "node", "jest", "react"],
+     "resolveJsonModule": true,
+    "esModuleInterop": true
+    
   },
   "skipLibCheck": true,
   "include": [
