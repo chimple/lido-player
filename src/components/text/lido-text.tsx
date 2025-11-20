@@ -1,6 +1,6 @@
-import { Component, Prop, h, Element, Host, State } from '@stencil/core';
+import { Component, Prop, h, Element, Host, State,Watch} from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
-
+import i18next, { t as i18t } from '../../utils/i18n';
 /**
  * @component LidoText
  *
@@ -298,7 +298,7 @@ export class LidoText {
         span-type={this.spanType}
         disable-speak={this.disableSpeak}
       >
-        {this.spanType !== '' ? <div class="lido-text-content">{this.string}</div> : this.string}
+        {this.spanType !== '' ? <div class="lido-text-content">{i18next.t(this.string)}</div> : i18next.t(this.string)}
       </Host>
     );
   }

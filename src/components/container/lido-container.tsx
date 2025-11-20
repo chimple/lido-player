@@ -1,6 +1,7 @@
-import { Component, Host, Prop, h, Element } from '@stencil/core';
+import { Component, Host, Prop, h, Element,Watch } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, calculateScale } from '../../utils/utils';
 import { string } from 'mathjs';
+import i18next from '../../utils/i18n';
 
 /**
  * @component LidoContainer
@@ -15,6 +16,10 @@ import { string } from 'mathjs';
   shadow: false,
 })
 export class LidoContainer {
+
+   /** Language to apply to all texts */
+  @Prop() locale: string = '';
+  
   /**
    * Controls whether the drop zone displays a border; true shows the border, false hides it.
    */
@@ -206,6 +211,38 @@ export class LidoContainer {
    */
   @Prop() delayVisible: string = '';
 
+  @Watch('locale')
+    languageChanged(newLang: string) {
+    const langToApply = newLang || this.resolveLanguage();
+    this.updateChildTextLanguage(langToApply);
+    }
+  componentWillLoad() {
+    const langToApply = this.resolveLanguage();
+    this.updateChildTextLanguage(langToApply);
+  }
+  private resolveLanguage(): string {
+    const rootEl = this.el.closest('lido-root') as any;
+    const rootLang = rootEl?.locale || '';
+    if (rootLang?.trim()) return rootLang;
+    const homeEl = this.el.closest('lido-home') as any;
+    const homeLang = homeEl?.locale || '';
+    if (homeLang?.trim()) return homeLang;
+    if (this.locale?.trim()) return this.locale;
+    const xmlLang = this.el.getAttribute('locale');
+    if (xmlLang?.trim()) return xmlLang;
+    return this.el.textContent?.trim();
+  }
+  private updateChildTextLanguage(lang?: string) {
+    const appliedLang = lang || i18next.language || 'en'; 
+    i18next.changeLanguage(appliedLang);
+
+    const texts = this.el.querySelectorAll('lido-text');
+    texts.forEach((textEl: any) => {
+      textEl.locale = appliedLang;
+      textEl.dispatchEvent(new CustomEvent('languageChanged', { bubbles: true }));
+    });
+  }
+
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
 
@@ -302,6 +339,8 @@ export class LidoContainer {
       styleElement.innerHTML = this.customStyle;
       document.head.appendChild(styleElement);
     }
+    const langToApply = this.resolveLanguage();
+    this.updateChildTextLanguage(langToApply);
   }
 
   disconnectedCallback() {
@@ -327,6 +366,7 @@ export class LidoContainer {
     return (
       <Host
         id="lido-container"
+        locale={this.locale}
         tab-index={0}
         class="lido-container"
         objective={this.objective}
