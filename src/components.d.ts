@@ -649,6 +649,10 @@ export namespace Components {
          */
         "isContinueOnCorrect": boolean;
         /**
+          * Language to apply to all texts
+         */
+        "locale": string;
+        /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
           * @default ''
          */
@@ -967,6 +971,10 @@ export namespace Components {
           * @default 0
          */
         "initialIndex": number;
+        /**
+          * Language to apply to all texts
+         */
+        "locale"?: string;
         /**
           * Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.
          */
@@ -1608,6 +1616,10 @@ export namespace Components {
           * @default 0
          */
         "initialIndex": number;
+        /**
+          * Language to apply to all texts
+         */
+        "locale"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
           * @default ''
@@ -3277,6 +3289,10 @@ declare namespace LocalJSX {
          */
         "isContinueOnCorrect"?: boolean;
         /**
+          * Language to apply to all texts
+         */
+        "locale"?: string;
+        /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
           * @default ''
          */
@@ -3595,6 +3611,10 @@ declare namespace LocalJSX {
           * @default 0
          */
         "initialIndex"?: number;
+        /**
+          * Language to apply to all texts
+         */
+        "locale"?: string;
         /**
           * Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.
          */
@@ -4236,6 +4256,10 @@ declare namespace LocalJSX {
           * @default 0
          */
         "initialIndex"?: number;
+        /**
+          * Language to apply to all texts
+         */
+        "locale"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
           * @default ''
