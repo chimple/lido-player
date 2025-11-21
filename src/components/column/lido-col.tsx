@@ -105,10 +105,6 @@ export class LidoCol {
    */
   @Prop() onCorrect: string;
 
-  /**
-   * Event handler for removing a required condition.
-   */
-  @Prop() onRemove: string = '';
 
   /**
    * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
@@ -240,7 +236,6 @@ export class LidoCol {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
-        onRemove={this.onRemove}
       >
         <slot />
       </Host>

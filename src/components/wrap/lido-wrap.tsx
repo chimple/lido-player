@@ -103,10 +103,7 @@ export class LidoWrap {
    */
   @Prop() onCorrect: string;
 
-    /**
-   * Event handler for removing a required condition.
-   */
-  @Prop() onRemove: string = '';
+
 
   /**
    * Event handler triggered when the wrap container is entered (useful for animations or logic on entry).
@@ -232,7 +229,6 @@ export class LidoWrap {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
         disableSpeak={this.disableSpeak}
-        onRemove={this.onRemove}
       >
         {/* Slot for child elements */}
         <slot />

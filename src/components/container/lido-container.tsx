@@ -214,10 +214,6 @@ export class LidoContainer {
   */
   @Prop() disableSpeak: boolean = false;
 
-  /**
-   * Event handler for removing a required condition.
-   */
-  @Prop() onRemove: string = '';
   @Watch('locale')
     languageChanged(newLang: string) {
     const langToApply = newLang || this.resolveLanguage();
@@ -373,7 +369,6 @@ export class LidoContainer {
         next-button-url={this.nextButtonUrl} 
         speaker-button-url={this.speakerButtonUrl}
         disable-speak={this.disableSpeak}
-        onRemove={this.onRemove}
       >
         <slot />
       </Host>

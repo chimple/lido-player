@@ -172,19 +172,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           afterDropDragHandling(dragElement, dropElement);
           break;
         }
-        case 'stackAlign': {
-          const dropElement = targetElement;
-          const dragElement = element;
-          const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
-          const rowAttr = dropElement.getAttribute('dropAttr');
-          const dropAttr = parseProp(rowAttr, orientation); // will return stackcascade or verticalstack
-          console.log("dropAttr resolved:", dropAttr, "orientation:", orientation);
-          if ((dropAttr)?.toLowerCase() === "stackcascade" || (dropAttr)?.toLowerCase() === "verticalstack") {
-            dropElement.append(dragElement);
-            placeElementInDropZone(dropElement, dragElement, orientation, dropAttr);
-          }
-          break;
-        }
         case 'removeClone': {
           const clonedElements = document.querySelectorAll(action.value);
           clonedElements.forEach(el => el.remove());
@@ -432,9 +419,10 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       const dropAttr = parseProp(rowAttr, orientation); // will return stackcascade or verticalstack
 
       if ((dropAttr)?.toLowerCase() === "stackcascade" || (dropAttr)?.toLowerCase() === "verticalstack") {
-        executeActions("this.stackAlign='true'",dropElement,dragElement);
-        return;
-      }
+            dropElement.append(dragElement);
+            placeElementInDropZone(dropElement, dragElement, orientation, dropAttr);
+            return;
+     }
 
       dropElement.parentElement.append(element);
 

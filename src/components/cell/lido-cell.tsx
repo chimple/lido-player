@@ -210,10 +210,7 @@ export class LidoCell {
      * When set to true, disables the speak functionality of long press for this component and its children.
      */
     @Prop() disableSpeak: boolean = false;
-  /**
-   * Event handler for removing a required condition.
-   */
-  @Prop() onRemove: string = '';
+  
 
   /**
    * This lifecycle hook is called after the component is rendered in the DOM.
@@ -337,7 +334,6 @@ export class LidoCell {
         onEntry={this.onEntry}
         flex-direction={this.flexDirection}
         disable-speak={this.disableSpeak}
-        onRemove={this.onRemove}
       >
         {/* Slot for child elements */}
         <slot />

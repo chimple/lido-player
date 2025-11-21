@@ -107,10 +107,6 @@ export class LidoShape {
    */
   @Prop() onCorrect: string = '';
 
-    /**
-   * Event handler for removing a required condition.
-   */
-  @Prop() onRemove: string = '';
 
   /**
    * Event handler triggered when the shape is entered (useful for animations or logic on entry).
@@ -188,7 +184,6 @@ export class LidoShape {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
         disable-speak={this.disableSpeak}
-        onRemove={this.onRemove}
       >
         {/* Slot for any child elements */}
       </Host>
