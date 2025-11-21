@@ -99,6 +99,7 @@ export class LidoPos {
    */
   @Prop() onCorrect: string = '';
 
+
   /**
    * Event handler triggered when the component is entered, often used to trigger animations or custom logic.
    */

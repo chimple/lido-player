@@ -125,6 +125,8 @@ export class LidoTrace {
    */
   @Prop() onCorrect: string;
 
+ 
+
   /**
    * Indicates whether to highlight the text associated with the SVG when the trace is completed.
    */
@@ -963,7 +965,6 @@ export class LidoTrace {
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
         disable-speak={this.disableSpeak}
-
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>

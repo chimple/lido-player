@@ -114,6 +114,7 @@ export class LidoRow {
    */
   @Prop() childElementsLength: number;
 
+
   /**
    * The minimum number of child elements that must be displayed inside the row.
    * If `childElementsLength` is less than this value, additional elements may be shown to meet this minimum.

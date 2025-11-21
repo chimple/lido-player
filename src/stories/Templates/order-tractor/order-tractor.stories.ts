@@ -13,6 +13,7 @@ const meta: Meta = {
     answer3: { control: 'text' },
     answer4: { control: 'text' },
     answer5: { control: 'text' },
+	isAllowOnlyCorrect: { control: 'boolean' },
   },
 };
 
@@ -21,6 +22,7 @@ export const OrderTractor: StoryObj = {
   args: {
     option1: '1', option2: '2', option3: '3', option4: '4', option5: '5',
     answer1: '5', answer2: '4', answer3: '3', answer4: '2', answer5: '1',
+	isAllowOnlyCorrect: 'true',
   },
 
   render: args => {
@@ -31,7 +33,7 @@ export const OrderTractor: StoryObj = {
 function getContainerXml(args) {
   return `
     <main>
-	<lido-container id="lido-container" is-allow-only-correct="true" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="${[args.answer1, args.answer2, args.answer3, args.answer4, args.answer5].join(',')}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/Spring.png" custom-style="#drop1, #drop2,#drop3,#drop4,#drop5{border: none !important;}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';  lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear';  truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true'; this.sleep='1000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" >
+	<lido-container id="lido-container" is-allow-only-correct="${args.isAllowOnlyCorrect}" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="${[args.answer1, args.answer2, args.answer3, args.answer4, args.answer5].join(',')}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/Spring.png" custom-style="#drop1, #drop2,#drop3,#drop4,#drop5{border: none !important;}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';  lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear';  truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true'; this.sleep='1000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" >
 				<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="300px" x="landscape.110px,portrait.10px" y="landscape.80px,portrait.230px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.animation='rightToPlace 2.5s linear';">
 				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
