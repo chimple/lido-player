@@ -86,6 +86,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     if (hasValidAudio || hasSpeak) {
         AudioPlayer.getI().stop();
     }
+    // AudioPlayer.getI().stop();
     
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');

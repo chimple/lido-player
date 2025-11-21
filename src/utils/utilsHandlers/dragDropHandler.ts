@@ -52,6 +52,7 @@ export function enableOptionArea(element: HTMLElement) {
 
 let isDraggingDisabled = false;
 export const setDraggingDisabled = (disabled: boolean) => {
+  console.log("Setting dragging disabled to:", disabled);
   isDraggingDisabled = disabled;
 };
 export const getDraggingDisabled = () => isDraggingDisabled;
@@ -956,6 +957,7 @@ async function onClickDragElement(element: HTMLElement){
   if (hasValidAudio || hasSpeak) {
       AudioPlayer.getI().stop();
   }
+  // AudioPlayer.getI().stop();
 
   
   const dropElements = buildDropHasDragFromDOM();

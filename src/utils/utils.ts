@@ -1366,7 +1366,7 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
 
   if (sign === '-') {
     // '-' flow: reveal one by one then change bgColor of last B to red
-    for (let i = 0; i < topRowChildren.length; i++) {
+    for (let i = 0; i < Math.min(number1, topRowChildren.length); i++) {
       await new Promise(resolve => setTimeout(resolve, 75));
       showElement(topRowChildren[i]);
     }
@@ -1375,7 +1375,7 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
 
     await new Promise(r => setTimeout(r, 500));
     for (let k = 0; k < Math.min(number2, topRowChildren.length); k++) {
-      const idx = topRowChildren.length - 1 - k;
+      const idx = Math.min(number1, topRowChildren.length) - 1 - k;
       setImageBackground(topRowChildren[idx], 'red');
       await new Promise(r => setTimeout(r, 200));
     }
