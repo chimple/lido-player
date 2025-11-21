@@ -650,6 +650,7 @@ export namespace Components {
         "isContinueOnCorrect": boolean;
         /**
           * Language to apply to all texts
+          * @default ''
          */
         "locale": string;
         /**
@@ -973,6 +974,7 @@ export namespace Components {
         "initialIndex": number;
         /**
           * Language to apply to all texts
+          * @default ''
          */
         "locale"?: string;
         /**
@@ -1618,6 +1620,7 @@ export namespace Components {
         "initialIndex": number;
         /**
           * Language to apply to all texts
+          * @default ''
          */
         "locale"?: string;
         /**
@@ -3290,6 +3293,7 @@ declare namespace LocalJSX {
         "isContinueOnCorrect"?: boolean;
         /**
           * Language to apply to all texts
+          * @default ''
          */
         "locale"?: string;
         /**
@@ -3613,6 +3617,7 @@ declare namespace LocalJSX {
         "initialIndex"?: number;
         /**
           * Language to apply to all texts
+          * @default ''
          */
         "locale"?: string;
         /**
@@ -4258,6 +4263,7 @@ declare namespace LocalJSX {
         "initialIndex"?: number;
         /**
           * Language to apply to all texts
+          * @default ''
          */
         "locale"?: string;
         /**

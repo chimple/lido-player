@@ -42,6 +42,15 @@ export class AudioPlayer {
   }
 
   public async play(targetElement: HTMLElement) {
+    // Stop any currently playing audio first if target element has audio given
+    try {
+      await AudioPlayer.getI().stop();
+    } 
+    catch (e) {
+      console.error('Error stopping audio before speak action:', e);
+    }
+
+    // then play the target element audio.
     let audioUrl = targetElement.getAttribute('audio') || '';
 
     // If no direct audio attribute, check childrens for audio

@@ -186,14 +186,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
         case 'speak': {
-          // Stop any currently playing audio first if target element has audio given
-          // then play the target element audio.
-          try {
-            await AudioPlayer.getI().stop();
-          } 
-          catch (e) {
-            console.error('Error stopping audio before speak action:', e);
-          }
           const val = (action.value || '').toString().trim().toLowerCase();
           if (val === 'true' || val === '1' || val === 'yes') {
             try {
