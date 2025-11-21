@@ -941,7 +941,6 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
-    executeActions("this.updateCountBlender='true'",container);
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
@@ -961,7 +960,6 @@ async function onClickDragElement(element) {
 
   if (currentTransform && currentTransform !== 'none' && currentTransform !== 'matrix(1, 0, 0, 1, 0, 0)') {
     onElementDropComplete(dragEl, null);
-    executeActions("this.updateCountBlender='true'",container);
     return;
   }
 
@@ -970,7 +968,6 @@ async function onClickDragElement(element) {
     const dropEl = document.querySelector(`#${firstFalse.drop}`) as HTMLElement;
     dragEl.style.transition = 'transform 0.5s ease';
     onElementDropComplete(dragEl, dropEl);
-    executeActions("this.updateCountBlender='true'",container);
   }
 }
 
