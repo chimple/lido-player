@@ -310,8 +310,9 @@ const slideCompleted = (slideElement: HTMLElement) => {
 
   if(container.getAttribute('is-continue-on-correct') === 'true'){
     storingEachActivityScore(true);
+    handleShowCheck();
   } else {
     storingEachActivityScore(isCorrect);
   }
-  handleShowCheck();
+
 };
