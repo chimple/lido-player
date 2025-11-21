@@ -644,6 +644,7 @@ export const validateObjectiveStatus = async () => {
   if (!container) return;
   const objectiveString = container['objective'];
   const additionalCheck = container.getAttribute('equationCheck');
+  const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true' || '';
   console.log('🚀 ~ validateObjectiveStatus ~ additionalCheck:', additionalCheck);
   let equationGiven = false;
   if (objectiveString == null || objectiveString.length === 0) 
@@ -719,6 +720,15 @@ export const validateObjectiveStatus = async () => {
     {
       triggerNextContainer();
       await calculateScore();
+    }
+  }
+
+  if(!isAllowOnlyCorrect){
+    if(countPatternWords(container.getAttribute(SelectedValuesKey) ?? '') == countPatternWords(objectiveString)){
+      storeActivityScore(100);
+      storingEachActivityScore(true);
+      setTimeout(() => triggerNextContainer(), 2000);
+      return;
     }
   }
 };
