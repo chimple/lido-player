@@ -51,13 +51,14 @@
 </lido-container>
 
 <lido-container visible="true" drop-action="move"  objective=">"  equationCheck="$#lefthandle1,$#righthandle1" id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" show-Check="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" is-continue-on-correct="true">
+<lido-container visible="true" locale="te" drop-action="move"  objective=">"  equationCheck="$#lefthandle1,$#righthandle1" id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" show-Check="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" is-continue-on-correct="true">
 			<!-- Check Button -->
 		<lido-pos id="pos1" disable-edit="true" value="pos1" height="70px" width="150px" x="landscape.1324px,portrait.639px" y="landscape.220px,portrait.28%" aria-hidden="true" z="1" bg-color="transparent" type="" visible="true" audio="col1.mp3" onTouch="" onCorrect="" onEntry="">
 			<lido-text id="lido-checkButton" visible="true" bg-color="#5b5bd3" width="150px" height="70px" string="Check" type="click" font-family="'Baloo 2', serif" font-size="30px" font-color="white" onEntry="this.fontWeight='800'; this.addClass='lido-disable-check-button';">
 			</lido-text>
 		</lido-pos>
 		<!-- question -->
-		<lido-text visible="true" height="landscape.100px,portrait.175px" font-family="'Baloo Bhai 2'" font-size="60px" width="landscape.auto,portrait.86%" string="Drop the elements to match the given symbol ' > '" font-color="black" bg-color="white" y="landscape.12%,portrait.-4%" onEntry="this.font-weight='600'; this.position='relative';">
+		<lido-text visible="true" height="landscape.100px,portrait.175px" font-family="'Baloo Bhai 2'" font-size="60px" width="landscape.auto,portrait.86%" string="Drop the elements to match the given symbol order" font-color="black" bg-color="white" y="landscape.12%,portrait.-4%" onEntry="this.font-weight='600'; this.position='relative';">
 		</lido-text>
 		<lido-balance  tilt="0" operation="add" visible="true" height="landscape.456px,portrait.500px" y="landscape.180px,portrait.6%" width="landscape.1136px,portrait.876px">
 		</lido-balance>
