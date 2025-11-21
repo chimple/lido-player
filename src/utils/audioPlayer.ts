@@ -1,16 +1,11 @@
 import { convertUrlToRelative, speakText } from './utils';
 import { highlightSpeakingElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
-import { setDraggingDisabled }from './utilsHandlers/dragDropHandler';
+import { setDraggingDisabled } from './utilsHandlers/dragDropHandler';
 import { NextContainerKey, PrevContainerKey, ActivityChangeKey, GameCompletedKey, GameExitKey, ActivityEndKey, LessonEndKey } from './constants';
 
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;
-
-  // — Safety & usability improvements —
-  private lastInteractionTime = 0;
-  private debounceDelay = 100; // ms
-  private lastTouchTime = 0;   // avoid touch + click duplicate play
 
   private constructor() {
     this.audioElement = document.createElement('audio');
@@ -18,7 +13,6 @@ export class AudioPlayer {
     document.body.appendChild(this.audioElement);
 
     this.registerGlobalStopEvents();
-    this.registerInteractionListeners();
   }
 
   public static getI(): AudioPlayer {
@@ -50,17 +44,20 @@ export class AudioPlayer {
   public async play(targetElement: HTMLElement) {
     let audioUrl = targetElement.getAttribute('audio') || '';
 
+    // If no direct audio attribute, check childrens for audio
     if (!audioUrl) {
       const childElements = targetElement.children;
       for (let i = 0; i < childElements.length; i++) {
         const childAudioUrl = childElements[i].getAttribute('audio');
         if (childAudioUrl) {
           audioUrl = childAudioUrl;
+          break;
         }
       }
     }
 
-    if (audioUrl) {
+    if (audioUrl) 
+    {
       audioUrl = convertUrlToRelative(audioUrl);
       this.audioElement.src = audioUrl;
       console.log('🚀 Playing audio:', this.audioElement.src);
@@ -76,7 +73,7 @@ export class AudioPlayer {
             resolve();
           };
         });
-      } 
+      }
       catch (error) {
         console.log('🎧 Audio play error:', error);
       }
@@ -87,7 +84,8 @@ export class AudioPlayer {
       }
     }
     // If no audio, use text-to-speech
-    else if (targetElement.textContent) {
+    else if (targetElement.textContent) 
+    {
       try {
         highlightSpeakingElement(targetElement);
         await speakText(targetElement.textContent, targetElement);
@@ -115,72 +113,9 @@ export class AudioPlayer {
     });
   }
 
-  // USER INTERACTION LISTENERS (click, drag…)
-  private registerInteractionListeners() {
-    const opts = { capture: true }; // guaranteed early interception
-
-    // document.addEventListener("mousedown", this.handleInteraction, opts);
-    // document.addEventListener("touchstart", this.handleTouch, opts);
-    // document.addEventListener("click", this.handleInteraction, opts);
-    // document.addEventListener("dragstart", this.handleInteraction, opts);
-  }
-
-  // touchstart handler — avoids duplicate click fire
-  private handleTouch = () => {
-    this.lastTouchTime = Date.now();
-  };
-
-  // private handleInteraction = (event: Event) => {
-  //   const now = Date.now();
-
-  //   // Touch+click duplicate → ignore click
-  //   if (event.type === "click" && now - this.lastTouchTime < 300) {
-  //     return;
-  //   }
-  //   // Debounce rapid interactions (avoid double stop/play)
-  //   if (now - this.lastInteractionTime < this.debounceDelay) {
-  //     return;
-  //   }
-    
-  //   this.lastInteractionTime = now;
-
-  //   const target = event.target as HTMLElement;
-  //   if (!target) return;
-
-  //   // Only elements with audio or speak="true" should stop audio
-  //   const audioElement = target.closest("[audio], [speak='true']") as HTMLElement;
-  //   if (!audioElement) {
-  //     // No audio element , DO NOT STOP current audio
-  //     return;
-  //   }
-
-  //   const audioAttr = target.closest("[audio]");
-  //   const speakAttr = target.closest("[speak='true']");
-  //   // audio="" should NOT trigger stop
-  //   // VALID conditions
-  //   const hasValidAudio = audioAttr && audioAttr.getAttribute("audio")?.trim() !== "";
-  //   const hasSpeak = speakAttr != null;
-
-  //   // If element has neither valid audio nor speak, DO NOT stop or play
-  //   if (!hasValidAudio && !hasSpeak) {
-  //     console.log("NO valid audio or speak=true → continue existing audio");
-  //     return;
-  //   }
-
-  //   // Stop any currently playing audio
-  //   this.stop();
-  //   // If element contains audio, play it
-  //   this.play(audioElement);
-  // }
-
   // DESTROY (for hot-reload)
   public destroy() {
     console.log("AudioPlayer destroyed (hot-reload safe)");
-
-    // document.removeEventListener("mousedown", this.handleInteraction, true);
-    // document.removeEventListener("touchstart", this.handleTouch, true);
-    // document.removeEventListener("click", this.handleInteraction, true);
-    // document.removeEventListener("dragstart", this.handleInteraction, true);
 
     this.stop();
 

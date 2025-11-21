@@ -32,7 +32,7 @@ export const decorators = [
   }
 ];
 
-// Hot Module Replacement: teardown the AudioPlayer to avoid duplicated listeners
+// Hot Reload: teardown the existing AudioPlayer to avoid duplicated listeners
 if ((module as any)?.hot) {
   (module as any).hot.dispose(() => {
     try {
