@@ -1,8 +1,9 @@
 import { calculateScale, countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
-import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr,  DropTimeAttr, LidoContainer, DropAction } from '../constants';
+import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
+import { dragDropAnimation } from './animationhandler';
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
@@ -176,12 +177,11 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     attributeFilter: ['style'], // Only observe changes to the 'style' attribute
   };
 
-  
   // Start observing the element
   observer.observe(container, observerConfig);
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
-    console.log("moved");    
+    console.log('moved');
     if (!isDragging) return;
     if (isDraggingDisabled) {
       isDragging = false;
@@ -438,7 +438,6 @@ export function handleResetDragElement(
   }
   let currentDrop = dragToDropMap.get(dragElement);
   if (currentDrop) {
-    
     dragToDropMap.delete(dragElement);
 
     updateDropBorder(currentDrop);
@@ -512,7 +511,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const selectedValueData = localStorage.getItem(SelectedValuesKey) || '';
   const dragSelectedData = localStorage.getItem(DragSelectedMapKey);
   const dropSelectedData = localStorage.getItem(DragMapKey);
-  console.log("dragggedddd elem", {value: dragElement.getAttribute("value")});
+  console.log('dragggedddd elem', { value: dragElement.getAttribute('value') });
   let dropHasDrag = JSON.parse(localStorage.getItem(DropHasDrag) || ' {}') as Record<string, { drop: string; isFull: boolean }>;
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!dropElement) {
@@ -535,10 +534,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       return;
     }
 
-    let isCorrect;    
+    let isCorrect;
 
-    const dragValue = dragElement.getAttribute('value')?.trim() || "";
-    const dropValue = dropElement.getAttribute('value')?.trim() || "";
+    const dragValue = dragElement.getAttribute('value')?.trim() || '';
+    const dropValue = dropElement.getAttribute('value')?.trim() || '';
 
     if (Number(dragValue)) {
       const dragNum = Number(dragValue);
@@ -549,9 +548,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       } else {
         //single number
         isCorrect = Number(dropValue) === dragNum;
-      } 
-    } 
-    else {
+      }
+    } else {
       //strings
       isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
     }
@@ -584,56 +582,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
       return;
     } else {
-      const checkdropAttr = container.getAttribute('dropAttr');
-      
-      if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
-        container.style.pointerEvents = "none";
-        setTimeout(() => {
-          const div = document.createElement('div');
-          container.append(div);
-          div.classList.add('after-drop-popup-container');
-
-          dragElement.style.scale = `1`;
-          dropElement.style.scale = `1`;
-
-          const allDragElements = container.querySelectorAll('[type="drag"]');
-          const dragParents = Array.from(allDragElements).map(el => el.parentElement);
-          const allSameParent = dragParents.every(parent => parent === dragElement.parentElement);
-
-          // Remove from old parents
-          if (allSameParent) {
-            dragElement.remove();
-            dropElement.remove();
-          } else {
-            dragElement.parentElement.parentElement.remove();
-            dropElement.parentElement.parentElement.remove();
-          }
-
-          // Add animation and popup classes
-          dragElement.classList.add('zoom-fade-in', 'after-drop-popup-drag-element');
-
-          dropElement.classList.add('zoom-fade-in', 'after-drop-popup-drop-element');
-
-          div.appendChild(dragElement);
-          div.appendChild(dropElement);
-
-          dropElement.classList.remove('empty');
-
-          setTimeout(() => {
-            dragElement.classList.remove('zoom-fade-in');
-            dropElement.classList.remove('zoom-fade-in');
-
-            dragElement.classList.add('zoom-fade-out');
-            dropElement.classList.add('zoom-fade-out');
-
-            setTimeout(() => {
-              div.remove();
-              container.style.pointerEvents = 'auto';
-            }, 800); // match animation duration
-          }, 2000); // stay for 2 seconds
-        }, 250);
-      }
+      //This function coming from animationhandler.ts
+      dragDropAnimation(container, dragElement, dropElement);
     }
+  } else {
+    //This function coming from animationhandler.ts
+    dragDropAnimation(container, dragElement, dropElement);
   }
 
   if (dropElement) {
@@ -663,7 +617,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
             const preDropId = dragElement.getAttribute('drop-to');
             const preDrop = container.querySelector(`#${preDropId}`) as HTMLElement;
             const preDropIndex = preDrop.getAttribute('tab-index');
-            if(preDropIndex){
+            if (preDropIndex) {
               delete dragSelected[preDropIndex];
             }
           }
@@ -768,7 +722,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
-   await onActivityComplete(dragElement, dropElement);
+  await onActivityComplete(dragElement, dropElement);
 }
 
 export function updateDropBorder(element: HTMLElement): void {
