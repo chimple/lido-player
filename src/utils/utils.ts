@@ -731,14 +731,13 @@ export const validateObjectiveStatus = async () => {
     }
   }
 
-  if(!isAllowOnlyCorrect){
-    if(countPatternWords(container.getAttribute(SelectedValuesKey) ?? '') == countPatternWords(objectiveString)){
-      storeActivityScore(100);
-      storingEachActivityScore(true);
-      setTimeout(() => triggerNextContainer(), 2000);
-      return;
+    if(!isAllowOnlyCorrect){
+      if(countPatternWords(container.getAttribute(SelectedValuesKey) ?? '') == countPatternWords(objectiveString)){
+        storingEachActivityScore(true);
+        setTimeout(() => triggerNextContainer(), 2000);
+        return;
+      }
     }
-  }
 };
 
 export const triggerNextContainer = () => {
