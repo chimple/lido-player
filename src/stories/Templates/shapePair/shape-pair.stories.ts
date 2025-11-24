@@ -59,7 +59,7 @@ const meta: Meta = {
 };
 export default meta;
 
-export const NumberPair: StoryObj = {
+export const ShapePair: StoryObj = {
   args: {
 	question: 'Drag the cards with the same shape together.',
 	isAllowOnlyCorrect: true,
@@ -124,7 +124,7 @@ function getContainerXml(args) {
 				
 				${(args.dropimg1.length=== 0 && args.droptext1.length === 0) ? '':`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
-						<lido-cell id="image1" audio="" value="${args.correct1}" tab-index="1" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; this.borderRadius='8px';" 
+						<lido-cell id="image1" audio="" value="${args.correct1}" tab-index="1" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" type="drop" onCorrect="lido-avatar.avatarAnimate='Success'; this.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';"  layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; this.borderRadius='8px';" 
 						>
 							${
 								!args.dropimg1 || args.dropimg1.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.126%,portrait.126%" height="landscape.100%,portrait.100%" bg-color="transparent" src="${args.dropimg1}"></lido-image>`
@@ -140,7 +140,7 @@ function getContainerXml(args) {
 
 				${(args.dropimg2.length=== 0 && args.droptext2.length === 0) ? '':`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
-						<lido-cell id="image2" class="boxShadow" audio="" value="${args.correct2}" tab-index="2" isAllowOnlyOneDrop="true" disable-edit="true" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';" onCorrect="this.speak='true'">
+						<lido-cell id="image2" class="boxShadow" audio="" value="${args.correct2}" tab-index="2" isAllowOnlyOneDrop="true" disable-edit="true" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" type="drop"  layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';" onCorrect="lido-avatar.avatarAnimate='Success'; this.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg2 || args.dropimg2.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.126%,portrait.126%" height="landscape.100%,portrait.100%" bg-color="transparent" src="${args.dropimg2}"></lido-image>`
 							}
@@ -154,8 +154,8 @@ function getContainerXml(args) {
 
 				${(args.dropimg3.length=== 0 && args.droptext3.length === 0) ? '':`<lido-cell layout="row" margin="landscape.50px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='5px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
-						<lido-cell type="drop" audio="" id="image3" tab-index="3" isAllowOnlyOneDrop="true" disable-edit="true" value="${args.correct3}" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" layout="col" visible="true" bg-Color="white" 
-						onEntry="this.padding='0px';this.borderRadius='8px';" onCorrect="this.speak='true'">
+						<lido-cell type="drop"  audio="" id="image3" tab-index="3" isAllowOnlyOneDrop="true" disable-edit="true" value="${args.correct3}" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" layout="col" visible="true" bg-Color="white" 
+						onEntry="this.padding='0px';this.borderRadius='8px';" onCorrect="lido-avatar.avatarAnimate='Success'; this.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg3 || args.dropimg3.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.126%,portrait.126%" height="landscape.100%,portrait.100%" bg-color="transparent" src="${args.dropimg3}"></lido-image>`
 							}
@@ -170,8 +170,8 @@ function getContainerXml(args) {
 
 				${(args.dropimg4.length=== 0 && args.droptext4.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
-						<lido-cell id="image4" audio="" value="${args.correct4}" isAllowOnlyOneDrop="true" disable-edit="true" tab-index="4" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';"
-						onCorrect="this.speak='true'">
+						<lido-cell id="image4" audio="" value="${args.correct4}" isAllowOnlyOneDrop="true" disable-edit="true" tab-index="4" height="landscape.268px,portrait.240px" width="landscape.268px,portrait.240px" type="drop"  layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';"
+						onCorrect="lido-avatar.avatarAnimate='Success'; this.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg4 || args.dropimg4.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.126%,portrait.126%" height="landscape.100%,portrait.100%" bg-color="transparent" src="${args.dropimg4}"></lido-image>`
 							}
