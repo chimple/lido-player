@@ -734,7 +734,7 @@ export const validateObjectiveStatus = async () => {
     if(!isAllowOnlyCorrect){
       if(countPatternWords(container.getAttribute(SelectedValuesKey) ?? '') == countPatternWords(objectiveString)){
         storingEachActivityScore(true);
-        setTimeout(() => triggerNextContainer(), 2000);
+        triggerNextContainer()
         return;
       }
     }
