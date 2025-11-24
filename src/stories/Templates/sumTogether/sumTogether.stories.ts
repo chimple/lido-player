@@ -8,6 +8,7 @@ type SumTogetherArgs = {
   answer: string;
   sign: string,
   options: string[];
+  isAllowOnlyCorrect?: boolean;
 };
 
 const meta: Meta<SumTogetherArgs> = {
@@ -18,6 +19,7 @@ const meta: Meta<SumTogetherArgs> = {
     answer: { control: 'text', name: 'answer' },
     sign: { control: 'text', name: 'sign', multiple: true},
     options: { control: 'object', name: 'digits' },
+    isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
   },
   args: {
     number1: '10',
@@ -25,6 +27,7 @@ const meta: Meta<SumTogetherArgs> = {
     answer: '1',
     sign: '-',
     options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    isAllowOnlyCorrect: true,
   },
 };
 
@@ -52,6 +55,7 @@ function getContainerXml(args: SumTogetherArgs) {
   const sign = args.sign;
   const options = args.options;
   const objective = answer
+  const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
   let tabCounter = 2
   const numberMap : Record<number,string> = {
@@ -86,7 +90,7 @@ function getContainerXml(args: SumTogetherArgs) {
   return `
     <main>
         
-        <lido-container id="sum-together" disable-speak="true" show-drop-border="false" objective="${objective}" tab-index="1"  value="questionBoard" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.sumTogetherAnimation='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isAllowOnlyCorrect="true">
+        <lido-container id="sum-together" disable-speak="true" show-drop-border="false" objective="${objective}" tab-index="1"  value="sum-together" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.sumTogetherAnimation='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}">
 
             <!-- Chimple Avatar -->
             <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.-80px, portrait.195px" y="landscape.175px, portrait.1085px" ariaHidden="true" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='0';">

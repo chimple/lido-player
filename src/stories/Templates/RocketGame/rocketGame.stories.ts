@@ -9,6 +9,7 @@ type RocketArgs = {
   dropImage: string[];
   backgroundImage: string[];
   colors: string[];
+  isAllowOnlyCorrect?: boolean;
 };
 
 const meta: Meta<RocketArgs> = {
@@ -52,6 +53,10 @@ const meta: Meta<RocketArgs> = {
       description: 'Array of colors for the letters',
       defaultValue: ['#F34D08','#81C127','#FFC805','#F55376','#5D44BD'],
     },
+    isAllowOnlyCorrect: {
+      control: 'boolean',
+      name: 'Allow Only Correct',
+    },
   },
   args: {
     correct: ['h', 'i', 't'],
@@ -61,6 +66,7 @@ const meta: Meta<RocketArgs> = {
     dropImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/dropImag.svg'],
     backgroundImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RocketAssets/Fullalphabet/Background_Sky.png'],
     colors: ['#F34D08', '#81C127', '#FFC805', '#F55376', '#5D44BD'],
+    isAllowOnlyCorrect: true,
   },
 };
 
@@ -79,6 +85,7 @@ function getContainerXml(args: RocketArgs) {
   const drags = args.options.slice(0);
   const indexStart = 16;
   const pickedColors = args.colors;
+  const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
   // ✅ Dynamic objective
   const objective = args.correct.join(",");
@@ -114,7 +121,7 @@ function getContainerXml(args: RocketArgs) {
   return `
   <main> 
        
-      <lido-container id="lido-container" objective="${objective}" show-drop-border="false" tab-index="1" is-allow-only-correct="true" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s 1s linear'; this.sleep='1000'; heading.speak='true'; " show-check="false" bg-image="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false" drop-action="infinite-drop">
+      <lido-container id="lido-container" objective="${objective}" show-drop-border="false" tab-index="1" is-allow-only-correct="${isAllowOnlyCorrect}" is-continue-on-correct="true" onCorrect="fullRrocket.animation='placeToLeft 2.5s 1s linear'; this.sleep='1000'; heading.speak='true'; " show-check="false" bg-image="${args.backgroundImage}" visible="true" onEntry="this.overflowY='hidden'; this.overflowX='hidden'; this.background-color='transparent';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" after-drop="false" drop-action="infinite-drop">
           <lido-cell layout="pos" id="pos1" disable-edit="true" tab-index="2" value="pos2" height="305px" width="227px" x="landscape.1270px, portrait.541px" y="landscape.-60px, portrait.250px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
               <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
               </lido-avatar>

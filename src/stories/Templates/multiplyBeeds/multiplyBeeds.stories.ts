@@ -5,6 +5,7 @@ type MultiplyBeedsArgs = {
     number: string;
     multiplicationFactor: string;
     answer: string;
+    isAllowOnlyCorrect?: boolean;
 }
 
 const meta: Meta<MultiplyBeedsArgs> = {
@@ -12,12 +13,14 @@ const meta: Meta<MultiplyBeedsArgs> = {
     argTypes: {
         number: { control: 'text', name: 'number1', description: 'number. (E.g. 9)' },
         multiplicationFactor: { control: 'text', name: 'multiplication factor', description: '(E.g. 9)' },
-        answer: { control: 'text', name: 'answer', description: 'answer. (E.g. 81)' }
+        answer: { control: 'text', name: 'answer', description: 'answer. (E.g. 81)' },
+        isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
     },
     args: {
         number: '9',
         multiplicationFactor: '9',
         answer: '81',
+        isAllowOnlyCorrect: true,
     }
 }
 
@@ -35,6 +38,7 @@ function getContainerXml(args : MultiplyBeedsArgs) {
     const number = args.number;
     const multiplicationFactor = args.multiplicationFactor;
     const answer = args.answer;
+    const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
     let str_val = "";
     for (let i = 0; i < Number(multiplicationFactor); i++) {
@@ -45,7 +49,7 @@ function getContainerXml(args : MultiplyBeedsArgs) {
 
     return `
         <main>
-            <lido-container id="multiply-beads" disableSpeak="true" show-drop-border="false" equationCheck="$#mat1,==,$#answer-multiply-beeds" objective="" tab-index="1"  value="multiply-beads" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="answer-multiply-beeds.addText='${answer}'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" showCheck="false" isContinueOnCorrect="true">
+            <lido-container id="multiply-beads" disableSpeak="true" show-drop-border="false" equationCheck="$#mat1,==,$#answer-multiply-beeds" objective="" tab-index="1"  value="multiply-beads" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="answer-multiply-beeds.addText='${answer}'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}">
 
                 <!-- Chimple Avatar -->
                 <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.1045px, portrait.220px" y="landscape.525px, portrait.1075px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='0';">

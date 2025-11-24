@@ -7,6 +7,7 @@ type SequenceBoxArgs = {
   number2: string;
   number4: string;
   options: string[];
+  isAllowOnlyCorrect?: boolean;
 };
 
 const meta: Meta<SequenceBoxArgs> = {
@@ -17,6 +18,7 @@ const meta: Meta<SequenceBoxArgs> = {
     number2: { control: 'text', name: 'Number 2' },
     number4: { control: 'text', name: 'Number 4' },
     options: { control: 'object', name: 'digits' },
+    isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
   },
   args: {
     missingNumber: '84',
@@ -24,6 +26,7 @@ const meta: Meta<SequenceBoxArgs> = {
     number2: '82',
     number4: '86',
     options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    isAllowOnlyCorrect: true,
   },
 };
 
@@ -43,6 +46,7 @@ function getContainerXml(args: SequenceBoxArgs) {
   const number2 = args.number2;
   const number4 = args.number4;
   const options = args.options;
+  const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
   const objectiveString = `${missingNumber.split('').join(',')}`;
 
@@ -69,7 +73,7 @@ function getContainerXml(args: SequenceBoxArgs) {
 
   return `
     <main>
-        <lido-container id="lido-container" objective="${objectiveString}" tab-index="1" show-drop-border="false"  is-allow-only-correct="true" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false">
+        <lido-container id="lido-container" objective="${objectiveString}" tab-index="1" show-drop-border="false" is-continue-on-correct="true"  is-allow-only-correct="${isAllowOnlyCorrect}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false">
 
             <!-- Chimple Avatar -->
             <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.600px, portrait.230px" y="landscape.45px, portrait.1010px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0';">

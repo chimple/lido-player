@@ -1,11 +1,13 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+
 const meta: Meta = {
   title: 'Templates/Phonic-tractor',
   argTypes: {
     text1: { control: 'text' },
     options: { control: 'object' },
     answers: { control: 'object' },
+	isAllowOnlyCorrect: { control: 'boolean', name: 'Allow Only Correct' },
   },
 };
 
@@ -15,6 +17,7 @@ export const PhonicTractor: StoryObj = {
     text1: 'fox',
     options: ['f', 'o', 'x'],
     answers: ['f', 'o', 'x'],
+	isAllowOnlyCorrect: true,
   },
 
   render: args => {
@@ -24,14 +27,14 @@ export const PhonicTractor: StoryObj = {
 };
 function getContainerXml(args) {
 	let tabCounter = 1;
-  const { text1, options = [], answers = [] } = args;
+  const { text1, options = [], answers = [], isAllowOnlyCorrect } = args;
 
   const trolleyCells = answers
     .map((answer) => {
       return `
 		<!-- drop and trolley -->
 		<lido-cell height="237px" width="200px" visible="true" bg-color="transparent" layout="col" >
-			<lido-text id="drop${tabCounter}" type="drop" tab-index="${tabCounter++}" bg-color="transparent" height="132px" width="132px" value="${answer}" is-allow-only-one-drop="true" margin="-25px 0px 16px 0px" onEntry=" this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';">
+			<lido-text id="drop${tabCounter}" type="drop" tab-index="${tabCounter++}" bg-color="transparent" height="132px" width="132px" value="${answer}" is-allow-only-one-drop="${isAllowOnlyCorrect}" margin="-25px 0px 16px 0px" onEntry=" this.borderRadius='6px';this.display='flex'; this.alignItems='center'; this.justifyContent='center';">
 			</lido-text>
 			<lido-image id="img${tabCounter}" visible="true"  disable-edit="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/phonictractor_tractor_holder.png" height="97px" width="220px" >
 			</lido-image>
@@ -51,7 +54,7 @@ function getContainerXml(args) {
 
   return `
     <main>
-	<lido-container id="lido-container" appendToDropOnCompletion="true" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png"  bg-color="transparent" objective="${answers.join(',')}" height="100%" width="100%" visible="true" show-check="false" is-continue-on-correct="true" after-drop="false" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000';  b1.animation='placeToLeft 2s linear'; this.sleep='2000';"  onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"   > 
+	<lido-container id="lido-container" appendToDropOnCompletion="true" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png"  bg-color="transparent" objective="${answers.join(',')}" height="100%" width="100%" visible="true" show-check="false" is-continue-on-correct="true" after-drop="false" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='1000';  b1.animation='placeToLeft 2s linear'; this.sleep='2000';"  onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-allow-only-correct="${isAllowOnlyCorrect}"> 
 
 	    <!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.576px" y="landscape.591px, portrait.236px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
