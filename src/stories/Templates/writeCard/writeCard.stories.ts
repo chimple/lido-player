@@ -8,6 +8,7 @@ type writeCardArgs = {
     backSlot: 'front' | 'back';
     frontText: string;
     backText: string;
+    isAllowOnlyCorrect?: boolean;
 };
 
 const meta: Meta<writeCardArgs> = {
@@ -19,6 +20,7 @@ const meta: Meta<writeCardArgs> = {
         backSlot: { control: 'select', options: ['front', 'back'], name: 'Flash Card Back Slot' },
         frontText: { control: 'text', name: 'Flash Card Front Text' },
         backText: { control: 'text', name: 'Flash Card Back Text' },
+        isAllowOnlyCorrect: { control: 'boolean', name: 'Allow Only Correct' },
     },
     args: {
        
@@ -27,6 +29,7 @@ const meta: Meta<writeCardArgs> = {
         backSlot: 'back',
         frontText: 'Unicorn is cute and shy',
         backText: 'I am a colour. I am mentioned in the poem along with Yellow and Blue. My name starts with the letter "R". Who am I?',
+        isAllowOnlyCorrect: true,
     },
 };
 
@@ -53,11 +56,12 @@ function getContainerXml(args: writeCardArgs){
     const backSlot = args.backSlot;
     const frontText = args.frontText;
     const backText = args.backText;
+    const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
    
     return `
         <main>
 
-            <lido-container id="lido-container" objective="" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png"  height="1600px" width="900px" bg-color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" show-next-button="true">
+            <lido-container id="lido-container" objective="" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png"  height="1600px" width="900px" bg-color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" after-drop="false" show-next-button="true">
 
                 <!-- Chimple Avatar -->
                 <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.-24px, portrait.465px" y="landscape.385px, portrait.983px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
