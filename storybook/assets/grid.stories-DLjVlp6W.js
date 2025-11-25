@@ -1,5 +1,5 @@
-import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";const l={title:"Templates/Grid"},e={args:{option1:"chop",option2:"chug",option3:"chad",option4:"dop",option5:"dug",option6:"dad",option7:"mop",option8:"mug",option9:"mad",correct1:"chop",correct2:"chug",correct3:"chad",correct4:"dop",correct5:"dug",correct6:"dad",correct7:"mop",correct8:"mug",correct9:"mad"},render:t=>{const r=p(t);return s`<lido-home .xmlData="${r}"></lido-home>`}};function p(t){return`<main>
-                <lido-container id="lido-container" value="mainContainer1" drop-action="move" objective="${t.correct1},${t.correct2},${t.correct3},${t.correct4},${t.correct5},${t.correct6},${t.correct7},${t.correct8},${t.correct9}" height="100%" width="100%" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" is-allow-only-correct="true">
+import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";const l={title:"Templates/Grid",argTypes:{PracticeMode:{control:"boolean"}}},e={args:{PracticeMode:!1,option1:"chop",option2:"chug",option3:"chad",option4:"dop",option5:"dug",option6:"dad",option7:"mop",option8:"mug",option9:"mad",correct1:"chop",correct2:"chug",correct3:"chad",correct4:"dop",correct5:"dug",correct6:"dad",correct7:"mop",correct8:"mug",correct9:"mad"},render:t=>{const r=p(t);return s`<lido-home .xmlData="${r}"></lido-home>`}};function p(t){return`<main>
+                <lido-container id="lido-container" value="mainContainer1" drop-action="move" objective="${t.correct1},${t.correct2},${t.correct3},${t.correct4},${t.correct5},${t.correct6},${t.correct7},${t.correct8},${t.correct9}" height="100%" width="100%" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false" after-drop="false" is-allow-only-correct="${t.PracticeMode}">
 
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.0, portrait.1274px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
@@ -118,6 +118,7 @@ import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";con
     </lido-container>
     </main>`}var i,o,a;e.parameters={...e.parameters,docs:{...(i=e.parameters)==null?void 0:i.docs,source:{originalSource:`{
   args: {
+    PracticeMode: false,
     option1: 'chop',
     option2: 'chug',
     option3: 'chad',

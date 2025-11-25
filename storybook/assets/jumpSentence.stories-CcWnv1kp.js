@@ -1,4 +1,4 @@
-import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";const b={title:"Templates/JumpSentence",argTypes:{cells:{control:{type:"object"}},buttons:{control:{type:"text"}}}},o={args:{cells:[{value:"Y",type:"drop"},{value:"o",type:"drop"},{value:"u",type:"drop"},{value:"ARE TALL.",type:""}],buttons:"A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"},render:t=>{const a=p(t);return s`<lido-home .xmlData="${a}"></lido-home>`}};function p(t){const a=t.cells.map((e,r)=>e.type==="drop"?`
+import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";const b={title:"Templates/JumpSentence",argTypes:{PracticeMode:{control:"boolean"},cells:{control:{type:"object"}},buttons:{control:{type:"text"}}}},o={args:{PracticeMode:!1,cells:[{value:"Y",type:"drop"},{value:"o",type:"drop"},{value:"u",type:"drop"},{value:"ARE TALL.",type:""}],buttons:"A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"},render:t=>{const a=p(t);return s`<lido-home .xmlData="${a}"></lido-home>`}};function p(t){const a=t.cells.map((e,r)=>e.type==="drop"?`
       <lido-text visible="true" tab-index="${r}" id="drop${r}" 
         width="120px" height="120px" type="drop" value="${e.value.toLowerCase()}" 
         bg-color="rgb(83 44 50 / 40%)" border-radius="10px">
@@ -12,9 +12,9 @@ import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";con
     <lido-container id="lido-container" visible="true" objective="${t.cells.filter(e=>e.type==="drop").map(e=>e.value.toLowerCase()).join(",")}" 
       onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" 
       onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';"
-      is-continue-on-correct="true" bg-color="transparent" 
+      is-continue-on-correct="false" bg-color="transparent" 
       bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" 
-      drop-action="infinite-drop" is-allow-only-correct="true">
+      drop-action="infinite-drop" is-allow-only-correct="${t.PracticeMode}">
 
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" 
         height="landscape.500px, portrait.600px" width="landscape.350px, portrait.450px" 
@@ -41,6 +41,7 @@ import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";con
     </lido-container>
   </main>`}var i,l,n;o.parameters={...o.parameters,docs:{...(i=o.parameters)==null?void 0:i.docs,source:{originalSource:`{
   args: {
+    PracticeMode: false,
     cells: [{
       value: 'Y',
       type: 'drop'
