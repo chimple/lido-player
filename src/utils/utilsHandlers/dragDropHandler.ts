@@ -582,12 +582,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       }
       return;
     } else {
+      const checkdropAttr = container.getAttribute('dropAttr');
+      if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
+        //This function coming from animationhandler.ts
+        dragDropAnimation(container, dragElement, dropElement);
+      }
+    }
+  } else {
+    const checkdropAttr = container.getAttribute('dropAttr');
+    if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
       //This function coming from animationhandler.ts
       dragDropAnimation(container, dragElement, dropElement);
     }
-  } else {
-    //This function coming from animationhandler.ts
-    dragDropAnimation(container, dragElement, dropElement);
   }
 
   if (dropElement) {
