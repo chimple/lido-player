@@ -26,6 +26,12 @@ export class LidoBalance {
     'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Stands.svg';
 
   /**
+   * URL of the shadow (below component) image for the balance.
+   */
+  @Prop() shadowImage: string =
+    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Shadow.svg';
+
+  /**
    * Fill color applied to all loaded SVGs (pivot, scale, handler).
    * Defaults to "brown".
    */
@@ -199,12 +205,11 @@ export class LidoBalance {
     this.pivotSvg = await this.fetchAndApplyFill(this.pivotimage);
     this.scaleSvg = await this.fetchAndApplyFill(this.scaleimage);
     this.handlerSvg = await this.fetchAndApplyFill(this.handlerimage);
+    this.shadowImage = await this.fetchSvgRaw(this.shadowImage);
    }
 
   componentDidLoad() {
-     setTimeout(() => {
-    this.animateBalance();
-  }, 4000);
+  this.animateBalance();
   this.leftParentEl = document.getElementById("leftparent") as HTMLElement;
   this.rightParentEl = document.getElementById("rightparent") as HTMLElement;
    initEventsForElement(this.el)
@@ -214,7 +219,16 @@ export class LidoBalance {
     if (this.animationFrameId != null)
     cancelAnimationFrame(this.animationFrameId);
   }
-
+  private async fetchSvgRaw(url: string): Promise<string> {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return '';
+      return await res.text();   // return SVG as-is
+    } catch (e) {
+      console.error('SVG fetch failed:', e);
+      return '';
+    }
+  }
   private async fetchAndApplyFill(url: string): Promise<string> {
     try {
       const res = await fetch(url);
@@ -245,6 +259,7 @@ export class LidoBalance {
   async updateTilt(leftVal: number, rightVal: number) {
   const diff = rightVal - leftVal;
   const newTilt = Math.max(-5, Math.min(5, diff));
+  await new Promise(res => setTimeout(res, 350));
   this.tiltf = newTilt;   
   }
 
@@ -266,7 +281,8 @@ export class LidoBalance {
       this.scaleEl.style.transformOrigin = '50% 80%';
     }
     if (this.leftParentEl && this.rightParentEl) {
-      const maxOffset = 60; 
+      const isPortrait = window.innerHeight > window.innerWidth;
+      const maxOffset =  isPortrait ? 40 : 60;  
       const offset = (this.currentAngle / this.maxTilt) * maxOffset;
 
       this.leftParentEl.style.transform = `translateY(${-offset}px)`;
@@ -301,7 +317,8 @@ export class LidoBalance {
   render() {
     return (
       <Host
-        id="lido-balance"        
+        id="lido-balance" 
+        bg-color="red"       
         onEntry={this.onEntry}
         class="lido-balance"
         tilt={this.tilt.toString()}
@@ -309,6 +326,7 @@ export class LidoBalance {
         operation={this.operation.toString()}>
         {/* <div   > */}
           <div innerHTML={this.pivotSvg} id="pivotimg" class="pivot"></div>
+          <div innerHTML={this.shadowImage} id="shadowImg" class="lido-balance-shadow"> </div>
           <div innerHTML={this.scaleSvg} id="scaleimg" class="scale" ref={(el) => (this.scaleEl = el as HTMLElement)}></div>
           <div innerHTML={this.handlerSvg} id="handlerimg" class="handler" ref={(el) => (this.leftHandleEl = el as HTMLElement)}></div> 
           <div innerHTML={this.handlerSvg} id="handimg" class="hand" ref={(el) => (this.rightHandleEl = el as HTMLElement)}></div> 

@@ -59,8 +59,8 @@ export function balanceResult(container: HTMLElement, objectiveString: string): 
 
   const leftVal = Number(balanceEl.leftVal ?? balanceEl.dataset?.leftVal ?? 0);
   const rightVal = Number(balanceEl.rightVal ?? balanceEl.dataset?.rightVal ?? 0);
-    const hasLeft = !isNaN(leftVal) && leftVal !== 0;
-  const hasRight = !isNaN(rightVal) && rightVal !== 0;
+  const hasLeft = !isNaN(leftVal) && container.querySelector('[drop-to^="lefthandle"]');
+  const hasRight = !isNaN(rightVal) && container.querySelector('[drop-to^="righthandle"]');
 
   if (!hasLeft || !hasRight) {
     return false; 

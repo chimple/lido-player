@@ -38,19 +38,19 @@ function getContainerXml(args) {
     <lido-container  visible="true"  id="lido-container"  onInCorrect="lido-avatar.avatarAnimate='Fail';"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='1000'; ${args.images .map((_, i) => `i${i + 1}.revealImageValue='true'; this.sleep='1000';`) .join('')} this.sleep='2000';"
     bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answer}" is-continue-on-correct="true" show-Check="false" >
 <!-- Chimple Avatar -->
-	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.37%, portrait.-4%" y="landscape.48%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
+	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.402px,portrait.402px" width="landscape.302px,portrait.398px" x="landscape.84%, portrait.-4%" y="landscape.58%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 		</lido-avatar>
 	</lido-cell>
 
       <!-- Main Layout -->
-      <lido-cell layout="landscape.row,portrait.col" visible="true" width="90%" height="90%" bg-color="transparent">
+      <lido-cell layout="landscape.row,portrait.col" y="landscape.3%,portrait.0px" onEntry="this.position='relative';" visible="true" width="90%" height="90%" bg-color="transparent">
         <!-- Left column: images -->
-        <lido-cell layout="col" visible="true" margin="landscape.0px 117px 0px -117px,portrait.0px" onEntry="this.animation='topToPlace 1.5s linear';" height="751px" width="500px" bg-color="transparent">
+        <lido-cell layout="wrap" visible="true"  margin="landscape.0px -161px 0px -148px,portrait.0px"  onEntry="this.animation='topToPlace 1.5s linear';this.gridTemplateColumns = 'repeat(5, 1fr)' ;this.gap='10px';" bg-color="transparent" height="auto" width="auto"  >
           ${args.images
             .map(
               (img, i) => `
-              <lido-image id="i${i + 1}" value="${i + 1}" type="text" visible="true" src="${img}" height="120px" width="120px"  margin="${margins[i % margins.length]}" ></lido-image>`
+              <lido-image id="i${i + 1}" value="${i + 1}" type="text" visible="true" src="${img}" height="landscape.170px,portrait.140px" width="landscape.170px,portrait.140px"    ></lido-image>`
             )
             .join('')}
         </lido-cell>
