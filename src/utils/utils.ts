@@ -445,7 +445,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     // storing each activity score based on isCorrect for (all drag-drop events)
     storingEachActivityScore(isCorrect);
     if (isCorrect) {
-      const onCorrect = dropElement.getAttribute('onCorrect');      
+      const onCorrect = dropElement.getAttribute('onCorrect');
       if (onCorrect) {
         await executeActions(onCorrect, dropElement, dragElement);
       }
@@ -566,14 +566,7 @@ export const validateObjectiveStatus = async () => {
         }
         await executeActions(onCorrect, container);
       }
-      if (container.getAttribute('dropAttr') === 'EnableAnimation') {
-        setTimeout(() => {
-          triggerNextContainer();
-        }, 2000);
-      } else {
-        triggerNextContainer();
-      }
-
+      triggerNextContainer()
       await calculateScore();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
