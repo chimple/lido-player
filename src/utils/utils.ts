@@ -566,27 +566,14 @@ export const validateObjectiveStatus = async () => {
         }
         await executeActions(onCorrect, container);
       }
-      if (container.getAttribute('dropAttr') === 'EnableAnimation') {
-        setTimeout(() => {
-          triggerNextContainer();
-        }, 2000);
-      } else {
-        triggerNextContainer();
-      }
-
+      triggerNextContainer()
       await calculateScore();
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
       await executeActions(onInCorrect, container);
       const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
       if (!isContinueOnCorrect) {
-        if (container.getAttribute('dropAttr') === 'EnableAnimation') {
-          setTimeout(() => {
-            triggerNextContainer();
-          }, 2000);
-        } else {
-          triggerNextContainer();
-        }
+        triggerNextContainer();
         await calculateScore();
       }
     }

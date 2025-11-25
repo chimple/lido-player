@@ -3,7 +3,7 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
-import { dragDropAnimation } from './animationhandler';
+import { dragDropAnimation } from './animationHandler';
 
 // Function to get the scale of an element
 export const getElementScale = (el: HTMLElement): number => {
