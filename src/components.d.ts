@@ -144,10 +144,6 @@ export namespace Components {
          */
         "scaleimage": string;
         /**
-          * URL of the shadow (below component) image for the balance.
-         */
-        "shadowImage": string;
-        /**
           * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
          */
         "showSymbol": boolean;
@@ -2453,10 +2449,6 @@ declare namespace LocalJSX {
           * URL of the scale (bar) image that tilts based on the weight difference.
          */
         "scaleimage"?: string;
-        /**
-          * URL of the shadow (below component) image for the balance.
-         */
-        "shadowImage"?: string;
         /**
           * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
          */

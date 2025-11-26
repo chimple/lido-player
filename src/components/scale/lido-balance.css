@@ -47,6 +47,21 @@
   }
 }
 
+#pivotimg::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;        
+  height: 60px;     
+  background-image: url("https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Shadow.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 10;
+}
 
 @media (orientation: landscape) {
   #pivotimg {
