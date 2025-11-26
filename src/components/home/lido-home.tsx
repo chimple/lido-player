@@ -36,6 +36,13 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
+
+  /** Boolean to show or hide navigation buttons */
+  @Prop() showNav: boolean = true;
+
+  /** Array of active container indexes to be rendered */
+  @Prop() activeContainerIndexes: number[] = [];
+
    /** Language to apply to all texts */
   @Prop() locale?: string='';
   /**
@@ -418,17 +425,24 @@ export class LidoHome {
   private parseContainers(rootElement: Element) {
     const containerElements = rootElement.querySelectorAll('lido-container');
 
-    const containers = Array.from(containerElements).map(container => {
+
+    const containers = Array.from(containerElements).map((container, index) => {
+      console.log("nammadhaaaaaaa",this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index));
+      
+      if(this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index))return;
       // Return a factory function that generates a fresh JSX node each time
       return () => this.parseElement(container);
-    });
+    }).filter(Boolean); // Remove any undefined entries
 
     this.containers = containers;
+    console.log("container :::", containers);
+    
   }
 
   // update arrow visibility
 
   private updateArrowVisibility = () => {
+    if(!this.showNav)return;
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
       if (!containerElement) return;
@@ -542,6 +556,7 @@ export class LidoHome {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
           }}
+          style={{visibility: this.showNav ? "visible" : "hidden"}}
         >
           <lido-image src={this.navBarIcons.exit}></lido-image>
         </div>
@@ -552,6 +567,7 @@ export class LidoHome {
             onClick={() => {
               triggerPrevcontainer();
             }}
+            style={{visibility: this.showNav ? "visible" : "hidden"}}
           >
             <lido-image src={this.navBarIcons.prev} />
           </div>
@@ -573,11 +589,12 @@ export class LidoHome {
               console.log('✅ Button clicked - nextBtn action triggered');
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
+            style={{visibility: this.showNav ? "visible" : "hidden"}}
           >
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} style={{visibility: this.showNav ? "visible" : "hidden"}}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
