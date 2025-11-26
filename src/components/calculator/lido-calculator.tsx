@@ -69,7 +69,7 @@ export class LidoCalculator {
   }
   private handleClick(value: string) {
     
-    const MAX_LENGTH = 10;
+    const MAX_LENGTH = 8;
     
     if (value === 'OK') {
       this.verifyAnswer();
@@ -95,6 +95,8 @@ export class LidoCalculator {
     if (!container) return;
 
     if (this.objective && this.objective !='' && !this.objective.includes(',')) {
+      console.log("hi iscorrect verified");
+      
       isCorrect = userInput === this.objective;
     } 
 
@@ -107,7 +109,7 @@ export class LidoCalculator {
     if (currentIndex < objectives.length && Number(userInput) === Number(objectives[currentIndex])) { 
       isCorrect = true; 
     } else { 
-      isCorrect = false; 
+      // isCorrect = false; 
     } 
     
     //  Store behavior based on mode
