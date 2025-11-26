@@ -34,8 +34,16 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
+
+  /** Boolean to show or hide navigation buttons */
+  @Prop() showNav: boolean = true;
+
+  /** Array of active container indexes to be rendered */
+  @Prop() activeContainerIndexes: number[] = [];
+
   /** Language to apply to all texts */
   @Prop() locale?: string='hi';
+  
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -413,11 +421,13 @@ export class LidoHome {
    */
   private parseContainers(rootElement: Element) {
     const containerElements = rootElement.querySelectorAll('lido-container');
-
-    const containers = Array.from(containerElements).map(container => {
+    
+    const containers = Array.from(containerElements).map((container, index) => {
+      if(this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index))return;
       // Return a factory function that generates a fresh JSX node each time
       return () => this.parseElement(container);
-    });
+      
+    }).filter(Boolean)
 
     this.containers = containers;
   }
@@ -425,6 +435,7 @@ export class LidoHome {
   // update arrow visibility
 
   private updateArrowVisibility = () => {
+    if(!this.showNav)return;
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
       if (!containerElement) return;
@@ -446,18 +457,15 @@ export class LidoHome {
       }
     }, 100);
   };
-    private areAllDropsFilled(): boolean {
-      const drops = Array.from(document.querySelectorAll('[type="drop"]'));
-      const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to')); 
-      console.log('drops', drops);
-      console.log('drags', drags);
-      
-      
-      return drops.every(drop => {
-         const dropId = drop.id;
-        return drags.some(drag => drag.getAttribute('drop-to') === dropId);
-        });
-    }
+  private areAllDropsFilled(): boolean {
+    const drops = Array.from(document.querySelectorAll('[type="drop"]'));
+    const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to')); 
+
+    return drops.every(drop => {
+        const dropId = drop.id;
+      return drags.some(drag => drag.getAttribute('drop-to') === dropId);
+      });
+  }
 
 
 
@@ -562,6 +570,7 @@ export class LidoHome {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
           }}
+          style={{visibility: this.showNav ? "visible" : "hidden"}}
         >
           <lido-image src={this.navBarIcons.exit}></lido-image>
         </div>
@@ -572,6 +581,7 @@ export class LidoHome {
             onClick={() => {
               triggerPrevcontainer();
             }}
+            style={{visibility: this.showNav ? "visible" : "hidden"}}
           >
             <lido-image src={this.navBarIcons.prev} />
           </div>
@@ -585,8 +595,10 @@ export class LidoHome {
               ></span>
             </div>
           ))}
+
           <div
             id="lido-arrow-right"
+            style={{visibility: this.showNav ? "visible" : "hidden"}}
             onClick={event => {
               console.log('Target:', event.target); // What was clicked
               console.log('Current Target:', event.currentTarget); // Where the onClick is bound
@@ -597,7 +609,7 @@ export class LidoHome {
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} style={{visibility: this.showNav ? "visible" : "hidden"}}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>

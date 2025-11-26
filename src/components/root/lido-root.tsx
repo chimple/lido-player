@@ -112,7 +112,7 @@ export class LidoRoot {
       if (!response.ok) {
         throw new Error(`Failed to fetch XML data: ${response.statusText}`);
       }
-      const data = await response.text();
+      const data = await response.text();      
 
       // Store the XML data in the component's state
       this.xmlData = data;
@@ -134,6 +134,6 @@ export class LidoRoot {
     }
 
     // Once the XML data is loaded, pass it to the `lido-home` component
-    return <lido-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
+    return <lido-home activeContainerIndexes={[]} showNav={true} initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
   }
 }
