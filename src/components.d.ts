@@ -797,6 +797,10 @@ export namespace Components {
      */
     interface LidoHome {
         /**
+          * Array of active container indexes to be rendered
+         */
+        "activeContainerIndexes": number[];
+        /**
           * URL for the avatar Rive file.
          */
         "avatarUrl": string;
@@ -832,6 +836,10 @@ export namespace Components {
           * Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.
          */
         "prevButtonUrl": string;
+        /**
+          * Boolean to show or hide navigation buttons
+         */
+        "showNav": boolean;
         /**
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
@@ -3106,6 +3114,10 @@ declare namespace LocalJSX {
      */
     interface LidoHome {
         /**
+          * Array of active container indexes to be rendered
+         */
+        "activeContainerIndexes"?: number[];
+        /**
           * URL for the avatar Rive file.
          */
         "avatarUrl"?: string;
@@ -3141,6 +3153,10 @@ declare namespace LocalJSX {
           * Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.
          */
         "prevButtonUrl"?: string;
+        /**
+          * Boolean to show or hide navigation buttons
+         */
+        "showNav"?: boolean;
         /**
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
