@@ -5,6 +5,7 @@ const meta: Meta = {
   title: 'Templates/shapePair',
   argTypes: {
 	isAllowOnlyCorrect: { control: 'boolean' },
+	isContinueOnCorrect: { control: 'boolean' },
 	question: { control: 'text' },
 	questionAudio: {control: {
         type: 'file',
@@ -63,6 +64,7 @@ export const ShapePair: StoryObj = {
   args: {
 	question: 'Drag the cards with the same shape together.',
 	isAllowOnlyCorrect: true,
+	isContinueOnCorrect: true,
 
 	dropimg1: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/matchinggame_triangle_level1_large.png',
 	droptext1: '',
@@ -109,7 +111,7 @@ export const ShapePair: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-    <lido-container id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" is-allow-only-correct="${args.isAllowOnlyCorrect}" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" dropAttr="EnableAnimation" custom-style="#heading,#drag1,#drag2,#drag3,#drag4,#drag5,#drag6,#drag7,#drop1,#drop2,#drop3,#drop4,#drop5,#drop6,#drop7{box-shadow: none !important;}">
+    <lido-container id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" is-allow-only-correct="${args.isAllowOnlyCorrect}" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" dropAttr="EnableAnimation" custom-style="#heading,#drag1,#drag2,#drag3,#drag4,#drag5,#drag6,#drag7,#drop1,#drop2,#drop3,#drop4,#drop5,#drop6,#drop7{box-shadow: none !important;}" is-continue-on-correct="${args.isContinueOnCorrect}">
 				<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="landscape.205px,portrait.195px" width="landscape.209px,portrait.209px" x="landscape.2%,portrait.80%" y="landscape.85px,portrait.146px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="">
 				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">

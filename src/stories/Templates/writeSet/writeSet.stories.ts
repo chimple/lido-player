@@ -6,6 +6,7 @@ const meta: Meta = {
   argTypes: {
     questions: { control: 'object' },
     isAllowOnlyCorrect: { control: 'boolean' },
+    isContinueOnCorrect: { control: 'boolean' },
   },
 };
 
@@ -15,6 +16,7 @@ export const writeSet: StoryObj = {
   args: {
     questions: ["26"],
     isAllowOnlyCorrect: true,
+    isContinueOnCorrect: true,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -24,7 +26,7 @@ export const writeSet: StoryObj = {
 
 function getContainerXml(args) {
   let tabCounter = 1;
-  const { questions = [], isAllowOnlyCorrect = true} = args;
+  const { questions = [], isAllowOnlyCorrect = true, isContinueOnCorrect = true} = args;
   
 
   const QuestionCells = questions.map(question => {
@@ -38,7 +40,7 @@ function getContainerXml(args) {
   }).join('');
 
   return `<main>
- <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" appendToDropOnCompletion="true" equationCheck="$#mat1,==,$#number" objective="" is-allow-only-correct="${isAllowOnlyCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; number.speak='true';  this.sleep='2000';">
+ <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" appendToDropOnCompletion="true" equationCheck="$#mat1,==,$#number" objective="" is-allow-only-correct="${isAllowOnlyCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; number.speak='true';  this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}">
 
     <!-- Audio -->
     <lido-text visible="false" id="audio123" onEntry="this.display='none'; this.speak='true';" string="Fill the matrix according to the number given in the box."></lido-text>

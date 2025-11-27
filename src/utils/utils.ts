@@ -721,23 +721,16 @@ export const validateObjectiveStatus = async () => {
   } 
   else 
   {
-    const onInCorrect = container.getAttribute('onInCorrect');
-    await executeActions(onInCorrect, container);
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     if (!isContinueOnCorrect) 
     {
       triggerNextContainer();
       await calculateScore();
-    }
+    } else {
+        const onInCorrect = container.getAttribute('onInCorrect');
+        await executeActions(onInCorrect, container);
+    }    
   }
-
-    if(!isAllowOnlyCorrect){
-      if(countPatternWords(container.getAttribute(SelectedValuesKey) ?? '') == countPatternWords(objectiveString)){
-        storingEachActivityScore(true);
-        triggerNextContainer()
-        return;
-      }
-    }
 };
 
 export const triggerNextContainer = () => {
