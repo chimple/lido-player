@@ -7,6 +7,7 @@ const meta: Meta = {
     options: { control: 'object' },
     answers: { control: 'object' },
     isAllowOnlyCorrect: { control: 'boolean' },
+    isContinueOnCorrect: { control: 'boolean' },
 	colors: {
       control: 'object',
       description: 'Array of colors for the letters',
@@ -66,6 +67,7 @@ export const numberBoard: StoryObj = {
       
     ],
    isAllowOnlyCorrect: true,
+   isContinueOnCorrect: true,
 	colors: ['#CF1565', '#409F5C', '#02C1C1', '#AD3184', '#F55376', '#81C127', '#5D44BD'],
   },
   render: args => {
@@ -77,7 +79,7 @@ export const numberBoard: StoryObj = {
 function getContainerXml(args) {
   let tabCounter = 1;
   const pickedColors = args.colors;
-  const { options = [], answers = [], isAllowOnlyCorrect = true } = args;
+  const { options = [], answers = [], isAllowOnlyCorrect = true, isContinueOnCorrect=true } = args;
   
 
   const DropCells = answers.map(answer => {
@@ -101,7 +103,7 @@ function getContainerXml(args) {
     .join('');
 
   return `<main>
- <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="${isAllowOnlyCorrect}" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';trainAudio.speak='true';" onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+ <lido-container id="lido-container" show-drop-border="false" is-allow-only-correct="${isAllowOnlyCorrect}" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';trainAudio.speak='true';" onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear'; audio.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="${isContinueOnCorrect}" after-drop="false">
 
  <lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/train1.m4a" onEntry="this.speak='true';"></lido-text>
 
