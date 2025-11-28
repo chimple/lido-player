@@ -50,6 +50,7 @@ graph TD;
   lido-home --> lido-math-matrix
   lido-home --> lido-balance
   lido-home --> lido-calculator
+  lido-home --> lido-canvas
   lido-keyboard --> lido-text
   lido-calculator --> lido-cell
   lido-calculator --> lido-text

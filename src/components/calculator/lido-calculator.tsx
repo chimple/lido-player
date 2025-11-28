@@ -143,6 +143,17 @@ export class LidoCalculator {
       this.displayValue = ""; 
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
+      if(this.objective===''){
+        const answerText = container.querySelector('#answer');
+        if(answerText){ 
+          const equationAttr = container.getAttribute('equationCheck') || ''; 
+          const calculatedValue = equationCheck(equationAttr);   
+           setTimeout(()=>{
+            answerText.setAttribute("string", String(calculatedValue))
+
+        },500);
+        }
+      }
       await executeActions(onCorrect, container);
       if(onCorrect.includes('scrollCellAfterEquationSolved')){
         if(this.objective.length===0){
