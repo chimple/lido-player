@@ -132,6 +132,6 @@ export class LidoRoot {
     }
 
     // Once the XML data is loaded, pass it to the `lido-home` component
-    return <lido-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
+    return <lido-home showNav={true} activeContainerIndexes={[]} initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
   }
 }

@@ -5,6 +5,8 @@ import { arg } from 'mathjs';
 const meta: Meta = {
   title: 'Templates/numberPair',
   argTypes: {
+	isAllowOnlyCorrect: { control: 'boolean' },
+	isContinueOnCorrect: { control: 'boolean' },
 	question: { control: 'text' },
 	questionAudio: {control: {
         type: 'file',
@@ -62,6 +64,8 @@ export default meta;
 export const NumberPair: StoryObj = {
   args: {
 	question: 'Match the number cards with the same number together.',
+	isAllowOnlyCorrect: true,
+	isContinueOnCorrect: true,
 
 	dropimg1: '',
 	droptext1: '1',
@@ -115,7 +119,7 @@ export const NumberPair: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-    <lido-container id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" is-allow-only-correct="true" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" dropAttr="EnableAnimation" custom-style="#heading,#drag1,#drag2,#drag3,#drag4,#drag5,#drag6,#drag7,#drop1,#drop2,#drop3,#drop4,#drop5,#drop6,#drop7{box-shadow: none !important;}">
+    <lido-container id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" is-allow-only-correct="${args.isAllowOnlyCorrect}" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" dropAttr="EnableAnimation" custom-style="#heading,#drag1,#drag2,#drag3,#drag4,#drag5,#drag6,#drag7,#drop1,#drop2,#drop3,#drop4,#drop5,#drop6,#drop7{box-shadow: none !important;}" is-continue-on-correct="${args.isContinueOnCorrect}">
 				<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="landscape.205px,portrait.195px" width="landscape.209px,portrait.209px" x="landscape.2%,portrait.80%" y="landscape.85px,portrait.146px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="">
 				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
@@ -131,7 +135,7 @@ function getContainerXml(args) {
 				${(args.dropimg1.length=== 0 && args.droptext1.length === 0) ? '':`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell id="image1" audio="" value="${args.correct1}" tab-index="1" height="landscape.270px,portrait.240px" width="landscape.200px,portrait.180px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; this.borderRadius='8px';" 
-						onCorrect="${args.dragtext1.length===0  ? "drop1.speak='true'": "drag1.speak='true'"};">
+						onCorrect="${args.dragtext1.length===0  ? "drop1.speak='true'": "drag1.speak='true'"}; lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg1 || args.dropimg1.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${args.dropimg1}"></lido-image>`
 							}
@@ -147,7 +151,7 @@ function getContainerXml(args) {
 				${(args.dropimg2.length=== 0 && args.droptext2.length === 0) ? '':`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell id="image2" class="boxShadow" audio="" value="${args.correct2}" tab-index="2" isAllowOnlyOneDrop="true" disable-edit="true" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';" 
-						onCorrect="${args.dragtext2.length===0 ? "drop2.speak='true';": "drag2.speak='true'"};">
+						onCorrect="${args.dragtext2.length===0 ? "drop2.speak='true';": "drag2.speak='true'"}; lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg2 || args.dropimg2.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${args.dropimg2}"></lido-image>`
 							}
@@ -163,7 +167,7 @@ function getContainerXml(args) {
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
 						<lido-cell type="drop" audio="" id="image3" tab-index="3" isAllowOnlyOneDrop="true" disable-edit="true" value="${args.correct3}" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" layout="col" visible="true" bg-Color="white" 
 						onEntry="this.padding='0px';this.borderRadius='8px';" onCorrect="${args.dragtext3.length===0 ?
-							"drop3.speak='true'": "drag3.speak='true'"}">
+							"drop3.speak='true'": "drag3.speak='true'"}; lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg3 || args.dropimg3.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${args.dropimg3}"></lido-image>`
 							}
@@ -179,7 +183,7 @@ function getContainerXml(args) {
 				${(args.dropimg4.length=== 0 && args.droptext4.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
 						<lido-cell id="image4" audio="" value="${args.correct4}" isAllowOnlyOneDrop="true" disable-edit="true" tab-index="4" height="landscape.270px,portrait.240px" width="landscape.200px,portrait.178px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';"
-						onCorrect="${args.dragtext4.length===0  ? "drop4.speak='true'": "drag4.speak='true'"}">
+						onCorrect="${args.dragtext4.length===0  ? "drop4.speak='true'": "drag4.speak='true'"}; lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg4 || args.dropimg4.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${args.dropimg4}"></lido-image>`
 							}
@@ -193,7 +197,7 @@ function getContainerXml(args) {
 
 				${(args.dropimg5.length=== 0 && args.droptext5.length === 0) ? '':`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
 					<lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
-						<lido-cell type="drop" audio="" id="image5" value="${args.correct5}" tab-index="5" isAllowOnlyOneDrop="true" disable-edit="true" width="landscape.200px,portrait.178px" height="landscape.268px,portrait.240px" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';" onCorrect="${args.dragtext5.length===0  ? "drop5.speak='true'": "drag5.speak='true'"}">
+						<lido-cell type="drop" audio="" id="image5" value="${args.correct5}" tab-index="5" isAllowOnlyOneDrop="true" disable-edit="true" width="landscape.200px,portrait.178px" height="landscape.268px,portrait.240px" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';" onCorrect="${args.dragtext5.length===0  ? "drop5.speak='true'": "drag5.speak='true'"}; lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
 							${
 								!args.dropimg5 || args.dropimg5.length===0?'':`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${args.dropimg5}"></lido-image>`
 							}

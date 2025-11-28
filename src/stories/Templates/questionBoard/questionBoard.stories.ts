@@ -11,6 +11,7 @@ type QuestionBoardArgs = {
     options: object;
     optionText: string;
     objective: string;
+    isAllowOnlyCorrect?: boolean;
 }
 
 const meta: Meta<QuestionBoardArgs> = {
@@ -25,6 +26,7 @@ const meta: Meta<QuestionBoardArgs> = {
         options: { control: 'object', name: 'Options' },
         optionText: { control: 'text', name: 'Option Text' },
         objective: { control: 'text', name: 'Objective', description: 'Objective to achieve the task. (E.g. 5)' },
+        isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
     },
     args: {
         questionBoardImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/question-board/wordwindow_frame_question.png'],
@@ -36,6 +38,7 @@ const meta: Meta<QuestionBoardArgs> = {
         options: [5, 7, 12, 18],
         optionText: 'tables',
         objective: '7',
+        isAllowOnlyCorrect: true,
     }
 }
 
@@ -115,6 +118,7 @@ function getContainerXml(args : QuestionBoardArgs) {
     const expressionText = args.expressionText;
     const optionText = args.optionText;
     const objective = args.objective;
+    const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
     const options = args.options as string[];
 
@@ -149,7 +153,7 @@ function getContainerXml(args : QuestionBoardArgs) {
     
     return `
         <main>
-            	<lido-container id="question-board-container" disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" >
+            	<lido-container id="question-board-container" disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" >
 
                     <!-- Chimple Avatar -->
                     <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.110px, portrait.195px" y="landscape.160px, portrait.1050px" ariaHidden="true" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='2';">

@@ -18,7 +18,23 @@
   pointer-events: none;
   z-index: 999;
 }
+@media (orientation: portrait) {
+  .lido-balance-shadow {
+    height: 100px;
+    position: absolute;
+    top: 80%;
+    left: 28%;
+  }
+}
 
+@media (orientation: landscape) {
+  .lido-balance-shadow {
+    height: 100px ;
+    position: absolute;
+    top: 90%  ;
+    left: 33%  ;
+  }
+}
 @media (orientation: portrait) {
   #pivotimg {
   position: absolute;
@@ -31,6 +47,21 @@
   }
 }
 
+#pivotimg::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;        
+  height: 60px;     
+  background-image: url("https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Shadow.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 10;
+}
 
 @media (orientation: landscape) {
   #pivotimg {

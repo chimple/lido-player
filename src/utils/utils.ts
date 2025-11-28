@@ -186,7 +186,15 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
         case 'speak': {
-          await AudioPlayer.getI().play(targetElement);
+          const val = (action.value || '').toString().trim().toLowerCase();
+          if (val === 'true' || val === '1' || val === 'yes') {
+            try {
+              await AudioPlayer.getI().play(targetElement);
+            } 
+            catch (err) {
+              console.error('Error playing audio for speak action:', err);
+            }
+          }
           break;
         }
         case 'fill-slide': {
@@ -316,6 +324,13 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           if (value) {
             targetElement.textContent += value;
           }
+          break;
+        }
+        
+        case 'disableType': {
+          const dragEle = document.querySelector<HTMLElement>('[type="drag"]');
+            dragEle.removeAttribute('type');
+            dragEle.style.pointerEvents = 'none';
           break;
         }
 
@@ -724,6 +739,7 @@ export const validateObjectiveStatus = async () => {
   if (!container) return;
   const objectiveString = container['objective'];
   const additionalCheck = container.getAttribute('equationCheck');
+  const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true' || '';
   console.log('🚀 ~ validateObjectiveStatus ~ additionalCheck:', additionalCheck);
   let equationGiven = false;
   if (objectiveString == null || objectiveString.length === 0) 
@@ -792,14 +808,15 @@ export const validateObjectiveStatus = async () => {
   } 
   else 
   {
-    const onInCorrect = container.getAttribute('onInCorrect');
-    await executeActions(onInCorrect, container);
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     if (!isContinueOnCorrect) 
     {
       triggerNextContainer();
       await calculateScore();
-    }
+    } else {
+        const onInCorrect = container.getAttribute('onInCorrect');
+        await executeActions(onInCorrect, container);
+    }    
   }
 };
 
@@ -1446,7 +1463,7 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
 
   if (sign === '-') {
     // '-' flow: reveal one by one then change bgColor of last B to red
-    for (let i = 0; i < topRowChildren.length; i++) {
+    for (let i = 0; i < Math.min(number1, topRowChildren.length); i++) {
       await new Promise(resolve => setTimeout(resolve, 75));
       showElement(topRowChildren[i]);
     }
@@ -1455,7 +1472,7 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
 
     await new Promise(r => setTimeout(r, 500));
     for (let k = 0; k < Math.min(number2, topRowChildren.length); k++) {
-      const idx = topRowChildren.length - 1 - k;
+      const idx = Math.min(number1, topRowChildren.length) - 1 - k;
       setImageBackground(topRowChildren[idx], 'red');
       await new Promise(r => setTimeout(r, 200));
     }

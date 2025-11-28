@@ -8,6 +8,7 @@ const meta: Meta = {
     equations: { control: 'object' },
     values: { control: 'object' },
     isContinueOnCorrect: { control: 'boolean' },
+    isAllowOnlyCorrect: { control: 'boolean' },
   },
 };
 
@@ -26,6 +27,7 @@ export const nimbletable: StoryObj = {
     ],
     answers: ["2", "4", "6", "8", "10", "12", "5"],
     isContinueOnCorrect: true,
+    isAllowOnlyCorrect: true,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -36,7 +38,7 @@ export const nimbletable: StoryObj = {
 
 function getContainerXml(args) {
   let tabCounter = 1;
-  const { equations = [], answers = [], isContinueOnCorrect = true } = args;
+  const { equations = [], answers = [], isContinueOnCorrect = true, isAllowOnlyCorrect = true } = args;
   
 
     const SlidingEquationCells = equations
@@ -61,7 +63,7 @@ function getContainerXml(args) {
 
 
   return `<main>
- <lido-container id="lido-container" is-allow-only-correct="true" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="this.scrollCellAfterEquationSolved='true'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" 
+ <lido-container id="lido-container" is-allow-only-correct="${isAllowOnlyCorrect}" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="this.scrollCellAfterEquationSolved='true'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" 
  is-continue-on-correct="${isContinueOnCorrect}">
 
    <!-- Audio -->

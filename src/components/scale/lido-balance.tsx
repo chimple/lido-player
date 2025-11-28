@@ -202,9 +202,7 @@ export class LidoBalance {
    }
 
   componentDidLoad() {
-     setTimeout(() => {
-    this.animateBalance();
-  }, 4000);
+  this.animateBalance();
   this.leftParentEl = document.getElementById("leftparent") as HTMLElement;
   this.rightParentEl = document.getElementById("rightparent") as HTMLElement;
    initEventsForElement(this.el)
@@ -214,7 +212,7 @@ export class LidoBalance {
     if (this.animationFrameId != null)
     cancelAnimationFrame(this.animationFrameId);
   }
-
+ 
   private async fetchAndApplyFill(url: string): Promise<string> {
     try {
       const res = await fetch(url);
@@ -245,6 +243,7 @@ export class LidoBalance {
   async updateTilt(leftVal: number, rightVal: number) {
   const diff = rightVal - leftVal;
   const newTilt = Math.max(-5, Math.min(5, diff));
+  await new Promise(res => setTimeout(res, 350));
   this.tiltf = newTilt;   
   }
 
@@ -266,7 +265,8 @@ export class LidoBalance {
       this.scaleEl.style.transformOrigin = '50% 80%';
     }
     if (this.leftParentEl && this.rightParentEl) {
-      const maxOffset = 60; 
+      const isPortrait = window.innerHeight > window.innerWidth;
+      const maxOffset =  isPortrait ? 40 : 60;  
       const offset = (this.currentAngle / this.maxTilt) * maxOffset;
 
       this.leftParentEl.style.transform = `translateY(${-offset}px)`;
@@ -301,7 +301,8 @@ export class LidoBalance {
   render() {
     return (
       <Host
-        id="lido-balance"        
+        id="lido-balance" 
+        bg-color="red"       
         onEntry={this.onEntry}
         class="lido-balance"
         tilt={this.tilt.toString()}
