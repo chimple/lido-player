@@ -264,7 +264,9 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
         mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
       } else {
+        if(!document.getElementById('unitsDrop') || !document.getElementById('tensDrop') || !document.getElementById('hundredsDrop')) {
         mostOverlappedElement.style.opacity = '0.3';
+        }
       }
     }
   };
@@ -320,6 +322,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     onElementDropComplete(element, mostOverlappedElement);
+    executeActions("this.updateCountBlender='true'",container);
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
@@ -545,11 +548,11 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   if (!dropElement) {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
-    return;
   }
   const dropTabIndex = dropElement.getAttribute('tab-index');
   
-  if (dropHasDrag[dropTabIndex]?.isFull) {
+  const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'false';
+  if (dropHasDrag[dropTabIndex]?.isFull  && !isAllowOnlyOneDrop) {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
     return;
   }
@@ -702,10 +705,11 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
     if (!(dropElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && (dropElement.getAttribute('minDrops') === '1' || !dropElement.getAttribute('minDrops'))) {
       const isisFull = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === dropElement);
-      if (isisFull) {
-        isisFull.isFull = true;
-         dropElement.setAttribute('is-full', 'true');
-      } else {
+      const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true';
+    if (isAllowOnlyOneDrop && isisFull) {
+            isisFull.isFull = true;
+            dropElement.setAttribute('is-full', 'true');
+          } else {
         console.warn('No matching drop item found for', dropElement);
       }
       //  container.setAttribute(DropHasDrag, JSON.stringify(dropHasDrag));
@@ -737,9 +741,9 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       // Check for overlaps and highlight only the most overlapping element
       if (dropElement && !dropHasDrag[dropTabIndex]?.isFull) {
         let mostOverlappedElement: HTMLElement = findMostoverlappedElement(dragElement, 'drag');
-        const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true' || '';
+        const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'true';
 
-        if (mostOverlappedElement && isAllowOnlyOneDrop) {
+        if (isAllowOnlyOneDrop && mostOverlappedElement) {
           dragElement.style.transform = 'translate(0,0)';
           dragElement.style.transition = 'transform 0.5s ease';
 

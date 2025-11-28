@@ -105,6 +105,7 @@ export class LidoCol {
    */
   @Prop() onCorrect: string;
 
+
   /**
    * Event handler for when the column is entered, which can be used to initiate specific behaviors on entry.
    */

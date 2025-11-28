@@ -124,6 +124,7 @@ export class LidoRandom {
    */
   @Prop() margin: string = '';
 
+
   /**
    * Reference to the HTML element representing this component.
    */

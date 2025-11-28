@@ -166,6 +166,7 @@ export class LidoImage {
    */
   @Prop() transform: string = '';
 
+
   /**
    * Reference to the HTML element that represents this image component.
    */
