@@ -211,6 +211,14 @@ export namespace Components {
          */
         "y": string;
     }
+    interface LidoCanvas {
+        "bgImage": string;
+        "height": string;
+        "onEntry": string;
+        "width": string;
+        "x": string;
+        "y": string;
+    }
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -2115,6 +2123,12 @@ declare global {
         prototype: HTMLLidoCalculatorElement;
         new (): HTMLLidoCalculatorElement;
     };
+    interface HTMLLidoCanvasElement extends Components.LidoCanvas, HTMLStencilElement {
+    }
+    var HTMLLidoCanvasElement: {
+        prototype: HTMLLidoCanvasElement;
+        new (): HTMLLidoCanvasElement;
+    };
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -2301,6 +2315,7 @@ declare global {
         "lido-avatar": HTMLLidoAvatarElement;
         "lido-balance": HTMLLidoBalanceElement;
         "lido-calculator": HTMLLidoCalculatorElement;
+        "lido-canvas": HTMLLidoCanvasElement;
         "lido-cell": HTMLLidoCellElement;
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
@@ -2526,6 +2541,14 @@ declare namespace LocalJSX {
         /**
           * Y-position of the calculator (can be px, %, etc.)
          */
+        "y"?: string;
+    }
+    interface LidoCanvas {
+        "bgImage"?: string;
+        "height"?: string;
+        "onEntry"?: string;
+        "width"?: string;
+        "x"?: string;
         "y"?: string;
     }
     /**
@@ -4393,6 +4416,7 @@ declare namespace LocalJSX {
         "lido-avatar": LidoAvatar;
         "lido-balance": LidoBalance;
         "lido-calculator": LidoCalculator;
+        "lido-canvas": LidoCanvas;
         "lido-cell": LidoCell;
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
@@ -4428,6 +4452,7 @@ declare module "@stencil/core" {
             "lido-avatar": LocalJSX.LidoAvatar & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
             "lido-balance": LocalJSX.LidoBalance & JSXBase.HTMLAttributes<HTMLLidoBalanceElement>;
             "lido-calculator": LocalJSX.LidoCalculator & JSXBase.HTMLAttributes<HTMLLidoCalculatorElement>;
+            "lido-canvas": LocalJSX.LidoCanvas & JSXBase.HTMLAttributes<HTMLLidoCanvasElement>;
             /**
              * @component LidoCell
              * A flexible UI cell component configurable via props like size, position, visibility,
