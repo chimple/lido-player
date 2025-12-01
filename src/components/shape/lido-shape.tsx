@@ -107,6 +107,7 @@ export class LidoShape {
    */
   @Prop() onCorrect: string = '';
 
+
   /**
    * Event handler triggered when the shape is entered (useful for animations or logic on entry).
    */

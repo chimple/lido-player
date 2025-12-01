@@ -14,6 +14,7 @@ const meta: Meta = {
       control: 'object',
       description: 'Array of colors for the letters',
       defaultValue: ['#F34D08','#81C127','#FFC805','#F55376','#5D44BD'],
+      isAllowOnlyCorrect: { control: 'boolean' },
     },
   },
 };
@@ -48,6 +49,7 @@ export const numberBoard: StoryObj = {
     ],
     
 	colors: ['#CF1565', '#409F5C', '#02C1C1', '#AD3184', '#F55376', '#81C127', '#5D44BD'],
+  isAllowOnlyCorrect: 'true',
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -57,15 +59,15 @@ export const numberBoard: StoryObj = {
 
 function getContainerXml(args) {
   let tabCounter = 1;
-  const { options = [], answers = [] } = args;
+  const { options = [], answers = [], isAllowOnlyCorrect = true} = args;
   const pickedColors = args.colors;
 
   const DropCells = answers.map(answer => {
     return `
 		<!-- drop --> 	
-        <lido-cell id="drop${tabCounter}" layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+        <lido-cell layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="121px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
 					<lido-math-matrix id="mat1" rows="2" cols="5"  defualtFill="${answer}" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px"></lido-math-matrix>
-					<lido-cell visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="${tabCounter++}" value="${answer}" string="${answer}" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
+					<lido-cell id="drop${tabCounter}" visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="${tabCounter++}" value="${answer}" string="${answer}" type="drop" onCorrect="lido-avatar.avatarAnimate='Success';" ></lido-cell>
 		</lido-cell>
       `;
   }).join('');
@@ -82,7 +84,7 @@ function getContainerXml(args) {
     .join('');
 
   return `<main>
-<lido-container id="lido-container" show-drop-border="false" appendToDropOnCompletion="false" is-allow-only-correct="true" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';trainAudio.speak='true';" onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+<lido-container id="lido-container" show-drop-border="false" appendToDropOnCompletion="false" is-allow-only-correct="${isAllowOnlyCorrect}" drop-action="move" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/bg.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.sleep='1000';lido-avatar.avatarAnimate='Success';xx.animation='placeToLeft 2s linear';tyre.animation='placeToLeft 2s linear';trainAudio.speak='true';" onEntry="this.justifyContent='space-around'; this.animation='rightToPlace 2.5 linear';this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.417px,portrait.363px" width="landscape.280px,portrait.340px" x="landscape.1360px, portrait.597px" y="landscape.637px, portrait.1370px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			

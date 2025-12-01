@@ -12,6 +12,7 @@ const meta: Meta = {
     option2: { control: 'text' },
     option3: { control: 'text' },
     option4: { control: 'text' },
+	isAllowOnlyCorrect: { control: 'boolean' },
   },
 };
 
@@ -19,7 +20,7 @@ export default meta;
 export const OrderTractor: StoryObj = {
   args: {
     firstNum: '3', operator: '+', secontNum: '4', equator: '=', answer: '7',
-    option1: '5', option2: '7', option3: '3', option4: '2', 
+    option1: '5', option2: '7', option3: '3', option4: '2', isAllowOnlyCorrect: 'true',
   },
 
   render: args => {
@@ -30,7 +31,7 @@ export const OrderTractor: StoryObj = {
 function getContainerXml(args) {
   return `
     <main>
-	<lido-container id="lido-container" is-allow-only-correct="true"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="${args.answer}" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+	<lido-container id="lido-container" is-allow-only-correct="${args.isAllowOnlyCorrect}"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" objective="${args.answer}" width="100%" bg-color="transparent" visible="true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';  " onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1267px, portrait.541px" y="landscape.587px, portrait.1304px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">

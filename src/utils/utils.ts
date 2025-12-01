@@ -334,6 +334,45 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
 
+        case 'updateCountBlender': {
+          const allDrags = document.querySelectorAll('[type="drag"]');
+          let units = 0;
+          let tens = 0;
+          let hundreds = 0;
+          allDrags.forEach(el => {
+            const dropTo = el.getAttribute("drop-to");
+
+            if (dropTo === "unitsDrop") units++;
+            if (dropTo === "tensDrop") tens++;
+            if (dropTo === "hundredsDrop") hundreds++;
+          });
+
+          const unitsValue = units * 1;
+          const tensValue = tens * 10;
+          const hundredsValue = hundreds * 100;
+          const totalValue = unitsValue + tensValue + hundredsValue;
+
+          // ✅ Update Lido Text Boxes
+          const unitsBox = document.getElementById("units");
+          const tensBox = document.getElementById("tens");
+          const hundredsBox = document.getElementById("hundreds");
+        
+          if (unitsBox) {
+            unitsBox.setAttribute("string", unitsValue.toString());
+          }
+          if (tensBox) {
+            tensBox.setAttribute("string", tensValue.toString());
+          }
+          if (hundredsBox) {
+            hundredsBox.setAttribute("string", hundredsValue.toString());
+          }
+          console.log(`Units = ${units} → ${unitsValue}`);
+          console.log(`Tens = ${tens} → ${tensValue}`);
+          console.log(`Hundreds = ${hundreds} → ${hundredsValue}`);
+          console.log(`✅ Total Value = ${totalValue}`);
+          break;
+        }
+
         default: {
           targetElement.style[action.action] = action.value;
           break;
@@ -368,6 +407,7 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
+      
 
       const keyframes = `
       @keyframes widthDecrease {
@@ -389,6 +429,15 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
           dummyElement.style.margin = '0px';
         });
       }
+      const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+      const rowAttr = dropElement.getAttribute('dropAttr');
+      const dropAttr = parseProp(rowAttr, orientation); // will return stackcascade or verticalstack
+
+      if ((dropAttr)?.toLowerCase() === "stackcascade" || (dropAttr)?.toLowerCase() === "verticalstack") {
+            dropElement.append(dragElement);
+            placeElementInDropZone(dropElement, dragElement, orientation, dropAttr);
+            return;
+     }
 
       dropElement.parentElement.append(element);
 
@@ -407,12 +456,25 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       const scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
       dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-    }, 500);
+    }, 100);
   }
 };
 
+// function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
+//   let clone = document.createElement('div') as HTMLElement;
+
+//   clone.innerHTML = originalEl.outerHTML;
+//   clone = clone.firstChild as HTMLElement;
+//   clone.setAttribute('height', originalEl.style.height);
+//   clone.setAttribute('width', originalEl.style.width);
+//   clone.setAttribute('visible', 'true');
+//   return clone;
+// }
+
 function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
-  let clone = document.createElement('div') as HTMLElement;
+  const tag = originalEl.tagName.toLowerCase();
+  if (tag === "lido-text") {
+      let clone = document.createElement('div') as HTMLElement;
 
   clone.innerHTML = originalEl.outerHTML;
   clone = clone.firstChild as HTMLElement;
@@ -420,7 +482,25 @@ function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
   clone.setAttribute('width', originalEl.style.width);
   clone.setAttribute('visible', 'true');
   return clone;
+  }
+   // ✅ For ALL other types (INCLUDING lido-image & matrix) use your simple logic
+  const clone = originalEl.cloneNode(false) as HTMLElement;
+  clone.style.width = originalEl.style.width;
+  clone.style.height = originalEl.style.height;
+  clone.style.margin = originalEl.style.margin;
+  clone.style.opacity = originalEl.style.opacity;
+  clone.style.transform = originalEl.style.transform;
+
+  clone.setAttribute("visible", "true");
+  clone.setAttribute("data-dummy", "true");
+  if(tag === "lido-math-matrix"){
+    clone.setAttribute('clickable' , "false");
+  }
+
+  return clone;
+  
 }
+
 
 // Function to parse actions string
 const parseActions = (input: string): Array<{ actor: string; action: string; value: string }> => {
@@ -1421,4 +1501,65 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
     
     elementAppearance(false);
   }
+}
+  function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr) {
+  const dropRect = dropElement.getBoundingClientRect();
+  const dragRect = dragElement.getBoundingClientRect();
+
+  const scale = typeof calculateScale === "function" ? calculateScale() : 1;
+
+  if (!dropElement.dataset.dropCount) dropElement.dataset.dropCount = "0";
+  let dropCount = parseInt(dropElement.dataset.dropCount, 10);
+
+  // === READ DROP ZONE SIZE ===
+  const dropWidth = dropRect.width;
+  const dropHeight = dropRect.height;
+
+  let targetX, targetY;
+
+  // ---------------- LANDSCAPE WATERFALL ----------------
+  if (orientation === "landscape" && dropAttr.toLowerCase() === "stackcascade") {
+    console.log("🌄 Landscape waterfall");
+
+    const shiftX = dropWidth * 0.02;  // proportional (5% of width)
+    const shiftY = dropHeight * 0.02; // proportional (5% of height)
+
+    const startX = dropRect.left + dropWidth * 0.36;  // 10% inside
+    const startY = dropRect.top + dropHeight * -0.09; // slightly above
+
+    targetX = startX + (dropCount * shiftX);
+    targetY = startY + (dropCount * shiftY);
+  }
+
+  // ---------------- PORTRAIT VERTICAL ----------------
+  else {
+    console.log("📱 Portrait vertical stack");
+    let startX
+    const stepY = dropHeight * 0.05; // 8% vertical step
+    if (dropElement.id === "unitsDrop") {
+        startX = dropRect.left + dropWidth * 0.4;   // special spacing
+    } else if (dropElement.id === "tensDrop"){
+      startX = dropRect.left + dropWidth * 0.25;
+    }
+    else {
+        startX = dropRect.left + dropWidth * 0.16;   // normal spacing
+    }
+    const startY = dropRect.top - dropHeight * 0.25; // above start
+
+    targetX = startX;
+    targetY = startY + (dropCount * stepY);
+  }
+
+  // ------------ APPLY TRANSFORM SMOOTHLY --------------
+  const dx = (targetX - dragRect.left) / scale;
+  const dy = (targetY - dragRect.top) / scale;
+
+  dragElement.style.transition = "transform .2s ease-out";
+  dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
+
+  dropElement.dataset.dropCount = String(dropCount + 1);
+
+  // reset size
+  dragElement.style.width = "auto";
+  dragElement.style.height = "auto";
 }
