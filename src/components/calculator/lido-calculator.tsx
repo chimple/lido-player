@@ -37,7 +37,7 @@ export class LidoCalculator {
   @Prop() bgColor: string = '#60DADA';
 
   /** Icon URL for the pen image shown on the calculator UI */
-  @Prop() penIcon: string = "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/Pen--Streamline-Solar%201.svg";
+  @Prop() penIcon: string = "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/penIcon.png";
 
 
   /** Current display value shown in the calculator screen */
@@ -143,17 +143,6 @@ export class LidoCalculator {
       this.displayValue = ""; 
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
-      if(this.objective===''){
-        const answerText = container.querySelector('#answer');
-        if(answerText){ 
-          const equationAttr = container.getAttribute('equationCheck') || ''; 
-          const calculatedValue = equationCheck(equationAttr);   
-           setTimeout(()=>{
-            answerText.setAttribute("string", String(calculatedValue))
-
-        },500);
-        }
-      }
       await executeActions(onCorrect, container);
       if(onCorrect.includes('scrollCellAfterEquationSolved')){
         if(this.objective.length===0){
@@ -179,7 +168,7 @@ export class LidoCalculator {
     return (
       <Host onEntry={this.onEntry} id="lidoCalculator" style={{ width: this.width, height: this.height, backgroundColor: this.bgColor,left:this.x, top:this.y }}>
           <lido-cell visible="true" height="94px" width="60px">
-            <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="176%" width="96px" onEntry="this.position='relative';" class="top-icon">
+            <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="176%" width="89px" onEntry="this.position='relative';" class="top-icon">
               <img src={this.penIcon} alt="pen" style={{ width: '100%', height: '100%' }} />
             </lido-text>
           </lido-cell>

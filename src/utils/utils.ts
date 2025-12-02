@@ -326,6 +326,10 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           }
           break;
         }
+         case 'updatedAnswer': {
+            updatedAnswer(); 
+          break;
+        }
 
         default: {
           targetElement.style[action.action] = action.value;
@@ -1414,4 +1418,14 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
     
     elementAppearance(false);
   }
+}
+export const updatedAnswer= (): void => {
+   const container = document.getElementById(LidoContainer) as HTMLElement | null;
+   if (!container) return;
+
+  const answerText = container.querySelector('#answer');
+  if (!answerText) return;
+  const equationAttr = container.getAttribute('equationCheck') || ''; 
+  const calculatedValue = equationCheck(equationAttr); 
+  answerText.setAttribute('string', String(calculatedValue));
 }
