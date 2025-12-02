@@ -1,4 +1,5 @@
-import { Component, h, Element, Prop, Host } from '@stencil/core';
+import { Component, h, Element, Prop, Host, State } from '@stencil/core';
+import { parseProp } from '../../utils/utils';
 
 @Component({
   tag: 'lido-canvas',
@@ -35,25 +36,46 @@ export class WritingPad {
   // Flag to track drawing state
   private drawing = false;
 
-  componentDidLoad() {
-    this.canvas = this.el.shadowRoot.querySelector('#lido-canvas');
+  @State() style: { [key: string]: string } = {};
+  updateStyles() {
+  const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
 
-    /** Set the REAL drawing resolution */
-    this.canvas.width = parseInt(this.width);
-    this.canvas.height = parseInt(this.height);
+  this.style = {
+    width: parseProp(this.width, orientation),
+    height: parseProp(this.height, orientation),
+    left: parseProp(this.x, orientation),
+    top: parseProp(this.y, orientation),
+    position: 'absolute',
+  };
 
-    this.ctx = this.canvas.getContext('2d');
-
+  if (this.canvas) {
+    this.canvas.width = parseInt(parseProp(this.width, orientation));
+    this.canvas.height = parseInt(parseProp(this.height, orientation));
     this.ctx.strokeStyle = '#000';
     this.ctx.lineWidth = 10;
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
 
     this.loadBackground();
+  }
+}
+
+  componentDidLoad() {
+    this.canvas = this.el.shadowRoot.querySelector('#lido-canvas');
+    this.ctx = this.canvas.getContext('2d');
+
+    this.ctx.strokeStyle = '#000';
+    this.ctx.lineWidth = 10;
+    this.ctx.lineCap = 'round';
+    this.ctx.lineJoin = 'round';
+    this.updateStyles();
+
+    this.loadBackground();
 
     this.canvas.addEventListener('pointerdown', e => this.start(e));
     this.canvas.addEventListener('pointermove', e => this.move(e));
     window.addEventListener('pointerup', () => this.stop());
+    window.addEventListener('resize', () => this.updateStyles());
   }
 
   loadBackground() {
@@ -108,20 +130,11 @@ export class WritingPad {
       <Host
         id="lido-canvas"
         class="lido-pad"
-        style={{
-          width: this.width,
-          height: this.height,
-          left: this.x,
-          top: this.y,
-          position: 'absolute',
-        }}
-      >
+        style={this.style}>
         <button onClick={() => this.clearCanvas()}>
           <img id="lido-img1" src="https://cdn-icons-png.flaticon.com/256/458/458595.png" alt="Clear"/>
         </button>
-        <canvas id="lido-canvas"  width={this.width}
-  height={this.height}
-  style={{ width: this.width, height: this.height }}></canvas>
+        <canvas id="lido-canvas" style={{ width: this.style.width, height: this.style.height,}}></canvas>
       </Host>
     );
   }
