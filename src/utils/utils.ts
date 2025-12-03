@@ -372,6 +372,11 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           console.log(`✅ Total Value = ${totalValue}`);
           break;
         }
+        case 'updateCalculatorAnswer': {
+          updateCalculatorAnswer(); 
+          break;
+        }
+
 
         default: {
           targetElement.style[action.action] = action.value;
@@ -1562,4 +1567,17 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
   // reset size
   dragElement.style.width = "auto";
   dragElement.style.height = "auto";
+}
+
+export const updateCalculatorAnswer= (): void => {
+   const container = document.getElementById(LidoContainer) as HTMLElement | null;
+   if (!container) return;
+   
+  const calci=document.querySelector('#lidoCalculator') as HTMLElement;
+  if(!calci) return;
+  const answerText = container.querySelector('#answer');
+   const value=calci.getAttribute('value');
+  console.log("😀😀😀😀😀😀😀",value);
+
+  answerText.setAttribute('string', value);
 }
