@@ -1577,7 +1577,5 @@ export const updateCalculatorAnswer= (): void => {
   if(!calci) return;
   const answerText = container.querySelector('#answer');
    const value=calci.getAttribute('value');
-  console.log("😀😀😀😀😀😀😀",value);
-
   answerText.setAttribute('string', value);
 }
