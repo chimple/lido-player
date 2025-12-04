@@ -82,7 +82,7 @@ function getContainerXml(args: SumTogetherArgs) {
   const dragCells = options
     .map((digit, i) => {
         return `
-        <lido-text id="option-${i}" tab-index="${tabCounter++}" type="drag" height="195px" width="120px" visible="true"   value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+        <lido-text id="option-${i}" tab-index="${tabCounter++}" type="drag" height="195px" width="120px" visible="true" onInCorrect="this.speak='true';" onCorrect="this.speak='true';" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="white" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
         </lido-text>
         `
     }).join('\n');
@@ -99,7 +99,7 @@ function getContainerXml(args: SumTogetherArgs) {
             </lido-cell>
 
             <!-- top section -->
-            <lido-cell layout="landscape.row,portrait.wrap" id="question-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.5%" width="landscape.100%, portrait.106%" bg-Color="transparent" margin="landscape.100px 0px 0px 0px,portrait.-130px -65px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center';" gap="landscape.35px,portrait.5px">
+            <lido-cell layout="landscape.row,portrait.wrap" id="top-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.5%" width="landscape.100%, portrait.106%" bg-Color="transparent" margin="landscape.100px 0px 0px 0px,portrait.-130px -65px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center';" gap="landscape.35px,portrait.5px">
                 ${topImageCells}
             </lido-cell>
 
@@ -113,13 +113,15 @@ function getContainerXml(args: SumTogetherArgs) {
                 </lido-text>
                 <lido-text id="equal" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="=" string="=" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
-                <lido-text id="${answer}" tab-index="${tabCounter++}" type="drop" height="245px" width="175px" visible="true"  value="${answer}" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png">
-                </lido-text>
+                <lido-image id="${answer}" tab-index="${tabCounter++}" is-slice="true" height="225px" width="175px" value="${answer}" string="?" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png" type="drop" onEntry="this.opacity='0';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='1000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
+                  <lido-text height="245px" width="175px" visible="true" value="${answer}" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='1';">
+                  </lido-text>
+                </lido-image>
             </lido-cell>
 
 
             <!-- option row-->
-            <lido-cell layout="landscape.row, portrait.wrap" id="question-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.5%" width="landscape.90%, portrait.106%" bg-Color="transparent" margin="landscape.65px 0px 65px 0px,portrait.-160px -65px 500px 0px" onEntry="this.z-index='1'; this.justify-content='center'; this.opacity='0';" gap="landscape.20px,portrait.5px">
+            <lido-cell layout="landscape.row, portrait.wrap" id="option-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.5%" width="landscape.90%, portrait.106%" bg-Color="transparent" margin="landscape.65px 0px 65px 0px,portrait.-160px -65px 500px 0px" onEntry="this.z-index='1'; this.justify-content='center'; this.opacity='0';" gap="landscape.20px,portrait.5px">
                 ${dragCells}
             </lido-cell>
 
