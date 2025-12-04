@@ -1402,9 +1402,6 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
   if (!element) return;
   if (!value) return;
 
-  const container = document.getElementById(LidoContainer) as HTMLElement | null;
-  if (!container) return;
-
   // Expecting structure: [_, TopRow, questionRow, optionRow, ...]
   const TopRow = element.querySelector("#top-row") as HTMLElement | null;
   const questionRow = element.querySelector("#question-row") as HTMLElement | null;
