@@ -301,7 +301,7 @@ export class LidoHome {
   }
 
   updateBackgroundImage() {
-    const container = document.querySelector(LidoContainer);
+    const container = document.querySelector(LidoContainer) as HTMLElement;
     const bgImageSrc = container.getAttribute('bg-image');
     document.body.style.background = 'none';
     container.style.backgroundImage = bgImageSrc ? `url(${bgImageSrc})` : 'none';
@@ -406,6 +406,7 @@ export class LidoHome {
       'lido-math-matrix': <lido-math-matrix {...props}>{children}</lido-math-matrix>,
       'lido-balance': <lido-balance {...props}>{children}</lido-balance>,
       'lido-calculator': <lido-calculator {...props}>{children}</lido-calculator>,
+      'lido-canvas': <lido-canvas {...props}>{children}</lido-canvas>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning
