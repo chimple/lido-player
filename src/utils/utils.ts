@@ -1403,9 +1403,9 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
   if (!value) return;
 
   // Expecting structure: [_, TopRow, questionRow, optionRow, ...]
-  const TopRow = element.querySelector("#top-row") as HTMLElement | null;
-  const questionRow = element.querySelector("#question-row") as HTMLElement | null;
-  const optionRow = element.querySelector("#option-row") as HTMLElement | null;
+  const TopRow = Array.from(element.children)[1] as HTMLElement | null;
+  const questionRow = Array.from(element.children)[2] as HTMLElement | null;
+  const optionRow = Array.from(element.children)[3] as HTMLElement | null;
 
   if (!TopRow || !questionRow || !optionRow) return;
 
