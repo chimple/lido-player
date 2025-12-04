@@ -113,7 +113,7 @@ function getContainerXml(args: SumTogetherArgs) {
                 </lido-text>
                 <lido-text id="equal" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="=" string="=" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
-                <lido-image id="${answer}" tab-index="${tabCounter++}" is-slice="true" height="225px" width="175px" value="${answer}" string="?" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png" type="drop" onEntry="this.opacity='0';">
+                <lido-image id="${answer}" tab-index="${tabCounter++}" is-slice="true" height="225px" width="175px" value="${answer}" string="?" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png" type="drop" onEntry="this.opacity='0';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='1000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
                   <lido-text height="245px" width="175px" visible="true" value="${answer}" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='1';">
                   </lido-text>
                 </lido-image>
