@@ -56,7 +56,7 @@ function getContainerXml(args: SequenceBoxArgs) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-        <lido-text id="${cell}" tab-index="${i}" disable-edit="true" height="landscape.165px, portrait.125px" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="#FFC805" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px';" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png">
+        <lido-text id="drop-${cell}" tab-index="${i}" disable-edit="true" height="landscape.165px, portrait.125px" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="#FFC805" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px';" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png">
         </lido-text>
       `
     )
@@ -65,7 +65,7 @@ function getContainerXml(args: SequenceBoxArgs) {
   const dragCells = options
   .map(
     (digit, i) => `
-      <lido-text id="${i}" tab-index="${i}" height="landscape.170px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="#FFF4CD"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
+      <lido-text id="drag-${i}" tab-index="${50+i}" height="landscape.170px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="#FFF4CD"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';">
       </lido-text>
     `
   )
@@ -90,7 +90,7 @@ function getContainerXml(args: SequenceBoxArgs) {
                 <lido-image is-slice="true" bg-color="transparent" id="drop-image0" disable-edit="true" tab-index="20" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_top1.png" height="landscape.150px, portrait.150px" width="landscape.315px, portrait.200px" margin="landscape.-180px 0px -525px 0px, portrait.-200px 0px -715px 0px">
                 </lido-image>
                 <lido-image is-slice="true" bg-color="transparent" id="drop-image0" disable-edit="true" tab-index="21" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_bottom1.png" height="landscape.250px, portrait.200px" width="landscape.315px, portrait.200px" margin="landscape.0px 0px -145px 0px, portrait.0px 0px -275px 0px" >
-                  <lido-text id="${number1}" tab-index="${number1}" disable-edit="true" height="landscape.130px portrait.100px" width="200px" visible="true" value="${number1}" string="${number1}" font-family="'Baloo Bhai 2'" font-color="#FFC805" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px'; this.margin-right='15px';">
+                  <lido-text id="drop-${number1}" tab-index="${number1}" disable-edit="true" height="landscape.130px portrait.100px" width="200px" visible="true" value="${number1}" string="${number1}" font-family="'Baloo Bhai 2'" font-color="#FFC805" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px'; this.margin-right='15px';">
                   </lido-text>
                 </lido-image>
               </lido-cell>
@@ -98,7 +98,7 @@ function getContainerXml(args: SequenceBoxArgs) {
                 <lido-image is-slice="true" bg-color="transparent" id="drop-image1" disable-edit="true" tab-index="23" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_top1.png" height="landscape.150px, portrait.150px" width="landscape.315px, portrait.200px" margin="landscape.-180px 0px -525px 0px, portrait.-200px 0px -715px 0px" >
                 </lido-image>
                 <lido-image is-slice="true" bg-color="transparent" id="drop-image1" disable-edit="true" tab-index="24" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_bottom1.png" height="landscape.250px, portrait.200px" width="landscape.315px, portrait.200px" margin="landscape.0px 0px -145px 0px, portrait.0px 0px -275px 0px" >
-                  <lido-text id="${number2}" tab-index="${number2}" disable-edit="true" height="landscape.130px portrait.100px" width="125px" visible="true" value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="#FFC805" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px'; this.margin-right='15px';">
+                  <lido-text id="drop-${number2}" tab-index="${number2}" disable-edit="true" height="landscape.130px portrait.100px" width="125px" visible="true" value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="#FFC805" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px'; this.margin-right='15px';">
                   </lido-text>
                 </lido-image>
               </lido-cell>
@@ -113,7 +113,7 @@ function getContainerXml(args: SequenceBoxArgs) {
                 <lido-image is-slice="true" bg-color="transparent" id="drop-image3" disable-edit="true" tab-index="30" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_top1.png" height="landscape.150px, portrait.150px" width="landscape.315px, portrait.200px" margin="landscape.-180px 0px -525px 0px, portrait.-200px 0px -715px 0px" >
                 </lido-image>
                 <lido-image is-slice="true" bg-color="transparent" id="drop-image3" disable-edit="true" tab-index="31" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_bottom1.png" height="landscape.250px, portrait.200px" width="landscape.315px, portrait.200px" margin="landscape.0px 0px -145px 0px, portrait.0px 0px -275px 0px" >
-                  <lido-text id="${number4}" tab-index="${number4}" disable-edit="true" height="landscape.130px portrait.100px" width="125px" visible="true" value="${number4}" string="${number4}" font-family="'Baloo Bhai 2'" font-color="#FFC805" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px'; this.margin-right='15px';">
+                  <lido-text id="drop-${number4}" tab-index="${number4}" disable-edit="true" height="landscape.130px portrait.100px" width="125px" visible="true" value="${number4}" string="${number4}" font-family="'Baloo Bhai 2'" font-color="#FFC805" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px'; this.margin-right='15px';">
                   </lido-text>
                 </lido-image>
               </lido-cell>
