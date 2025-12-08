@@ -490,9 +490,9 @@ const storeActivityScore = (score: number) => {
   const totalIndex = Number(appHome.getAttribute('totalIndex') ?? 0);
 
   const activityScore = JSON.parse(localStorage.getItem(ActivityScoreKey) ?? '{}');
+  
   const activityScoreKey = index.toString();
   activityScore[activityScoreKey] = score;
-
   //send Custom Event to parent
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
   dispatchActivityEndEvent(index, totalIndex, score);
@@ -500,6 +500,7 @@ const storeActivityScore = (score: number) => {
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
     const scoresArray: number[] = Object.values(activityScore);
+    
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
     gameScore.finalScore = Math.floor(finalScore);
     console.log('Total Score : ', gameScore.finalScore);
@@ -566,15 +567,16 @@ export const validateObjectiveStatus = async () => {
         }
         await executeActions(onCorrect, container);
       }
-      triggerNextContainer()
       await calculateScore();
+      triggerNextContainer()
+      
     } else {
       const onInCorrect = container.getAttribute('onInCorrect');
       await executeActions(onInCorrect, container);
       const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
       if (!isContinueOnCorrect) {
-        triggerNextContainer();
         await calculateScore();
+        triggerNextContainer();
       }
     }
   }
