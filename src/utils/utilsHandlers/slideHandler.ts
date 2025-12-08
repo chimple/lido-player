@@ -294,14 +294,14 @@ export function slidingWithScaling(element: HTMLElement): void {
 
 const slideCompleted = (slideElement: HTMLElement) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  const slideArr = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
+  const slideArr = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
   const allSlideElements = document.querySelectorAll("[type='slide']");
 
   let index = 0;
   allSlideElements.forEach(item => {
     slideArr[index++] = item['value'];
   });
-  localStorage.setItem(SelectedValuesKey, JSON.stringify(slideArr));
+ container.setAttribute(SelectedValuesKey, JSON.stringify(slideArr));
 
   const objectiveString = document.getElementById(LidoContainer)['objective'];
   const objectiveArray = objectiveString.split(',');

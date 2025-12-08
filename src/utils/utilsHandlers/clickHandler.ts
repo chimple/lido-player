@@ -1,4 +1,4 @@
-import { countPatternWords, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus } from '../utils';
+import { countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, storingEachActivityScore, validateObjectiveStatus, triggerNextContainer } from '../utils';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constants';
 import { dispatchClickEvent } from '../customEvents';
@@ -61,8 +61,6 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   element.addEventListener('pointerleave', onPointerLeave);
 }
 
-
-
 export function addClickListenerForClickType(element: HTMLElement): void {
   handlingElementFlexibleWidth(element, 'click');
   element.style.cursor = 'pointer';
@@ -76,7 +74,13 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     if (lido_buttons === 'lido-arrow-left' || lido_buttons === 'lido-arrow-right') {
       return;
     }
-    AudioPlayer.getI().stop();
+    const audioAttr = element.getAttribute('audio') as string;
+    const hasValidAudio = audioAttr && audioAttr.trim().length > 0;
+    if(hasValidAudio) {
+      AudioPlayer.getI().stop();
+    }
+    
+    
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const objective = container['objective'].split(',');
 
@@ -91,21 +95,11 @@ export function addClickListenerForClickType(element: HTMLElement): void {
 
     if(container['objective'].length === 0)return;
 
-    // element.style.border = '2px solid yellow';
-    // element.style.boxShadow = '0px 0px 10px rgba(255, 255, 0, 0.7)';
-
-    // element.style.transition = 'transform 0.2s ease, border 0.5s ease';
-    // element.style.transform = 'scale(1.1)';
-
-    // element.style.transform = 'scale(1)';
-    // element.style.border = '';
-    // element.style.boxShadow = '';
-
     const isActivated = element.classList.contains('lido-element-selected');
-    let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || [];
+    let selectedValue = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
     
     if (objective.length === 1) {
-      localStorage.setItem(SelectedValuesKey, JSON.stringify([element['value']]));
+      container.setAttribute(SelectedValuesKey, JSON.stringify([element['value']]));
       const isCorrect = objective.includes(element['value']);
       dispatchClickEvent(element, isCorrect);
       if (isCorrect) {
@@ -121,10 +115,15 @@ export function addClickListenerForClickType(element: HTMLElement): void {
         await executeActions(onInCorrect, element);
         // showWrongAnswerAnimation([element]);
       }
+      // const calciEl=document.querySelector('#lidoCalculator') as any; 
+      const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      if(!isInsideCalculator){ 
       storingEachActivityScore(isCorrect);
+      }
       handleShowCheck();
       return;
-    }
+    } 
+    
 
     if (showCheck) {
       checkButton.classList.remove('lido-disable-check-button');
@@ -135,9 +134,9 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       executeActions(element.getAttribute('onEntry'), element);
 
       selectedValue = selectedValue.filter(item => item != element['value']);
-      localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+      container.setAttribute(SelectedValuesKey, JSON.stringify([element['value']]));
 
-      let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      let multiOptionScore =buildDragSelectedMapFromDOM();
       const valueToRemove = element['value'];
       const keyToRemove = Object.keys(multiOptionScore).find(key => multiOptionScore[key].includes(valueToRemove));
 
@@ -146,10 +145,10 @@ export function addClickListenerForClickType(element: HTMLElement): void {
         if (multiOptionScore[keyToRemove].length === 0) {
           delete multiOptionScore[keyToRemove];
         }
-        localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+        
         const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
         const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
-        localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+        container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
       }
 
       if (showCheck && selectedValue.length === 0) {
@@ -160,16 +159,16 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       element.classList.add('lido-element-selected');
       const valueToFind = element['value'];
       const key = Object.keys(objective).find(key => objective[key] === valueToFind);
-      let multiOptionScore = JSON.parse(localStorage.getItem(DragSelectedMapKey)) || {};
+      let multiOptionScore = buildDragSelectedMapFromDOM();
       if (!key) {
         multiOptionScore[objective.length + selectedValue.length] = [valueToFind];
       } else {
         multiOptionScore[key] = [valueToFind];
       }
-      localStorage.setItem(DragSelectedMapKey, JSON.stringify(multiOptionScore));
+      
       const sortedKeys = Object.keys(multiOptionScore).sort((a, b) => parseInt(a) - parseInt(b));
       const sortedValues = sortedKeys.reduce((acc, key) => acc.concat(multiOptionScore[key]), []);
-      localStorage.setItem(SelectedValuesKey, JSON.stringify(sortedValues));
+      container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
 
       const isCorrect = objective.includes(element['value']);
       dispatchClickEvent(element, isCorrect);
@@ -184,11 +183,12 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }
       storingEachActivityScore(isCorrect);
     }
-
+    const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      if(!isInsideCalculator){
     if (!showCheck && countPatternWords(objective) === countPatternWords(selectedValue)) {
       validateObjectiveStatus();
     }
-  };
+  }};
   element.addEventListener('click', onClick);
 
   // using pointerup and pointerdown - for handling mouse and touch events combined

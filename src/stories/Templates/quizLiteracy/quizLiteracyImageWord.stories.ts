@@ -31,7 +31,7 @@ function getContainerXml(args) {
  
 
   return `<main>
-   <lido-container id="lido-container" value="maincontainer" visible="true" objective="${args.answers}"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png"  onEntry="" is-Continue-On-Correct="true" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
+   <lido-container id="lido-container" value="maincontainer" visible="true" objective="${args.answers}"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Quiz%20literacy.png"  onEntry="" is-Continue-On-Correct="true" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.290px,portrait.434px" width="landscape.278px,portrait.437px" x="landscape.78%, portrait.24%" y="landscape.228px, portrait.75%" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" bg-color="transparent">
 		</lido-avatar>

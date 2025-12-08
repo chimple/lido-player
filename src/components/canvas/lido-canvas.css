@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lido-canvas {
+  
+  background:red;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+#lido-exit-button {
+  padding: 6px 14px;
+  border: none;
+  background:transparent;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+   top: -43%;   
+  left: 18%;   
+  z-index: 10;
+}
+
+canvas {
+  /* flex: 1; */
+  touch-action: none;
+  display: block;
+}

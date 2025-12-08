@@ -16,10 +16,8 @@ import i18next from '../../utils/i18n';
   shadow: false,
 })
 export class LidoContainer {
-
-   /** Language to apply to all texts */
+  /** Language to apply to all texts */
   @Prop() locale: string = '';
-  
   /**
    * Controls whether the drop zone displays a border; true shows the border, false hides it.
    */
@@ -211,6 +209,11 @@ export class LidoContainer {
    */
   @Prop() delayVisible: string = '';
 
+  /**
+    * When set to true, disables the speak functionality of long press for this component and its children.
+  */
+  @Prop() disableSpeak: boolean = false;
+
   @Watch('locale')
     languageChanged(newLang: string) {
     const langToApply = newLang || this.resolveLanguage();
@@ -231,17 +234,7 @@ export class LidoContainer {
     const xmlLang = this.el.getAttribute('locale');
     if (xmlLang?.trim()) return xmlLang;
     return this.el.textContent?.trim();
-  }
-  private updateChildTextLanguage(lang?: string) {
-    const appliedLang = lang || i18next.language || 'en'; 
-    i18next.changeLanguage(appliedLang);
-
-    const texts = this.el.querySelectorAll('lido-text');
-    texts.forEach((textEl: any) => {
-      textEl.locale = appliedLang;
-      textEl.dispatchEvent(new CustomEvent('languageChanged', { bubbles: true }));
-    });
-  }
+}
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -315,6 +308,16 @@ export class LidoContainer {
     }
   }
 
+  private updateChildTextLanguage(lang?: string) {
+    const appliedLang = lang || i18next.language || 'en'; 
+    i18next.changeLanguage(appliedLang);
+
+    const texts = this.el.querySelectorAll('lido-text');
+    texts.forEach((textEl: any) => {
+      textEl.locale = appliedLang;
+      textEl.dispatchEvent(new CustomEvent('languageChanged', { bubbles: true }));
+    });
+  }
   /**
    * Lifecycle hook that runs after the component is loaded.
    * - It scales the container.
@@ -391,6 +394,7 @@ export class LidoContainer {
         prev-button-url={this.prevButtonUrl}
         next-button-url={this.nextButtonUrl}
         speaker-button-url={this.speakerButtonUrl}
+        disable-speak={this.disableSpeak}
       >
         <slot />
       </Host>

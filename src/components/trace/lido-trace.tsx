@@ -125,6 +125,8 @@ export class LidoTrace {
    */
   @Prop() onCorrect: string;
 
+ 
+
   /**
    * Indicates whether to highlight the text associated with the SVG when the trace is completed.
    */
@@ -744,11 +746,6 @@ export class LidoTrace {
       let startPoint = currentPath.getPointAtLength(0);
       let endPoint = currentPath.getPointAtLength(currentPath.getTotalLength());
       let pathIsClosed = this.getDistanceSquared(startPoint, endPoint) < 200; // threshold for overlap
-      console.log('lastLength, totalPathLength', state.lastLength, state.totalPathLength);
-      console.log('percentComplete', percentComplete);
-      console.log('startPoint, endPoint', startPoint, endPoint);
-      console.log('distance squared between start & end:', this.getDistanceSquared(startPoint, endPoint));
-      console.log('pathIsClosed:', pathIsClosed);
 
       if (pathIsClosed && state.totalPathLength > 50) {
         if (percentComplete >= COMPLETION_THRESHOLD) {
@@ -785,8 +782,9 @@ export class LidoTrace {
     }
 
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
-    console.log('Total SVGs:', this.svgUrls.length);
+    const delay = 1000; // milliseconds
     if (this.currentSvgIndex < this.svgUrls.length - 1) {
+      await new Promise(resolve => setTimeout(resolve, delay));
       this.currentSvgIndex++;
       await this.initializeSVG();
       this.moving = false;
@@ -1043,7 +1041,6 @@ export class LidoTrace {
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
         disable-speak={this.disableSpeak}
-
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>

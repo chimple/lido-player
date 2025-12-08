@@ -16,7 +16,9 @@ import {
   ActivityScoreKey,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
+
+import { calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
+
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 import i18next from '../../utils/i18n';
@@ -34,8 +36,15 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
-  /** Language to apply to all texts */
-  @Prop() locale?: string='hi';
+
+  /** Boolean to show or hide navigation buttons */
+  @Prop() showNav: boolean = true;
+
+  /** Array of active container indexes to be rendered */
+  @Prop() activeContainerIndexes: number[] = [];
+
+   /** Language to apply to all texts */
+  @Prop() locale?: string='';
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -119,12 +128,13 @@ export class LidoHome {
    */
   @State() containers: (() => any)[] = [];
 
+
   @Watch('locale')
-  onLangChange(newLang: string) {
-    this.setLanguage(newLang);
-    // re-render all containers with updated locale
-    this.containers = [...this.containers];
-  }
+    onLangChange(newLang: string) {
+      this.setLanguage(newLang);
+      // re-render all containers with updated locale
+      this.containers = [...this.containers];
+    }
 
   private setLanguage(lang?: string) {
     const effectiveLang = lang || i18next.language; // fallback to current
@@ -132,7 +142,6 @@ export class LidoHome {
     // Trigger re-render of containers to update <lido-text> dynamically
     this.containers = [...this.containers];
   }
-
   /**
    * Event handler for transitioning to the next container in the sequence.
    * If the last container is reached, it shows a completion message.
@@ -152,7 +161,7 @@ export class LidoHome {
     // console.log("👉 NextContainerKey CALLED with index:", index);
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
-    clearLocalStorage();
+    // clearmemoryStorage();
 
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
@@ -182,7 +191,7 @@ export class LidoHome {
     if (this.currentContainerIndex <= 0) return;
 
     // Clear selected values from localStorage on container transition
-    clearLocalStorage();
+    // clearmemoryStorage();
 
     // Move to the previous container
     this.currentContainerIndex--;
@@ -209,7 +218,7 @@ export class LidoHome {
 
     if (this.currentContainerIndex === 0) {
       localStorage.removeItem(ActivityScoreKey);
-      clearLocalStorage();
+      // clearmemoryStorage();
     }
 
     // Listen for 'NextContainerKey' event to transition between containers
@@ -232,7 +241,7 @@ export class LidoHome {
     window.addEventListener('beforeunload', () => {
       AudioPlayer.getI().stop();
       localStorage.removeItem(ActivityScoreKey);
-      clearLocalStorage();
+      // clearmemoryStorage();
     });
   }
 
@@ -292,7 +301,7 @@ export class LidoHome {
   }
 
   updateBackgroundImage() {
-    const container = document.querySelector(LidoContainer);
+    const container = document.querySelector(LidoContainer) as HTMLElement;
     const bgImageSrc = container.getAttribute('bg-image');
     document.body.style.background = 'none';
     container.style.backgroundImage = bgImageSrc ? `url(${bgImageSrc})` : 'none';
@@ -372,6 +381,9 @@ export class LidoHome {
       props.string = i18next.t(props.string); 
     }
 
+  if (tagName === 'lido-text' && props.string) {
+    props.string = i18next.t(props.string); 
+  }
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
@@ -395,6 +407,9 @@ export class LidoHome {
       'lido-float': <lido-float {...props}>{children}</lido-float>,
       'lido-keyboard': <lido-keyboard {...props}>{children}</lido-keyboard>,
       'lido-math-matrix': <lido-math-matrix {...props}>{children}</lido-math-matrix>,
+      'lido-balance': <lido-balance {...props}>{children}</lido-balance>,
+      'lido-calculator': <lido-calculator {...props}>{children}</lido-calculator>,
+      'lido-canvas': <lido-canvas {...props}>{children}</lido-canvas>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning
@@ -414,17 +429,24 @@ export class LidoHome {
   private parseContainers(rootElement: Element) {
     const containerElements = rootElement.querySelectorAll('lido-container');
 
-    const containers = Array.from(containerElements).map(container => {
+
+    const containers = Array.from(containerElements).map((container, index) => {
+      console.log("nammadhaaaaaaa",this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index));
+      
+      if(this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index))return;
       // Return a factory function that generates a fresh JSX node each time
       return () => this.parseElement(container);
-    });
+    }).filter(Boolean); // Remove any undefined entries
 
     this.containers = containers;
+    console.log("container :::", containers);
+    
   }
 
   // update arrow visibility
 
   private updateArrowVisibility = () => {
+    if(!this.showNav)return;
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
       if (!containerElement) return;
@@ -506,7 +528,7 @@ export class LidoHome {
         dispatchGameExitEvent();
         AudioPlayer.getI().stop();
         localStorage.removeItem(ActivityScoreKey);
-        clearLocalStorage();
+        // clearmemoryStorage();
         alertElement.remove();
         this.currentContainerIndex = 0;
       } else {
@@ -562,6 +584,7 @@ export class LidoHome {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
           }}
+          style={{visibility: this.showNav ? "visible" : "hidden"}}
         >
           <lido-image src={this.navBarIcons.exit}></lido-image>
         </div>
@@ -572,6 +595,7 @@ export class LidoHome {
             onClick={() => {
               triggerPrevcontainer();
             }}
+            style={{visibility: this.showNav ? "visible" : "hidden"}}
           >
             <lido-image src={this.navBarIcons.prev} />
           </div>
@@ -593,11 +617,12 @@ export class LidoHome {
               console.log('✅ Button clicked - nextBtn action triggered');
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
+            style={{visibility: this.showNav ? "visible" : "hidden"}}
           >
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} style={{visibility: this.showNav ? "visible" : "hidden"}}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>

@@ -103,6 +103,8 @@ export class LidoWrap {
    */
   @Prop() onCorrect: string;
 
+
+
   /**
    * Event handler triggered when the wrap container is entered (useful for animations or logic on entry).
    */

@@ -11,6 +11,7 @@ type WriteWordArgs = {
     topDisplayImage: string[];
     bottomDisplayImage: string[];
     spanType: 'letters' | 'words';
+    isAllowOnlyCorrect?: boolean;
 }
 
 const meta: Meta<WriteWordArgs> = {
@@ -24,6 +25,7 @@ const meta: Meta<WriteWordArgs> = {
         topDisplayImage: { control: 'file', name: 'Top Display Image URL', multiple: true },
         bottomDisplayImage: { control: 'file', name: 'Bottom Display Image URL', multiple: true },
         spanType: { control: 'select', options: ['letters', 'words'], name: 'Text Highlight Type' },
+        isAllowOnlyCorrect: { control: 'boolean', name: 'Allow Only Correct' },
     },
     args: {
         traceImage1: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/hindi_aa.svg'],
@@ -34,6 +36,7 @@ const meta: Meta<WriteWordArgs> = {
         topDisplayImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/questionBg.png'],
         bottomDisplayImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/tracing%20bg.png'],
         spanType: 'letters',
+        isAllowOnlyCorrect: true,
     }
 }
 
@@ -60,6 +63,7 @@ function getContainerXml(args : WriteWordArgs) {
     const topDisplayImage = args.topDisplayImage[0];
     const bottomDisplayImage = args.bottomDisplayImage[0];
     const spanType = args.spanType;
+    const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
     if (!traceImage1 || !traceImage2 || !traceImage3) {
         console.error('Trace image is missing');
@@ -70,7 +74,7 @@ function getContainerXml(args : WriteWordArgs) {
     
     return `
         <main>
-            <lido-container id="lido-container" tab-index="1" objective="writeWord" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+            <lido-container id="lido-container" tab-index="1" objective="writeWord" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20word.png" height="100%" width="100%" bg-color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" after-drop="false">
 
                     <!-- Chimple Avatar -->
                     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1200px, portrait.450px" y="landscape.390px, portrait.1020px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
