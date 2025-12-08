@@ -209,31 +209,35 @@ function getContainerXml({ blocks, options }: ShapeTractorArgs) {
 
   return `
     <main>
-     <lido-container id="lido-container" is-allow-only-correct="true" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="${dropValues}" visible="true" bg-image="https://drive.google.com/file/d/1tvYA4_q3fPciJwc_mHTQp8DoHgMhXABU/view" custom-style="#drop1, #drop2{border: none !important;}"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; answer.visible='false';  lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear';  truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail';" >
-			<!-- Chimple Avatar -->
-		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="300px" x="landscape.110px,portrait.10px" y="landscape.80px,portrait.230px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry=" this.animation='rightToPlace 2.5s linear';">
-				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
-				</lido-avatar>
-		</lido-cell>
+      <lido-container id="lido-container" is-allow-only-correct="true" show-Check="false" is-Continue-On-Correct="true" after-Drop="false" objective="${dropValues}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Shape%20tractor.png" custom-style="#drop1, #drop2{border: none !important;}"  onCorrect="drg1.disableType='true'; drg2.disableType='true'; drg3.disableType='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000'; answer.visible='false'; lido-avatar.animation='placeToLeft 2.5s linear'; answer.animation='placeToLeft 2.5s linear'; truck.animation='placeToLeft 2.5s linear'; trainAudio.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail';" > 
 
-        <lido-cell visible="true" id="truck" layout="row" height="landscape.60%, portrait.60%" width="landscape.100%, portrait.100%" bg-color="transparent"  onEntry=" this.animation='rightToPlace 2.5s linear';" onCorrect="" >
-		  	<lido-text id="question" visible="false" string="complete the pattern using the blocks given below" value="complete the pattern using the blocks given below" onEntry="this.sleep='2000';this.speak='true';"></lido-text>
-			<lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/train1.m4a" onEntry="this.speak='true';"></lido-text>
-			
-		  <lido-cell visible="true" layout="row" bg-color="transparent" gap="0px"   margin="landscape.220px 0px 0px 0px,portrait.977px 0px 0px -200px">
-			
-			<lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/truck_bg_soundtrain.png" width="landscape.220px,portrait.250px" padding="0px" margin="72px 0px 0px 0px"></lido-image>
-			${truckBlocks}
+          <!-- Chimple Avatar -->
+          <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="300px" x="landscape.110px,portrait.10px" y="landscape.80px,portrait.230px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry=" this.animation='rightToPlace 2.5s linear';">
+              <lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">
+              </lido-avatar>
           </lido-cell>
-        </lido-cell>
 
-        <lido-cell visible="true" id="answer" layout="row" height="landscape.40%,portrait.40%" width="landscape.50%,portrait.50%" bg-color="transparent" onEntry="this.alignItems='center';this.justify-content='space-around';this.animation='rightToPlace 2.5s linear'">
-          ${optionCells}
-        </lido-cell>
-      </lido-container>
+          <lido-cell visible="true" id="truck" layout="row" height="landscape.60%, portrait.60%" width="landscape.100%, portrait.100%" bg-color="transparent"  onEntry=" this.animation='rightToPlace 2.5s linear';" onCorrect="" >
 
-      
-     
+            <lido-text id="question" visible="false" string="complete the pattern using the blocks given below" value="complete the pattern using the blocks given below" onEntry="this.sleep='2000';this.speak='true';">
+            </lido-text>
+            <lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/train1.m4a" onEntry="this.speak='true';">
+            </lido-text>
+            
+            <lido-cell visible="true" layout="row" bg-color="transparent" gap="0px"   margin="landscape.220px 0px 0px 0px,portrait.977px 0px 0px -200px">
+            
+              <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Shape%20Tractor/truck_bg_soundtrain.png" width="landscape.220px,portrait.250px" padding="0px" margin="72px 0px 0px 0px">
+              </lido-image>
+
+              ${truckBlocks}
+                
+            </lido-cell>
+          </lido-cell>
+
+          <lido-cell visible="true" id="answer" delay-visible="2650" layout="row" height="landscape.40%,portrait.40%" width="landscape.50%,portrait.50%" bg-color="transparent" onEntry="this.alignItems='center';this.justify-content='space-around';this.animation='rightToPlace 2.5s linear'">
+            ${optionCells}
+          </lido-cell>
+        </lido-container>     
     </main>
   `;
 }

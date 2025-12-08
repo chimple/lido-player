@@ -33,7 +33,7 @@ function getContainerXml(args) {
   let tabCounter = 1;
   const correctSequence = args.options.filter(opt => opt.startsWith('#') || opt.startsWith('@')).map(opt => opt.slice(1)) .join('');
   return `<main>
-    	<lido-container id="lido-container" is-allow-only-correct="true" bg-image="https://drive.google.com/file/d/1bWLOQbE7_myfNzm-HeiZfsKR2VzuAeHt/view" objective="${drops.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect=" lido-avatar.avatarAnimate='Success';  correctWord.speak='true';  this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
+    	<lido-container id="lido-container" is-allow-only-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Spell%20door.png" objective="${drops.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect=" lido-avatar.avatarAnimate='Success';  correctWord.speak='true';  this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false">
 				<lido-text visible="false" id="correctWord" onEntry="this.display='none';" string="${correctSequence}" ></lido-text>
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" value="pos2" height="305px" width="227px" x="landscape.81%, portrait.60%" y="landscape.12%, portrait.20%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">

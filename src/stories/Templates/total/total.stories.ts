@@ -36,7 +36,7 @@ function getContainerXml(args) {
   return `
   <main>
     <lido-container  visible="true"  id="lido-container"  onInCorrect="lido-avatar.avatarAnimate='Fail';"  onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='1000'; ${args.images .map((_, i) => `i${i + 1}.revealImageValue='true'; this.sleep='1000';`) .join('')} this.sleep='2000';"
-    bg-image="https://drive.google.com/file/d/1UlIo8raVC3vyGY9DVL7VhBGsfgfZJZpV/view" objective="${args.answer}" is-continue-on-correct="true" show-Check="false" >
+    bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Total.png" objective="${args.answer}" is-continue-on-correct="true" show-Check="false" >
 <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.402px,portrait.402px" width="landscape.302px,portrait.398px" x="landscape.84%, portrait.-4%" y="landscape.58%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
