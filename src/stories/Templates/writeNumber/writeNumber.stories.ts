@@ -81,7 +81,7 @@ function getContainerXml(args : WriteNumberArgs) {
     
     return `
         <main>
-            <lido-container id="lido-container" objective="writeNumber" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}">
+            <lido-container id="lido-container" objective="writeNumber" tab-index="1"  value="mainContainer1" bg-image="https://drive.google.com/file/d/1Sl3YP-2txge2CR5O6I0D6SIXUjvoTTyO/view" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}">
 
                 <!-- Chimple Avatar -->
                 <lido-cell layout="pos" id="pos1" disable-edit="true" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1279px, portrait.230px" y="landscape.375px, portrait.1035px" ariaHidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">

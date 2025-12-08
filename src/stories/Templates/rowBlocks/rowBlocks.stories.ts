@@ -57,7 +57,7 @@ function getContainerXml(args) {
 <main>
 
     <lido-container id="lido-container" visible="true" objective="${answers.join(',')}" onEntry="audio12.speak='true';"
-        onCorrect="lido-avatar.avatarAnimate='Success';  sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RowBlocks/Sky%207.png" custom-style= ".dropping {
+        onCorrect="lido-avatar.avatarAnimate='Success';  sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}" bg-color="transparent" bg-image="https://drive.google.com/file/d/1iDTxufw6ZBkapBxX-Nj_C2fffl1hLBIo/view" custom-style= ".dropping {
         border: 5px dashed #2C3836 !important;
         background-color: #6D8C87 !important;
         }" is-allow-only-correct="${isAllowOnlyCorrect}">

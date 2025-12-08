@@ -53,7 +53,7 @@ function getContainerXml(args) {
 
   return `
     <main>
-        <lido-container id="lido-container" visible="true" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/cloud.png" drop-action="infinite-drop" is-allow-only-correct="${args.isAllowOnlyCorrect}">
+        <lido-container id="lido-container" visible="true" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://drive.google.com/file/d/1KcyrpWLlz92WLcEiKuNOMZQkdjxMIzrK/view" drop-action="infinite-drop" is-allow-only-correct="${args.isAllowOnlyCorrect}">
  <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1332px, portrait.-8%" y="landscape.547px, portrait.1%" aria-hidden="true" z="0" bg-color="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">

@@ -60,7 +60,7 @@ function getContainerXml(args: SequenceBoxArgs) {
 
   return `
     <main>
-        <lido-container id="lido-container" objective="${missingNumber}" tab-index="1" show-drop-border="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='20000';" drop-action="infinite-drop" show-check="false">
+        <lido-container id="lido-container" objective="${missingNumber}" tab-index="1" show-drop-border="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" value="mainContainer1" bg-image="https://drive.google.com/file/d/1uUXxJ3YHmap0mbgx4LTAWW1ndXgjPixv/view" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='20000';" drop-action="infinite-drop" show-check="false">
 
 			<!-- Chimple Avatar -->
 			<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.600px, portrait.230px" y="landscape.45px, portrait.1010px" ariaHidden="true" z="1" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0';">

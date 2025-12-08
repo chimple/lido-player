@@ -26,7 +26,7 @@ function getContainerXml(args) {
   
 
   return `<main>
-    <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" objective="nammadha" onCorrect="this.sleep='120000';">
+    <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" objective="nammadha" bg-image="https://drive.google.com/file/d/1Q2Uvvy6dImFKsREb8F9-UcBl_GJUnheB/view" onCorrect="this.sleep='120000';">
 	<lido-math-matrix id="matrix3" visible="true" rows="10" cols="10" top-index="false" left-index="false" bottom-index="false" active-only-visible="false" defualtFill="100" active-bg-color="#deb3f2" clickable="false" type="checkerBlock"></lido-math-matrix>
 
 	<lido-cell visible="true" layout="pos" x="0" y="0">

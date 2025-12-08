@@ -45,7 +45,7 @@ function getContainerXml(args: Args) {
     height="100%"
     width="100%"
     bgColor="transparent"
-    bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/grid-game//Sky.png"
+    bgImage="https://drive.google.com/file/d/1wgyNBYcORWaLeWtNdBH28S5ScQb_EUzT/view"
     visible="true"
     showCheck="false"
     isContinueOnCorrect="true"
