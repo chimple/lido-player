@@ -96,6 +96,14 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoCanvas {
+        "bgImage": string;
+        "height": string;
+        "onEntry": string;
+        "width": string;
+        "x": string;
+        "y": string;
+    }
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -1938,6 +1946,12 @@ declare global {
         prototype: HTMLLidoAvatarElement;
         new (): HTMLLidoAvatarElement;
     };
+    interface HTMLLidoCanvasElement extends Components.LidoCanvas, HTMLStencilElement {
+    }
+    var HTMLLidoCanvasElement: {
+        prototype: HTMLLidoCanvasElement;
+        new (): HTMLLidoCanvasElement;
+    };
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -2122,6 +2136,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "lido-avatar": HTMLLidoAvatarElement;
+        "lido-canvas": HTMLLidoCanvasElement;
         "lido-cell": HTMLLidoCellElement;
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
@@ -2232,6 +2247,14 @@ declare namespace LocalJSX {
           * The z-index of the column to control stacking order.
          */
         "z"?: string;
+    }
+    interface LidoCanvas {
+        "bgImage"?: string;
+        "height"?: string;
+        "onEntry"?: string;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
     }
     /**
      * @component LidoCell
@@ -4061,6 +4084,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "lido-avatar": LidoAvatar;
+        "lido-canvas": LidoCanvas;
         "lido-cell": LidoCell;
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
@@ -4094,6 +4118,7 @@ declare module "@stencil/core" {
              * This component initializes and manages a Rive animation inside a canvas element.
              */
             "lido-avatar": LocalJSX.LidoAvatar & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
+            "lido-canvas": LocalJSX.LidoCanvas & JSXBase.HTMLAttributes<HTMLLidoCanvasElement>;
             /**
              * @component LidoCell
              * A flexible UI cell component configurable via props like size, position, visibility,
