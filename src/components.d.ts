@@ -96,6 +96,129 @@ export namespace Components {
          */
         "z": string;
     }
+    interface LidoBalance {
+        /**
+          * Balance symbol shown when `showSymbol` is true. Default: "=".
+         */
+        "balanceSymbol": string;
+        /**
+          * Fill color applied to all loaded SVGs (pivot, scale, handler). Defaults to "brown".
+         */
+        "fill": string;
+        /**
+          * URL of the handler (side stands / hooks) image for the balance.
+         */
+        "handlerimage": string;
+        /**
+          * CSS height of the component (responsive values allowed). Default: "auto".
+         */
+        "height": string;
+        "hideSymbol": () => Promise<void>;
+        /**
+          * CSS margin applied to the outer container.
+         */
+        "margin": string;
+        /**
+          * Maximum allowed tilt angle (in degrees) for the balance bar.
+         */
+        "maxTilt": number;
+        /**
+          * Action(s) to execute when the component enters the DOM. Example: trigger animations or audio cues.
+         */
+        "onEntry": string;
+        /**
+          * Operation type used to calculate balance values. Supported: "count", "add", "subtract", etc.
+         */
+        "operation": string;
+        /**
+          * CSS padding applied to the outer container.
+         */
+        "padding": string;
+        /**
+          * URL of the pivot (base stand) image used in the balance visualization.
+         */
+        "pivotimage": string;
+        "revealSymbol": () => Promise<void>;
+        /**
+          * URL of the scale (bar) image that tilts based on the weight difference.
+         */
+        "scaleimage": string;
+        /**
+          * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
+         */
+        "showSymbol": boolean;
+        /**
+          * Initial tilt value of the balance. Negative = tilts left, Positive = tilts right.
+         */
+        "tilt": number;
+        "updateTilt": (leftVal: number, rightVal: number) => Promise<void>;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
+        "visible": boolean | string;
+        /**
+          * CSS width of the component (responsive values allowed). Default: "auto".
+         */
+        "width": string;
+        /**
+          * Horizontal (X-axis) offset for positioning the component. Default: "0px".
+         */
+        "x": string;
+        /**
+          * Vertical (Y-axis) offset for positioning the component. Default: "0px".
+         */
+        "y": string;
+        /**
+          * Z-index for stacking order of the component. Default: "0".
+         */
+        "z": string;
+    }
+    interface LidoCalculator {
+        /**
+          * Background color for the calculator container
+         */
+        "bgColor": string;
+        /**
+          * Height of the calculator component (default: '711px')
+         */
+        "height": string;
+        /**
+          * Objective or identifier for activity-based logic or validation
+         */
+        "objective": string;
+        /**
+          * Code or actions to execute when the component is first rendered
+         */
+        "onEntry": string;
+        /**
+          * Icon URL for the pen image shown on the calculator UI
+         */
+        "penIcon": string;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
+        "visible": boolean | string;
+        /**
+          * Width of the calculator component (default: '479px')
+         */
+        "width": string;
+        /**
+          * X-position of the calculator (can be px, %, etc.)
+         */
+        "x": string;
+        /**
+          * Y-position of the calculator (can be px, %, etc.)
+         */
+        "y": string;
+    }
+    interface LidoCanvas {
+        "bgImage": string;
+        "height": string;
+        "onEntry": string;
+        "width": string;
+        "x": string;
+        "y": string;
+    }
     /**
      * @component LidoCell
      * A flexible UI cell component configurable via props like size, position, visibility,
@@ -1915,6 +2038,10 @@ export namespace Components {
         "z": string;
     }
 }
+export interface LidoCalculatorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLLidoCalculatorElement;
+}
 declare global {
     /**
      * @component LidoAvatar
@@ -1929,6 +2056,35 @@ declare global {
     var HTMLLidoAvatarElement: {
         prototype: HTMLLidoAvatarElement;
         new (): HTMLLidoAvatarElement;
+    };
+    interface HTMLLidoBalanceElement extends Components.LidoBalance, HTMLStencilElement {
+    }
+    var HTMLLidoBalanceElement: {
+        prototype: HTMLLidoBalanceElement;
+        new (): HTMLLidoBalanceElement;
+    };
+    interface HTMLLidoCalculatorElementEventMap {
+        "onOk": boolean;
+    }
+    interface HTMLLidoCalculatorElement extends Components.LidoCalculator, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLLidoCalculatorElementEventMap>(type: K, listener: (this: HTMLLidoCalculatorElement, ev: LidoCalculatorCustomEvent<HTMLLidoCalculatorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLLidoCalculatorElementEventMap>(type: K, listener: (this: HTMLLidoCalculatorElement, ev: LidoCalculatorCustomEvent<HTMLLidoCalculatorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLLidoCalculatorElement: {
+        prototype: HTMLLidoCalculatorElement;
+        new (): HTMLLidoCalculatorElement;
+    };
+    interface HTMLLidoCanvasElement extends Components.LidoCanvas, HTMLStencilElement {
+    }
+    var HTMLLidoCanvasElement: {
+        prototype: HTMLLidoCanvasElement;
+        new (): HTMLLidoCanvasElement;
     };
     /**
      * @component LidoCell
@@ -2114,6 +2270,9 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "lido-avatar": HTMLLidoAvatarElement;
+        "lido-balance": HTMLLidoBalanceElement;
+        "lido-calculator": HTMLLidoCalculatorElement;
+        "lido-canvas": HTMLLidoCanvasElement;
         "lido-cell": HTMLLidoCellElement;
         "lido-col": HTMLLidoColElement;
         "lido-container": HTMLLidoContainerElement;
@@ -2224,6 +2383,130 @@ declare namespace LocalJSX {
           * The z-index of the column to control stacking order.
          */
         "z"?: string;
+    }
+    interface LidoBalance {
+        /**
+          * Balance symbol shown when `showSymbol` is true. Default: "=".
+         */
+        "balanceSymbol"?: string;
+        /**
+          * Fill color applied to all loaded SVGs (pivot, scale, handler). Defaults to "brown".
+         */
+        "fill"?: string;
+        /**
+          * URL of the handler (side stands / hooks) image for the balance.
+         */
+        "handlerimage"?: string;
+        /**
+          * CSS height of the component (responsive values allowed). Default: "auto".
+         */
+        "height"?: string;
+        /**
+          * CSS margin applied to the outer container.
+         */
+        "margin"?: string;
+        /**
+          * Maximum allowed tilt angle (in degrees) for the balance bar.
+         */
+        "maxTilt"?: number;
+        /**
+          * Action(s) to execute when the component enters the DOM. Example: trigger animations or audio cues.
+         */
+        "onEntry"?: string;
+        /**
+          * Operation type used to calculate balance values. Supported: "count", "add", "subtract", etc.
+         */
+        "operation"?: string;
+        /**
+          * CSS padding applied to the outer container.
+         */
+        "padding"?: string;
+        /**
+          * URL of the pivot (base stand) image used in the balance visualization.
+         */
+        "pivotimage"?: string;
+        /**
+          * URL of the scale (bar) image that tilts based on the weight difference.
+         */
+        "scaleimage"?: string;
+        /**
+          * Whether the balance symbol is currently displayed. Can be toggled with `revealSymbol()` and `hideSymbol()`.
+         */
+        "showSymbol"?: boolean;
+        /**
+          * Initial tilt value of the balance. Negative = tilts left, Positive = tilts right.
+         */
+        "tilt"?: number;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
+        "visible"?: boolean | string;
+        /**
+          * CSS width of the component (responsive values allowed). Default: "auto".
+         */
+        "width"?: string;
+        /**
+          * Horizontal (X-axis) offset for positioning the component. Default: "0px".
+         */
+        "x"?: string;
+        /**
+          * Vertical (Y-axis) offset for positioning the component. Default: "0px".
+         */
+        "y"?: string;
+        /**
+          * Z-index for stacking order of the component. Default: "0".
+         */
+        "z"?: string;
+    }
+    interface LidoCalculator {
+        /**
+          * Background color for the calculator container
+         */
+        "bgColor"?: string;
+        /**
+          * Height of the calculator component (default: '711px')
+         */
+        "height"?: string;
+        /**
+          * Objective or identifier for activity-based logic or validation
+         */
+        "objective"?: string;
+        /**
+          * Code or actions to execute when the component is first rendered
+         */
+        "onEntry"?: string;
+        /**
+          * Event emitted when user confirms or completes an action (e.g., pressing OK)
+         */
+        "onOnOk"?: (event: LidoCalculatorCustomEvent<boolean>) => void;
+        /**
+          * Icon URL for the pen image shown on the calculator UI
+         */
+        "penIcon"?: string;
+        /**
+          * Controls component visibility. Accepts boolean (`true`/`false`) or string ("true"/"false").
+         */
+        "visible"?: boolean | string;
+        /**
+          * Width of the calculator component (default: '479px')
+         */
+        "width"?: string;
+        /**
+          * X-position of the calculator (can be px, %, etc.)
+         */
+        "x"?: string;
+        /**
+          * Y-position of the calculator (can be px, %, etc.)
+         */
+        "y"?: string;
+    }
+    interface LidoCanvas {
+        "bgImage"?: string;
+        "height"?: string;
+        "onEntry"?: string;
+        "width"?: string;
+        "x"?: string;
+        "y"?: string;
     }
     /**
      * @component LidoCell
@@ -4045,6 +4328,9 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "lido-avatar": LidoAvatar;
+        "lido-balance": LidoBalance;
+        "lido-calculator": LidoCalculator;
+        "lido-canvas": LidoCanvas;
         "lido-cell": LidoCell;
         "lido-col": LidoCol;
         "lido-container": LidoContainer;
@@ -4078,6 +4364,9 @@ declare module "@stencil/core" {
              * This component initializes and manages a Rive animation inside a canvas element.
              */
             "lido-avatar": LocalJSX.LidoAvatar & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
+            "lido-balance": LocalJSX.LidoBalance & JSXBase.HTMLAttributes<HTMLLidoBalanceElement>;
+            "lido-calculator": LocalJSX.LidoCalculator & JSXBase.HTMLAttributes<HTMLLidoCalculatorElement>;
+            "lido-canvas": LocalJSX.LidoCanvas & JSXBase.HTMLAttributes<HTMLLidoCanvasElement>;
             /**
              * @component LidoCell
              * A flexible UI cell component configurable via props like size, position, visibility,
