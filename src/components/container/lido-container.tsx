@@ -265,12 +265,37 @@ export class LidoContainer {
    */
 
   scaleContainer(container: HTMLElement) {
+    
+    // Calculate the scale factor based on the closest parent element's width and height (1600x900 reference)
+    const parentElement = this.getClosestParentWithWidth();
+    let scaleFactor = 0;
+    if (parentElement) {
+      const parentWidth = parentElement.clientWidth;
+      const parentHeight = parentElement.clientHeight;
+      const scaleX = parentWidth / 1600;
+      const scaleY = parentHeight / 900;
+      scaleFactor = Math.min(scaleX, scaleY);
+    }
+
     // Center the container and apply scaling
-    container.style.transform = `translate(-50%, -50%) scale(${calculateScale()})`;
+    container.style.transform = `translate(-50%, -50%) scale(${scaleFactor != 0 ? scaleFactor : calculateScale()})`;
     container.style.left = '50%';
     container.style.top = '50%';
     container.style.position = 'absolute'; // Ensure proper positioning
     this.screenOrientation();
+  }
+
+  // Find and return the nearest parent element that has a measurable (non-zero) width
+  getClosestParentWithWidth() {
+    let parent = this.el.parentElement;
+
+    while (parent) {
+      if (parent.offsetWidth > 0) {
+        return parent;
+      }
+      parent = parent.parentElement;
+    }
+    return null;
   }
 
   screenOrientation() {
@@ -302,6 +327,7 @@ export class LidoContainer {
   componentDidLoad() {
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
+    document.body.style.pointerEvents = 'auto';
     document.body.style.backgroundColor = this.bgColor;
     document.body.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
     document.body.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
@@ -364,9 +390,9 @@ export class LidoContainer {
         show-next-button={`${this.showNextButton}`}
         show-drop-border={`${this.showDropBorder}`}
         bg-image={this.bgImage}
-        exit-button-url={this.exitButtonUrl} 
-        prev-button-url={this.prevButtonUrl} 
-        next-button-url={this.nextButtonUrl} 
+        exit-button-url={this.exitButtonUrl}
+        prev-button-url={this.prevButtonUrl}
+        next-button-url={this.nextButtonUrl}
         speaker-button-url={this.speakerButtonUrl}
         disable-speak={this.disableSpeak}
       >

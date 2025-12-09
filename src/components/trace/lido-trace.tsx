@@ -776,7 +776,7 @@ export class LidoTrace {
 
     if (this.highlightTextId) {
       this.highlightLetter(this.currentSvgIndex);
-    }
+    } 
     if (this.animationTrace) {
       await this.playTraceAnimation();
     }
@@ -797,6 +797,7 @@ export class LidoTrace {
     if (this.el && this.onCorrect) {
       await executeActions(this.onCorrect, this.el);
     }
+    console.log('All SVGs completed, hiding component.');
     triggerNextContainer();
   }
 
