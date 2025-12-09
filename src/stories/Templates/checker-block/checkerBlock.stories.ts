@@ -47,7 +47,7 @@ function getContainerXml(args) {
   
 
   return `<main>
-    <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; all.animation='placeToLeft 1.5s linear'; this.sleep='1500';" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/create%20sentence/Spring.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';">
+    <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; all.animation='placeToLeft 1.5s linear'; this.sleep='1500';" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Checker%20blocks.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';">
 
     <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.270px" width="landscape.350px,portrait.270px" x="landscape.500px, portrait.-9%" y="landscape.522px, portrait.36%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">

@@ -74,7 +74,7 @@ function getContainerXml(args : WriteWordArgs) {
     
     return `
         <main>
-            <lido-container id="lido-container" tab-index="1" objective="writeWord" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" height="100%" width="100%" bg-color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" after-drop="false">
+            <lido-container id="lido-container" tab-index="1" objective="writeWord" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20word.png" height="100%" width="100%" bg-color="transparent"  visible="true"   onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" after-drop="false">
 
                     <!-- Chimple Avatar -->
                     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1200px, portrait.450px" y="landscape.390px, portrait.1020px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
@@ -84,14 +84,15 @@ function getContainerXml(args : WriteWordArgs) {
                         </lido-image>
                     </lido-cell>
 
-                    <!-- text-element -->
-                    <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.80px, portrait.80px" width="landscape.297px, portrait.297px" x="landscape.650px, portrait.300px" y="landscape.125px, portrait.190px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="">
-                        <lido-text id="txt1" tab-index="2" span-type="${spanType}"  audio="" width="297px" height="80px" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
-                        </lido-text>                        
-                    </lido-cell>
+                    
 
                     <lido-cell layout="col" visible="true" width="landscape.70%, portrait.70%" height="landscape.84%, portrait.60%" bg-color="transparent" margin="landscape.-35px 0px -35px 0px, portrait.-400px 0px -40px 0px" onEntry="this.padding='4px 0px 16px 0px';">
                         <lido-image visible="true" src="${topDisplayImage}" z="1" width="landscape.570px, portrait.570px" height="landscape.225px, portrait.225px" onEntry="this.flex-shrink='0';" altText="{image1}">
+                            <!-- text-element -->
+                            <lido-cell layout="pos" display="flex" id="pos1" disable-edit="true" value="pos1" height="landscape.80px, portrait.80px" width="landscape.525px, portrait.525px" x="landscape.545px, portrait.300px" y="landscape.125px, portrait.190px" aria-hidden="true" bg-color="transparent" visible="true"  onEntry="this.z-index='2'; this.align-items='center'; this.justify-content='center'; this.display='flex';">
+                                <lido-text id="txt1" tab-index="2" span-type="${spanType}"  audio="" width="525px" height="80px" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0'; this.fontWeight='600';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black"  color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
+                                </lido-text>                        
+                            </lido-cell>
                         </lido-image>
 
                         <lido-image visible="true" src="${bottomDisplayImage}" z="1" width="landscape.574px, portrait.760px" height="landscape.574px, portrait.760px" onEntry="this.flex-shrink='0';" altText="{image1}">
