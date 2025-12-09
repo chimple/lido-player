@@ -533,6 +533,10 @@ export namespace Components {
          */
         "delayVisible": string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak": boolean;
+        /**
           * Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.
          */
         "exitButtonUrl": string;
@@ -801,6 +805,10 @@ export namespace Components {
      */
     interface LidoHome {
         /**
+          * Array of active container indexes to be rendered
+         */
+        "activeContainerIndexes": number[];
+        /**
           * URL for the avatar Rive file.
          */
         "avatarUrl": string;
@@ -836,6 +844,10 @@ export namespace Components {
           * Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.
          */
         "prevButtonUrl": string;
+        /**
+          * Boolean to show or hide navigation buttons
+         */
+        "showNav": boolean;
         /**
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
@@ -1096,19 +1108,20 @@ export namespace Components {
         /**
           * Number of columns in the matrix
          */
-        "cols": number;
+        "cols": string;
+        "deactiveBgColor": string;
         /**
           * Number of slots to pre-fill as active by default
          */
         "defualtFill": number;
         /**
+          * Font color for the slot text
+         */
+        "fontColor": string;
+        /**
           * Height of the slot container
          */
         "height": string;
-        /**
-          * Background color for inactive slots
-         */
-        "inactiveBgColor": string;
         /**
           * Show row index numbers on the left side
          */
@@ -1121,6 +1134,9 @@ export namespace Components {
           * Image source used inside the slots
          */
         "matrixImage": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "onInCorrect": string;
         /**
           * Padding inside the matrix container
          */
@@ -1128,19 +1144,43 @@ export namespace Components {
         /**
           * Number of rows in the matrix
          */
-        "rows": number;
+        "rows": string;
+        /**
+          * Sets the tab index for keyboard navigation
+         */
+        "tabIndex": number;
+        /**
+          * The display text or label associated with this matrix element
+         */
+        "text": string;
         /**
           * Show column index numbers on the top side
          */
         "topIndex": boolean;
         /**
-          * Controls visibility of the matrix (string "true" or "false")
+          * Defines the matrix type (e.g., "drop", "slot", "answer")
+         */
+        "type": string;
+        /**
+          * The value or data associated with this matrix element
+         */
+        "value": string;
+        /**
+          * Controls the visibility of the matrix (accepts "true" or "false" as string)
          */
         "visible": string;
         /**
           * Width of the slot container
          */
         "width": string;
+        /**
+          * The left coordinate (in pixels or percentage) for matrix positioning
+         */
+        "x": string;
+        /**
+          * The top coordinate (in pixels or percentage) for matrix positioning
+         */
+        "y": string;
         /**
           * Z-index value for the matrix container
          */
@@ -2822,6 +2862,10 @@ declare namespace LocalJSX {
          */
         "delayVisible"?: string;
         /**
+          * When set to true, disables the speak functionality of long press for this component and its children.
+         */
+        "disableSpeak"?: boolean;
+        /**
           * Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.
          */
         "exitButtonUrl"?: string;
@@ -3090,6 +3134,10 @@ declare namespace LocalJSX {
      */
     interface LidoHome {
         /**
+          * Array of active container indexes to be rendered
+         */
+        "activeContainerIndexes"?: number[];
+        /**
           * URL for the avatar Rive file.
          */
         "avatarUrl"?: string;
@@ -3125,6 +3173,10 @@ declare namespace LocalJSX {
           * Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.
          */
         "prevButtonUrl"?: string;
+        /**
+          * Boolean to show or hide navigation buttons
+         */
+        "showNav"?: boolean;
         /**
           * Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.
          */
@@ -3385,19 +3437,20 @@ declare namespace LocalJSX {
         /**
           * Number of columns in the matrix
          */
-        "cols"?: number;
+        "cols"?: string;
+        "deactiveBgColor"?: string;
         /**
           * Number of slots to pre-fill as active by default
          */
         "defualtFill"?: number;
         /**
+          * Font color for the slot text
+         */
+        "fontColor"?: string;
+        /**
           * Height of the slot container
          */
         "height"?: string;
-        /**
-          * Background color for inactive slots
-         */
-        "inactiveBgColor"?: string;
         /**
           * Show row index numbers on the left side
          */
@@ -3410,6 +3463,9 @@ declare namespace LocalJSX {
           * Image source used inside the slots
          */
         "matrixImage"?: string;
+        "onCorrect"?: string;
+        "onEntry"?: string;
+        "onInCorrect"?: string;
         /**
           * Padding inside the matrix container
          */
@@ -3417,19 +3473,43 @@ declare namespace LocalJSX {
         /**
           * Number of rows in the matrix
          */
-        "rows"?: number;
+        "rows"?: string;
+        /**
+          * Sets the tab index for keyboard navigation
+         */
+        "tabIndex"?: number;
+        /**
+          * The display text or label associated with this matrix element
+         */
+        "text"?: string;
         /**
           * Show column index numbers on the top side
          */
         "topIndex"?: boolean;
         /**
-          * Controls visibility of the matrix (string "true" or "false")
+          * Defines the matrix type (e.g., "drop", "slot", "answer")
+         */
+        "type"?: string;
+        /**
+          * The value or data associated with this matrix element
+         */
+        "value"?: string;
+        /**
+          * Controls the visibility of the matrix (accepts "true" or "false" as string)
          */
         "visible"?: string;
         /**
           * Width of the slot container
          */
         "width"?: string;
+        /**
+          * The left coordinate (in pixels or percentage) for matrix positioning
+         */
+        "x"?: string;
+        /**
+          * The top coordinate (in pixels or percentage) for matrix positioning
+         */
+        "y"?: string;
         /**
           * Z-index value for the matrix container
          */
