@@ -4,7 +4,6 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 const meta: Meta = {
   title: 'Templates/MCQWithQuestionImage',
   argTypes: {
-    PracticeMode: { control: 'boolean' },
     question: { control: 'text' },
     questionImg: { control: 'file' },
     questionAudio: {control: {
@@ -42,7 +41,6 @@ export default meta;
 
 export const Default: StoryObj = {
   args: {
-    PracticeMode: false,
     question: 'I have less than double of 3 marbles. I have more than half of 8 marbles. How many marbles do I have?',
     questionImg: "https://aeakbcdznktpsbrfsgys.storage.supabase.co/v1/object/public/template-assets/fill-in-the-blanks/image%201.png",
     questionAudio: '',
@@ -79,11 +77,11 @@ function getContainerXml(args) {
     <lido-container id="lido-container" value="maincontainer" objective="${args.correctAns}"
     aria-label="This is a multiple-option question. Select one option from the list."
     height="100vh" width="100vw" x="0" y="0" z="0" bg-color="transparent"
-    bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/MCQ.png"
+    bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png"
     visible="true" audio="background1.mp3" onTouch=""
     onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
     onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
-    show-check="false" is-continue-on-correct="${args.PracticeMode}" onEntry="">
+    show-check="false" is-continue-on-correct="true" onEntry="">
 
     <!-- Chimple Avatar -->
     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1"

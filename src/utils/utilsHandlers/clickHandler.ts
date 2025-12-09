@@ -104,11 +104,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       dispatchClickEvent(element, isCorrect);
       if (isCorrect) {
         const onCorrect = element.getAttribute('onCorrect');
-        if(!(element.id && element.id.startsWith('key-button')))
-          {       
-            element.style.pointerEvents = 'none';
-        }
-        document.body.style.pointerEvents = 'none';
+        // element.style.pointerEvents = 'none';
         await executeActions(onCorrect, element);
       } else {
         const onInCorrect = element.getAttribute('onInCorrect');
@@ -172,7 +168,6 @@ export function addClickListenerForClickType(element: HTMLElement): void {
 
       const isCorrect = objective.includes(element['value']);
       dispatchClickEvent(element, isCorrect);
-      AudioPlayer.getI().stop();
       if (isCorrect) {
         const onCorrect = element.getAttribute('onCorrect');
         await executeActions(onCorrect, element);

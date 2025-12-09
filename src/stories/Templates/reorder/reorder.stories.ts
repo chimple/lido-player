@@ -4,7 +4,6 @@ import { html } from 'lit';
 const meta: Meta = {
   title: 'Templates/Reorder',
   argTypes: {
-    PracticeMode: { control: 'boolean' },
     question: { control: 'text' },
     questionImg: { control: 'file' },
     questionAudio: {control: {
@@ -42,7 +41,6 @@ export default meta;
 
 export const QuestionAndOptions: StoryObj = {
   args: {
-    PracticeMode: false,
     question: 'Reorder the following shapes from the fewest flat faces to the most flat faces.',
     questionImg: '',
     questionAudio: '',
@@ -69,7 +67,7 @@ export const QuestionAndOptions: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
- <lido-container visible="true" objective="${args.correctObjective.toLowerCase()}" is-continue-on-correct="${args.PracticeMode}" show-next-button="${!args.PracticeMode}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="this.sleep='1000'; this.slideAnimation='true';">
+ <lido-container visible="true" objective="${args.correctObjective.toLowerCase()}" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.sleep='1000'; this.slideAnimation='true';">
 
 	<!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="250px" width="250px" x="landscape.0, portrait.670px" y="landscape.105px, portrait.1315px" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">

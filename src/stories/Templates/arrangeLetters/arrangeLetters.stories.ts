@@ -35,7 +35,7 @@ export const arrangeLetters: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-<lido-container visible="true" objective="${args.answers}" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Arrange%20letters.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.sleep='1000'; this.slideAnimation='true';">
+<lido-container visible="true" objective="${args.answers}" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.sleep='1000'; this.slideAnimation='true';">
 
 	<!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.372px,portrait.476px" width="landscape.366px,portrait.467px" x="landscape.71%, portrait.52%" y="landscape.105px, portrait.66%" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">

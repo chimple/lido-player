@@ -5,7 +5,6 @@ import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction,NextContainerKey, } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
 import { removeHighlight } from './highlightHandler';
-import { dragDropAnimation } from './animationHandler';
 export function buildDropHasDragFromDOM(): Record<string, { drop: string; isFull: boolean }> {
   const dropHasDrag: Record<string, { drop: string; isFull: boolean }> = {};
 
@@ -85,7 +84,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       isDragging = false;
       return;
     }
-    AudioPlayer.getI().stop();
+    // AudioPlayer.getI().stop();
     removeHighlight(element);
     isDragging = true;
     isClicked = true;
@@ -204,7 +203,6 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   observer.observe(container, observerConfig);
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
-    console.log('moved');
     if (!isDragging) return;
     if (isDraggingDisabled) {
       isDragging = false;
@@ -212,7 +210,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }
     isClicked = false;
     element.style.transition = 'none';
-    const containerScale = calculateScale();
+    const containerScale = getElementScale(container);
 
     let dx = 0;
     let dy = 0;
@@ -539,6 +537,7 @@ export function handleResetDragElement(
 }
     const tempVanishedValues: any[] = [];
 export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
+
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const selectedValueData = container.getAttribute(SelectedValuesKey) ?? "[]";
   const dragSelectedData = JSON.stringify(buildDragSelectedMapFromDOM());
@@ -566,6 +565,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
+    // let isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
 
     let isCorrect;
     const dragValue = dragElement.getAttribute('value')?.trim() || "";
@@ -582,8 +582,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
         isCorrect = Number(dropValue) === dragNum;
       } 
     } else {
-      //strings
-      isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
+      isCorrect = dropElement.getAttribute('value').toLowerCase().includes(dragElement.getAttribute('value').toLowerCase());
     }
 
     if (!isCorrect) {
@@ -598,7 +597,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
-        storingEachActivityScore(false);
+
         // const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
         // if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
         //   dropHasDrag[oldDropIndex].isFull = false;
@@ -623,15 +622,67 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     } else {
       const checkdropAttr = container.getAttribute('dropAttr');
       if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
-        //This function coming from animationhandler.ts
-        dragDropAnimation(container, dragElement, dropElement);
+        container.style.pointerEvents = "none";
+        setTimeout(() => {
+          const div = document.createElement('div');
+          container.append(div);
+          div.classList.add('after-drop-popup-container');
+
+          dragElement.style.scale = `1`;
+          dropElement.style.scale = `1`;
+
+          const allDragElements = container.querySelectorAll('[type="drag"]');
+          const dragParents = Array.from(allDragElements).map(el => el.parentElement);
+          const allSameParent = dragParents.every(parent => parent === dragElement.parentElement);
+          const selectedValues: any[] = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]');
+          const vanishedValue = dragElement.getAttribute('value') ?? dragElement.textContent?.trim();
+          if (vanishedValue) {
+            tempVanishedValues.push(vanishedValue);}
+
+          // Remove from old parents
+          if (allSameParent) {
+            dragElement.remove();
+            dropElement.remove();
+          } else {
+            dragElement.parentElement.parentElement.remove();
+            dropElement.parentElement.parentElement.remove();
+          }
+
+          // Add animation and popup classes
+          dragElement.classList.add('zoom-fade-in', 'after-drop-popup-drag-element');
+
+          dropElement.classList.add('zoom-fade-in', 'after-drop-popup-drop-element');
+
+          div.appendChild(dragElement);
+          div.appendChild(dropElement);
+
+          dropElement.classList.remove('empty');
+
+          setTimeout(() => {
+            dragElement.classList.remove('zoom-fade-in');
+            dropElement.classList.remove('zoom-fade-in');
+
+            dragElement.classList.add('zoom-fade-out');
+            dropElement.classList.add('zoom-fade-out');
+
+            setTimeout(() => {
+              div.remove();
+              container.style.pointerEvents = 'auto';
+              const objective = container.getAttribute('objective');
+             if (objective && tempVanishedValues.map(v => v.trim()).sort().join(',')  === objective.split(',').map(v => v.trim()).sort().join(',')) {             
+                (async() => {
+                  isCorrect=true;
+                  const onCorrect = container?.getAttribute('onCorrect') || '';
+                  
+                  await executeActions(onCorrect, container);
+                   window.dispatchEvent(new CustomEvent(NextContainerKey));
+                    tempVanishedValues.length = 0;
+                })();
+             }
+            }, 800); // match animation duration
+          }, 2000); // stay for 2 seconds
+        }, 250);
       }
-    }
-  } else {
-    const checkdropAttr = container.getAttribute('dropAttr');
-    if (checkdropAttr && checkdropAttr.toLowerCase() === DropMode.EnableAnimation.toLowerCase()) {
-      //This function coming from animationhandler.ts
-      dragDropAnimation(container, dragElement, dropElement);
     }
   }
 
@@ -771,7 +822,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
-  // storingEachActivityScore(isCorrect);
+  storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
 
   await onActivityComplete(dragElement, dropElement);
@@ -779,7 +830,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
-  await onActivityComplete(dragElement, dropElement);
 }
 
 export function updateDropBorder(element: HTMLElement): void {
