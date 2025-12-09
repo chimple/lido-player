@@ -3,15 +3,11 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 const meta: Meta = {
   title: 'Templates/PictureMeaningCocos',
-  argTypes: {
-	PracticeMode: { control: 'boolean' },
-  }
 };
 export default meta;
 
 export const Default: StoryObj = {
   args: {
-	PracticeMode: false,
     drag1: "Uma alimentação saudável é essencial.",
     drag2: "Devemos evitar contato com vírus.",
     drag3: "O carro da dona violeta é amarelo.",
@@ -28,7 +24,7 @@ export const Default: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>	
-  <lido-container id="lido-container" is-allow-only-correct="${args.PracticeMode}" objective="${args.drop1},${args.drop2},${args.drop3}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" dropAttr="EnableAnimation" onCorrect="this.sleep='2000';" onInCorrect="this.sleep='2000';">
+  <lido-container id="lido-container" is-allow-only-correct="true" objective="${args.drop1},${args.drop2},${args.drop3}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" dropAttr="EnableAnimation">
 				<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="300px" width="300px" x="landscape.870px,portrait.300px" y="landscape.560px,portrait.1400px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="">
 				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}">

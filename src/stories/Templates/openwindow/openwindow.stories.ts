@@ -106,7 +106,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
 
   return `
   <main>
-    <lido-container id="lido-container" tab-index="1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Open%20window.png" height="100%" width="100%" visible="true" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
+    <lido-container id="lido-container" tab-index="1" bg-image="${args.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
       <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="this.gap='45px';">
         <lido-cell layout="row" visible="false">
           <lido-text id="heading0" string="${args.objective}">
@@ -125,7 +125,7 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
       </lido-cell>
     </lido-container>
 
-    <lido-container id="lido-container" tab-index="1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Open%20window.png" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
+    <lido-container id="lido-container" tab-index="1" bg-image="${args.backgroundImage}" height="100%" width="100%" visible="true" is-continue-on-correct="true" onCorrect="${speakSequence} lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="${speakSequence}" objective="${args.objective}" >
       <lido-cell layout="row" visible="true" width="landscape.auto, portrait.80%" height="landscape.30%, portrait.10%" bg-color="transparent" margin="5%" onEntry="this.gap='45px';">
         <lido-cell layout="row" visible="false">
           <lido-text id="heading0" string="${args.objective}">

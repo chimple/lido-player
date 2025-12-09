@@ -48,7 +48,7 @@ function getContainerXml(args) {
         const pickedColors = args.dragColors;
 		const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
       return `
-			<lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" width="140px" height="86px" value="${option}" string="${option}" font-color="white" font-size="76px" font-family="Baloo Bhai 2" bg-color="${color}" border-radius="8px" onEntry="this.border='5px solid ${color}'; this.font-weight='500'; this.sleep='100';this.animation='rightToPlace 3s linear';" type="drag" margin="${index%2==0? 'landscape.196px 0px 0px -52px' : 'landscape.-56px 28px 0px -60px'}, portrait.0px 0px 0px 0px" isAllowOnlyCorrect="true" onTouch="this.speak='true';" onCorrect="this.speak='true';" ></lido-text>
+			<lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" width="140px" height="86px" value="${option}" string="${option}" font-color="white" font-size="76px" font-family="Baloo Bhai 2" bg-color="${color}" border-radius="8px" onEntry="this.border='5px solid ${color}'; this.font-weight='500'; this.sleep='100';this.animation='rightToPlace 3s linear';" type="drag" margin="${index%2==0? 'landscape.196px 0px 0px -52px' : 'landscape.-56px 28px 0px -60px'}, portrait.0px 0px 0px 0px"  onTouch="this.speak='true';" onCorrect="this.speak='true';" ></lido-text>
       `;
     })
     .join('');
@@ -57,7 +57,7 @@ function getContainerXml(args) {
 <main>
 
     <lido-container id="lido-container" visible="true" objective="${answers.join(',')}" onEntry="audio12.speak='true';"
-        onCorrect="lido-avatar.avatarAnimate='Success';  sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Row%20blocks.png" custom-style= ".dropping {
+        onCorrect="lido-avatar.avatarAnimate='Success';  sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RowBlocks/Sky%207.png" custom-style= ".dropping {
         border: 5px dashed #2C3836 !important;
         background-color: #6D8C87 !important;
         }" is-allow-only-correct="${isAllowOnlyCorrect}">

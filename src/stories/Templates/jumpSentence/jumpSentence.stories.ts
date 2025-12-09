@@ -4,7 +4,6 @@ import { html } from 'lit';
 const meta: Meta = {
   title: 'Templates/JumpSentence',
   argTypes: {
-    PracticeMode: { control: 'boolean' },
     cells: {
       control: { type: 'object' },
     },
@@ -15,7 +14,6 @@ export default meta;
 
 export const QuestionAndOptions: StoryObj = {
   args: {
-    PracticeMode: false,
     cells: [
       { value: 'Y', type: 'drop' },
       { value: 'o', type: 'drop' },
@@ -60,9 +58,9 @@ function getContainerXml(args) {
     <lido-container id="lido-container" visible="true" objective="${objective}" 
       onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" 
       onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';"
-      is-continue-on-correct="false" bg-color="transparent" 
+      is-continue-on-correct="true" bg-color="transparent" 
       bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Underwater.png" 
-      drop-action="infinite-drop" is-allow-only-correct="${args.PracticeMode}">
+      drop-action="infinite-drop" is-allow-only-correct="true">
 
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" 
         height="landscape.500px, portrait.600px" width="landscape.350px, portrait.450px" 
