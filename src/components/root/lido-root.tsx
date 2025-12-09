@@ -73,6 +73,20 @@ export class LidoRoot {
    */
   @State() xmlData: string;
 
+   connectedCallback() {
+    this.setLanguage(this.locale);
+  }
+
+  @Watch('locale')
+  onLangChange(newLang: string) {
+    this.setLanguage(newLang);
+  }
+
+  setLanguage(lang?: string) {
+    const effectiveLang = lang || i18next.language; 
+    i18next.changeLanguage(effectiveLang);
+  }
+
   /**
    * Lifecycle method that runs before the component is loaded.
    * It fetches the XML data from the specified path or URL and sets it to the component's state.

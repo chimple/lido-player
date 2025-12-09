@@ -48,7 +48,7 @@ function getContainerXml(args) {
         const pickedColors = args.dragColors;
 		const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
       return `
-			<lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" width="140px" height="86px" value="${option}" string="${option}" font-color="white" font-size="76px" font-family="Baloo Bhai 2" bg-color="${color}" border-radius="8px" onEntry="this.border='5px solid ${color}'; this.font-weight='500'; this.sleep='100';this.animation='rightToPlace 3s linear';" type="drag" margin="${index%2==0? 'landscape.196px 0px 0px -52px' : 'landscape.-56px 28px 0px -60px'}, portrait.0px 0px 0px 0px"  onTouch="this.speak='true';" onCorrect="this.speak='true';" ></lido-text>
+			<lido-text visible="true" id="drag${tabCounter}" tab-index="${tabCounter++}" width="140px" height="86px" value="${option}" string="${option}" font-color="white" font-size="76px" font-family="Baloo Bhai 2" bg-color="${color}" border-radius="8px" onEntry="this.border='5px solid ${color}'; this.font-weight='500'; this.sleep='100';this.animation='rightToPlace 3s linear';" type="drag" margin="${index%2==0? 'landscape.196px 0px 0px -52px' : 'landscape.-56px 28px 0px -60px'}, portrait.0px 0px 0px 0px" isAllowOnlyCorrect="true" onTouch="this.speak='true';" onCorrect="this.speak='true';" ></lido-text>
       `;
     })
     .join('');
