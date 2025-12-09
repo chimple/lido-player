@@ -127,7 +127,7 @@ export function enableReorderDrag(element: HTMLElement): void {
     event.preventDefault();
 
     const containerRect = container.getBoundingClientRect();
-    const containerScale = getElementScale(container);
+    const containerScale = calculateScale();
 
     const newLeft = (point.clientX - containerRect.left - offsetXInElement) / containerScale;
     const newTop = (point.clientY - containerRect.top - offsetYInElement) / containerScale;
@@ -195,9 +195,7 @@ export function enableReorderDrag(element: HTMLElement): void {
       } else {
         if (element.parentElement['type'] !== 'category') {
           executeActions('this.alignMatch=true', divEl, element);
-          setTimeout(() => {
-            divEl.replaceWith(element);
-          }, 500);
+          divEl.replaceWith(element);
         } else {
           const categoryElement = element.parentElement;
           const dragValues = buildDragSelectedMapFromDOM();

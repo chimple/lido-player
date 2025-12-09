@@ -3,11 +3,15 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Templates/Grid',
+  argTypes: {
+	PracticeMode: { control: 'boolean' },
+  }
 };
 export default meta;
 
 export const Options: StoryObj = {
   args: {
+	PracticeMode: false,
     option1: 'chop',
     option2: 'chug',
     option3: 'chad',
@@ -36,7 +40,7 @@ export const Options: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-				<lido-container id="lido-container" value="mainContainer1" drop-action="move" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5},${args.correct6},${args.correct7},${args.correct8},${args.correct9}" height="100%" width="100%" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" after-drop="false" is-allow-only-correct="true">
+				<lido-container id="lido-container" value="mainContainer1" drop-action="move" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4},${args.correct5},${args.correct6},${args.correct7},${args.correct8},${args.correct9}" height="100%" width="100%" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/grid/Underwater.png" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; this.overflow='hidden';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="false" after-drop="false" is-allow-only-correct="${args.PracticeMode}">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.1274px, portrait.541px" y="landscape.0, portrait.1274px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.animation='rightToPlace 2.5s linear';">

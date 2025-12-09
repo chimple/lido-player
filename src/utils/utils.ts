@@ -115,7 +115,7 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
   const actions = parseActions(actionsString);
-
+  body.style.pointerEvents = 'none';
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
 
@@ -150,7 +150,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const container = document.getElementById(LidoContainer) as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
-         console.log("logg alinmatch");         
+          console.log('logg alinmatch');
 
           const dropRect = dropElement.getBoundingClientRect();
           const dragRect = dragElement.getBoundingClientRect();
@@ -206,7 +206,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           if (container.getAttribute('is-continue-on-correct') !== 'true') {
             targetElement.style.pointerEvents = 'none';
           }
-          validateObjectiveStatus();
+          await validateObjectiveStatus();
           break;
         }
         case 'prevBtn': {
@@ -387,6 +387,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
       }
     }
   }
+  body.style.pointerEvents = 'auto';
 };
 
 const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElement) => {
@@ -691,9 +692,9 @@ const storeActivityScore = (score: number) => {
   const totalIndex = Number(appHome.getAttribute('totalIndex') ?? 0);
 
   const activityScore = JSON.parse(localStorage.getItem(ActivityScoreKey) ?? '{}');
+  
   const activityScoreKey = index.toString();
   activityScore[activityScoreKey] = score;
-
   //send Custom Event to parent
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
   dispatchActivityEndEvent(index, totalIndex, score);
@@ -701,6 +702,7 @@ const storeActivityScore = (score: number) => {
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
     const scoresArray: number[] = Object.values(activityScore);
+    
     const finalScore = scoresArray.reduce((acc, cur) => acc + cur, 0) / scoresArray.length;
     gameScore.finalScore = Math.floor(finalScore);
     console.log('Total Score : ', gameScore.finalScore);
@@ -740,6 +742,8 @@ export const handleShowCheck = () => {
     validateObjectiveStatus();
   }
 };
+
+const body = document.body;
 let res;
 export const validateObjectiveStatus = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
@@ -820,6 +824,8 @@ export const validateObjectiveStatus = async () => {
     {
       triggerNextContainer();
       await calculateScore();
+      triggerNextContainer()
+      
     } else {
         const onInCorrect = container.getAttribute('onInCorrect');
         await executeActions(onInCorrect, container);
@@ -845,14 +851,15 @@ export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const baseUrl = container.getAttribute('baseUrl');
 
-  if (url?.startsWith('http') || url?.startsWith('blob')) {
+  if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
-  } else if (baseUrl) {
-    const newUrl = !url.startsWith('/') ? url : url.substring(1);
-    return baseUrl + (baseUrl.endsWith('/') ? newUrl : '/' + newUrl);
-  } else {
-    return getAssetPath(url);
   }
+  if (baseUrl) {
+    const newUrl = url.startsWith('/') ? url.slice(1) : url;
+    if (newUrl.startsWith(baseUrl.replace(/^\/+|\/+$/g, ''))) return newUrl;
+    return baseUrl.endsWith('/') ? baseUrl + newUrl : `${baseUrl}/${newUrl}`;
+  }
+  return getAssetPath(url);
 }
 
 /**
