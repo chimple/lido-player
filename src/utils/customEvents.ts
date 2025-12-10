@@ -1,7 +1,7 @@
 import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, NextContainerKey,PrevContainerKey } from './constants';
 
 function dispatchCustomEvent(eventName: string, detail: any) {
-  console.log("👍Event Name : " ,eventName, "Detail : ", detail);
+  console.log("👍Event Name : " ,eventName, "Detail : ", detail.toString());
   const event = new CustomEvent(eventName, { detail });
   window.dispatchEvent(event);
 }
