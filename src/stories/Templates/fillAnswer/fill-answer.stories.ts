@@ -17,7 +17,7 @@ const meta: Meta = {
 };
 
 export default meta;
-export const OrderTractor: StoryObj = {
+export const FillAnswer: StoryObj = {
   args: {
     firstNum: '3', operator: '+', secontNum: '4', equator: '=', answer: '7',
     option1: '5', option2: '7', option3: '3', option4: '2', isAllowOnlyCorrect: 'true',
