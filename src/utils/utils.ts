@@ -634,6 +634,8 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
     if (dragElement && dropElement) {
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  // storing each activity score based on isCorrect for (all drag-drop events)
+    storingEachActivityScore(isCorrect);
   if (isCorrect) {
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {

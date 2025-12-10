@@ -1,5 +1,5 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
-import { parseProp,executeActions,equationCheck,storingEachActivityScore } from '../../utils/utils';
+import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore } from '../../utils/utils';
 import { NextContainerKey,LidoContainer } from '../../utils/constants';
 
 @Component({
@@ -140,15 +140,17 @@ export class LidoCalculator {
     this.onOk.emit(isCorrect);
 
     if (isCorrect) {
-      this.displayValue = ""; 
+      this.displayValue = "";
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
       if(onCorrect.includes('scrollCellAfterEquationSolved')){
         if(this.objective.length===0){
+        calculateScore()
         window.dispatchEvent(new CustomEvent(NextContainerKey));
       }
       }else{
+        calculateScore()
         window.dispatchEvent(new CustomEvent(NextContainerKey));
       }
       
