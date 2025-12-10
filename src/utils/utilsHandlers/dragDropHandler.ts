@@ -1,5 +1,5 @@
 
-import { calculateScale, countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore } from '../utils';
+import { calculateScale, countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore, calculateScore } from '../utils';
 import { updateBalanceOnDrop } from './lidoBalanceHandler';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction,NextContainerKey, } from '../constants';
@@ -537,7 +537,7 @@ export function handleResetDragElement(
  
   handleShowCheck();
 }
-    const tempVanishedValues: any[] = [];
+
 export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const selectedValueData = container.getAttribute(SelectedValuesKey) ?? "[]";
@@ -773,9 +773,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
   // storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
-
-  await onActivityComplete(dragElement, dropElement);
-
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
