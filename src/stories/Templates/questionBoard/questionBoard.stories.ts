@@ -122,9 +122,11 @@ function getContainerXml(args : QuestionBoardArgs) {
 
     const options = args.options as string[];
 
+    let tabIndexStart = 4;
     const optionsCell = options.map((option: any) => {
+        
         return `
-        <lido-text id="${option}" tab-index="${option}" height="215px" width="auto" visible="true" value="${option}" string="${option}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="#FFB366" onCorrect="" onInCorrect="this.vibrate='horizontal-shake';" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
+        <lido-text id="${option}" tab-index="${tabIndexStart++}" height="215px" width="auto" visible="true" value="${option}" string="${option}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="#FFB366" onCorrect="" onInCorrect="this.vibrate='horizontal-shake';" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
             <lido-text visible="true" id="option-text" audio="" height="0px" width="auto" font-family="'Baloo 2', serif" font-size="landscape.44px, portrait.52px" font-color="black" string="${optionText}" bg-Color="transparent" onEntry="this.font-weight='700';" padding="0px 10px 0px 10px">
             </lido-text>
         </lido-text>
@@ -153,7 +155,7 @@ function getContainerXml(args : QuestionBoardArgs) {
     
     return `
         <main>
-            	<lido-container id="question-board-container" disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Question%20board.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" >
+            	<lido-container id="question-board-container" disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Question%20board.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" >
 
                     <!-- Chimple Avatar -->
                     <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.110px, portrait.195px" y="landscape.160px, portrait.1050px" ariaHidden="true" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='2';">
@@ -167,11 +169,11 @@ function getContainerXml(args : QuestionBoardArgs) {
                         </lido-image>
                     </lido-cell>
 
-                    <lido-text visible="false" id="txt1" audio="" font-family="'Baloo 2', serif" font-size="52px" font-color="black" string="Solve the problem shown in the board and select the correct answer" bg-Color="transparent" onEntry="this.speak='true'; question-board-text.speak='true';" >
+                    <lido-text visible="false" id="txt1" audio="" tab-index="2" font-family="'Baloo 2', serif" font-size="52px" font-color="black" string="Solve the problem shown in the board and select the correct answer" bg-Color="transparent" onEntry="this.speak='true'; question-board-text.speak='true';" >
                     </lido-text>
 
                     <lido-cell layout="pos" id="pos3" value="pos3" x="landscape.445px, portrait.45px" y="landscape.115px, portrait.145px" visible="true" height="landscape.60%,portrait.10%" width="landscape.55%,portrait.92%" border-radius="7px" bg-color="transparent" onEntry="this.z-index='1';">
-                        <lido-text visible="true" id="question-board-text" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
+                        <lido-text visible="true" id="question-board-text" tab-index="3" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
                         </lido-text>
                     </lido-cell>
 
@@ -182,7 +184,7 @@ function getContainerXml(args : QuestionBoardArgs) {
                     
                     <!-- Invisible Text for Animation -->
                     <lido-cell layout="pos" id="invisible-text" disableEdit="true" value="pos3" height="landscape.10%, portrait.710px" width="landscape.75%, portrait.875px" x="landscape.325px, portrait.10px" y="landscape.740px, portrait.475px" ariaHidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.opacity='0'; this.z-index='0';">
-                        <lido-text id="txt2" audio="" tab-index="6" height="inherit" width="inherit" visible="true" value="${escapedExpressionText}" string="${escapedExpressionText}" font-family="'Baloo Bhai 2'" font-color="white" font-size="104px"  bg-color="transparent" onCorrect="" onInCorrect="this.vibrate='horizontal-shake';" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-shrink='0';">
+                        <lido-text id="txt2" audio="" tab-index="8" height="inherit" width="inherit" visible="true" value="${escapedExpressionText}" string="${escapedExpressionText}" font-family="'Baloo Bhai 2'" font-color="white" font-size="104px"  bg-color="transparent" onCorrect="" onInCorrect="this.vibrate='horizontal-shake';" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-shrink='0';">
                         </lido-text>
                     </lido-cell>
 
