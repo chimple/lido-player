@@ -122,8 +122,9 @@ function getContainerXml(args : QuestionBoardArgs) {
 
     const options = args.options as string[];
 
+    let tabIndexStart = 4;
     const optionsCell = options.map((option: any) => {
-        let tabIndexStart = 4;
+        
         return `
         <lido-text id="${option}" tab-index="${tabIndexStart++}" height="215px" width="auto" visible="true" value="${option}" string="${option}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="#FFB366" onCorrect="" onInCorrect="this.vibrate='horizontal-shake';" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse';" border-image="">
             <lido-text visible="true" id="option-text" audio="" height="0px" width="auto" font-family="'Baloo 2', serif" font-size="landscape.44px, portrait.52px" font-color="black" string="${optionText}" bg-Color="transparent" onEntry="this.font-weight='700';" padding="0px 10px 0px 10px">
