@@ -157,8 +157,10 @@ export class LidoMathMatrix {
     const slotElement = this.el.querySelectorAll('.slot');
     const fristElement = this.el.querySelector('.slot') as HTMLElement;
     if (!slotElement.length || !fristElement) return;
-    const slotMaxValues = fristElement.offsetWidth < fristElement.offsetHeight ? fristElement.offsetWidth : fristElement.offsetHeight;
+    const elementSize = Number(this.rows) < Number(this.cols) ? this.el.offsetHeight : this.el.offsetWidth;
+    const numberOfSlots = Number(this.rows) > Number(this.cols) ? Number(this.rows) : Number(this.cols);
     const slotParent = this.el.querySelectorAll('.slot-parent');
+    const slotMaxValues = elementSize / numberOfSlots
     slotParent.forEach(parent => {
       (parent as HTMLElement).style.width = `${slotMaxValues}px`;
       Array.from(parent.children).forEach(el => {
