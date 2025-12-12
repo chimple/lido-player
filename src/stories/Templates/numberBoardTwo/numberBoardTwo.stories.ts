@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { string } from 'mathjs';
 
 type TextColors = {
   colors: string[];
@@ -64,7 +63,7 @@ function getContainerXml(args) {
   const pickedColors = args.colors;
 
   const DropCells = answers.map(answer => {
-    const rows = string(Number(answer)<=10 ? 2 : 4);
+    const rows = String(Number(answer)<=10 ? 2 : 4);
     return `
 		    <!-- drop --> 	
         <lido-cell layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="150px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
