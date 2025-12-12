@@ -804,6 +804,7 @@ export const validateObjectiveStatus = async () => {
       {
         appendingDragElementsInDrop();
       }
+      storingEachActivityScore(true);
       await executeActions(onCorrect, container);
     }
     if (container.getAttribute('dropAttr') === 'EnableAnimation') 
@@ -824,13 +825,14 @@ export const validateObjectiveStatus = async () => {
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     if (!isContinueOnCorrect) 
     {
-      triggerNextContainer();
       await calculateScore();
       triggerNextContainer()
-      
-    } else {
-        const onInCorrect = container.getAttribute('onInCorrect');
-        await executeActions(onInCorrect, container);
+    } 
+    else 
+    {
+      const onInCorrect = container.getAttribute('onInCorrect');
+      storingEachActivityScore(false);
+      await executeActions(onInCorrect, container);
     }    
   }
 };

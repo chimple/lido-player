@@ -57,7 +57,6 @@ function getContainerXml(args: SumTogetherArgs) {
   const objective = answer
   const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
-  let tabCounter = 2
   const numberMap : Record<number,string> = {
     1 : "one",
     2 : "two",
@@ -79,6 +78,7 @@ function getContainerXml(args: SumTogetherArgs) {
     `;
     }).join('\n');
 
+  let tabCounter = 8;
   const dragCells = options
     .map((digit, i) => {
         return `
@@ -105,16 +105,16 @@ function getContainerXml(args: SumTogetherArgs) {
 
             <!-- question row-->
             <lido-cell layout="row" id="question-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.15%" width="landscape.65%, portrait.90%" bg-Color="transparent" margin="landscape.185px 0px 30px 0px,portrait.25px 0px -120px 0px" onEntry="this.z-index='1'; this.justify-content='center';" gap="landscape.90px,portrait.40px">
-                <lido-text id="${number1}" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="${number1}" string="${number1}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+                <lido-text id="num-${number1}" tab-index="2" height="215px" width="120px" visible="true"  value="${number1}" string="${number1}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
-                <lido-text id="operator-${sign}" tab-index="${tabCounter++}" height="295px" width="120px" visible="true"  value="${sign}" string="${sign}" font-family="'Baloo Bhai 2'" font-color="black" font-size="195px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+                <lido-text id="operator-${sign}" tab-index="3" height="295px" width="120px" visible="true"  value="${sign}" string="${sign}" font-family="'Baloo Bhai 2'" font-color="black" font-size="195px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
-                <lido-text id="${number2}" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+                <lido-text id="num-${number2}" tab-index="4" height="215px" width="120px" visible="true"  value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
-                <lido-text id="equal" tab-index="${tabCounter++}" height="215px" width="120px" visible="true"  value="=" string="=" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
+                <lido-text id="equal" tab-index="5" height="215px" width="120px" visible="true"  value="=" string="=" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onInCorrect="" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='0';" border-image="">
                 </lido-text>
-                <lido-image id="${answer}" tab-index="${tabCounter++}" is-slice="true" height="225px" width="175px" value="${answer}" string="?" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png" type="drop" onEntry="this.opacity='0';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='1000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
-                  <lido-text height="245px" width="175px" visible="true" value="${answer}" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px"  bg-color="transparent" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='1';">
+                <lido-image is-slice="true" height="225px" width="175px" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png" onEntry="this.opacity='0';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='1000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';">
+                  <lido-text id="number-${answer}" height="225px" width="175px" visible="true" tab-index="6" value="${answer}" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="150px" type="drop" bg-color="transparent" onEntry="this.font-weight='800'; this.borderRadius='10px'; this.flex-flow='column-reverse'; this.opacity='1';">
                   </lido-text>
                 </lido-image>
             </lido-cell>
@@ -126,7 +126,7 @@ function getContainerXml(args: SumTogetherArgs) {
             </lido-cell>
 
             <!-- speaking element-->
-            <lido-text id="speak-text" tab-index="5" height="100%" width="100%" visible="false" string="solve the problem by counting the teddys above and drag the correct answer" font-family="'Baloo Bhai 2'" font-color="red" font-size="75px"  bg-color="transparent" onInCorrect="" onEntry="this.opacity='0'; this.speak='true';" border-image="">
+            <lido-text id="speak-text" tab-index="20" height="100%" width="100%" visible="false" string="solve the problem by counting the teddys above and drag the correct answer" font-family="'Baloo Bhai 2'" font-color="red" font-size="75px"  bg-color="transparent" onInCorrect="" onEntry="this.opacity='0'; this.speak='true';" border-image="">
             </lido-text>
         </lido-container>
     </main>
