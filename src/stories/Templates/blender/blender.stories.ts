@@ -97,9 +97,9 @@ function getContainerXml(args) {
 	</lido-cell>
 
 	<lido-cell layout="row" bg-color="transparent" aria-hidden="true" visible="true" height="landscape.420px,portrait.30%" width="landscape.1451px,portrait.90%"  onEntry="this.z-index='1';">
-		<lido-math-matrix id="hundredsDrag" value="100" tab-index="11" type="drag" rows="10" cols="10" defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#5D44BD" deactiveBgColor="#5D44BD" border="2px solid #4A3697" height="288px" width="35px" visible="true"></lido-math-matrix>
-		<lido-math-matrix  id="tensDrag" value="10" type="drag" tab-index="12" rows="10" cols="1"  defualtFill="10" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="35px" visible="true"></lido-math-matrix>
-		<lido-math-matrix id="unitsDrag" value="1" tab-index="13" type="drag" rows="1" cols="1"  defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="100px" visible="true"></lido-math-matrix> 
+		<lido-math-matrix id="hundredsDrag" value="100" tab-index="11" type="drag" rows="10" cols="10" defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#5D44BD" deactiveBgColor="#5D44BD" border="2px solid #4A3697" height="288px" width="220px" visible="true"></lido-math-matrix>
+		<lido-math-matrix  id="tensDrag" value="10" type="drag" tab-index="12" rows="10" cols="1"  defualtFill="10" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="300px" visible="true"></lido-math-matrix>
+		<lido-math-matrix id="unitsDrag" value="1" tab-index="13" type="drag" rows="1" cols="1"  defualtFill="100" leftIndex="false" topIndex="false" clickable="false" activeBgColor="#F57139" deactiveBgColor="#F57139" border="2px solid #F34D08" height="288px" width="80px" visible="true"></lido-math-matrix> 
 	  </lido-cell>		
 	
 </lido-container>

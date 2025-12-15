@@ -62,13 +62,13 @@ function getContainerXml(args : MultiplyBeedsArgs) {
                 </lido-text>
 
                 <!-- Bottom display Section -->
-                <lido-cell layout="pos" id="pos2"  value="pos2" height="auto" width="landscape.815px, portrait.815px" x="landscape.775px, portrait.48px" y="landscape.300px, portrait.945px" ariaHidden="true" bgColor="transparent" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear';">
+                <lido-cell layout="pos" id="pos2"  value="pos2" height="auto" width="landscape.900px, portrait.100%" x="landscape.700px, portrait.0px" y="landscape.300px, portrait.1000px" ariaHidden="true" bgColor="transparent" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear';">
                     <lido-text id="answer-multiply-beeds"  value="${answer}" height="inherit" width="inherit" string="${str_val}" font-size="84px" font-weight="600" bgColor="#FFF4CD" visible="true" onEntry="this.word-wrap='break-word'; this.fontWeight='600'; this.textAlign='center';">
                     </lido-text>
                 </lido-cell>
 
                 <!-- Beeds Section -->
-                <lido-cell layout="pos" id="pos3"  height="landscape.1100px, portrait.900px" width="landscape.700px,portrait.825px" x="landscape.40px, portrait.15px" y="landscape.-80px,portrait.45px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
+                <lido-cell layout="pos" id="pos3"  height="landscape.1100px, portrait.900px" width="landscape.600px,portrait.825px" x="landscape.40px, portrait.15px" y="landscape.-80px,portrait.45px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
                     <lido-math-matrix id="mat1" visible="true" rows="9" cols="9" top-index="true" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="#C23E06" deactive-bg-color="#F57139" border="2px solid #F34D08" defualt-fill="0" matrix-image="">
                     </lido-math-matrix>
                 </lido-cell>
