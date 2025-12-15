@@ -288,7 +288,6 @@ export const how_many: StoryObj = {
     images: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_01.png'],
     isAllowOnlyCorrect: true,
     isContinueOnCorrect: true,
-    templateName: 'how_many',
   },
   render: args => {
     const xml = getContainerXml2(args);
@@ -393,7 +392,7 @@ function getContainerXml2(args) {
                 height="landcape.100%,portrait.50%" width="landscape.50%,portrait.100%" bg-color="transparent">
 
                 <lido-shape class="shape" id="${args.options[0]}1" shapeType="lido-${args.options[0]}"
-                    x="landscape.7%, portrait.10%" y="${args.options[0] === 'cube' ? 'landscape.58%, portrait.30%' : args.options[0] === 'cylinder' ? 'landscape.52%, portrait.30%' : 'landscape.30%, portrait.30%'}"
+                    x="landscape.7%, portrait.10%"  y="${args.options[0] === 'cube' ? 'landscape.58%, portrait.36%' : args.options[0] === 'cylinder' ? 'landscape.52%, portrait.36%' : args.options[0] === 'rectangle' ? 'landscape.61%, portrait.36%':'landscape.51%, portrait.36%'}"
                     width="${args.options[0] === 'cube'
                           ? 'landscape.200px,portrait.200px'
                           : args.options[0] === 'rectangle'
@@ -411,7 +410,7 @@ function getContainerXml2(args) {
                     bgColor="blue" value="${args.options[0]}" type="click" visible="true"></lido-shape>
 
                 <lido-shape class="shape" id="${args.options[1]}" shapeType="lido-${args.options[1]}"
-                    x="landscape.30%,portrait.55%" y="${args.options[1] === 'cube' ? 'landscape.58%, portrait.30%' : args.options[1] === 'cylinder' ? 'landscape.52%, portrait.30%' : 'landscape.51%, portrait.30%'}"
+                    x="landscape.30%,portrait.55%"  y="${args.options[1] === 'cube' ? 'landscape.58%, portrait.36%' : args.options[1] === 'cylinder' ? 'landscape.52%, portrait.36%' : args.options[1] === 'rectangle' ? 'landscape.61%, portrait.36%':'landscape.51%, portrait.36%'}"
                     width="${
                           args.options[1] === 'cube'
                             ? 'landscape.200px,portrait.200px'
@@ -434,7 +433,7 @@ function getContainerXml2(args) {
                 height="landcape.100%,portrait.50%" width="landscape.50%,portrait.100%" bg-color="transparent">
 
                 <lido-shape class="shape" id="${args.options[2]}" shapeType="lido-${args.options[2]}"
-                    x="landscape.53%, portrait.8%" y="${args.options[2] === 'cube' ? 'landscape.58%, portrait.60%' : args.options[2] === 'cylinder' ? 'landscape.52%, portrait.60%' : 'landscape.51%, portrait.60%'}"
+                    x="landscape.53%, portrait.8%" y="${args.options[2] === 'cube' ? 'landscape.58%, portrait.60%' : args.options[2] === 'cylinder' ? 'landscape.52%, portrait.60%' : args.options[2] === 'rectangle' ? 'landscape.61%, portrait.60%':'landscape.51%, portrait.60%'}"
                     width="${
                           args.options[2] === 'cube'
                             ? 'landscape.200px,portrait.300px'
@@ -453,19 +452,19 @@ function getContainerXml2(args) {
                     bgColor="blue" value="${args.options[2]}" type="click" visible="true"></lido-shape>
 
                 <lido-shape class="shape" id="${args.options[3]}" shapeType="lido-${args.options[3]}"
-                    x="landscape.75%,portrait.56%" y="${args.options[3] === 'cube' ? 'landscape.58%, portrait.60%' : args.options[3] === 'cylinder' ? 'landscape.52%, portrait.60%' : 'landscape.51%, portrait.60%'}"
+                    x="landscape.75%,portrait.56%"  y="${args.options[3] === 'cube' ? 'landscape.58%, portrait.60%' : args.options[3] === 'cylinder' ? 'landscape.52%, portrait.60%' : args.options[3] === 'rectangle' ? 'landscape.61%, portrait.60%':'landscape.51%, portrait.60%'}"
                     width="${
-                        args.options[2] === 'cube'
+                        args.options[3] === 'cube'
                           ? 'landscape.200px,portrait.300px'
-                          : args.options[2] === 'rectangle'
+                          : args.options[3] === 'rectangle'
                             ? 'landscape.232px,portrait.312px'
                             : 'landscape.268px,portrait.300px'
                       }"
 
                       height="${
-                        args.options[2] === 'cube'
+                        args.options[3] === 'cube'
                           ? 'landscape.100px,portrait.300px'
-                          : args.options[2] === 'rectangle'
+                          : args.options[3] === 'rectangle'
                             ? 'landscape.144px,portrait.224px'
                             : 'landscape.268px,portrait.300px'
                       }"
@@ -1032,8 +1031,8 @@ function getContainerXml6(args) {
         onEntry="this.fontWeight='800';">
       </lido-text>
 
-      <lido-shape class="shape" id="${args.answer}" shapeType="lido-${args.answer}" x="landscape.40%,portrait.55%" y="${args.answer === 'cube' ? 'landscape.58%, portrait.30%' : args.answer === 'cylinder' ? 'landscape.52%, portrait.30%' : 'landscape.30%, portrait.30%'}" 
-      width="${args.answer === 'cube' ? 'landscape.150px,portrait.300px' : 'landscape.268px,portrait.300px'}"
+      <lido-shape class="shape" id="${args.answer}" shapeType="lido-${args.answer}" x="landscape.40%,portrait.32%" y="landscape.30%, portrait.19%" 
+      width="${args.answer === 'cube' ? 'landscape.150px,portrait.150px' : 'landscape.268px,portrait.300px'}"
       height="${args.answer === 'cube' ? 'landscape.1500px,portrait.300px' : 'landscape.268px,portrait.300px'}"
       bgColor="blue" value="${args.answer}" type="click" visible="true"></lido-shape>
   </lido-cell>
@@ -1048,7 +1047,7 @@ function getContainerXml6(args) {
     <lido-cell 
       layout="landscape.row, portrait.col" 
       visible="landscape.true, portrait.false"
-      margin="0px 90px 0px 0px"
+      margin="landscape.0px 90px 0px 0px"
       onEntry="this.border-radius='26px';"
       height="landscape.390px,portrait.46%" 
       width="landscape.92%,portrait.100%" 
@@ -1080,7 +1079,7 @@ function getContainerXml6(args) {
 
     <!-- Portrait layout: 2 items per row -->
     <lido-cell 
-      layout="landscape.row, portrait.col" 
+      layout="landscape.row, portrait.col" margin="68px 0px 0px 0px"
       visible="landscape.false, portrait.true" 
       onEntry="this.border-radius='26px';"
       height="landscape.390px,portrait.42%" 
