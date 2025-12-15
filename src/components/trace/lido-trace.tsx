@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
+import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp, storingEachActivityScore, calculateScore } from '../../utils/utils';
 import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
 import { AudioPlayer } from '../../utils/audioPlayer';
 
@@ -741,7 +741,7 @@ export class LidoTrace {
       currentPath.greenPath?.setAttribute('stroke-dashoffset', (state.totalPathLength - state.lastLength).toString());
 
       // Completion logic for closed paths: only allow completion if almost all points are traced
-      const COMPLETION_THRESHOLD = 0.90; // 90% of the path must be traced
+      const COMPLETION_THRESHOLD = 0.95; // 95% of the path must be traced
       let percentComplete = state.lastLength / state.totalPathLength;
       let startPoint = currentPath.getPointAtLength(0);
       let endPoint = currentPath.getPointAtLength(currentPath.getTotalLength());
@@ -781,6 +781,8 @@ export class LidoTrace {
       await this.playTraceAnimation();
     }
 
+    storingEachActivityScore(true);
+
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
     const delay = 1000; // milliseconds
     if (this.currentSvgIndex < this.svgUrls.length - 1) {
@@ -797,6 +799,8 @@ export class LidoTrace {
     if (this.el && this.onCorrect) {
       await executeActions(this.onCorrect, this.el);
     }
+
+    calculateScore();
     console.log('All SVGs completed, hiding component.');
     triggerNextContainer();
   }
