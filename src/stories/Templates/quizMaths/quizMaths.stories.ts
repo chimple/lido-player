@@ -288,6 +288,7 @@ export const how_many: StoryObj = {
     images: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/total/stone_01.png'],
     isAllowOnlyCorrect: true,
     isContinueOnCorrect: true,
+    templateName: 'how_many',
   },
   render: args => {
     const xml = getContainerXml2(args);
@@ -310,7 +311,7 @@ export const number_identification: StoryObj = {
 
 function getContainerXml2(args) {
   // FIXED: works for Shapes + Single Digit + Two Digit
-  const hasOptions = Array.isArray(args.options) && args.options.length > 0;
+  const hasImages = Array.isArray(args.images) && args.images.length > 0; 
 
   // ---------------------- QUESTION CELLS ----------------------
 
@@ -527,7 +528,7 @@ function getContainerXml2(args) {
 
   // ---------------------- FINAL RENDER LOGIC ----------------------
 
-  const SelectedQuestionCell = args.question1 ? QuestionCellForShapes : hasOptions ? QuestionCellForHowMany : QuestionCellForNumberIdentification;
+  const SelectedQuestionCell = args.question1 ? QuestionCellForShapes : hasImages ? QuestionCellForHowMany: QuestionCellForNumberIdentification ;
 
   const SelectedOptions = OptionCellsForHowManySingleAndTwoDigit;
 
