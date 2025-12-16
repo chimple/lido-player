@@ -228,7 +228,7 @@ export class LidoText {
   }
 
  private resolveAutoAudio(): string | null {
-  const origin =(window as any).__LIDO_COMMON_AUDIO_ORIGIN__ ?? '';
+  const origin = (window as any).__LIDO_COMMON_AUDIO_origin__;
   const base = (window as any).__LIDO_COMMON_AUDIO_PATH__;
   if (!base || !this.string) return null;
   const fileName = this.string.toLowerCase().trim().replace(/\s+/g, "_").replace(/[^\w-]/g, "");

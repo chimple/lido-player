@@ -275,6 +275,7 @@ export class LidoHome {
   private publishCommonAudioPath(path?: string) {
     if (!path) return;
     const cleanPath = path.replace(/\/+$/, "");
+    (window as any).__LIDO_COMMON_AUDIO_origin__="localhost:3000";
     (window as any).__LIDO_COMMON_AUDIO_PATH__ = cleanPath;
 
     console.log("[LidoHome] Published common audio path:", cleanPath);
