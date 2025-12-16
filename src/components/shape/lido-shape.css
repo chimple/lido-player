@@ -4,6 +4,8 @@
   left: var(--x);
   display: var(--display);
   z-index: var(--z);
+  justify-content: center;
+  align-items: center;
 }
 
 .lido-rectangle {
@@ -53,6 +55,52 @@
   transform: skew(20deg);
 }
 
+.lido-trapezoid {
+  width: var(--trapezoidWidth);
+  height: var(--trapezoidHeight);
+  background-color: var(--bgColor);
+  clip-path: polygon(
+    20% 0%,   /* top left */
+    80% 0%,   /* top right */
+    100% 100%,/* bottom right */
+    0% 100%  /* bottom left */
+  );
+}
+
+.lido-hexagon {
+  width: var(--hexagonWidth);
+  height: var(--hexagonHeight);
+  background-color: var(--bgColor);
+  clip-path: polygon(
+    25% 0%,   /* top left */
+    75% 0%,   /* top right */
+    100% 50%, /* right */
+    75% 100%, /* bottom right */
+    25% 100%, /* bottom left */
+    0% 50%   /* left */
+  );
+}
+
+.lido-cone {
+  width: var(--coneWidth);
+  height: var(--coneHeight);
+  background-color: var(--bgColor);
+  clip-path: polygon(
+    /* Curved top (approximated arc) */
+    15% 10%,
+    25% 4%,
+    35% 1%,
+    50% 0%,
+    65% 1%,
+    75% 4%,
+    85% 10%,
+
+    /* Bottom tip */
+    50% 100%
+  );
+}
+
+
 .lido-star {
   width: var(--starWidth);
   height: var(--starHeight);
@@ -93,4 +141,46 @@
   width: var(--heartWidth);
   border-image: radial-gradient(var(--heartBgColor) 69%, #0000 70%) 84.5%/50%;
   clip-path: polygon(-41% 0, 50% 91%, 141% 0);
+}
+
+/* cube */
+
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  /* animation: spin 6s infinite linear; */
+  transform: rotateX(-20deg) rotateY(45deg);
+}
+
+/* all faces */
+.face {
+  position: absolute;
+  width: var(--face-width,150px);
+  height: var(--face-width,150px);
+  background: var(--face-bg-color,150px); /* cube color */
+  box-shadow: inset -20px -20px 40px rgba(0,0,0,0.3);
+}
+
+/* move faces into a cube shape */
+.front  { transform: rotateY(  0deg) translateZ(var(--face-translate, 75px)); }
+.back   { transform: rotateY(180deg) translateZ(var(--face-translate, 75px)); }
+.right  { transform: rotateY( 90deg) translateZ(var(--face-translate, 75px)); }
+.left   { transform: rotateY(-90deg) translateZ(var(--face-translate, 75px)); }
+.top    { transform: rotateX( 90deg) translateZ(var(--face-translate, 75px)); }
+.bottom { transform: rotateX(-90deg) translateZ(var(--face-translate, 75px)); }
+
+
+
+/* Cylinder */
+.lido-cylinder {
+  /* whatever values/units you want */
+  width: var(--width);
+  height: var(--height);
+  border-radius: 100% / 80px;
+  background: 
+    radial-gradient(50% 40px at 50% 40px, #0003 99.99%, #0000 0),
+    radial-gradient(50% 40px at 50% calc(100% - 40px), #fff3 99.99%, #0000 0),
+    red;
 }
