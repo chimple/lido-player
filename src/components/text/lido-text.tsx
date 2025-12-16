@@ -1,7 +1,7 @@
 import { Component, Prop, h, Element, Host, State,Watch } from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
 import i18next, { t as i18t } from '../../utils/i18n';
-import { LangChangeEvent} from '../../utils/constants';
+import { LangChangeEvent, LIDO_COMMON_AUDIO_ORIGIN, LIDO_COMMON_AUDIO_PATH } from '../../utils/constants';
 /**
  * @component LidoText
  *
@@ -218,7 +218,7 @@ export class LidoText {
         }
       };
       // If path is already available, apply immediately
-      if ((window as any).__LIDO_COMMON_AUDIO_PATH__) {
+      if (LIDO_COMMON_AUDIO_PATH) {
         applyAutoAudio();
       } else {
         // Otherwise, wait for it
@@ -228,10 +228,11 @@ export class LidoText {
   }
 
  private resolveAutoAudio(): string | null {
-  const base = (window as any).__LIDO_COMMON_AUDIO_PATH__;
+  const origin = LIDO_COMMON_AUDIO_ORIGIN;
+  const base = LIDO_COMMON_AUDIO_PATH;
   if (!base || !this.string) return null;
   const fileName = this.string.toLowerCase().trim().replace(/\s+/g, "_").replace(/[^\w-]/g, "");
-  return `${base}/${fileName}.mp3`;
+  return `${origin}${base}/${fileName}.mp3`;
   }
 
   /**
