@@ -57,7 +57,6 @@ function getContainerXml(args: SumTogetherArgs) {
   const objective = answer
   const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
 
-  let tabCounter = 2
   const numberMap : Record<number,string> = {
     1 : "one",
     2 : "two",
@@ -79,6 +78,7 @@ function getContainerXml(args: SumTogetherArgs) {
     `;
     }).join('\n');
 
+  let tabCounter = 8;
   const dragCells = options
     .map((digit, i) => {
         return `
@@ -128,7 +128,7 @@ function getContainerXml(args: SumTogetherArgs) {
             <lido-cell layout="landscape.row, portrait.wrap" id="option-row" aria-hidden="true" visible="true" height="landscape.15%,portrait.5%" width="landscape.90%, portrait.106%" bg-Color="transparent" margin="landscape.65px 0px 65px 0px,portrait.-160px -65px 500px 0px" onEntry="this.z-index='1'; this.justify-content='center'; this.opacity='0';" gap="landscape.20px,portrait.5px">
                 ${dragCells}
             </lido-cell>
-
+            
         </lido-container>
     </main>
   `;

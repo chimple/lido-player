@@ -51,7 +51,7 @@ function getContainerXml(args) {
     <lido-container id="lido-container" tab-index="1" visible="true" objective="${args.objective}"
       onCorrect="lido-slide-fill.fill-slide='${args.Increment}'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
       onInCorrect="lido-slide-fill.fill-slide='${args.Decrement}'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
-      is-continue-on-correct="true" show-check="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png">
+      is-continue-on-correct="true" show-check="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" disable-speak="true">
         <lido-text tab-index="1" visible="false" string="Pop the ${args.objective} balloon"></lido-text>
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="-50px" y="landscape.560px, portrait.1220px" aria-hidden="true" z="1" bg-color="transparent" visible="true">
@@ -60,7 +60,7 @@ function getContainerXml(args) {
         </lido-cell>
         
         <!-- Content -->
-        <lido-cell visible="true" layout="row" width="landscape.100%, portrait.95%" height="100%" z="1" onEntry="this.alignItems='flex-start';">
+        <lido-cell visible="true" layout="row" width="landscape.100%, portrait.95%" height="100%" z="1" onEntry="this.alignItems='flex-start';" >
 
             <lido-cell visible="true" layout="pos" x="landscape.70px, portrait.50px" y="landscape.360px, portrait.330px" bg-color="transparent">
               <lido-text visible="true" string="${args.objective}" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="140px">

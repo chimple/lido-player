@@ -8,10 +8,10 @@ import { convertUrlToRelative, initEventsForElement, parseProp ,validateObjectiv
 })
 export class LidoMathMatrix {
   /** Number of rows in the matrix */
-  @Prop() rows = "7";
+  @Prop() rows = "10";
 
   /** Number of columns in the matrix */
-  @Prop() cols = "5";
+  @Prop() cols = "10";
 
   /** Number of slots to pre-fill as active by default */
   @Prop({ mutable: true, reflect: true }) defualtFill = 0;

@@ -1,5 +1,5 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
+import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp, storingEachActivityScore, calculateScore } from '../../utils/utils';
 import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
 import { AudioPlayer } from '../../utils/audioPlayer';
 
@@ -574,7 +574,7 @@ export class LidoTrace {
   }
 
   // Modified handlePointerMove function
-  handlePointerMove(state: any) {
+  async handlePointerMove(state: any) {
     if (!state.isDragging) return;
     if (!state.circle || !state.paths || state.paths.length === 0) return;
 
@@ -741,7 +741,7 @@ export class LidoTrace {
       currentPath.greenPath?.setAttribute('stroke-dashoffset', (state.totalPathLength - state.lastLength).toString());
 
       // Completion logic for closed paths: only allow completion if almost all points are traced
-      const COMPLETION_THRESHOLD = 0.90; // 90% of the path must be traced
+      const COMPLETION_THRESHOLD = 0.95; // 95% of the path must be traced
       let percentComplete = state.lastLength / state.totalPathLength;
       let startPoint = currentPath.getPointAtLength(0);
       let endPoint = currentPath.getPointAtLength(currentPath.getTotalLength());
@@ -749,6 +749,8 @@ export class LidoTrace {
 
       if (pathIsClosed && state.totalPathLength > 50) {
         if (percentComplete >= COMPLETION_THRESHOLD) {
+          // Animate the draggable circle & green trace to the very end, then proceed
+          await this.animatePathToEnd(state, currentPath);
           if (state.currentPathIndex < state.paths.length - 1) {
             this.moveToNextPath(state);
           } else if (state.currentPathIndex === state.paths.length - 1) {
@@ -768,6 +770,59 @@ export class LidoTrace {
     // this.resetIdleTimer(state); // ← keep timer alive
   }
 
+  // Smoothly animate the draggable circle + green stroke from current lastLength to totalPathLength
+  private animatePathToEnd(state: any, path: SVGGeometryElement, duration = 300): Promise<void> {
+    if (!path || !state.svg) return Promise.resolve();
+    if (state._animatingToEnd) return Promise.resolve();
+    state._animatingToEnd = true;
+
+    const start = state.lastLength || 0;
+    const end = path.getTotalLength();
+    const startTime = performance.now();
+
+    // get greenPath safely: prefer the attached property, otherwise query by class near the original path
+    const greenPath = ((path as any).greenPath as SVGPathElement | undefined) ||
+                      ((path.parentNode && (path.parentNode as Element).querySelector('.lido-trace-path-green')) as SVGPathElement | null);
+
+    return new Promise(resolve => {
+      const step = (now: number) => {
+
+        const t = Math.min(1, (now - startTime) / duration);
+        const eased = t; // linear easing
+        const currentLen = start + (end - start) * eased;
+        state.lastLength = currentLen;
+        // update circle position and green path dashoffset
+        const pt = path.getPointAtLength(currentLen);
+        if (state.circle) {
+          state.circle.setAttribute('cx', pt.x.toString());
+          state.circle.setAttribute('cy', pt.y.toString());
+        }
+        if (greenPath) {
+          greenPath.setAttribute('stroke-dashoffset', (state.totalPathLength - currentLen).toString());
+        }
+
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } 
+        else {
+          // ensure fully complete
+          state.lastLength = end;
+          if (state.circle) {
+            const finalPt = path.getPointAtLength(end);
+            state.circle.setAttribute('cx', finalPt.x.toString());
+            state.circle.setAttribute('cy', finalPt.y.toString());
+          }
+          if (greenPath) {
+            greenPath.setAttribute('stroke-dashoffset', '0');
+          }
+          state._animatingToEnd = false;
+          resolve();
+        }
+      };
+      requestAnimationFrame(step);
+    });
+  }
+
   // Move to the next container after completing the current SVG
   async moveToNextContainer() {
     this.isDragging = false;
@@ -780,6 +835,8 @@ export class LidoTrace {
     if (this.animationTrace) {
       await this.playTraceAnimation();
     }
+
+    storingEachActivityScore(true);
 
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
     const delay = 1000; // milliseconds
@@ -797,6 +854,8 @@ export class LidoTrace {
     if (this.el && this.onCorrect) {
       await executeActions(this.onCorrect, this.el);
     }
+
+    calculateScore();
     console.log('All SVGs completed, hiding component.');
     triggerNextContainer();
   }
