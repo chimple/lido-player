@@ -1303,7 +1303,7 @@ export namespace Components {
         "clickable": boolean;
         /**
           * Number of columns in the matrix
-          * @default "5"
+          * @default "10"
          */
         "cols": string;
         /**
@@ -1346,7 +1346,7 @@ export namespace Components {
         "padding": string;
         /**
           * Number of rows in the matrix
-          * @default "7"
+          * @default "10"
          */
         "rows": string;
         /**
@@ -3985,7 +3985,7 @@ declare namespace LocalJSX {
         "clickable"?: boolean;
         /**
           * Number of columns in the matrix
-          * @default "5"
+          * @default "10"
          */
         "cols"?: string;
         /**
@@ -4028,7 +4028,7 @@ declare namespace LocalJSX {
         "padding"?: string;
         /**
           * Number of rows in the matrix
-          * @default "7"
+          * @default "10"
          */
         "rows"?: string;
         /**

@@ -1358,12 +1358,22 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
     cell.classList.remove('lido-box-highlight');
   }
 
-  // After all cells have come down, apply the bounce animation
-  for (const cell of boxCells) {
+  // checkout parent cell first then pick the first text child inside cell
+  const parentCell = document.getElementById(LidoContainer) as HTMLElement | null;
+  if (!parentCell) return;
+  const firstTextChild = parentCell.querySelector('lido-text') as HTMLElement | null;
+  if (firstTextChild) {
+    // play the text child inside parent cell
+    await AudioPlayer.getI().play(firstTextChild);
+  }
 
-    // play the text child inside cell
-    await AudioPlayer.getI().play(cell);
+  // Now select each box cell's text child and play them one by one
+  for(const box of boxCells) {
+    const text = box.querySelector<HTMLElement>('lido-text');
+    console.log('box text', text);  
+    if (!text) continue;
 
+    await AudioPlayer.getI().play(text);
   }
 };
 
@@ -1393,18 +1403,6 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
     const dropVal = dropEl.getAttribute("value");
     if (dropVal && dropEl.innerText.trim() === "?") {
       dropEl.innerText = dropVal;
-      if(dropElements.length > 1 && check==false)
-      {
-        if(window.innerWidth > window.innerHeight)
-        {
-          dropEl.style.marginRight = "-45px"
-        }
-        else
-        {
-          dropEl.style.marginRight = "-65px"
-        }
-        check = true;
-      }
     }
   });
 }
