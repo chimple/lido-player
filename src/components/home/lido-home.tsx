@@ -36,7 +36,7 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
- @Prop() commonAudioPath?: string="http://localhost:3000/commonAudios";
+ @Prop() commonAudioPath?: string;
 
   /** Boolean to show or hide navigation buttons */
   @Prop() showNav: boolean = true;
