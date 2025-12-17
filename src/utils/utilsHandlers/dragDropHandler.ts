@@ -304,9 +304,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
             if (otherElement.tagName.toLowerCase() === 'lido-text') {
               otherElement.style.border = ''; // Reset border
               otherElement.style.backgroundColor = 'transparent'; // Reset background color
-            }
-            if (otherElement.tagName.toLowerCase() === 'lido-image') {
+            }else if (otherElement.tagName.toLowerCase() === 'lido-image') {
               otherElement.style.opacity = '0';
+            } else {
+              otherElement.style.opacity = '1';
             }
           }
         } else {

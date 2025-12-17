@@ -66,8 +66,8 @@ function getContainerXml(args) {
     const rows = String(Number(answer)<=10 ? 2 : 4);
     return `
 		    <!-- drop --> 	
-        <lido-cell layout="col" visible="true" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="150px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
-					<lido-math-matrix id="mat1" rows="${rows}" cols="5"  defualtFill="${answer}" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="70%" width="130%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px">
+        <lido-cell layout="col" visible="true" gap="20px" margin="landscape.0,portrait.72px 0px -95px 0px" height="landscape.345px,portrait.350px" width="150px" bg-Color="#DFF2F2" onEntry="this.position='relative';this.align-items='center';this.justify-content='center';this.borderRadius='10px';">
+					<lido-math-matrix id="mat1" rows="${rows}" cols="5"  defualtFill="${answer}" leftIndex="false" topIndex="false" clickable="true" matrixImage="" activeBgColor="#922E05" inactiveBgColor="transparent" border="5px soild transparent" height="50%" width="100%" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px">
           </lido-math-matrix>
 					<lido-cell id="drop${tabCounter}" visible="true" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-color="white" tab-index="${tabCounter++}" value="${answer}" string="${answer}" type="drop" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';">
           </lido-cell>

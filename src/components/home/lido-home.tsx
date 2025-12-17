@@ -167,7 +167,6 @@ export class LidoHome {
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
       this.currentContainerIndex = index;
-      console.log('container index ; ', this.currentContainerIndex);
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex < this.containers.length - 1) {
@@ -448,7 +447,6 @@ export class LidoHome {
 
 
     const containers = Array.from(containerElements).map((container, index) => {
-      console.log("nammadhaaaaaaa",this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index));
       
       if(this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index))return;
       // Return a factory function that generates a fresh JSX node each time
@@ -456,7 +454,6 @@ export class LidoHome {
     }).filter(Boolean); // Remove any undefined entries
 
     this.containers = containers;
-    console.log("container :::", containers);
     
   }
 
@@ -488,9 +485,6 @@ export class LidoHome {
     private areAllDropsFilled(): boolean {
       const drops = Array.from(document.querySelectorAll('[type="drop"]'));
       const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to')); 
-      console.log('drops', drops);
-      console.log('drags', drags);
-      
       
       return drops.every(drop => {
          const dropId = drop.id;

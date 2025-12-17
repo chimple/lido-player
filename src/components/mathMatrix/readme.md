@@ -15,7 +15,7 @@
 | `borderRadius`      | `border-radius`       | Border radius for each slot                                                 | `string`  | `'5px'`             |
 | `bottomIndex`       | `bottom-index`        | Show row index numbers on the bottom side                                   | `boolean` | `false`             |
 | `clickable`         | `clickable`           | Enable/disable click interactions on the slots                              | `boolean` | `true`              |
-| `cols`              | `cols`                | Number of columns in the matrix                                             | `string`  | `"5"`               |
+| `cols`              | `cols`                | Number of columns in the matrix                                             | `string`  | `"10"`              |
 | `deactiveBgColor`   | `deactive-bg-color`   |                                                                             | `string`  | `'transparent'`     |
 | `defualtFill`       | `defualt-fill`        | Number of slots to pre-fill as active by default                            | `number`  | `0`                 |
 | `fontColor`         | `font-color`          | Font color for the slot text                                                | `string`  | `undefined`         |
@@ -27,7 +27,7 @@
 | `onEntry`           | `on-entry`            |                                                                             | `string`  | `undefined`         |
 | `onInCorrect`       | `on-in-correct`       |                                                                             | `string`  | `undefined`         |
 | `padding`           | `padding`             | Padding inside the matrix container                                         | `string`  | `undefined`         |
-| `rows`              | `rows`                | Number of rows in the matrix                                                | `string`  | `"7"`               |
+| `rows`              | `rows`                | Number of rows in the matrix                                                | `string`  | `"10"`              |
 | `tabIndex`          | `tab-index`           | Sets the tab index for keyboard navigation                                  | `number`  | `undefined`         |
 | `text`              | `text`                | The display text or label associated with this matrix element               | `string`  | `undefined`         |
 | `topIndex`          | `top-index`           | Show column index numbers on the top side                                   | `boolean` | `false`             |

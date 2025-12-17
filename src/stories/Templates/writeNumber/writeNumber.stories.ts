@@ -66,7 +66,7 @@ function getContainerXml(args : WriteNumberArgs) {
         return '';
     }
 
-    let tabCounter = 4;
+    let tabCounter = 7;
     // Make a list [1,2,3,...,stars]
     const starList = Array.from({ length: stars }, (_, i) => i + 1);
 
@@ -81,7 +81,7 @@ function getContainerXml(args : WriteNumberArgs) {
     
     return `
         <main>
-            <lido-container id="lido-container" objective="writeNumber" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20number.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}">
+            <lido-container id="lido-container" objective="writeNumber" tab-index="1"  value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20number.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}">
 
                 <!-- Chimple Avatar -->
                 <lido-cell layout="pos" id="pos1" disable-edit="true" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1279px, portrait.230px" y="landscape.375px, portrait.1035px" ariaHidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
@@ -91,9 +91,13 @@ function getContainerXml(args : WriteNumberArgs) {
                     </lido-image>
                 </lido-cell>
 
+
+                <lido-text id="invisible-text" tab-index="2" audio="" width="297px" height="80px" display="flex" onEntry="this.speak='true';" font-size="12px" z="1" font-color="black" value="trace the number as shown by pointing the figure and count the rockets." string="trace the number as shown by pointing the figure and count the rockets." visible="false" bg-color="transparent">
+                </lido-text>   
+
                 <!-- text-element -->
                 <lido-cell layout="pos" id="pos2" disable-edit="true" height="landscape.80px, portrait.80px" width="landscape.297px, portrait.297px" x="landscape.645px, portrait.300px" y="landscape.90px, portrait.105px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.font-weight='600';">
-                    <lido-text id="txt1" tab-index="2" span-type="${spanType}"  audio="" width="297px" height="80px" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
+                    <lido-text id="txt1" tab-index="3" span-type="${spanType}"  audio="" width="297px" height="80px" display="flex" onEntry="this.text-align='center'; this.justify-content='center'; this.flex-shrink='0';" font="'Baloo Bhai 2'" font-size="96px" z="1" font-color="black" font-weight="600" color=" #000000" string="${text}" visible="true" y="landscape., portrait." bg-color="transparent">
                     </lido-text>                        
                 </lido-cell>
 
@@ -105,7 +109,7 @@ function getContainerXml(args : WriteNumberArgs) {
 
                 <!-- trace cell -->
                 <lido-cell layout="pos" id="pos3" visible="true" width="landscape.740px, portrait.740px"  height="landscape.477px, portrait.477px" bg-color="transparent"  onEntry="this.border-radius='6px'; this.flex-shrink='0';" x="landscape.430px, portrait.75px" y="landscape.205px, portrait.275px">
-                    <lido-trace id="image2" tab-index="3" value="a" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Audios/1.wav; https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Audios/2.wav" visible="true" highlightTextId="txt1" svgSource="${traceImage1}; ${traceImage2}" onCorrect="star-row.highlightStarsAndDisapper='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';"  mode="${traceMode}" z="1" x="" y="" width="740px" height="477px" alt-text="{backgroundImage}">
+                    <lido-trace id="image2" tab-index="4" value="10" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Audios/1.wav; https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Audios/2.wav" visible="true" highlightTextId="txt1" svgSource="${traceImage1}; ${traceImage2}" onCorrect="star-row.highlightStarsAndDisapper='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';"  mode="${traceMode}" z="1" x="" y="" width="740px" height="477px" alt-text="{backgroundImage}">
                     </lido-trace>
                 </lido-cell>
 
