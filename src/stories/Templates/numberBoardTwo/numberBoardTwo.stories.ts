@@ -58,7 +58,7 @@ export const numberBoard: StoryObj = {
 };
 
 function getContainerXml(args) {
-  let tabCounter = 1;
+  let tabCounter = 3;
   const { options = [], answers = [], isAllowOnlyCorrect = true} = args;
   const pickedColors = args.colors;
 
@@ -77,8 +77,7 @@ function getContainerXml(args) {
 
   const DragCells = options
     .map((option) => {
-        
-	const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
+	    const color = pickedColors[Math.floor(Math.random() * pickedColors.length)];
       return `
         <lido-text visible="true"  onTouch="this.speak='true';" type="drag" id="drag${tabCounter}" tab-index="${tabCounter++}" height="landscape.110px,portrait.110px" width="landscape.110px,portrait.110px" bg-Color="white" font-family="'Baloo Bhai 2'" font-size="100px" font-weigth="500" value="${option}" string="${option}" margin="landscape.0 0 127px 0,portrait.0 135px 0 0 " onEntry="this.color='${color}';this.fontWeight='800';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white ">
         </lido-text>
@@ -102,7 +101,7 @@ function getContainerXml(args) {
 
             <lido-text id="trainAudio" visible="false" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Ordered%20Tractor/train1.m4a" onEntry="this.speak='true'; question-text.speak='true';">
             </lido-text>
-            <lido-text id="question-text" visible="false" audio="" string="drag the number to its correct place and complete the number puzzle" value="drag the number to its correct place and complete the number puzzle" onEntry="">
+            <lido-text id="question-text" tab-index="2" visible="false" audio="" string="drag the number to its correct place and complete the number puzzle" value="drag the number to its correct place and complete the number puzzle" onEntry="">
             </lido-text>
               
             <lido-cell visible="true" id="xx"  layout="landscape.row,portrait.col" height="90%" width="90%" bg-Color="transparent" margin="landscape.56px 0px 0px 0px,portrait.0px" onEntry="">
