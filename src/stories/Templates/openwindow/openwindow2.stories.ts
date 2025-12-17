@@ -96,8 +96,6 @@ function getOpenWindowXml(args: OpenWindowArgs): string {
 		  </lido-cell>
       <lido-cell layout="row" visible="true" width="75%" height="25%" bg-color="transparent" margin="5%">
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="landscape.620px, portrait.270px" y="landscape.440px, portrait.1200px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="this.padding-right=100px">
-          <lido-image id="image" disable-edit="true" value="image" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/open_window/door.png" bg-color="transparent" width="195px" height="285px" x="landscape.80px, portrait.80px" y="landscape.90px, portrait.90px" alt-text="{shadowImage}">
-          </lido-image>
           <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="480px" width="220px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" x="65px" y="-25px">
           </lido-avatar>
         </lido-cell>

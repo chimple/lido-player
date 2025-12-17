@@ -1,4 +1,6 @@
+import { LidoContainer } from '../constants';
 import { executeActions } from '../utils';
+import { buildDropHasDragFromDOM } from './dragDropHandler';
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
   const styleId = '#wrong-answer-animation-style';
@@ -56,7 +58,7 @@ export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
 }
 
 export function removeHighlight(element: HTMLElement): void {
-  element.classList.remove('highlight');
+  element.classList.remove('highlight-element');
   element.ariaPressed = 'false';
 }
 
@@ -115,4 +117,21 @@ export function stopHighlightForSpeakingElement(element: HTMLElement): void {
   // Remove inline styles
   // element.style.boxShadow = '';
   // element.style.border = '';
+}
+
+export function highlightElement(): void {
+  const container = document.querySelector(LidoContainer);
+  if (!container) return;
+  const dropElements = buildDropHasDragFromDOM();
+  let firstFalse = Object.values(dropElements).find(item => !item.isFull);
+  if (firstFalse) {
+    const dropEls = container.querySelectorAll(`[type="drop"]`);
+    dropEls.forEach(dropEl => {
+      dropEl.classList.remove('highlight-element');
+    });
+    const dropEle = container.querySelector(`#${firstFalse.drop}`) as HTMLElement;
+    if (dropEle) {
+      dropEle.classList.add('highlight-element');
+    }
+  }
 }
