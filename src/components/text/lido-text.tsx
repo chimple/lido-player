@@ -1,7 +1,7 @@
 import { Component, Prop, h, Element, Host, State,Watch } from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
 import i18next, { t as i18t } from '../../utils/i18n';
-import { LangChangeEvent,LIDO_COMMON_AUDIO_PATH} from '../../utils/constants';
+import { LangChangeEvent,LIDO_COMMON_AUDIO_PATH,LIDO_COMMON_AUDIO_READY_EVENT} from '../../utils/constants';
 /**
  * @component LidoText
  *
@@ -222,7 +222,7 @@ export class LidoText {
         applyAutoAudio();
       } else {
         // Otherwise, wait for it
-        window.addEventListener('lidoCommonAudioPathReady', applyAutoAudio, { once: true });
+        window.addEventListener(LIDO_COMMON_AUDIO_READY_EVENT, applyAutoAudio, { once: true });
       }
     }
   }

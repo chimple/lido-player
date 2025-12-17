@@ -858,7 +858,7 @@ export function convertUrlToRelative(url: string): string {
   if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
   }
-  if ( url.startsWith('/commonAudios/')) {  
+  if ( url.startsWith('/Lido-CommonAudios/')) {  
     return url;
   }
   if (baseUrl) {
