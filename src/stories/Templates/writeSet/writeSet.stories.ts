@@ -40,7 +40,7 @@ function getContainerXml(args) {
   }).join('');
 
   return `<main>
- <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" appendToDropOnCompletion="true" equationCheck="$#mat1,==,$#number" objective="" is-allow-only-correct="${isAllowOnlyCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; number.speak='true';  this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}">
+ <lido-container visible="true" show-next-button="false" dropAttr="math-matrix" appendToDropOnCompletion="true" equationCheck="$#mat1,==,$#number" objective="" is-allow-only-correct="${isAllowOnlyCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; number.speak='true';  this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}">
 
     <!-- Audio -->
     <lido-text visible="false" id="audio123" onEntry="this.display='none'; this.speak='true';" string="Fill the matrix according to the number given in the box."></lido-text>
