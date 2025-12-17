@@ -858,6 +858,9 @@ export function convertUrlToRelative(url: string): string {
   if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
   }
+  if ( url.startsWith('/commonAudios/')) {  
+    return url;
+  }
   if (baseUrl) {
     const newUrl = url.startsWith('/') ? url.slice(1) : url;
     if (newUrl.startsWith(baseUrl.replace(/^\/+|\/+$/g, ''))) return newUrl;
