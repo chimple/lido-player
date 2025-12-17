@@ -13,7 +13,7 @@ import {
   prevUrl,
   nextUrl,
   speakUrl,
-  ActivityScoreKey,
+  ActivityScoreKey,LIDO_COMMON_AUDIO_PATH
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 
@@ -36,6 +36,7 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
+ @Prop() commonAudioPath?: string;
 
   /** Boolean to show or hide navigation buttons */
   @Prop() showNav: boolean = true;
@@ -203,6 +204,11 @@ export class LidoHome {
     this.updateArrowVisibility();
   };
 
+  @Watch("commonAudioPath")
+    onCommonAudioPathChange(path: string) {
+      this.publishCommonAudioPath(path);
+  }
+
   /**
    * Lifecycle method that runs before the component is loaded. It sets up event listeners for transitioning
    * between containers and parses the XML data into containers.
@@ -246,6 +252,7 @@ export class LidoHome {
 
   @State() showDotsandbtn: boolean = false;
   componentDidLoad() {
+     this.publishCommonAudioPath(this.commonAudioPath);
     setTimeout(() => {
       this.showDotsandbtn = true;
     }, 10);
@@ -263,6 +270,16 @@ export class LidoHome {
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
     });
+  }
+  private publishCommonAudioPath(path?: string) {
+    if (!path) return;
+    const cleanPath = path.replace(/\/+$/, "");
+    (window as any)[LIDO_COMMON_AUDIO_PATH] = cleanPath;
+
+    console.log("[LidoHome] Published common audio path:", cleanPath);
+
+    // Dispatch a global event so LidoText knows the path is ready
+    window.dispatchEvent(new Event('lidoCommonAudioPathReady'));
   }
 
   private async handleIcons() {
