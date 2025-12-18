@@ -1108,8 +1108,12 @@ export namespace Components {
         "clickable": boolean;
         /**
           * Number of columns in the matrix
+          * @default "10"
          */
         "cols": string;
+        /**
+          * deactivating bg color
+         */
         "deactiveBgColor": string;
         /**
           * Number of slots to pre-fill as active by default
@@ -1144,6 +1148,7 @@ export namespace Components {
         "padding": string;
         /**
           * Number of rows in the matrix
+          * @default "10"
          */
         "rows": string;
         /**
@@ -3438,8 +3443,12 @@ declare namespace LocalJSX {
         "clickable"?: boolean;
         /**
           * Number of columns in the matrix
+          * @default "10"
          */
         "cols"?: string;
+        /*
+          * deactivating bg color
+        */
         "deactiveBgColor"?: string;
         /**
           * Number of slots to pre-fill as active by default
@@ -3474,6 +3483,7 @@ declare namespace LocalJSX {
         "padding"?: string;
         /**
           * Number of rows in the matrix
+          * @default "10"
          */
         "rows"?: string;
         /**
