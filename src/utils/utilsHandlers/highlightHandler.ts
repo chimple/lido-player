@@ -156,7 +156,7 @@ export function highlightElement(): void {
       clickTemplate.forEach(clickEl => {
         if(clickEl.getAttribute('value') === container.getAttribute('objective')){
           if(!clickEl.classList.contains('highlight-element')){
-            clickEl.className = `${clickEl.className} highlight-element`;
+            clickEl.classList.add('highlight-element');
           }
         }
       })
