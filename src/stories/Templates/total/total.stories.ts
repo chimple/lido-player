@@ -42,6 +42,8 @@ function getContainerXml(args) {
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 		</lido-avatar>
 	</lido-cell>
+  <lido-text visible="false" audio="" onEntry="this.speak='true';" bg-color="red" string="Count the number of objects in the left and click the number on the number board">
+  </lido-text>
 
       <!-- Main Layout -->
       <lido-cell layout="landscape.row,portrait.col" y="landscape.3%,portrait.0px" onEntry="this.position='relative';" visible="true" width="90%" height="90%" bg-color="transparent">
