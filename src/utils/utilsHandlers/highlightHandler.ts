@@ -151,6 +151,7 @@ export function highlightElement(): void {
       });
     }
   } else {
+      if(countOfMistakes < 2)return;
       const clickTemplate = container.querySelectorAll("[type='click']");
       clickTemplate.forEach(clickEl => {
         if(clickEl.getAttribute('value') === container.getAttribute('objective')){
