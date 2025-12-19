@@ -1,5 +1,5 @@
 import { LidoContainer } from '../constants';
-import { executeActions } from '../utils';
+import { countOfMistakes, executeActions } from '../utils';
 import { buildDropHasDragFromDOM } from './dragDropHandler';
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
@@ -133,5 +133,32 @@ export function highlightElement(): void {
     if (dropEle) {
       dropEle.classList.add('highlight-element');
     }
+
+    // Highlight corresponding drag elements if mistakes are more than 2
+    const dragElements = container.querySelectorAll(`[type="drag"]`);    
+    if(countOfMistakes > 2){
+      dragElements.forEach(dragEl => {
+        dragEl.classList.remove('highlight-element');
+        if(dragEl.getAttribute('value') === dropEle.getAttribute('value')){
+          dragEl.classList.add('highlight-element');
+          dragEl.classList.remove('drag-element')
+        }
+      });
+    } else {
+      dragElements.forEach(dragEl => {
+        dragEl.classList.remove('highlight-element');
+        dragEl.classList.add('drag-element');
+      });
+    }
+  } else {
+      const clickTemplate = container.querySelectorAll("[type='click']");
+      clickTemplate.forEach(clickEl => {
+        if(clickEl.getAttribute('value') === container.getAttribute('objective')){
+          if(!clickEl.classList.contains('highlight-element')){
+            clickEl.className = `${clickEl.className} highlight-element`;
+          }
+        }
+      })
   }
+
 }

@@ -2,6 +2,7 @@ import { Component, Host, Prop, h, Element,Watch } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, calculateScale } from '../../utils/utils';
 import { string } from 'mathjs';
 import i18next from '../../utils/i18n';
+import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
 
 /**
  * @component LidoContainer
@@ -344,6 +345,7 @@ export class LidoContainer {
     }
     const langToApply = this.resolveLanguage();
     this.updateChildTextLanguage(langToApply);
+    highlightElement()
   }
 
   disconnectedCallback() {
