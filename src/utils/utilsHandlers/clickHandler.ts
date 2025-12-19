@@ -4,6 +4,7 @@ import { DragSelectedMapKey, LidoContainer, SelectedValuesKey } from '../constan
 import { dispatchClickEvent } from '../customEvents';
 import tinycolor from 'tinycolor2';
 import { setDraggingDisabled } from './dragDropHandler';
+import { highlightElement } from './highlightHandler';
 
 export function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
@@ -120,6 +121,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       if(!isInsideCalculator){ 
       storingEachActivityScore(isCorrect);
       }
+      highlightElement();
       handleShowCheck();
       return;
     } 

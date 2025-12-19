@@ -22,7 +22,7 @@ import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDro
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
-import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
+import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
 import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
@@ -608,11 +608,16 @@ export const countPatternWords = (pattern: string): number => {
   return wordCount;
 };
 
+export let countOfMistakes = 0;
+
 export const storingEachActivityScore = (flag: boolean) => {
   if (flag) {
     gameScore.rightMoves += 1;
+    countOfMistakes = 0;
+    highlightElement();
   } else {
     gameScore.wrongMoves += 1;
+    countOfMistakes += 1;
   }
   console.log('Right Moves : ', gameScore.rightMoves);
   console.log('Wrong Moves : ', gameScore.wrongMoves);

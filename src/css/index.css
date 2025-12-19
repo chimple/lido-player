@@ -44,7 +44,7 @@ body {
 
 .highlight-element {
   border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(151, 150, 150, 0.1) !important;
+  box-shadow: rgb(243, 77, 8) 0px 0px 40px !important;
 }
 
 .drop-element.empty {

@@ -56,7 +56,7 @@ function getContainerXml(args: SequenceBoxArgs) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-        <lido-text id="drop-${cell}" tab-index="${25+i}" disable-edit="true" height="landscape.165px, portrait.125px" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="#FFC805" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px';" border-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png">
+        <lido-text id="drop-${cell}" tab-index="${25+i}" disable-edit="true" height="landscape.140px, portrait.125px" width="110px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="#FFC805" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.margin-top='65px'; this.border='1px solid white';" >
         </lido-text>
       `
     )
@@ -108,7 +108,7 @@ function getContainerXml(args: SequenceBoxArgs) {
               <lido-cell layout="col" visible="true" type="box" height="landscape.90%,portrait.41%" width="20%" bg-Color="transparent" onEntry="this.z-index='1';" onCorrect="this.boxAnimate='true';">
                 <lido-image is-slice="true" bg-color="transparent" id="drop-image4" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_top1.png" height="landscape.150px, portrait.150px" width="landscape.315px, portrait.200px" margin="landscape.-180px 0px -525px 0px, portrait.-200px 0px -715px 0px" >
                 </lido-image>
-                <lido-image is-slice="true" bg-color="transparent" id="drop-image5" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_bottom1.png" height="landscape.250px, portrait.200px" width="landscape.315px, portrait.200px" margin="landscape.0px 0px -145px 0px, portrait.0px 0px -275px 0px" >
+                <lido-image is-slice="true" bg-color="transparent" id="drop-image2" disable-edit="true" tab-index="27" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/tressure_bottom1.png" height="landscape.250px, portrait.200px" width="landscape.315px, portrait.200px" margin="landscape.0px 0px -145px 0px, portrait.0px 0px -275px 0px" onEntry="this.gap='10px';">
                   ${dropCells}
                 </lido-image>
               </lido-cell>

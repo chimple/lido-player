@@ -156,13 +156,20 @@ export class LidoFlash {
 
   componentWillLoad() {
     this.updateStyles();
+    
     window.addEventListener('resize', this.updateStyles);
     window.addEventListener('load', this.updateStyles);
   }
 
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);    
-
+    const card = this.el.querySelector('.card');
+    if (card) {
+      card.classList.add('flipped');
+      setTimeout(() => {
+        card.classList.remove('flipped');
+      }, 1000)
+    }
     initEventsForElement(this.el, this.type);
     // handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'inline-block');
   }
@@ -215,7 +222,7 @@ export class LidoFlash {
         onClick={this.handleFlip}
         disable-speak={this.disableSpeak}
       >
-        <div class={`card ${this.flipped ? 'flipped' : ''}`}>
+        <div class={`card ${this.flipped ? 'flipped' : ''}`} >
           {/* Front face */}
           <div class="card-face card-front">{this.front != null ? this.front : <slot name="front" />}</div>
 

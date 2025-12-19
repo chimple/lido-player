@@ -1,7 +1,17 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp, storingEachActivityScore, calculateScore } from '../../utils/utils';
+import {
+  convertUrlToRelative,
+  executeActions,
+  triggerNextContainer,
+  speakIcon,
+  setVisibilityWithDelay,
+  parseProp,
+  storingEachActivityScore,
+  calculateScore,
+} from '../../utils/utils';
 import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
 import { AudioPlayer } from '../../utils/audioPlayer';
+import { trace } from 'console';
 
 // Enum for different tracing modes
 
@@ -38,8 +48,8 @@ export class LidoTrace {
   /**
    * Array of audio URLs to be played when tracing is completed, separated by semicolons.
    * This allows multiple audio files to be loaded and played in sequence.
-  */
-  @State() audioUrls: string[] = [];  
+   */
+  @State() audioUrls: string[] = [];
 
   /**
    * Index of the currently active SVG in the `svgUrls` array.
@@ -125,8 +135,6 @@ export class LidoTrace {
    */
   @Prop() onCorrect: string;
 
- 
-
   /**
    * Indicates whether to highlight the text associated with the SVG when the trace is completed.
    */
@@ -142,10 +150,10 @@ export class LidoTrace {
    */
   @Prop() delayVisible: string = '';
 
-   /**
-     * When set to true, disables the speak functionality of long press for this component and its children.
-     */
-    @Prop() disableSpeak: boolean = false;
+  /**
+   * When set to true, disables the speak functionality of long press for this component and its children.
+   */
+  @Prop() disableSpeak: boolean = false;
 
   @Element() el!: HTMLElement;
 
@@ -507,12 +515,12 @@ export class LidoTrace {
   setupDraggableCircle(state: any) {
     const firstPathStart = state.paths[0].getPointAtLength(0);
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');    
+    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
     circle.setAttribute('r', `calc(20)`); // Radius of the draggable circle
-    circle.setAttribute('fill', '#CF1565'); // fill the color for the circle 
+    circle.setAttribute('fill', '#CF1565'); // fill the color for the circle
     state.svg?.appendChild(circle);
     state.circle = circle;
 
@@ -653,14 +661,11 @@ export class LidoTrace {
         state.currentFreePath[state.currentPathIndex] = newPolyline;
         // Store points array for this polyline
         state.currentFreePolylinePoints = state.currentFreePolylinePoints || [];
-        state.currentFreePolylinePoints[state.currentPathIndex] = [
-          { x: pointerPos.x, y: pointerPos.y }
-        ];
+        state.currentFreePolylinePoints[state.currentPathIndex] = [{ x: pointerPos.x, y: pointerPos.y }];
         // Reset lastPointerPos for the new path
         state.lastPointerPos = pointerPos;
         // Add a points counter to limit path growth
         state.freeTracePointsCount = 1;
-
       }
 
       // Limit the number of points in the free trace path for performance
@@ -781,12 +786,12 @@ export class LidoTrace {
     const startTime = performance.now();
 
     // get greenPath safely: prefer the attached property, otherwise query by class near the original path
-    const greenPath = ((path as any).greenPath as SVGPathElement | undefined) ||
-                      ((path.parentNode && (path.parentNode as Element).querySelector('.lido-trace-path-green')) as SVGPathElement | null);
+    const greenPath =
+      ((path as any).greenPath as SVGPathElement | undefined) ||
+      ((path.parentNode && (path.parentNode as Element).querySelector('.lido-trace-path-green')) as SVGPathElement | null);
 
     return new Promise(resolve => {
       const step = (now: number) => {
-
         const t = Math.min(1, (now - startTime) / duration);
         const eased = t; // linear easing
         const currentLen = start + (end - start) * eased;
@@ -803,8 +808,7 @@ export class LidoTrace {
 
         if (t < 1) {
           requestAnimationFrame(step);
-        } 
-        else {
+        } else {
           // ensure fully complete
           state.lastLength = end;
           if (state.circle) {
@@ -831,7 +835,7 @@ export class LidoTrace {
 
     if (this.highlightTextId) {
       this.highlightLetter(this.currentSvgIndex);
-    } 
+    }
     if (this.animationTrace) {
       await this.playTraceAnimation();
     }
@@ -844,6 +848,8 @@ export class LidoTrace {
       await new Promise(resolve => setTimeout(resolve, delay));
       this.currentSvgIndex++;
       await this.initializeSVG();
+      const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
+      svgContainer.style.visibility = 'visible';
       this.moving = false;
       return;
     }
@@ -1015,7 +1021,7 @@ export class LidoTrace {
     if (!container) return;
 
     const traceElement = this.el;
-    if(!traceElement) return;
+    if (!traceElement) return;
 
     // Ensure highlightTextId is set
     const textId = this.highlightTextId;
@@ -1026,8 +1032,8 @@ export class LidoTrace {
     if (!textElem) return;
 
     // Extract audio URLs from the trace element's audio attribute
-    const audioList = this.audio; 
-    if(!audioList) return;
+    const audioList = this.audio;
+    if (!audioList) return;
 
     this.audioUrls = audioList.split(';').map(s => s.trim());
     console.log('audioUrls', this.audioUrls);
@@ -1045,12 +1051,23 @@ export class LidoTrace {
       if (index < 0 || index >= letters.length) return;
       // Highlight the current letter keeping the previous ones highlighted
       const letter = letters[index] as HTMLElement;
-      if (letter) 
-      {
-        letter.classList.add('letter-highlight');
-        
-        if(this.audioUrls[this.currentSvgIndex])
-        {
+      if (letter) {
+        const svgContainer = traceElement.querySelector('#lido-svgContainer') as HTMLElement;
+
+        await executeActions("this.alignMatch='true';", textElem, svgContainer);
+        svgContainer.style.animation = 'trace-animation 0.4s forwards';
+        svgContainer.style.setProperty('--trace-width', `${letter.offsetWidth - 5}px`);
+        svgContainer.style.setProperty('--trace-height', `${letter.offsetHeight - 5}px`);
+        await executeActions("this.alignMatch='true';", letter, svgContainer);
+
+        setTimeout(() => {
+          letter.classList.add('letter-highlight');
+          svgContainer.style.transform = '';
+          svgContainer.style.animation = '';
+          svgContainer.style.visibility = 'hidden';
+        }, 500);
+
+        if (this.audioUrls[this.currentSvgIndex]) {
           console.log('Playing audio:', this.audioUrls[this.currentSvgIndex]);
           const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
@@ -1063,11 +1080,9 @@ export class LidoTrace {
       if (index < 0 || index >= words.length) return;
       // Highlight the current word keeping the previous ones highlighted
       const word = words[index] as HTMLElement;
-      if (word) 
-      {
+      if (word) {
         word.classList.add('word-highlight');
-        if(this.audioUrls[this.currentSvgIndex])
-        {
+        if (this.audioUrls[this.currentSvgIndex]) {
           const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
         }
