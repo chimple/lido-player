@@ -22,7 +22,7 @@ import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDro
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
-import { stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
+import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
 import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
@@ -608,11 +608,16 @@ export const countPatternWords = (pattern: string): number => {
   return wordCount;
 };
 
+export let countOfMistakes = 0;
+
 export const storingEachActivityScore = (flag: boolean) => {
   if (flag) {
     gameScore.rightMoves += 1;
+    countOfMistakes = 0;
+    highlightElement();
   } else {
     gameScore.wrongMoves += 1;
+    countOfMistakes += 1;
   }
   console.log('Right Moves : ', gameScore.rightMoves);
   console.log('Wrong Moves : ', gameScore.wrongMoves);
@@ -856,6 +861,9 @@ export function convertUrlToRelative(url: string): string {
   const baseUrl = container.getAttribute('baseUrl');
 
   if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
+    return url;
+  }
+  if ( url.startsWith('/Lido-CommonAudios/')) {  
     return url;
   }
   if (baseUrl) {
@@ -1358,12 +1366,22 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
     cell.classList.remove('lido-box-highlight');
   }
 
-  // After all cells have come down, apply the bounce animation
-  for (const cell of boxCells) {
+  // checkout parent cell first then pick the first text child inside cell
+  const parentCell = document.getElementById(LidoContainer) as HTMLElement | null;
+  if (!parentCell) return;
+  const firstTextChild = parentCell.querySelector('lido-text') as HTMLElement | null;
+  if (firstTextChild) {
+    // play the text child inside parent cell
+    await AudioPlayer.getI().play(firstTextChild);
+  }
 
-    // play the text child inside cell
-    await AudioPlayer.getI().play(cell);
+  // Now select each box cell's text child and play them one by one
+  for(const box of boxCells) {
+    const text = box.querySelector<HTMLElement>('lido-text');
+    console.log('box text', text);  
+    if (!text) continue;
 
+    await AudioPlayer.getI().play(text);
   }
 };
 
@@ -1393,18 +1411,6 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
     const dropVal = dropEl.getAttribute("value");
     if (dropVal && dropEl.innerText.trim() === "?") {
       dropEl.innerText = dropVal;
-      if(dropElements.length > 1 && check==false)
-      {
-        if(window.innerWidth > window.innerHeight)
-        {
-          dropEl.style.marginRight = "-45px"
-        }
-        else
-        {
-          dropEl.style.marginRight = "-65px"
-        }
-        check = true;
-      }
     }
   });
 }
@@ -1414,9 +1420,9 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
   if (!value) return;
 
   // Expecting structure: [_, TopRow, questionRow, optionRow, ...]
-  const TopRow = Array.from(element.children)[1] as HTMLElement | null;
-  const questionRow = Array.from(element.children)[2] as HTMLElement | null;
-  const optionRow = Array.from(element.children)[3] as HTMLElement | null;
+  const TopRow = Array.from(element.children)[2] as HTMLElement | null;
+  const questionRow = Array.from(element.children)[3] as HTMLElement | null;
+  const optionRow = Array.from(element.children)[4] as HTMLElement | null;
 
   if (!TopRow || !questionRow || !optionRow) return;
 

@@ -13,6 +13,7 @@
 | `avatarUrl`              | `avatar-url`         | URL for the avatar Rive file.                                                                            | `string`   | `undefined`              |
 | `baseUrl`                | `base-url`           | Base URL for the containers.                                                                             | `string`   | `''`                     |
 | `canplay`                | `canplay`            | Boolean that controls the playability of the game.                                                       | `boolean`  | `true`                   |
+| `commonAudioPath`        | `common-audio-path`  |                                                                                                          | `string`   | `undefined`              |
 | `exitButtonUrl`          | `exit-button-url`    | Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.          | `string`   | `undefined`              |
 | `height`                 | `height`             | The height of the container (CSS value).                                                                 | `string`   | `''`                     |
 | `initialIndex`           | `initial-index`      | Initial index of the container being displayed.                                                          | `number`   | `0`                      |

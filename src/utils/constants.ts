@@ -17,6 +17,8 @@ export const DropToAttr = 'drop-to';
 export const DropTimeAttr = 'drop-time';
 export const LidoContainer = 'lido-container';
 export const LangChangeEvent = 'languageChanged';
+export const LIDO_COMMON_AUDIO_PATH = '__LIDO_COMMON_AUDIO_PATH__';
+export const LIDO_COMMON_AUDIO_READY_EVENT = 'lidoCommonAudioPathReady';
 
 export enum TraceMode {
   NoFlow = 'noFlow',
