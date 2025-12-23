@@ -671,7 +671,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color**
+          // otherElement.style.backgroundColor = 'transparent'; // Reset background color**
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
@@ -680,7 +680,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
+        // otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
         otherElement.style.opacity = '1';

@@ -63,7 +63,7 @@ function getContainerXml(args) {
         }" is-allow-only-correct="${isAllowOnlyCorrect}">
 
         <!-- Audio -->
-        <lido-text visible="false" id="audio12" onEntry="this.display='none';" string="Drag the missing number to its correct place and complete the number puzzle."></lido-text>
+        <lido-text visible="false" id="audio12" tab-index="${tabCounter++}" onEntry="this.display='none';" string="Drag the missing number to its correct place and complete the number puzzle."></lido-text>
         
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" x="landscape.1432px,portrait.330px" y="landscape.612px, portrait.1338px" aria-hidden="true" z="9999" bg-color="transparent" visible="true" onEntry="" margin="-104px 0px 0px -54px">
