@@ -193,3 +193,13 @@
             drop-shadow(0 0 30px orange);
   }
 }
+
+@keyframes trace-animation {
+  0% {
+    
+  }
+  100% {
+    width: var(--trace-width, 100px);
+    height: var(--trace-height, 100px);
+  }
+}

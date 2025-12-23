@@ -4,7 +4,7 @@ import { updateBalanceOnDrop } from './lidoBalanceHandler';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction,NextContainerKey, } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
-import { removeHighlight } from './highlightHandler';
+import { highlightElement, removeHighlight } from './highlightHandler';
 import { dragDropAnimation } from './animationHandler';
 export function buildDropHasDragFromDOM(): Record<string, { drop: string; isFull: boolean }> {
   const dropHasDrag: Record<string, { drop: string; isFull: boolean }> = {};
@@ -484,6 +484,7 @@ export function handleResetDragElement(
     let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
     if (prevDropItem) {
       prevDropItem.isFull = false;
+      highlightElement()
       // container.setAttribute(DropHasDrag, JSON.stringify(dropHasDrag));
       const dropEl = document.getElementById(prevDropItem.drop);
       if (dropEl) {
@@ -537,6 +538,7 @@ export function handleResetDragElement(
   });
  
   handleShowCheck();
+  highlightElement();
 }
 
 export async function onElementDropComplete(dragElement: HTMLElement, dropElement: HTMLElement): Promise<void> {
@@ -659,6 +661,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     if (isAllowOnlyOneDrop && isisFull) {
             isisFull.isFull = true;
             dropElement.setAttribute('is-full', 'true');
+            highlightElement()
           } else {
         console.warn('No matching drop item found for', dropElement);
       }
@@ -777,6 +780,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
+  highlightElement();
   await onActivityComplete(dragElement, dropElement);
 }
 
@@ -849,11 +853,12 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
     document.head.appendChild(style);
   }
 
-  element?.classList.add('highlight');
+
+  element?.classList.add('highlight-element');
   element.ariaPressed = 'true';
 
-  const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight");
-  const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight");
+  const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight-element");
+  const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight-element");
 
   if (!selectedDropElement) {
     onClickDragElement(element);
@@ -918,6 +923,7 @@ async function onClickDragElement(element: HTMLElement){
   }
 
   let firstFalse = Object.values(dropElements).find(item => !item.isFull);
+
   if (firstFalse) {
     const dropEl = document.querySelector(`#${firstFalse.drop}`) as HTMLElement;
     dragEl.style.transition = 'transform 0.5s ease';
