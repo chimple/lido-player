@@ -7,7 +7,7 @@ type TextColors = {
 };
 
 const meta: Meta = {
-  title: 'Templates/palEgmaTemp2',
+  title: 'Templates/palEgmaPatternMatching',
   argTypes: {
     options: { control: 'object' },
     answers: { control: 'object' },
@@ -18,7 +18,7 @@ const meta: Meta = {
 
 export default meta;
 
-export const palEgmaTemp2: StoryObj = {
+export const palEgmaPatternMatching: StoryObj = {
   args: {
     question_text: 'Complete the pattern',
     questions: ['975', '976', '@977', '978', '979'],
