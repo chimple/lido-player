@@ -108,7 +108,7 @@ function getContainerXml(args: PalEgma2Args) {
                     ${imageCells2}
                   </lido-cell>
                   <lido-cell layout="row" is-slice="true" visible="true" height="landscape.5%,portrait.41%" width="inherit" bg-Color="transparent" onEntry="this.z-index='1';" onCorrect="">
-                    <lido-text id="num-1" is-slice="true"  disable-edit="true" height="landscape.156px, portrait.125px" width="inherit" visible="true" value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.90px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='700'; this.borderRadius='16px';" border-image="">
+                    <lido-text id="num-2" is-slice="true"  disable-edit="true" height="landscape.156px, portrait.125px" width="inherit" visible="true" value="${number2}" string="${number2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.90px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='700'; this.borderRadius='16px';" border-image="">
                     </lido-text>
                   </lido-cell>
                 </lido-cell>
