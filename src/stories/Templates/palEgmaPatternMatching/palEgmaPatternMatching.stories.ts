@@ -32,6 +32,37 @@ export const palEgmaPatternMatching: StoryObj = {
 
 function getContainerXml(args) {
   // ---------------------- FINAL XML ----------------------
+  const question_cells = args.questions.map((q, index) => {
+  const isHidden = q?.startsWith('@');
+  const actualValue = isHidden ? q.slice(1) : q;
+  const questionString = isHidden ? '? ' : q;
+
+  // add comma except for last item
+  const comma = index < args.questions.length - 1 ? ' ,' : '';
+
+  return `
+      <lido-text
+        visible="true" tab-index="${1 + index}"
+        value="${actualValue}"
+        string="${questionString}${comma}"
+        font-family="'Baloo Bhai 2'"
+        font-color="#07004E"
+        font-size="landscape.130px, portrait.100px"
+        bg-color=""
+        onEntry="this.fontWeight='800';">
+      </lido-text>  
+  `;
+}).join('');
+
+ const opion_cells = args.options.map((q, index) => {
+  return `
+      <lido-cell layout="row" id="text${1+index}" visible="true" margin="" onEntry="this.border-radius='14px';" height="landscape.270px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="orange"  type="click" value="${q}">
+        <lido-text visible="true" value="${q}" string="${q}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='800';">
+        </lido-text>
+      </lido-cell>
+  `;
+}).join('');
+
 
   return `
 <main>
@@ -47,67 +78,19 @@ function getContainerXml(args) {
 
     <lido-cell layout="landscape.col, portrait.col" visible="true" margin="landscape.30px 0px 0px 0px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px';" height="landscape.90%,portrait.42%" width="landscape.96%,portrait.100%" bg-color="transparent">
         <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 0px 0px 0px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px';" height="landscape.140px,portrait.42%" width="landscape.80%,portrait.100%" bg-color=" transparent">
-            <lido-text id="text" visible="true" tab-index="112" value="${args.questions[0]}" string="${args.question_text}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.80px, portrait.100px"  bg-color="" onEntry="this.fontWeight='800'; this.fontWeight='800'; this.speak='true';">
+            <lido-text id="text" visible="true" tab-index="112" value="${args.questions[0]}" string="${args.question_text}" font-family="'Baloo Bhai 2'" font-color="#07004E" font-size="landscape.80px, portrait.100px"  bg-color="" onEntry="this.fontWeight='800'; this.fontWeight='800'; this.speak='true';">
 			      </lido-text>
         </lido-cell>
 
         <!-- question cells -->
-		<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 0px 0px 0px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px';" height="landscape.290px,portrait.42%" width="landscape.100%,portrait.100%" bg-color="transparent">				
-
-			<lido-cell layout="row" id="text2" tab-index="2" visible="true" margin="" onEntry="this.border-radius='14px'; this.border='7px solid #F34D08';" height="landscape.214px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="white"  type="" value="${args.questions[0]?.startsWith('@') ? args.questions[0].slice(1) : args.questions[0]}" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';">
-				<lido-text  visible="true" value="${args.questions[0]?.startsWith('@') ? args.questions[0].slice(1) : args.questions[0]}" string="${args.questions[0]?.startsWith('@') ? '?'.repeat(args.questions[2].slice(1).length) : args.questions[0]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="" onEntry="this.fontWeight='800';">
-				</lido-text>
-			</lido-cell>
-
-            <lido-cell layout="row" id="text2" tab-index="2" visible="true" margin="" onEntry="this.border-radius='14px'; this.border='7px solid #F34D08';" height="landscape.214px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="white"  type="" value="${args.questions[1]?.startsWith('@') ? args.questions[1].slice(1) : args.questions[2]}" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';">
-				<lido-text  visible="true" value="${args.questions[1]?.startsWith('@') ? args.questions[1].slice(1) : args.questions[2]}" string="${args.questions[1]?.startsWith('@') ? '?'.repeat(args.questions[2].slice(1).length) : args.questions[1]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="" onEntry="this.fontWeight='800';">
-				</lido-text>
-			</lido-cell>
-
-            <lido-cell layout="row" id="text2" tab-index="2" visible="true" margin="" onEntry="this.border-radius='14px'; this.border='7px solid #F34D08';" height="landscape.214px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="white"  type="" value="${args.questions[2]?.startsWith('@') ? args.questions[2].slice(1) : args.questions[2]}" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';">
-				<lido-text  visible="true" value="${args.questions[2]?.startsWith('@') ? args.questions[2].slice(1) : args.questions[2]}" string="${args.questions[2]?.startsWith('@') ? '?'.repeat(args.questions[2].slice(1).length) : args.questions[2]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="" onEntry="this.fontWeight='800';">
-				</lido-text>
-			</lido-cell>
-
-            <lido-cell layout="row" id="text2" tab-index="2" visible="true" margin="" onEntry="this.border-radius='14px'; this.border='7px solid #F34D08';" height="landscape.214px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="white"  type="" value="${args.questions[3]?.startsWith('@') ? args.questions[3].slice(1) : args.questions[3]}" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';">
-				<lido-text  visible="true" value="${args.questions[3]?.startsWith('@') ? args.questions[3].slice(1) : args.questions[3]}" string="${args.questions[3]?.startsWith('@') ? '?'.repeat(args.questions[2].slice(1).length) : args.questions[3]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="" onEntry="this.fontWeight='800';">
-				</lido-text>
-			</lido-cell>
-
-            <lido-cell layout="row" id="text2" tab-index="2" visible="true" margin="" onEntry="this.border-radius='14px'; this.border='7px solid #F34D08';" height="landscape.214px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="white"  type="" value="${args.questions[4]}" onInCorrect="lido-avatar.avatarAnimate='Fail';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';">
-				<lido-text  visible="true" value="${args.questions[4]}" string="${args.questions[4]?.startsWith('@') ? '?'.repeat(args.questions[4].slice(1).length) : args.questions[4]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="" onEntry="this.fontWeight='800';">
-				</lido-text>
-			</lido-cell>
- 	    </lido-cell>
+          <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 0px 0px 0px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px'; this.border='5px solid #6D8600'" height="landscape.290px,portrait.42%" width="landscape.90%,portrait.100%" bg-color="#FFFFFF99">				
+            ${question_cells}
+          </lido-cell>
 
         <!-- options cells -->
-		<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 38px 0px 0px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.290px,portrait.35%" width="landscape.86%,portrait.100%" bg-color="transparent">
-
-
-                    <lido-cell layout="row" id="text6" tab-index="6" visible="true" margin="" onEntry="this.border-radius='14px';" height="landscape.270px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="orange"  type="click" value="${args.options[0]}">
-                        <lido-text visible="true" value="${args.options[0]}" string="${args.options[0]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" 
-                        onEntry="this.fontWeight='800';">
-                        </lido-text>
-                    </lido-cell>
-
-                    <lido-cell layout="row" id="text7" tab-index="7" visible="true" margin="" onEntry="this.border-radius='14px';" height="landscape.270px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="orange"  type="click" value="${args.options[1]}">
-                        <lido-text visible="true" value="${args.options[1]}" string="${args.options[1]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" 
-                        onEntry="this.fontWeight='800';">
-                        </lido-text>
-                    </lido-cell>
-            
-                    <lido-cell layout="row" id="text8" tab-index="8" visible="true" margin="" onEntry="this.border-radius='14px';" height="landscape.270px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="orange"  type="click" value="${args.options[2]}">
-                        <lido-text  visible="true" value="${args.options[2]}" string="${args.options[2]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" 
-                        onEntry="this.fontWeight='800';">
-                        </lido-text>
-                    </lido-cell>
-
-                    <lido-cell layout="row" id="text9" tab-index="9" visible="true" margin="" onEntry="this.border-radius='14px';" height="landscape.270px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="orange"  type="click" value="${args.options[3]}">
-                        <lido-text visible="true" value="${args.options[3]}" string="${args.options[3]}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" 
-                        onEntry="this.fontWeight='800';">
-                        </lido-text>
-                    </lido-cell>	        
-        </lido-cell>
+	      	<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 38px 0px 0px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.290px,portrait.35%" width="landscape.86%,portrait.100%" bg-color="transparent">
+            ${opion_cells}
+          </lido-cell>
 
           
     </lido-cell>
