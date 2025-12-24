@@ -37,7 +37,7 @@ function getContainerXml(args) {
 
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${(args.questions.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.isContinueOnCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}" custom-style= "#text {
+<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/Frame%2051.svg" objective="${(args.questions.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.isContinueOnCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}" custom-style= "#text {
         box-shadow: none !important;
         }">
 	 <!-- Chimple Avatar -->
