@@ -243,8 +243,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
         if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
-            otherElement.style.border = ''; // Reset border
-            otherElement.style.backgroundColor = 'transparent'; // Reset background color
+            // otherElement.style.border = ''; // Reset border
+            // otherElement.style.backgroundColor = 'transparent'; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image') {
             otherElement.style.opacity = '0';
@@ -252,8 +252,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         }
       } else {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.border = ''; // Reset border
-          otherElement.style.backgroundColor = ''; // Reset background color
+          // otherElement.style.border = ''; // Reset border
+          // otherElement.style.backgroundColor = ''; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
           otherElement.style.opacity = '1';
@@ -302,8 +302,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
           if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
             if (otherElement.tagName.toLowerCase() === 'lido-text') {
-              otherElement.style.border = ''; // Reset border
-              otherElement.style.backgroundColor = 'transparent'; // Reset background color
+              // otherElement.style.border = ''; // Reset border
+              // otherElement.style.backgroundColor = 'transparent'; // Reset background color
             }else if (otherElement.tagName.toLowerCase() === 'lido-image') {
               otherElement.style.opacity = '0';
             } else {
@@ -312,8 +312,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
           }
         } else {
           if (otherElement.tagName.toLowerCase() === 'lido-text') {
-            otherElement.style.border = ''; // Reset border
-            otherElement.style.backgroundColor = ''; // Reset background color
+            // otherElement.style.border = ''; // Reset border
+            // otherElement.style.backgroundColor = ''; // Reset background color
           }
           if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
             otherElement.style.opacity = '1';
@@ -519,7 +519,7 @@ export function handleResetDragElement(
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          // otherElement.style.backgroundColor = 'transparent'; // Reset background color
         }
         if (otherElement.tagName.toLowerCase() === 'lido-image') {
           otherElement.style.opacity = '0';
@@ -528,7 +528,7 @@ export function handleResetDragElement(
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        otherElement.style.backgroundColor = 'transparent'; // Reset background color
+        // otherElement.style.backgroundColor = 'transparent'; // Reset background color
       }
       if (otherElement.tagName.toLowerCase() === 'lido-image') {
         otherElement.style.opacity = '1';
@@ -707,8 +707,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
             if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
               if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
                 if (otherElement.tagName.toLowerCase() === 'lido-text') {
-                  otherElement.style.border = ''; // Reset border
-                  otherElement.style.backgroundColor = 'transparent'; // Reset background color
+                  // otherElement.style.border = ''; // Reset border
+                  // otherElement.style.backgroundColor = 'transparent'; // Reset background color
                 }
                 if (otherElement.tagName.toLowerCase() === 'lido-image') {
                   otherElement.style.opacity = '0';
@@ -716,8 +716,8 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
               }
             } else {
               if (otherElement.tagName.toLowerCase() === 'lido-text') {
-                otherElement.style.border = ''; // Reset border
-                otherElement.style.backgroundColor = ''; // Reset background color
+                // otherElement.style.border = ''; // Reset border
+                // otherElement.style.backgroundColor = ''; // Reset background color
               }
               if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
                 otherElement.style.opacity = '1';
