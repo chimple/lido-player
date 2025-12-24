@@ -8,9 +8,7 @@ const meta: Meta = {
   option2: { control: 'text' },
   option3: { control: 'text' },
   option4: { control: 'text' },
-  num1Row: { control: 'text' },
   
-  num2Row: { control: 'text' },
   
   text1: { control: 'text' },
    text2: { control: 'text' },
@@ -27,8 +25,7 @@ export const substractionWithimg: StoryObj = {
   option2:"3",
   option3:"8",
   option4:"4",
-    solidImg:"3",
-    borderImg:"2",
+    
   
  
   
@@ -61,12 +58,12 @@ function generateImages(count, src) {
 function getContainerXml(args) {
     let tabCounter = 1;
      const solidImages = generateImages(
-    args.solidImg,
+    args.text1,
     'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/image5.png'
   );
 
   const borderImages = generateImages(
-    args.borderImg,
+    args.text2,
     'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Tenbox/aplle%20outlinee.png'
   );
   return `<main>
