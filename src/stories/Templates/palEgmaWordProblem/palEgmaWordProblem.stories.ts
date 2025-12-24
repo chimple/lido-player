@@ -11,8 +11,7 @@ const meta: Meta = {
   argTypes: {
     options: { control: 'object' },
     answers: { control: 'object' },
-    isAllowOnlyCorrect: { control: 'boolean' },
-    isContinueOnCorrect: { control: 'boolean' },
+    PracticeMode: { control: 'boolean' },
   },
 };
 
@@ -24,8 +23,7 @@ export const palEgmaWordProblem1: StoryObj = {
         'George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?',
       answer: '13',
       options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      isAllowOnlyCorrect: true,
-      isContinueOnCorrect: true,
+      PracticeMode: false,
     },
     render: args => {
       const xml = getContainerXml(args);
@@ -73,7 +71,7 @@ function getContainerXml(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer.split('').join(',',)}" tab-index="" show-drop-border="false" is-continue-on-correct="true"  is-allow-only-correct="true" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
+  <lido-container id="lido-container" objective="${args.answer.split('').join(',',)}" tab-index="" show-drop-border="false" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
         box-shadow: none !important;
         }">
 
