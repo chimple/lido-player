@@ -263,8 +263,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Apply styles only to the most overlapped element
     if (mostOverlappedElement) {
       if (mostOverlappedElement.tagName.toLowerCase() === 'lido-text') {
-        mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
-        mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
+        // mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
+        // mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
       } else {
         if(!document.getElementById('unitsDrop') || !document.getElementById('tensDrop') || !document.getElementById('hundredsDrop')) {
         mostOverlappedElement.style.opacity = '0.3';
