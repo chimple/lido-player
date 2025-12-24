@@ -44,7 +44,7 @@ function getContainerXml(args) {
 	</lido-cell>
 	<lido-text visible="false" id="inst" tab-index="1" string="choose the correct option" onEntry=""></lido-text>
 <!-- question text -->
-		<lido-cell layout="row" visible="true" margin="landscape.26px 0px 155px 0px, portrait.-170px 0px 0px 0px" height="290px" width="landscape.1476px,portrait.100%" bg-color="transparent" onEntry="this.justifyContent='center';">
+		<lido-cell layout="row" visible="true"  margin="landscape.26px 0px 155px 0px, portrait.-170px 0px 0px 0px" height="290px" width="landscape.1476px,portrait.100%" bg-color="#FFF5BB" onEntry="this.justifyContent='center';this.border='2px solid #FFA500'; this.borderRadius='16px';">
 			<lido-text id="question" tab-index="2" visible="true" value="10" string="${args.question}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.80px, portrait.84px"  bg-color="transparent" 
 			onEntry="this.fontWeight='700';">
             </lido-text>
