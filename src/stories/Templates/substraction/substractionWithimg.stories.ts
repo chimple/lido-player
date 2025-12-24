@@ -58,7 +58,7 @@ function generateImages(count, src) {
 function getContainerXml(args) {
     let tabCounter = 1;
      const solidImages = generateImages(
-    args.text1,
+    args.answer,
     'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/image5.png'
   );
 
