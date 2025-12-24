@@ -27,9 +27,10 @@ export const substractionWithimg: StoryObj = {
   option2:"3",
   option3:"8",
   option4:"4",
-num1Row:"3",
+    solidImg:"3",
+    borderImg:"2",
   
-  num2Row:"2",
+ 
   
    text1:"5",
    text2:"2",
@@ -42,9 +43,32 @@ num1Row:"3",
     return html`<lido-home .xmlData="${xml}"></lido-home>`;
   },
 };
+function generateImages(count, src) {
+  let images = '';
+  for (let i = 0; i < Number(count); i++) {
+    images += `
+      <lido-image
+        visible="true"
+        height="100px"
+        width="100px"
+        src="${src}">
+      </lido-image>
+    `;
+  }
+  return images;
+}
 
 function getContainerXml(args) {
     let tabCounter = 1;
+     const solidImages = generateImages(
+    args.solidImg,
+    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/image5.png'
+  );
+
+  const borderImages = generateImages(
+    args.borderImg,
+    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Tenbox/aplle%20outlinee.png'
+  );
   return `<main>
    <lido-container  visible="true" id="lido-container" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="true" onEntry="">
 
@@ -55,13 +79,14 @@ function getContainerXml(args) {
 		</lido-cell>
 		<lido-text visible="false" id="inst" tab-index="1" string="choose the correct option"></lido-text>
 <lido-cell visible="true" layout="row" height="280px" width="auto" onEntry="this.position='relative';this.align-items='center';this.justify-content='space-around';" y="6%" x="0%">
+		<lido-cell visible="true" layout="row" width="auto" bg-color="#FFF5BB" onEntry="this.padding='10px 18px 10px 18px';this.justifyContent='space-around';this.border='2px solid #FFA500'; this.borderRadius='16px';this.gap='0px';">
+			<lido-cell layout="row" visible="true" height="auto" width="auto" bg-color="transparent" onEntry="this.display='flex';this.align-items='center';this.justify-content='center';">
+				 ${solidImages}
+			</lido-cell>
+			<lido-cell layout="row" visible="true" height="auto" width="auto" bg-color="transparent">
+				${borderImages}
+			</lido-cell>
 			
-<lido-cell visible="true" layout="row" width="auto" bg-color="#FFF5BB" onEntry="this.padding='10px 18px 10px 18px';this.justifyContent='space-around';this.border='2px solid #FFA500'; this.borderRadius='16px';this.gap='0px';">
-<lido-math-matrix id="mat1" rows="${args.num1Row}" cols="1"  defualtFill="${args.text1}" leftIndex="false" topIndex="false" clickable="true" matrixImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/image5.png" activeBgColor="transparent" inactiveBgColor="transparent" border="5px soild transparent" height="180px" width="400px" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px">
-			</lido-math-matrix>
-			<lido-math-matrix id="mat1" rows="${args.num2Row}" cols="1"  defualtFill="${args.text2}" leftIndex="false" topIndex="false" clickable="true" matrixImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Tenbox/aplle%20outlinee.png
-" activeBgColor="transparent" inactiveBgColor="transparent" border="5px soild transparent" height="180px" width="300px" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px">
-			</lido-math-matrix>
 			</lido-cell>
 			</lido-cell>
 			
