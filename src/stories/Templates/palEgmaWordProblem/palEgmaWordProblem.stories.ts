@@ -31,21 +31,6 @@ export const palEgmaWordProblem1: StoryObj = {
     },
 };
 
-export const palEgmaWordProblem2: StoryObj = {
-  args: {
-      question2:
-        'George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?',
-      answer: '13',
-      options: ['10', '15', '12', '13'],
-      isAllowOnlyCorrect: true,
-      isContinueOnCorrect: true,
-    },
-    render: args => {
-      const xml = getContainerXml1(args);
-      return html`<lido-home .xmlData="${xml}"></lido-home>`;
-    },
-};
-
 function getContainerXml(args) {
   const dragCells = args.options
     .map(
@@ -108,6 +93,20 @@ function getContainerXml(args) {
 }
 
 
+export const palEgmaWordProblem2: StoryObj = {
+  args: {
+      question2:
+        'George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?',
+      answer: '13',
+      options: ['10', '15', '12', '13'],
+      PracticeMode: false,
+    },
+    render: args => {
+      const xml = getContainerXml1(args);
+      return html`<lido-home .xmlData="${xml}"></lido-home>`;
+    },
+};
+
 function getContainerXml1(args) {
   const optionCells = args.options
     .map(
@@ -123,7 +122,7 @@ function getContainerXml1(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer}" tab-index="" show-drop-border="false" is-continue-on-correct="true"  is-allow-only-correct="true" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
+  <lido-container id="lido-container" objective="${args.answer}" tab-index="" show-drop-border="false" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
         box-shadow: none !important;
         }">
 

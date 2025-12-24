@@ -828,9 +828,11 @@ export const validateObjectiveStatus = async () => {
   else 
   {
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
+    const onCorrect = container.getAttribute('onCorrect');
     if (!isContinueOnCorrect) 
     {
       await calculateScore();
+      await executeActions(onCorrect, container);
       triggerNextContainer()
     } 
     else 

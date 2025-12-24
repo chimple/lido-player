@@ -11,8 +11,7 @@ const meta: Meta = {
   argTypes: {
     options: { control: 'object' },
     answers: { control: 'object' },
-    isAllowOnlyCorrect: { control: 'boolean' },
-    isContinueOnCorrect: { control: 'boolean' },
+    PracticeMode: { control: 'boolean' },
   },
 };
 
@@ -23,8 +22,7 @@ export const palEgmaPatternMatching: StoryObj = {
     question_text: 'Complete the pattern',
     questions: ['975', '976', '@977', '978', '979'],
     options: ['977', '980', '957', '947'],
-    isAllowOnlyCorrect: true,
-    isContinueOnCorrect: true,
+    PracticeMode: false,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -37,7 +35,7 @@ function getContainerXml(args) {
 
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/Frame%2051.svg" objective="${(args.questions.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.isContinueOnCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}" custom-style= "#text {
+<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/Frame%2051.svg" objective="${(args.questions.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#text {
         box-shadow: none !important;
         }">
 	 <!-- Chimple Avatar -->
