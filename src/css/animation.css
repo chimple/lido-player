@@ -34,6 +34,13 @@
     transform: translateX(-2000px);
   }
 }
+@keyframes placeToRight {
+  from {
+  }
+  to {
+    transform: translateX(2000px);
+  }
+}
 
 @keyframes leftToPlace {
   from {
