@@ -319,7 +319,7 @@ function getContainerXml2(args) {
       onEntry="this.border-radius='14px';" bg-color="" onTouch="this.speak='true';" string="${args.question1}" font-color="white"
       font-size="1px">
         <lido-image visible="true"
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"
+          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png"
           width="96px">
         </lido-image>
     </lido-text>
@@ -339,7 +339,7 @@ function getContainerXml2(args) {
       onEntry="this.border-radius='14px';" bg-color="" onTouch="this.speak='true';" string="${args.answer}" font-color="white"
       font-size="1px">
         <lido-image visible="true"
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"
+          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png"
           width="96px">
         </lido-image>
     </lido-text>
@@ -369,7 +369,7 @@ function getContainerXml2(args) {
       font-color="white"
       font-size="1px">
         <lido-image visible="true"
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"
+          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png"
           width="100%">
         </lido-image>
     </lido-text>
@@ -574,7 +574,7 @@ export const word_problem: StoryObj = {
       'George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?',
     answer: '13',
     options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    images: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg'],
+    images: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png'],
     isAllowOnlyCorrect: true,
     isContinueOnCorrect: true,
   },
@@ -699,7 +699,7 @@ function getContainerXml3(args) {
            : `
           <lido-cell  layout="col" visible="true" margin="landscape.22px 0px 0px 0px, portrait.-110px 0px 0px 0px" height="landscape.62%,portrait.40%" width="landscape.96%,portrait.100%" bg-color="transparent" onEntry="this.justifyContent='center';" gap="82px">
               <lido-text id="text12" visible="true" margin="landscape.0px,portrait.0px" onEntry="this.border-radius='14px';" height="177px" width="landscape.236px,portrait.34%" bg-color="" onTouch="this.speak='true';" string="${args.answer}" font-color="white" font-size="1px">
-                <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"
+                <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png"
                 width="100%">
                 </lido-image>
                 </lido-text>
@@ -904,7 +904,7 @@ function getContainerXml5(args) {
 		<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.156px 0px 0px -154px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px';" height="landscape.390px,portrait.42%" width="landscape.86%,portrait.100%" bg-color="transparent">
 
 			<lido-text visible="true" margin="" id="t11" onEntry="this.border-radius='14px';" bg-color="" onTouch="this.speak='true';" string="Order the numbers from smallest to largest." font-color="white" font-size="1px">
-				<lido-image type="text" margin="landscape.-244px 0px 0px 0px,portrait.0px 0px 0px 0px" id="" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg" width="100px" height="127px" onTouch="this.speak='true'">
+				<lido-image type="text" margin="landscape.-244px 0px 0px 0px,portrait.0px 0px 0px 0px" id="" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png" width="100px" height="127px" onTouch="this.speak='true'">
 				</lido-image>
 			</lido-text>
 				
@@ -1137,7 +1137,7 @@ function getContainerXml6(args) {
       onEntry="this.border-radius='14px';" bg-color="" onTouch="this.speak='true';" string="${args.question1}" font-color="white"
       font-size="1px">
         <lido-image visible="true"
-          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg"
+          src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png"
           width="96px">
         </lido-image>
     </lido-text>
