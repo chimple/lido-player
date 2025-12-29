@@ -3,7 +3,7 @@ import { convertUrlToRelative, initEventsForElement, calculateScale } from '../.
 import { string } from 'mathjs';
 import i18next from '../../utils/i18n';
 import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
-import { templateAudio } from '../../utils/constants';
+import { templateAudio, TemplateID } from '../../utils/constants';
 /**
  * @component LidoContainer
  *
@@ -257,12 +257,12 @@ export class LidoContainer {
     const home = document.querySelector('lido-home') as HTMLElement;
     if (!home) return;
 
-    const existing = home.getAttribute('template-id') || '';
+    const existing = home.getAttribute(TemplateID) || '';
 
     this.speakFlag = existing.includes(this.templateId);
 
     if (!this.speakFlag) {
-      home.setAttribute('template-id', [existing, this.templateId].filter(Boolean).join(','));
+      home.setAttribute(TemplateID, [existing, this.templateId].filter(Boolean).join(','));
     }
   }
 

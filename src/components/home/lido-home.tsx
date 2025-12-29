@@ -15,7 +15,7 @@ import {
   speakUrl,
   ActivityScoreKey,
   LIDO_COMMON_AUDIO_PATH,
-  templateAudio,
+  TemplateID,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 
@@ -508,7 +508,7 @@ export class LidoHome {
 
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const allele = container.querySelectorAll('*');
-    const templateId = container.getAttribute('template-id')
+    const templateId = container.getAttribute(TemplateID)
     if(templateId){
       const instructEl = this.el.querySelector(`#${templateId}`);
       if(instructEl){
