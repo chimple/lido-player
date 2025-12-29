@@ -34,7 +34,7 @@ export const substractionWithoutImg: StoryObj = {
 function getContainerXml(args) {
     let tabCounter = 1;
   return `<main>
-   <lido-container  drop-action="infinite-drop" visible="true" id="lido-container" objective="${args.answers}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="true" onEntry="">
+   <lido-container  drop-action="infinite-drop" visible="true" id="lido-container" objective="${args.answers}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="true" onEntry="inst.speak='true';text1.speak='true';text2.speak='true';text3.speak='true';text4.speak='true';">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.83%, portrait.28%" y="landscape.40%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >
@@ -51,7 +51,7 @@ function getContainerXml(args) {
 					onEntry="this.fontWeight='700';"></lido-text>
 				<lido-text visible="true" id="text3" tab-index="4" string="${args.text2}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px"  bg-color="transparent" 
 					onEntry="this.fontWeight='700';"></lido-text>
-				<lido-text visible="true" id="text3" tab-index="5" string="="  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px"  bg-color="transparent" 
+				<lido-text visible="true" id="text4" tab-index="5" string="="  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px"  bg-color="transparent" 
 					onEntry="this.fontWeight='700';"></lido-text>
 				<lido-text visible="true" id="drop1" type="drop" tab-index="6" height="212px" width="130px" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="140px"  bg-color="#FFF5BBB2" value="2"
 					onEntry="this.fontWeight='700';this.border='2px solid #FFB612';this.border-radius='16px';" ></lido-text>	
