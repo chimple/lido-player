@@ -5,7 +5,7 @@
  * ------------------------------------------------------------------*/
 
 import { Component, Host, Prop, h, Element, State, Watch } from '@stencil/core';
-import { parseProp, initEventsForElement, setVisibilityWithDelay } from '../../utils/utils';
+import { parseProp, initEventsForElement, setVisibilityWithDelay, executeActions } from '../../utils/utils';
 
 @Component({
   tag: 'lido-flash-card',
@@ -163,12 +163,13 @@ export class LidoFlash {
 
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);    
-    const card = this.el.querySelector('.card');
+    const card = this.el.querySelector('.card') as HTMLElement;
     if (card) {
-      card.classList.add('flipped');
       setTimeout(() => {
-        card.classList.remove('flipped');
-      }, 1000)
+        card.classList.add('flipped');
+        setTimeout(() => {
+          card.classList.remove('flipped');}, 500)
+      }, 500)
     }
     initEventsForElement(this.el, this.type);
     // handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'inline-block');

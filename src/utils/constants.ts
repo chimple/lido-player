@@ -53,3 +53,12 @@ export const prevUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/obje
 export const nextUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg';
 export const speakUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png';
 export const fingerUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg';
+
+
+export const enum templateAudio {
+  dragAndDrop = 'Match the items by dragging and dropping them into the correct places.',
+  mcq = 'Select the correct answer from the options provided.',
+  tracing = 'Trace the shape by following the outline carefully.',
+  flashcards = 'Review the flashcards to reinforce your learning.',
+  hello='hello',
+}

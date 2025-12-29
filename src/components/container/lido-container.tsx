@@ -1,9 +1,9 @@
-import { Component, Host, Prop, h, Element,Watch } from '@stencil/core';
+import { Component, Host, Prop, h, Element, Watch, State } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, calculateScale } from '../../utils/utils';
 import { string } from 'mathjs';
 import i18next from '../../utils/i18n';
 import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
-
+import { templateAudio } from '../../utils/constants';
 /**
  * @component LidoContainer
  *
@@ -211,19 +211,61 @@ export class LidoContainer {
   @Prop() delayVisible: string = '';
 
   /**
-    * When set to true, disables the speak functionality of long press for this component and its children.
-  */
+   * When set to true, disables the speak functionality of long press for this component and all its child components.
+   */
   @Prop() disableSpeak: boolean = false;
 
+  /**
+   * Identifies the template type used by this component (e.g., mcq, flashcard, tracing, dragAndDrop).
+   */
+  @Prop() templateId = '';
+
+  /**
+   * Stores the instruction audio/text key based on the current template.
+   */
+  @State() instructName: string = '';
+
+  /**
+   * Indicates whether the speak action is currently active or in progress.
+   */
+  @State() speakFlag: boolean = false;
+
+
   @Watch('locale')
-    languageChanged(newLang: string) {
+  languageChanged(newLang: string) {
     const langToApply = newLang || this.resolveLanguage();
     this.updateChildTextLanguage(langToApply);
-    }
+  }
+
   componentWillLoad() {
     const langToApply = this.resolveLanguage();
     this.updateChildTextLanguage(langToApply);
+    this.resolveInstructionAudio();
   }
+
+  private resolveInstructionAudio() {
+    this.instructName =
+      (
+        {
+          flashcard: templateAudio.flashcards,
+          mcq: templateAudio.mcq,
+          tracing: templateAudio.tracing,
+          dragAndDrop: templateAudio.dragAndDrop,
+        } as any
+      )[this.templateId!] ?? '';
+
+    const home = document.querySelector('lido-home') as HTMLElement;
+    if (!home) return;
+
+    const existing = home.getAttribute('template-id') || '';
+
+    this.speakFlag = existing.includes(this.templateId);
+
+    if (!this.speakFlag) {
+      home.setAttribute('template-id', [existing, this.templateId].filter(Boolean).join(','));
+    }
+  }
+
   private resolveLanguage(): string {
     const rootEl = this.el.closest('lido-root') as any;
     const rootLang = rootEl?.locale || '';
@@ -235,7 +277,7 @@ export class LidoContainer {
     const xmlLang = this.el.getAttribute('locale');
     if (xmlLang?.trim()) return xmlLang;
     return this.el.textContent?.trim();
-}
+  }
 
   convertToPixels(height: string, parentElement = document.body) {
     if (!height) return 0; // Handle empty or invalid input
@@ -266,7 +308,6 @@ export class LidoContainer {
    */
 
   scaleContainer(container: HTMLElement) {
-    
     // Calculate the scale factor based on the closest parent element's width and height (1600x900 reference)
     const parentElement = this.getClosestParentWithWidth();
     let scaleFactor = 0;
@@ -310,7 +351,7 @@ export class LidoContainer {
   }
 
   private updateChildTextLanguage(lang?: string) {
-    const appliedLang = lang || i18next.language || 'en'; 
+    const appliedLang = lang || i18next.language || 'en';
     i18next.changeLanguage(appliedLang);
 
     const texts = this.el.querySelectorAll('lido-text');
@@ -336,7 +377,17 @@ export class LidoContainer {
     // Re-scale the container on window resize or load events
     window.addEventListener('resize', () => this.scaleContainer(this.el));
     window.addEventListener('load', () => this.scaleContainer(this.el));
-    initEventsForElement(this.el, this.type);
+
+    if(this.templateId){
+      setTimeout(() => {
+        this.el.setAttribute("onEntry",`${this.templateId}.speak='${!this.speakFlag}'; `+this.el.getAttribute("onEntry"))
+        initEventsForElement(this.el, this.type);
+      },100)
+    } else {
+      initEventsForElement(this.el, this.type)
+    }
+
+
 
     if (this.customStyle) {
       const styleElement = document.createElement('style');
@@ -345,7 +396,7 @@ export class LidoContainer {
     }
     const langToApply = this.resolveLanguage();
     this.updateChildTextLanguage(langToApply);
-    highlightElement()
+    highlightElement();
   }
 
   disconnectedCallback() {
@@ -397,7 +448,10 @@ export class LidoContainer {
         next-button-url={this.nextButtonUrl}
         speaker-button-url={this.speakerButtonUrl}
         disable-speak={this.disableSpeak}
+        template-id={this.templateId}
+        audio={this.audio}
       >
+        <lido-text visible="false" id={this.templateId} audio="" string={this.instructName} ></lido-text>
         <slot />
       </Host>
     );

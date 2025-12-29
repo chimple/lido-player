@@ -13,11 +13,23 @@ import {
   prevUrl,
   nextUrl,
   speakUrl,
-  ActivityScoreKey,LIDO_COMMON_AUDIO_PATH
+  ActivityScoreKey,
+  LIDO_COMMON_AUDIO_PATH,
+  templateAudio,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
 
-import { calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
+import {
+  calculateScale,
+  getCancelBtnPopup,
+  setCancelBtnPopup,
+  executeActions,
+  triggerPrevcontainer,
+  convertUrlToRelative,
+  triggerNextContainer,
+  matchStringPattern,
+  speakText,
+} from '../../utils/utils';
 
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
@@ -36,7 +48,7 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
- @Prop() commonAudioPath?: string;
+  @Prop() commonAudioPath?: string="";
 
   /** Boolean to show or hide navigation buttons */
   @Prop() showNav: boolean = true;
@@ -44,8 +56,8 @@ export class LidoHome {
   /** Array of active container indexes to be rendered */
   @Prop() activeContainerIndexes: number[] = [];
 
-   /** Language to apply to all texts */
-  @Prop() locale?: string='';
+  /** Language to apply to all texts */
+  @Prop() locale?: string = '';
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -129,13 +141,12 @@ export class LidoHome {
    */
   @State() containers: (() => any)[] = [];
 
-
   @Watch('locale')
-    onLangChange(newLang: string) {
-      this.setLanguage(newLang);
-      // re-render all containers with updated locale
-      this.containers = [...this.containers];
-    }
+  onLangChange(newLang: string) {
+    this.setLanguage(newLang);
+    // re-render all containers with updated locale
+    this.containers = [...this.containers];
+  }
 
   private setLanguage(lang?: string) {
     const effectiveLang = lang || i18next.language; // fallback to current
@@ -204,9 +215,9 @@ export class LidoHome {
     this.updateArrowVisibility();
   };
 
-  @Watch("commonAudioPath")
-    onCommonAudioPathChange(path: string) {
-      this.publishCommonAudioPath(path);
+  @Watch('commonAudioPath')
+  onCommonAudioPathChange(path: string) {
+    this.publishCommonAudioPath(path);
   }
 
   /**
@@ -252,7 +263,7 @@ export class LidoHome {
 
   @State() showDotsandbtn: boolean = false;
   componentDidLoad() {
-     this.publishCommonAudioPath(this.commonAudioPath);
+    this.publishCommonAudioPath(this.commonAudioPath);
     setTimeout(() => {
       this.showDotsandbtn = true;
     }, 10);
@@ -273,10 +284,10 @@ export class LidoHome {
   }
   private publishCommonAudioPath(path?: string) {
     if (!path) return;
-    const cleanPath = path.replace(/\/+$/, "");
+    const cleanPath = path.replace(/\/+$/, '');
     (window as any)[LIDO_COMMON_AUDIO_PATH] = cleanPath;
 
-    console.log("[LidoHome] Published common audio path:", cleanPath);
+    console.log('[LidoHome] Published common audio path:', cleanPath);
 
     // Dispatch a global event so LidoText knows the path is ready
     window.dispatchEvent(new Event('lidoCommonAudioPathReady'));
@@ -394,12 +405,12 @@ export class LidoHome {
       })
       .filter(Boolean);
     if (tagName === 'lido-text' && props.string) {
-      props.string = i18next.t(props.string); 
+      props.string = i18next.t(props.string);
     }
 
-  if (tagName === 'lido-text' && props.string) {
-    props.string = i18next.t(props.string); 
-  }
+    if (tagName === 'lido-text' && props.string) {
+      props.string = i18next.t(props.string);
+    }
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
@@ -445,22 +456,21 @@ export class LidoHome {
   private parseContainers(rootElement: Element) {
     const containerElements = rootElement.querySelectorAll('lido-container');
 
-
-    const containers = Array.from(containerElements).map((container, index) => {
-      
-      if(this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index))return;
-      // Return a factory function that generates a fresh JSX node each time
-      return () => this.parseElement(container);
-    }).filter(Boolean); // Remove any undefined entries
+    const containers = Array.from(containerElements)
+      .map((container, index) => {
+        if (this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index)) return;
+        // Return a factory function that generates a fresh JSX node each time
+        return () => this.parseElement(container);
+      })
+      .filter(Boolean); // Remove any undefined entries
 
     this.containers = containers;
-    
   }
 
   // update arrow visibility
 
   private updateArrowVisibility = () => {
-    if(!this.showNav)return;
+    if (!this.showNav) return;
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
       if (!containerElement) return;
@@ -482,25 +492,30 @@ export class LidoHome {
       }
     }, 100);
   };
-    private areAllDropsFilled(): boolean {
-      const drops = Array.from(document.querySelectorAll('[type="drop"]'));
-      const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to')); 
-      
-      return drops.every(drop => {
-         const dropId = drop.id;
-        return drags.some(drag => drag.getAttribute('drop-to') === dropId);
-        });
-    }
+  private areAllDropsFilled(): boolean {
+    const drops = Array.from(document.querySelectorAll('[type="drop"]'));
+    const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to'));
 
-
+    return drops.every(drop => {
+      const dropId = drop.id;
+      return drags.some(drag => drag.getAttribute('drop-to') === dropId);
+    });
+  }
 
   private async btnpopup() {
     setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
 
-    const container = document.getElementById(LidoContainer);
+    const container = document.getElementById(LidoContainer) as HTMLElement;
     const allele = container.querySelectorAll('*');
-
+    const templateId = container.getAttribute('template-id')
+    if(templateId){
+      const instructEl = this.el.querySelector(`#${templateId}`);
+      if(instructEl){
+        await executeActions("this.speak='true';", instructEl as HTMLElement)
+      }
+    }
+    
     for (const el of Array.from(allele)) {
       if (getCancelBtnPopup()) break;
 
@@ -519,12 +534,12 @@ export class LidoHome {
       }
     }
     if (this.areAllDropsFilled()) {
-      const objectiveString = container['objective']; 
+      const objectiveString = container['objective'];
       const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) || '[]');
       const res = matchStringPattern(objectiveString, objectiveArray);
       console.log('Resultt', res);
       if (res) {
-       triggerNextContainer(); 
+        triggerNextContainer();
       }
     } else {
       console.log('Not yet filled ');
@@ -595,7 +610,7 @@ export class LidoHome {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
           }}
-          style={{visibility: this.showNav ? "visible" : "hidden"}}
+          style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
         >
           <lido-image src={this.navBarIcons.exit}></lido-image>
         </div>
@@ -606,7 +621,7 @@ export class LidoHome {
             onClick={() => {
               triggerPrevcontainer();
             }}
-            style={{visibility: this.showNav ? "visible" : "hidden"}}
+            style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
             <lido-image src={this.navBarIcons.prev} />
           </div>
@@ -628,12 +643,12 @@ export class LidoHome {
               console.log('✅ Button clicked - nextBtn action triggered');
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
-            style={{visibility: this.showNav ? "visible" : "hidden"}}
+            style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} style={{visibility: this.showNav ? "visible" : "hidden"}}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} style={{ visibility: this.showNav ? 'visible' : 'hidden' }}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
@@ -663,7 +678,7 @@ export class LidoHome {
     };
 
     return (
-      <Host class="lido-home" uuid={this.uuid} index={this.currentContainerIndex} totalIndex={this.containers.length} style={style}>
+      <Host class="lido-home" uuid={this.uuid} template-id="" index={this.currentContainerIndex} totalIndex={this.containers.length} style={style}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
         {/* Render navigation dots below the container */}
