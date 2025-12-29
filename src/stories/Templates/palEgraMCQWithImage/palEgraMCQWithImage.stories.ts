@@ -22,7 +22,7 @@ const meta: Meta = {
 };
 export default meta;
 
-export const Default: StoryObj = {
+export const PalEgraMCQWithImage: StoryObj = {
   args: {
     question: 'हाथी',
     option1: 'ELEPHANT',
