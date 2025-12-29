@@ -42,7 +42,7 @@ export const Default: StoryObj = {
 
   render: args => {
     const xml = getContainerXml(args);
-    return html`<lido-home .xmlData="${xml}}"></lido-home>`;
+    return html`<lido-home .xmlData="${xml}"></lido-home>`;
   },
 };
 
@@ -61,7 +61,7 @@ function getContainerXml(args) {
 		<lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
 			<!-- Question -->
 			<lido-cell layout="flex" visible="true" width="518px" height="landscape.198px, portrait.25%" bg-color="#FFF5BB" onEntry="this.justifyContent='center'; this.borderRadius='16px'; this.alignContent='center'; this.animation='topToPlace 0.5s linear';" margin="landscape.75px 0px 0px 0px, portrait.0px 0px 0px 0px">
-					<lido-text id="textA" tab-index="1" value="{question.id}" visible="true" width="1000px" height="100px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" string="${args.question}" font-family="'Baloo 2', serif" font-size="90px" font-color="black" bg-color="transparent" z="0" x="25px" y="20px" onTouch="question.speak='true';"></lido-text>
+					<lido-text id="textA" tab-index="1" value="${args.question}" visible="true" width="1000px" height="100px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" string="${args.question}" font-family="'Baloo 2', serif" font-size="90px" font-color="black" bg-color="transparent" z="0" x="25px" y="20px" onTouch="this.speak='true';"></lido-text>
 			</lido-cell>
 			
 			<!-- Options -->
