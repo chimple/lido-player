@@ -36,7 +36,7 @@ function getContainerXml(args) {
 	const {  isAllowOnlyCorrect = true } = args;
     let tabCounter = 1;
   return `<main>
-   <lido-container  drop-action="infinite-drop" visible="true" id="lido-container" objective="${args.answers}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" onEntry="inst.speak='true';text1.speak='true';text2.speak='true';text3.speak='true';text4.speak='true';">
+   <lido-container  drop-action="infinite-drop" visible="true" template-id="dragAnDrop" id="lido-container" objective="${args.answers}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" onEntry="inst.speak='true';text1.speak='true';text2.speak='true';text3.speak='true';text4.speak='true';">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.83%, portrait.28%" y="landscape.40%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >
