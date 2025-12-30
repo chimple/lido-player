@@ -46,7 +46,7 @@ const drag_cells = shuffledOptions.map((q, index) => {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.options.join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#drop1, #drop2, #drop3, #drop4 {
+<lido-container  visible="true" id="lido-container" template-id="dragAndDrop" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.options.join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#drop1, #drop2, #drop3, #drop4 {
         border: 2px solid #FFB612 !important;
         }">
 	  <!-- Chimple Avatar -->

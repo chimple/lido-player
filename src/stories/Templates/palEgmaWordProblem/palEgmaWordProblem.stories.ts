@@ -56,7 +56,7 @@ function getContainerXml(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer.split('').join(',',)}" tab-index="" show-drop-border="false" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
+  <lido-container id="lido-container" objective="${args.answer.split('').join(',',)}" tab-index="" template-id="dragAndDrop" show-drop-border="false" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
         box-shadow: none !important;
         }">
 
@@ -122,7 +122,7 @@ function getContainerXml1(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer}" tab-index="" show-drop-border="false" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
+  <lido-container id="lido-container" objective="${args.answer}" tab-index="" template-id="mcq" show-drop-border="false" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
         box-shadow: none !important;
         }">
 
