@@ -114,8 +114,8 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
 
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
-  const actions = parseActions(actionsString);
-  body.style.pointerEvents = 'none';
+  const actions = parseActions(actionsString);  
+  // body.style.pointerEvents = 'none';
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
 
