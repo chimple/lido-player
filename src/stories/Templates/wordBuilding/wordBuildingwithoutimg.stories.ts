@@ -9,7 +9,7 @@ const meta: Meta = {
   option3: { control: 'text' },
   option4: { control: 'text' },
   option5: { control: 'text' },
-  
+   isAllowOnlyCorrect: { control: 'boolean' },
   
   letter1: { control: 'text' },
    letter2: { control: 'text' },
@@ -28,7 +28,7 @@ export const wordBuildingwithoutimg: StoryObj = {
   option3:"S",
   option4:"P",
   option5:"M",
-  
+  isAllowOnlyCorrect: true,
  
   word:"CAT",
    letter1:"A",
@@ -44,10 +44,10 @@ export const wordBuildingwithoutimg: StoryObj = {
 };
 
  function getContainerXml(args) {
-
+const {  isAllowOnlyCorrect = true } = args;
 
   return `<main>
-   <lido-container visible="true" id="lido-container" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/WordBuilding/bgImage.png"  onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';data.speak='true';this.sleep='1200';data.z-index='100'; data.boxShadow='0 0 40px #FFC107';this.sleep='300'; this.sleep='400'; data.boxShadow='none';this.sleep='2000';" is-continue-on-correct="true" is-allow-only-correct="true" onEntry="inst.speak='true';blank.z-index='12';">
+   <lido-container visible="true" id="lido-container" template-id="mcq"  objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/WordBuilding/bgImage.png"  onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';data.speak='true';this.sleep='1200';data.z-index='100'; data.boxShadow='0 0 40px #FFC107';this.sleep='300'; this.sleep='400'; data.boxShadow='none';this.sleep='2000';" is-continue-on-correct="${isAllowOnlyCorrect}" is-allow-only-correct="true" onEntry="inst.speak='true';blank.z-index='12';">
 <!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape. 373px,portrait.402px" width="landscape.304px,portrait.398px" x="landscape.0%, portrait.28%" y="landscape.51%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">

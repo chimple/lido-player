@@ -40,7 +40,7 @@ export const numberIdentificationimageTotext: StoryObj = {
 function getContainerXml(args) {
     let tabCounter = 1;
   return `<main>
- <lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal_number_identification/bgImage.png" objective="${args.answer}"  is-continue-on-correct="true" is-allow-only-correct="true" onEntry="inst.speak='true';question.speak='true';text1.speak='true';text2.speak='true';text3.speak='true';text4.speak='true';">
+ <lido-container  visible="true" id="lido-container" template-id="mcq" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal_number_identification/bgImage.png" objective="${args.answer}"  is-continue-on-correct="true" is-allow-only-correct="true" onEntry="inst.speak='true';question.speak='true';text1.speak='true';text2.speak='true';text3.speak='true';text4.speak='true';">
 	 <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.83%, portrait.28%" y="landscape.64%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">

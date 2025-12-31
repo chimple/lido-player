@@ -42,7 +42,7 @@ export const Default: StoryObj = {
 function getContainerXml(args) {
 
   return `<main>
-    <lido-container objective="${(args.correctAns)}" is-continue-on-correct="${args.PracticeMode}" show-next-button="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';">
+    <lido-container objective="${(args.correctAns)}" template-id="mcq" is-continue-on-correct="${args.PracticeMode}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="questionText.speak='true';">
 	<lido-col visible="true" width="100%" height="80%" bg-color="transparent">
 		
         <!-- Chimple Avatar -->
@@ -53,9 +53,9 @@ function getContainerXml(args) {
 		  </lido-image>
         </lido-cell>
 
-		<lido-text visible="${args.template === 'Template1'}" width="300px" height="300px" tab-index="1"  bg-color="#fff5bb" string="${(args.correctAns).toLowerCase()}" font-size="150px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700'; this.border='#ffac4c 2px solid'; this.speak='true';"></lido-text>
+		<lido-text visible="${args.template === 'Template1'}" id="questionText" width="300px" height="300px" tab-index="1"  bg-color="#fff5bb" string="${(args.correctAns).toLowerCase()}" font-size="150px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700'; this.border='#ffac4c 2px solid'; "></lido-text>
 		
-		<lido-cell visible="${args.template !== 'Template1'}" layout="row" width="300px" height="300px" bg-color="white" border-radius="130px" onEntry="this.border='#ffac4c 2px solid';">
+		<lido-cell visible="${args.template !== 'Template1'}" onTouch="questionText.speak='true';" layout="row" width="300px" height="300px" bg-color="white" border-radius="130px" onEntry="this.border='#ffac4c 2px solid';">
 			<lido-image visible="true" bg-color="transparent" width="200px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Icons/palAudioIcon.png"></lido-image>
 		</lido-cell>
 

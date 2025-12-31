@@ -14,7 +14,7 @@ const meta: Meta = {
    text2: { control: 'text' },
     
   answer: { control: 'text' },
- 
+ isAllowOnlyCorrect: { control: 'boolean' },
   },
 };
 export default meta;
@@ -27,7 +27,7 @@ export const substractionWithimg: StoryObj = {
   option4:"4",
     
   
- 
+ isAllowOnlyCorrect: true,
   
    text1:"5",
    text2:"2",
@@ -62,6 +62,7 @@ function generateImages(count, src) {
 
 function getContainerXml(args) {
     let tabCounter = 1;
+    const {  isAllowOnlyCorrect = true } = args;
     const solidText1Images = generateImages(args.answer, SOLID_IMAGE);
 
     const solidText2Images = generateImages(args.text2, SOLID_IMAGE);
@@ -71,7 +72,7 @@ function getContainerXml(args) {
     const actualMinusImages = generateImages(args.text2, OUTLINE_IMAGE);
 
   return `<main>
-   <lido-container  visible="true" id="lido-container" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="true" onEntry="solid.z-index='2';this.sleep='1000';text2.animation='placeToRight 2s linear';this.sleep='1000';actual.z-index='10';">
+   <lido-container  visible="true" id="lido-container" template-id="mcq" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" onEntry="solid.z-index='2';this.sleep='1000';text2.animation='placeToRight 2s linear';this.sleep='1000';actual.z-index='10';">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.83%, portrait.28%" y="landscape.40%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >

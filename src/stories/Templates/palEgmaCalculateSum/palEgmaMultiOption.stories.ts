@@ -86,7 +86,7 @@ function getContainerXml(args: PalEgma2Args) {
                 </lido-image>
             </lido-cell>
 
-            <lido-text id="invisible-text" tab-index="2" audio="" width="297px" height="80px" display="flex" font-size="12px" z="1" font-color="black" value="solve the equation and click the correct answer" string="solve the equation and click the correct answer" visible="false" bg-color="transparent" onEntry="this.speak='true';">
+            <lido-text id="invisibleText" tab-index="2" audio="" width="297px" height="80px" display="flex" font-size="12px" z="1" font-color="black" value="solve the equation and click the correct answer" string="solve the equation and click the correct answer" visible="false" bg-color="transparent" onEntry="">
             </lido-text> 
 
 

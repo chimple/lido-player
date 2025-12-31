@@ -19,7 +19,7 @@
 | `canplay`                  | `canplay`                      | Boolean that controls the playability of the game.                                                                                                | `boolean` | `true`      |
 | `customStyle`              | `custom-style`                 | Custom CSS styles to be applied to the container. Allows for dynamic styling through inline styles or class names.                                | `string`  | `''`        |
 | `delayVisible`             | `delay-visible`                | Delay in milliseconds to make the cell visible after mount.                                                                                       | `string`  | `''`        |
-| `disableSpeak`             | `disable-speak`                | When set to true, disables the speak functionality of long press for this component and its children.                                             | `boolean` | `false`     |
+| `disableSpeak`             | `disable-speak`                | When set to true, disables the speak functionality of long press for this component and all its child components.                                 | `boolean` | `false`     |
 | `exitButtonUrl`            | `exit-button-url`              | Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.                                                   | `string`  | `undefined` |
 | `height`                   | `height`                       | The height of the container (CSS value).                                                                                                          | `string`  | `'auto'`    |
 | `id`                       | `id`                           | Unique identifier for the container.                                                                                                              | `string`  | `''`        |
@@ -40,6 +40,7 @@
 | `showPrevButton`           | `show-prev-button`             | Indicates whether the previous button should be displayed. Expected values: "true" or "false".                                                    | `string`  | `'false'`   |
 | `speakerButtonUrl`         | `speaker-button-url`           | Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.                                                | `string`  | `undefined` |
 | `tabIndex`                 | `tab-index`                    | TabIndex for keyboard navigation.                                                                                                                 | `number`  | `0`         |
+| `templateId`               | `template-id`                  | Identifies the template type used by this component (e.g., mcq, flashcard, tracing, dragAndDrop).                                                 | `string`  | `''`        |
 | `type`                     | `type`                         | Type of the container, which can be used for conditional logic or styling purposes.                                                               | `string`  | `''`        |
 | `value`                    | `value`                        | Value assigned to the container. This can be used for logic related to this component.                                                            | `string`  | `''`        |
 | `visible`                  | `visible`                      | Visibility flag for the container. If `true`, the container is visible; otherwise, it is hidden.                                                  | `boolean` | `false`     |
@@ -55,9 +56,14 @@
 
  - [lido-home](../home)
 
+### Depends on
+
+- [lido-text](../text)
+
 ### Graph
 ```mermaid
 graph TD;
+  lido-container --> lido-text
   lido-home --> lido-container
   style lido-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
