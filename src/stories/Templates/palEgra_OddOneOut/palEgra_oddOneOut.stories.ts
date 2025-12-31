@@ -20,7 +20,7 @@ export const palEgra_OddOneOut: StoryObj = {
   args: {
     question_text: 'विषम का चयन कीजिये',
     options: ['तन', '@नर', 'मन', 'जन'],
-    PracticeMode: true,
+    PracticeMode: false,
   },
   render: args => {
     const xml = getContainerXml(args);
