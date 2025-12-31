@@ -12,6 +12,7 @@ const meta: Meta = {
     option4:{control:'text'},
     answer:{control:'text'},
     image: { control: 'file' },
+    isAllowOnlyCorrect: { control: 'boolean' },
        
   },
  
@@ -20,6 +21,7 @@ export default meta;
 
 export const imageMatch: StoryObj = {
   args: {
+    isAllowOnlyCorrect: true,
    option1:"रमन के स्कूल में खेल दिवस है।",
    option2:"रमन के स्कूल में खेल दिवस हैं।",
    option3:"रमन की स्कूल में खेल दिवस है।",
@@ -38,8 +40,9 @@ export const imageMatch: StoryObj = {
 
 function getContainerXml(args) {
     let tabCounter = 1;
+    const { isAllowOnlyCorrect = true } = args;
   return `<main>
-  <lido-container id="lido-container" value="maincontainer" visible="true" objective="${args.answer}"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Quiz%20literacy.png"  onEntry="" is-Continue-On-Correct="true" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
+  <lido-container id="lido-container" value="maincontainer" visible="true" objective="${args.answer}"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Quiz%20literacy.png"  onEntry="" is-allow-only-correct="${isAllowOnlyCorrect}" is-Continue-On-Correct="true" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.415px,portrait.401px" width="landscape.374px,portrait.401px" x="landscape.25%, portrait.24%" y="landscape.52%, portrait.83%" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" bg-color="transparent">
 		</lido-avatar>
@@ -67,13 +70,13 @@ function getContainerXml(args) {
 		  </lido-cell>
 		
 		<lido-cell layout="col" visible="true"  width="landscape.53%,portrait.108%" height="216px" bg-Color="transparent" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" onEntry="this.align-items='center'; this.justify-content='center'; this.gap='40px';">
-            <lido-text visible="true" audio="" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';"  id="option1" font-family="'Baloo Bhai 2'" tab-index="2" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+            <lido-text visible="true" audio="" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';"  id="option1" font-family="'Baloo Bhai 2'" tab-index="2" font-size="62px" border-radius="12px" font-color="black" height="120px" width="788px" string="${args.option1}" value="${args.option1}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-			<lido-text visible="true" audio=""  id="option2" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" font-family="'Baloo Bhai 2'" tab-index="3" font-size="62px" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option2}" value="${args.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+			<lido-text visible="true" audio=""  id="option2" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" font-family="'Baloo Bhai 2'" tab-index="3" font-size="62px" border-radius="12px" font-color="black" height="120px" width="788px" string="${args.option2}" value="${args.option2}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-			<lido-text visible="true" audio=""  id="option3" font-family="'Baloo Bhai 2'" tab-index="4" font-size="62px" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" border-radius="12px" font-color="black" height="120px" width="auto" string="${args.option3}" value="${args.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+			<lido-text visible="true" audio=""  id="option3" font-family="'Baloo Bhai 2'" tab-index="4" font-size="62px" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" border-radius="12px" font-color="black" height="120px" width="788px" string="${args.option3}" value="${args.option3}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
-			<lido-text visible="true" audio=""  id="option4" font-family="'Baloo Bhai 2'" tab-index="5" font-size="62px" border-radius="12px" font-color="black" height="120px" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" width="auto" string="${args.option4}" value="${args.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
+			<lido-text visible="true" audio=""  id="option4" font-family="'Baloo Bhai 2'" tab-index="5" font-size="62px" border-radius="12px" font-color="black" height="120px" onCorrect="this.border='5px solid green';this.cellBorderAnimate='#65BC46';" onInCorrect="this.vibrate='horizontal-shake';" width="788px" string="${args.option4}" value="${args.option4}" type="click" onEntry="this.font-weight='500';this.padding='0px 64px 0px 64px';">
             </lido-text>
 		</lido-cell>
 
