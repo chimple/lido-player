@@ -56,10 +56,8 @@ function getContainerXml(args: PalEgma1Args) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-      <lido-image is-slice="true" height="225px" width="175px" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png" onEntry="this.opacity='1';">
-        <lido-text id="drop-${cell}" tab-index="${25+i}" disable-edit="true" height="landscape.215px, portrait.125px" width="135px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.140px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='700'; this.borderRadius='16px';" border-image="">
-        </lido-text>
-      </lido-image>
+      <lido-text visible="true" id="drop-${i}" type="drop" tab-index="${25+i}" height="212px" width="130px" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="140px"  bg-color="#FFF5BBB2" value="${cell}" onEntry="this.fontWeight='700';this.border='2px solid #FFB612';this.border-radius='16px';" >
+      </lido-text>	
       `
     )
     .join('\n');
