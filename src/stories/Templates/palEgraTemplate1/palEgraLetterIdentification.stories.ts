@@ -42,7 +42,7 @@ export const Default: StoryObj = {
 function getContainerXml(args) {
 
   return `<main>
-    <lido-container objective="${(args.correctAns)}" template-id="mcq" is-continue-on-correct="${args.PracticeMode}" show-next-button="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="questionText.speak='true';">
+    <lido-container objective="${(args.correctAns)}" template-id="mcq" is-continue-on-correct="${args.PracticeMode}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="questionText.speak='true';">
 	<lido-col visible="true" width="100%" height="80%" bg-color="transparent">
 		
         <!-- Chimple Avatar -->
