@@ -19,7 +19,7 @@ export const palEgraBuildWord: StoryObj = {
   args: {
     question_text: 'Listen to the word and build it with the letters below',
     question_word: ['dance'],
-    PracticeMode: true,
+    PracticeMode: false,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -33,7 +33,7 @@ const letters = [...word];          // ["d", "a", "n", "c", "e"]
 
 const drop_cells = letters.map((q, index) => {
   return `
-    <lido-text visible="true" id="drop${index+1}" tab-index="${12+index}" value="${q}" string="?" font-family="'Baloo Bhai 2'" width="172px" height="189px" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
+    <lido-text visible="true" id="drop${index+1}" tab-index="${12+index}" value="${q}" string="?" font-family="'Baloo Bhai 2'" width="172px" height="189px" is-allow-only-one-drop="true" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
 	</lido-text>
   `;
 }).join('');

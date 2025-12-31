@@ -35,7 +35,7 @@ function getContainerXml(args) {
   const dragCells = args.options
     .map(
       (digit, i) => `
-      <lido-text id="drag${i}" tab-index="${i}" height="landscape.190px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
+      <lido-text id="drag${i}" height="landscape.190px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
       </lido-text>
     `,
     )
@@ -45,7 +45,7 @@ function getContainerXml(args) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-       <lido-text id="drop${i}" tab-index="${i}" disable-edit="true" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px solid #f69820'" border-image="">
+       <lido-text id="drop${i}" disable-edit="true" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px solid #f69820'" border-image="">
       </lido-text>
       `,
     )
@@ -111,7 +111,7 @@ function getContainerXml1(args) {
   const optionCells = args.options
     .map(
       (digit, i) => `
-      <lido-text id="drag${i}" tab-index="${i}" height="landscape.270px, portrait.125px" width="landscape.270px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
+      <lido-text id="drag${i}" tab-index="${i+1}" height="landscape.270px, portrait.125px" width="landscape.270px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
       </lido-text>
     `,
     )

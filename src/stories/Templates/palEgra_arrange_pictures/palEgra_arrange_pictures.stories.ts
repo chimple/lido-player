@@ -18,7 +18,7 @@ export const palEgraArrangePictures: StoryObj = {
              {id: '2', src: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/glass_on_table.webp'},
              {id: '3', src: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/cat_on_table.jpg'},
              {id: '4', src: 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/juice_on_table_spilled.webp'}],
-    PracticeMode: true,
+    PracticeMode: false,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -48,7 +48,7 @@ const drag_cells = shuffledOptions.map((img, index) => {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.images.map(img => img.id).join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#drop1, #drop2, #drop3, #drop4, #drop5 {
+<lido-container  visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop"  is-allow-only-one-drop = "true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.images.map(img => img.id).join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#drop1, #drop2, #drop3, #drop4, #drop5 {
         border: none !important;
 		box-shadow:
 			inset -10px 10px 10px 0 rgba(0, 0, 0, 0.25);
