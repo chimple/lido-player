@@ -135,8 +135,9 @@ export function highlightElement(): void {
     }
 
     // Highlight corresponding drag elements if mistakes are more than 2
-    const dragElements = container.querySelectorAll(`[type="drag"]`);    
-    if(countOfMistakes > 2){
+    const dragElements = container.querySelectorAll(`[type="drag"]`);   
+
+    if(countOfMistakes > 2 && container.getAttribute("is-continue-on-correct") === "true"){
       dragElements.forEach(dragEl => {
         dragEl.classList.remove('highlight-element');
         if(dragEl.getAttribute('value') === dropEle.getAttribute('value')){
@@ -151,7 +152,7 @@ export function highlightElement(): void {
       });
     }
   } else {
-      if(countOfMistakes <= 2)return;
+      if(countOfMistakes <= 2 || container.getAttribute("is-continue-on-correct") === "false")return;
       const clickTemplate = container.querySelectorAll("[type='click']");
       clickTemplate.forEach(clickEl => {
         if(clickEl.getAttribute('value') === container.getAttribute('objective')){

@@ -386,9 +386,6 @@ export class LidoContainer {
     } else {
       initEventsForElement(this.el, this.type)
     }
-
-
-
     if (this.customStyle) {
       const styleElement = document.createElement('style');
       styleElement.innerHTML = this.customStyle;
@@ -396,7 +393,9 @@ export class LidoContainer {
     }
     const langToApply = this.resolveLanguage();
     this.updateChildTextLanguage(langToApply);
-    highlightElement();
+    setTimeout(() => {
+      highlightElement();
+    },100)
   }
 
   disconnectedCallback() {
