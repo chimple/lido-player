@@ -10,7 +10,7 @@ const meta: Meta = {
    text2: { control: 'text' },
     
   answers: { control: 'text' },
-   isAllowOnlyCorrect: { control: 'boolean' },
+   PracticeMode: { control: 'boolean' },
  
   },
 };
@@ -23,7 +23,7 @@ export const substractionWithoutImg: StoryObj = {
    text1:"36",
    text2:"12",
    answers: "2,4",
-  isAllowOnlyCorrect: true,
+  PracticeMode: true,
   },
 
   render: args => {
@@ -61,16 +61,16 @@ function getContainerXml(args) {
 					onEntry="this.fontWeight='700';this.border='2px solid #FFB612';this.border-radius='16px';" ></lido-text>	
 			</lido-cell>
 			<lido-cell layout="row" visible="true" width="108%" height="300px">
-				<lido-text visible="true" type="drag" id="option1" tab-index="8" bg-color="#FFAC4C" height="212px" width="130px" string="0"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="1" type="drag" id="option2" tab-index="9" bg-color="#FFAC4C" height="212px" width="130px" string="1"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="2" type="drag" id="option3" tab-index="10" bg-color="#FFAC4C" height="212px" width="130px" string="2"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" type="drag" value="3" id="option4" tab-index="11" bg-color="#FFAC4C" height="212px" width="130px" string="3"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" type="drag" value="4" id="option5" tab-index="12" bg-color="#FFAC4C" height="212px" width="130px" string="4"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" type="drag" value="5" id="option6" tab-index="13" bg-color="#FFAC4C" height="212px" width="130px" string="5"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" type="drag" id="option7" value="6" tab-index="14" bg-color="#FFAC4C" height="212px" width="130px" string="6"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" type="drag" value="7" id="option8" tab-index="15" bg-color="#FFAC4C" height="212px" width="130px" string="7"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="8" type="drag" id="option9" tab-index="16" bg-color="#FFAC4C" height="212px" width="130px" string="8"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="9" type="drag" id="option10" tab-index="17" bg-color="#FFAC4C" height="212px" width="130px" string="9"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" type="drag" id="option1" tab-index="8" bg-color="#FFAC4C" height="212px" width="130px" string="0"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="1" type="drag" id="option2" tab-index="9" bg-color="#FFAC4C" height="212px" width="130px" string="1"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="2" type="drag" id="option3" tab-index="10" bg-color="#FFAC4C" height="212px" width="130px" string="2"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" type="drag" value="3" id="option4" tab-index="11" bg-color="#FFAC4C" height="212px" width="130px" string="3"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" type="drag" value="4" id="option5" tab-index="12" bg-color="#FFAC4C" height="212px" width="130px" string="4"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" type="drag" value="5" id="option6" tab-index="13" bg-color="#FFAC4C" height="212px" width="130px" string="5"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" type="drag" id="option7" value="6" tab-index="14" bg-color="#FFAC4C" height="212px" width="130px" string="6"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" type="drag" value="7" id="option8" tab-index="15" bg-color="#FFAC4C" height="212px" width="130px" string="7"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="8" type="drag" id="option9" tab-index="16" bg-color="#FFAC4C" height="212px" width="130px" string="8"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="9" type="drag" id="option10" tab-index="17" bg-color="#FFAC4C" height="212px" width="130px" string="9"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
 
 
 			</lido-cell>

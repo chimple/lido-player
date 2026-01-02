@@ -14,6 +14,7 @@ const meta: Meta = {
   answers: { control: 'text' },
   row: { control: 'text' },
   col: { control: 'text' },
+  PracticeMode: { control: 'boolean' },
  
   },
 };
@@ -21,6 +22,7 @@ export default meta;
 
 export const numberIdentificationimageTotext: StoryObj = {
   args: {
+	PracticeMode: false,
    option1:"3",
    option2:"2",
     option3:"7",
@@ -52,8 +54,8 @@ function getContainerXml(args) {
 			<lido-text id="question" tab-index="2" visible="true" value="10" string="${args.question}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.140px, portrait.84px"  bg-color="transparent" 
 			onEntry="this.fontWeight='700';">
             </lido-text>
-			<lido-cell visible="true" width="400px" bg-color="transparent" height="200px" onEntry="this.display='flex';this.align-items='center';"	>
-				<lido-math-matrix id="mat1" rows="${args.row}" cols="${args.col}"  defualtFill="${args.answer}" leftIndex="false" topIndex="false" clickable="true" matrixImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal_number_identification/fruit.png" activeBgColor="transparent" inactiveBgColor="transparent" border="5px soild transparent" height="200px" width="400px" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px">
+			<lido-cell visible="true" width="500px" bg-color="transparent" height="300px" onEntry="this.display='flex';this.align-items='center';"	>
+				<lido-math-matrix id="mat1" rows="${args.row}" cols="${args.col}"  defualtFill="${args.answer}" leftIndex="false" topIndex="false" clickable="true" matrixImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal_number_identification/fruit.png" activeBgColor="transparent" inactiveBgColor="transparent" border="5px soild transparent" height="300px" width="500px" visible="true" margin="landscape.0,portrait.-26px 0px 0px 0px">
 			</lido-math-matrix>
 		  </lido-cell>
 			
@@ -64,14 +66,14 @@ function getContainerXml(args) {
 		
 				<lido-cell layout="row" visible="true" margin="" onEntry="this.border-radius='24px';" height="228px" width="landscape.280px,portrait.300px" bg-color="orange"  type="click" value="${args.option1}">
 					
-					<lido-text id="text1" tab-index="3" visible="true"  string="${args.option1}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.140px, portrait.100px"  bg-color="orange" 
+					<lido-text id="text1" tab-index="3" disable-speak="true" visible="true"  string="${args.option1}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.140px, portrait.100px"  bg-color="orange" 
 					onEntry="this.fontWeight='700';">
 					</lido-text>
 				</lido-cell>
 
 				<lido-cell layout="row" visible="true" margin="" onEntry="this.border-radius='24px';" height="228px" width="landscape.280px,portrait.300px" bg-color="orange"  type="click" value="${args.option2}">
 					
-					<lido-text id="text2" tab-index="4" visible="true"  string="${args.option2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.140px, portrait.100px"  bg-color="orange" 
+					<lido-text id="text2" tab-index="4" disable-speak="true" visible="true"  string="${args.option2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.140px, portrait.100px"  bg-color="orange" 
 					onEntry="this.fontWeight='700';">
 					</lido-text>
 				</lido-cell>
@@ -79,14 +81,14 @@ function getContainerXml(args) {
 		
 				<lido-cell layout="row" visible="true" margin="" onEntry="this.border-radius='24px';" height="228px" width="landscape.280px,portrait.300px" bg-color="orange"  type="click" value="${args.option3}">
 					
-					<lido-text id="text3" tab-index="5" visible="true" string="${args.option3}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.140px, portrait.100px"  bg-color="orange" 
+					<lido-text id="text3" tab-index="5" disable-speak="true" visible="true" string="${args.option3}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.140px, portrait.100px"  bg-color="orange" 
 					onEntry="this.fontWeight='700';">
 					</lido-text>
 				</lido-cell>
 
 				<lido-cell layout="row" visible="true" margin="" onEntry="this.border-radius='24px';" height="228px" width="landscape.280px,portrait.300px" bg-color="orange"  type="click" value="${args.option4}">
 					
-					<lido-text id="text4" tab-index="6" visible="true" string="${args.option4}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" 
+					<lido-text id="text4" tab-index="6" disable-speak="true" visible="true" string="${args.option4}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" 
 					onEntry="this.fontWeight='800';">
 					</lido-text>
 				</lido-cell>	

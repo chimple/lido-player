@@ -40,7 +40,9 @@ export class AudioPlayer {
       pauseElement.style.visibility = 'hidden';
     }
   }
-
+    private handleUserClick = () => {
+      this.stop();
+    };
   public async play(targetElement: HTMLElement) {
     // Stop any currently playing audio first if target element has audio given
     try {
@@ -49,6 +51,10 @@ export class AudioPlayer {
     catch (e) {
       console.error('Error stopping audio before speak action:', e);
     }
+  const text=targetElement.closest('lido-text') as HTMLElement;
+  if(text && text.getAttribute('disable-speak')==='true'){
+    return;
+  }
 
     // then play the target element audio.
     let audioUrl = targetElement.getAttribute('audio') || '';
@@ -74,7 +80,7 @@ export class AudioPlayer {
       try {
         setDraggingDisabled(true);
         highlightSpeakingElement(targetElement);
-
+        window.addEventListener('click', this.handleUserClick, true);
         await this.audioElement.play();
 
         await new Promise<void>(resolve => {
@@ -87,6 +93,7 @@ export class AudioPlayer {
         console.log('🎧 Audio play error:', error);
       }
       finally {
+        window.removeEventListener('click', this.handleUserClick, true);
         this.audioElement.onended = null;  // cleanup
         setDraggingDisabled(false);
         stopHighlightForSpeakingElement(targetElement);
@@ -97,6 +104,7 @@ export class AudioPlayer {
     {
       try {
         highlightSpeakingElement(targetElement);
+        window.addEventListener('click', this.handleUserClick, true);
         await speakText(targetElement.textContent, targetElement);
         const highlightedElements = document.querySelectorAll('.speaking-highlight');
         highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));        

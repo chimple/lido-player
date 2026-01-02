@@ -15,7 +15,7 @@ const meta: Meta = {
     
   answer: { control: 'text' },
  
- isAllowOnlyCorrect: { control: 'boolean' },
+PracticeMode: { control: 'boolean' },
   },
 };
 export default meta;
@@ -28,7 +28,7 @@ export const pictureWordMatch2: StoryObj = {
   option4:"sun",
   option5:"dog", 
   
- isAllowOnlyCorrect: true,
+ PracticeMode: true,
   
    img1:"https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/CAT.png",
    
@@ -70,11 +70,11 @@ function getContainerXml(args) {
     
   </lido-cell>
   <lido-cell visible="true" layout="row"  height="270px" width="90%" bg-color="transparent" onEntry="this.align-items='center';this.justify-content='space-around';">
-    <lido-text visible="true" height="122px" width="225px" type="drag" id="drag1" tab-index="2" string="${args.option1}" value="${args.option1}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
-    <lido-text visible="true" height="122px" width="225px" type="drag" id="drag2" tab-index="3" string="${args.option2}" value="${args.option2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
-    <lido-text visible="true" height="122px" width="225px" type="drag" id="drag3" tab-index="4" string="${args.option3}" value="${args.option3}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
-    <lido-text visible="true" height="122px" width="225px" type="drag" id="drag4" tab-index="5" string="${args.option4}" value="${args.option4}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
-    <lido-text visible="true" height="122px" width="225px" type="drag" id="drag5" tab-index="6" string="${args.option5}" value="${args.option5}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
+    <lido-text visible="true" disable-speak="true" height="122px" width="225px" type="drag" id="drag1" tab-index="2" string="${args.option1}" value="${args.option1}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
+    <lido-text visible="true" disable-speak="true" height="122px" width="225px" type="drag" id="drag2" tab-index="3" string="${args.option2}" value="${args.option2}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
+    <lido-text visible="true" disable-speak="true" height="122px" width="225px" type="drag" id="drag3" tab-index="4" string="${args.option3}" value="${args.option3}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
+    <lido-text visible="true" disable-speak="true" height="122px" width="225px" type="drag" id="drag4" tab-index="5" string="${args.option4}" value="${args.option4}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
+    <lido-text visible="true" disable-speak="true" height="122px" width="225px" type="drag" id="drag5" tab-index="6" string="${args.option5}" value="${args.option5}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px"  bg-color="#FFAC4C" onEntry="this.font-weight='700';this.border-radius='16px';" ></lido-text>
   </lido-cell>
 
 </lido-cell>
