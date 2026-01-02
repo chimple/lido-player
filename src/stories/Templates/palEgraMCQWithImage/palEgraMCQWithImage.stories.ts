@@ -1,6 +1,5 @@
 import { html } from 'lit-html';
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { boolean } from 'mathjs';
 
 const meta: Meta = {
   title: 'Templates/palEgraMCQWithImage',
@@ -66,22 +65,22 @@ function getContainerXml(args) {
 		<lido-cell visible="true" layout="col" width="100%" height="100%" bg-color="transparent">
 			<!-- Question -->
 			<lido-cell layout="flex" visible="true" width="518px" height="landscape.198px, portrait.25%" bg-color="#FFF5BB" onEntry="this.justifyContent='center'; this.borderRadius='16px'; this.alignContent='center'; this.animation='topToPlace 0.5s linear';" margin="landscape.75px 0px 0px 0px, portrait.0px 0px 0px 0px">
-					<lido-text id="textA" value="${args.question}" visible="true" width="1000px" height="100px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" string="${args.question}" font-family="'Baloo 2', serif" font-size="90px" font-color="black" bg-color="transparent" z="0" x="25px" y="20px" onTouch="this.speak='true';"></lido-text>
+					<lido-text id="textA" tab-index="3" value="${args.question}" visible="true" width="1000px" height="100px" onEntry="this.boxShadow='unset'; this.fontWeight='700';" string="${args.question}" font-family="'Baloo 2', serif" font-size="90px" font-color="black" bg-color="transparent" z="0" x="25px" y="20px" onTouch="this.speak='true';"></lido-text>
 			</lido-cell>
 			
 			<!-- Options -->
 			<lido-cell layout="flex" visible="true" width="100%" height="90%" bg-color="transparent" onEntry="this.justifyContent='center'; this.alignContent='center'; this.animation='bottomToPlace 1s linear';" margin="landscape.-60px 0px -210px 0px, portrait.0px 0px 0px 0px">
 				<lido-cell visible="true" layout="landscape.row, portrait.wrap" width="landscape.85%, portrait.73%" height="landscape.100%, portrait.auto" bg-color="transparent" gap="landscape.0px, portrait.55px" onEntry="">
-					<lido-cell tab-index="3" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option1}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio1}' onTouch="this.speak='true';">
+					<lido-cell tab-index="4" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option1}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio1}' onTouch="this.speak='true';">
 						<lido-image visible="true" src="${args.optionImg1}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
-					<lido-cell tab-index="4" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option2}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio2}' onTouch="this.speak='true';">
+					<lido-cell tab-index="5" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option2}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio2}' onTouch="this.speak='true';">
 						<lido-image visible="true" src="${args.optionImg2}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
-					<lido-cell tab-index="5" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option3}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio3}' onTouch="this.speak='true';">
+					<lido-cell tab-index="6" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option3}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio3}' onTouch="this.speak='true';">
 						<lido-image visible="true" src="${args.optionImg3}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
-					<lido-cell tab-index="6" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option4}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio4}' onTouch="this.speak='true';">
+					<lido-cell tab-index="7" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option4}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio4}' onTouch="this.speak='true';">
 						<lido-image visible="true" src="${args.optionImg4}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
 				</lido-cell>
