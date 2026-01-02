@@ -14,7 +14,7 @@ export default meta;
 
 export const writeSet: StoryObj = {
   args: {
-    questions: ["26"],
+    questions: ["110"],
     isAllowOnlyCorrect: true,
     isContinueOnCorrect: true,
   },
@@ -32,8 +32,9 @@ function getContainerXml(args) {
   const QuestionCells = questions.map(question => {
     return `
 		<!-- Questions --> 	
-		<lido-cell visible="true" id="question"  layout="" height="93px" width="368px" bg-Color="transparent" onEntry="" justify-content="space-evenly" margin="landscape.0px 0px 0px -78px,portrait.44px">
-			<lido-text visible="true" id="number" audio="" value="${question}" onTouch="" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="#FFE99B" margin="" onEntry="this.border='5px solid #FFC805'" string="${question}" font-size="76px" font-weight="500" font-family="'Baloo Bhai 2'" onCorrect="this.speak='true'">
+		<lido-cell visible="true" id="question"  layout="" height="93px" width="202px" bg-Color="transparent" onEntry="" justify-content="space-evenly" 
+    margin="landscape.0px -74px 0px 68px,portrait.44px">
+			<lido-text visible="true" id="number" audio="" value="${question}" onTouch="" tab-index="${tabCounter++}" height="100%" width="100%" bg-Color="#FFE99B" margin="" onEntry="this.border='5px solid #FFC805'; justify-content='center'; align-items='center'" string="${question}" font-size="76px" font-weight="500" font-family="'Baloo Bhai 2'" onCorrect="this.speak='true'">
 			</lido-text>
 		</lido-cell>
       `;
@@ -43,10 +44,10 @@ function getContainerXml(args) {
  <lido-container visible="true" show-next-button="false" dropAttr="math-matrix" appendToDropOnCompletion="true" equationCheck="$#mat1,==,$#number" objective="" is-allow-only-correct="${isAllowOnlyCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; number.speak='true';  this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}">
 
     <!-- Audio -->
-    <lido-text visible="false" id="audio123" onEntry="this.display='none'; this.speak='true';" string="Fill the matrix according to the number given in the box."></lido-text>
+    <lido-text visible="false" tab-index="111" id="audio123" onEntry="this.display='none'; this.speak='true';" string="Fill the matrix according to the number given in the box."></lido-text>
 		
     <!-- Chimple Avatar -->
-	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.346px,portrait.310px" width="landscape.263px,portrait.276px" x="landscape.82%, portrait.72%" y="landscape.68%, portrait.82%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
+	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.346px,portrait.310px" width="landscape.263px,portrait.276px" x="landscape.86%, portrait.72%" y="landscape.68%, portrait.82%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
 			<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 			</lido-avatar>
 	</lido-cell>

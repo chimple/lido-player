@@ -30,7 +30,7 @@ export const palEgraWordFormation: StoryObj = {
 function getContainerXml(args) {
 const drop_cells = args.options.map((q, index) => {
   return `
-    <lido-text visible="true" id="drop${index+1}" tab-index="${12+index}" value="${q}" string="?" font-family="'Baloo Bhai 2'" width="173px" height="189px" is-allow-only-one-drop="true"font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
+    <lido-text visible="true" id="drop${index+1}" tab-index="${12+index}" value="${q}" string="?" font-family="'Baloo Bhai 2'" width="173px" height="189px" is-allow-only-one-drop="true" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
 	</lido-text>
   `;
 }).join('');
