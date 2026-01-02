@@ -20,7 +20,7 @@ export const palEgra_OddOneOut: StoryObj = {
   args: {
     question_text: 'विषम का चयन कीजिये',
     options: ['तन', '@नर', 'मन', 'जन'],
-    PracticeMode: true,
+    PracticeMode: false,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -31,7 +31,7 @@ export const palEgra_OddOneOut: StoryObj = {
 function getContainerXml(args) {
  const option_cells = args.options.map((q, index) => {
   return `
-      <lido-cell layout="row" id="text${1+index}" tab-index="${12+index}" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${q.startsWith('@') ? q.slice(1) : q}">
+      <lido-cell layout="row" id="text${1+index}" tab-index="${12+index}" template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${q.startsWith('@') ? q.slice(1) : q}">
         <lido-text visible="true" value="${q.startsWith('@') ? q.slice(1) : q}" string="${q.startsWith('@') ? q.slice(1) : q}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
         </lido-text>
       </lido-cell>
@@ -41,9 +41,9 @@ function getContainerXml(args) {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/fb207af37ae5d938778718e0095fc36abef7c694.png" objective="${(args.options.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#text {
+<lido-container  visible="true" id="lido-container" template-id="mcq" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/fb207af37ae5d938778718e0095fc36abef7c694.png" objective="${(args.options.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#text {
         box-shadow: none !important;
-        }">
+        }" onEntry="questionText.speak='true';">
 	 <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.362px,portrait.378px" width="landscape.315px,portrait.382px"
        x="landscape.39%, portrait.30%" y="landscape.27%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
@@ -54,7 +54,7 @@ function getContainerXml(args) {
         <lido-cell layout="landscape.col, portrait.row" aria-hidden="true" visible="true" height="landscape.100%,portrait.150px" width="landscape.100%, portrait.80%" bg-Color="transparent" margin="landscape.46px 0px 0px 0px,portrait.20px 0px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center'; this.alignItems='center'; this.gap='278px';">
             <!-- question cells -->
           <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 0px 0px 0px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px'; this.border='2px solid #FFB612'; this.justify-content='center'; this.align-items='center';" height="landscape.184px,portrait.42%" width="landscape.1050px,portrait.100%" bg-color="#FFF5BB">				
-            <lido-text visible="true" id="text" tab-index="11" value="" string="${args.question_text}" font-family="'Baloo Bhai 2'" font-color="#07004E" font-size="landscape.90px, portrait.100px" bg-color="" onEntry="this.fontWeight='700'; this.speak='true'">
+            <lido-text visible="true" id="questionText" tab-index="11" value="" string="${args.question_text}" font-family="'Baloo Bhai 2'" font-color="#07004E" font-size="landscape.90px, portrait.100px" bg-color="" onEntry="this.fontWeight='700';">
             </lido-text>  
           </lido-cell>
 

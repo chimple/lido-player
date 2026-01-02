@@ -547,7 +547,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   const dragSelectedData = JSON.stringify(buildDragSelectedMapFromDOM());
   const dropSelectedDataobject =  buildDragSelectedMapFromDOM();
   const dropSelectedData=JSON.stringify(dropSelectedDataobject);
-  console.log("dragggedddd elem", {value: dragElement.getAttribute("value")});
   let dropHasDrag = buildDropHasDragFromDOM();
 
   if (!dropElement) {
@@ -798,6 +797,7 @@ export function updateDropBorder(element: HTMLElement): void {
   if (dragSelectedElements.length > 0) {
     element.classList.add('filled');
     element.classList.remove('empty');
+    element.classList.remove('highlight-element')
   } else {
     if (!element.classList.contains('math-matrix')) {
       element.classList.add('empty');

@@ -35,7 +35,7 @@ function getContainerXml(args) {
   const dragCells = args.options
     .map(
       (digit, i) => `
-      <lido-text id="drag${i}" tab-index="${i}" height="landscape.190px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
+      <lido-text id="drag${i}" height="landscape.190px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
       </lido-text>
     `,
     )
@@ -45,7 +45,7 @@ function getContainerXml(args) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-       <lido-text id="drop${i}" tab-index="${i}" disable-edit="true" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px solid #f69820'" border-image="">
+       <lido-text id="drop${i}" disable-edit="true" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px solid #f69820'" border-image="">
       </lido-text>
       `,
     )
@@ -56,7 +56,7 @@ function getContainerXml(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer.split('').join(',',)}" tab-index="" show-drop-border="false" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
+  <lido-container id="lido-container" objective="${args.answer.split('').join(',',)}" tab-index="" template-id="dragAndDrop" show-drop-border="false" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
         box-shadow: none !important;
         }">
 
@@ -111,7 +111,7 @@ function getContainerXml1(args) {
   const optionCells = args.options
     .map(
       (digit, i) => `
-      <lido-text id="drag${i}" tab-index="${i}" height="landscape.270px, portrait.125px" width="landscape.270px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
+      <lido-text id="drag${i}" tab-index="${i+1}" height="landscape.270px, portrait.125px" width="landscape.270px, portrait.90px" visible="true" value="${digit}" string="${digit}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
       </lido-text>
     `,
     )
@@ -122,7 +122,7 @@ function getContainerXml1(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer}" tab-index="" show-drop-border="false" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
+  <lido-container id="lido-container" objective="${args.answer}" tab-index="" template-id="mcq" show-drop-border="false" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
         box-shadow: none !important;
         }">
 

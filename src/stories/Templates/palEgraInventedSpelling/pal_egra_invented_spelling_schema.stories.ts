@@ -52,7 +52,7 @@ function getContainerXml(args) {
 
 		<lido-text visible="true" string="Choose the rhyming word" tab-index="1" font-size="80px" font-color="#07004E" border-radius="16px" bg-color="#FFF5BB" onEntry="this.fontWeight='700'; this.border='#FFB612 2px solid'; this.padding='25px 50px';"></lido-text>
 		<lido-text visible="false" id="inventedAudio" string="${args.correctAns}" tab-index="2" font-size="80px" font-color="#07004E" border-radius="16px" bg-color="#FFF5BB" onEntry="this.fontWeight='700'; this.border='#FFB612 2px solid'; this.padding='25px 50px';"></lido-text>
-		<lido-cell visible="true" layout="row" width="160px" height="160px" bg-color="white" border-radius="70px" onEntry="this.border='#ffac4c 2px solid';">
+		<lido-cell visible="true" layout="row" width="160px" height="160px" onTouch="inventedAudio.speak='true';" bg-color="white" border-radius="70px" onEntry="this.border='#ffac4c 2px solid';">
 			<lido-image visible="true" bg-color="transparent" width="100px" height="100px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Icons/palAudioIcon.png"></lido-image>
 		</lido-cell>
 		<lido-cell layout="col" visible="true" width="100%" height="50%" bg-color="transparent" padding="0">

@@ -56,10 +56,8 @@ function getContainerXml(args: PalEgma1Args) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-      <lido-image is-slice="true" height="225px" width="175px" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/sequence-box/card-slot_empty.png" onEntry="this.opacity='1';">
-        <lido-text id="drop-${cell}" tab-index="${25+i}" disable-edit="true" height="landscape.215px, portrait.125px" width="135px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.140px, portrait.100px"  bg-color="transparent"  onEntry="this.fontWeight='700'; this.borderRadius='16px';" border-image="">
-        </lido-text>
-      </lido-image>
+      <lido-text visible="true" id="drop-${i}" type="drop" tab-index="${25+i}" height="212px" width="130px" string="?" font-family="'Baloo Bhai 2'" font-color="black" font-size="140px"  bg-color="#FFF5BBB2" value="${cell}" onEntry="this.fontWeight='700';this.border='2px solid #FFB612';this.border-radius='16px';" >
+      </lido-text>	
       `
     )
     .join('\n');
@@ -75,7 +73,7 @@ function getContainerXml(args: PalEgma1Args) {
 
   return `
     <main>
-        <lido-container id="lido-container" objective="${objectiveString}" tab-index="1" show-drop-border="false" is-continue-on-correct="true"  is-allow-only-correct="${isAllowOnlyCorrect}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/pal_egma_temp_3.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false">
+        <lido-container id="lido-container" objective="${objectiveString}" tab-index="1" template-id="dragAndDrop" show-drop-border="false" is-continue-on-correct="true"  is-allow-only-correct="${isAllowOnlyCorrect}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/pal_egma_temp_3.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; invisibleText.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false">
 
             <!-- Chimple Avatar -->
             <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.600px, portrait.700px" width="landscape.393px, portrait.485px" x="landscape.1310px, portrait.450px" y="landscape.100px, portrait.1020px" aria-hidden="true" z="1" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0';">
@@ -85,7 +83,7 @@ function getContainerXml(args: PalEgma1Args) {
                 </lido-image>
             </lido-cell>
 
-            <lido-text id="invisible-text" tab-index="2" audio="" width="297px" height="80px" display="flex" font-size="12px" z="1" font-color="black" value="solve the equation and drag the correct answer" string="solve the equation and drag the correct answer" visible="false" bg-color="transparent" onEntry="this.speak='true';">
+            <lido-text id="invisibleText" tab-index="2" audio="" width="297px" height="80px" display="flex" font-size="12px" z="1" font-color="black" value="solve the equation and drag the correct answer" string="solve the equation and drag the correct answer" visible="false" bg-color="transparent" onEntry="">
             </lido-text> 
 
             <!-- question row-->
