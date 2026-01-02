@@ -16,7 +16,7 @@ const meta: Meta = {
     img:{control:'file'},
     word:{control:'text'},
   answer: { control: 'text' },
-   isAllowOnlyCorrect: { control: 'boolean' },
+  PracticeMode: { control: 'boolean' },
  
   },
 };
@@ -30,7 +30,7 @@ export const wordBuildingwithimg: StoryObj = {
   option4:"P",
   option5:"M",
   img:"https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/WordBuilding/image.png",
- isAllowOnlyCorrect: true,
+PracticeMode: true,
   word:"CAT",
    letter1:"A",
    letter2:"T",
@@ -72,10 +72,10 @@ const {  isAllowOnlyCorrect = true } = args;
 	</lido-cell>
 	<lido-cell visible="true" height="40%" width="79%"  layout="row" >
 		<lido-text visible="true" type="click" value="${args.option1}" id="option1" tab-index="8" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option1}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="${args.option2}" type="click" id="option2" tab-index="9" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option2}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="${args.option3}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option3}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="${args.option4}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option4}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="${args.option5}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option5}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="${args.option2}" type="click" id="option2" tab-index="9" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option2}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="${args.option3}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option3}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="${args.option4}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option4}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="${args.option5}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="210px" string="${args.option5}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
 				
 				
 	</lido-cell>

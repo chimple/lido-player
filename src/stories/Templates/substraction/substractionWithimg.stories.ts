@@ -14,7 +14,7 @@ const meta: Meta = {
    text2: { control: 'text' },
     
   answer: { control: 'text' },
- isAllowOnlyCorrect: { control: 'boolean' },
+PracticeMode: { control: 'boolean' },
   },
 };
 export default meta;
@@ -27,7 +27,7 @@ export const substractionWithimg: StoryObj = {
   option4:"4",
     
   
- isAllowOnlyCorrect: true,
+PracticeMode: false,
   
    text1:"5",
    text2:"2",
@@ -72,7 +72,7 @@ function getContainerXml(args) {
     const actualMinusImages = generateImages(args.text2, OUTLINE_IMAGE);
 
   return `<main>
-   <lido-container  visible="true" id="lido-container" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" onEntry="solid.z-index='2';this.sleep='1000';text2.animation='placeToRight 2s linear';this.sleep='1000';actual.z-index='10';">
+   <lido-container  visible="true" id="lido-container" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" onEntry="solid.z-index='2';this.sleep='1000';text2.animation='placeToRight 2s linear';this.sleep='1000';actual.z-index='10';">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.83%, portrait.28%" y="landscape.40%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >
@@ -115,10 +115,10 @@ function getContainerXml(args) {
 						
 			</lido-cell>
 			<lido-cell layout="row" visible="true" width="84%" height="300px">
-				<lido-text visible="true" value="${args.option1}" type="click" id="option1" tab-index="8" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option1}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="${args.option2}" type="click" id="option2" tab-index="9" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option2}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" value="${args.option3}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option3}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
-				<lido-text visible="true" type="click" value="${args.option4}" id="option4" tab-index="11" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option4}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="${args.option1}" type="click" id="option1" tab-index="8" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option1}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="${args.option2}" type="click" id="option2" tab-index="9" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option2}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" value="${args.option3}" type="click" id="option3" tab-index="10" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option3}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
+				<lido-text visible="true" disable-speak="true" type="click" value="${args.option4}" id="option4" tab-index="11" bg-color="#FFAC4C" height="212.4px" width="280px" string="${args.option4}"  font-family="'Baloo Bhai 2'" font-color="black" font-size="140px" onEntry="this.fontWeight='700';this.border-radius='16px';"></lido-text>
 				
 
 
