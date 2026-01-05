@@ -57,9 +57,8 @@ export const fingerUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/ob
 
 
 export const enum templateAudio {
-  dragAndDrop = 'Match the items by dragging and dropping them into the correct places.',
-  mcq = 'Select the correct answer from the options provided.',
-  tracing = 'Trace the shape by following the outline carefully.',
-  flashcards = 'Review the flashcards to reinforce your learning.',
-  hello='hello',
+ dragAndDrop = 'instruction.dragAndDrop',
+  mcq = 'instruction.mcq',
+  tracing = 'instruction.tracing',
+  flashcards = 'instruction.flashcards',
 }

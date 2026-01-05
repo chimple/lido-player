@@ -465,7 +465,7 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       const scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
       dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-    }, 100);
+    }, 700);
   }
 };
 
