@@ -51,7 +51,7 @@ function getContainerXml(args) {
    
 
   return `<main>
-   <lido-container show-drop-border="false"  visible="true" template-id="dragAndDrop" id="lido-container" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/bgImg.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" onEntry="inst.speak='true';">
+   <lido-container   visible="true" template-id="dragAndDrop" id="lido-container" objective="${args.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/bgImg.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" onEntry="inst.speak='true';">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.94%, portrait.28%" y="landscape.61%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >
@@ -66,7 +66,7 @@ function getContainerXml(args) {
     
   </lido-cell>
   <lido-cell visible="true" layout="row" height="270px" width="90%" bg-color="transparent">
-    <lido-image type="drop" value="${args.answer}" tab-index="8" id="drop1" visible="true" height="122px" width="225px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/dropimg.png"></lido-image>
+    <lido-text type="drop" value="${args.answer}" tab-index="8" id="drop1" visible="true" height="122px" width="225px" onEntry="this.border-radius='16px';"></lido-text>
     
   </lido-cell>
   <lido-cell visible="true" layout="row"  height="270px" width="90%" bg-color="transparent" onEntry="this.align-items='center';this.justify-content='space-around';">
