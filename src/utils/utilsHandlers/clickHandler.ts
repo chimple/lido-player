@@ -103,7 +103,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       container.setAttribute(SelectedValuesKey, JSON.stringify([element['value']]));
       const isCorrect = objective.includes(element['value']);
       dispatchClickEvent(element, isCorrect);
-      if (isCorrect) {
+      if (isCorrect || container.getAttribute('is-continue-on-correct') === 'false') {
         const onCorrect = element.getAttribute('onCorrect');
         if(!(element.id && element.id.startsWith('key-button')))
           {       
