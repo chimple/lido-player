@@ -57,7 +57,7 @@ export class LidoHome {
   @Prop() activeContainerIndexes: number[] = [];
 
   /** Language to apply to all texts */
-  @Prop() locale?: string = '';
+  @Prop() Lang?: string = '';
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -141,7 +141,7 @@ export class LidoHome {
    */
   @State() containers: (() => any)[] = [];
 
-  @Watch('locale')
+  @Watch('Lang')
   onLangChange(newLang: string) {
     this.setLanguage(newLang);
     // re-render all containers with updated locale

@@ -15,7 +15,7 @@ import i18next from '../../utils/i18n';
 })
 export class LidoRoot {
   /** Language to apply to all texts */
-  @Prop() locale?: string='';
+  @Prop() Lang?: string='';
   /**
    * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
    */
@@ -78,10 +78,10 @@ export class LidoRoot {
    * It fetches the XML data from the specified path or URL and sets it to the component's state.
    */
   connectedCallback() {
-    this.setLanguage(this.locale);
+    this.setLanguage(this.Lang);
   }
 
-  @Watch('locale')
+  @Watch('Lang')
   onLangChange(newLang: string) {
     this.setLanguage(newLang);
   }

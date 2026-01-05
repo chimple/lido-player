@@ -493,6 +493,10 @@ export namespace Components {
      */
     interface LidoContainer {
         /**
+          * Language to apply to all texts
+         */
+        "Lang": string;
+        /**
           * Enables appending the dragged element to the drop target after all correct drops are completed.
          */
         "appendToDropOnCompletion": boolean;
@@ -556,10 +560,6 @@ export namespace Components {
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
          */
         "isContinueOnCorrect": boolean;
-        /**
-          * Language to apply to all texts
-         */
-        "locale": string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
@@ -809,6 +809,10 @@ export namespace Components {
      */
     interface LidoHome {
         /**
+          * Language to apply to all texts
+         */
+        "Lang"?: string;
+        /**
           * Array of active container indexes to be rendered
          */
         "activeContainerIndexes": number[];
@@ -837,10 +841,6 @@ export namespace Components {
           * Initial index of the container being displayed.
          */
         "initialIndex": number;
-        /**
-          * Language to apply to all texts
-         */
-        "locale"?: string;
         /**
           * Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.
          */
@@ -1387,6 +1387,10 @@ export namespace Components {
      */
     interface LidoRoot {
         /**
+          * Language to apply to all texts
+         */
+        "Lang"?: string;
+        /**
           * Base URL for the containers.
          */
         "baseUrl": string;
@@ -1402,10 +1406,6 @@ export namespace Components {
           * Initial index of the container being displayed.
          */
         "initialIndex": number;
-        /**
-          * Language to apply to all texts
-         */
-        "locale"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
@@ -2827,6 +2827,10 @@ declare namespace LocalJSX {
      */
     interface LidoContainer {
         /**
+          * Language to apply to all texts
+         */
+        "Lang"?: string;
+        /**
           * Enables appending the dragged element to the drop target after all correct drops are completed.
          */
         "appendToDropOnCompletion"?: boolean;
@@ -2890,10 +2894,6 @@ declare namespace LocalJSX {
           * Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".
          */
         "isContinueOnCorrect"?: boolean;
-        /**
-          * Language to apply to all texts
-         */
-        "locale"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */
@@ -3143,6 +3143,10 @@ declare namespace LocalJSX {
      */
     interface LidoHome {
         /**
+          * Language to apply to all texts
+         */
+        "Lang"?: string;
+        /**
           * Array of active container indexes to be rendered
          */
         "activeContainerIndexes"?: number[];
@@ -3171,10 +3175,6 @@ declare namespace LocalJSX {
           * Initial index of the container being displayed.
          */
         "initialIndex"?: number;
-        /**
-          * Language to apply to all texts
-         */
-        "locale"?: string;
         /**
           * Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.
          */
@@ -3721,6 +3721,10 @@ declare namespace LocalJSX {
      */
     interface LidoRoot {
         /**
+          * Language to apply to all texts
+         */
+        "Lang"?: string;
+        /**
           * Base URL for the containers.
          */
         "baseUrl"?: string;
@@ -3736,10 +3740,6 @@ declare namespace LocalJSX {
           * Initial index of the container being displayed.
          */
         "initialIndex"?: number;
-        /**
-          * Language to apply to all texts
-         */
-        "locale"?: string;
         /**
           * CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
          */

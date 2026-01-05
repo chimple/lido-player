@@ -18,7 +18,7 @@ import { templateAudio, TemplateID } from '../../utils/constants';
 })
 export class LidoContainer {
   /** Language to apply to all texts */
-  @Prop() locale: string = '';
+  @Prop() Lang: string = '';
   /**
    * Controls whether the drop zone displays a border; true shows the border, false hides it.
    */
@@ -231,7 +231,7 @@ export class LidoContainer {
   @State() speakFlag: boolean = false;
 
 
-  @Watch('locale')
+  @Watch('Lang')
   languageChanged(newLang: string) {
     const langToApply = newLang || this.resolveLanguage();
     this.updateChildTextLanguage(langToApply);
@@ -269,13 +269,13 @@ export class LidoContainer {
 
   private resolveLanguage(): string {
     const rootEl = this.el.closest('lido-root') as any;
-    const rootLang = rootEl?.locale || '';
+    const rootLang = rootEl?.Lang || '';
     if (rootLang?.trim()) return rootLang;
     const homeEl = this.el.closest('lido-home') as any;
-    const homeLang = homeEl?.locale || '';
+    const homeLang = homeEl?.Lang || '';
     if (homeLang?.trim()) return homeLang;
-    if (this.locale?.trim()) return this.locale;
-    const xmlLang = this.el.getAttribute('locale');
+    if (this.Lang?.trim()) return this.Lang;
+    const xmlLang = this.el.getAttribute('Lang');
     if (xmlLang?.trim()) return xmlLang;
     return this.el.textContent?.trim();
   }
@@ -357,7 +357,7 @@ export class LidoContainer {
 
     const texts = this.el.querySelectorAll('lido-text');
     texts.forEach((textEl: any) => {
-      textEl.locale = appliedLang;
+      textEl.Lang = appliedLang;
       textEl.dispatchEvent(new CustomEvent('languageChanged', { bubbles: true }));
     });
   }
@@ -422,7 +422,7 @@ export class LidoContainer {
     return (
       <Host
         id="lido-container"
-        locale={this.locale}
+        Lang={this.Lang}
         tab-index={0}
         class="lido-container"
         objective={this.objective}
