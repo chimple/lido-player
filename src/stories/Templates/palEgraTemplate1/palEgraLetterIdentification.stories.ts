@@ -42,7 +42,10 @@ export const Default: StoryObj = {
 function getContainerXml(args) {
 
   return `<main>
-    <lido-container objective="${(args.correctAns)}" template-id="mcq" is-continue-on-correct="${args.PracticeMode}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="questionText.speak='true';">
+    <lido-container objective="${(args.correctAns)}" template-id="mcq" is-continue-on-correct="${args.PracticeMode}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="questionText.speak='true';" custom-style = "#audioCell:active {
+  box-shadow: 0px 0px 0px !important;
+  transform: translateY(10px);
+} ">
 	<lido-col visible="true" width="100%" height="80%" bg-color="transparent">
 		
         <!-- Chimple Avatar -->
@@ -53,19 +56,23 @@ function getContainerXml(args) {
 		  </lido-image>
         </lido-cell>
 
-		<lido-text visible="${args.template === 'Template1'}" id="questionText" width="300px" height="300px" tab-index="1"  bg-color="#fff5bb" string="${(args.correctAns).toLowerCase()}" font-size="150px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700'; this.border='#ffac4c 2px solid'; "></lido-text>
+		<lido-text visible="${args.template === 'Template1'}" id="questionText" width="405px" height="250px" tab-index="1"  bg-color="#fff5bb" string="${(args.correctAns).toLowerCase()}" font-size="120px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700'; this.border='#ffac4c 2px solid'; "></lido-text>
 		
-		<lido-cell visible="${args.template !== 'Template1'}" onTouch="questionText.speak='true';" layout="row" width="300px" height="300px" bg-color="white" border-radius="130px" onEntry="this.border='#ffac4c 2px solid';">
+		<lido-cell visible="${args.template !== 'Template1'}" id="audioCell" onTouch="questionText.speak='true';" layout="row" width="300px" height="300px" bg-color="white" border-radius="130px" onEntry="this.border='#ffac4c 2px solid'; this.boxShadow='0px 10.88px 0px #f34d08;';">
 			<lido-image visible="true" bg-color="transparent" width="200px" height="200px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Icons/palAudioIcon.png"></lido-image>
 		</lido-cell>
 
-		<lido-row visible="true" width="80%" height="50%" bg-color="transparent">
-			<lido-text visible="true" width="220px" height="220px" type="click" value="${args.option1}" string="${args.option1}" font-size="120px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-			<lido-text visible="true" width="220px" height="220px" type="click" value="${args.option2}" string="${args.option2}" font-size="120px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-			<lido-text visible="true" width="220px" height="220px" type="click" value="${args.option3}" string="${args.option3}" font-size="120px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-			<lido-text visible="true" width="220px" height="220px" type="click" value="${args.option4}" string="${args.option4}" font-size="120px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-			<lido-text visible="true" width="220px" height="220px" type="click" value="${args.option5}" string="${args.option5}" font-size="120px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-		</lido-row>
+		<lido-cell layout="col" visible="true" width="90%" height="50%" bg-color="transparent" padding="0">
+			<lido-cell layout="row" visible="true" width="70%" height="50%" bg-color="transparent">
+				<lido-text visible="true" width="400px" height="136px" type="click" value="${args.option1}" string="${args.option1}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" width="400px" height="136px" type="click" value="${args.option2}" string="${args.option2}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+			</lido-cell>
+			<lido-cell layout="row" visible="true" width="100%" height="50%" bg-color="transparent">
+				<lido-text visible="true" width="400px" height="136px" type="click" value="${args.option3}" string="${args.option3}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" width="400px" height="136px" type="click" value="${args.option4}" string="${args.option4}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" width="400px" height="136px" type="click" value="${args.option5}" string="${args.option5}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+			</lido-cell>
+		</lido-cell>
 	</lido-col>
 </lido-container>
 </main>`;
