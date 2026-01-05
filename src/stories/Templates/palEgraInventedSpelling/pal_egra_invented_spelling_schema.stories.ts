@@ -57,13 +57,13 @@ function getContainerXml(args) {
 		</lido-cell>
 		<lido-cell layout="col" visible="true" width="100%" height="50%" bg-color="transparent" padding="0">
 			<lido-cell layout="row" visible="true" width="70%" height="50%" bg-color="transparent">
-				<lido-text visible="true" width="400px" height="136px" type="click" value="${(args.option1).toLowerCase()}" string="${args.option1}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-				<lido-text visible="true" width="400px" height="136px" type="click" value="${(args.option2).toLowerCase()}" string="${args.option2}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" disable-speak="true" width="400px" height="136px" type="click" value="${(args.option1).toLowerCase()}" string="${args.option1}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" disable-speak="true" width="400px" height="136px" type="click" value="${(args.option2).toLowerCase()}" string="${args.option2}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
 			</lido-cell>
 			<lido-cell layout="row" visible="true" width="100%" height="50%" bg-color="transparent">
-				<lido-text visible="true" width="400px" height="136px" type="click" value="${(args.option3).toLowerCase()}" string="${args.option3}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-				<lido-text visible="true" width="400px" height="136px" type="click" value="${(args.option4).toLowerCase()}" string="${args.option4}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
-				<lido-text visible="true" width="400px" height="136px" type="click" value="${(args.option5).toLowerCase()}" string="${args.option5}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" disable-speak="true" width="400px" height="136px" type="click" value="${(args.option3).toLowerCase()}" string="${args.option3}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" disable-speak="true" width="400px" height="136px" type="click" value="${(args.option4).toLowerCase()}" string="${args.option4}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
+				<lido-text visible="true" disable-speak="true" width="400px" height="136px" type="click" value="${(args.option5).toLowerCase()}" string="${args.option5}" font-size="110px" border-radius="20px" font-color="black" onEntry="this.fontWeight='700';"></lido-text>
 			</lido-cell>
 		</lido-cell>
 	</lido-cell>

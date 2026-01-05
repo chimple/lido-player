@@ -4,6 +4,7 @@ import { string } from 'mathjs';
 import i18next from '../../utils/i18n';
 import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
 import { templateAudio, TemplateID } from '../../utils/constants';
+import { Timer } from '../../utils/utilsHandlers/timer';
 /**
  * @component LidoContainer
  *
@@ -397,6 +398,8 @@ export class LidoContainer {
     setTimeout(() => {
       highlightElement();
     },100)
+
+    Timer.getI().start();
   }
 
   disconnectedCallback() {
@@ -404,6 +407,7 @@ export class LidoContainer {
     window.removeEventListener('load', () => this.scaleContainer(this.el));
     document.body.style.backgroundColor = '';
     document.body.style.backgroundImage = '';
+    Timer.getI().stop();
   }
 
   render() {

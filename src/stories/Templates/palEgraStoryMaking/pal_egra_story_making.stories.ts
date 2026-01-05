@@ -49,29 +49,29 @@ function getContainerXml(args) {
 		<lido-cell visible="true" layout="col" width="53%" height="100%" padding="0" bg-color="transparent">
 			<lido-cell visible="true" layout="row" width="100%" height="22%" bg-color="transparent">
 				<lido-image visible="true" width="160px" height="160px" bg-color="white" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picture_Clues/f1.png"></lido-image>
-				<lido-text visible="true" value="${args.value1}" id="drop1" tab-index="1" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
+				<lido-text visible="true" value="${args.value1}" id="drop1" tab-index="1" disable-speak="true" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
 			</lido-cell>
 			<lido-cell visible="true" layout="row" width="100%" height="22%" bg-color="transparent">
 				<lido-image visible="true" width="160px" height="160px" bg-color="white" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picture_Clues/f1.png"></lido-image>
-				<lido-text visible="true" value="${args.value2}" id="drop2" tab-index="2" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
+				<lido-text visible="true" value="${args.value2}" id="drop2" tab-index="2" disable-speak="true" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
 			</lido-cell>
 			<lido-cell visible="true" layout="row" width="100%" height="22%" bg-color="transparent">
 				<lido-image visible="true" width="160px" height="160px" bg-color="white" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picture_Clues/f1.png"></lido-image>
-				<lido-text visible="true" value="${args.value3}" id="drop3" tab-index="3" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
+				<lido-text visible="true" value="${args.value3}" id="drop3" tab-index="3" disable-speak="true" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
 			</lido-cell>
 			<lido-cell visible="true" layout="row" width="100%" height="22%" bg-color="transparent">
 				<lido-image visible="true" width="160px" height="160px" bg-color="white" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/picture_Clues/f1.png"></lido-image>
-				<lido-text visible="true" value="${args.value4}" id="drop4" tab-index="4" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
+				<lido-text visible="true" value="${args.value4}" id="drop4" tab-index="4" disable-speak="true" type="drop" width="630px" height="100px" bg-color="white" border-radius="16px" onCorrect="lido-avatar.avatarAnimate='Success';"></lido-text>
 			</lido-cell>
 		</lido-cell>
 
 		<!-- Drag Elements -->
 		<lido-cell visible="true" layout="col" width="42%" height="100%" bg-color="transparent">
 			<lido-cell visible="true" layout="col" width="100%" height="70%" bg-color="transparent">
-				<lido-text visible="true" value="${args.value3}" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value3}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
-				<lido-text visible="true" value="${args.value1}" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value1}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
-				<lido-text visible="true" value="${args.value4}" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value4}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
-				<lido-text visible="true" value="${args.value2}" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value2}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
+				<lido-text visible="true" value="${args.value3}" disable-speak="true" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value3}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
+				<lido-text visible="true" value="${args.value1}" disable-speak="true" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value1}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
+				<lido-text visible="true" value="${args.value4}" disable-speak="true" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value4}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
+				<lido-text visible="true" value="${args.value2}" disable-speak="true" type="drag" width="630px" height="100px" bg-color="#FFAC4C" font-size="50px" font-color="black" string="${args.value2}" border-radius="16px" onEntry="this.fontWeight='600';"></lido-text>
 			</lido-cell>
 			<lido-cell visible="true" height="30%"></lido-cell>
 		</lido-cell>
