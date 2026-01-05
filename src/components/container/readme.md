@@ -56,9 +56,14 @@
 
  - [lido-home](../home)
 
+### Depends on
+
+- [lido-text](../text)
+
 ### Graph
 ```mermaid
 graph TD;
+  lido-container --> lido-text
   lido-home --> lido-container
   style lido-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
