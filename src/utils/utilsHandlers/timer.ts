@@ -1,24 +1,37 @@
 export class Timer {
+  private static instance: Timer;
+
   private startTime = 0;
   private elapsedTime = 0;
   private intervalId: number | null = null;
-  private onTick: (elapsed: number) => void;
+  private onTick?: (elapsed: number) => void;
 
-  constructor(onTick: (elapsed: number) => void) {
-    this.onTick = onTick;
+  private constructor() {}
+
+  public static getI(onTick?: (elapsed: number) => void): Timer {
+    if (!Timer.instance) {
+      Timer.instance = new Timer();
+    }
+
+    if (onTick) {
+      Timer.instance.onTick = onTick;
+    }
+
+    return Timer.instance;
   }
 
-  start() {
+  public start() {
     if (this.intervalId) return;
 
-    this.startTime = Date.now();
+    this.startTime = Date.now() - this.elapsedTime;
+
     this.intervalId = window.setInterval(() => {
       this.elapsedTime = Date.now() - this.startTime;
-      this.onTick(this.elapsedTime);
+      this.onTick?.(this.elapsedTime);
     }, 1000);
   }
 
-  pause() {
+  public pause() {
     if (!this.intervalId) return;
 
     clearInterval(this.intervalId);
@@ -26,31 +39,25 @@ export class Timer {
     this.elapsedTime = Date.now() - this.startTime;
   }
 
-  resume() {
+  public resume() {
     if (this.intervalId) return;
-
-    this.startTime = Date.now() - this.elapsedTime;
-    this.intervalId = window.setInterval(() => {
-      this.elapsedTime = Date.now() - this.startTime;
-      this.onTick(this.elapsedTime);
-    }, 1000);
+    this.start();
   }
 
-  stop() {
+  public stop() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
+
     this.startTime = 0;
     this.elapsedTime = 0;
+    this.onTick?.(0);
   }
 
-  getElapsed() {
+  public getElapsed() {
     return this.intervalId
       ? Date.now() - this.startTime
       : this.elapsedTime;
   }
 }
- 
-export const screenTimer = new Timer(ms => {
-});
