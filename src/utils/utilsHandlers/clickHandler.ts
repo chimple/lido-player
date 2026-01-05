@@ -46,10 +46,14 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
       return;
     }
 
-    const shouldClick = onTouch || (!onTouch && ['category', 'option'].includes(element.getAttribute('type') || ''));
+    // If an onTouch action is defined, execute it on tap.
+    if (onTouch) {
+      await executeActions(onTouch, element);
+    }
 
-    if(shouldClick) {
-      element.dispatchEvent( 
+    const type = element.getAttribute('type') || '';
+    if (['category', 'option', 'click'].includes(type)) {
+      element.dispatchEvent(
         new MouseEvent('click', { bubbles: true, cancelable: true })
       );
     }
