@@ -3,5 +3,11 @@
   "Exit": "Exit",
   "Continue playing": "Continue playing",
   "Drop the elements to match the given symbol order": "Drop the elements to match the given symbol order",
-  "Fill  in  the  blanks": "Fill  in  the  blanks"
+  "Fill  in  the  blanks": "Fill  in  the  blanks",
+  "instruction": {
+    "dragAndDrop": "Match the items by dragging and dropping them into the correct places.",
+    "mcq": "Select the correct answer from the options provided.",
+    "tracing": "Trace the shape by following the outline carefully.",
+    "flashcards": "Review the flashcards to reinforce your learning."
+  }
   }

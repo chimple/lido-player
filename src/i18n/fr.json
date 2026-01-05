@@ -3,6 +3,12 @@
   "Exit": "Quitter",
   "Continue playing": "Continuer à jouer",
   "Drop the elements to match the given symbol order":"Déposez les éléments pour correspondre au symbole donné",
-  "Fill  in  the  blanks":"Remplissez les blancs"
+  "Fill  in  the  blanks":"Remplissez les blancs",
+  "instruction": {
+  "dragAndDrop": "Faites glisser les objets vers le bon emplacement.",
+  "mcq": "Choisissez la bonne réponse parmi les options proposées.",
+  "tracing": "Tracez soigneusement la forme en suivant la ligne.",
+  "flashcards": "Regardez les cartes mémoire pour renforcer l’apprentissage."
+}
  
 }

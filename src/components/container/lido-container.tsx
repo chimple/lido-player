@@ -244,7 +244,7 @@ export class LidoContainer {
   }
 
   private resolveInstructionAudio() {
-    this.instructName =
+   const key =
       (
         {
           flashcard: templateAudio.flashcards,
@@ -253,6 +253,7 @@ export class LidoContainer {
           dragAndDrop: templateAudio.dragAndDrop,
         } as any
       )[this.templateId!] ?? '';
+        this.instructName = key ? i18next.t(key) : '';
 
     const home = document.querySelector('lido-home') as HTMLElement;
     if (!home) return;
