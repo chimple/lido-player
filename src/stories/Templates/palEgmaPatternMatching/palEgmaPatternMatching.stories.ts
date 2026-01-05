@@ -68,10 +68,10 @@ function getContainerXml(args) {
 
 }).join('');
 
- const opion_cells = args.options.map((q, index) => {
+ const option_cells = args.options.map((q, index) => {
   return `
       <lido-cell layout="row" id="text${1+index}" visible="true" margin="" onEntry="this.border-radius='14px';" height="landscape.270px,portrait.244px" width="landscape.270px,portrait.244px" bg-color="orange"  type="click" value="${q}">
-        <lido-text visible="true" value="${q}" string="${q}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='800';">
+        <lido-text visible="true" value="${q}" string="${q}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='800';">
         </lido-text>
       </lido-cell>
   `;
@@ -103,7 +103,7 @@ function getContainerXml(args) {
 
         <!-- options cells -->
 	      	<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 38px 0px 0px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.290px,portrait.35%" width="landscape.86%,portrait.100%" bg-color="transparent">
-            ${opion_cells}
+            ${option_cells}
           </lido-cell>
 
           
