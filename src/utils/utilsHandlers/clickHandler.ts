@@ -30,7 +30,7 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   };
 
   const onPointerDown = (event: PointerEvent) => {
-    event.stopPropagation();
+    // event.stopPropagation();
     onholdTriggered = false;
     onholdTimer = setTimeout(() => {
       playAudio();
@@ -40,14 +40,18 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   const onPointerUp = async (event: PointerEvent) => {
     clearTimeout(onholdTimer!);
 
-    if (!onholdTriggered && onTouch) {
-      await executeActions(onTouch, element);
-    } else if (!onTouch) {
-      if (['category', 'option'].includes(element.getAttribute('type') || '')) {
-        element.dispatchEvent(
-          new MouseEvent('click', { bubbles: true, cancelable: true })
-        );
-      }
+    // If long-press happened → do nothing else
+    if (onholdTriggered) {
+      setDraggingDisabled(false);
+      return;
+    }
+
+    const shouldClick = onTouch || (!onTouch && ['category', 'option'].includes(element.getAttribute('type') || ''));
+
+    if(shouldClick) {
+      element.dispatchEvent( 
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      );
     }
 
     setDraggingDisabled(false);
