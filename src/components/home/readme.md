@@ -9,6 +9,7 @@
 
 | Property                 | Attribute            | Description                                                                                              | Type       | Default                  |
 | ------------------------ | -------------------- | -------------------------------------------------------------------------------------------------------- | ---------- | ------------------------ |
+| `Lang`                   | `lang`               | Language to apply to all texts                                                                           | `string`   | `''`                     |
 | `activeContainerIndexes` | --                   | Array of active container indexes to be rendered                                                         | `number[]` | `[]`                     |
 | `avatarUrl`              | `avatar-url`         | URL for the avatar Rive file.                                                                            | `string`   | `undefined`              |
 | `baseUrl`                | `base-url`           | Base URL for the containers.                                                                             | `string`   | `''`                     |
@@ -17,7 +18,6 @@
 | `exitButtonUrl`          | `exit-button-url`    | Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.          | `string`   | `undefined`              |
 | `height`                 | `height`             | The height of the container (CSS value).                                                                 | `string`   | `''`                     |
 | `initialIndex`           | `initial-index`      | Initial index of the container being displayed.                                                          | `number`   | `0`                      |
-| `locale`                 | `locale`             | Language to apply to all texts                                                                           | `string`   | `''`                     |
 | `nextButtonUrl`          | `next-button-url`    | Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.          | `string`   | `undefined`              |
 | `prevButtonUrl`          | `prev-button-url`    | Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.      | `string`   | `undefined`              |
 | `showNav`                | `show-nav`           | Boolean to show or hide navigation buttons                                                               | `boolean`  | `true`                   |

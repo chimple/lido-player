@@ -9,6 +9,7 @@
 
 | Property                   | Attribute                      | Description                                                                                                                                       | Type      | Default     |
 | -------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `Lang`                     | `lang`                         | Language to apply to all texts                                                                                                                    | `string`  | `''`        |
 | `appendToDropOnCompletion` | `append-to-drop-on-completion` | Enables appending the dragged element to the drop target after all correct drops are completed.                                                   | `boolean` | `false`     |
 | `ariaHidden`               | `aria-hidden`                  | The ARIA hidden attribute of the container. Used for accessibility to hide the element.                                                           | `string`  | `''`        |
 | `ariaLabel`                | `aria-label`                   | The ARIA label of the container. Used for accessibility to indicate the purpose of the element.                                                   | `string`  | `'auto'`    |
@@ -25,7 +26,6 @@
 | `id`                       | `id`                           | Unique identifier for the container.                                                                                                              | `string`  | `''`        |
 | `isAllowOnlyCorrect`       | `is-allow-only-correct`        | Determines if the activity should proceed automatically only after a correct response. Acceptable values: "true" or "false". Defaults to "false". | `boolean` | `false`     |
 | `isContinueOnCorrect`      | `is-continue-on-correct`       | Specifies whether the activity should continue automatically upon a correct response. Expected values: "true" or "false".                         | `boolean` | `false`     |
-| `locale`                   | `locale`                       | Language to apply to all texts                                                                                                                    | `string`  | `''`        |
 | `margin`                   | `margin`                       | CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).        | `string`  | `''`        |
 | `nextButtonUrl`            | `next-button-url`              | Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.                                                   | `string`  | `undefined` |
 | `objective`                | `objective`                    | Objective or purpose of the container. Can be used for internal logic or tracking.                                                                | `string`  | `''`        |
