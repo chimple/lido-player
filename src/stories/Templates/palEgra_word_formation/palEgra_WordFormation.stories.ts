@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { Options } from '../grid/grid.stories';
 
 type TextColors = {
   colors: string[];
@@ -28,6 +29,8 @@ export const palEgraWordFormation: StoryObj = {
 };
 
 function getContainerXml(args) {
+  const calculatedWidth =
+  (173 * args.options.length) + (25 * args.options.length);
 const drop_cells = args.options.map((q, index) => {
   return `
     <lido-text visible="true" id="drop${index+1}" tab-index="${12+index}" disable-speak="true" value="${q}" string="?" font-family="'Baloo Bhai 2'" width="173px" height="189px" is-allow-only-one-drop="true" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
@@ -64,7 +67,7 @@ const drag_cells = shuffledOptions.map((q, index) => {
           
 	      	<lido-cell layout="landscape.col, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.84%,portrait.35%" width="landscape.51%,portrait.100%" bg-color="transparent" gap="240px">
                 <!-- drop cells -->
-				<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.auto,portrait.100%" bg-color="#FFFFFF99" padding="0px 13px 0px 17px" gap="23px">
+				<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.${calculatedWidth}px,portrait.100%" bg-color="#FFFFFF99" padding="0px 13px 0px 17px" gap="23px">
 					${drop_cells}
 				</lido-cell>
 
