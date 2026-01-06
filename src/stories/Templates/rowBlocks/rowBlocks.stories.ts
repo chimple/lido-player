@@ -11,6 +11,8 @@ const meta: Meta = {
   argTypes: {
     options: { control: 'object' },
     answers: { control: 'object' },
+    isAllowOnlyCorrect: { control: 'boolean' },
+    isContinueOnCorrect: { control: 'boolean' },
 	colors: {
       control: 'object',
       description: 'Array of colors for numbers',
@@ -26,6 +28,8 @@ export const rowBlock: StoryObj = {
     numbers: ["970","971","972","973","@974","975","976","977","@978","979","980","981","982","@983","984","985","986","@987","988","989","990","991","992","993","@994","995", "996", "997", "@998", "999",],
     answers: ["974", "978", "983", "987", "994", "998"],
 	dragColors: ['#CF1565', '#AD3184', '#F55376', '#81C127', '#5D44BD'],
+  isAllowOnlyCorrect: true,
+  isContinueOnCorrect: true,
 	numColors: ['#FFE99B', '#FBCAB5'],
   },
   render: args => {
@@ -36,7 +40,7 @@ export const rowBlock: StoryObj = {
 
 function getContainerXml(args) {
   let tabCounter = 1;
-  const {  answers = [], numbers = [] } = args;
+  const {  answers = [], numbers = [], isAllowOnlyCorrect = true, isContinueOnCorrect = true } = args;
   
 
   const DragCells = answers
@@ -53,13 +57,13 @@ function getContainerXml(args) {
 <main>
 
     <lido-container id="lido-container" visible="true" objective="${answers.join(',')}" onEntry="audio12.speak='true';"
-        onCorrect="lido-avatar.avatarAnimate='Success';  sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/RowBlocks/Sky%207.png" custom-style= ".dropping {
+        onCorrect="lido-avatar.avatarAnimate='Success';  sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Row%20blocks.png" custom-style= ".dropping {
         border: 5px dashed #2C3836 !important;
         background-color: #6D8C87 !important;
-        }" is-allow-only-correct="true">
+        }" is-allow-only-correct="${isAllowOnlyCorrect}">
 
         <!-- Audio -->
-        <lido-text visible="false" id="audio12" onEntry="this.display='none';" string="Drag the missing number to its correct place and complete the number puzzle."></lido-text>
+        <lido-text visible="false" id="audio12" tab-index="${tabCounter++}" onEntry="this.display='none';" string="Drag the missing number to its correct place and complete the number puzzle."></lido-text>
         
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" x="landscape.1432px,portrait.330px" y="landscape.612px, portrait.1338px" aria-hidden="true" z="9999" bg-color="transparent" visible="true" onEntry="" margin="-104px 0px 0px -54px">
@@ -80,7 +84,7 @@ function getContainerXml(args) {
                         const cleanValue = opt.substring(1); // removes the first character (@)
                     if (opt.startsWith('@')) {
                     return `
-                    <lido-text visible="true" class="dropping" id="drop${tabCounter}" tab-index="${tabCounter++}" width="138px" height="86px" value="${cleanValue}" string="" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="#6D8C87" border-radius="8px" onEntry="this.border='5px solid #2C3836'; this.speak='true';" type="drop" layout="row"></lido-text>
+                    <lido-text visible="true" class="dropping" id="drop${tabCounter}" tab-index="${tabCounter++}" width="138px" height="86px" value="${cleanValue}" string="" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="#6D8C87" border-radius="8px" onCorrect="lido-avatar.avatarAnimate='Success';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='1000';" onEntry="this.border='5px solid #2C3836'; this.speak='true';" type="drop" layout="row"></lido-text>
                     `;   }
                     return `
                     <lido-text visible="true" id="num${tabCounter}" tab-index="${tabCounter++}" width="140px" height="94px" value="${opt}" string="${opt}" font-color="#182A4F" font-size="76px" font-family="Baloo Bhai 2" bg-color="${index%2!==0 ? color[0] : color[1]}" border-radius="8px" onEntry="this.font-weight='500'" onTouch="this.speak='true';" margin="0px 1px 0px 0px"></lido-text>

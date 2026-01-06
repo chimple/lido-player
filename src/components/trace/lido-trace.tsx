@@ -1,7 +1,17 @@
 import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
-import { convertUrlToRelative, executeActions, triggerNextContainer, speakIcon, setVisibilityWithDelay, parseProp } from '../../utils/utils';
+import {
+  convertUrlToRelative,
+  executeActions,
+  triggerNextContainer,
+  speakIcon,
+  setVisibilityWithDelay,
+  parseProp,
+  storingEachActivityScore,
+  calculateScore,
+} from '../../utils/utils';
 import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
 import { AudioPlayer } from '../../utils/audioPlayer';
+import { trace } from 'console';
 
 // Enum for different tracing modes
 
@@ -38,8 +48,8 @@ export class LidoTrace {
   /**
    * Array of audio URLs to be played when tracing is completed, separated by semicolons.
    * This allows multiple audio files to be loaded and played in sequence.
-  */
-  @State() audioUrls: string[] = [];  
+   */
+  @State() audioUrls: string[] = [];
 
   /**
    * Index of the currently active SVG in the `svgUrls` array.
@@ -140,10 +150,10 @@ export class LidoTrace {
    */
   @Prop() delayVisible: string = '';
 
-   /**
-     * When set to true, disables the speak functionality of long press for this component and its children.
-     */
-    @Prop() disableSpeak: boolean = false;
+  /**
+   * When set to true, disables the speak functionality of long press for this component and its children.
+   */
+  @Prop() disableSpeak: boolean = false;
 
   @Element() el!: HTMLElement;
 
@@ -505,12 +515,12 @@ export class LidoTrace {
   setupDraggableCircle(state: any) {
     const firstPathStart = state.paths[0].getPointAtLength(0);
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');    
+    const strokeWidth = state.paths[state.currentPathIndex].style['stroke-width'] || state.paths[state.currentPathIndex].getAttribute('stroke-width');
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
     circle.setAttribute('r', `calc(20)`); // Radius of the draggable circle
-    circle.setAttribute('fill', '#CF1565'); // fill the color for the circle 
+    circle.setAttribute('fill', '#CF1565'); // fill the color for the circle
     state.svg?.appendChild(circle);
     state.circle = circle;
 
@@ -572,7 +582,7 @@ export class LidoTrace {
   }
 
   // Modified handlePointerMove function
-  handlePointerMove(state: any) {
+  async handlePointerMove(state: any) {
     if (!state.isDragging) return;
     if (!state.circle || !state.paths || state.paths.length === 0) return;
 
@@ -651,14 +661,11 @@ export class LidoTrace {
         state.currentFreePath[state.currentPathIndex] = newPolyline;
         // Store points array for this polyline
         state.currentFreePolylinePoints = state.currentFreePolylinePoints || [];
-        state.currentFreePolylinePoints[state.currentPathIndex] = [
-          { x: pointerPos.x, y: pointerPos.y }
-        ];
+        state.currentFreePolylinePoints[state.currentPathIndex] = [{ x: pointerPos.x, y: pointerPos.y }];
         // Reset lastPointerPos for the new path
         state.lastPointerPos = pointerPos;
         // Add a points counter to limit path growth
         state.freeTracePointsCount = 1;
-
       }
 
       // Limit the number of points in the free trace path for performance
@@ -739,19 +746,16 @@ export class LidoTrace {
       currentPath.greenPath?.setAttribute('stroke-dashoffset', (state.totalPathLength - state.lastLength).toString());
 
       // Completion logic for closed paths: only allow completion if almost all points are traced
-      const COMPLETION_THRESHOLD = 0.90; // 90% of the path must be traced
+      const COMPLETION_THRESHOLD = 0.95; // 95% of the path must be traced
       let percentComplete = state.lastLength / state.totalPathLength;
       let startPoint = currentPath.getPointAtLength(0);
       let endPoint = currentPath.getPointAtLength(currentPath.getTotalLength());
       let pathIsClosed = this.getDistanceSquared(startPoint, endPoint) < 200; // threshold for overlap
-      console.log('lastLength, totalPathLength', state.lastLength, state.totalPathLength);
-      console.log('percentComplete', percentComplete);
-      console.log('startPoint, endPoint', startPoint, endPoint);
-      console.log('distance squared between start & end:', this.getDistanceSquared(startPoint, endPoint));
-      console.log('pathIsClosed:', pathIsClosed);
 
       if (pathIsClosed && state.totalPathLength > 50) {
         if (percentComplete >= COMPLETION_THRESHOLD) {
+          // Animate the draggable circle & green trace to the very end, then proceed
+          await this.animatePathToEnd(state, currentPath);
           if (state.currentPathIndex < state.paths.length - 1) {
             this.moveToNextPath(state);
           } else if (state.currentPathIndex === state.paths.length - 1) {
@@ -771,6 +775,58 @@ export class LidoTrace {
     // this.resetIdleTimer(state); // ← keep timer alive
   }
 
+  // Smoothly animate the draggable circle + green stroke from current lastLength to totalPathLength
+  private animatePathToEnd(state: any, path: SVGGeometryElement, duration = 300): Promise<void> {
+    if (!path || !state.svg) return Promise.resolve();
+    if (state._animatingToEnd) return Promise.resolve();
+    state._animatingToEnd = true;
+
+    const start = state.lastLength || 0;
+    const end = path.getTotalLength();
+    const startTime = performance.now();
+
+    // get greenPath safely: prefer the attached property, otherwise query by class near the original path
+    const greenPath =
+      ((path as any).greenPath as SVGPathElement | undefined) ||
+      ((path.parentNode && (path.parentNode as Element).querySelector('.lido-trace-path-green')) as SVGPathElement | null);
+
+    return new Promise(resolve => {
+      const step = (now: number) => {
+        const t = Math.min(1, (now - startTime) / duration);
+        const eased = t; // linear easing
+        const currentLen = start + (end - start) * eased;
+        state.lastLength = currentLen;
+        // update circle position and green path dashoffset
+        const pt = path.getPointAtLength(currentLen);
+        if (state.circle) {
+          state.circle.setAttribute('cx', pt.x.toString());
+          state.circle.setAttribute('cy', pt.y.toString());
+        }
+        if (greenPath) {
+          greenPath.setAttribute('stroke-dashoffset', (state.totalPathLength - currentLen).toString());
+        }
+
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          // ensure fully complete
+          state.lastLength = end;
+          if (state.circle) {
+            const finalPt = path.getPointAtLength(end);
+            state.circle.setAttribute('cx', finalPt.x.toString());
+            state.circle.setAttribute('cy', finalPt.y.toString());
+          }
+          if (greenPath) {
+            greenPath.setAttribute('stroke-dashoffset', '0');
+          }
+          state._animatingToEnd = false;
+          resolve();
+        }
+      };
+      requestAnimationFrame(step);
+    });
+  }
+
   // Move to the next container after completing the current SVG
   async moveToNextContainer() {
     this.isDragging = false;
@@ -779,16 +835,21 @@ export class LidoTrace {
 
     if (this.highlightTextId) {
       this.highlightLetter(this.currentSvgIndex);
-    } 
+    }
     if (this.animationTrace) {
       await this.playTraceAnimation();
     }
 
+    storingEachActivityScore(true);
+
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
-    console.log('Total SVGs:', this.svgUrls.length);
+    const delay = 1000; // milliseconds
     if (this.currentSvgIndex < this.svgUrls.length - 1) {
+      await new Promise(resolve => setTimeout(resolve, delay));
       this.currentSvgIndex++;
       await this.initializeSVG();
+      const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
+      svgContainer.style.visibility = 'visible';
       this.moving = false;
       return;
     }
@@ -799,6 +860,8 @@ export class LidoTrace {
     if (this.el && this.onCorrect) {
       await executeActions(this.onCorrect, this.el);
     }
+
+    calculateScore();
     console.log('All SVGs completed, hiding component.');
     triggerNextContainer();
   }
@@ -958,7 +1021,7 @@ export class LidoTrace {
     if (!container) return;
 
     const traceElement = this.el;
-    if(!traceElement) return;
+    if (!traceElement) return;
 
     // Ensure highlightTextId is set
     const textId = this.highlightTextId;
@@ -969,8 +1032,8 @@ export class LidoTrace {
     if (!textElem) return;
 
     // Extract audio URLs from the trace element's audio attribute
-    const audioList = this.audio; 
-    if(!audioList) return;
+    const audioList = this.audio;
+    if (!audioList) return;
 
     this.audioUrls = audioList.split(';').map(s => s.trim());
     console.log('audioUrls', this.audioUrls);
@@ -988,12 +1051,23 @@ export class LidoTrace {
       if (index < 0 || index >= letters.length) return;
       // Highlight the current letter keeping the previous ones highlighted
       const letter = letters[index] as HTMLElement;
-      if (letter) 
-      {
-        letter.classList.add('letter-highlight');
-        
-        if(this.audioUrls[this.currentSvgIndex])
-        {
+      if (letter) {
+        const svgContainer = traceElement.querySelector('#lido-svgContainer') as HTMLElement;
+
+        await executeActions("this.alignMatch='true';", textElem, svgContainer);
+        svgContainer.style.animation = 'trace-animation 0.4s forwards';
+        svgContainer.style.setProperty('--trace-width', `${letter.offsetWidth - 5}px`);
+        svgContainer.style.setProperty('--trace-height', `${letter.offsetHeight - 5}px`);
+        await executeActions("this.alignMatch='true';", letter, svgContainer);
+
+        setTimeout(() => {
+          letter.classList.add('letter-highlight');
+          svgContainer.style.transform = '';
+          svgContainer.style.animation = '';
+          svgContainer.style.visibility = 'hidden';
+        }, 500);
+
+        if (this.audioUrls[this.currentSvgIndex]) {
           console.log('Playing audio:', this.audioUrls[this.currentSvgIndex]);
           const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
@@ -1006,11 +1080,9 @@ export class LidoTrace {
       if (index < 0 || index >= words.length) return;
       // Highlight the current word keeping the previous ones highlighted
       const word = words[index] as HTMLElement;
-      if (word) 
-      {
+      if (word) {
         word.classList.add('word-highlight');
-        if(this.audioUrls[this.currentSvgIndex])
-        {
+        if (this.audioUrls[this.currentSvgIndex]) {
           const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
         }
@@ -1043,7 +1115,6 @@ export class LidoTrace {
         aria-hidden={this.ariaHidden}
         tabindex={this.tabIndex}
         disable-speak={this.disableSpeak}
-
       >
         <div style={this.style} id="lido-svgContainer"></div>
       </Host>

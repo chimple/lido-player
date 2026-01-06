@@ -14,9 +14,8 @@ import i18next from '../../utils/i18n';
   assetsDirs: ['assets'], // Specifies the directory for static assets
 })
 export class LidoRoot {
-
   /** Language to apply to all texts */
-  @Prop() locale?: string='hi';
+  @Prop() Lang?: string='';
   /**
    * Prop to hold the XML file path or URL. This can be a relative path or an external URL.
    */
@@ -74,11 +73,15 @@ export class LidoRoot {
    */
   @State() xmlData: string;
 
-   connectedCallback() {
-    this.setLanguage(this.locale);
+  /**
+   * Lifecycle method that runs before the component is loaded.
+   * It fetches the XML data from the specified path or URL and sets it to the component's state.
+   */
+  connectedCallback() {
+    this.setLanguage(this.Lang);
   }
 
-  @Watch('locale')
+  @Watch('Lang')
   onLangChange(newLang: string) {
     this.setLanguage(newLang);
   }
@@ -87,11 +90,6 @@ export class LidoRoot {
     const effectiveLang = lang || i18next.language; 
     i18next.changeLanguage(effectiveLang);
   }
-
-  /**
-   * Lifecycle method that runs before the component is loaded.
-   * It fetches the XML data from the specified path or URL and sets it to the component's state.
-   */
   async componentWillLoad() {
     // Validate the xmlPath prop
     // if (!this.xmlPath) {
@@ -134,6 +132,6 @@ export class LidoRoot {
     }
 
     // Once the XML data is loaded, pass it to the `lido-home` component
-    return <lido-home initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
+    return <lido-home showNav={true} activeContainerIndexes={[]} initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
   }
 }

@@ -14,9 +14,23 @@ import {
   nextUrl,
   speakUrl,
   ActivityScoreKey,
+  LIDO_COMMON_AUDIO_PATH,
+  TemplateID,
 } from '../../utils/constants';
 import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
-import { clearLocalStorage, calculateScale, getCancelBtnPopup, setCancelBtnPopup, executeActions, triggerPrevcontainer, convertUrlToRelative, triggerNextContainer,matchStringPattern } from '../../utils/utils';
+
+import {
+  calculateScale,
+  getCancelBtnPopup,
+  setCancelBtnPopup,
+  executeActions,
+  triggerPrevcontainer,
+  convertUrlToRelative,
+  triggerNextContainer,
+  matchStringPattern,
+  speakText,
+} from '../../utils/utils';
+
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 import i18next from '../../utils/i18n';
@@ -34,8 +48,16 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
+  @Prop() commonAudioPath?: string="";
+
+  /** Boolean to show or hide navigation buttons */
+  @Prop() showNav: boolean = true;
+
+  /** Array of active container indexes to be rendered */
+  @Prop() activeContainerIndexes: number[] = [];
+
   /** Language to apply to all texts */
-  @Prop() locale?: string='hi';
+  @Prop() Lang?: string = '';
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -119,7 +141,7 @@ export class LidoHome {
    */
   @State() containers: (() => any)[] = [];
 
-  @Watch('locale')
+  @Watch('Lang')
   onLangChange(newLang: string) {
     this.setLanguage(newLang);
     // re-render all containers with updated locale
@@ -132,7 +154,6 @@ export class LidoHome {
     // Trigger re-render of containers to update <lido-text> dynamically
     this.containers = [...this.containers];
   }
-
   /**
    * Event handler for transitioning to the next container in the sequence.
    * If the last container is reached, it shows a completion message.
@@ -152,12 +173,11 @@ export class LidoHome {
     // console.log("👉 NextContainerKey CALLED with index:", index);
     if (index != undefined && index == this.currentContainerIndex) return;
     // Clear selected values from localStorage on container transition
-    clearLocalStorage();
+    // clearmemoryStorage();
 
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
       this.currentContainerIndex = index;
-      console.log('container index ; ', this.currentContainerIndex);
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex < this.containers.length - 1) {
@@ -182,7 +202,7 @@ export class LidoHome {
     if (this.currentContainerIndex <= 0) return;
 
     // Clear selected values from localStorage on container transition
-    clearLocalStorage();
+    // clearmemoryStorage();
 
     // Move to the previous container
     this.currentContainerIndex--;
@@ -194,6 +214,11 @@ export class LidoHome {
     this.containers = [...this.containers];
     this.updateArrowVisibility();
   };
+
+  @Watch('commonAudioPath')
+  onCommonAudioPathChange(path: string) {
+    this.publishCommonAudioPath(path);
+  }
 
   /**
    * Lifecycle method that runs before the component is loaded. It sets up event listeners for transitioning
@@ -209,7 +234,7 @@ export class LidoHome {
 
     if (this.currentContainerIndex === 0) {
       localStorage.removeItem(ActivityScoreKey);
-      clearLocalStorage();
+      // clearmemoryStorage();
     }
 
     // Listen for 'NextContainerKey' event to transition between containers
@@ -232,12 +257,13 @@ export class LidoHome {
     window.addEventListener('beforeunload', () => {
       AudioPlayer.getI().stop();
       localStorage.removeItem(ActivityScoreKey);
-      clearLocalStorage();
+      // clearmemoryStorage();
     });
   }
 
   @State() showDotsandbtn: boolean = false;
   componentDidLoad() {
+    this.publishCommonAudioPath(this.commonAudioPath);
     setTimeout(() => {
       this.showDotsandbtn = true;
     }, 10);
@@ -255,6 +281,16 @@ export class LidoHome {
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
     });
+  }
+  private publishCommonAudioPath(path?: string) {
+    if (!path) return;
+    const cleanPath = path.replace(/\/+$/, '');
+    (window as any)[LIDO_COMMON_AUDIO_PATH] = cleanPath;
+
+    console.log('[LidoHome] Published common audio path:', cleanPath);
+
+    // Dispatch a global event so LidoText knows the path is ready
+    window.dispatchEvent(new Event('lidoCommonAudioPathReady'));
   }
 
   private async handleIcons() {
@@ -292,7 +328,7 @@ export class LidoHome {
   }
 
   updateBackgroundImage() {
-    const container = document.querySelector(LidoContainer);
+    const container = document.querySelector(LidoContainer) as HTMLElement;
     const bgImageSrc = container.getAttribute('bg-image');
     document.body.style.background = 'none';
     container.style.backgroundImage = bgImageSrc ? `url(${bgImageSrc})` : 'none';
@@ -369,9 +405,12 @@ export class LidoHome {
       })
       .filter(Boolean);
     if (tagName === 'lido-text' && props.string) {
-      props.string = i18next.t(props.string); 
+      props.string = i18next.t(props.string);
     }
 
+    if (tagName === 'lido-text' && props.string) {
+      props.string = i18next.t(props.string);
+    }
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
@@ -395,6 +434,9 @@ export class LidoHome {
       'lido-float': <lido-float {...props}>{children}</lido-float>,
       'lido-keyboard': <lido-keyboard {...props}>{children}</lido-keyboard>,
       'lido-math-matrix': <lido-math-matrix {...props}>{children}</lido-math-matrix>,
+      'lido-balance': <lido-balance {...props}>{children}</lido-balance>,
+      'lido-calculator': <lido-calculator {...props}>{children}</lido-calculator>,
+      'lido-canvas': <lido-canvas {...props}>{children}</lido-canvas>,
     };
 
     // If the tag is known, return the corresponding Stencil component, otherwise log a warning
@@ -414,10 +456,13 @@ export class LidoHome {
   private parseContainers(rootElement: Element) {
     const containerElements = rootElement.querySelectorAll('lido-container');
 
-    const containers = Array.from(containerElements).map(container => {
-      // Return a factory function that generates a fresh JSX node each time
-      return () => this.parseElement(container);
-    });
+    const containers = Array.from(containerElements)
+      .map((container, index) => {
+        if (this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index)) return;
+        // Return a factory function that generates a fresh JSX node each time
+        return () => this.parseElement(container);
+      })
+      .filter(Boolean); // Remove any undefined entries
 
     this.containers = containers;
   }
@@ -425,6 +470,7 @@ export class LidoHome {
   // update arrow visibility
 
   private updateArrowVisibility = () => {
+    if (!this.showNav) return;
     setTimeout(() => {
       const containerElement = this.el.querySelector('lido-container');
       if (!containerElement) return;
@@ -446,28 +492,30 @@ export class LidoHome {
       }
     }, 100);
   };
-    private areAllDropsFilled(): boolean {
-      const drops = Array.from(document.querySelectorAll('[type="drop"]'));
-      const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to')); 
-      console.log('drops', drops);
-      console.log('drags', drags);
-      
-      
-      return drops.every(drop => {
-         const dropId = drop.id;
-        return drags.some(drag => drag.getAttribute('drop-to') === dropId);
-        });
-    }
+  private areAllDropsFilled(): boolean {
+    const drops = Array.from(document.querySelectorAll('[type="drop"]'));
+    const drags = Array.from(document.querySelectorAll('[type="drag"]')).filter(drag => drag.getAttribute('drop-to'));
 
-
+    return drops.every(drop => {
+      const dropId = drop.id;
+      return drags.some(drag => drag.getAttribute('drop-to') === dropId);
+    });
+  }
 
   private async btnpopup() {
     setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
 
-    const container = document.getElementById(LidoContainer);
+    const container = document.getElementById(LidoContainer) as HTMLElement;
     const allele = container.querySelectorAll('*');
-
+    const templateId = container.getAttribute(TemplateID)
+    if(templateId){
+      const instructEl = this.el.querySelector(`#${templateId}`);
+      if(instructEl){
+        await executeActions("this.speak='true';", instructEl as HTMLElement)
+      }
+    }
+    
     for (const el of Array.from(allele)) {
       if (getCancelBtnPopup()) break;
 
@@ -486,12 +534,12 @@ export class LidoHome {
       }
     }
     if (this.areAllDropsFilled()) {
-      const objectiveString = container['objective']; 
+      const objectiveString = container['objective'];
       const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) || '[]');
       const res = matchStringPattern(objectiveString, objectiveArray);
       console.log('Resultt', res);
       if (res) {
-       triggerNextContainer(); 
+        triggerNextContainer();
       }
     } else {
       console.log('Not yet filled ');
@@ -506,7 +554,7 @@ export class LidoHome {
         dispatchGameExitEvent();
         AudioPlayer.getI().stop();
         localStorage.removeItem(ActivityScoreKey);
-        clearLocalStorage();
+        // clearmemoryStorage();
         alertElement.remove();
         this.currentContainerIndex = 0;
       } else {
@@ -562,6 +610,7 @@ export class LidoHome {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
           }}
+          style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
         >
           <lido-image src={this.navBarIcons.exit}></lido-image>
         </div>
@@ -572,6 +621,7 @@ export class LidoHome {
             onClick={() => {
               triggerPrevcontainer();
             }}
+            style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
             <lido-image src={this.navBarIcons.prev} />
           </div>
@@ -593,11 +643,12 @@ export class LidoHome {
               console.log('✅ Button clicked - nextBtn action triggered');
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
+            style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} style={{ visibility: this.showNav ? 'visible' : 'hidden' }}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
@@ -627,7 +678,7 @@ export class LidoHome {
     };
 
     return (
-      <Host class="lido-home" uuid={this.uuid} index={this.currentContainerIndex} totalIndex={this.containers.length} style={style}>
+      <Host class="lido-home" uuid={this.uuid} template-id="" index={this.currentContainerIndex} totalIndex={this.containers.length} style={style}>
         {/* Render the current container */}
         <div key={this.currentContainerIndex}>{this.containers[this.currentContainerIndex]?.()}</div>
         {/* Render navigation dots below the container */}

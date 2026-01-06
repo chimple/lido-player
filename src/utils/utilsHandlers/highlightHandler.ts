@@ -1,4 +1,6 @@
-import { executeActions } from '../utils';
+import { LidoContainer } from '../constants';
+import { countOfMistakes, executeActions } from '../utils';
+import { buildDropHasDragFromDOM } from './dragDropHandler';
 
 export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
   const styleId = '#wrong-answer-animation-style';
@@ -56,7 +58,7 @@ export function showWrongAnswerAnimation(elements: HTMLElement[]): void {
 }
 
 export function removeHighlight(element: HTMLElement): void {
-  element.classList.remove('highlight');
+  element.classList.remove('highlight-element');
   element.ariaPressed = 'false';
 }
 
@@ -115,4 +117,50 @@ export function stopHighlightForSpeakingElement(element: HTMLElement): void {
   // Remove inline styles
   // element.style.boxShadow = '';
   // element.style.border = '';
+}
+
+export function highlightElement(): void {
+  const container = document.querySelector(LidoContainer);
+  if (!container) return;
+  const dropElements = buildDropHasDragFromDOM();
+  let firstFalse = Object.values(dropElements).find(item => !item.isFull);
+  if (firstFalse) {
+    const dropEls = container.querySelectorAll(`[type="drop"]`);
+    dropEls.forEach(dropEl => {
+      dropEl.classList.remove('highlight-element');
+    });
+    const dropEle = container.querySelector(`#${firstFalse.drop}`) as HTMLElement;
+    if (dropEle) {
+      dropEle.classList.add('highlight-element');
+    }
+
+    // Highlight corresponding drag elements if mistakes are more than 2
+    const dragElements = container.querySelectorAll(`[type="drag"]`);   
+
+    if(countOfMistakes > 2 && container.getAttribute("is-continue-on-correct") === "true"){
+      dragElements.forEach(dragEl => {
+        dragEl.classList.remove('highlight-element');
+        if(dragEl.getAttribute('value') === dropEle.getAttribute('value')){
+          dragEl.classList.add('highlight-element');
+          dragEl.classList.remove('drag-element')
+        }
+      });
+    } else {
+      dragElements.forEach(dragEl => {
+        dragEl.classList.remove('highlight-element');
+        dragEl.classList.add('drag-element');
+      });
+    }
+  } else {
+      if(countOfMistakes <= 2 || container.getAttribute("is-continue-on-correct") === "false")return;
+      const clickTemplate = container.querySelectorAll("[type='click']");
+      clickTemplate.forEach(clickEl => {
+        if(clickEl.getAttribute('value') === container.getAttribute('objective')){
+          if(!clickEl.classList.contains('highlight-element')){
+            clickEl.classList.add('highlight-element');
+          }
+        }
+      })
+  }
+
 }

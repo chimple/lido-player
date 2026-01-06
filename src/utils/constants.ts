@@ -16,6 +16,10 @@ export const DropHasDrag = 'dropHasDrag';
 export const DropToAttr = 'drop-to';
 export const DropTimeAttr = 'drop-time';
 export const LidoContainer = 'lido-container';
+export const LangChangeEvent = 'languageChanged';
+export const LIDO_COMMON_AUDIO_PATH = '__LIDO_COMMON_AUDIO_PATH__';
+export const LIDO_COMMON_AUDIO_READY_EVENT = 'lidoCommonAudioPathReady';
+export const TemplateID = 'template-id';
 
 export enum TraceMode {
   NoFlow = 'noFlow',
@@ -48,5 +52,13 @@ export enum DropAction {
 export const exitUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.svg';
 export const prevUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.svg';
 export const nextUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.svg';
-export const speakUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Audio%20icon.svg';
+export const speakUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png';
 export const fingerUrl = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg';
+
+
+export const enum templateAudio {
+ dragAndDrop = 'instruction.dragAndDrop',
+  mcq = 'instruction.mcq',
+  tracing = 'instruction.tracing',
+  flashcards = 'instruction.flashcards',
+}

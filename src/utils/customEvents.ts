@@ -1,6 +1,8 @@
 import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, NextContainerKey,PrevContainerKey } from './constants';
+import { Timer } from './utilsHandlers/timer';
 
 function dispatchCustomEvent(eventName: string, detail: any) {
+  console.log("👍Event Name : " ,eventName, "Detail : ", detail.toString());
   const event = new CustomEvent(eventName, { detail });
   window.dispatchEvent(event);
 }
@@ -10,7 +12,7 @@ export function dispatchActivityEndEvent(index: number, totalIndex: number, scor
 }
 
 export function dispatchLessonEndEvent(score: number) {
-  dispatchCustomEvent(LessonEndKey, { score });
+  dispatchCustomEvent(LessonEndKey, { score, timeSpent: Math.floor(Timer.getI().getElapsed() / 1000) });
 }
 
 export function dispatchNextContainerEvent() {

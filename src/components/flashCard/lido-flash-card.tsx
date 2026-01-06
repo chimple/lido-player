@@ -5,7 +5,7 @@
  * ------------------------------------------------------------------*/
 
 import { Component, Host, Prop, h, Element, State, Watch } from '@stencil/core';
-import { parseProp, initEventsForElement, setVisibilityWithDelay } from '../../utils/utils';
+import { parseProp, initEventsForElement, setVisibilityWithDelay, executeActions } from '../../utils/utils';
 
 @Component({
   tag: 'lido-flash-card',
@@ -133,6 +133,7 @@ export class LidoFlash {
      * When set to true, disables the speak functionality of long press for this component and its children.
      */
     @Prop() disableSpeak: boolean = false;
+ 
 
   /* ---------  Element & internal state --------- */
   @Element() el: HTMLElement;
@@ -155,13 +156,21 @@ export class LidoFlash {
 
   componentWillLoad() {
     this.updateStyles();
+    
     window.addEventListener('resize', this.updateStyles);
     window.addEventListener('load', this.updateStyles);
   }
 
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);    
-
+    const card = this.el.querySelector('.card') as HTMLElement;
+    if (card) {
+      setTimeout(() => {
+        card.classList.add('flipped');
+        setTimeout(() => {
+          card.classList.remove('flipped');}, 500)
+      }, 500)
+    }
     initEventsForElement(this.el, this.type);
     // handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'inline-block');
   }
@@ -214,7 +223,7 @@ export class LidoFlash {
         onClick={this.handleFlip}
         disable-speak={this.disableSpeak}
       >
-        <div class={`card ${this.flipped ? 'flipped' : ''}`}>
+        <div class={`card ${this.flipped ? 'flipped' : ''}`} >
           {/* Front face */}
           <div class="card-face card-front">{this.front != null ? this.front : <slot name="front" />}</div>
 

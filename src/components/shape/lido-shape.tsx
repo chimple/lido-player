@@ -1,5 +1,5 @@
-import { Component, Host, Prop, h, Element } from '@stencil/core';
-import { initEventsForElement, setVisibilityWithDelay} from '../../utils/utils';
+import { Component, Host, Prop, h, Element, State } from '@stencil/core';
+import { initEventsForElement, setVisibilityWithDelay, parseProp } from '../../utils/utils';
 
 /**
  * @component LidoShape
@@ -126,7 +126,7 @@ export class LidoShape {
    * Reference to the HTML element representing this `lido-shape` component.
    */
   @Element() el: HTMLElement;
-  
+
   /**
    * CSS margin value applied to each child element inside the container.
    * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
@@ -138,10 +138,13 @@ export class LidoShape {
    */
   @Prop() delayVisible: string = '';
 
-   /**
-     * When set to true, disables the speak functionality of long press for this component and its children.
-     */
-    @Prop() disableSpeak: boolean = false;
+  /**
+   * When set to true, disables the speak functionality of long press for this component and its children.
+   */
+  @Prop() disableSpeak: boolean = false;
+
+  /** Holds dynamically generated inline styles for the container */
+  @State() style: { [key: string]: string | undefined } = {};
 
   /**
    * Lifecycle hook that runs after the component is loaded into the DOM.
@@ -149,17 +152,46 @@ export class LidoShape {
    */
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);
-    
     initEventsForElement(this.el, this.type);
+    this.updateStyles();
+    this.lido3DShapes()
+  }
+
+  updateStyles() {
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    this.style = {
+      x: parseProp(`${this.x}`, orientation),
+      y: parseProp(`${this.y}`, orientation),
+      height: parseProp(`${this.height}`, orientation),
+      width: parseProp(`${this.width}`, orientation),
+    };
+  }
+
+  lido3DShapes() {    
+    const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    if(this.shapeType === "lido-cube"){
+      const faces = this.el.querySelectorAll(".face")
+      faces.forEach(item => {
+        const face = item as HTMLElement
+        face.style.setProperty("--face-width", parseProp(`${this.width}`, orientation),)
+        const translateValue = parseInt(parseProp(`${this.width}`, orientation))/2;
+        console.log("translate : ", translateValue)
+        face.style.setProperty("--face-translate",`${translateValue}px`)
+        face.style.setProperty("--face-bg-color",this.bgColor)
+      })
+    }
+    if(this.shapeType === "lido-cylinder"){
+      const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    }
   }
 
   render() {
     // Inline styles to position and size the shape component
     const style = {
-      height: this.shapeType !== 'polygon' ? this.height : undefined, // Set height unless it's a polygon
-      width: this.shapeType !== 'polygon' ? this.width : undefined, // Set width unless it's a polygon
-      top: this.y,
-      left: this.x,
+      height: this.shapeType !== 'polygon' ? this.style.height : undefined, // Set height unless it's a polygon
+      width: this.shapeType !== 'polygon' ? this.style.width : undefined, // Set width unless it's a polygon
+      top: this.style.y,
+      left: this.style.x,
       display: this.visible ? 'block' : 'none', // Toggle visibility
       zIndex: this.z,
       backgroundColor: this.shapeType !== 'polygon' ? this.bgColor : 'transparent', // Apply background only if not a polygon
@@ -182,10 +214,22 @@ export class LidoShape {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
-        disable-speak={this.disableSpeak}
-      >
+        disable-speak={this.disableSpeak}>
+
         {/* Slot for any child elements */}
-      </Host>
+        {this.shapeType === "lido-cube" && 
+          <div class="cube">
+           <div class="face top"></div>
+           <div class="face bottom"></div>
+           <div class="face left"></div>
+           <div class="face right"></div>
+           <div class="face front"></div>
+           <div class="face back"></div>
+          </div>
+        }
+     </Host>
+
+            
     );
   }
 }

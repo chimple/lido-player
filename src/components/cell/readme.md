@@ -49,11 +49,13 @@
 
 ### Used by
 
+ - [lido-calculator](../calculator)
  - [lido-home](../home)
 
 ### Graph
 ```mermaid
 graph TD;
+  lido-calculator --> lido-cell
   lido-home --> lido-cell
   style lido-cell fill:#f9f,stroke:#333,stroke-width:4px
 ```
