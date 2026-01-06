@@ -49,9 +49,7 @@ const drag_cells = shuffledOptions.map((q, index) => {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${letters}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#button {
-        box-shadow: 0px 12.08px 0px rgb(159, 50, 5);
-        }">
+<lido-container  visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${letters}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" >
 	   <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.330px,portrait.378px" width="landscape.300px,portrait.382px"
        x="landscape.82%, portrait.30%" y="landscape.32%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
@@ -68,9 +66,10 @@ const drag_cells = shuffledOptions.map((q, index) => {
 
           <!-- options cells -->
 	      	<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.-18px 91px 31px -100px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.auto,portrait.35%" width="landscape.80%,portrait.100%" bg-color="transparent">
-				    <lido-text id="button" layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';this.border='2px solid #FFB612';" height="landscape.147px,portrait.35%" width="landscape.140px,portrait.100%" bg-color="#f34d08" font-size="1px" onTouch="this.speak='true';" string="${word}">
-					    <lido-image visible="true" bg-color="transparent" width="133px" height="140px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png"></lido-image>
-				    </lido-text>
+				    <lido-text visible="false" id="inventedAudio" string="${word}" tab-index="2" font-size="80px" font-color="#07004E" border-radius="16px" bg-color="#FFF5BB" onEntry="this.fontWeight='700'; this.border='#FFB612 2px solid'; this.padding='25px 50px';"></lido-text>
+          <lido-cell visible="true" id="audioCell" layout="row" width="160px" height="160px" onTouch="inventedAudio.speak='true';" bg-color="white" border-radius="70px" onEntry="this.border='#ffac4c 2px solid'; this.boxShadow='0px 8px 0px #f34d08;'">
+            <lido-image visible="true" bg-color="transparent" width="100px" height="100px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Icons/palAudioIcon.png"></lido-image>
+          </lido-cell>
 				
               <!-- drop cells -->
               <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px'; this.justifyContent='space-around'" height="landscape.239px,portrait.35%" width="landscape.80%,portrait.100%" bg-color="#FFFFFF99" padding="0px 13px 0px 17px">
