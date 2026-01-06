@@ -671,22 +671,15 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     const storedTabIndexes = Object.keys(dragScore).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
-        if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          // otherElement.style.backgroundColor = 'transparent'; // Reset background color**
-        }
-        if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.opacity = '0';
-          otherElement.style.backgroundColor = 'transparent';
+        if (otherElement) {
+          otherElement.style.opacity="0"
         }
       }
     } else {
       if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        // otherElement.style.backgroundColor = 'transparent'; // Reset background color**********
-      }
-      if (otherElement.tagName.toLowerCase() === 'lido-image') {
         otherElement.style.opacity = '1';
-        otherElement.style.backgroundColor = 'transparent';
       }
+
     }
   });
 

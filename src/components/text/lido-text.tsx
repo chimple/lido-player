@@ -230,7 +230,8 @@ export class LidoText {
  private resolveAutoAudio(): string | null {
   const base = (window as any)[LIDO_COMMON_AUDIO_PATH];
   if (!base || !this.string) return null;
-  const fileName = this.string.toLowerCase().trim().replace(/\s+/g, "_").replace(/[^\w-]/g, "");
+  const fileName = this.string;
+  console.log(fileName,"filename😂");
   return `${base}/${fileName}.mp3`;
   }
 

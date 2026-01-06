@@ -81,6 +81,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    console.log("moving start");
+    
     if (isDraggingDisabled) {
       isDragging = false;
       return;
@@ -242,21 +244,14 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
         if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
-          if (otherElement.tagName.toLowerCase() === 'lido-text') {
-            // otherElement.style.border = ''; // Reset border
-            // otherElement.style.backgroundColor = 'transparent'; // Reset background color
+          if (otherElement) {
+            otherElement.style.opacity = "0.3"
           }
-          if (otherElement.tagName.toLowerCase() === 'lido-image') {
-            otherElement.style.opacity = '0';
-          }
+          
         }
       } else {
-        if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          // otherElement.style.border = ''; // Reset border
-          // otherElement.style.backgroundColor = ''; // Reset background color
-        }
-        if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
-          otherElement.style.opacity = '1';
+        if (otherElement) {
+          otherElement.style.opacity = "1"
         }
       }
     });
@@ -265,6 +260,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       if (mostOverlappedElement.tagName.toLowerCase() === 'lido-text') {
         // mostOverlappedElement.style.border = '2px dashed #ff0000'; // Red dashed border
         // mostOverlappedElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Light red background
+        mostOverlappedElement.style.opacity = "0.3"
       } else {
         if(!document.getElementById('unitsDrop') || !document.getElementById('tensDrop') || !document.getElementById('hundredsDrop')) {
         mostOverlappedElement.style.opacity = '0.3';
@@ -301,22 +297,15 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         const storedTabIndexes = Object.keys(dropObject).map(Number);
         if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
           if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
-            if (otherElement.tagName.toLowerCase() === 'lido-text') {
-              // otherElement.style.border = ''; // Reset border
-              // otherElement.style.backgroundColor = 'transparent'; // Reset background color
-            }else if (otherElement.tagName.toLowerCase() === 'lido-image') {
-              otherElement.style.opacity = '0';
+            if (otherElement) {
+              otherElement.style.opacity = "0"
             } else {
               otherElement.style.opacity = '1';
             }
           }
         } else {
-          if (otherElement.tagName.toLowerCase() === 'lido-text') {
-            // otherElement.style.border = ''; // Reset border
-            // otherElement.style.backgroundColor = ''; // Reset background color
-          }
-          if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
-            otherElement.style.opacity = '1';
+          if (otherElement) {
+            otherElement.style.opacity = "1"
           }
         }
       });
@@ -373,6 +362,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   element.addEventListener('touchstart', onStart);
   element.addEventListener('click', ev => {
     if (isClicked) {
+      console.log("clicked drag elkement");
+      
       onClickDropOrDragElement(element, 'drag');
     }
   });
@@ -519,21 +510,14 @@ export function handleResetDragElement(
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          // otherElement.style.backgroundColor = 'transparent'; // Reset background color
-        }
-        if (otherElement.tagName.toLowerCase() === 'lido-image') {
-          otherElement.style.opacity = '0';
-          otherElement.style.backgroundColor = 'transparent';
+          otherElement.style.opacity = "0"
         }
       }
     } else {
-      if (otherElement.tagName.toLowerCase() === 'lido-text') {
-        // otherElement.style.backgroundColor = 'transparent'; // Reset background color
+      if (otherElement) {
+        otherElement.style.opacity = "1"
       }
-      if (otherElement.tagName.toLowerCase() === 'lido-image') {
-        otherElement.style.opacity = '1';
-        otherElement.style.backgroundColor = 'transparent';
-      }
+
     }
   });
  
@@ -552,13 +536,18 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   if (!dropElement) {
     handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
   }
-  const dropTabIndex = dropElement.getAttribute('tab-index');
+
+  let dropTabIndex;
+  if(dropElement){
+    dropTabIndex = dropElement.getAttribute('tab-index');
   
-  const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'false';
-  if (dropHasDrag[dropTabIndex]?.isFull  && !isAllowOnlyOneDrop) {
-    handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
-    return;
+    const isAllowOnlyOneDrop = dropElement.getAttribute('is-allow-only-one-drop') === 'false';
+    if (dropHasDrag[dropTabIndex]?.isFull  && !isAllowOnlyOneDrop) {
+      handleResetDragElement(dragElement, dropElement, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+      return;
+    }
   }
+
 
   const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
   if (isAllowOnlyCorrect) {
@@ -594,7 +583,6 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       animateDragToTarget(dragElement, dropElement, container);
       
       const onInCorrect = dropElement.getAttribute('onInCorrect');
-      console.log("onincorrectttt",onInCorrect);
 
       await executeActions(onInCorrect, dropElement, dragElement);
       
@@ -705,20 +693,12 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
             const storedTabIndexes = Object.keys(dropObject).map(Number);
             if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
               if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
-                if (otherElement.tagName.toLowerCase() === 'lido-text') {
-                  // otherElement.style.border = ''; // Reset border
-                  // otherElement.style.backgroundColor = 'transparent'; // Reset background color
-                }
-                if (otherElement.tagName.toLowerCase() === 'lido-image') {
+                if (otherElement) {
                   otherElement.style.opacity = '0';
                 }
               }
             } else {
-              if (otherElement.tagName.toLowerCase() === 'lido-text') {
-                // otherElement.style.border = ''; // Reset border
-                // otherElement.style.backgroundColor = ''; // Reset background color
-              }
-              if (otherElement.tagName.toLowerCase() === 'lido-image' || 'lido-cell') {
+              if (otherElement) {
                 otherElement.style.opacity = '1';
               }
             }
@@ -859,9 +839,10 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight-element");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight-element");
-
-  if (!selectedDropElement) {
+  
+  if (!selectedDropElement || element.classList.contains("dropped")) {
     onClickDragElement(element);
+    return;
   }
 
   if (selectedDropElement && selectedDragElement) {
