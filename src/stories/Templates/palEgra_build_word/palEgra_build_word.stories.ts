@@ -33,7 +33,7 @@ const letters = [...word];          // ["d", "a", "n", "c", "e"]
 
 const drop_cells = letters.map((q, index) => {
   return `
-    <lido-text visible="true" id="drop${index+1}" tab-index="${12+index}" value="${q}" string="?" disable-speak="true" font-family="'Baloo Bhai 2'" width="172px" height="189px" is-allow-only-one-drop="true" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
+    <lido-text visible="true" id="drop${index+1}" tab-index="${12+index}" value="${q}" string="?" disable-speak="true" font-family="'Baloo Bhai 2'" width="165px" height="182px" is-allow-only-one-drop="true" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
 	</lido-text>
   `;
 }).join('');
@@ -49,7 +49,7 @@ const drag_cells = shuffledOptions.map((q, index) => {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.question_word.join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#button {
+<lido-container  visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${letters}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#button {
         box-shadow: 0px 12.08px 0px rgb(159, 50, 5);
         }">
 	   <!-- Chimple Avatar -->
@@ -67,21 +67,21 @@ const drag_cells = shuffledOptions.map((q, index) => {
           
 
           <!-- options cells -->
-	      	<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.-18px 91px 31px -100px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.auto,portrait.35%" width="landscape.auto,portrait.100%" bg-color="transparent" gap="60px">
+	      	<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.-18px 91px 31px -100px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.auto,portrait.35%" width="landscape.80%,portrait.100%" bg-color="transparent">
 				    <lido-text id="button" layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';this.border='2px solid #FFB612';" height="landscape.147px,portrait.35%" width="landscape.140px,portrait.100%" bg-color="#f34d08" font-size="1px" onTouch="this.speak='true';" string="${word}">
 					    <lido-image visible="true" bg-color="transparent" width="133px" height="140px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/audio.png"></lido-image>
 				    </lido-text>
 				
-				<!-- drop cells -->
-				<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.auto,portrait.100%" bg-color="#FFFFFF99" padding="0px 13px 0px 17px" gap="12px">
-					${drop_cells}
-				</lido-cell>
-			</lido-cell>
+              <!-- drop cells -->
+              <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px'; this.justifyContent='space-around'" height="landscape.239px,portrait.35%" width="landscape.80%,portrait.100%" bg-color="#FFFFFF99" padding="0px 13px 0px 17px">
+                ${drop_cells}
+              </lido-cell>
+            </lido-cell>
 
 
-			<lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.-46px 0px 0px 0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.auto,portrait.100%" bg-color="transparent" gap="23px">
-                ${drag_cells}
-			</lido-cell>        
+            <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.-46px 0px 0px 0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.auto,portrait.100%" bg-color="transparent" gap="23px">
+                      ${drag_cells}
+            </lido-cell>        
              
         </lido-cell>
 </lido-container>
