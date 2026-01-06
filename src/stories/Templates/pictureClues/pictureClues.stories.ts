@@ -54,7 +54,7 @@ function renderSentencePart(text: string, id: string) {
     const value = text.replace('#', '').trim();
 
     return `
-      <lido-text type="drop" drop-attr="stretch" value="${value}" id="${id}" visible="true" height="136px" width="200px" y="19px" onEntry="this.position='relative';this.margin-right='40px';this.border='4px solid #A8B53A';this.border-radius='16px';"></lido-text>
+      <lido-text type="drop" drop-attr="stretch" value="${value}" id="${id}" visible="true" height="136px" width="200px" y="19px" onEntry="this.position='relative';this.margin-right='40px';this.border-radius='16px';"></lido-text>
     `;
   }
 
