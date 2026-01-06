@@ -1,7 +1,7 @@
-import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";const g={title:"Templates/palEgraWordFormation",argTypes:{options:{control:"object"},PracticeMode:{control:"boolean"}}},r={args:{image:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/madari.jpg"],options:["म","दा","री"],PracticeMode:!1},render:t=>{const o=d(t);return n`<lido-home .xmlData="${o}"></lido-home>`}};function d(t){const o=t.options.map((e,a)=>`
+import"./lit-element-BxxbMms4.js";import{x as d}from"./lit-html-DLYuhZ0i.js";const m={title:"Templates/palEgraWordFormation",argTypes:{options:{control:"object"},PracticeMode:{control:"boolean"}}},o={args:{image:["https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/madari.jpg"],options:["म","दा","री"],PracticeMode:!1},render:t=>{const r=c(t);return d`<lido-home .xmlData="${r}"></lido-home>`}};function c(t){const r=173*t.options.length+25*t.options.length,s=t.options.map((e,a)=>`
     <lido-text visible="true" id="drop${a+1}" tab-index="${12+a}" disable-speak="true" value="${e}" string="?" font-family="'Baloo Bhai 2'" width="173px" height="189px" is-allow-only-one-drop="true" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#FFFFFF"  type="drop" onEntry="this.fontWeight='700'; this.border-radius='16px';">
     </lido-text>
-  `).join(""),s=[...t.options].sort(()=>Math.random()-.5).map((e,a)=>`
+  `).join(""),n=[...t.options].sort(()=>Math.random()-.5).map((e,a)=>`
       <lido-text visible="true" id="drag${a+1}" tab-index="${16+a}" value="${e}" string="${e}" disable-speak="true" font-family="'Baloo Bhai 2'" width="173px" height="189px" font-color="#030028" font-size="landscape.140px, portrait.100px"  bg-color="#A05730"  type="drag" onEntry="this.fontWeight='700'; this.border-radius='16px'; this.justifyContent='center'; this.alignItems='baseline';">
       </lido-text>
   `).join("");return`
@@ -24,13 +24,13 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
           
             <lido-cell layout="landscape.col, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='26px';" height="landscape.84%,portrait.35%" width="landscape.51%,portrait.100%" bg-color="transparent" gap="240px">
                 <!-- drop cells -->
-                <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.auto,portrait.100%" bg-color="#FFFFFF99" padding="0px 13px 0px 17px" gap="23px">
-                    ${o}
+                <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.${r}px,portrait.100%" bg-color="#FFFFFF99" padding="0px 13px 0px 17px" gap="23px">
+                    ${s}
                 </lido-cell>
 
                 <!-- drag cells -->
                 <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px,portrait.0" onEntry="this.border-radius='16px';" height="landscape.239px,portrait.35%" width="landscape.auto,portrait.100%" bg-color="transparent" padding="0px 13px 0px 17px" gap="23px">
-                    ${s}
+                    ${n}
                 </lido-cell>          
             </lido-cell>
         </lido-cell>
@@ -38,7 +38,7 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
 
 </lido-container>
 </main>
-`}var i,p,l;r.parameters={...r.parameters,docs:{...(i=r.parameters)==null?void 0:i.docs,source:{originalSource:`{
+`}var i,p,l;o.parameters={...o.parameters,docs:{...(i=o.parameters)==null?void 0:i.docs,source:{originalSource:`{
   args: {
     image: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/madari.jpg'],
     options: ['म', 'दा', 'री'],
@@ -48,4 +48,4 @@ import"./lit-element-BxxbMms4.js";import{x as n}from"./lit-html-DLYuhZ0i.js";con
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(l=(p=r.parameters)==null?void 0:p.docs)==null?void 0:l.source}}};const m=["palEgraWordFormation"];export{m as __namedExportsOrder,g as default,r as palEgraWordFormation};
+}`,...(l=(p=o.parameters)==null?void 0:p.docs)==null?void 0:l.source}}};const u=["palEgraWordFormation"];export{u as __namedExportsOrder,m as default,o as palEgraWordFormation};
