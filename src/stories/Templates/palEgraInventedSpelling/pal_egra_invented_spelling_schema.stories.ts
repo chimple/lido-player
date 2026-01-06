@@ -40,7 +40,10 @@ export const Default: StoryObj = {
 function getContainerXml(args) {
 
   return `<main>
-    <lido-container objective="${(args.correctAns).toLowerCase()}" is-continue-on-correct="${args.PracticeMode}" template-id="mcq" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Picture%20meaning.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="inventedAudio.speak='true';">
+        <lido-container objective="${(args.correctAns).toLowerCase()}" is-continue-on-correct="${args.PracticeMode}" template-id="mcq" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Picture%20meaning.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="inventedAudio.speak='true';" custom-style = "#audioCell:active {
+  box-shadow: 0px 0px 0px !important;
+  transform: translateY(7px);
+}" >
 	<lido-cell visible="true" layout="col" width="80%" height="90%" bg-color="transparent">
     <!-- Chimple Avatar -->
     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.300px,portrait.402px" width="landscape.250px,portrait.398px" x="landscape.56%, portrait.28%" y="landscape.200px, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true">
@@ -52,7 +55,7 @@ function getContainerXml(args) {
 
 		<lido-text visible="true" string="Choose the rhyming word" tab-index="1" font-size="80px" font-color="#07004E" border-radius="16px" bg-color="#FFF5BB" onEntry="this.fontWeight='700'; this.border='#FFB612 2px solid'; this.padding='25px 50px';"></lido-text>
 		<lido-text visible="false" id="inventedAudio" string="${args.correctAns}" tab-index="2" font-size="80px" font-color="#07004E" border-radius="16px" bg-color="#FFF5BB" onEntry="this.fontWeight='700'; this.border='#FFB612 2px solid'; this.padding='25px 50px';"></lido-text>
-		<lido-cell visible="true" layout="row" width="160px" height="160px" onTouch="inventedAudio.speak='true';" bg-color="white" border-radius="70px" onEntry="this.border='#ffac4c 2px solid';">
+		<lido-cell visible="true" id="audioCell" layout="row" width="160px" height="160px" onTouch="inventedAudio.speak='true';" bg-color="white" border-radius="70px" onEntry="this.border='#ffac4c 2px solid'; this.boxShadow='0px 8px 0px #f34d08;'">
 			<lido-image visible="true" bg-color="transparent" width="100px" height="100px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Icons/palAudioIcon.png"></lido-image>
 		</lido-cell>
 		<lido-cell layout="col" visible="true" width="100%" height="50%" bg-color="transparent" padding="0">
