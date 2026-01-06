@@ -3,7 +3,7 @@ import"./lit-element-BxxbMms4.js";import{x as p}from"./lit-html-DLYuhZ0i.js";con
     `:`
     <lido-text visible="true" height="100px" width="auto" id="${e}" string="${t}" font-family="'Baloo Bhai 2'" font-color="black" font-size="80px" bg-color="transparent" onEntry="  this.font-weight='700';  this.border-radius='16px';  this.margin-right='40px'; " ></lido-text>
   `}function c(t){const{isAllowOnlyCorrect:e=!0}=t,{sentenceParts:i=[]}=t;return`<main>
-    <lido-container  visible="true" template-id="dragAndDrop" id="lido-container" objective="${t.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/bgImg.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${t.PracticeMode}" is-allow-only-correct="${t.PracticeMode}" onEntry="inst.speak='true';">
+    <lido-container  visible="true" template-id="dragAndDrop" id="lido-container" objective="${t.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/bgImg.png" onInCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${t.PracticeMode}" is-allow-only-correct="${t.PracticeMode}" onEntry="">
 
     <!-- Chimple Avatar -->
     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.85%, portrait.28%" y="landscape.21%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true">

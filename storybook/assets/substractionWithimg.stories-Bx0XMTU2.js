@@ -1,12 +1,12 @@
-import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const m={title:"Templates/substractionWithimg",argTypes:{option1:{control:"text"},option2:{control:"text"},option3:{control:"text"},option4:{control:"text"},text1:{control:"text"},text2:{control:"text"},answer:{control:"text"},PracticeMode:{control:"boolean"}}},l={args:{option1:"2",option2:"3",option3:"8",option4:"4",PracticeMode:!1,text1:"5",text2:"2",answer:"3"},render:t=>{const i=b(t);return x`<lido-home .xmlData="${i}"></lido-home>`}};function a(t,i){let o="";for(let e=0;e<Number(t);e++)o+=`
+import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const m={title:"Templates/substractionWithimg",argTypes:{option1:{control:"text"},option2:{control:"text"},option3:{control:"text"},option4:{control:"text"},text1:{control:"text"},text2:{control:"text"},answer:{control:"text"},PracticeMode:{control:"boolean"}}},l={args:{option1:"2",option2:"3",option3:"8",option4:"4",PracticeMode:!1,text1:"5",text2:"2",answer:"3"},render:t=>{const o=b(t);return x`<lido-home .xmlData="${o}"></lido-home>`}};function n(t,o){let i="";for(let e=0;e<Number(t);e++)i+=`
       <lido-image
         visible="true"
         height="100px"
         width="100px"
-        src="${i}">
+        src="${o}">
       </lido-image>
-    `;return o}const n="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/image5.png",h="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Tenbox/aplle%20outlinee.png";function b(t){const{isAllowOnlyCorrect:i=!0}=t,o=a(t.answer,n),e=a(t.text2,n),c=a(t.answer,n),p=a(t.text2,h);return`<main>
-   <lido-container  visible="true" id="lido-container" template-id="mcq" objective="${t.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${t.PracticeMode}" is-allow-only-correct="${t.PracticeMode}" onEntry="solid.z-index='2';this.sleep='1000';text2.animation='placeToRight 2s linear';this.sleep='1000';actual.z-index='10';">
+    `;return i}const a="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/image5.png",h="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Tenbox/aplle%20outlinee.png";function b(t){const{isAllowOnlyCorrect:o=!0}=t,i=n(t.answer,a),e=n(t.text2,a),c=n(t.answer,a),p=n(t.text2,h);return`<main>
+   <lido-container  visible="true" id="lido-container" template-id="mcq" objective="${t.answer}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal-Subtraction/Frame.png" onInCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${t.PracticeMode}" is-allow-only-correct="${t.PracticeMode}" onEntry="solid.z-index='2';this.sleep='1000';text2.animation='placeToRight 2s linear';this.sleep='1000';actual.z-index='10';">
 
         <!-- Chimple Avatar -->
         <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.83%, portrait.28%" y="landscape.40%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >
@@ -16,7 +16,7 @@ import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const m=
         <lido-text visible="false" id="inst" tab-index="1" string="choose the correct option"></lido-text>
 <lido-cell visible="true" id="solid" layout="row" width="auto" bg-color="#FFF5BB" y="14%" onEntry="this.padding='10px 18px 10px 18px';this.position='relative';this.justifyContent='space-around';this.border='2px solid #FFA500'; this.borderRadius='16px';this.gap='0px';">
             <lido-cell layout="row" id="text1" visible="true">
-                 ${o}
+                 ${i}
             </lido-cell>	
             <lido-cell layout="row" visible="true" id="text2" bg-color="transparent">
                  ${e}
