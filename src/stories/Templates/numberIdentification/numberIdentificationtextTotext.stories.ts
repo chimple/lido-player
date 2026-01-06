@@ -38,13 +38,13 @@ export const numberIdentificationtextTotext: StoryObj = {
 function getContainerXml(args) {
     let tabCounter = 1;
   return `<main>
- <lido-container  visible="true" id="lido-container" template-id="mcq" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal_number_identification/bgImage.png" objective="${args.answer}"  is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" onEntry="inst.speak='true';question.speak='true';text1.speak='true';text2.speak='true';text3.speak='true';text4.speak='true';">
+ <lido-container  visible="true" id="lido-container" template-id="mcq" onInCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/pal_number_identification/bgImage.png" objective="${args.answer}"  is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" onEntry="question.speak='true';text1.speak='true';text2.speak='true';text3.speak='true';text4.speak='true';">
 	 <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.344px,portrait.402px" width="landscape.296px,portrait.398px" x="landscape.83%, portrait.28%" y="landscape.64%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 		</lido-avatar>
 	</lido-cell>
-	<lido-text visible="false" id="inst" tab-index="1" string="choose the correct option" onEntry=""></lido-text>
+	
 <!-- question text -->
 		<lido-cell layout="row" visible="true"  margin="landscape.26px 0px 155px 0px, portrait.-170px 0px 0px 0px" height="290px" width="landscape.1476px,portrait.100%" bg-color="#FFF5BB" onEntry="this.justifyContent='center';this.border='2px solid #FFA500'; this.borderRadius='16px';">
 			<lido-text id="question" tab-index="2" visible="true" value="10" string="${args.question}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.80px, portrait.84px"  bg-color="transparent" 
