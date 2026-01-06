@@ -32,7 +32,7 @@ function getContainerXml(args) {
  const option_cells = args.options.map((q, index) => {
   return `
       <lido-cell layout="row" id="text${1+index}" tab-index="${12+index}" template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${q.startsWith('@') ? q.slice(1) : q}">
-        <lido-text visible="true" value="${q.startsWith('@') ? q.slice(1) : q}" string="${q.startsWith('@') ? q.slice(1) : q}" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.130px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
+        <lido-text visible="true" value="${q.startsWith('@') ? q.slice(1) : q}" string="${q.startsWith('@') ? q.slice(1) : q}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.79px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
         </lido-text>
       </lido-cell>
   `;
@@ -45,16 +45,16 @@ function getContainerXml(args) {
         box-shadow: none !important;
         }" onEntry="questionText.speak='true';">
 	 <!-- Chimple Avatar -->
-      <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.362px,portrait.378px" width="landscape.315px,portrait.382px"
-       x="landscape.39%, portrait.30%" y="landscape.27%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
+      <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.330px,portrait.378px" width="landscape.292px,portrait.382px"
+       x="landscape.40%, portrait.30%" y="landscape.26%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
         <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
         </lido-avatar>
       </lido-cell>
 
         <lido-cell layout="landscape.col, portrait.row" aria-hidden="true" visible="true" height="landscape.100%,portrait.150px" width="landscape.100%, portrait.80%" bg-Color="transparent" margin="landscape.46px 0px 0px 0px,portrait.20px 0px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center'; this.alignItems='center'; this.gap='278px';">
             <!-- question cells -->
-          <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 0px 0px 0px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px'; this.border='2px solid #FFB612'; this.justify-content='center'; this.align-items='center';" height="landscape.184px,portrait.42%" width="landscape.1050px,portrait.100%" bg-color="#FFF5BB">				
-            <lido-text visible="true" id="questionText" tab-index="11" value="" string="${args.question_text}" font-family="'Baloo Bhai 2'" font-color="#07004E" font-size="landscape.90px, portrait.100px" bg-color="" onEntry="this.fontWeight='700';">
+          <lido-cell layout="landscape.row, portrait.col" visible="true" margin="landscape.0px 0px 0px 0px,portrait.-168px 0px 0px 0px" onEntry="this.border-radius='26px'; this.border='2px solid #FFB612'; this.justify-content='center'; this.align-items='center';" height="landscape.auto,portrait.42%" width="landscape.auto,portrait.100%" bg-color="#FFF5BB" padding="8px 35px">				
+            <lido-text visible="true" id="questionText" tab-index="11" value="" string="${args.question_text}" font-family="'Baloo Bhai 2'" font-color="#07004E" font-size="${args.question_text.length <= 17 ? '90px' : '70px'}" bg-color="" onEntry="this.fontWeight='700';">
             </lido-text>  
           </lido-cell>
 
