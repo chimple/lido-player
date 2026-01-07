@@ -34,7 +34,7 @@ export const Default: StoryObj = {
 function getContainerXml(args) {
 
   return `<main>
-    <lido-container is-continue-on-correct="true" template-id="dragAndDrop" is-allow-only-correct="true" objective="${args.value1},${args.value2},${args.value3},${args.value4}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palStory/bgImage.png">
+    <lido-container disable-speak="true" is-continue-on-correct="true" template-id="dragAndDrop" is-allow-only-correct="true" objective="${args.value1},${args.value2},${args.value3},${args.value4}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palStory/bgImage.png">
 
 	<!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.300px,portrait.402px" width="landscape.250px,portrait.398px" x="landscape.68%, portrait.28%" y="landscape.600px, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">

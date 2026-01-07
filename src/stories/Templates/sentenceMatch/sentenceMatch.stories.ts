@@ -40,7 +40,7 @@ function getContainerXml(args) {
     let tabCounter = 1;
       const {  isAllowOnlyCorrect = true } = args;
   return `<main>
-  <lido-container id="lido-container" value="maincontainer" visible="true" objective="${args.answer}"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Quiz%20literacy.png"  onEntry="text1.speak='true';"  is-allow-only-correct="${args.PracticeMode}" is-Continue-On-Correct="${args.PracticeMode}" onInCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
+  <lido-container disable-speak="true" id="lido-container" value="maincontainer" visible="true" objective="${args.answer}"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Quiz%20literacy.png"  onEntry="text1.speak='true';"  is-allow-only-correct="${args.PracticeMode}" is-Continue-On-Correct="${args.PracticeMode}" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.375px,portrait.401px" width="landscape.338px,portrait.401px" x="landscape.1323px, portrait.24%" y="landscape.57%, portrait.83%" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="">
 		<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp1/chimplecharacter.riv" alt-text="{chimpleCharacterRive}" bg-color="transparent">
 		</lido-avatar>
