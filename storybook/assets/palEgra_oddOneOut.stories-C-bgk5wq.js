@@ -1,6 +1,6 @@
 import"./lit-element-BxxbMms4.js";import{x as s}from"./lit-html-DLYuhZ0i.js";const x={title:"Templates/palEgra_OddOneOut",argTypes:{options:{control:"object"},PracticeMode:{control:"boolean"}}},a={args:{question_text:"विषम का चयन कीजिये",options:["तन","@नर","मन","जन"],PracticeMode:!1},render:e=>{const i=p(e);return s`<lido-home .xmlData="${i}"></lido-home>`}};function p(e){const i=e.options.map((t,o)=>`
-      <lido-cell layout="row" id="text${1+o}" tab-index="${12+o}" template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${t.startsWith("@")?t.slice(1):t}">
-        <lido-text visible="true" value="${t.startsWith("@")?t.slice(1):t}" string="${t.startsWith("@")?t.slice(1):t}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.79px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
+      <lido-cell layout="row" id="text${1+o}"  template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${t.startsWith("@")?t.slice(1):t}">
+        <lido-text visible="true" value="${t.startsWith("@")?t.slice(1):t}" tab-index="${13+o}" string="${t.startsWith("@")?t.slice(1):t}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.79px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
         </lido-text>
       </lido-cell>
   `).join("");return`

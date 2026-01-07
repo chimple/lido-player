@@ -1,9 +1,9 @@
-import"./lit-element-BxxbMms4.js";import{x as m}from"./lit-html-DLYuhZ0i.js";const w={title:"Templates/palEgmaWordProblem",argTypes:{options:{control:"object"},answers:{control:"object"},PracticeMode:{control:"boolean"}}},i={args:{question2:"George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?",answer:"13",options:["0","1","2","3","4","5","6","7","8","9"],PracticeMode:!1},render:t=>{const e=x(t);return m`<lido-home .xmlData="${e}"></lido-home>`}};function x(t){const e=t.options.map((o,r)=>`
-      <lido-text id="drag${r}" disable-speak="true" tab-index="${11+r}" height="landscape.190px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${o}" string="${o}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
+import"./lit-element-BxxbMms4.js";import{x}from"./lit-html-DLYuhZ0i.js";const w={title:"Templates/palEgmaWordProblem",argTypes:{options:{control:"object"},answers:{control:"object"},PracticeMode:{control:"boolean"}}},i={args:{question2:"George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?",answer:"13",options:["0","1","2","3","4","5","6","7","8","9"],PracticeMode:!1},render:t=>{const e=m(t);return x`<lido-home .xmlData="${e}"></lido-home>`}};function m(t){const e=t.options.map((r,a)=>`
+      <lido-text id="drag${a}" disable-speak="true" tab-index="${11+a}" height="landscape.190px, portrait.125px" width="landscape.125px, portrait.90px" visible="true" value="${r}" string="${r}" font-family="'Baloo Bhai 2'" font-color="black" type="drag" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
       </lido-text>
     `).join(`
-`),a=t.answer.split("").map((o,r)=>`
-       <lido-text id="drop${r}" disable-edit="true" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${o}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px dashed #f34d08'" border-image="">
+`),o=t.answer.split("").map((r,a)=>`
+       <lido-text id="drop${a}" disable-edit="true" tab-index="${10+a}" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${r}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px dashed #f34d08'" border-image="">
       </lido-text>
       `).join(`
 `);return`
@@ -29,7 +29,7 @@ import"./lit-element-BxxbMms4.js";import{x as m}from"./lit-html-DLYuhZ0i.js";con
             <lido-cell layout="landscape.col, portrait.row" aria-hidden="true" visible="true" height="landscape.50%,portrait.150px" width="landscape.100%, portrait.80%" bg-Color="transparent" margin="landscape.0px,portrait.20px 0px 0px 0px" onEntry="this.z-index='1'; this.justify-content='flex-start'; this.alignItems='center'; this.gap='44px';">
 
                 <lido-cell layout="landscape.row, portrait.row" aria-hidden="true" visible="true" height="landscape.200px,portrait.150px" width="landscape.60%, portrait.80%" bg-Color="transparent" margin="landscape.0px,portrait.20px 0px 0px 0px" onEntry="this.z-index='1'; this.justify-content='center'; this.alignItems='center'; this.gap='20px';">
-                    ${a}
+                    ${o}
                 </lido-cell>
 
             <!-- answers drag cell -->
@@ -42,8 +42,8 @@ import"./lit-element-BxxbMms4.js";import{x as m}from"./lit-html-DLYuhZ0i.js";con
   </lido-container>
 
 </main>
-`}const n={args:{question2:"George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?",answer:"13",options:["10","15","12","13"],PracticeMode:!1},render:t=>{const e=b(t);return m`<lido-home .xmlData="${e}"></lido-home>`}};function b(t){const e=t.options.map((s,a)=>`
-      <lido-text id="drag${a}" tab-index="${a+1}" disable-speak="true" height="landscape.270px, portrait.125px" width="landscape.270px, portrait.90px" visible="true" value="${s}" string="${s}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
+`}const n={args:{question2:"George went to a store and bought some t-shirts. He went to another store and bought 2 more t-shirts. He bought a total of 15 t-shirts. How many t-shirts did he buy at the first store?",answer:"13",options:["10","15","12","13"],PracticeMode:!1},render:t=>{const e=b(t);return x`<lido-home .xmlData="${e}"></lido-home>`}};function b(t){const e=t.options.map((s,o)=>`
+      <lido-text id="drag${o}" tab-index="${o+1}" disable-speak="true" height="landscape.270px, portrait.125px" width="landscape.270px, portrait.90px" visible="true" value="${s}" string="${s}" font-family="'Baloo Bhai 2'" font-color="black" type="click" font-size="104px"  bg-color="orange"  onEntry="this.fontWeight='800'; this.borderRadius='10px'; this.flex-shrink='0';" border-image="">
       </lido-text>
     `).join(`
 `);return`
