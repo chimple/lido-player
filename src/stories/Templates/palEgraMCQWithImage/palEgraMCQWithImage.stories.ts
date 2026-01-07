@@ -50,7 +50,7 @@ export const PalEgraMCQWithImage: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-		<lido-container id="lido-container" tab-index="1" value="maincontainer" objective="${args.correctAns}" aria-label="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemplate3.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="invisibleText.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="${args.isAllowOnlyCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}">
+		<lido-container disable-speak="true" id="lido-container" tab-index="1" value="maincontainer" objective="${args.correctAns}" aria-label="This is a multiple-option question. Select one option from the list." height="100vh" width="100vw" x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemplate3.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="invisibleText.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="${args.isAllowOnlyCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}">
 
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="350px" width="350px" x="landscape.1228px, portrait.273px" y="landscape.125px, portrait.1200px" aria-hidden="true" z="2" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" onEntry="this.animation='leftToPlace 1.5s linear';">
@@ -71,7 +71,7 @@ function getContainerXml(args) {
 			<!-- Options -->
 			<lido-cell layout="flex" visible="true" width="100%" height="90%" bg-color="transparent" onEntry="this.justifyContent='center'; this.alignContent='center'; this.animation='bottomToPlace 1s linear';" margin="landscape.-60px 0px -210px 0px, portrait.0px 0px 0px 0px">
 				<lido-cell visible="true" layout="landscape.row, portrait.wrap" width="landscape.85%, portrait.73%" height="landscape.100%, portrait.auto" bg-color="transparent" gap="landscape.0px, portrait.55px" onEntry="">
-					<lido-cell tab-index="4" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option1}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio1}' onTouch="this.speak='true';">
+					<lido-cell tab-index="4" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"   value="${args.option1}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio1}' onTouch="this.speak='true';">
 						<lido-image visible="true" src="${args.optionImg1}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
 					<lido-cell tab-index="5" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option2}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio2}' onTouch="this.speak='true';">
@@ -85,8 +85,7 @@ function getContainerXml(args) {
 					</lido-cell>
 				</lido-cell>
 			</lido-cell>
-			
-			<lido-cell layout="flex" height="30%" width="100%" x="landscape.-50px, portrait.100px" y="507px" z="2" bg-color="transparent" type="" visible="landscape.false, portrait.true" audio="" onTouch="" onCorrect="" onEntry="this.justifyContent='center'; this.alignContent='center'; this.animation='leftToPlace 1.5s linear'; ">
+						<lido-cell layout="flex" height="30%" width="100%" x="landscape.-50px, portrait.100px" y="507px" z="2" bg-color="transparent" type="" visible="landscape.false, portrait.true" audio="" onTouch="" onCorrect="" onEntry="this.justifyContent='center'; this.alignContent='center'; this.animation='leftToPlace 1.5s linear'; ">
 				
 			</lido-cell>
 
