@@ -45,7 +45,7 @@ function getContainerXml(args) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-       <lido-text id="drop${i}" disable-edit="true" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px dashed #f34d08'" border-image="">
+       <lido-text id="drop${i}" disable-edit="true" tab-index="${10+i}" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px dashed #f34d08'" border-image="">
       </lido-text>
       `,
     )

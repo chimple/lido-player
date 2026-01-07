@@ -31,8 +31,8 @@ export const palEgra_OddOneOut: StoryObj = {
 function getContainerXml(args) {
  const option_cells = args.options.map((q, index) => {
   return `
-      <lido-cell layout="row" id="text${1+index}" tab-index="${12+index}" template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${q.startsWith('@') ? q.slice(1) : q}">
-        <lido-text visible="true" value="${q.startsWith('@') ? q.slice(1) : q}" string="${q.startsWith('@') ? q.slice(1) : q}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.79px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
+      <lido-cell layout="row" id="text${1+index}"  template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${q.startsWith('@') ? q.slice(1) : q}">
+        <lido-text visible="true" value="${q.startsWith('@') ? q.slice(1) : q}" tab-index="${13+index}" string="${q.startsWith('@') ? q.slice(1) : q}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.79px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
         </lido-text>
       </lido-cell>
   `;
