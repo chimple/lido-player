@@ -30,7 +30,7 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   };
 
   const onPointerDown = (event: PointerEvent) => {
-    // event.stopPropagation();
+    event.stopPropagation();
     onholdTriggered = false;
     onholdTimer = setTimeout(() => {
       playAudio();
@@ -38,27 +38,17 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   };
 
   const onPointerUp = async (event: PointerEvent) => {
-    clearTimeout(onholdTimer!);
-
-    // If long-press happened → do nothing else
-    if (onholdTriggered) {
-      setDraggingDisabled(false);
-      return;
-    }
-
-    // If an onTouch action is defined, execute it on tap.
-    if (onTouch) {
+     clearTimeout(onholdTimer!);
+    if (!onholdTriggered && onTouch) {
       await executeActions(onTouch, element);
+    } else if (!onTouch) {
+      if (['category', 'option'].includes(element.getAttribute('type') || '')) {
+        element.dispatchEvent(
+          new MouseEvent('click', { bubbles: true, cancelable: true })
+        );
+      }
     }
-
-    const type = element.getAttribute('type') || '';
-    if (['category', 'option', 'click'].includes(type)) {
-      element.dispatchEvent(
-        new MouseEvent('click', { bubbles: true, cancelable: true })
-      );
-    }
-
-    setDraggingDisabled(false);
+    setDraggingDisabled(false)
   };
 
   const onPointerLeave = () => {
@@ -79,6 +69,8 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    
     const lido_buttons = element.getAttribute('id');
     if (lido_buttons === 'lido-arrow-left' || lido_buttons === 'lido-arrow-right') {
       return;
@@ -90,7 +82,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     }
     
     
-    const container = document.getElementById(LidoContainer) as HTMLElement;
+    
     const objective = container['objective'].split(',');
 
     const checkButton = document.querySelector('#lido-checkButton') as HTMLElement;
@@ -113,11 +105,11 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       dispatchClickEvent(element, isCorrect);
       if (isCorrect || container.getAttribute('is-continue-on-correct') === 'false') {
         const onCorrect = element.getAttribute('onCorrect');
-        if(!(element.id && element.id.startsWith('key-button')))
-          {       
-            element.style.pointerEvents = 'none';
-        }
-        document.body.style.pointerEvents = 'none';
+        // if(!(element.id && element.id.startsWith('key-button')))
+        //   {       
+        //     // element.style.pointerEvents = 'none';
+        // }
+        // document.body.style.pointerEvents = 'none';
         await executeActions(onCorrect, element);
       } else {
         const onInCorrect = element.getAttribute('onInCorrect');
@@ -125,12 +117,14 @@ export function addClickListenerForClickType(element: HTMLElement): void {
         // showWrongAnswerAnimation([element]);
       }
       // const calciEl=document.querySelector('#lidoCalculator') as any; 
-      const isInsideCalculator = element.closest('#lidoCalculator') !== null;
-      if(!isInsideCalculator){ 
-      storingEachActivityScore(isCorrect);
-      }
+      // const isInsideCalculator = element.closest('#lidoCalculator') !== null;
+      // if(!isInsideCalculator){ 
+      // storingEachActivityScore(isCorrect);
+      // }
       highlightElement();
-      handleShowCheck();
+      if(!container.getAttribute("click-completed")){
+        handleShowCheck()
+      }
       return;
     } 
     

@@ -388,7 +388,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
       }
     }
   }
-  body.style.pointerEvents = 'auto';
+  // body.style.pointerEvents = 'auto';
 };
 
 const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElement) => {
@@ -715,6 +715,7 @@ const storeActivityScore = (score: number) => {
 
 export const handleShowCheck = () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
+  container.setAttribute("click-completed", "true");
   const objectiveString = container['objective'];
   const selectValues = container.getAttribute(SelectedValuesKey) ?? '';
 
@@ -826,6 +827,7 @@ export const validateObjectiveStatus = async () => {
     if (!isContinueOnCorrect) 
     {
       await calculateScore();
+      storingEachActivityScore(false);
       await executeActions(onCorrect, container);
       triggerNextContainer()
     } 
@@ -834,6 +836,7 @@ export const validateObjectiveStatus = async () => {
       const onInCorrect = container.getAttribute('onInCorrect');
       storingEachActivityScore(false);
       await executeActions(onInCorrect, container);
+      container.removeAttribute("click-completed")
     }    
   }
 };
