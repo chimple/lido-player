@@ -42,7 +42,7 @@ export const Default: StoryObj = {
 function getContainerXml(args) {
 
   return `<main>
-    <lido-container disable-speak="true" objective="${(args.correctAns)}" template-id="mcq" is-continue-on-correct="${args.PracticeMode}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="questionText.speak='true';" custom-style = "#audioCell:active {
+    <lido-container disable-speak="true" id="lido-container" objective="${(args.correctAns)}" template-id="mcq" is-continue-on-correct="${args.PracticeMode}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Write%20Set.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail';" onEntry="questionText.speak='true';" custom-style = "#audioCell:active {
   box-shadow: 0px 0px 0px !important;
   transform: translateY(10px);
 } ">
