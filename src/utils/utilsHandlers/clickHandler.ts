@@ -10,9 +10,9 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
    const container = document.getElementById('lido-container') as HTMLElement;
     // const container = element.closest('lido-container') as HTMLElement;
-  if (container && container.getAttribute('disable-speak') === 'true') {
-    return;
-  }
+  // if (container && container.getAttribute('disable-speak') === 'true') {
+  //   return;
+  // }
 
   // if (element.closest('[disableSpeak="true"]')) {
   //   return;
@@ -23,6 +23,9 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   const onholdTime = 1000;
 
   const playAudio = async () => {
+    if (container && container.getAttribute('disable-speak') === 'true') {
+      return;
+    }
     onholdTriggered = true;
     setDraggingDisabled(true);
     await AudioPlayer.getI().play(element);
