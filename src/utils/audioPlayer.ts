@@ -80,7 +80,7 @@ export class AudioPlayer {
       try {
         setDraggingDisabled(true);
         highlightSpeakingElement(targetElement);
-        window.addEventListener('click', this.handleUserClick, true);
+        // window.addEventListener('click', this.handleUserClick, true);
         await this.audioElement.play();
 
         await new Promise<void>(resolve => {
