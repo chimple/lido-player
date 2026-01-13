@@ -6,11 +6,42 @@
   "Drop the elements to match the given symbol order":"दिए गए चिन्ह से मिलाने के लिए तत्वों को ड्रॉप करें",
   "Fill  in  the  blanks":"रिक्त स्थान भरें",
   "instruction": {
-  "dragAndDrop": "वस्तुओं को सही स्थानों पर खींचकर और छोड़कर मिलाएँ।",
-  "mcq": "दिए गए विकल्पों में से सही उत्तर चुनें।",
-  "tracing": "रेखा का सावधानीपूर्वक अनुसरण करते हुए आकृति बनाएँ।",
-  "flashcards": "सीख को मजबूत करने के लिए फ्लैशकार्ड देखें।"
-}
+    "dragAndDrop": "Match_the_items_by_dragging_and_dropping_them_into_the_correct_places.",
+    "mcq": "Select the correct answer from the options provided.",
+    "tracing": "Trace the shape by following the outline carefully.",
+    "flashcards": "Review the flashcards to reinforce your learning.",
+    "substractionWithImage":"substractionWithImageHiAudio",
+    "substractionWithoutImage":"substractionWithoutImageHiAudio",
+    "numberIdentificationWithImage":"numberIdentificationWithImageHiAudio",
+    "numberIdentificationWithoutImage":"numberIdentificationWithoutImageHiAudio",
+    "wordBuildingWithImage":"wordBuildingWithImageHiAudio",
+    "wordBuildingWithoutImage":"wordBuildingWithoutImageHiAudio",
+    "pictureClues":"pictureCluesHiAudio",
+    "pictureWordMatchMultipleImages":"pictureWordMatchMultipleImagesHiAudio",
+    "pictureWordMatchSingleImage":"pictureWordMatchSingleImageHiAudio",
+    "sentenceMatch":"sentenceMatchHiAudio",
+    "imageMatch":"imageMatchHiAudio",
+    "palStoryTale":"palStoryTaleHiAudio",
+    "palEgmaPatternMatching":"palEgmaPatternMatchingHiAudio",
+    "palEgmaWordProblemDragnDrop":"palEgmaWordProblemDragnDropHiAudio",
+    "palEgmaWordProblemClick":"palEgmaWordProblemClickHiAudio",
+    "palEgraOddOneOut":"palEgraOddOneOutHiAudio",
+    "palEgraArrangePictures":"palEgraArrangePicturesHiAudio",
+    "palEgraBuildWord":"palEgraBuildWordHiAudio",
+    "palEgraWordFormation":"palEgraWordFormationHiAudio",
+    "palInventedSpelling":"palInventedSpellingHiAudio",
+    "palLetterIdentification":"palLetterIdentificationHiAudio",
+    "palStoryMaking":"palStoryMakingHiAudio",
+    "palegmasumtogether":"palegmasumtogetherHiAudio",
+    "palegmamultioption":"palegmamultioptionHiAudio",
+    "palegraoptionaudio":"palegraoptionaudioHiAudio",
+    "palegrawordmatch":"palegrawordmatchHiAudio",
+    "palegramcqimages":"palegramcqimagesHiAudio"
+
+
+
+
+  }
+  }
  
   
-}

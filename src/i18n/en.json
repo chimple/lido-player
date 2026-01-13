@@ -8,6 +8,37 @@
     "dragAndDrop": "Match the items by dragging and dropping them into the correct places.",
     "mcq": "Select the correct answer from the options provided.",
     "tracing": "Trace the shape by following the outline carefully.",
-    "flashcards": "Review the flashcards to reinforce your learning."
+    "flashcards": "Review the flashcards to reinforce your learning.",
+    "substractionWithImage":"substractionWithImageEngAudio",
+    "substractionWithoutImage":"substractionWithoutImageEngAudio",
+    "numberIdentificationWithImage":"numberIdentificationWithImageEngAudio",
+    "numberIdentificationWithoutImage":"numberIdentificationWithoutImageEngAudio",
+    "wordBuildingWithImage":"wordBuildingWithImageEngAudio",
+    "wordBuildingWithoutImage":"wordBuildingWithoutImageEngAudio",
+    "pictureClues":"pictureCluesEngAudio",
+    "pictureWordMatchMultipleImages":"pictureWordMatchMultipleImagesEngAudio",
+    "pictureWordMatchSingleImage":"pictureWordMatchSingleImageEngAudio",
+    "sentenceMatch":"sentenceMatchEngAudio",
+    "imageMatch":"imageMatchEngAudio",
+    "palStoryTale":"palStoryTaleEngAudio",
+    "palEgmaPatternMatching":"palEgmaPatternMatchingEngAudio",
+    "palEgmaWordProblemDragnDrop":"palEgmaWordProblemDragnDropEngAudio",
+    "palEgmaWordProblemClick":"palEgmaWordProblemClickEngAudio",
+    "palEgraOddOneOut":"palEgraOddOneOutEngAudio",
+    "palEgraArrangePictures":"palEgraArrangePicturesEngAudio",
+    "palEgraBuildWord":"palEgraBuildWordEngAudio",
+    "palEgraWordFormation":"palEgraWordFormationEngAudio",
+    "palInventedSpelling":"palInventedSpellingEngAudio",
+    "palLetterIdentification":"palLetterIdentificationEngAudio",
+    "palStoryMaking":"palStoryMakingEngAudio",
+    "palegmasumtogether":"palegmasumtogetherEngAudio",
+    "palegmamultioption":"palegmamultioptionEngAudio",
+    "palegraoptionaudio":"palegraoptionaudioEngAudio",
+    "palegrawordmatch":"palegrawordmatchEngAudio",
+    "palegramcqimages":"palegramcqimagesEngAudio"
+
+
+
+
   }
   }
