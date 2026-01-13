@@ -8,6 +8,37 @@
     "dragAndDrop": "Match the items by dragging and dropping them into the correct places.",
     "mcq": "Select the correct answer from the options provided.",
     "tracing": "Trace the shape by following the outline carefully.",
-    "flashcards": "Review the flashcards to reinforce your learning."
+    "flashcards": "Review the flashcards to reinforce your learning.",
+    "substractionWithImage":"",
+    "substractionWithoutImage":"",
+    "numberIdentificationWithImage":"",
+    "numberIdentificationWithoutImage":"",
+    "wordBuildingWithImage":"wordbuilding .......withimage",
+    "wordBuildingWithoutImage":"wordbuilding .......withOuttttttimage",
+    "pictureClues":"",
+    "pictureWordMatchMultipleImages":"",
+    "pictureWordMatchSingleImage":"",
+    "sentenceMatch":"",
+    "imageMatch":"",
+    "palStoryTale":"",
+    "palEgmaPatternMatching":"",
+    "palEgmaWordProblemDragnDrop":"",
+    "palEgmaWordProblemClick":"",
+    "palEgraOddOneOut":"",
+    "palEgraArrangePictures":"",
+    "palEgraBuildWord":"",
+    "palEgraWordFormation":"",
+    "palInventedSpelling":"",
+    "palLetterIdentification":"",
+    "palStoryMaking":"",
+    "palegmasumtogether":"",
+    "palegmamultioption":"",
+    "palegraoptionaudio":"",
+    "palegrawordmatch":"",
+    "palegramcqimages":""
+
+
+
+
   }
   }
