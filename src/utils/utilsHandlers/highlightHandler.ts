@@ -123,12 +123,12 @@ export function highlightElement(): void {
   const container = document.querySelector(LidoContainer);
   if (!container) return;
   const dropElements = buildDropHasDragFromDOM();
+  const dropEls = container.querySelectorAll(`[type="drop"]`);
+  dropEls.forEach(dropEl => {
+    dropEl.classList.remove('highlight-element');
+  });
   let firstFalse = Object.values(dropElements).find(item => !item.isFull);
   if (firstFalse) {
-    const dropEls = container.querySelectorAll(`[type="drop"]`);
-    dropEls.forEach(dropEl => {
-      dropEl.classList.remove('highlight-element');
-    });
     const dropEle = container.querySelector(`#${firstFalse.drop}`) as HTMLElement;
     if (dropEle) {
       dropEle.classList.add('highlight-element');

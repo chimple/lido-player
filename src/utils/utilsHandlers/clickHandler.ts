@@ -125,9 +125,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       // storingEachActivityScore(isCorrect);
       // }
       highlightElement();
-      if(!container.getAttribute("click-completed")){
-        handleShowCheck()
-      }
+      handleShowCheck()
       return;
     } 
     
