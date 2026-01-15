@@ -123,7 +123,7 @@ export function highlightElement(): void {
   const container = document.querySelector(LidoContainer);
   if (!container) return;
   const dropElements = buildDropHasDragFromDOM();
-  let firstFalse = Object.values(dropElements).find(item => {!item.isFull});
+  let firstFalse = Object.values(dropElements).find(item => !item.isFull);
   if (firstFalse) {
     const dropEls = container.querySelectorAll(`[type="drop"]`);
     dropEls.forEach(dropEl => {
