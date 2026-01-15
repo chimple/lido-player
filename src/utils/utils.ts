@@ -810,9 +810,9 @@ export const validateObjectiveStatus = async () => {
         appendingDragElementsInDrop();
       }
       
-      // if(container.querySelectorAll("[type='click']").length > 0){
+      if(container.querySelectorAll("[type='click']").length > 0){
         storingEachActivityScore(true);
-      // }
+      }
       await executeActions(onCorrect, container);
     }
     if (container.getAttribute('dropAttr') === 'EnableAnimation') 
@@ -1401,23 +1401,21 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
 
   // Ensure all drag childrens which is dropped disappear
   dragElements.forEach(dragElement => {
-    if(dragElement.hasAttribute('drop-to')){
+    const dropToAttr = dragElement.getAttribute('drop-to');
+    if(dropToAttr && dropToAttr !== '') {
       dragElement.style.transition = 'opacity 0.5s ease';
       dragElement.style.opacity = '0'; // Fade out
+
+      const dropEl = document.getElementById(dropToAttr) as HTMLElement | null;
+
+      const dragVal = dragElement.getAttribute("value");
+      if (dragVal && dropEl.innerText.trim() === "?") {
+        dropEl.innerText = dragVal;
+      }
 
       // setTimeout(() => {
       //   // dragElement.remove() // Remove from view after fade-out
       // }, 500); 
-    }
-  });
-
-  // Reveal all drop childrens which is hidden
-  const dropElements = Array.from(element.querySelectorAll("[type='drop']")) as HTMLElement[];
-  let check = false;
-  dropElements.forEach(dropEl => {
-    const dropVal = dropEl.getAttribute("value");
-    if (dropVal && dropEl.innerText.trim() === "?") {
-      dropEl.innerText = dropVal;
     }
   });
 }
