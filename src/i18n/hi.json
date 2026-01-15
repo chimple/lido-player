@@ -6,7 +6,7 @@
   "Drop the elements to match the given symbol order":"दिए गए चिन्ह से मिलाने के लिए तत्वों को ड्रॉप करें",
   "Fill  in  the  blanks":"रिक्त स्थान भरें",
   "instruction": {
-    "dragAndDrop": "Match_the_items_by_dragging_and_dropping_them_into_the_correct_places.",
+    "dragAndDrop": "Match the items by dragging and dropping them into the correct places.",
     "mcq": "Select the correct answer from the options provided.",
     "tracing": "Trace the shape by following the outline carefully.",
     "flashcards": "Review the flashcards to reinforce your learning.",
