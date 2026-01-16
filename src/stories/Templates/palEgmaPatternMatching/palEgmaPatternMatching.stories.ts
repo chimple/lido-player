@@ -35,7 +35,7 @@ function getContainerXml(args) {
   const question_cells = args.questions.map((q, index) => {
   const isHidden = q?.startsWith('@');
   const actualValue = isHidden ? q.slice(1) : q;
-  const spokenString = isHidden ? '?' : q;
+  const spokenString = isHidden ? '_' : q;
   const showComma = index < args.questions.length - 1;
 
 
