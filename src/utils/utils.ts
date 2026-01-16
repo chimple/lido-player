@@ -409,6 +409,7 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
         dummyElement.classList.remove('dropped');
         dummyElement.removeAttribute('drop-to');
         dummyElement.removeAttribute('drop-time');
+        dummyElement.style.opacity = "1"
         dragElement.style.width = dropElement.style.width;
         dragElement.style.height = dropElement.style.height;
         dragElement.setAttribute('hasDummy', 'true');
@@ -499,6 +500,7 @@ function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
   clone.style.margin = originalEl.style.margin;
   clone.style.opacity = originalEl.style.opacity;
   clone.style.transform = originalEl.style.transform;
+  clone.style.borderRadius = originalEl.style.borderRadius;
 
   clone.setAttribute("visible", "true");
   clone.setAttribute("data-dummy", "true");
@@ -670,7 +672,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   allElements.forEach(otherElement => {
     const storedTabIndexes = Object.keys(dragScore).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
-      if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+      if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && !(container.getAttribute('drop-action')?.toLowerCase() === DropMode.InfiniteDrop)) {
         if (otherElement) {
           otherElement.style.opacity="0"
         }
@@ -715,7 +717,6 @@ const storeActivityScore = (score: number) => {
 
 export const handleShowCheck = () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  container.setAttribute("click-completed", "true");
   const objectiveString = container['objective'];
   const selectValues = container.getAttribute(SelectedValuesKey) ?? '';
 
@@ -741,7 +742,11 @@ export const handleShowCheck = () => {
     checkButton.setAttribute('data-balance-listener', 'true'); 
   }}
   } else {
-    validateObjectiveStatus();
+    if(!container.getAttribute("game-completed")){
+      validateObjectiveStatus();
+    }
+
+    container.setAttribute("game-completed", "true");
   }
 };
 
@@ -804,7 +809,10 @@ export const validateObjectiveStatus = async () => {
       {
         appendingDragElementsInDrop();
       }
-      storingEachActivityScore(true);
+      
+      if(container.querySelectorAll("[type='click']").length > 0){
+        storingEachActivityScore(true);
+      }
       await executeActions(onCorrect, container);
     }
     if (container.getAttribute('dropAttr') === 'EnableAnimation') 
@@ -836,7 +844,7 @@ export const validateObjectiveStatus = async () => {
       const onInCorrect = container.getAttribute('onInCorrect');
       storingEachActivityScore(false);
       await executeActions(onInCorrect, container);
-      container.removeAttribute("click-completed")
+      container.removeAttribute("game-completed");
     }    
   }
 };
@@ -1393,23 +1401,21 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
 
   // Ensure all drag childrens which is dropped disappear
   dragElements.forEach(dragElement => {
-    if(dragElement.hasAttribute('drop-to')){
+    const dropToAttr = dragElement.getAttribute('drop-to');
+    if(dropToAttr && dropToAttr !== '') {
       dragElement.style.transition = 'opacity 0.5s ease';
       dragElement.style.opacity = '0'; // Fade out
 
-      setTimeout(() => {
-        dragElement.remove() // Remove from view after fade-out
-      }, 500); 
-    }
-  });
+      const dropEl = document.getElementById(dropToAttr) as HTMLElement | null;
 
-  // Reveal all drop childrens which is hidden
-  const dropElements = Array.from(element.querySelectorAll("[type='drop']")) as HTMLElement[];
-  let check = false;
-  dropElements.forEach(dropEl => {
-    const dropVal = dropEl.getAttribute("value");
-    if (dropVal && dropEl.innerText.trim() === "?") {
-      dropEl.innerText = dropVal;
+      const dragVal = dragElement.getAttribute("value");
+      if (dragVal && dropEl.innerText.trim() === "?") {
+        dropEl.innerText = dragVal;
+      }
+
+      // setTimeout(() => {
+      //   // dragElement.remove() // Remove from view after fade-out
+      // }, 500); 
     }
   });
 }
