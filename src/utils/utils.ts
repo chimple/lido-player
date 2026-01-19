@@ -546,42 +546,58 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
     if (arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
   }
 
-  for (const group of patternGroups) {
-    if (group.startsWith('(') && group.endsWith(')')) {
-      // Inside parentheses: '|' acts like "OR" condition
-      const choices = group
-        .slice(1, -1)
-        .split('|')
-        .map(option => option.trim());
+  for (const group of patternGroups) 
+  {
+    if (group.startsWith('(') && group.endsWith(')')) 
+    {
+      // Parenthesized group: treat choices as a set (order-insensitive)
+      const choices = group.slice(1, -1).split('|').map(option => option.trim());
 
-      const arrChoice = arr[arrIndex]
-        .slice(1, -1)
-        .split('|')
-        .map(option => option.trim());
+      const arrVal = arr[arrIndex] ?? '';
+      let arrChoice: string[] = [];
 
-      if (arrIndex > arrChoice.length) return false;
-      for (let i = 0; i < choices.length; i++) {
-        if (!choices.includes(arrChoice[i])) return false;
+      if (arrVal.startsWith('(') && arrVal.endsWith(')')) {
+        arrChoice = arrVal.slice(1, -1).split('|').map(option => option.trim());
+      } else if (arrVal.includes('|')) {
+        arrChoice = arrVal.split('|').map(option => option.trim());
+      } else if (arrVal !== '') {
+        arrChoice = [arrVal.trim()];
+      } else {
+        return false;
       }
+
+      const normalize = (items: string[]) => items.map(s => s.trim()).sort().join('|');
+      if (normalize(choices) !== normalize(arrChoice)) return false;
+
       arrIndex++;
-    } else if (group.includes('|')) {
+    }
+    else if (group.includes('|')) 
+    {
       // Outside parentheses: '|' acts as optional order
       const choices = group.split('|').map(option => option.trim());
 
-      for (const choice of choices) {
+      for (const choice of choices) 
+      {
         options.add(choice);
       }
-    } else {
+    } 
+    else 
+    {
       // Exact match required
-      if (arrIndex >= arr.length || arr[arrIndex] !== group) return false;
+      if (arrIndex >= arr.length || arr[arrIndex] !== group) 
+      {
+        return false;
+      }
 
       arrIndex++;
     }
   }
 
   // Validate the optional ordered items against the remaining array elements
-  while (arrIndex < arr.length) {
-    if (!options.has(arr[arrIndex])) {
+  while (arrIndex < arr.length)
+  {
+    if (!options.has(arr[arrIndex])) 
+    {
       return false;
     }
     options.delete(arr[arrIndex]);

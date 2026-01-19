@@ -292,23 +292,17 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Reset overlapping styles from all elements
     const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
     allElements.forEach(otherElement => {
-      allElements.forEach(otherElement => {
-        const dropObject =buildDragSelectedMapFromDOM();
-        const storedTabIndexes = Object.keys(dropObject).map(Number);
-        if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
-          if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
-            if (otherElement) {
-              otherElement.style.opacity = "0"
-            } else {
-              otherElement.style.opacity = '1';
-            }
-          }
-        } else {
-          if (otherElement) {
-            otherElement.style.opacity = "1"
-          }
+      const dropObject = buildDragSelectedMapFromDOM();
+      const storedTabIndexes = Object.keys(dropObject).map(Number);
+      if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
+        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+          otherElement.style.opacity = '1';
         }
-      });
+      } else {
+        if (otherElement) {
+          otherElement.style.opacity = '1';
+        }
+      }
     });
 
     // Check for overlaps and log the most overlapping element
@@ -510,7 +504,7 @@ export function handleResetDragElement(
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
         if (otherElement.tagName.toLowerCase() === 'lido-text') {
-          otherElement.style.opacity = "0"
+          otherElement.style.opacity = "1"
         }
       }
     } else {
@@ -521,6 +515,11 @@ export function handleResetDragElement(
     }
   });
  
+  // Update counts when a drag is reset/removed from a drop
+  if (container) {
+    executeActions("this.updateCountBlender='true'", container);
+  }
+
   handleShowCheck();
   highlightElement();
 }
@@ -876,6 +875,8 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
+    // ensure count update for click-to-drop flow
+    await executeActions("this.updateCountBlender='true'", container);
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
@@ -908,7 +909,9 @@ async function onClickDragElement(element: HTMLElement){
   if (firstFalse) {
     const dropEl = document.querySelector(`#${firstFalse.drop}`) as HTMLElement;
     dragEl.style.transition = 'transform 0.5s ease';
-    onElementDropComplete(dragEl, dropEl);
+    await onElementDropComplete(dragEl, dropEl);
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    await executeActions("this.updateCountBlender='true'", container);
   }
 }
 
