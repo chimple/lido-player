@@ -415,14 +415,14 @@ function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElemen
   dragElement.style.transition = 'transform 0.5s ease';
   dragElement.style.transform = `translate(${finalX}px, ${finalY}px)`;
 }
-export function handleResetDragElement(
+export async function handleResetDragElement(
   dragElement: HTMLElement,
   dropElement: HTMLElement,
   dropHasDrag: Record<string, { drop: string; isFull: boolean }>,
   selectedValueData?: string,
   dragSelectedData?: string,
   dropSelectedData?: string,
-): void {
+): Promise<void> {
   dragElement.classList.remove('dropped');
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
@@ -517,7 +517,7 @@ export function handleResetDragElement(
  
   // Update counts when a drag is reset/removed from a drop
   if (container) {
-    executeActions("this.updateCountBlender='true'", container);
+    await executeActions("this.updateCountBlender='true'", container);
   }
 
   handleShowCheck();
