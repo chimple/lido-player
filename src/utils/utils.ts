@@ -762,7 +762,7 @@ export const handleShowCheck = () => {
       validateObjectiveStatus();
     }
 
-    container.setAttribute("game-completed", "true");
+    
   }
 };
 
@@ -816,6 +816,7 @@ export const validateObjectiveStatus = async () => {
   }
   if (res) 
   {
+    container.setAttribute("game-completed", "true");
     const attach = container.getAttribute('appendToDropOnCompletion');
 
     const onCorrect = container.getAttribute('onCorrect');
@@ -851,6 +852,7 @@ export const validateObjectiveStatus = async () => {
     const onCorrect = container.getAttribute('onCorrect');
     if (!isContinueOnCorrect) 
     {
+      container.setAttribute("game-completed", "true");
       storingEachActivityScore(false);
       calculateScore();
       await executeActions(onCorrect, container);
@@ -861,7 +863,6 @@ export const validateObjectiveStatus = async () => {
       const onInCorrect = container.getAttribute('onInCorrect');
       storingEachActivityScore(false);
       await executeActions(onInCorrect, container);
-      container.removeAttribute("game-completed");
     }    
   }
 };
