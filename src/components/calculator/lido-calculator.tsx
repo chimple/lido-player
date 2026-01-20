@@ -138,8 +138,10 @@ export class LidoCalculator {
       }
     }
     this.onOk.emit(isCorrect);
-
+    
+    const okbtn = document.getElementById("btn-11") as HTMLElement;
     if (isCorrect) {
+      okbtn.style.pointerEvents = 'none'; // Disable OK button to prevent multiple clicks
       this.displayValue = "";
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
@@ -157,11 +159,18 @@ export class LidoCalculator {
     }
 
     else{
+      okbtn.style.pointerEvents = 'none'; // Disable OK button to prevent multiple clicks
       this.displayValue = "";
       storingEachActivityScore(isCorrect);
       const onInCorrect = container?.getAttribute('onInCorrect') || '';
-      await executeActions(onInCorrect, container);
+      const onCorrect = container?.getAttribute('onCorrect') || '';
+      if(container.getAttribute('is-continue-on-correct') === 'false'){
+        await executeActions(onCorrect, container);  
+      }else{
+        await executeActions(onInCorrect, container);
+      }
     }
+    okbtn.style.pointerEvents = 'auto'; // Re-enable OK button after processing
   }
 
   render() {
