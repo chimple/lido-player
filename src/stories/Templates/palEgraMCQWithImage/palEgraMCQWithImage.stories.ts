@@ -69,19 +69,19 @@ function getContainerXml(args) {
 			</lido-cell>
 			
 			<!-- Options -->
-			<lido-cell layout="flex" visible="true" width="100%" height="90%" bg-color="transparent" onEntry="this.justifyContent='center'; this.alignContent='center'; this.animation='bottomToPlace 1s linear';" margin="landscape.-60px 0px -210px 0px, portrait.0px 0px 0px 0px">
-				<lido-cell visible="true" layout="landscape.row, portrait.wrap" width="landscape.85%, portrait.73%" height="landscape.100%, portrait.auto" bg-color="transparent" gap="landscape.0px, portrait.55px" onEntry="">
-					<lido-cell tab-index="4" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"   value="${args.option1}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio1}' onTouch="this.speak='true';">
-						<lido-image visible="true" src="${args.optionImg1}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
+			<lido-cell layout="flex" visible="true" width="116%" height="90%" bg-color="transparent" onEntry="this.justifyContent='center'; this.alignContent='center'; this.animation='bottomToPlace 1s linear';" margin="landscape.-60px 0px -210px 0px, portrait.0px 0px 0px 0px">
+				<lido-cell visible="true" layout="landscape.row, portrait.wrap" width="landscape.85%, portrait.73%" height="landscape.100%, portrait.auto" bg-color="transparent" gap="landscape.30px, portrait.55px" onEntry="">
+					<lido-cell tab-index="4" type="click" visible="true" layout="col" width="landscape.25%, portrait.100%"   value="${args.option1}" height="50%" onEntry="this.borderRadius='25px'; this.padding='9px';" onCorrect="" onInCorrect="" audio='${args.audio1}' onTouch="this.speak='true';">
+						<lido-image visible="true" src="${args.optionImg1}" width="90%" height="auto" border-radius="25px" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
-					<lido-cell tab-index="5" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option2}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" onCorrect="" onInCorrect="" audio='${args.audio2}' onTouch="this.speak='true';">
-						<lido-image visible="true" src="${args.optionImg2}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
+					<lido-cell tab-index="5" type="click" visible="true" layout="col" width="landscape.25%, portrait.100%"  value="${args.option2}" height="50%" onEntry="this.borderRadius='25px'; this.padding='9px';" onCorrect="" onInCorrect="" audio='${args.audio2}' onTouch="this.speak='true';">
+						<lido-image visible="true" src="${args.optionImg2}" width="90%" height="auto" border-radius="25px" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
-					<lido-cell tab-index="6" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option3}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio3}' onTouch="this.speak='true';">
-						<lido-image visible="true" src="${args.optionImg3}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
+					<lido-cell tab-index="6" type="click" visible="true" layout="col" width="landscape.25%, portrait.100%"  value="${args.option3}" height="50%" onEntry="this.borderRadius='25px'; this.padding='9px';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio3}' onTouch="this.speak='true';">
+						<lido-image visible="true" src="${args.optionImg3}" width="90%" height="auto" border-radius="25px" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
-					<lido-cell tab-index="7" type="click" visible="true" layout="col" bg-color="transparent" width="landscape.25%, portrait.100%"  value="${args.option4}" height="50%" onEntry="this.borderRadius='25px'; this.padding='0';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio4}' onTouch="this.speak='true';">
-						<lido-image visible="true" src="${args.optionImg4}" bg-color="transparent" width="90%" height="auto" border-radius="25px 25px 0 0" onEntry="this.marginTop='10px';"></lido-image>
+					<lido-cell tab-index="7" type="click" visible="true" layout="col" width="landscape.25%, portrait.100%"  value="${args.option4}" height="50%" onEntry="this.borderRadius='25px'; this.padding='9px';" margin="landscape.0, portrait.20px 0 0 0" onCorrect="" onInCorrect="" audio='${args.audio4}' onTouch="this.speak='true';">
+						<lido-image visible="true" src="${args.optionImg4}" width="90%" height="auto" border-radius="25px" onEntry="this.marginTop='10px';"></lido-image>
 					</lido-cell>
 				</lido-cell>
 			</lido-cell>

@@ -815,6 +815,7 @@ export const validateObjectiveStatus = async () => {
       }
       await executeActions(onCorrect, container);
     }
+    calculateScore();
     if (container.getAttribute('dropAttr') === 'EnableAnimation') 
     {
       setTimeout(() => {
@@ -826,7 +827,7 @@ export const validateObjectiveStatus = async () => {
       triggerNextContainer();
     }
 
-    await calculateScore();
+    
   } 
   else 
   {
@@ -834,8 +835,8 @@ export const validateObjectiveStatus = async () => {
     const onCorrect = container.getAttribute('onCorrect');
     if (!isContinueOnCorrect) 
     {
-      await calculateScore();
       storingEachActivityScore(false);
+      calculateScore();
       await executeActions(onCorrect, container);
       triggerNextContainer()
     } 
