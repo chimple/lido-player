@@ -1,9 +1,9 @@
-import"./lit-element-BxxbMms4.js";import{x as u}from"./lit-html-DLYuhZ0i.js";const y={title:"Templates/nimbleTable",argTypes:{equations:{control:"object"},values:{control:"object"},isContinueOnCorrect:{control:"boolean"},isAllowOnlyCorrect:{control:"boolean"}}},e={args:{equations:["1 + 1 = ?","2 + 2 = ?","3 + 3 = ?","4 + 4 = ?","5 + 5 = ?","6 + 6 = ?","3 + 2 = ?"],answers:["2","4","6","8","10","12","5"],isContinueOnCorrect:!0,isAllowOnlyCorrect:!0},render:i=>{const t=b(i);return u`<lido-home .xmlData="${t}"></lido-home>`}};function b(i){let t=1;const{equations:p=[],answers:a=[],isContinueOnCorrect:s=!0,isAllowOnlyCorrect:d=!0}=i,x=p.map((c,r)=>{const h=a[r];return`
-      <lido-text visible="true" audio="" onTouch="" type="calculate"
-        id="equation${r+1}" tab-index="${t++}"
+import"./lit-element-BxxbMms4.js";import{x as h}from"./lit-html-DLYuhZ0i.js";const m={title:"Templates/nimbleTable",argTypes:{equations:{control:"object"},values:{control:"object"},PracticeMode:{control:"boolean"}}},e={args:{equations:["1 + 1 = ?","2 + 2 = ?","3 + 3 = ?","4 + 4 = ?","5 + 5 = ?","6 + 6 = ?","3 + 2 = ?"],answers:["2","4","6","8","10","12","5"],PracticeMode:!1},render:i=>{const t=u(i);return h`<lido-home .xmlData="${t}"></lido-home>`}};function u(i){let t=1;const{equations:s=[],answers:a=[],PracticeMode:r=!1}=i,d=s.map((x,o)=>{const c=a[o];return`
+      <lido-text visible="true" disable-speak="true" audio="" onTouch="" type="calculate"
+        id="equation${o+1}" tab-index="${t++}"
         height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%"
         bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="84px"
-        value="${h}" string="${c}"
+        value="${c}" string="${x}"
         margin="landscape.-4px 10px 22px -116px,portrait.6px 0 20px 0 "
         onEntry="this.color='white';this.fontWeight='500';this.borderRadius='10px';
                  this.flex-shrink='0';this.textShadow='3px 0 white, -3px 0 white, 0 3px white, 0 -3px white';
@@ -11,11 +11,11 @@ import"./lit-element-BxxbMms4.js";import{x as u}from"./lit-html-DLYuhZ0i.js";con
         onCorrect="">
       </lido-text>
     `}).join("");return`<main>
- <lido-container id="lido-container" is-allow-only-correct="${d}" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Nimble%20table.png" objective="${a.join(",")}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="this.scrollCellAfterEquationSolved='true'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" 
- is-continue-on-correct="${s}">
+ <lido-container id="lido-container" is-allow-only-correct="${r}" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Nimble%20table.png" objective="${a.join(",")}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around';" onInCorrect="this.scrollCellAfterEquationSolved='true'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" 
+ is-continue-on-correct="${r}">
 
    <!-- Audio -->
-  <lido-text visible="false" id="audio" onEntry="this.display='none';" string="Solve the question at the third board and select the correct answer from the calculator."></lido-text>
+  <lido-text visible="false" id="audio" tab-index="221" onEntry="this.display='none'; this.speak='true'" string="Solve the question at the third board and select the correct answer from the calculator." ></lido-text>
 
 <!-- Chimple Avatar -->
     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.718px, portrait.-8%" y="landscape.502px, portrait.73%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
@@ -43,7 +43,7 @@ import"./lit-element-BxxbMms4.js";import{x as u}from"./lit-html-DLYuhZ0i.js";con
                 </lido-text>
                 <lido-text visible="true" audio="" onTouch="" id="dummy112" class="dummy-2" tab-index="" height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%" bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="88px" string="" margin="landscape.-4px 10px 22px -116px,portrait.6px 0 20px 0 " onEntry="this.color='white';this.fontWeight='500';this.borderRadius='10px'; this.flex-shrink='0';this.textShadow = '3px 0 white, -3px 0 white, 0 3px white, 0 -3px white'; this.justifyContent='center'" onCorrect="">
                 </lido-text>
-        ${x}
+        ${d}
 
        <lido-cell visible="true" height="landscape.84%,portrait.732px" width="landscape.530px,portrait.62%" bg-color="transparent"  onEntry="this.display='flex'; this.position='fixed'" margin="landscape.98px 0px 106px 1027px, portrait.860px 0px 0px 280px">
                 <lido-calculator visible="true" height="100%"></lido-calculator>
@@ -51,15 +51,14 @@ import"./lit-element-BxxbMms4.js";import{x as u}from"./lit-html-DLYuhZ0i.js";con
             </lido-cell>
     </lido-cell>
 </lido-container>
-</main>`}var o,n,l;e.parameters={...e.parameters,docs:{...(o=e.parameters)==null?void 0:o.docs,source:{originalSource:`{
+</main>`}var p,l,n;e.parameters={...e.parameters,docs:{...(p=e.parameters)==null?void 0:p.docs,source:{originalSource:`{
   args: {
     equations: ["1 + 1 = ?", "2 + 2 = ?", "3 + 3 = ?", "4 + 4 = ?", "5 + 5 = ?", "6 + 6 = ?", "3 + 2 = ?"],
     answers: ["2", "4", "6", "8", "10", "12", "5"],
-    isContinueOnCorrect: true,
-    isAllowOnlyCorrect: true
+    PracticeMode: false
   },
   render: args => {
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(l=(n=e.parameters)==null?void 0:n.docs)==null?void 0:l.source}}};const w=["nimbletable"];export{w as __namedExportsOrder,y as default,e as nimbletable};
+}`,...(n=(l=e.parameters)==null?void 0:l.docs)==null?void 0:n.source}}};const f=["nimbletable"];export{f as __namedExportsOrder,m as default,e as nimbletable};
