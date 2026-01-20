@@ -307,6 +307,10 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
+    if(!mostOverlappedElement){
+      handleResetDragElement(element,null,null,null,null,null);
+      return;
+    }
     onElementDropComplete(element, mostOverlappedElement);
     executeActions("this.updateCountBlender='true'",container);
 
