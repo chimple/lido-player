@@ -92,7 +92,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
     const showCheck = container.getAttribute('show-check') === 'true';
 
     if (element.getAttribute('id') == 'lido-checkButton') {
-      // checkButton.classList.add('lido-disable-check-button');
+      checkButton.classList.add('lido-disable-check-button');
       await validateObjectiveStatus();
       return;
     }
