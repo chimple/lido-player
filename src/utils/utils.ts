@@ -208,6 +208,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             AudioPlayer.getI().stop();
           }
           await validateObjectiveStatus();
+          targetElement.style.pointerEvents = 'auto';
           break;
         }
         case 'prevBtn': {
@@ -386,7 +387,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
       }
-    }
+    } 
   }
   // body.style.pointerEvents = 'auto';
 };
