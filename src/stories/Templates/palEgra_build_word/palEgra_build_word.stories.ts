@@ -56,7 +56,7 @@ custom-style = "#audioCell:active {
 }" >
 	   <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.330px,portrait.378px" width="landscape.300px,portrait.382px"
-       x="landscape.82%, portrait.30%" y="landscape.32%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
+       x="landscape.79%, portrait.30%" y="landscape.61%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
         <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
         </lido-avatar>
 		<lido-image id="image" disableEdit="true" value="image" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/Shadow.png" bgColor="transparent" width="inherit" height="20px" x="landscape.-1px, portrait.-7px" y="landscape.280px, portrait.535px" altText="{shadowImage}"></lido-image>
