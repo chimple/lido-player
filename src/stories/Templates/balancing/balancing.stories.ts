@@ -38,7 +38,7 @@ function getContainerXml(args) {
 
   return `
    <main>
-    <lido-container visible="true" drop-action="move"  objective="${objective}"  equationCheck="$#lefthandle1,$#righthandle1" id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" show-Check="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Balancing.png" is-continue-on-correct="true">
+    <lido-container visible="true" drop-action="move"  objective="${objective}"  equationCheck="$#lefthandle1,$#righthandle1" id="lido-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" show-Check="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Balancing.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true">
      <!-- Chimple Avatar -->
     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.396px,portrait.400px" width="landscape.298px,portrait.369px" x="landscape.82%, portrait.32%" y="landscape.63%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
         <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
@@ -50,7 +50,7 @@ function getContainerXml(args) {
         </lido-text>
       </lido-pos>
       <!-- question -->
-      <lido-text visible="true" tab-index="12" height="landscape.100px,portrait.175px" font-family="'Baloo Bhai 2'" font-size="60px" width="landscape.auto,portrait.86%" string="Drop the elements to match the given symbol '${objective}'" font-color="black" bg-color="white" y="landscape.0%,portrait.-12%" onEntry="this.font-weight='600'; this.position='relative';">
+      <lido-text visible="true" audio="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/fill-in-the-blanks/fill-upAudio.mp3" id="heading" tab-index="12" height="landscape.100px,portrait.175px" font-family="'Baloo Bhai 2'" font-size="60px" width="landscape.auto,portrait.86%" string="Drop the elements to match the given symbol '${objective}'" font-color="black" bg-color="white" y="landscape.0%,portrait.-12%" onEntry="this.speak='true';this.font-weight='600'; this.position='relative';">
       </lido-text>
       <lido-balance  tilt="0" operation="add" visible="true" height="landscape.456px,portrait.500px" y="landscape.4%,portrait.0%" width="landscape.1136px,portrait.876px">
       <!-- drop Element -->
