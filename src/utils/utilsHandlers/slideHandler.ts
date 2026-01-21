@@ -292,7 +292,7 @@ export function slidingWithScaling(element: HTMLElement): void {
   element.addEventListener('touchstart', onStart);
 }
 
-const slideCompleted = async (slideElement: HTMLElement) => {
+const slideCompleted = (slideElement: HTMLElement) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const slideArr = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
   const allSlideElements = document.querySelectorAll("[type='slide']");
