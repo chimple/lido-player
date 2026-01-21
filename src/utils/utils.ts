@@ -758,7 +758,7 @@ export const handleShowCheck = () => {
     checkButton.setAttribute('data-balance-listener', 'true'); 
   }}
   } else {
-    if(!container.getAttribute("game-completed")){
+    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']")){
       validateObjectiveStatus();
     }
 
