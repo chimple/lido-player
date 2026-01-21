@@ -690,7 +690,13 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && !(container.getAttribute('drop-action')?.toLowerCase() === DropMode.InfiniteDrop)) {
         if (otherElement) {
-          otherElement.style.opacity="0"
+        const append=container.getAttribute('appendToDropOnCompletion');
+          if (append === 'true') {
+            otherElement.style.opacity="0";
+          }
+          else{
+          otherElement.style.opacity = '0';
+          }
         }
       }
     } else {
