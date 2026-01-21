@@ -692,7 +692,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
         if (otherElement) {
         const append=container.getAttribute('appendToDropOnCompletion');
           if (append === 'true') {
-            otherElement.style.opacity="0";
+            otherElement.style.opacity="1";
           }
           else{
           otherElement.style.opacity = '0';
