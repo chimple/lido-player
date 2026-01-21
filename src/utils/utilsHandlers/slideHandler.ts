@@ -1,6 +1,6 @@
 import { LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
-import { calculateScale, executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore } from '../utils';
+import { calculateScale, executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
 import { removeHighlight } from './highlightHandler';
 
@@ -310,9 +310,20 @@ const slideCompleted = (slideElement: HTMLElement) => {
 
   if(container.getAttribute('is-continue-on-correct') === 'true'){
     storingEachActivityScore(true);
-    handleShowCheck();
+    validationForSlideHandler();
   } else {
     storingEachActivityScore(isCorrect);
   }
 
 };
+
+const validationForSlideHandler = async () => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if (!container) return;
+  const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
+  const objectiveString = document.getElementById(LidoContainer)['objective'];
+  const res = matchStringPattern(objectiveString, objectiveArray);
+  if (res) {
+    await executeActions(container.getAttribute('onCorrect'), container);
+  }
+}
