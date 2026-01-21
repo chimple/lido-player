@@ -13,7 +13,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
             <lido-cell visible="true" margin="20px 0px 0px 0px" bg-color="transparent" layout="landscape.row,portrait.col" height="landscape.50%,portrait.96%" width="landscape.100%,portrait.100%" onEntry="this.gap='10px';">
                 
                 ${t.dropimg1.length===0&&t.droptext1.length===0?"":`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="">
-                    <lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
+                    <lido-cell layout="row" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
                         <lido-cell id="image1" show-speak-icon="true" audio="${t.drop1Audio}" value="${t.correct1}" tab-index="1" height="landscape.270px,portrait.240px" width="landscape.200px,portrait.180px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px'; this.borderRadius='8px';">
                             ${!t.dropimg1||t.dropimg1.length===0?"":`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${t.dropimg1}"></lido-image>`}
 
@@ -24,7 +24,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
                 </lido-cell>`}
 
                 ${t.dropimg2.length===0&&t.droptext2.length===0?"":`<lido-cell layout="row" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
-                    <lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
+                    <lido-cell layout="row" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
                         <lido-cell id="image2" show-speak-icon="true" audio="${t.drop2Audio}" value="${t.correct2}" tab-index="2" isAllowOnlyOneDrop="true" disable-edit="true" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
                             ${!t.dropimg2||t.dropimg2.length===0?"":`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${t.dropimg2}"></lido-image>`}
 
@@ -34,7 +34,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
                 </lido-cell>`}
 
                 ${t.dropimg3.length===0&&t.droptext3.length===0?"":`<lido-cell layout="row" margin="landscape.50px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='5px';">
-                    <lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
+                    <lido-cell layout="row" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="">
                         <lido-cell type="drop" show-speak-icon="true" audio="${t.drop3Audio}" id="image3" tab-index="3" isAllowOnlyOneDrop="true" disable-edit="true" value="${t.correct3}" height="landscape.268px,portrait.240px" width="landscape.200px,portrait.178px" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
                             ${!t.dropimg3||t.dropimg3.length===0?"":`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${t.dropimg3}"></lido-image>`}
 
@@ -45,7 +45,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
 
 
                 ${t.dropimg4.length===0&&t.droptext4.length===0?"":`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
-                    <lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
+                    <lido-cell layout="row" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
                         <lido-cell id="image4" show-speak-icon="true" audio="${t.drop4Audio}" value="${t.correct4}" isAllowOnlyOneDrop="true" disable-edit="true" tab-index="4" height="landscape.270px,portrait.240px" width="landscape.200px,portrait.178px" type="drop" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
                             ${!t.dropimg4||t.dropimg4.length===0?"":`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${t.dropimg4}"></lido-image>`}
 
@@ -55,7 +55,7 @@ import"./lit-element-BxxbMms4.js";import{x as a}from"./lit-html-DLYuhZ0i.js";con
                 </lido-cell>`}
 
                 ${t.dropimg5.length===0&&t.droptext5.length===0?"":`<lido-cell layout="row" margin="landscape.0px 0px 0px 0px,portrait.0px 0px 0px 0px" visible="true" bg-color="transparent" height="landscape.100%,portrait.20%" width="landscape.20%,portrait.100%" onEntry="this.border-radius='6px';">
-                    <lido-cell layout="random" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
+                    <lido-cell layout="row" visible="true" width="100%" height="100%" bg-color="transparent" onEntry="this.display='flex';">
                         <lido-cell type="drop" show-speak-icon="true" audio="${t.drop5Audio}" id="image5" value="${t.correct5}" tab-index="5" isAllowOnlyOneDrop="true" disable-edit="true" width="landscape.200px,portrait.178px" height="landscape.268px,portrait.240px" layout="col" visible="true" bg-Color="white" onEntry="this.padding='0px';this.borderRadius='8px';">
                             ${!t.dropimg5||t.dropimg5.length===0?"":`<lido-image border-radius="8px 8px 0px 0px" margin="0px 0px 0px 0px"  visible="true" width="landscape.202px,portrait.180px" height="landscape.200px,portrait.180px" bg-color="transparent" src="${t.dropimg5}"></lido-image>`}
 
