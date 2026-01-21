@@ -208,6 +208,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             AudioPlayer.getI().stop();
           }
           await validateObjectiveStatus();
+          targetElement.style.pointerEvents = 'auto';
           break;
         }
         case 'prevBtn': {
@@ -386,7 +387,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
       }
-    }
+    } 
   }
   // body.style.pointerEvents = 'auto';
 };
@@ -690,7 +691,13 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
       if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && !(container.getAttribute('drop-action')?.toLowerCase() === DropMode.InfiniteDrop)) {
         if (otherElement) {
-          otherElement.style.opacity="0"
+        const append=container.getAttribute('appendToDropOnCompletion');
+          if (append === 'true') {
+            otherElement.style.opacity="1";
+          }
+          else{
+          otherElement.style.opacity = '0';
+          }
         }
       }
     } else {
