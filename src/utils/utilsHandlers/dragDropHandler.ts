@@ -591,7 +591,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
-        storingEachActivityScore(false);
+        // storingEachActivityScore(false);
         // const oldDropIndex = dragToDropMap[dragElement.getAttribute('data-id')];
         // if (oldDropIndex !== undefined && dropHasDrag[oldDropIndex]) {
         //   dropHasDrag[oldDropIndex].isFull = false;
@@ -757,7 +757,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
-  // storingEachActivityScore(isCorrect);
+  storingEachActivityScore(isCorrect);
   dragElement.style.opacity = '1';
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');

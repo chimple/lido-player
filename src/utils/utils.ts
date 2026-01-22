@@ -660,7 +660,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (dragElement && dropElement) {
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   // storing each activity score based on isCorrect for (all drag-drop events)
-    storingEachActivityScore(isCorrect);
+    // storingEachActivityScore(isCorrect);
   if (isCorrect) {
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {
@@ -673,8 +673,8 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
 
  const sortedValues = getSortedValuesArrayFromMap(dragScore);
  container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
- 
 
+ 
   //localStorage
   let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');
   const index = dropElement.getAttribute('tab-index');
@@ -720,10 +720,10 @@ const storeActivityScore = (score: number) => {
   const activityScore = JSON.parse(localStorage.getItem(ActivityScoreKey) ?? '{}');
   
   const activityScoreKey = index.toString();
-  activityScore[activityScoreKey] = score;
+  activityScore[activityScoreKey] = score;  
   //send Custom Event to parent
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
-  dispatchActivityEndEvent(index, totalIndex, score);
+  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
@@ -733,7 +733,7 @@ const storeActivityScore = (score: number) => {
     gameScore.finalScore = Math.floor(finalScore);
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
-    dispatchLessonEndEvent(finalScore);
+    dispatchLessonEndEvent(totalIndex, gameScore.rightMoves, gameScore.wrongMoves,finalScore);
     localStorage.removeItem(ActivityScoreKey);
   }
 };
@@ -857,10 +857,14 @@ export const validateObjectiveStatus = async () => {
   {
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     const onCorrect = container.getAttribute('onCorrect');
+
+    if(container.querySelectorAll("[type='click']").length > 0){
+        storingEachActivityScore(false);
+      }
+
     if (!isContinueOnCorrect) 
     {
       container.setAttribute("game-completed", "true");
-      storingEachActivityScore(false);
       calculateScore();
       await executeActions(onCorrect, container);
       triggerNextContainer()
@@ -868,7 +872,6 @@ export const validateObjectiveStatus = async () => {
     else 
     {
       const onInCorrect = container.getAttribute('onInCorrect');
-      storingEachActivityScore(false);
       await executeActions(onInCorrect, container);
     }    
   }
