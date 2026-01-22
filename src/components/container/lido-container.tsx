@@ -244,10 +244,10 @@ export class LidoContainer {
     this.resolveInstructionAudio();
   }
 
-  private resolveInstructionAudio() {
-   const key =
-      (
-        {
+ private resolveInstructionAudio() {
+  this.instructName =
+    (
+      {
           flashcard: templateAudio.flashcards,
           mcq: templateAudio.mcq,
           tracing: templateAudio.tracing,
@@ -280,9 +280,8 @@ export class LidoContainer {
           "palegrawordmatch": templateAudio.palegrawordmatch,
           "palegramcqimages": templateAudio.palegramcqimages,
 
-        } as any
-      )[this.templateId!] ?? '';
-        this.instructName = key ? i18next.t(key) : '';
+       } as any
+    )[this.templateId!] ?? '';
 
     const home = document.querySelector('lido-home') as HTMLElement;
     if (!home) return;
