@@ -52,9 +52,10 @@ export class AudioPlayer {
       console.error('Error stopping audio before speak action:', e);
     }
   const text=targetElement.closest('lido-text') as HTMLElement;
-  if(text && text.getAttribute('disable-speak')==='true'){
-    return;
-  }
+  // if(text && text.getAttribute('disable-speak')==='true'){
+  //   return;
+  // }
+
 
     // then play the target element audio.
     let audioUrl = targetElement.getAttribute('audio') || '';
