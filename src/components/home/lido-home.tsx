@@ -520,10 +520,14 @@ export class LidoHome {
       if (getCancelBtnPopup()) break;
 
       const tabIndex = el.getAttribute('tab-index');
+
       const htmlel = el as HTMLElement;
 
       if (tabIndex && Number(tabIndex) > 0) {
-        await AudioPlayer.getI().play(htmlel);
+        if(el && el.getAttribute('disable-speak')!=='true'){
+          await AudioPlayer.getI().play(htmlel);
+        }
+        
 
         if (getCancelBtnPopup()) {
           await AudioPlayer.getI().stop();
