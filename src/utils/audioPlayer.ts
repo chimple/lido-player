@@ -120,7 +120,7 @@ export class AudioPlayer {
       try {
         setDraggingDisabled(true);
 
-        const Language = document.getElementById(LidoContainer)?.getAttribute('Lang') || 'en';
+        const Language = container.getAttribute('Lang') || 'en';
         const profile = LANGUAGE_PROFILES[Language] || LANGUAGE_PROFILES[Language.split('-')[0]] || LANGUAGE_PROFILES['en'];
         let timeline: WordTimelineEntry[] = [];
 
