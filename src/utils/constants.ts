@@ -89,3 +89,69 @@ export const enum templateAudio {
     palegrawordmatch='palegrawordmatchAudio',
     palegramcqimages='palegramcqimagesAudio'
 }
+
+export type WordTimelineEntry = {
+  word: string;
+  startMs: number;
+  endMs: number;
+  index: number;
+};
+
+export const FAST_WORDS_BY_LANG = {
+  'en': new Set([
+    'a', 'an', 'the',
+    'on', 'in', 'at',
+    'to', 'of', 'for',
+    'into', 'up', 'or',
+    'is', 'are', 'were',
+  ]),
+
+  'hi': new Set([
+    'का', 'की', 'के',
+    'में', 'पर', 'से',
+    'तो', 'को',
+    'है', 'था', 'थे',
+  ]),
+
+  'ka': new Set([
+    'ಅದು', 'ಇದು',
+    'ನಲ್ಲಿ', 'ಮೇಲೆ',
+    'ಮತ್ತು', 'ಇದೆ',
+    'ಆಗಿತ್ತು',
+  ]),
+};
+
+export const LANGUAGE_PROFILES = {
+  'en': {
+    expectedWPM: 135,
+    minWordMs: 80,
+    syllableWeight: 1.28,
+    punctuationPauseWeight: 0.45,
+    preemptiveOffsetMs: 55,
+    smoothingMs: 25,
+    fastWordMultiplier: 0.65,
+    fastClusterMultiplier: 0.65,
+  },
+
+  'hi': {
+    expectedWPM: 155,
+    minWordMs: 40,
+    syllableWeight: 1.30,
+    punctuationPauseWeight: 0.30,
+    preemptiveOffsetMs: 20,
+    smoothingMs: 45,
+    fastWordMultiplier: 0.9,     // much weaker compression
+    fastClusterMultiplier: 0.9,
+  },
+
+  'ka': {
+    expectedWPM: 85,
+    minWordMs: 35,
+    syllableWeight: 1.75,
+    punctuationPauseWeight: 0.50,
+    preemptiveOffsetMs: 15,
+    smoothingMs: 50,
+    fastWordMultiplier: 1.0,      // no compression
+    fastClusterMultiplier: 1.0,
+  }
+};

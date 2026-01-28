@@ -276,3 +276,36 @@ body {
   mask-repeat: no-repeat;
   mask-position: center;
 }
+
+
+.tts-highlight-overlay {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+
+  /* Visual */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 235, 59, 0.95),
+    rgba(255, 214, 0, 0.95)
+  );
+  border-radius: 6px;
+
+  /* Soft depth */
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+
+  /* Motion */
+  transition:
+    left 55ms linear,
+    top 55ms linear,
+    width 55ms ease-out,
+    height 55ms ease-out,
+    opacity 80ms ease-out;
+
+  opacity: 0.95;
+
+  /* Safety */
+  will-change: transform, width, height;
+}

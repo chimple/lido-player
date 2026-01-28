@@ -222,6 +222,11 @@ export class LidoContainer {
   @Prop() templateId = '';
 
   /**
+   * When set to true, highlights each word individually during speech playback.
+   */
+  @Prop() highlightWordByWord: boolean = false;
+
+  /**
    * Stores the instruction audio/text key based on the current template.
    */
   @State() instructName: string = '';
@@ -481,6 +486,7 @@ export class LidoContainer {
         disable-speak={this.disableSpeak}
         template-id={this.templateId}
         audio={this.audio}
+        highlight-word-by-word={`${this.highlightWordByWord}`}
       >
         <lido-text visible="false" id={this.templateId} audio="" string={this.instructName} ></lido-text>
         <slot />
