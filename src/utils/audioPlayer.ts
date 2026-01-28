@@ -121,7 +121,7 @@ export class AudioPlayer {
         setDraggingDisabled(true);
 
         const Language = document.getElementById(LidoContainer)?.getAttribute('Lang') || 'en';
-        const profile = LANGUAGE_PROFILES[Language];
+        const profile = LANGUAGE_PROFILES[Language] || LANGUAGE_PROFILES[Language.split('-')[0]] || LANGUAGE_PROFILES['en'];
         let timeline: WordTimelineEntry[] = [];
 
         // If word-by-word highlighting is enabled prepare timeline & rects
@@ -277,7 +277,7 @@ export class AudioPlayer {
         weight += profile.punctuationPauseWeight;
       }
 
-      if (FAST_WORDS_BY_LANG[language].has(curr)) {
+      if (FAST_WORDS_BY_LANG[language]?.has(curr)) {
         weight *= profile.fastWordMultiplier     // faster words get less weight
       }
       if (this.isFastCluster(prev, curr, language)) {
