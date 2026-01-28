@@ -357,7 +357,7 @@ export class AudioPlayer {
 
     while ((node = walker.nextNode() as Text | null)) {
       const text = node.textContent || '';
-      const words = text.split(/\s+/);
+      const words = text.split(/\s+/).filter(Boolean);
 
       let offset = 0;
       words.forEach(word => {
