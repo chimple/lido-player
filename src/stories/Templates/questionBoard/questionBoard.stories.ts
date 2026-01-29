@@ -13,6 +13,7 @@ type QuestionBoardArgs = {
     objective: string;
     isAllowOnlyCorrect?: boolean;
     highlightWord?: boolean;
+    audioURL?: string;
 }
 
 const meta: Meta<QuestionBoardArgs> = {
@@ -29,6 +30,7 @@ const meta: Meta<QuestionBoardArgs> = {
         objective: { control: 'text', name: 'Objective', description: 'Objective to achieve the task. (E.g. 5)' },
         isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
         highlightWord: { control: 'boolean', name: 'Highlight Word by Word' },
+        audioURL: { control: 'text', name: 'Audio URL' },
     },
     args: {
         questionBoardImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/question-board/wordwindow_frame_question.png'],
@@ -42,6 +44,7 @@ const meta: Meta<QuestionBoardArgs> = {
         objective: '7',
         isAllowOnlyCorrect: true,
         highlightWord: true,
+        audioURL: '',
     }
 }
 
@@ -176,7 +179,7 @@ function getContainerXml(args : QuestionBoardArgs) {
                     </lido-text>
 
                     <lido-cell layout="pos" id="pos3" value="pos3" x="landscape.445px, portrait.45px" y="landscape.115px, portrait.145px" visible="true" height="landscape.60%,portrait.10%" width="landscape.55%,portrait.92%" border-radius="7px" bg-color="transparent" onEntry="this.z-index='1';">
-                        <lido-text visible="true" id="question-board-text" tab-index="3" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
+                        <lido-text visible="true" audio="${args.audioURL}" id="question-board-text" tab-index="3" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
                         </lido-text>
                     </lido-cell>
 
