@@ -278,7 +278,7 @@ body {
 }
 
 
-.tts-highlight-overlay {
+.lido-tts-highlight-overlay {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
