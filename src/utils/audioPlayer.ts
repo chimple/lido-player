@@ -120,58 +120,59 @@ export class AudioPlayer {
       try {
         setDraggingDisabled(true);
 
-        const Language = container.getAttribute('Lang') || 'en';
-        const profile = LANGUAGE_PROFILES[Language] || LANGUAGE_PROFILES[Language.split('-')[0]] || LANGUAGE_PROFILES['en'];
+        const language = container.getAttribute('Lang') || 'en';
+        const profile = LANGUAGE_PROFILES[language] || LANGUAGE_PROFILES[language.split('-')[0]] || LANGUAGE_PROFILES['en'];
         let timeline: WordTimelineEntry[] = [];
 
+        const isWordByWord = container.getAttribute('highlight-word-by-word') === 'true';
+
+        // ALWAYS clear handlers first (important)
+        this.audioElement.onloadedmetadata = null;
+        this.audioElement.onended = null;
+
         // If word-by-word highlighting is enabled prepare timeline & rects
-        if (container.getAttribute('highlight-word-by-word') === 'true') {
+        if (isWordByWord) {
           this.audioElement.onloadedmetadata = () => {
             const durationMs = this.audioElement.duration * 1000;
-            console.log('[audio] durationMs:', durationMs);
-
             const textContent = targetElement.textContent || '';
 
-            timeline = this.buildWordTimeline(textContent, durationMs, profile, Language);
+            timeline = this.buildWordTimeline(textContent,durationMs,profile,language);
             this.wordRects = this.computeWordRects(targetElement);
           };
-
-          this.audioElement.onended = () => {
-            this.stopOverlayHighlightLoop();
-            setDraggingDisabled(false);
-          };
-        }
-        // Non word-by-word: keep previous behaviour (highlight entire element)
+        } 
         else {
-          this.audioElement.onloadedmetadata = null;
-          this.audioElement.onended = () => {
-            setDraggingDisabled(false);
-          };
-        }
-
-        // Apply full-element highlight only when NOT doing word-by-word overlay
-        if (container.getAttribute('highlight-word-by-word') !== 'true') {
           highlightSpeakingElement(targetElement);
         }
 
-        // Play once; onloadedmetadata will have prepared timeline if needed
+        // PLAY ONCE
         await this.audioElement.play();
 
-        // After playback starts, if word-by-word is enabled start overlay loop
-        if (container.getAttribute('highlight-word-by-word') === 'true') {
+        // ensure metadata processed before overlay
+        if(isWordByWord && timeline.length === 0) 
+        {
+          await new Promise<void>(resolve => {
+            this.audioElement.onloadedmetadata = () => resolve();
+          });
+          this.startOverlayHighlightLoop(timeline, profile);
+        } 
+        else if (isWordByWord) {
           this.startOverlayHighlightLoop(timeline, profile);
         }
 
+        // unified end
         await new Promise<void>(resolve => {
-          this.audioElement.onended = () => {
-            resolve();
-          };
+          this.audioElement.onended = () => resolve();
         });
+
       }
       catch (error) {
         console.log('🎧 Audio play error:', error);
       }
       finally {
+        this.audioElement.onended = null;
+        this.audioElement.onloadedmetadata = null;
+        this.stopOverlayHighlightLoop();
+
         window.removeEventListener('click', this.handleUserClick, true);
         this.audioElement.onended = null;  // cleanup
         setDraggingDisabled(false);
