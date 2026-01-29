@@ -333,7 +333,7 @@ export class AudioPlayer {
     if (this.highlightOverlay) return;
 
     const overlay = document.createElement('div');
-    overlay.className = 'tts-highlight-overlay';
+    overlay.className = 'lido-tts-highlight-overlay';
     document.body.appendChild(overlay);
     this.highlightOverlay = overlay;
   }
