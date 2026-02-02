@@ -1,1 +1,1 @@
-export{f as format}from"./p-a7208ebe.js";import"./p-9a9d5339.js";
+export{f as format}from"./p-38fe8f2c.js";import"./p-9a9d5339.js";
