@@ -70,8 +70,10 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
   }
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
-  // const canplay = container.getAttribute('canplay');
-  // if (canplay != null && canplay === 'false') return;
+  const canplay = container.getAttribute('canplay');
+  if (canplay != null && canplay === 'false'){
+    container.style.pointerEvents = 'none';
+  }
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
