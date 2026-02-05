@@ -70,8 +70,10 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
   }
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
-  // const canplay = container.getAttribute('canplay');
-  // if (canplay != null && canplay === 'false') return;
+  const canplay = container.getAttribute('canplay');
+  if (canplay != null && canplay === 'false'){
+    container.style.pointerEvents = 'none';
+  }
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
@@ -765,7 +767,7 @@ export const handleShowCheck = () => {
     checkButton.setAttribute('data-balance-listener', 'true'); 
   }}
   } else {
-    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']")){
+    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")){
       validateObjectiveStatus();
     }
 

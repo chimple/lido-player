@@ -12,6 +12,8 @@ type QuestionBoardArgs = {
     optionText: string;
     objective: string;
     isAllowOnlyCorrect?: boolean;
+    highlightWord?: boolean;
+    audioURL?: string;
 }
 
 const meta: Meta<QuestionBoardArgs> = {
@@ -27,6 +29,8 @@ const meta: Meta<QuestionBoardArgs> = {
         optionText: { control: 'text', name: 'Option Text' },
         objective: { control: 'text', name: 'Objective', description: 'Objective to achieve the task. (E.g. 5)' },
         isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
+        highlightWord: { control: 'boolean', name: 'Highlight Word by Word' },
+        audioURL: { control: 'text', name: 'Audio URL' },
     },
     args: {
         questionBoardImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/question-board/wordwindow_frame_question.png'],
@@ -39,6 +43,8 @@ const meta: Meta<QuestionBoardArgs> = {
         optionText: 'tables',
         objective: '7',
         isAllowOnlyCorrect: true,
+        highlightWord: true,
+        audioURL: '',
     }
 }
 
@@ -155,7 +161,7 @@ function getContainerXml(args : QuestionBoardArgs) {
     
     return `
         <main>
-            	<lido-container id="question-board-container" disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Question%20board.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" >
+            	<lido-container id="question-board-container" highlight-word-by-word="${args.highlightWord}"  disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Question%20board.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" >
 
                     <!-- Chimple Avatar -->
                     <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.110px, portrait.195px" y="landscape.160px, portrait.1050px" ariaHidden="true" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='2';">
@@ -173,7 +179,7 @@ function getContainerXml(args : QuestionBoardArgs) {
                     </lido-text>
 
                     <lido-cell layout="pos" id="pos3" value="pos3" x="landscape.445px, portrait.45px" y="landscape.115px, portrait.145px" visible="true" height="landscape.60%,portrait.10%" width="landscape.55%,portrait.92%" border-radius="7px" bg-color="transparent" onEntry="this.z-index='1';">
-                        <lido-text visible="true" id="question-board-text" tab-index="3" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
+                        <lido-text visible="true" audio="${args.audioURL}" id="question-board-text" tab-index="3" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
                         </lido-text>
                     </lido-cell>
 

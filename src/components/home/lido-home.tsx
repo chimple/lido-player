@@ -595,7 +595,7 @@ export class LidoHome {
       });
 
       navBar.style.width = window.outerWidth + 'px';
-    }, 700);
+    }, 500);
   }
 
   /**
@@ -606,7 +606,7 @@ export class LidoHome {
   private renderDots() {
     const style = { pointerEvents: this.canplay ? 'none' : '' };
     return (
-      <div id="lido-dot-indicator" class="lido-dot-container">
+      <div id="lido-dot-indicator" class="lido-dot-container" style={{ visibility: 'hidden' }}>
         <div
           class="lido-exit-button popup
         -button"
@@ -614,7 +614,7 @@ export class LidoHome {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
           }}
-          style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
+          // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
         >
           <lido-image src={this.navBarIcons.exit}></lido-image>
         </div>
@@ -625,7 +625,7 @@ export class LidoHome {
             onClick={() => {
               triggerPrevcontainer();
             }}
-            style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
+            // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
             <lido-image src={this.navBarIcons.prev} />
           </div>
@@ -647,12 +647,12 @@ export class LidoHome {
               console.log('✅ Button clicked - nextBtn action triggered');
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
-            style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
+            // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} style={{ visibility: this.showNav ? 'visible' : 'hidden' }}>
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} >
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
