@@ -5140,29 +5140,570 @@ declare namespace LocalJSX {
          */
         "z"?: string;
     }
+
+    interface LidoAvatarAttributes {
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "audio": string;
+        "src": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "delayVisible": string;
+    }
+    interface LidoBalanceAttributes {
+        "pivotimage": string;
+        "scaleimage": string;
+        "handlerimage": string;
+        "fill": string;
+        "tilt": number;
+        "maxTilt": number;
+        "onEntry": string;
+        "height": string;
+        "width": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "visible": string;
+        "margin": string;
+        "padding": string;
+        "balanceSymbol": string;
+        "showSymbol": boolean;
+        "operation": string;
+    }
+    interface LidoCalculatorAttributes {
+        "width": string;
+        "visible": string;
+        "height": string;
+        "objective": string;
+        "onEntry": string;
+        "x": string;
+        "y": string;
+        "bgColor": string;
+        "penIcon": string;
+    }
+    interface LidoCanvasAttributes {
+        "bgImage": string;
+        "width": string;
+        "height": string;
+        "x": string;
+        "y": string;
+        "onEntry": string;
+    }
+    interface LidoCellAttributes {
+        "showSpeakIcon": boolean;
+        "scrollbarWidth": string;
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "gap": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": string;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "childElementsLength": number;
+        "minLength": number;
+        "maxLength": number;
+        "layout": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "margin": string;
+        "padding": string;
+        "alignItems": string;
+        "borderRadius": string;
+        "flexDirection": string;
+        "delayVisible": string;
+        "disableSpeak": boolean;
+    }
+    interface LidoColAttributes {
+        "showSpeakIcon": boolean;
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "childElementsLength": number;
+        "minLength": number;
+        "maxLength": number;
+        "direction": string;
+        "borderImage": string;
+        "boxShadow": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "margin": string;
+    }
+    interface LidoContainerAttributes {
+        "Lang": string;
+        "showDropBorder": boolean;
+        "appendToDropOnCompletion": boolean;
+        "id": string;
+        "objective": string;
+        "customStyle": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "bgImage": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "canplay": boolean;
+        "showCheck": boolean;
+        "isContinueOnCorrect": boolean;
+        "isAllowOnlyCorrect": boolean;
+        "baseUrl": string;
+        "margin": string;
+        "exitButtonUrl": string;
+        "prevButtonUrl": string;
+        "nextButtonUrl": string;
+        "speakerButtonUrl": string;
+        "showPrevButton": string;
+        "showNextButton": string;
+        "delayVisible": string;
+        "disableSpeak": boolean;
+        "templateId": string;
+        "highlightWordByWord": boolean;
+    }
+    interface LidoFlashCardAttributes {
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "direction": string;
+        "display": string;
+        "front": string;
+        "back": string;
+        "flipped": boolean;
+        "margin": string;
+        "disableSpeak": boolean;
+        "delayVisible": string;
+    }
+    interface LidoFloatAttributes {
+        "id": string;
+        "value": string;
+        "z": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "onEntry": string;
+        "width": string;
+        "height": string;
+        "bgColor": string;
+        "type": string;
+        "delayVisible": string;
+        "floatDirection": string;
+    }
+    interface LidoHomeAttributes {
+        "commonAudioPath": string;
+        "showNav": boolean;
+        "Lang": string;
+        "xmlData": string;
+        "initialIndex": number;
+        "canplay": boolean;
+        "baseUrl": string;
+        "height": string;
+        "exitButtonUrl": string;
+        "prevButtonUrl": string;
+        "nextButtonUrl": string;
+        "speakerButtonUrl": string;
+        "avatarUrl": string;
+        "uuid": string;
+    }
+    interface LidoImageAttributes {
+        "showSpeakIcon": boolean;
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": string;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "src": string;
+        "isSlice": string;
+        "sliceWidth": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "margin": string;
+        "padding": string;
+        "filter": string;
+        "borderRadius": string;
+        "transform": string;
+        "delayVisible": string;
+        "disableSpeak": boolean;
+    }
+    interface LidoKeyboardAttributes {
+        "keys": string;
+        "width": string;
+        "height": string;
+        "fontSize": string;
+        "fontColor": string;
+        "fontFamily": string;
+        "gap": string;
+        "bgColor": string;
+        "borderRadius": string;
+        "y": string;
+        "x": string;
+        "z": string;
+        "margin": string;
+        "padding": string;
+        "visible": string;
+        "onEntry": string;
+        "type": string;
+        "keyboardInput": boolean;
+        "columns": string;
+        "letterLength": number;
+        "disableSpeak": boolean;
+    }
+    interface LidoMathMatrixAttributes {
+        "rows": string;
+        "cols": string;
+        "defualtFill": number;
+        "leftIndex": boolean;
+        "topIndex": boolean;
+        "bottomIndex": boolean;
+        "clickable": boolean;
+        "activeOnlyVisible": boolean;
+        "matrixImage": string;
+        "activeBgColor": string;
+        "deactiveBgColor": string;
+        "border": string;
+        "height": string;
+        "width": string;
+        "borderRadius": string;
+        "z": string;
+        "margin": string;
+        "padding": string;
+        "visible": string;
+        "text": string;
+        "type": string;
+        "value": string;
+        "tabIndex": number;
+        "x": string;
+        "y": string;
+        "fontColor": string;
+        "onCorrect": string;
+        "onInCorrect": string;
+        "onEntry": string;
+    }
+    interface LidoPosAttributes {
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": string;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "margin": string;
+    }
+    interface LidoRandomAttributes {
+        "showSpeakIcon": boolean;
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "margin": string;
+    }
+    interface LidoRootAttributes {
+        "Lang": string;
+        "xmlPath": string;
+        "initialIndex": number;
+        "margin": string;
+        "canplay": boolean;
+        "baseUrl": string;
+        "exitButtonUrl": string;
+        "prevButtonUrl": string;
+        "nextButtonUrl": string;
+        "speakerButtonUrl": string;
+    }
+    interface LidoRowAttributes {
+        "showSpeakIcon": boolean;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "childElementsLength": number;
+        "minLength": number;
+        "maxLength": number;
+        "direction": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "display": string;
+        "margin": string;
+        "disableSpeak": boolean;
+    }
+    interface LidoShapeAttributes {
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "shapeType": string;
+        "visible": boolean;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "margin": string;
+        "delayVisible": string;
+        "disableSpeak": boolean;
+    }
+    interface LidoSlideFillAttributes {
+        "id": string;
+        "width": string;
+        "height": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "visible": string;
+        "margin": string;
+        "padding": string;
+        "borderRadius": string;
+        "fill": string;
+        "numberType": string;
+        "min": number;
+        "division": number;
+        "max": number;
+        "slider": boolean;
+        "src": string;
+        "fillDirection": string;
+        "type": string;
+        "onEntry": string;
+        "delayVisible": string;
+        "disableSpeak": boolean;
+    }
+    interface LidoTextAttributes {
+        "showSpeakIcon": boolean;
+        "id": string;
+        "value": string;
+        "string": string;
+        "fontFamily": string;
+        "fontSize": string;
+        "fontColor": string;
+        "highlightWhileSpeaking": boolean;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "borderImage": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": string;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "onEntry": string;
+        "margin": string;
+        "padding": string;
+        "borderRadius": string;
+        "spanType": 'letters' | 'words' | '';
+        "delayVisible": string;
+        "disableSpeak": boolean;
+    }
+    interface LidoTraceAttributes {
+        "showSpeakIcon": boolean;
+        "id": string;
+        "svgSource": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "audio": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "tabIndex": number;
+        "mode": string;
+        "fingerHintUrl": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "highlightTextId": string;
+        "animationTrace": boolean;
+        "delayVisible": string;
+        "disableSpeak": boolean;
+    }
+    interface LidoWrapAttributes {
+        "showSpeakIcon": boolean;
+        "id": string;
+        "value": string;
+        "height": string;
+        "width": string;
+        "ariaLabel": string;
+        "ariaHidden": string;
+        "x": string;
+        "y": string;
+        "z": string;
+        "bgColor": string;
+        "type": string;
+        "tabIndex": number;
+        "visible": boolean;
+        "audio": string;
+        "onTouch": string;
+        "onInCorrect": string;
+        "onCorrect": string;
+        "onEntry": string;
+        "childElementsLength": number;
+        "minLength": number;
+        "maxLength": number;
+        "flex": string;
+        "minDrops": number;
+        "maxDrops": number;
+        "margin": string;
+        "disableSpeak": boolean;
+    }
+
     interface IntrinsicElements {
-        "lido-avatar": LidoAvatar;
-        "lido-balance": LidoBalance;
-        "lido-calculator": LidoCalculator;
-        "lido-canvas": LidoCanvas;
-        "lido-cell": LidoCell;
-        "lido-col": LidoCol;
-        "lido-container": LidoContainer;
-        "lido-flash-card": LidoFlashCard;
-        "lido-float": LidoFloat;
-        "lido-home": LidoHome;
-        "lido-image": LidoImage;
-        "lido-keyboard": LidoKeyboard;
-        "lido-math-matrix": LidoMathMatrix;
-        "lido-pos": LidoPos;
-        "lido-random": LidoRandom;
-        "lido-root": LidoRoot;
-        "lido-row": LidoRow;
-        "lido-shape": LidoShape;
-        "lido-slide-fill": LidoSlideFill;
-        "lido-text": LidoText;
-        "lido-trace": LidoTrace;
-        "lido-wrap": LidoWrap;
+        "lido-avatar": Omit<LidoAvatar, keyof LidoAvatarAttributes> & { [K in keyof LidoAvatar & keyof LidoAvatarAttributes]?: LidoAvatar[K] } & { [K in keyof LidoAvatar & keyof LidoAvatarAttributes as `attr:${K}`]?: LidoAvatarAttributes[K] } & { [K in keyof LidoAvatar & keyof LidoAvatarAttributes as `prop:${K}`]?: LidoAvatar[K] };
+        "lido-balance": Omit<LidoBalance, keyof LidoBalanceAttributes> & { [K in keyof LidoBalance & keyof LidoBalanceAttributes]?: LidoBalance[K] } & { [K in keyof LidoBalance & keyof LidoBalanceAttributes as `attr:${K}`]?: LidoBalanceAttributes[K] } & { [K in keyof LidoBalance & keyof LidoBalanceAttributes as `prop:${K}`]?: LidoBalance[K] };
+        "lido-calculator": Omit<LidoCalculator, keyof LidoCalculatorAttributes> & { [K in keyof LidoCalculator & keyof LidoCalculatorAttributes]?: LidoCalculator[K] } & { [K in keyof LidoCalculator & keyof LidoCalculatorAttributes as `attr:${K}`]?: LidoCalculatorAttributes[K] } & { [K in keyof LidoCalculator & keyof LidoCalculatorAttributes as `prop:${K}`]?: LidoCalculator[K] };
+        "lido-canvas": Omit<LidoCanvas, keyof LidoCanvasAttributes> & { [K in keyof LidoCanvas & keyof LidoCanvasAttributes]?: LidoCanvas[K] } & { [K in keyof LidoCanvas & keyof LidoCanvasAttributes as `attr:${K}`]?: LidoCanvasAttributes[K] } & { [K in keyof LidoCanvas & keyof LidoCanvasAttributes as `prop:${K}`]?: LidoCanvas[K] };
+        "lido-cell": Omit<LidoCell, keyof LidoCellAttributes> & { [K in keyof LidoCell & keyof LidoCellAttributes]?: LidoCell[K] } & { [K in keyof LidoCell & keyof LidoCellAttributes as `attr:${K}`]?: LidoCellAttributes[K] } & { [K in keyof LidoCell & keyof LidoCellAttributes as `prop:${K}`]?: LidoCell[K] };
+        "lido-col": Omit<LidoCol, keyof LidoColAttributes> & { [K in keyof LidoCol & keyof LidoColAttributes]?: LidoCol[K] } & { [K in keyof LidoCol & keyof LidoColAttributes as `attr:${K}`]?: LidoColAttributes[K] } & { [K in keyof LidoCol & keyof LidoColAttributes as `prop:${K}`]?: LidoCol[K] };
+        "lido-container": Omit<LidoContainer, keyof LidoContainerAttributes> & { [K in keyof LidoContainer & keyof LidoContainerAttributes]?: LidoContainer[K] } & { [K in keyof LidoContainer & keyof LidoContainerAttributes as `attr:${K}`]?: LidoContainerAttributes[K] } & { [K in keyof LidoContainer & keyof LidoContainerAttributes as `prop:${K}`]?: LidoContainer[K] };
+        "lido-flash-card": Omit<LidoFlashCard, keyof LidoFlashCardAttributes> & { [K in keyof LidoFlashCard & keyof LidoFlashCardAttributes]?: LidoFlashCard[K] } & { [K in keyof LidoFlashCard & keyof LidoFlashCardAttributes as `attr:${K}`]?: LidoFlashCardAttributes[K] } & { [K in keyof LidoFlashCard & keyof LidoFlashCardAttributes as `prop:${K}`]?: LidoFlashCard[K] };
+        "lido-float": Omit<LidoFloat, keyof LidoFloatAttributes> & { [K in keyof LidoFloat & keyof LidoFloatAttributes]?: LidoFloat[K] } & { [K in keyof LidoFloat & keyof LidoFloatAttributes as `attr:${K}`]?: LidoFloatAttributes[K] } & { [K in keyof LidoFloat & keyof LidoFloatAttributes as `prop:${K}`]?: LidoFloat[K] };
+        "lido-home": Omit<LidoHome, keyof LidoHomeAttributes> & { [K in keyof LidoHome & keyof LidoHomeAttributes]?: LidoHome[K] } & { [K in keyof LidoHome & keyof LidoHomeAttributes as `attr:${K}`]?: LidoHomeAttributes[K] } & { [K in keyof LidoHome & keyof LidoHomeAttributes as `prop:${K}`]?: LidoHome[K] };
+        "lido-image": Omit<LidoImage, keyof LidoImageAttributes> & { [K in keyof LidoImage & keyof LidoImageAttributes]?: LidoImage[K] } & { [K in keyof LidoImage & keyof LidoImageAttributes as `attr:${K}`]?: LidoImageAttributes[K] } & { [K in keyof LidoImage & keyof LidoImageAttributes as `prop:${K}`]?: LidoImage[K] };
+        "lido-keyboard": Omit<LidoKeyboard, keyof LidoKeyboardAttributes> & { [K in keyof LidoKeyboard & keyof LidoKeyboardAttributes]?: LidoKeyboard[K] } & { [K in keyof LidoKeyboard & keyof LidoKeyboardAttributes as `attr:${K}`]?: LidoKeyboardAttributes[K] } & { [K in keyof LidoKeyboard & keyof LidoKeyboardAttributes as `prop:${K}`]?: LidoKeyboard[K] };
+        "lido-math-matrix": Omit<LidoMathMatrix, keyof LidoMathMatrixAttributes> & { [K in keyof LidoMathMatrix & keyof LidoMathMatrixAttributes]?: LidoMathMatrix[K] } & { [K in keyof LidoMathMatrix & keyof LidoMathMatrixAttributes as `attr:${K}`]?: LidoMathMatrixAttributes[K] } & { [K in keyof LidoMathMatrix & keyof LidoMathMatrixAttributes as `prop:${K}`]?: LidoMathMatrix[K] };
+        "lido-pos": Omit<LidoPos, keyof LidoPosAttributes> & { [K in keyof LidoPos & keyof LidoPosAttributes]?: LidoPos[K] } & { [K in keyof LidoPos & keyof LidoPosAttributes as `attr:${K}`]?: LidoPosAttributes[K] } & { [K in keyof LidoPos & keyof LidoPosAttributes as `prop:${K}`]?: LidoPos[K] };
+        "lido-random": Omit<LidoRandom, keyof LidoRandomAttributes> & { [K in keyof LidoRandom & keyof LidoRandomAttributes]?: LidoRandom[K] } & { [K in keyof LidoRandom & keyof LidoRandomAttributes as `attr:${K}`]?: LidoRandomAttributes[K] } & { [K in keyof LidoRandom & keyof LidoRandomAttributes as `prop:${K}`]?: LidoRandom[K] };
+        "lido-root": Omit<LidoRoot, keyof LidoRootAttributes> & { [K in keyof LidoRoot & keyof LidoRootAttributes]?: LidoRoot[K] } & { [K in keyof LidoRoot & keyof LidoRootAttributes as `attr:${K}`]?: LidoRootAttributes[K] } & { [K in keyof LidoRoot & keyof LidoRootAttributes as `prop:${K}`]?: LidoRoot[K] };
+        "lido-row": Omit<LidoRow, keyof LidoRowAttributes> & { [K in keyof LidoRow & keyof LidoRowAttributes]?: LidoRow[K] } & { [K in keyof LidoRow & keyof LidoRowAttributes as `attr:${K}`]?: LidoRowAttributes[K] } & { [K in keyof LidoRow & keyof LidoRowAttributes as `prop:${K}`]?: LidoRow[K] };
+        "lido-shape": Omit<LidoShape, keyof LidoShapeAttributes> & { [K in keyof LidoShape & keyof LidoShapeAttributes]?: LidoShape[K] } & { [K in keyof LidoShape & keyof LidoShapeAttributes as `attr:${K}`]?: LidoShapeAttributes[K] } & { [K in keyof LidoShape & keyof LidoShapeAttributes as `prop:${K}`]?: LidoShape[K] };
+        "lido-slide-fill": Omit<LidoSlideFill, keyof LidoSlideFillAttributes> & { [K in keyof LidoSlideFill & keyof LidoSlideFillAttributes]?: LidoSlideFill[K] } & { [K in keyof LidoSlideFill & keyof LidoSlideFillAttributes as `attr:${K}`]?: LidoSlideFillAttributes[K] } & { [K in keyof LidoSlideFill & keyof LidoSlideFillAttributes as `prop:${K}`]?: LidoSlideFill[K] };
+        "lido-text": Omit<LidoText, keyof LidoTextAttributes> & { [K in keyof LidoText & keyof LidoTextAttributes]?: LidoText[K] } & { [K in keyof LidoText & keyof LidoTextAttributes as `attr:${K}`]?: LidoTextAttributes[K] } & { [K in keyof LidoText & keyof LidoTextAttributes as `prop:${K}`]?: LidoText[K] };
+        "lido-trace": Omit<LidoTrace, keyof LidoTraceAttributes> & { [K in keyof LidoTrace & keyof LidoTraceAttributes]?: LidoTrace[K] } & { [K in keyof LidoTrace & keyof LidoTraceAttributes as `attr:${K}`]?: LidoTraceAttributes[K] } & { [K in keyof LidoTrace & keyof LidoTraceAttributes as `prop:${K}`]?: LidoTrace[K] };
+        "lido-wrap": Omit<LidoWrap, keyof LidoWrapAttributes> & { [K in keyof LidoWrap & keyof LidoWrapAttributes]?: LidoWrap[K] } & { [K in keyof LidoWrap & keyof LidoWrapAttributes as `attr:${K}`]?: LidoWrapAttributes[K] } & { [K in keyof LidoWrap & keyof LidoWrapAttributes as `prop:${K}`]?: LidoWrap[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -5177,17 +5718,17 @@ declare module "@stencil/core" {
              * events based on user interactions.
              * This component initializes and manages a Rive animation inside a canvas element.
              */
-            "lido-avatar": LocalJSX.LidoAvatar & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
-            "lido-balance": LocalJSX.LidoBalance & JSXBase.HTMLAttributes<HTMLLidoBalanceElement>;
-            "lido-calculator": LocalJSX.LidoCalculator & JSXBase.HTMLAttributes<HTMLLidoCalculatorElement>;
-            "lido-canvas": LocalJSX.LidoCanvas & JSXBase.HTMLAttributes<HTMLLidoCanvasElement>;
+            "lido-avatar": LocalJSX.IntrinsicElements["lido-avatar"] & JSXBase.HTMLAttributes<HTMLLidoAvatarElement>;
+            "lido-balance": LocalJSX.IntrinsicElements["lido-balance"] & JSXBase.HTMLAttributes<HTMLLidoBalanceElement>;
+            "lido-calculator": LocalJSX.IntrinsicElements["lido-calculator"] & JSXBase.HTMLAttributes<HTMLLidoCalculatorElement>;
+            "lido-canvas": LocalJSX.IntrinsicElements["lido-canvas"] & JSXBase.HTMLAttributes<HTMLLidoCanvasElement>;
             /**
              * @component LidoCell
              * A flexible UI cell component configurable via props like size, position, visibility,
              * background, and events. Supports layout flows (`wrap`, `flex`, `row`, `col`, `pos`, `random`), accessibility,
              * audio, and dynamic child management for rich interactive content.
              */
-            "lido-cell": LocalJSX.LidoCell & JSXBase.HTMLAttributes<HTMLLidoCellElement>;
+            "lido-cell": LocalJSX.IntrinsicElements["lido-cell"] & JSXBase.HTMLAttributes<HTMLLidoCellElement>;
             /**
              * @component LidoCol
              * The `LidoCol` component is a dynamic column-like UI element that can be
@@ -5196,23 +5737,23 @@ declare module "@stencil/core" {
              * containers (`lido-container`) and can include child components like
              * `lido-text`, `lido-row`, etc.
              */
-            "lido-col": LocalJSX.LidoCol & JSXBase.HTMLAttributes<HTMLLidoColElement>;
+            "lido-col": LocalJSX.IntrinsicElements["lido-col"] & JSXBase.HTMLAttributes<HTMLLidoColElement>;
             /**
              * @component LidoContainer
              * The `LidoContainer` component acts as a container for other elements. It scales responsively
              * based on the window size, adjusts background color, and provides various configurable properties
              * such as dimensions, positioning, visibility, and custom event handlers.
              */
-            "lido-container": LocalJSX.LidoContainer & JSXBase.HTMLAttributes<HTMLLidoContainerElement>;
-            "lido-flash-card": LocalJSX.LidoFlashCard & JSXBase.HTMLAttributes<HTMLLidoFlashCardElement>;
-            "lido-float": LocalJSX.LidoFloat & JSXBase.HTMLAttributes<HTMLLidoFloatElement>;
+            "lido-container": LocalJSX.IntrinsicElements["lido-container"] & JSXBase.HTMLAttributes<HTMLLidoContainerElement>;
+            "lido-flash-card": LocalJSX.IntrinsicElements["lido-flash-card"] & JSXBase.HTMLAttributes<HTMLLidoFlashCardElement>;
+            "lido-float": LocalJSX.IntrinsicElements["lido-float"] & JSXBase.HTMLAttributes<HTMLLidoFloatElement>;
             /**
              * @component LidoHome
              * The `LidoHome` component renders a series of containers parsed from the provided XML data.
              * It handles navigation between containers, resets the state on page reloads or container transitions,
              * and displays progress indicators (dots) for each container.
              */
-            "lido-home": LocalJSX.LidoHome & JSXBase.HTMLAttributes<HTMLLidoHomeElement>;
+            "lido-home": LocalJSX.IntrinsicElements["lido-home"] & JSXBase.HTMLAttributes<HTMLLidoHomeElement>;
             /**
              * @component LidoImage
              * The `LidoImage` component displays an image element within a container. It is a versatile
@@ -5220,59 +5761,59 @@ declare module "@stencil/core" {
              * The component is designed to work in different types of environments, supporting custom
              * events such as touch, match, and entry events.
              */
-            "lido-image": LocalJSX.LidoImage & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
-            "lido-keyboard": LocalJSX.LidoKeyboard & JSXBase.HTMLAttributes<HTMLLidoKeyboardElement>;
-            "lido-math-matrix": LocalJSX.LidoMathMatrix & JSXBase.HTMLAttributes<HTMLLidoMathMatrixElement>;
+            "lido-image": LocalJSX.IntrinsicElements["lido-image"] & JSXBase.HTMLAttributes<HTMLLidoImageElement>;
+            "lido-keyboard": LocalJSX.IntrinsicElements["lido-keyboard"] & JSXBase.HTMLAttributes<HTMLLidoKeyboardElement>;
+            "lido-math-matrix": LocalJSX.IntrinsicElements["lido-math-matrix"] & JSXBase.HTMLAttributes<HTMLLidoMathMatrixElement>;
             /**
              * @component LidoPos
              * The `LidoPos` component is used to position a block-level element with dynamic styling and event handling.
              * It supports positioning with `x` and `y` coordinates, sizing with `height` and `width`, and custom
              * events for interaction such as touch, match, and entry events.
              */
-            "lido-pos": LocalJSX.LidoPos & JSXBase.HTMLAttributes<HTMLLidoPosElement>;
+            "lido-pos": LocalJSX.IntrinsicElements["lido-pos"] & JSXBase.HTMLAttributes<HTMLLidoPosElement>;
             /**
              * @component LidoRandom
              * The `LidoRandom` component randomly positions its child elements within its container.
              * This component can be used when a random layout of elements is required. It allows
              * full customization via props such as dimensions, positioning, visibility, and event handling.
              */
-            "lido-random": LocalJSX.LidoRandom & JSXBase.HTMLAttributes<HTMLLidoRandomElement>;
+            "lido-random": LocalJSX.IntrinsicElements["lido-random"] & JSXBase.HTMLAttributes<HTMLLidoRandomElement>;
             /**
              * @component LidoRoot
              * The `LidoRoot` component is the main application entry point. It loads an external XML data file
              * from a specified URL or asset path and passes it down to the `lido-home` component for rendering.
              * The XML path can be configured via a prop.
              */
-            "lido-root": LocalJSX.LidoRoot & JSXBase.HTMLAttributes<HTMLLidoRootElement>;
+            "lido-root": LocalJSX.IntrinsicElements["lido-root"] & JSXBase.HTMLAttributes<HTMLLidoRootElement>;
             /**
              * @component LidoRow
              * The `LidoRow` component is used to create a flexible row element that can contain other elements.
              * It supports dynamic positioning, sizing, visibility control, and custom events for interaction.
              */
-            "lido-row": LocalJSX.LidoRow & JSXBase.HTMLAttributes<HTMLLidoRowElement>;
+            "lido-row": LocalJSX.IntrinsicElements["lido-row"] & JSXBase.HTMLAttributes<HTMLLidoRowElement>;
             /**
              * @component LidoShape
              * The `LidoShape` component is used to display various types of shapes like rectangles, circles, or polygons.
              * The shape's appearance is dynamically controlled by props such as dimensions, position, visibility, and the type of shape.
              * Additionally, it supports custom events for interaction like touch, match, and entry.
              */
-            "lido-shape": LocalJSX.LidoShape & JSXBase.HTMLAttributes<HTMLLidoShapeElement>;
-            "lido-slide-fill": LocalJSX.LidoSlideFill & JSXBase.HTMLAttributes<HTMLLidoSlideFillElement>;
+            "lido-shape": LocalJSX.IntrinsicElements["lido-shape"] & JSXBase.HTMLAttributes<HTMLLidoShapeElement>;
+            "lido-slide-fill": LocalJSX.IntrinsicElements["lido-slide-fill"] & JSXBase.HTMLAttributes<HTMLLidoSlideFillElement>;
             /**
              * @component LidoText
              * The `LidoText` component is used to display text with customizable styling.
              * It allows you to set the font, size, color, and background color, along with
              * positioning and visibility control. The component supports custom events like touch, match, and entry.
              */
-            "lido-text": LocalJSX.LidoText & JSXBase.HTMLAttributes<HTMLLidoTextElement>;
-            "lido-trace": LocalJSX.LidoTrace & JSXBase.HTMLAttributes<HTMLLidoTraceElement>;
+            "lido-text": LocalJSX.IntrinsicElements["lido-text"] & JSXBase.HTMLAttributes<HTMLLidoTextElement>;
+            "lido-trace": LocalJSX.IntrinsicElements["lido-trace"] & JSXBase.HTMLAttributes<HTMLLidoTraceElement>;
             /**
              * @component LidoWrap
              * The `LidoWrap` component acts as a flexible container that supports dynamic positioning, sizing, and layout.
              * The component can display its content as a grid and supports custom events like touch, match, and entry.
              * It allows for full customization via props like dimensions, background color, visibility, and z-index.
              */
-            "lido-wrap": LocalJSX.LidoWrap & JSXBase.HTMLAttributes<HTMLLidoWrapElement>;
+            "lido-wrap": LocalJSX.IntrinsicElements["lido-wrap"] & JSXBase.HTMLAttributes<HTMLLidoWrapElement>;
         }
     }
 }
