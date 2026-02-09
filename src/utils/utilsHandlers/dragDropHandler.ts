@@ -74,6 +74,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     console.error(`Container with ID "container" not found.`);
     return;
   }
+  if(container.getAttribute("canplay") === "false")return;
 
   handlingElementFlexibleWidth(element, 'drag');
 
@@ -812,6 +813,8 @@ export function handleDropElement(element: HTMLElement): void {
 }
 
 export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if(container.getAttribute('canplay') === 'false') return;
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
 

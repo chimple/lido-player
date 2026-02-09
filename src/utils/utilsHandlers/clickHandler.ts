@@ -65,6 +65,8 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
 
 export function addClickListenerForClickType(element: HTMLElement): void {
   handlingElementFlexibleWidth(element, 'click');
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if(container.getAttribute('canplay') === 'false')return;
   element.style.cursor = 'pointer';
   if (!element) {
     console.error('No element provided.');
@@ -72,8 +74,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
-    const container = document.getElementById(LidoContainer) as HTMLElement;
-    
+ 
     const lido_buttons = element.getAttribute('id');
     if (lido_buttons === 'lido-arrow-left' || lido_buttons === 'lido-arrow-right') {
       return;
