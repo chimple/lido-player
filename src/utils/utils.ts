@@ -793,8 +793,10 @@ export const validateObjectiveStatus = async () => {
       if (onCorrect) {
         await executeActions(onCorrect, container);
       }
-      storeActivityScore(100);
       storingEachActivityScore(true);
+      storeActivityScore(100);
+      gameScore.rightMoves = 0;
+      gameScore.wrongMoves = 0;
       triggerNextContainer();
       return;
     }
