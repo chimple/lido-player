@@ -1,3 +1,4 @@
+import { re } from 'mathjs';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey,DropToAttr } from '../constants';
 
 import {calculateScale,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
@@ -47,6 +48,7 @@ export function enableReorderDrag(element: HTMLElement): void {
   let startY = 0;
 
   const container = document.getElementById(LidoContainer) as HTMLElement;
+  if(!container || container.getAttribute("canplay") === "false") return;
   const blankArea = document.querySelector('[type="blank"]') as HTMLElement;
   const wordParent = element.parentElement !== blankArea ? element.parentElement : null;
   const elementType = element.getAttribute('type');
@@ -246,6 +248,8 @@ export function enableReorderDrag(element: HTMLElement): void {
   };
 
   const onClickElement = (element: HTMLElement) => {
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    if(container.getAttribute('canplay') === 'false')return;
     if (elementType === 'option') {
       const categoryArr = container.querySelectorAll('[type="category"]');
       let category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
