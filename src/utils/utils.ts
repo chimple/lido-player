@@ -70,10 +70,6 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
   }
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
-  const canplay = container.getAttribute('canplay');
-  if (canplay != null && canplay === 'false'){
-    container.style.pointerEvents = 'none';
-  }
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
@@ -205,6 +201,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
         case 'nextBtn': {
           const container = document.getElementById(LidoContainer) as HTMLElement;
+          if(container.getAttribute('canplay') === 'false')return;
           if (container.getAttribute('is-continue-on-correct') !== 'true') {
             targetElement.style.pointerEvents = 'none';
             AudioPlayer.getI().stop();
@@ -797,8 +794,10 @@ export const validateObjectiveStatus = async () => {
       if (onCorrect) {
         await executeActions(onCorrect, container);
       }
-      storeActivityScore(100);
       storingEachActivityScore(true);
+      storeActivityScore(100);
+      gameScore.rightMoves = 0;
+      gameScore.wrongMoves = 0;
       triggerNextContainer();
       return;
     }

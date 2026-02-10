@@ -98,6 +98,9 @@ export function slidingWithScaling(element: HTMLElement): void {
     return;
   }
 
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if(container.getAttribute('canplay') === 'false')return;
+
   let verticalDistance;
   let horizontalDistance;
 

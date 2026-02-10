@@ -274,7 +274,7 @@ export class LidoHome {
     // } else {
     //   this.updateBackgroundImage();
     // }
-    this.currentContainerIndex = 0;
+    // this.currentContainerIndex = 0;
 
     this.handleIcons();
 
