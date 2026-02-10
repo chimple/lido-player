@@ -201,6 +201,7 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
         case 'nextBtn': {
           const container = document.getElementById(LidoContainer) as HTMLElement;
+          if(container.getAttribute('canplay') === 'false')return;
           if (container.getAttribute('is-continue-on-correct') !== 'true') {
             targetElement.style.pointerEvents = 'none';
             AudioPlayer.getI().stop();
