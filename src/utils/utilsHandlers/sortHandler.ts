@@ -49,6 +49,9 @@ export function enableReorderDrag(element: HTMLElement): void {
 
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if(!container || container.getAttribute("canplay") === "false") return;
+  Array.from(element.children).forEach(child => {
+    (child as HTMLElement).style.pointerEvents = 'none';
+  });
   const blankArea = document.querySelector('[type="blank"]') as HTMLElement;
   const wordParent = element.parentElement !== blankArea ? element.parentElement : null;
   const elementType = element.getAttribute('type');
