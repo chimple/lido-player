@@ -1402,13 +1402,13 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
     cell.classList.remove('lido-box-highlight');
   }
 
-  // checkout parent cell first then pick the first text child inside cell
+  // checkout parent cell first then pick the second text child inside cell
   const parentCell = document.getElementById(LidoContainer) as HTMLElement | null;
   if (!parentCell) return;
-  const firstTextChild = parentCell.querySelector('lido-text') as HTMLElement | null;
-  if (firstTextChild) {
+  const instructionText = parentCell.children[2] as HTMLElement | null; 
+  if (instructionText) {
     // play the text child inside parent cell
-    await AudioPlayer.getI().play(firstTextChild);
+    await AudioPlayer.getI().play(instructionText);
   }
 
   // Now select each box cell's text child and play them one by one
@@ -1454,9 +1454,9 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
   if (!value) return;
 
   // Expecting structure: [_, TopRow, questionRow, optionRow, ...]
-  const TopRow = Array.from(element.children)[2] as HTMLElement | null;
-  const questionRow = Array.from(element.children)[3] as HTMLElement | null;
-  const optionRow = Array.from(element.children)[4] as HTMLElement | null;
+  const TopRow = Array.from(element.children)[3] as HTMLElement | null;
+  const questionRow = Array.from(element.children)[4] as HTMLElement | null;
+  const optionRow = Array.from(element.children)[5] as HTMLElement | null;
 
   if (!TopRow || !questionRow || !optionRow) return;
 
