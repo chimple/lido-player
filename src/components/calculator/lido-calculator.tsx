@@ -187,6 +187,7 @@ export class LidoCalculator {
           <div class="lido-calculator-displayParent">
             <div class="lido-calculator-display">{this.displayValue}</div>
           </div>
+
           <div class="lido-calculator-buttons">{numbers.map((num, i) => (
            <lido-text id={`btn-${i}`} string={num} visible="true" type="click" class={{
         'lido-calculator-btn-special': num === '←' || num === 'OK',
