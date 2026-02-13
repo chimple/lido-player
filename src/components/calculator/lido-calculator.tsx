@@ -97,7 +97,7 @@ export class LidoCalculator {
     if (this.objective && this.objective !='' && !this.objective.includes(',')) {
       console.log("hi iscorrect verified");
       
-      isCorrect = userInput === this.objective;
+      isCorrect = Number(userInput) === Number(this.objective);
     } 
 
   // --- Multiple Objectives ---
