@@ -1558,7 +1558,8 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
     elementAppearance(false);
   }
 }
-  function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr) {
+
+function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr) {
   const dropRect = dropElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
 
@@ -1580,8 +1581,22 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
     const shiftX = dropWidth * 0.02;  // proportional (5% of width)
     const shiftY = dropHeight * 0.02; // proportional (5% of height)
 
-    const startX = dropRect.left + dropWidth * 0.36;  // 10% inside
-    const startY = dropRect.top + dropHeight * -0.09; // slightly above
+    let startX, startY;
+
+    if(dropElement.id === "unitsDrop") {
+        startX = dropRect.left + dropWidth * 0.15;  // 15% from left for better centering of multiple items
+        startY = dropRect.top + dropHeight * -0.10; // slightly above
+    }
+    else if(dropElement.id === "tensDrop")
+    {
+        startX = dropRect.left + dropWidth * 0.40;  // 40% from left for better centering of multiple items
+        startY = dropRect.top + dropHeight * -0.10; // slightly above
+    }
+    else
+    { 
+        startX = dropRect.left + dropWidth * 0.10;  // 10% from left for better centering of multiple items
+        startY = dropRect.top + dropHeight * -0.10; // slightly above
+    }
 
     targetX = startX + (dropCount * shiftX);
     targetY = startY + (dropCount * shiftY);
