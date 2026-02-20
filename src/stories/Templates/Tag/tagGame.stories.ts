@@ -39,15 +39,25 @@ function getContainerXml(args) {
   return `<main>
 <lido-container id="lido-container" value="maincontainer" objective="${args.correct1},${args.correct2},${args.correct3},${args.correct4}" aria-label="This is a multiple-option question. Select one option from the list." x="0" y="0" z="0" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/tag/Spring.png" visible="true" audio="background1.mp3" onTouch="" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000;pos1.animation='placeToLeft 2.5s linear';this.sleep='2000';" onEntry="" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="true">
 		<lido-cell id="pos1" layout="landscape.row, portrait.col" height="100%" width="100%" visible="true" bg-color="transparent">
-			<lido-cell layout="landscape.col, portrait.row" id="pos2" disable-edit="true" value="pos2" margin="landscape.0% 4% 41% -3%, portrait.2% 69% 0% 0%" height="landscape.56%, portrait.28%" width="landscape.28%, portrait.38%" x="landscape.-11%, portrait.-5%" y="landscape.-6%, portrait.-39%" aria-hidden="true" z="5" bg-color="transparent" visible="true" onEntry="this.animation='leftToPlace 2.5s linear';">
-				<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
-				</lido-avatar>
-			</lido-cell>
+			
 			<lido-cell id="pos3" layout="landscape.col, portrait.row" disable-edit="true" value="pos" aria-hidden="true" x="0" y="0" z="0" bg-color="transparent" type="" visible="true" audio="" onTouch="" onCorrect="" width="100%" height="100%" onEntry="">
 				<lido-cell id="pos4" layout="pos" disable-edit="true" value="pos" aria-hidden="true" x="0" y="0" z="0" bg-color="transparent" type="" visible="true" audio="" onTouch="" width="100%" height="100%" onEntry="this.animation='rightToPlace 2.5s linear'; this.sleep='2000'">
-					<lido-image width="landscape.87%, portrait.138%" height="landscape.137%, portrait.51%" y="landscape.-16%, portrait.32%" x="landscape.0%, portrait.-23%" custom-style=".redBg{background-color: red !important;} .greenBg{background-color: green !important; color: white !important;}" id="image1" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/tag/truck.png" onEntry="">
+
+          <lido-cell layout="landscape.pos, portrait.row" id="pos2" disable-edit="true" value="pos2" margin="landscape.0, portrait.2% 69% 0% 0%" height="landscape.47%, portrait.28%" width="landscape.20%, portrait.38%" x="landscape.2%, portrait.-5%" y="landscape.21%, portrait.-39%" aria-hidden="true" z="-1" bg-color="transparent" visible="true" onEntry="">
+            <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="100%" width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
+            </lido-avatar>
+          </lido-cell>
+
+          <lido-cell layout="row" width="87%" height="92%" visible="true" y="85px" x="-263px">
+            <lido-image width="landscape.87%, portrait.138%" height="landscape.137%, portrait.51%" y="landscape.-16%, portrait.32%" x="landscape.0%, portrait.-23%" custom-style=".redBg{background-color: red !important;} .greenBg{background-color: green !important; color: white !important;}" id="image1" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/truck.png" onEntry="">
+            </lido-image>
+            <lido-cell layout="col" width="95%" height="86%" visible="true" bg-color="#F78315" margin="0 0 100px 0" ></lido-cell>
+          </lido-cell>
+
+          <lido-image  height="landscape.21%, portrait.23%" y="landscape.705px, portrait.43%" x="landscape.850px, portrait.34%" z="-1" id="image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/letterboard/wheel.png" onEntry="">
 					</lido-image>
-					<lido-image width="landscape.42%, portrait.51%" height="landscape.45%, portrait.23%" y="landscape.23%, portrait.43%" x="landscape.30%, portrait.34%" z="2" id="image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/tag/face.png" onEntry="">
+          
+					<lido-image  height="landscape.76%, portrait.23%" y="landscape.13%, portrait.43%" x="landscape.26%, portrait.34%" z="2" id="image2" disable-edit="true" visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/tag/face.png" onEntry="">
 					</lido-image>
 					<lido-text id="text1" visible="true" width="landscape.16%, portrait.25%" height="landscape.9%, portrait.6%" z="3" x="landscape.43%, portrait.46%" y="landscape.23%, portrait.41%" type="drop" value="${args.option1}" isAllowOnlyOneDrop="true" onEntry="this.border='5px dashed black'" bg-color="#fbfbfbcf"></lido-text>
 					<lido-text id="text2" visible="true" width="landscape.16%, portrait.25%" height="landscape.9%, portrait.6%" z="3" x="landscape.59%, portrait.71%" y="landscape.33%, portrait.48%" type="drop" value="${args.option2}" isAllowOnlyOneDrop="true" onEntry="this.border='5px dashed black'" bg-color="#fbfbfbcf"></lido-text>
