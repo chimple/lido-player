@@ -589,7 +589,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       const onInCorrect = dropElement.getAttribute('onInCorrect');
 
       await executeActions(onInCorrect, dropElement, dragElement);
-      
+      storingEachActivityScore(false);
       setTimeout(() => {
         dragElement.style.transform = 'translate(0, 0)';
         // storingEachActivityScore(false);
@@ -912,6 +912,7 @@ async function onClickDragElement(element: HTMLElement){
   }
 
   let firstFalse = Object.values(dropElements).find(item => !item.isFull);
+  console.log('🚀 ~ onClickDragElement ~ firstFalse:', firstFalse);
 
   if (firstFalse) {
     const dropEl = document.querySelector(`#${firstFalse.drop}`) as HTMLElement;
