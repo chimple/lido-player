@@ -56,7 +56,7 @@ export class LidoCanvas {
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
 
-    this.loadBackground();
+    // this.loadBackground();
   }
 }
 
@@ -70,7 +70,7 @@ export class LidoCanvas {
     this.ctx.lineJoin = 'round';
     this.updateStyles();
 
-    this.loadBackground();
+    // this.loadBackground();
 
     this.canvas.addEventListener('pointerdown', e => this.start(e));
     this.canvas.addEventListener('pointermove', e => this.move(e));
@@ -122,7 +122,7 @@ export class LidoCanvas {
   }
 
   clearCanvas() {
-    this.loadBackground();
+    // this.loadBackground();
   }
 
   render() {
@@ -134,6 +134,9 @@ export class LidoCanvas {
         <button id="lido-exit-button" onClick={() => this.clearCanvas()}>
           <lido-text visible="true" height="92px" width="43px"  id="lido-exit-icon" font-color="white"  onEntry="this.font-weight='900';" font-size="96px" string='X'></lido-text>
         </button>
+        <div id="lido-canvas-background">
+          <lido-image  visible="true"  width="100%"  height="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/canvas1.png">  </lido-image>
+        </div>
         <canvas id="lido-canvas" style={{ width: this.style.width, height: this.style.height,}}></canvas>
       </Host>
     );
