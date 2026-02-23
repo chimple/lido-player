@@ -122,7 +122,7 @@ export class LidoCanvas {
   }
 
   clearCanvas() {
-    // this.loadBackground();
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   render() {
@@ -134,9 +134,6 @@ export class LidoCanvas {
         <button id="lido-exit-button" onClick={() => this.clearCanvas()}>
           <lido-text visible="true" height="92px" width="43px"  id="lido-exit-icon" font-color="white"  onEntry="this.font-weight='900';" font-size="96px" string='X'></lido-text>
         </button>
-        <div id="lido-canvas-background">
-          <lido-image  visible="true"  width="100%"  height="100%"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/canvas1.png">  </lido-image>
-        </div>
         <canvas id="lido-canvas" style={{ width: this.style.width, height: this.style.height,}}></canvas>
       </Host>
     );
