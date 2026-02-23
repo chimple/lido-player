@@ -1,5 +1,5 @@
 
-import { calculateScale, countPatternWords,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore, calculateScore } from '../utils';
+import { calculateScale, countPatternWords, buildDragSelectedMapFromDOM, getSortedValuesArrayFromMap, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore, calculateScore } from '../utils';
 import { updateBalanceOnDrop } from './lidoBalanceHandler';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction,NextContainerKey, } from '../constants';
@@ -309,7 +309,14 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Check for overlaps and log the most overlapping element
     let mostOverlappedElement: HTMLElement | null = findMostoverlappedElement(element, 'drop');
     if(!mostOverlappedElement){
-      handleResetDragElement(element,null,null,null,null,null);
+      // build current selection/drop maps so reset logic can update counts correctly
+      const selectedValueData = container.getAttribute(SelectedValuesKey) ?? "[]";
+      const dragSelectedData = JSON.stringify(buildDragSelectedMapFromDOM());
+      const dropSelectedDataObject = buildDragSelectedMapFromDOM();
+      const dropSelectedData = JSON.stringify(dropSelectedDataObject);
+      const dropHasDrag = buildDropHasDragFromDOM();
+
+      handleResetDragElement(element, null, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
       return;
     }
     onElementDropComplete(element, mostOverlappedElement);
@@ -485,9 +492,10 @@ export async function handleResetDragElement(
   }
 
   if (selectedValueData) {
-    let selectedValue = JSON.parse(selectedValueData);
-    selectedValue = selectedValue.filter(value => value != dragElement['value']);
-     container.setAttribute(SelectedValuesKey, JSON.stringify(selectedValue));
+    // Instead of filtering stale selectedValueData, rebuild selected values from DOM
+    const rebuiltMap = buildDragSelectedMapFromDOM();
+    const sortedValues = getSortedValuesArrayFromMap(rebuiltMap);
+    container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
   }
   if (dragSelectedData) {
     let dragSelected = JSON.parse(dragSelectedData);
@@ -499,7 +507,11 @@ export async function handleResetDragElement(
   //  container.setAttribute(DragSelectedMapKey, JSON.stringify(dragSelected));
     dragElement.removeAttribute(DropToAttr);
     updateDropBorder(currentDrop);
-     updateBalanceOnDrop(dragElement, dropElement);
+    // rebuild counts & balance after removing mapping
+    const rebuiltMap2 = buildDragSelectedMapFromDOM();
+    const sortedValues2 = getSortedValuesArrayFromMap(rebuiltMap2);
+    container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues2));
+    updateBalanceOnDrop(dragElement, dropElement);
   }
 
   const allElements = document.querySelectorAll<HTMLElement>("[type='drop']");
@@ -521,9 +533,7 @@ export async function handleResetDragElement(
   });
  
   // Update counts when a drag is reset/removed from a drop
-  if (container) {
-    await executeActions("this.updateCountBlender='true'", container);
-  }
+  await executeActions("this.updateCountBlender='true'", container);
 
   handleShowCheck();
   highlightElement();
