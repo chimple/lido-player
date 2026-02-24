@@ -56,7 +56,7 @@ export class LidoCanvas {
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
 
-    this.loadBackground();
+    // this.loadBackground();
   }
 }
 
@@ -70,7 +70,7 @@ export class LidoCanvas {
     this.ctx.lineJoin = 'round';
     this.updateStyles();
 
-    this.loadBackground();
+    // this.loadBackground();
 
     this.canvas.addEventListener('pointerdown', e => this.start(e));
     this.canvas.addEventListener('pointermove', e => this.move(e));
@@ -122,7 +122,7 @@ export class LidoCanvas {
   }
 
   clearCanvas() {
-    this.loadBackground();
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   render() {

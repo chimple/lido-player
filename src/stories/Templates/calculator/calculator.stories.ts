@@ -34,7 +34,7 @@ function getContainerXml(args) {
    <main>
     <lido-container visible="true" id="lido-container" objective="" equationCheck="$#numb1,$#symbol,$#numb2" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Calculator.png" onInCorrect="lido-avatar.avatarAnimate='Fail';" is-allow-only-correct="${args.isAllowOnlyCorrect}" onCorrect="lido-avatar.avatarAnimate='Success';answer.updateCalculatorAnswer='true';this.sleep='2500';" is-continue-on-correct="${args.isContinueOnCorrect}" >
 		<lido-text visible="true" z="1" height="100px" width="400px" y="landscape.8%,portrait.-17%" x="landscape.-21%,portrait.0px" font-size="56px" font-color="white" onEntry="this.position='relative';this.font-weight='600';"  string="WRITE HERE"></lido-text>
-		<lido-cell layout="col" visible="true" height="10px" width="254px" bg-color="transparent" z="1" y="landscape.18%,portrait.-15%" x="landscape.-12%,portrait.19%" onEntry="this.align-items='center'; this.jsutifyContent='space-around'; this.position='relative';">
+		<lido-cell layout="col" visible="true" height="10px" width="254px" bg-color="transparent" z="1" y="landscape.18%,portrait.-15%" x="landscape.-15%,portrait.19%" onEntry="this.align-items='center'; this.jsutifyContent='space-around'; this.position='relative';">
 			<lido-text visible="true" height="100px" width="400px" id="numb1" tab-index="1" font-size="106px" font-color="black" value="${args.number1}" string="${args.number1}" y="" z="1" x="" onEntry="this.position='relative';this.font-weight='900';"></lido-text>
 			<lido-cell layout="row" visible="true" height="100px" width="243px" bg-color="transparent" onEntry="this.position='relative';" x="-61px">
 				<lido-text visible="true" height="100px" width="400px" id="symbol" tab-index="2" font-size="106px" font-color="black" value="${args.symbol}" string="${args.symbol}" y="" z="1" x=""  onEntry="this.position='relative';this.font-weight='900';"></lido-text>
@@ -43,8 +43,12 @@ function getContainerXml(args) {
 			<lido-text visible="true" height="40px" width="295px" font-size="106px" font-color="black" string="- - - - -"   z="1" ></lido-text>
 			<lido-text  id="answer" visible="true" tab-index="4" height="84px" width="279px"  font-size="106px" font-color="black" string=" " value="5"   z="1"  onEntry="this.font-weight='900';"></lido-text>
 		</lido-cell>
-		<lido-canvas visible="true" width="700px" heigth="800px" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/s1.png" y="landscape.10%,portrait.6%" x="landscape.4%,portrait.6%"   ></lido-canvas>
-		<lido-cell visible="true" height="700px" width="470px"  onEntry="this.position='relative';" y="landscape.-2%,portrait.23%" x="landscape.456px,portrait.9%" >
+
+  <lido-image  visible="true"  width="700px"  height="800px"  onEntry="this.position='absolute';"  y="landscape.3%,portrait.6%"  x="landscape.5%,portrait.6%"  z="0"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/canvas1.png">
+  </lido-image>
+  <lido-canvas visible="true"  width="700px"  height="700px"  y="landscape.9%,portrait.6%"  x="landscape.3%,portrait.6%"  z="1">
+  </lido-canvas>
+    <lido-cell visible="true" height="700px" width="470px"  onEntry="this.position='relative';" y="landscape.-2%,portrait.23%" x="landscape.456px,portrait.9%" >
 			<lido-calculator id="lidoCalculator" visible="true" height="700px" width="470px"  onEntry="this.position='relative';" ></lido-calculator>
 		</lido-cell>
     <!-- Chimple Avatar -->
