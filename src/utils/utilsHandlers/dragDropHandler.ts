@@ -588,7 +588,11 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
       } 
     } else {
       //strings
-      isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
+      if(dropValue.includes(',')) {
+        isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
+      } else {
+        isCorrect = dropValue.toLowerCase() === dragValue.toLowerCase();
+      }
     }
 
     if (!isCorrect) {
@@ -729,7 +733,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   updateBalanceOnDrop(dragElement, dropElement);
   if (dragSelectedData) {
     let currentDrop = dragToDropMap.get(dragElement);
-    if (currentDrop) {
+    if (currentDrop) {      
       let prevDropItem = Object.values(dropHasDrag).find(item => document.getElementById(item.drop) === currentDrop);
       if (prevDropItem) {
         prevDropItem.isFull = false;
@@ -937,25 +941,38 @@ export const appendingDragElementsInDrop = () => {
   const dragItems = document.querySelectorAll("[type='drag']");
   const dropItems = document.querySelectorAll("[type='drop']");
   if (!dragItems || !dropItems) return;
+  
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
+  const appendedDragIds = new Set<string>();
+  
   dropItems.forEach(dropElement => {
-    dragItems.forEach(dragElement => {
-      const drag = dragElement as HTMLElement;
+    for (let i = 0; i < dragItems.length; i++) {
+      const dragElement = dragItems[i] as HTMLElement;
+
+      // Skip if already appended to another drop element
+      if (appendedDragIds.has(dragElement.id)) continue;
+      
+      const drag = dragElement;
       const drop = dropElement as HTMLElement;
-      const container = document.getElementById(LidoContainer) as HTMLElement;
-      const isAllowOnlyCorrect = container.getAttribute('is-allow-only-correct') === 'true';
+      
       if (isAllowOnlyCorrect === true) {
         if (drop['value'] === drag['value']) {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
+          appendedDragIds.add(drag.id);
+          drag.style.pointerEvents = 'none';
+          break;
         }
       } else {
         if (drop['value'].includes(drag['value'])) {
           drag.style.transform = 'translate(0,0)';
           drop.appendChild(drag);
+          appendedDragIds.add(drag.id);
+          drag.style.pointerEvents = 'none';
         }
       }
-      drag.style.pointerEvents = 'none';
-    });
+    }
   });
 };
 
