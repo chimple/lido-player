@@ -589,7 +589,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
     } else {
       //strings
       if(dropValue.includes(',')) {
-        dropValue.toLowerCase().includes(dragValue.toLowerCase());
+        isCorrect = dropValue.toLowerCase().includes(dragValue.toLowerCase());
       } else {
         isCorrect = dropValue.toLowerCase() === dragValue.toLowerCase();
       }
