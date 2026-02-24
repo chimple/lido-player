@@ -25,12 +25,12 @@
   position: relative;
    top: -43%;   
   left: 18%;   
-  z-index: 999999;
+  z-index: 15;
 }
 
 canvas {
   /* flex: 1; */
   touch-action: none;
   display: block;
-  z-index: 99999;
+  z-index: 10;
 }
