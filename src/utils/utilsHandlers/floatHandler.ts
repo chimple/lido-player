@@ -69,6 +69,7 @@ export function handleFloatElementPosition(element: HTMLElement) {
 
   if (direction === 'leftToRight') {
     const containerHeight = floatContainer.offsetHeight;
+    // Add class for bubble elements to identify them later for input matching and scoring
     element.classList.add("bubble-element")
     element.style.left = 'unset';
     element.style.right = `${window.innerWidth + document.body.getBoundingClientRect().width}px`;
@@ -130,5 +131,3 @@ function calculateFill(input, currentFill = 0) {
 
   return Math.max(0, Math.min(100, value));
 }
-
-
