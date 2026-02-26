@@ -1,6 +1,6 @@
 import { Component, Prop, Event, EventEmitter, h, Host, State, Element } from '@stencil/core';
 import { DropAction, LidoContainer, SelectedValuesKey } from '../../utils/constants';
-import { executeActions, parseProp, storingEachActivityScore, triggerNextContainer, validateObjectiveStatus } from '../../utils/utils';
+import { calculateScore, executeActions, parseProp, storingEachActivityScore, triggerNextContainer, validateObjectiveStatus } from '../../utils/utils';
 import { index } from 'mathjs';
 import { handleFloatElementPosition } from '../../utils/utilsHandlers/floatHandler';
 
@@ -74,10 +74,10 @@ export class LidoKeyboard {
   /** Total number of letters required for completion */
   @Prop() letterLength: number;
 
-   /**
-     * When set to true, disables the speak functionality of long press for this component and its children.
-     */
-    @Prop() disableSpeak: boolean = false;
+  /**
+   * When set to true, disables the speak functionality of long press for this component and its children.
+   */
+  @Prop() disableSpeak: boolean = false;
 
   /** Tracks the number of keys clicked by the user */
   @State() numberOfClick: number = 0;
@@ -110,21 +110,22 @@ export class LidoKeyboard {
       isOverlapping = elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
     }
     if (isOverlapping) {
+      storingEachActivityScore(true);
       filteredElement.style.animation = 'none';
       this.numberOfClick++;
       if (this.numberOfClick === this.letterLength) {
+        calculateScore();
         const onCorrrect = container.getAttribute('onCorrect');
         container.style.pointerEvents = 'none';
         await executeActions(onCorrrect, this.el);
         triggerNextContainer();
       } else {
         handleFloatElementPosition(filteredElement);
-        storingEachActivityScore(true);
       }
     } else {
+      storingEachActivityScore(false);
       const onInCorrrect = container.getAttribute('onInCorrect');
       await executeActions(onInCorrrect, this.el);
-      storingEachActivityScore(false);
     }
   }
 
@@ -187,7 +188,7 @@ export class LidoKeyboard {
       <Host class="lido-keyboard" style={{ width: this.style.width, height: this.style.height, position: 'relative', margin: this.style.margin, zIndex: this.z }}>
         {this.keyboardInput && (
           <div class="input-area">
-            <input type="text" value={this.inputString} class="input-area" readonly onInput={(e: any) => (this.inputString = e.target.value)} />
+            <input type="text" value={this.inputString.toUpperCase()} class="input-area" readonly onInput={(e: any) => (this.inputString = e.target.value)} />
             <lido-text
               visible={showCheck ? 'true' : 'false'}
               string="<<"
