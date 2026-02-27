@@ -7,12 +7,12 @@ function dispatchCustomEvent(eventName: string, detail: any) {
   window.dispatchEvent(event);
 }
 
-export function dispatchActivityEndEvent(totalIndex: number, currentIndex: number, score: number, rightMoves?: number, wrongMoves?: number) {
-  dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves });
+export function dispatchActivityEndEvent(totalIndex: number, currentIndex: number, score: number, rightMoves?: number, wrongMoves?: number, timeSpentForActivity?: number) {  
+  dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity});
 }
 
-export function dispatchLessonEndEvent(totalIndex: number, rightMoves: number, wrongMoves: number, finalScore: number) {
-  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, timeSpent: Math.floor(Timer.getI().getElapsed() / 1000) });
+export function dispatchLessonEndEvent(totalIndex: number, rightMoves: number, wrongMoves: number, finalScore: number, timeSpendForLesson: number) {  
+  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, timeSpendForLesson });
 }
 
 export function dispatchNextContainerEvent() {

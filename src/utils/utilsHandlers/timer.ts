@@ -61,3 +61,5 @@ export class Timer {
       : this.elapsedTime;
   }
 }
+
+export let ACTIVYTY_TIME_SPEND_ARRAY: number[] = [];  
