@@ -1,8 +1,8 @@
-import"./lit-element-DRlmAcsz.js";import{b as a}from"./lit-html-s0HVm7S4.js";const p={title:"Templates/calculator",argTypes:{number1:{control:"text"},number2:{control:"text"},symbol:{control:"text"},isContinueOnCorrect:{control:"boolean"},isAllowOnlyCorrect:{control:"boolean"}}},e={args:{number1:"10",number2:"5",symbol:"+",isContinueOnCorrect:!0,isAllowOnlyCorrect:!0},render:t=>{const l=n(t);return a`<lido-home .xmlData="${l}"></lido-home>`}};function n(t){return`
+import"./lit-element-DRlmAcsz.js";import{b as l}from"./lit-html-s0HVm7S4.js";const p={title:"Templates/calculator",argTypes:{number1:{control:"text"},number2:{control:"text"},symbol:{control:"text"},isContinueOnCorrect:{control:"boolean"},isAllowOnlyCorrect:{control:"boolean"}}},e={args:{number1:"10",number2:"5",symbol:"+",isContinueOnCorrect:!0,isAllowOnlyCorrect:!0},render:t=>{const a=n(t);return l`<lido-home .xmlData="${a}"></lido-home>`}};function n(t){return`
    <main>
     <lido-container visible="true" id="lido-container" objective="" equationCheck="$#numb1,$#symbol,$#numb2" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Calculator.png" onInCorrect="lido-avatar.avatarAnimate='Fail';" is-allow-only-correct="${t.isAllowOnlyCorrect}" onCorrect="lido-avatar.avatarAnimate='Success';answer.updateCalculatorAnswer='true';this.sleep='2500';" is-continue-on-correct="${t.isContinueOnCorrect}" >
         <lido-text visible="true" z="1" height="100px" width="400px" y="landscape.8%,portrait.-17%" x="landscape.-21%,portrait.0px" font-size="56px" font-color="white" onEntry="this.position='relative';this.font-weight='600';"  string="WRITE HERE"></lido-text>
-        <lido-cell layout="col" visible="true" height="10px" width="254px" bg-color="transparent" z="1" y="landscape.18%,portrait.-15%" x="landscape.-12%,portrait.19%" onEntry="this.align-items='center'; this.jsutifyContent='space-around'; this.position='relative';">
+        <lido-cell layout="col" visible="true" height="10px" width="254px" bg-color="transparent" z="1" y="landscape.18%,portrait.-15%" x="landscape.-15%,portrait.19%" onEntry="this.align-items='center'; this.jsutifyContent='space-around'; this.position='relative';">
             <lido-text visible="true" height="100px" width="400px" id="numb1" tab-index="1" font-size="106px" font-color="black" value="${t.number1}" string="${t.number1}" y="" z="1" x="" onEntry="this.position='relative';this.font-weight='900';"></lido-text>
             <lido-cell layout="row" visible="true" height="100px" width="243px" bg-color="transparent" onEntry="this.position='relative';" x="-61px">
                 <lido-text visible="true" height="100px" width="400px" id="symbol" tab-index="2" font-size="106px" font-color="black" value="${t.symbol}" string="${t.symbol}" y="" z="1" x=""  onEntry="this.position='relative';this.font-weight='900';"></lido-text>
@@ -11,8 +11,12 @@ import"./lit-element-DRlmAcsz.js";import{b as a}from"./lit-html-s0HVm7S4.js";con
             <lido-text visible="true" height="40px" width="295px" font-size="106px" font-color="black" string="- - - - -"   z="1" ></lido-text>
             <lido-text  id="answer" visible="true" tab-index="4" height="84px" width="279px"  font-size="106px" font-color="black" string=" " value="5"   z="1"  onEntry="this.font-weight='900';"></lido-text>
         </lido-cell>
-        <lido-canvas visible="true" width="700px" heigth="800px" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/s1.png" y="landscape.10%,portrait.6%" x="landscape.4%,portrait.6%"   ></lido-canvas>
-        <lido-cell visible="true" height="700px" width="470px"  onEntry="this.position='relative';" y="landscape.-2%,portrait.23%" x="landscape.456px,portrait.9%" >
+
+  <lido-image  visible="true"  width="700px"  height="800px"  onEntry="this.position='absolute';"  y="landscape.3%,portrait.6%"  x="landscape.5%,portrait.6%"  z="0"  src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/canvas1.png">
+  </lido-image>
+  <lido-canvas visible="true"  width="700px"  height="700px"  y="landscape.9%,portrait.6%"  x="landscape.3%,portrait.6%"  z="1">
+  </lido-canvas>
+    <lido-cell visible="true" height="700px" width="470px"  onEntry="this.position='relative';" y="landscape.-2%,portrait.23%" x="landscape.456px,portrait.9%" >
             <lido-calculator id="lidoCalculator" visible="true" height="700px" width="470px"  onEntry="this.position='relative';" ></lido-calculator>
         </lido-cell>
     <!-- Chimple Avatar -->

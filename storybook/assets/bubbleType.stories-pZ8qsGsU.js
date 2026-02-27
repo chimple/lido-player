@@ -1,4 +1,4 @@
-import"./lit-element-DRlmAcsz.js";import{b as n}from"./lit-html-s0HVm7S4.js";const h={title:"Templates/BubbleType",argTypes:{cells:{control:{type:"object"},description:"Array of bubble cells with value and filter"},buttons:{control:{type:"text"}}}},l={args:{cells:[{value:"A",filter:"#F34D08"},{value:"B",filter:"#81C127"},{value:"C",filter:"#FFC805"},{value:"D",filter:"#F55376"},{value:"E",filter:"#5D44BD"}],buttons:"A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"},render:t=>{const i=c(t);return n`<lido-home .xmlData="${i}"></lido-home>`}};function c(t){const i=t.cells.map(e=>e.value.toUpperCase()),s=`${t.buttons}`.split(",").map(e=>i.includes(e)?e:`${e}-disable`).join(",");return`<main>
+import"./lit-element-DRlmAcsz.js";import{b as n}from"./lit-html-s0HVm7S4.js";const h={title:"Templates/BubbleType",argTypes:{cells:{control:{type:"object"},description:"Array of bubble cells with value and filter"},buttons:{control:{type:"text"}}}},l={args:{cells:[{value:"A",filter:"#F34D08"},{value:"B",filter:"#81C127"},{value:"C",filter:"#FFC805"},{value:"D",filter:"#F55376"},{value:"E",filter:"#5D44BD"}],buttons:"A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"},render:e=>{const i=c(e);return n`<lido-home .xmlData="${i}"></lido-home>`}};function c(e){const i=e.cells.map(t=>t.value.toUpperCase()),s=`${e.buttons}`.split(",").map(t=>i.includes(t)?t:`${t}-disable`).join(",");return`<main>
               <lido-container id="lido-container" visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Bubble%20type.png">
 
 
@@ -11,11 +11,11 @@ import"./lit-element-DRlmAcsz.js";import{b as n}from"./lit-html-s0HVm7S4.js";con
                         </lido-cell>
                             <!-- Float Area -->
                             <lido-float visible="true" width="100%" height="56%" bg-color="transparent" float-direction="leftToRight" onEntry="this.pointerEvents='none';">
-                                ${t.cells.map(e=>`
-    <lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="${e.value}">
-        <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/bubble-type/Group1.png" width="100%" height="100%" filter="${e.filter}">
+                                ${e.cells.map(t=>`
+    <lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="${t.value.toLowerCase()}" onEntry="this.alignItems='center'; this.justifyContent='center';">
+        <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/bubble-type/Group1.png" width="100%" height="100%" filter="${t.filter}">
         </lido-image>
-        <lido-text visible="true" height="100%" width="100%" string="${e.value}" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
+        <lido-text visible="true" height="100%" width="100%" string="${t.value}" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
         </lido-text>
     </lido-cell>
   `).join("")}
@@ -40,7 +40,7 @@ import"./lit-element-DRlmAcsz.js";import{b as n}from"./lit-html-s0HVm7S4.js";con
                         </lido-cell>
                         
               </lido-container>
-          </main>`}var a,o,r;l.parameters={...l.parameters,docs:{...(a=l.parameters)==null?void 0:a.docs,source:{originalSource:`{
+          </main>`}var o,a,r;l.parameters={...l.parameters,docs:{...(o=l.parameters)==null?void 0:o.docs,source:{originalSource:`{
   args: {
     cells: [{
       value: 'A',
@@ -64,4 +64,4 @@ import"./lit-element-DRlmAcsz.js";import{b as n}from"./lit-html-s0HVm7S4.js";con
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(r=(o=l.parameters)==null?void 0:o.docs)==null?void 0:r.source}}};const m=["QuestionAndOptions"];export{l as QuestionAndOptions,m as __namedExportsOrder,h as default};
+}`,...(r=(a=l.parameters)==null?void 0:a.docs)==null?void 0:r.source}}};const m=["QuestionAndOptions"];export{l as QuestionAndOptions,m as __namedExportsOrder,h as default};
