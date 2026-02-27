@@ -1,6 +1,6 @@
 {
   "name": "lido-player",
-  "version": "0.0.2-alpha-76",
+  "version": "0.0.2-alpha-77",
   "description": "Stencil Component For  Lido Player",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
