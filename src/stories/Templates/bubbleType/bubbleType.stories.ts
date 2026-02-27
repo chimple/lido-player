@@ -38,7 +38,7 @@ function getContainerXml(args) {
   const floatCellsXml = args.cells
     .map(
       cell => `
-    <lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="${cell.value}">
+    <lido-cell visible="true" layout="col" width="180px" height="180px" bg-color="transparent" value="${cell.value.toLowerCase()}" onEntry="this.alignItems='center'; this.justifyContent='center';">
         <lido-image visible="true" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/bubble-type/Group1.png" width="100%" height="100%" filter="${cell.filter}">
         </lido-image>
         <lido-text visible="true" height="100%" width="100%" string="${cell.value}" bg-color="transparent" font-family="'Baloo Bhai 2'" font-size="120px" font-color="white" onEntry="this.position='absolute'; this.fontWeight='800';">
