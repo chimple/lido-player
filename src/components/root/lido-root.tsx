@@ -96,7 +96,7 @@ export class LidoRoot {
     //   console.error('XML path is not provided.');
     //   return;
     // }
-    const xmlPath = this.xmlPath ?? this.baseUrl + (this.baseUrl?.endsWith('/') ? 'index.xml.br' : '/index.xml.br');
+    const xmlPath = this.xmlPath ?? this.baseUrl + (this.baseUrl?.endsWith('/') ? 'index.xml' : '/index.xml');
     console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.baseUrl:', this.baseUrl);
     console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.xmlPath:', this.xmlPath);
     console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ xmlPath:', xmlPath);

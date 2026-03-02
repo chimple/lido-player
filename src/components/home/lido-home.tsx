@@ -489,17 +489,6 @@ export class LidoHome {
       });
     });
 
-    const walker = clonedElement.ownerDocument.createTreeWalker(clonedElement, NodeFilter.SHOW_TEXT);
-    let textNode = walker.nextNode();
-    while (textNode) {
-      const currentValue = textNode.textContent || '';
-      const nextValue = this.replacePlaceholders(currentValue, data);
-      if (nextValue !== currentValue) {
-        textNode.textContent = nextValue;
-      }
-      textNode = walker.nextNode();
-    }
-
     return clonedElement;
   }
 
