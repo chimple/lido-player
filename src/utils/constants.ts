@@ -1,12 +1,3 @@
-import { arrangeLetters } from '../stories/Templates/arrangeLetters/arrangeLetters.stories';
-import { calculator } from '../stories/Templates/calculator/calculator.stories';
-import { number } from 'mathjs';
-import { sentenceMatch } from '../stories/Templates/sentenceMatch/sentenceMatch.stories';
-import { pictureClues } from '../stories/Templates/pictureClues/pictureClues.stories';
-import { palEgraArrangePictures } from '../stories/Templates/palEgra_arrange_pictures/palEgra_arrange_pictures.stories';
-import { palEgraBuildWord } from '../stories/Templates/palEgra_build_word/palEgra_build_word.stories';
-import { palEgraWordFormation } from '../stories/Templates/palEgra_word_formation/palEgra_WordFormation.stories';
-import { palEgraWordMatch } from '../stories/Templates/palEgraWordMatch/palEgraWordMatch.stories';
 export const DragSelectedMapKey = 'lidoDragSelectedMap';
 export const DragMapKey = 'lidoDragMap';
 export const SelectedValuesKey = 'lidoSelectedValues';
