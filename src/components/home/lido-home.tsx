@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Host, Watch, Element } from '@stencil/core';
+import { Component, Prop, h, State, Host, Watch, Element, getAssetPath } from '@stencil/core';
 import {
   DragSelectedMapKey,
   DragMapKey,
@@ -141,6 +141,16 @@ export class LidoHome {
    */
   @State() containers: (() => any)[] = [];
 
+  /** Holds the parsed data loaded from data.json.Each object in the array represents the dynamic data
+    for one XML container (matched by index).
+  */
+  @State() templateData: Record<string, any>[] = [];
+
+  /** Regex used to detect placeholders in XML like {question_text}.It captures the key inside curly braces so it can be replaced
+     with corresponding values from templateData during rendering.
+  */
+  private readonly placeholderRegex = /\{([a-zA-Z0-9_]+)\}/g;
+
   @Watch('Lang')
   onLangChange(newLang: string) {
     this.setLanguage(newLang);
@@ -224,7 +234,7 @@ export class LidoHome {
    * Lifecycle method that runs before the component is loaded. It sets up event listeners for transitioning
    * between containers and parses the XML data into containers.
    */
-  componentWillLoad() {
+  async componentWillLoad() {
     this.navBarIcons = {
       exit: this.exitButtonUrl || exitUrl,
       prev: this.prevButtonUrl || prevUrl,
@@ -249,9 +259,17 @@ export class LidoHome {
     window.addEventListener('changeContainer', (e: any) => {
       this.NextContainerKey(e.detail.index);
     });
+    await this.loadTemplateData();
 
+    const trimmed = (this.xmlData|| '').trim();
+    if (trimmed.startsWith('<main')) {
+        this.parseXMLData(this.xmlData);
+      } else {
+        const finalXml = await this.decompressBrotliBase64(this.xmlData);
+        this.parseXMLData(finalXml);
+      }
     // Parse the provided XML data
-    this.parseXMLData(this.xmlData);
+    
 
     // Remove stored values in localStorage when the page is about to be unloaded
     window.addEventListener('beforeunload', () => {
@@ -259,6 +277,75 @@ export class LidoHome {
       localStorage.removeItem(ActivityScoreKey);
       // clearmemoryStorage();
     });
+  }
+  private async loadTemplateData() {
+    if (!this.baseUrl) {
+      return;
+    }
+
+    const candidatePaths = [`${this.baseUrl.replace(/\/+$/, '')}/data.json`];
+    
+    for (const path of candidatePaths) {
+      try {
+        const resolvedPath = path.startsWith('http') ? path : getAssetPath(path);
+        const response = await fetch(resolvedPath);
+        if (!response.ok) {
+          continue;
+        }
+
+        const payload = await response.json();
+        if (Array.isArray(payload)) {
+          this.templateData = payload.filter(item => item && typeof item === 'object');
+          if (this.templateData.length) {
+            return;
+          }
+        }
+      } catch (error) {
+        console.warn(`[LidoHome] Failed to load template data from ${path}`, error);
+      }
+    }
+  }
+    private async decompressBrotliBase64(base64: string): Promise<string> {
+    // Normalize payload (raw base64 / quoted / data URL / escaped newlines)
+    base64 = (base64 || '').trim().replace(/^data:.*;base64,/, '').replace(/^['"]|['"]$/g, '').replace(/\\n/g, '').replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+    while (base64.length % 4) {
+      base64 += '=';
+    }
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    // Native Brotli first
+    if ('DecompressionStream' in window) {
+      try {
+        const stream = new (window as any).DecompressionStream('br');
+        const blob = new Blob([bytes]);
+        const decompressedStream = blob.stream().pipeThrough(stream);
+        const buffer = await new Response(decompressedStream).arrayBuffer();
+        const decoded = new TextDecoder().decode(buffer);
+        return decoded;
+      } catch (nativeErr) {
+        console.warn('[LidoRoot] Native Brotli unavailable, trying WASM fallback.', nativeErr);
+      }
+    }
+    // Pure-JS fallback (no wasm asset required)
+    try {
+      const brotliDecodeModule = await import('brotli/dec/decode');
+      const brotliDecompressBuffer =
+        (brotliDecodeModule as any).BrotliDecompressBuffer ||
+        (brotliDecodeModule as any).default?.BrotliDecompressBuffer;
+      if (typeof brotliDecompressBuffer !== 'function') {
+        throw new Error('BrotliDecompressBuffer function not found in brotli/dec/decode');
+      }
+      const decompressedBytes = brotliDecompressBuffer(bytes) as Uint8Array;
+      const decoded = new TextDecoder().decode(decompressedBytes);  
+      return decoded;
+    } catch (fallbackErr) {   
+      throw new Error(
+        `Brotli decompression failed (native + fallback): ${fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr)}`,
+      );
+    }
   }
 
   @State() showDotsandbtn: boolean = false;
@@ -372,6 +459,49 @@ export class LidoHome {
       this.parseContainers(rootElement);
     }
   }
+  private resolveContainerData(index: number): Record<string, any> | null {
+    if (!this.templateData?.length) return null;
+    if (this.templateData[index]) return this.templateData[index];
+    if (this.templateData.length === 1) return this.templateData[0];
+    return null;
+  }
+
+  private replacePlaceholders(value: string, data: Record<string, any> | null): string {
+    if (!data || !value) return value;
+    return value.replace(this.placeholderRegex, (_match, key: string) => {
+      const replacement = data[key];
+      return replacement === undefined || replacement === null ? `{${key}}` : String(replacement);
+    });
+  }
+
+  private applyDataToElement(sourceElement: Element, data: Record<string, any> | null): Element {
+    if (!data) return sourceElement;
+
+    const clonedElement = sourceElement.cloneNode(true) as Element;
+    const allElements = [clonedElement, ...Array.from(clonedElement.querySelectorAll('*'))];
+
+    allElements.forEach(node => {
+      Array.from(node.attributes).forEach(attr => {
+        const nextValue = this.replacePlaceholders(attr.value, data);
+        if (nextValue !== attr.value) {
+          node.setAttribute(attr.name, nextValue);
+        }
+      });
+    });
+
+    const walker = clonedElement.ownerDocument.createTreeWalker(clonedElement, NodeFilter.SHOW_TEXT);
+    let textNode = walker.nextNode();
+    while (textNode) {
+      const currentValue = textNode.textContent || '';
+      const nextValue = this.replacePlaceholders(currentValue, data);
+      if (nextValue !== currentValue) {
+        textNode.textContent = nextValue;
+      }
+      textNode = walker.nextNode();
+    }
+
+    return clonedElement;
+  }
 
   @Watch('xmlData')
   onXmlDataChange(newValue: string) {
@@ -459,8 +589,10 @@ export class LidoHome {
     const containers = Array.from(containerElements)
       .map((container, index) => {
         if (this.activeContainerIndexes.length && !this.activeContainerIndexes.includes(index)) return;
+        const dataForContainer = this.resolveContainerData(index);
+        const hydratedContainer = this.applyDataToElement(container, dataForContainer);
         // Return a factory function that generates a fresh JSX node each time
-        return () => this.parseElement(container);
+        return () => this.parseElement(hydratedContainer);
       })
       .filter(Boolean); // Remove any undefined entries
 
