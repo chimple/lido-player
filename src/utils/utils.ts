@@ -207,7 +207,9 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             targetElement.style.pointerEvents = 'none';
             AudioPlayer.getI().stop();
           }
-          await validateObjectiveStatus();
+          if (!container.getAttribute("game-completed") || container.getAttribute("game-completed") === 'false') {
+            await validateObjectiveStatus();
+          }
           targetElement.style.pointerEvents = 'auto';
           break;
         }
@@ -795,6 +797,7 @@ export const validateObjectiveStatus = async () => {
     if(!equationGiven)
     {
       const onCorrect = container.getAttribute('onCorrect');
+      container.setAttribute("game-completed", "true");
       if (onCorrect) {
         await executeActions(onCorrect, container);
       }
