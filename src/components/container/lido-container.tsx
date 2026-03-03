@@ -333,6 +333,7 @@ export class LidoContainer {
           "palEgraOptionWithAudio": templateAudio.palEgraOptionWithAudio,
           "palEgraWordFormation": templateAudio.palEgraWordFormation,
           "palEgraWordMatch": templateAudio.palEgraWordMatch,
+          "calculateSum": templateAudio.calculateSum,
 
        } as any
     )[this.templateId!] ?? '';
