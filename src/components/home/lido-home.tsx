@@ -477,19 +477,25 @@ export class LidoHome {
   private applyDataToElement(sourceElement: Element, data: Record<string, any> | null): Element {
     if (!data) return sourceElement;
 
-    const clonedElement = sourceElement.cloneNode(true) as Element;
-    const allElements = [clonedElement, ...Array.from(clonedElement.querySelectorAll('*'))];
+    const allElements = [sourceElement,...Array.from(sourceElement.querySelectorAll('*'))];
 
     allElements.forEach(node => {
       Array.from(node.attributes).forEach(attr => {
-        const nextValue = this.replacePlaceholders(attr.value, data);
-        if (nextValue !== attr.value) {
-          node.setAttribute(attr.name, nextValue);
-        }
-      });
-    });
+        const replacedValue = attr.value.replace(this.placeholderRegex,(_match, key: string) => {
+            const replacement = data[key];
+            return replacement === undefined || replacement === null
+              ? `{${key}}`
+              : String(replacement);
+          }
+        );
 
-    return clonedElement;
+        if (replacedValue !== attr.value) {
+            node.setAttribute(attr.name, replacedValue);
+          }
+        });
+      });
+
+      return sourceElement;
   }
 
   @Watch('xmlData')
