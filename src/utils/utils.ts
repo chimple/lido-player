@@ -26,6 +26,7 @@ import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandle
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
 import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
+import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from './utilsHandlers/timer';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -206,7 +207,9 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             targetElement.style.pointerEvents = 'none';
             AudioPlayer.getI().stop();
           }
-          await validateObjectiveStatus();
+          if (!container.getAttribute("game-completed") || container.getAttribute("game-completed") === 'false') {
+            await validateObjectiveStatus();
+          }
           targetElement.style.pointerEvents = 'auto';
           break;
         }
@@ -722,7 +725,9 @@ const storeActivityScore = (score: number) => {
   activityScore[activityScoreKey] = score;  
   //send Custom Event to parent
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
-  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves);
+  const timeSpendForActivity = Math.floor(Timer.getI().getElapsed() / 1000);
+  ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
+  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
@@ -732,7 +737,8 @@ const storeActivityScore = (score: number) => {
     gameScore.finalScore = Math.floor(finalScore);
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
-    dispatchLessonEndEvent(totalIndex, gameScore.rightMoves, gameScore.wrongMoves,finalScore);
+    const timeSpendForLesson = ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0);
+    dispatchLessonEndEvent(totalIndex, gameScore.rightMoves, gameScore.wrongMoves,finalScore, timeSpendForLesson);
     localStorage.removeItem(ActivityScoreKey);
   }
 };
@@ -791,6 +797,7 @@ export const validateObjectiveStatus = async () => {
     if(!equationGiven)
     {
       const onCorrect = container.getAttribute('onCorrect');
+      container.setAttribute("game-completed", "true");
       if (onCorrect) {
         await executeActions(onCorrect, container);
       }

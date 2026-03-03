@@ -1,6 +1,6 @@
 import { Component, Prop, Event, EventEmitter, h, Host, State, Element } from '@stencil/core';
 import { DropAction, LidoContainer, SelectedValuesKey } from '../../utils/constants';
-import { executeActions, parseProp, storingEachActivityScore, triggerNextContainer, validateObjectiveStatus } from '../../utils/utils';
+import { calculateScore, executeActions, parseProp, storingEachActivityScore, triggerNextContainer, validateObjectiveStatus } from '../../utils/utils';
 import { index } from 'mathjs';
 import { handleFloatElementPosition } from '../../utils/utilsHandlers/floatHandler';
 
@@ -74,10 +74,10 @@ export class LidoKeyboard {
   /** Total number of letters required for completion */
   @Prop() letterLength: number;
 
-   /**
-     * When set to true, disables the speak functionality of long press for this component and its children.
-     */
-    @Prop() disableSpeak: boolean = false;
+  /**
+   * When set to true, disables the speak functionality of long press for this component and its children.
+   */
+  @Prop() disableSpeak: boolean = false;
 
   /** Tracks the number of keys clicked by the user */
   @State() numberOfClick: number = 0;
@@ -93,38 +93,66 @@ export class LidoKeyboard {
 
   async inputValidation(e) {
     if (this.type !== 'click') return;
-    let selcetedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || '';
-    selcetedValue = this.inputString;
-    localStorage.setItem(SelectedValuesKey, JSON.stringify(selcetedValue));
+    
+    let isOverlapping = false;
 
     const container = document.getElementById(LidoContainer) as HTMLElement;
+    const clickedValue = (e.target as HTMLElement).getAttribute('value');
 
-    const value = (e.target as HTMLElement).getAttribute('value');
-    const bubbleValues = container.querySelectorAll(`[value= '${value}']`);
-    const filteredElement = Array.from(bubbleValues).find(el => !el.className.includes('key-button')) as HTMLElement;
-    this.inputString = value;
-    let isOverlapping: boolean;
-    if (filteredElement) {
+    if (!clickedValue) return;
+
+    let selectedValue = JSON.parse(localStorage.getItem(SelectedValuesKey)) || '';
+
+    localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
+
+    // Get all word bubbles (make sure bubbles have class "bubble-element")
+    const bubbles = Array.from(container.querySelectorAll('.bubble-element')) as HTMLElement[];
+
+    // Find a bubble whose word starts with current progress + clicked letter
+    const matchedBubble = bubbles.find(bubble => {
+      const word = bubble.getAttribute('value'); // full word like "one"
+      const element = word?.startsWith(this.inputString.toLowerCase())
+      return element;
+    });    
+
+    if (matchedBubble) {
+
       const bodyRect = document.body.getBoundingClientRect();
-      const elemRect = filteredElement.getBoundingClientRect();
+      const elemRect = matchedBubble.getBoundingClientRect();
+
+      // Ciheck if the matched bubble is overlapping with the target area (you can define the target area as needed, here we use the entire viewport)
       isOverlapping = elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
-    }
-    if (isOverlapping) {
-      filteredElement.style.animation = 'none';
-      this.numberOfClick++;
-      if (this.numberOfClick === this.letterLength) {
-        const onCorrrect = container.getAttribute('onCorrect');
-        container.style.pointerEvents = 'none';
-        await executeActions(onCorrrect, this.el);
-        triggerNextContainer();
-      } else {
-        handleFloatElementPosition(filteredElement);
+    
+      // If full word completed
+      if (this.inputString.toLowerCase() === matchedBubble.getAttribute('value').toLowerCase() && isOverlapping) {
         storingEachActivityScore(true);
+
+        matchedBubble.style.animation = 'none';
+        matchedBubble.style.pointerEvents = 'none';
+
+        this.numberOfClick++;
+        setTimeout(() => {this.inputString = '';}, 1000)
+        localStorage.removeItem(SelectedValuesKey);
+
+        if (this.numberOfClick === this.letterLength) {
+          calculateScore();
+          const onCorrrect = container.getAttribute('onCorrect');
+          container.style.pointerEvents = 'none';
+          await executeActions(onCorrrect, this.el);
+          triggerNextContainer();
+        } else {
+          handleFloatElementPosition(matchedBubble);
+        }
       }
     } else {
+      // ❌ Incorrect click
+      storingEachActivityScore(false);
+
+      setTimeout(() => {this.inputString = '';}, 1000)
+      localStorage.removeItem(SelectedValuesKey);
+
       const onInCorrrect = container.getAttribute('onInCorrect');
       await executeActions(onInCorrrect, this.el);
-      storingEachActivityScore(false);
     }
   }
 
@@ -187,7 +215,7 @@ export class LidoKeyboard {
       <Host class="lido-keyboard" style={{ width: this.style.width, height: this.style.height, position: 'relative', margin: this.style.margin, zIndex: this.z }}>
         {this.keyboardInput && (
           <div class="input-area">
-            <input type="text" value={this.inputString} class="input-area" readonly onInput={(e: any) => (this.inputString = e.target.value)} />
+            <input type="text" value={this.inputString} class="input-area" readonly />
             <lido-text
               visible={showCheck ? 'true' : 'false'}
               string="<<"

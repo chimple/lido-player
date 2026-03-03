@@ -23,7 +23,7 @@ export function onTouchListenerForOnTouch(element: HTMLElement) {
   const onholdTime = 1000;
 
   const playAudio = async () => {
-    if (container && container.getAttribute('disable-speak') === 'true') {
+    if (container && (container.getAttribute('disable-speak') || container.getAttribute('disableSpeak') !== 'false')) {
       return;
     }
     onholdTriggered = true;
