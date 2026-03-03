@@ -137,7 +137,6 @@ export const enum templateAudio {
     palEgraOptionWithAudio = 'palEgraOptionWithAudio',
     palEgraWordFormation = 'palEgraWordFormation',
     palEgraWordMatch = 'palEgraWordMatch',
-    calculateSum = 'calculateSum',
 }
 
 export type WordTimelineEntry = {
