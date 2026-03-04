@@ -3,6 +3,8 @@ import { DropAction, LidoContainer, SelectedValuesKey } from '../../utils/consta
 import { calculateScore, executeActions, parseProp, storingEachActivityScore, triggerNextContainer, validateObjectiveStatus } from '../../utils/utils';
 import { index } from 'mathjs';
 import { handleFloatElementPosition } from '../../utils/utilsHandlers/floatHandler';
+import { AudioPlayer } from '../../utils/audioPlayer';
+import { stopHighlightForSpeakingElement } from '../../utils/utilsHandlers/highlightHandler';
 
 // LidoKeyboard component with customizable props for styling and behavior
 @Component({
@@ -113,20 +115,24 @@ export class LidoKeyboard {
       const word = bubble.getAttribute('value'); // full word like "one"
       const element = word?.startsWith(this.inputString.toLowerCase())
       return element;
-    });    
-
-    if (matchedBubble) {
-
-      const bodyRect = document.body.getBoundingClientRect();
-      const elemRect = matchedBubble.getBoundingClientRect();
-
-      // Ciheck if the matched bubble is overlapping with the target area (you can define the target area as needed, here we use the entire viewport)
-      isOverlapping = elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
+    });  
     
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = matchedBubble.getBoundingClientRect();
+
+    // Ciheck if the matched bubble is overlapping with the target area (you can define the target area as needed, here we use the entire viewport)
+    isOverlapping = elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
+    
+
+    if (matchedBubble && isOverlapping) {
       // If full word completed
-      if (this.inputString.toLowerCase() === matchedBubble.getAttribute('value').toLowerCase() && isOverlapping) {
+      if (this.inputString.toLowerCase() === matchedBubble.getAttribute('value').toLowerCase()) {
         storingEachActivityScore(true);
 
+        AudioPlayer.getI().play(matchedBubble);
+        stopHighlightForSpeakingElement(matchedBubble);
+        const elementOnCorrect = matchedBubble.getAttribute('onCorrect');
+        await executeActions(elementOnCorrect, matchedBubble);
         matchedBubble.style.animation = 'none';
         matchedBubble.style.pointerEvents = 'none';
 
