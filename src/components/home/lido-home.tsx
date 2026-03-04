@@ -262,7 +262,7 @@ export class LidoHome {
     await this.loadTemplateData();
 
     const trimmed = (this.xmlData|| '').trim();
-    if (trimmed.startsWith('<main') || trimmed.startsWith('<container') || trimmed.startsWith('<root')) {
+    if (trimmed.includes("lido-container")) {
         this.parseXMLData(this.xmlData);
       } else {
         const finalXml = await this.decompressBrotliBase64(this.xmlData);
@@ -879,3 +879,4 @@ export class LidoHome {
     );
   }
 }
+
