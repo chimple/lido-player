@@ -101,9 +101,15 @@ export class LidoFloat {
   initializeFloatElement() {
     const floatElements = this.el.children as HTMLCollection;
 
+    let delay = 0;
     Array.from(floatElements).forEach((el: Element) => {
       const element = el as HTMLElement;
-      handleFloatElementPosition(element);
+      element.style.visibility = 'hidden';
+      setTimeout(() => {
+        element.style.visibility = 'visible';
+        handleFloatElementPosition(element);
+      }, delay);
+      delay += 1000; // Stagger the visibility of each element by 1 second
       el.addEventListener('click', () => {
         handleElementClick(element);
       });
