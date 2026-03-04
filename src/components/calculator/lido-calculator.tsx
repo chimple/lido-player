@@ -1,5 +1,5 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
-import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore } from '../../utils/utils';
+import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore, triggerNextContainer } from '../../utils/utils';
 import { NextContainerKey,LidoContainer } from '../../utils/constants';
 
 @Component({
@@ -169,7 +169,7 @@ export class LidoCalculator {
       }else{
         await executeActions(onInCorrect, container);
       }
-      window.dispatchEvent(new CustomEvent(NextContainerKey));
+      triggerNextContainer();
     }
     okbtn.style.pointerEvents = 'auto'; // Re-enable OK button after processing
   }
