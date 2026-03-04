@@ -169,6 +169,7 @@ export class LidoCalculator {
       }else{
         await executeActions(onInCorrect, container);
       }
+      calculateScore()
       triggerNextContainer();
     }
     okbtn.style.pointerEvents = 'auto'; // Re-enable OK button after processing
