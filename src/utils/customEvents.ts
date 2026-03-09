@@ -12,7 +12,7 @@ export function dispatchActivityEndEvent(totalIndex: number, currentIndex: numbe
 }
 
 export function dispatchLessonEndEvent(totalIndex: number, rightMoves: number, wrongMoves: number, finalScore: number, timeSpendForLesson: number) {  
-  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, timeSpendForLesson });
+  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson });
 }
 
 export function dispatchNextContainerEvent() {
