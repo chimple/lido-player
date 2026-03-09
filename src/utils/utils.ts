@@ -668,7 +668,13 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (onCorrect) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
+  } else {
+    const onInCorrect = dropElement.getAttribute('onInCorrect');
+    if (onInCorrect) {
+      await executeActions(onInCorrect, dropElement, dragElement);
+    }
   }
+
 }
 
   let dragScore =buildDragSelectedMapFromDOM();

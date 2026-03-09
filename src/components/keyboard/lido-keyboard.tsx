@@ -118,10 +118,12 @@ export class LidoKeyboard {
     });  
     
     const bodyRect = document.body.getBoundingClientRect();
-    const elemRect = matchedBubble.getBoundingClientRect();
+    if(matchedBubble){
+      const elemRect = matchedBubble.getBoundingClientRect();
 
-    // Ciheck if the matched bubble is overlapping with the target area (you can define the target area as needed, here we use the entire viewport)
-    isOverlapping = elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
+      // Ciheck if the matched bubble is overlapping with the target area (you can define the target area as needed, here we use the entire viewport)
+      isOverlapping = matchedBubble && elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
+    }
     
 
     if (matchedBubble && isOverlapping) {
