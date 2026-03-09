@@ -5,6 +5,7 @@ import i18next from '../../utils/i18n';
 import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
 import { templateAudio, TemplateID } from '../../utils/constants';
 import { Timer } from '../../utils/utilsHandlers/timer';
+import { resetFloatState } from '../../utils/utilsHandlers/floatHandler';
 /**
  * @component LidoContainer
  *
@@ -486,7 +487,7 @@ export class LidoContainer {
     setTimeout(() => {
       highlightElement();
     },100)
-
+    resetFloatState()
     Timer.getI().start();
   }
 
@@ -495,6 +496,7 @@ export class LidoContainer {
     window.removeEventListener('load', () => this.scaleContainer(this.el));
     document.body.style.backgroundColor = '';
     document.body.style.backgroundImage = '';
+    resetFloatState();
     Timer.getI().stop();
   }
 
