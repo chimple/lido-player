@@ -82,6 +82,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    if(container && container.getAttribute("game-completed") === "true") return;
     console.log("moving start");
     
     if (isDraggingDisabled) {
@@ -369,7 +370,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
   element.addEventListener('click', ev => {
     if (isClicked) {
       console.log("clicked drag elkement");
-      
+      if(container && container.getAttribute("game-completed") === "true") return;
       onClickDropOrDragElement(element, 'drag');
     }
   });
