@@ -118,7 +118,7 @@ export class AudioPlayer {
       console.log('🚀 Playing audio:', this.audioElement.src);
 
       try {
-        setDraggingDisabled(true);
+        // setDraggingDisabled(true);
 
         const language = container.getAttribute('Lang') || 'en';
         const profile = LANGUAGE_PROFILES[language] || LANGUAGE_PROFILES[language.split('-')[0]] || LANGUAGE_PROFILES['en'];

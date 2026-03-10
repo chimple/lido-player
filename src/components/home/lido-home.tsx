@@ -666,7 +666,7 @@ export class LidoHome {
     }
     if (this.areAllDropsFilled()) {
       const objectiveString = container['objective'];
-      const objectiveArray = JSON.parse(localStorage.getItem(SelectedValuesKey) || '[]');
+      const objectiveArray = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
       const res = matchStringPattern(objectiveString, objectiveArray);
       console.log('Resultt', res);
       if (res) {
