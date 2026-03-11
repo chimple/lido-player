@@ -137,8 +137,8 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
 
         case 'scrollCellAfterEquationSolved': { 
-          if(targetElement){ 
-            handleSolvedEquationSubmissionAndScoreUpdate();
+          if (targetElement) { 
+            handleSolvedEquationSubmissionAndScoreUpdate(targetElement);
           } 
           break; 
         }          

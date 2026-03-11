@@ -146,14 +146,20 @@ export class LidoCalculator {
       storingEachActivityScore(isCorrect);
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
-      if(onCorrect.includes('scrollCellAfterEquationSolved')){
-        if(this.objective.length===0){
-        calculateScore()
-        window.dispatchEvent(new CustomEvent(NextContainerKey));
-      }
-      }else{
-        calculateScore()
-        window.dispatchEvent(new CustomEvent(NextContainerKey));
+      const hasScrollAction = onCorrect.includes('scrollCellAfterEquationSolved');
+      const isMultiObjective = this.objective.includes(',');
+      if (!hasScrollAction) {
+        if (!isMultiObjective) {
+          calculateScore();
+          window.dispatchEvent(new CustomEvent(NextContainerKey));
+        } else {
+          const objectives = this.objective.split(',').map(obj => obj.trim());
+          const allSolved = this.userAnswers.length >= objectives.length;
+          if (allSolved) {
+            calculateScore();
+            window.dispatchEvent(new CustomEvent(NextContainerKey));
+          }
+        }
       }
       
     }
@@ -164,13 +170,17 @@ export class LidoCalculator {
       storingEachActivityScore(isCorrect);
       const onInCorrect = container?.getAttribute('onInCorrect') || '';
       const onCorrect = container?.getAttribute('onCorrect') || '';
-      if(container.getAttribute('is-continue-on-correct') === 'false'){
+      const isContinueOnCorrect =
+        container.getAttribute('is-continue-on-correct') === 'true';
+      if(!isContinueOnCorrect){
         await executeActions(onCorrect, container);  
       }else{
         await executeActions(onInCorrect, container);
       }
       calculateScore()
-      triggerNextContainer();
+      if (!isContinueOnCorrect) {
+        triggerNextContainer();
+      }
     }
     okbtn.style.pointerEvents = 'auto'; // Re-enable OK button after processing
   }
