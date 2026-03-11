@@ -113,8 +113,8 @@ export class LidoKeyboard {
     // Find a bubble whose word starts with current progress + clicked letter
     const matchedBubble = bubbles.find(bubble => {
       const word = bubble.getAttribute('value'); // full word like "one"
-      const element = word?.startsWith(this.inputString.toLowerCase())
-      return element;
+      const hasElement = word?.startsWith(this.inputString.toLowerCase())      
+      return hasElement ? bubble : null;
     });  
     
     const bodyRect = document.body.getBoundingClientRect();
