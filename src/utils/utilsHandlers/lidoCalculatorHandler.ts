@@ -9,7 +9,7 @@ const wait = (ms: number) =>
 
 const animationToRemoveEquationSolvedCellForNimbleTable = (
   activeCell: HTMLElement,
-  allCalculateTypes: NodeListOf<Element>
+  container: HTMLElement
 ) => {
   return new Promise<void>((resolve) => {
     const keyframes = `
@@ -31,8 +31,9 @@ const animationToRemoveEquationSolvedCellForNimbleTable = (
       "animationend",
       () => {
         activeCell.remove();
-        // Trigger next container if last cell
-        if (allCalculateTypes.length === 1) {
+        // Trigger next container only after the last calculate cell is removed
+        const remainingCalculateTypes = container.querySelectorAll("[type='calculate']");
+        if (remainingCalculateTypes.length === 0) {
           setTimeout(() => triggerNextContainer(), 2000);
         }
 
@@ -49,7 +50,7 @@ const checkEquationOfActiveCell = async (container: HTMLElement) => {
   const calculatorValue =
     container.querySelector("#lidoCalculator")?.getAttribute("value") || "";
 
-  const allCalculateTypes = document.querySelectorAll("[type='calculate']");
+  const allCalculateTypes = container.querySelectorAll("[type='calculate']");
   const activeCell = allCalculateTypes[0] as HTMLElement;
   if (!activeCell) return;
 
@@ -75,10 +76,7 @@ const checkEquationOfActiveCell = async (container: HTMLElement) => {
   element2.innerHTML = activeCell.innerHTML;
 
   // 3. animate out
-  await animationToRemoveEquationSolvedCellForNimbleTable(
-    activeCell,
-    allCalculateTypes
-  );
+  await animationToRemoveEquationSolvedCellForNimbleTable(activeCell, container);
 
   // 4. update element1 ONLY from second equation onwards
   if (previousElement2Content) {
@@ -90,30 +88,35 @@ const checkEquationOfActiveCell = async (container: HTMLElement) => {
 
 let score = 0;
 
-export const handleSolvedEquationSubmissionAndScoreUpdate = async () => {
-  const container = document.getElementById("lido-container") as HTMLElement;
-  if (!container) return;
+export const handleSolvedEquationSubmissionAndScoreUpdate = async (
+  container?: HTMLElement
+) => {
+  const resolvedContainer =
+    container ?? (document.getElementById("lido-container") as HTMLElement);
+  if (!resolvedContainer) return;
 
   const calculatorValue =
-    container.querySelector("#lidoCalculator")?.getAttribute("value") || "";
+    resolvedContainer.querySelector("#lidoCalculator")?.getAttribute("value") ||
+    "";
   if (!calculatorValue.length) return;
 
-  const allCalculateTypes = document.querySelectorAll("[type='calculate']");
+  const allCalculateTypes =
+    resolvedContainer.querySelectorAll("[type='calculate']");
   const activeCell = allCalculateTypes[0] as HTMLElement;
   if (!activeCell) return;
 
   const isContinueOnCorrect =
-    container.getAttribute("is-continue-on-correct") === "true";
+    resolvedContainer.getAttribute("is-continue-on-correct") === "true";
 
   const activeCellValue = Number(activeCell["value"]);
   const calculateValue = Number(calculatorValue);
 
-  const element1 = container.querySelector("#dummy111") as HTMLElement;
-  const element2 = container.querySelector("#dummy112") as HTMLElement;
+  const element1 = resolvedContainer.querySelector("#dummy111") as HTMLElement;
+  const element2 = resolvedContainer.querySelector("#dummy112") as HTMLElement;
 
   /* ---------- PRACTICE MODE ---------- */
   if (isContinueOnCorrect) {
-    await checkEquationOfActiveCell(container);
+    await checkEquationOfActiveCell(resolvedContainer);
     return;
   }
 
@@ -145,7 +148,7 @@ export const handleSolvedEquationSubmissionAndScoreUpdate = async () => {
   //3. animate out
   await animationToRemoveEquationSolvedCellForNimbleTable(
     activeCell,
-    allCalculateTypes
+    resolvedContainer
   );
 
   //4. update element1 ONLY after animation & only if previous exists
