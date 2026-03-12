@@ -165,12 +165,13 @@ export class LidoCalculator {
       const onInCorrect = container?.getAttribute('onInCorrect') || '';
       const onCorrect = container?.getAttribute('onCorrect') || '';
       if(container.getAttribute('is-continue-on-correct') === 'false'){
-        await executeActions(onCorrect, container);  
+        await executeActions(onCorrect, container);
+        triggerNextContainer();  
       }else{
         await executeActions(onInCorrect, container);
       }
       calculateScore()
-      triggerNextContainer();
+      // triggerNextContainer();
     }
     okbtn.style.pointerEvents = 'auto'; // Re-enable OK button after processing
   }
