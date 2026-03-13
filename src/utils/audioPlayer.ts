@@ -57,6 +57,8 @@ export class AudioPlayer {
   }
 
   private handleUserClick = () => {
+    const container = document.getElementById(LidoContainer);
+    if (container?.getAttribute('game-completed') === 'true')return;
     this.stop();
   };
 
