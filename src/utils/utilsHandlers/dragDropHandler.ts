@@ -773,7 +773,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
-  storingEachActivityScore(isCorrect);
+  if(container.getAttribute("template-id") !== "blender"){
+      storingEachActivityScore(isCorrect);
+  }
+
   dragElement.style.opacity = '1';
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
