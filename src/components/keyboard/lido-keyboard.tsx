@@ -105,11 +105,12 @@ export class LidoKeyboard {
 
     localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
 
+    const bodyRect = document.body.getBoundingClientRect();
+
     // Get all word bubbles (make sure bubbles have class "bubble-element")
     const bubbles = Array.from(container.querySelectorAll('.bubble-element')) as HTMLElement[];
     const overlapingBubbles = bubbles.filter(bubble => {
       const elemRect = bubble.getBoundingClientRect();
-      const bodyRect = document.body.getBoundingClientRect();
       return elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
     });
     

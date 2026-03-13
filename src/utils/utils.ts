@@ -872,9 +872,6 @@ export const validateObjectiveStatus = async () => {
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     const onCorrect = container.getAttribute('onCorrect');
 
-    // console.log("false va,ue is coming");
-    
-
     if(container.querySelectorAll("[type='click']").length > 0 || container.getAttribute("template-id") === "blender"){
         storingEachActivityScore(false);
       }
