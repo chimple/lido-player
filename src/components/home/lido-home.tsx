@@ -630,10 +630,12 @@ export class LidoHome {
   }
 
   private async btnpopup() {
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    console.log("game completed !");
+    
+    if (!container || container.getAttribute("game-completed") === "true") return;
     setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
-
-    const container = document.getElementById(LidoContainer) as HTMLElement;
     const allele = container.querySelectorAll('*');
     const templateId = container.getAttribute(TemplateID)
     if(templateId){

@@ -96,8 +96,6 @@ export class LidoKeyboard {
   async inputValidation(e) {
     if (this.type !== 'click') return;
     
-    let isOverlapping = false;
-
     const container = document.getElementById(LidoContainer) as HTMLElement;
     const clickedValue = (e.target as HTMLElement).getAttribute('value');
 
@@ -107,39 +105,36 @@ export class LidoKeyboard {
 
     localStorage.setItem(SelectedValuesKey, JSON.stringify(selectedValue));
 
+    const bodyRect = document.body.getBoundingClientRect();
+
     // Get all word bubbles (make sure bubbles have class "bubble-element")
     const bubbles = Array.from(container.querySelectorAll('.bubble-element')) as HTMLElement[];
-
+    const overlapingBubbles = bubbles.filter(bubble => {
+      const elemRect = bubble.getBoundingClientRect();
+      return elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
+    });
+    
     // Find a bubble whose word starts with current progress + clicked letter
-    const matchedBubble = bubbles.find(bubble => {
+    const matchedBubble = overlapingBubbles.find(bubble => {
       const word = bubble.getAttribute('value'); // full word like "one"
-      const hasElement = word?.startsWith(this.inputString.toLowerCase())      
+      const hasElement = word?.startsWith(this.inputString.toLowerCase())  
       return hasElement ? bubble : null;
     });  
-    
-    const bodyRect = document.body.getBoundingClientRect();
-    if(matchedBubble){
-      const elemRect = matchedBubble.getBoundingClientRect();
-
-      // Ciheck if the matched bubble is overlapping with the target area (you can define the target area as needed, here we use the entire viewport)
-      isOverlapping = matchedBubble && elemRect.left < bodyRect.right && elemRect.right > bodyRect.left && elemRect.top < bodyRect.bottom && elemRect.bottom > bodyRect.top;
-    }
-    
-
-    if (matchedBubble && isOverlapping) {
+        
+    if (matchedBubble) {
       // If full word completed
       if (this.inputString.toLowerCase() === matchedBubble.getAttribute('value').toLowerCase()) {
         storingEachActivityScore(true);
 
         AudioPlayer.getI().play(matchedBubble);
         stopHighlightForSpeakingElement(matchedBubble);
+        setTimeout(() => {this.inputString = '';}, 1000)
         const elementOnCorrect = matchedBubble.getAttribute('onCorrect');
         await executeActions(elementOnCorrect, matchedBubble);
         matchedBubble.style.animation = 'none';
         matchedBubble.style.pointerEvents = 'none';
 
         this.numberOfClick++;
-        setTimeout(() => {this.inputString = '';}, 1000)
         localStorage.removeItem(SelectedValuesKey);
 
         if (this.numberOfClick === this.letterLength) {

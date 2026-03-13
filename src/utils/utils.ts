@@ -20,7 +20,7 @@ import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
-import { evaluate, isArray } from 'mathjs';
+import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
@@ -137,8 +137,8 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
 
         case 'scrollCellAfterEquationSolved': { 
-          if (targetElement) { 
-            handleSolvedEquationSubmissionAndScoreUpdate(targetElement);
+          if(targetElement){ 
+            handleSolvedEquationSubmissionAndScoreUpdate();
           } 
           break; 
         }          
@@ -848,7 +848,7 @@ export const validateObjectiveStatus = async () => {
         appendingDragElementsInDrop();
       }
       
-      if(container.querySelectorAll("[type='click']").length > 0){
+      if(container.querySelectorAll("[type='click']").length > 0 || container.getAttribute("template-id") === "blender"){
         storingEachActivityScore(true);
       }
       await executeActions(onCorrect, container);
@@ -872,7 +872,7 @@ export const validateObjectiveStatus = async () => {
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     const onCorrect = container.getAttribute('onCorrect');
 
-    if(container.querySelectorAll("[type='click']").length > 0){
+    if(container.querySelectorAll("[type='click']").length > 0 || container.getAttribute("template-id") === "blender"){
         storingEachActivityScore(false);
       }
 
@@ -1111,6 +1111,7 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
 };
 
 export const equationCheck = (additionalCheck: string): boolean => {
+  console.log('🚀 ~ equationCheck ~ additionalCheck:', additionalCheck);
   if (!additionalCheck) {
     console.log('Input string is empty.');
     return undefined;
@@ -1120,9 +1121,12 @@ export const equationCheck = (additionalCheck: string): boolean => {
   const parts: string[] = additionalCheck.split(',');
   // 2. Map through the parts, replacing those that start with '#'
   const modifiedParts: string[] = parts.map(part => {
+    console.log('🚀 ~ equationCheck ~ part:', part);
     if (part.startsWith('$')) {
       const cleanWord = part.substring(1);
+      console.log('🚀 ~ equationCheck ~ part starts with $:', cleanWord);
       const dragSelectedElements = getElementsForQueries(cleanWord);
+      console.log('🚀 ~ equationCheck ~ dragSelectedElements:', dragSelectedElements);
       const randomReplacement = isArray(dragSelectedElements)
         ? dragSelectedElements?.map(val => val.getAttribute('value'))
         : dragSelectedElements.getAttribute('value') || document.getElementById(cleanWord)?.['value'];
@@ -1132,12 +1136,14 @@ export const equationCheck = (additionalCheck: string): boolean => {
       return part;
     }
   });
+  console.log('🚀 ~ equationCheck ~ modifiedParts:', modifiedParts);
+
 
   // 3. Join the modified parts back into one string
   const resultString = modifiedParts.join('');
   console.log('🚀 ~ equationCheck ~ resultString:', resultString);
   // 4. Evaluate the final string as a mathematical expression
-  const finalRes = evaluate(resultString);
+const finalRes = evaluate(resultString);
   console.log('🚀 ~ equationCheck ~ finalRes:', finalRes);
   return finalRes;
 };
@@ -1156,6 +1162,7 @@ const getElementsForQueries = (query: string) => {
   const sortedDragSelectedElements = Array.from(dragSelectedElements).sort((a, b) => parseInt(a.getAttribute(DropTimeAttr)) - parseInt(b.getAttribute(DropTimeAttr)));
   return sortedDragSelectedElements;
 };
+
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
