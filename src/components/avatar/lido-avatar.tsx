@@ -195,6 +195,7 @@ export class LidoAvatar {
         onCorrect={this.onCorrect}
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
+        src={this.src}
       >
         <canvas class="lido-canvas"></canvas>
       </Host>
