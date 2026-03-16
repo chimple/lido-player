@@ -74,7 +74,7 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   }
 
   const onClick = async () => {
- 
+    if(container.getAttribute("game-completed") === "true") return;
     const lido_buttons = element.getAttribute('id');
     if (lido_buttons === 'lido-arrow-left' || lido_buttons === 'lido-arrow-right') {
       return;
