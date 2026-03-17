@@ -21,7 +21,7 @@ import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
-import { evaluate, isArray } from 'mathjs';
+import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
