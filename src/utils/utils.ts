@@ -10,6 +10,7 @@ import {
   DropAction,
   DropHasDrag,
   DropLength,
+  CalculatorOk
 } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import GameScore from './constants';
@@ -632,7 +633,9 @@ export const countPatternWords = (pattern: string): number => {
 
 export let countOfMistakes = 0;
 
-export const storingEachActivityScore = (flag: boolean) => {
+export const storingEachActivityScore = (flag: boolean, scoreTrigger?: typeof CalculatorOk) => {
+  const hasCalculator = document.querySelector('lido-calculator') !== null;
+  if (hasCalculator && scoreTrigger !== CalculatorOk) return;
   if (flag) {
     gameScore.rightMoves += 1;
     countOfMistakes = 0;
@@ -646,6 +649,11 @@ export const storingEachActivityScore = (flag: boolean) => {
 };
 
 export const calculateScore = () => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const hasCalculator = document.querySelector('lido-calculator') !== null;
+  if (hasCalculator && container && container.getAttribute('game-completed') !== 'true') {
+    return;
+  }
   const rightMoves = gameScore.rightMoves;
   const wrongMoves = gameScore.wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
