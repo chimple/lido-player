@@ -674,7 +674,11 @@ export class LidoHome {
       if (res) {
         triggerNextContainer();
       }
-    } else {
+    }
+    else if(container.getAttribute("game-completed") === 'true'){
+         triggerNextContainer();
+    }
+    else {
       console.log('Not yet filled ');
     }
   }

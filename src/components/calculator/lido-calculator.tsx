@@ -1,6 +1,6 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore, triggerNextContainer } from '../../utils/utils';
-import { NextContainerKey,LidoContainer } from '../../utils/constants';
+import { NextContainerKey,LidoContainer, SelectedValuesKey ,CalculatorOk} from '../../utils/constants';
 
 @Component({
   tag: 'lido-calculator',
@@ -84,6 +84,7 @@ export class LidoCalculator {
   }
 
   private userAnswers: Number[] = []; // store all calculator inputs
+  private tempInputs: string[] = []; // store inputs before clearing display
   
   private async verifyAnswer() { 
     const userInput = this.displayValue.trim();
@@ -141,9 +142,20 @@ export class LidoCalculator {
     
     const okbtn = document.getElementById("btn-11") as HTMLElement;
     if (isCorrect) {
+      container.setAttribute("game-completed", "true");
+      this.tempInputs.push(userInput);
+      const existingSelected = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]');
+      const cleanedSelected = Array.isArray(existingSelected)
+        ? existingSelected.filter(v => String(v).trim() !== '')
+        : [];
+      const tempValue = this.tempInputs[this.tempInputs.length - 1];
+      if (String(tempValue).trim() !== '') {
+        cleanedSelected.push(tempValue);
+      }
+      container.setAttribute(SelectedValuesKey, JSON.stringify(cleanedSelected));
       okbtn.style.pointerEvents = 'none'; // Disable OK button to prevent multiple clicks
       this.displayValue = "";
-      storingEachActivityScore(isCorrect);
+      storingEachActivityScore(isCorrect, CalculatorOk);
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
       const hasScrollAction = onCorrect.includes('scrollCellAfterEquationSolved');
@@ -167,7 +179,7 @@ export class LidoCalculator {
     else{
       okbtn.style.pointerEvents = 'none'; // Disable OK button to prevent multiple clicks
       this.displayValue = "";
-      storingEachActivityScore(isCorrect);
+      storingEachActivityScore(isCorrect,CalculatorOk);
       const onInCorrect = container?.getAttribute('onInCorrect') || '';
       const onCorrect = container?.getAttribute('onCorrect') || '';
       const isContinueOnCorrect =
