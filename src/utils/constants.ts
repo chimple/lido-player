@@ -21,7 +21,6 @@ export const LIDO_COMMON_AUDIO_PATH = '__LIDO_COMMON_AUDIO_PATH__';
 export const LIDO_COMMON_AUDIO_READY_EVENT = 'lidoCommonAudioPathReady';
 export const TemplateID = 'template-id';
 export const CalculatorOk='calculator-ok';
-
 export enum TraceMode {
   NoFlow = 'noFlow',
   ShowFlow = 'showFlow',
