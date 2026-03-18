@@ -317,7 +317,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       const dropSelectedData = JSON.stringify(dropSelectedDataObject);
       const dropHasDrag = buildDropHasDragFromDOM();
 
-      handleResetDragElement(element, null, dropHasDrag, selectedValueData, dragSelectedData, dropSelectedData);
+      handleResetDragElement(element, null, dropHasDrag, null, null, null);
       return;
     }
     onElementDropComplete(element, mostOverlappedElement);
