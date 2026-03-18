@@ -1,1 +1,1 @@
-export{W as format}from"./p-D98Jt3Pi.js";import"./p-CaJY8rZO.js";
+export{X as format}from"./p-BNDxYZhO.js";import"./p-CaJY8rZO.js";
