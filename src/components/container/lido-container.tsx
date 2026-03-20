@@ -541,7 +541,7 @@ export class LidoContainer {
         prev-button-url={this.prevButtonUrl}
         next-button-url={this.nextButtonUrl}
         speaker-button-url={this.speakerButtonUrl}
-        disable-speak={this.disableSpeak}
+        disable-speak={`${this.disableSpeak}`}
         template-id={this.templateId}
         audio={this.audio}
         highlight-word-by-word={`${this.highlightWordByWord}`}
