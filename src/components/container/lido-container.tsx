@@ -312,7 +312,7 @@ export class LidoContainer {
           "quizMathShapes": templateAudio.quizMathShapes,
           "reorder": templateAudio.reorder,
           "rocketGame": templateAudio.rocketGame,
-          "rowBlock  ": templateAudio.rowBlock  ,
+          "rowBlock": templateAudio.rowBlock,
           "sequenceBox1": templateAudio.sequenceBox1,
           "shapeTractor": templateAudio.shapeTractor,
           "spellDoor": templateAudio.spellDoor,
