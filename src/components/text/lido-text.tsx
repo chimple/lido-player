@@ -322,7 +322,7 @@ export class LidoText {
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
         span-type={this.spanType}
-        disable-speak={this.disableSpeak}
+        disable-speak={`${this.disableSpeak}`}
       >
         {this.spanType !== '' ? <div class="lido-text-content"> {i18next.t(this.string)}</div> :  i18next.t(this.string)}
       </Host>

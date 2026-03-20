@@ -653,7 +653,9 @@ export class LidoHome {
       const htmlel = el as HTMLElement;
 
       if (tabIndex && Number(tabIndex) > 0) {
-        if(el && el.getAttribute('disable-speak')!=='true'){
+        if(el && (el.getAttribute('disable-speak')!=='true') || !el.getAttribute("disable-speak")){
+          console.log("disbale speak thing : ", el.getAttribute("diable-speak"), !el.getAttribute("diable-speak"));
+          
           await AudioPlayer.getI().play(htmlel);
         }
         
