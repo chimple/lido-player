@@ -204,6 +204,16 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'nextBtn': {
           const container = document.getElementById(LidoContainer) as HTMLElement;
           if(container.getAttribute('canplay') === 'false')return;
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (balanceEl) {
+            const objectiveString = container['objective'];
+            res = balanceResult(container, objectiveString);
+            if (res) {
+              await executeActions("this.showBalanceSymbol='true'", targetElement);
+            } else {
+              await executeActions("this.hideBalanceSymbol='true'", targetElement);
+            }
+          }
           if (container.getAttribute('is-continue-on-correct') !== 'true') {
             targetElement.style.pointerEvents = 'none';
             AudioPlayer.getI().stop();
@@ -773,16 +783,6 @@ export const handleShowCheck = () => {
 
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
-    const balanceEl = document.querySelector('lido-balance') as any;
-    if (balanceEl) {
-     if (!checkButton.hasAttribute('data-balance-listener')) {
-    checkButton.addEventListener('click', async function onClick() {
-    if(balanceResult && res){
-      await executeActions("this.showBalanceSymbol='true'", checkButton);
-      checkButton.removeEventListener('click', onClick);}
-    });
-    checkButton.setAttribute('data-balance-listener', 'true'); 
-  }}
   } else {
     if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")){
       validateObjectiveStatus();
