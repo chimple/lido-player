@@ -1,5 +1,5 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
-import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore, triggerNextContainer } from '../../utils/utils';
+import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore, triggerNextContainer, convertUrlToRelative } from '../../utils/utils';
 import { NextContainerKey,LidoContainer, SelectedValuesKey ,CalculatorOk} from '../../utils/constants';
 
 @Component({
@@ -204,7 +204,7 @@ export class LidoCalculator {
       <Host onEntry={this.onEntry} id="lidoCalculator" style={{ width: this.width, height: this.height, backgroundColor: this.bgColor,left:this.x, top:this.y }}>
           <lido-cell visible="true" height="94px" width="60px">
             <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="176%" width="89px" onEntry="this.position='relative';" class="top-icon">
-              <img src={this.penIcon} alt="pen" style={{ width: '100%', height: '100%' }} />
+              <img src={convertUrlToRelative(this.penIcon)} alt="pen" style={{ width: '100%', height: '100%' }} />
             </lido-text>
           </lido-cell>
 
