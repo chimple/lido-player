@@ -1,1 +1,1 @@
-export{X as format}from"./p-CNMWrCUc.js";import"./p-CaJY8rZO.js";
+export{X as format}from"./p-BGgr6xse.js";import"./p-CaJY8rZO.js";
