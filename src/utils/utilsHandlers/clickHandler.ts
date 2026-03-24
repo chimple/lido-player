@@ -8,29 +8,37 @@ import { highlightElement } from './highlightHandler';
 
 export function onTouchListenerForOnTouch(element: HTMLElement) {
   if (!element) return;
-   const container = document.getElementById('lido-container') as HTMLElement;
-    // const container = element.closest('lido-container') as HTMLElement;
-  // if (container && container.getAttribute('disable-speak') === 'true') {
-  //   return;
-  // }
-
-  // if (element.closest('[disableSpeak="true"]')) {
-  //   return;
-  // }
   const onTouch = element.getAttribute('onTouch');
   let onholdTimer: NodeJS.Timeout | null = null;
   let onholdTriggered = false;
   const onholdTime = 1000;
 
   const playAudio = async () => {
-    if (container && (container.getAttribute('disable-speak') || container.getAttribute('disableSpeak') !== 'false')) {
-      return;
-    }
-    onholdTriggered = true;
-    setDraggingDisabled(true);
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  if(element === container){
+    return;
+  }
+  const hasDisableSpeakAttribute = element.hasAttribute('disable-speak') || element.hasAttribute('disableSpeak');
+
+  onholdTriggered = true;
+  setDraggingDisabled(true);
+
+  // If container itself is NOT disabled → play normally
+  if (!hasDisableSpeakAttribute) {
     await AudioPlayer.getI().play(element);
     setDraggingDisabled(false);
-  };
+    return;
+  }
+
+if (element.getAttribute('disable-speak') === 'true' || (element.hasAttribute('disable-speak') && element.getAttribute('disable-speak') !== 'false') ) {
+  return;
+}
+else{
+  await AudioPlayer.getI().play(element);
+}
+
+  setDraggingDisabled(false);
+};
 
   const onPointerDown = (event: PointerEvent) => {
     event.stopPropagation();
