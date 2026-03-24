@@ -18,6 +18,7 @@ import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay} fro
   tag: 'lido-avatar',
   styleUrl: 'lido-avatar.css',
   shadow: false,
+  assetsDirs: ['.'],
 })
 export class LidoAvatar {
   /**
