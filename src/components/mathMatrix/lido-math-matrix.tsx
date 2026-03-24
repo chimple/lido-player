@@ -1,5 +1,6 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, parseProp ,validateObjectiveStatus } from '../../utils/utils';
+import { LidoContainer } from '../../utils/constants';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -157,8 +158,15 @@ export class LidoMathMatrix {
     const slotElement = this.el.querySelectorAll('.slot');
     const fristElement = this.el.querySelector('.slot') as HTMLElement;
     if (!slotElement.length || !fristElement) return;
-    const elementSize = Number(this.rows) < Number(this.cols) ? this.el.offsetHeight : this.el.offsetWidth;
-    const numberOfSlots = Number(this.rows) > Number(this.cols) ? Number(this.rows) : Number(this.cols);
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    let numOfRows = this.rows
+    let numOfCols = this.cols
+    if(container && container.getAttribute("template-id") === "multiplyBeeds"){
+      numOfCols = "9"
+      numOfRows = "1"
+    }
+    const elementSize = Number(numOfRows) < Number(numOfCols) ? this.el.offsetHeight : this.el.offsetWidth;
+    const numberOfSlots = Number(numOfRows) > Number(numOfCols) ? Number(numOfRows) : Number(numOfCols);
     const slotParent = this.el.querySelectorAll('.slot-parent');
     const slotMaxValues = elementSize / numberOfSlots
     slotParent.forEach(parent => {

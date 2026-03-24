@@ -1,78 +1,92 @@
 import {Meta, StoryObj} from '@storybook/web-components';
 import {html} from 'lit';
 
-type MultiplyBeedsArgs = {
-    number: string;
-    multiplicationFactor: string;
-    answer: string;
-    isAllowOnlyCorrect?: boolean;
-}
 
-const meta: Meta<MultiplyBeedsArgs> = {
+
+const meta: Meta = {
     title: 'Templates/multiplyBeeds',
     argTypes: {
-        number: { control: 'text', name: 'number1', description: 'number. (E.g. 9)' },
-        multiplicationFactor: { control: 'text', name: 'multiplication factor', description: '(E.g. 9)' },
-        answer: { control: 'text', name: 'answer', description: 'answer. (E.g. 81)' },
-        isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
+        num1: { control: 'number' },
+        num2: { control: 'number' },
     },
     args: {
-        number: '9',
-        multiplicationFactor: '9',
-        answer: '81',
-        isAllowOnlyCorrect: true,
+        num1: 9,
+        num2: 9
     }
 }
 
 export default meta;
 
-export const MultiplyBeeds: StoryObj<MultiplyBeedsArgs> = {
+export const MultiplyBeeds: StoryObj = {
     
-    render: (args: MultiplyBeedsArgs) => {
+    render: (args) => {
         const xml = getContainerXml(args);
         return html`<lido-home xml-data="${xml}" xmlData="${xml}"></lido-home>`;
     },
 }
 
-function getContainerXml(args : MultiplyBeedsArgs) {    
-    const number = args.number;
-    const multiplicationFactor = args.multiplicationFactor;
-    const answer = args.answer;
-    const isAllowOnlyCorrect = args.isAllowOnlyCorrect ?? true;
-
-    let str_val = "";
-    for (let i = 0; i < Number(multiplicationFactor); i++) {
-        str_val += number + '+';
-    }
-
-    str_val = str_val.slice(0,-1) + '=';
-
+function getContainerXml(args) {   
+    const num1 = Number(args?.num1 ?? 0);
+    const num2 = Number(args?.num2 ?? 0);
+    const objective = Array.from({ length: Math.max(0, num2) }, (_, i) => i + 1).join(",");
+    "9x9=81"
     return `
         <main>
-            <lido-container id="multiply-beads" disableSpeak="true" show-drop-border="false" equationCheck="$#mat1,==,$#answer-multiply-beeds" objective="" tab-index="1"  value="multiply-beads" bgImage="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Multiply%20beads.png"  height="100%" width="100%" bgColor="transparent"  visible="true" onCorrect="answer-multiply-beeds.addText='${answer}'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}">
+        <lido-container visible="true" template-id="multiplyBeeds" objective="${objective}" onCorrect="drop${num2}.visibility='hidden'; drag${num2}.visibility='hidden'; num1.speak='true'; num2.speak='true'; num3.speak='true'; num4.speak='true'; num5.speak='true'; this.sleep='10000';" is-allow-only-correct="true" bg-image="https://db-stage.chimple.net/storage/v1/object/public/template-assets/background-images/Multiply%20beads.png" exit-button-url="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Close.png" prev-button-url='https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Previous.png' next-button-url='https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/Next.png' speaker-button-url='https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Navbar-buttons/NavAudio.png'>
 
-                <!-- Chimple Avatar -->
-                <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.1045px, portrait.220px" y="landscape.525px, portrait.1075px" ariaHidden="true" bgColor="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='0';">
-                    <lido-avatar id="lido-avatar" disable-edit="true" visible="true"  height="inherit"  width="inherit" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" altText="{chimpleCharacterRive}" onEntry="">
-                    </lido-avatar>
-                </lido-cell>
+                <lido-text id="num1" string="${num1}"></lido-text>
+                <lido-text id="num2" string="in to"></lido-text>
+                <lido-text id="num3" string="${num2}"></lido-text>
+                <lido-text id="num4" string="equal"></lido-text>
+                <lido-text id="num5" string="${num1 * num2}"></lido-text>
                 
-                <!-- Question Start Section -->
-                <lido-text visible="false" id="txt1" font-family="'Baloo 2', serif" font-size="52px" font-color="black" string="click the right slot of the beeds column and count the sum of all the beeds" onEntry="this.speak='true';" >
-                </lido-text>
-
-                <!-- Bottom display Section -->
-                <lido-cell layout="pos" id="pos2"  value="pos2" height="auto" width="landscape.900px, portrait.100%" x="landscape.700px, portrait.0px" y="landscape.300px, portrait.1000px" ariaHidden="true" bgColor="transparent" visible="true" onEntry="this.flex-shrink='0'; this.animation='bottomToPlace 2s linear';">
-                    <lido-text id="answer-multiply-beeds"  value="${answer}" height="inherit" width="inherit" string="${str_val}" font-size="84px" font-weight="600" bgColor="#FFF4CD" visible="true" onEntry="this.word-wrap='break-word'; this.fontWeight='600'; this.textAlign='center';">
-                    </lido-text>
+        <lido-cell visible="true" height="100%" width="80%" bg-color="transparent" layout="col" onEntry="this.justifyContent='flex-end';" margin="0 0 -10px 0">
+            <lido-cell visible="true" height="80px" width="90%" bg-color="transparent" layout="row" onEntry="this.justifyContent='flex-start';">
+                <lido-cell visible="true" height="30px" width="60%" layout="row">
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="1" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="2" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="3" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="4" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="5" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="6" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="7" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="8" borderRadius="86px"></lido-text>
+                    <lido-text visible="true" width="63px" font-size="40px" onEntry="this.fontWeight='800'; this.border='2px solid black';" bg-color="#f2c90f" string="9" borderRadius="86px"></lido-text>
                 </lido-cell>
-
-                <!-- Beeds Section -->
-                <lido-cell layout="pos" id="pos3"  height="landscape.1100px, portrait.900px" width="landscape.600px,portrait.825px" x="landscape.40px, portrait.15px" y="landscape.-80px,portrait.45px" ariaHidden="true" z="0" bgColor="transparent" visible="true" onEntry="this.opacity='1';">
-                    <lido-math-matrix id="mat1" visible="true" rows="9" cols="9" top-index="true" left-index="true" bottom-index="false" clickable="true" active-only-visible="false" active-bg-color="#C23E06" deactive-bg-color="#F57139" border="2px solid #F34D08" defualt-fill="0" matrix-image="">
-                    </lido-math-matrix>
+            </lido-cell>
+            <lido-cell visible="true" height="600px" width="90%" bg-color="transparent" layout="row" onEntry="this.justifyContent='flex-start';">
+                <lido-cell visible="true" height="100%" width="60%" bg-color="transparent" layout="row" onEntry="this.alignItems='flex-start';">
+                    <lido-math-matrix id="drop0" value="1" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='visible';" onCorrect="drop1.visibility='visible'; drag1.visibility='visible';"></lido-math-matrix>
+                    <lido-math-matrix id="drop1" value="2" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop2.visibility='visible'; drag2.visibility='visible';"></lido-math-matrix>   
+                    <lido-math-matrix id="drop2" value="3" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop3.visibility='visible'; drag3.visibility='visible';"></lido-math-matrix>   
+                    <lido-math-matrix id="drop3" value="4" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop4.visibility='visible'; drag4.visibility='visible';"></lido-math-matrix>   
+                    <lido-math-matrix id="drop4" value="5" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop5.visibility='visible'; drag5.visibility='visible';"></lido-math-matrix>   
+                    <lido-math-matrix id="drop5" value="6" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop6.visibility='visible'; drag6.visibility='visible';"></lido-math-matrix>   
+                    <lido-math-matrix id="drop6" value="7" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop7.visibility='visible'; drag7.visibility='visible';"></lido-math-matrix>   
+                    <lido-math-matrix id="drop7" value="8" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop8.visibility='visible'; drag8.visibility='visible';"></lido-math-matrix>   
+                    <lido-math-matrix id="drop8" value="9" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drop" onEntry="this.visibility='hidden';" onCorrect="drop9.visibility='visible'; drag9.visibility='visible';"></lido-math-matrix>   
                 </lido-cell>
-            </lido-container>
+                <lido-cell visible="true" layout="pos" height="65%" width="30%" bg-color="transparent" x="950px" y="113px" onEntry="this.display='flex'; this.justifyContent='center'; this.alignItems='center';">
+                    <lido-math-matrix id="drag0" value="1" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry=""></lido-math-matrix>
+                    <lido-math-matrix id="drag1" value="2" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                    <lido-math-matrix id="drag2" value="3" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                    <lido-math-matrix id="drag3" value="4" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                    <lido-math-matrix id="drag4" value="5" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                    <lido-math-matrix id="drag5" value="6" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                    <lido-math-matrix id="drag6" value="7" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                    <lido-math-matrix id="drag7" value="8" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                    <lido-math-matrix id="drag8" value="9" clickable="false" visible="true" height="550px" width="1200px" cols="${num1}" rows="1" border-radius="20px" type="drag" activeBgColor="#9a3dc5ff" defualtFill="${num1}" onEntry="this.visibility='hidden';"></lido-math-matrix>
+                </lido-cell>
+            </lido-cell>
+
+            <lido-cell visible="true" layout="row" width="90%" height="165px" bg-color="brown" border-radius="50px">
+                <lido-text visible="true" id="beedsText" font-size="100px" font-color="white" string="" onEntry="this.fontWeight='800';"></lido-text>
+            <lido-cell>
+        <lido-cell>
+
+    </lido-container>
+
         </main>
     `
 }
+
