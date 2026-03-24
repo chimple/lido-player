@@ -1,6 +1,7 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore, triggerNextContainer, convertUrlToRelative } from '../../utils/utils';
 import { NextContainerKey,LidoContainer, SelectedValuesKey ,CalculatorOk} from '../../utils/constants';
+import { AudioPlayer } from '../../utils/audioPlayer';
 
 @Component({
   tag: 'lido-calculator',
@@ -97,7 +98,6 @@ export class LidoCalculator {
 
     if (this.objective && this.objective !='' && !this.objective.includes(',')) {
       console.log("hi iscorrect verified");
-      
       isCorrect = Number(userInput) === Number(this.objective);
     } 
 
@@ -142,7 +142,11 @@ export class LidoCalculator {
     
     const okbtn = document.getElementById("btn-11") as HTMLElement;
     if (isCorrect) {
-      container.setAttribute("game-completed", "true");
+      const isNimbleTable = container.getAttribute('template-id') === 'nimbleTable';
+      const isMultiObjective = this.objective.includes(',');
+      if (!(isNimbleTable && isMultiObjective)) {
+        container.setAttribute("game-completed", "true");
+      }
       this.tempInputs.push(userInput);
       const existingSelected = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]');
       const cleanedSelected = Array.isArray(existingSelected)
@@ -156,10 +160,22 @@ export class LidoCalculator {
       okbtn.style.pointerEvents = 'none'; // Disable OK button to prevent multiple clicks
       this.displayValue = "";
       storingEachActivityScore(isCorrect, CalculatorOk);
+
+      if (isNimbleTable && isMultiObjective) {
+        const activeCell = container.querySelector("[type='calculate']") as HTMLElement | null;
+        if (activeCell) {
+          const activeCellAudio = activeCell.getAttribute('audio') || '';
+          if (activeCellAudio.trim()) {
+            activeCell.style.boxShadow = 'none !important';
+            activeCell.setAttribute('onCorrect', "this.speak='true'");
+            AudioPlayer.getI().play(activeCell);
+          }
+        }
+      }
+
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
       const hasScrollAction = onCorrect.includes('scrollCellAfterEquationSolved');
-      const isMultiObjective = this.objective.includes(',');
       if (!hasScrollAction) {
         if (!isMultiObjective) {
           calculateScore();
@@ -168,12 +184,12 @@ export class LidoCalculator {
           const objectives = this.objective.split(',').map(obj => obj.trim());
           const allSolved = this.userAnswers.length >= objectives.length;
           if (allSolved) {
+            container.setAttribute("game-completed", "true");
             calculateScore();
             window.dispatchEvent(new CustomEvent(NextContainerKey));
           }
         }
       }
-      
     }
 
     else{
