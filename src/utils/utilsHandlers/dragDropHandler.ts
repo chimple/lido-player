@@ -1001,3 +1001,32 @@ export const reduceSizeToOriginal = () => {
     }
   });
 };
+
+export const multiplyBeedsCalculation = (dropElement: HTMLElement) => {
+  const container = document.getElementById("lido-container") as HTMLElement;
+  const beedsTextPlace = container.querySelector("#beedsText") as HTMLElement;
+  if (!beedsTextPlace) return;
+
+  const colsText = dropElement.getAttribute("cols") ?? "";
+  if (colsText.trim() === "") return;
+
+  const currentText = (beedsTextPlace.textContent ?? "").trim();
+  if (currentText === "") {
+    beedsTextPlace.textContent = colsText;
+    return;
+  }
+
+  // Keep the expression part before "=" if it already exists.
+  const expression = currentText.split("=")[0].trim();
+  const newExpression = expression ? `${expression}+${colsText}` : colsText;
+  const sum = newExpression
+    .split("+")
+    .map(part => Number(part.trim()))
+    .reduce((acc, val) => (Number.isNaN(val) ? NaN : acc + val), 0);
+
+  if (Number.isNaN(sum)) {
+    beedsTextPlace.textContent = newExpression;
+  } else {
+    beedsTextPlace.textContent = `${newExpression}=${sum}`;
+  }
+}

@@ -124,7 +124,7 @@ export class LidoMathMatrix {
       slot.style.color = this.fontColor;
 
       if (slot.className.includes('slot-active')) {
-        slot.style.visibility = 'visible';
+        slot.style.visibility = '';
         if (this.matrixImage) {
           slot.style.setProperty('--bg-image', `url(${convertUrlToRelative(this.matrixImage)})`);
         }

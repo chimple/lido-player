@@ -19,7 +19,7 @@ import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation } from './utilsHandlers/dragDropHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
@@ -686,6 +686,11 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (onCorrect) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
+
+    //for multiply beeds
+    if(container.getAttribute("template-id") === "multiplyBeeds"){
+      multiplyBeedsCalculation(dropElement);
+    }
   } else {
     const onInCorrect = dropElement.getAttribute('onInCorrect');
     if (onInCorrect) {
@@ -859,6 +864,14 @@ export const validateObjectiveStatus = async () => {
       if(container.querySelectorAll("[type='click']").length > 0 || container.getAttribute("template-id") === "blender"){
         storingEachActivityScore(true);
       }
+
+      if(container.getAttribute("template-id") === "multiplyBeeds"){
+        const beedsTextPlace = container.querySelector("#beedsText") as HTMLElement;
+        if (!beedsTextPlace) return;
+
+        await animateMultiplyBeedsResult(beedsTextPlace);
+      }
+      
       await executeActions(onCorrect, container);
     }
     calculateScore();
@@ -897,6 +910,78 @@ export const validateObjectiveStatus = async () => {
       await executeActions(onInCorrect, container);
     }    
   }
+};
+
+const parseMultiplyBeedsText = (text: string) => {
+  const trimmed = text.trim();
+  if (!trimmed) return null;
+
+  const [expressionPart, resultPart] = trimmed.split("=");
+  const expression = (expressionPart ?? "").trim();
+  if (!expression) return null;
+
+  const terms = expression
+    .split("+")
+    .map(part => part.trim())
+    .filter(Boolean);
+  if (terms.length === 0) return null;
+
+  const firstValue = Number(terms[0]);
+  if (Number.isNaN(firstValue)) return null;
+
+  const allSame = terms.every(term => Number(term) === firstValue);
+  if (!allSame) return null;
+
+  let total = Number((resultPart ?? "").trim());
+  if (Number.isNaN(total)) {
+    total = terms
+      .map(term => Number(term))
+      .reduce((acc, val) => (Number.isNaN(val) ? NaN : acc + val), 0);
+  }
+  if (Number.isNaN(total)) return null;
+
+  return {
+    value: firstValue,
+    count: terms.length,
+    total,
+  };
+};
+
+const animateMultiplyBeedsResult = (beedsTextPlace: HTMLElement) => {
+  const parsed = parseMultiplyBeedsText(beedsTextPlace.textContent ?? "");
+  if (!parsed) return;
+
+  const existingTimerIds = beedsTextPlace.getAttribute("data-multiply-timers");
+  if (existingTimerIds) {
+    existingTimerIds
+      .split(",")
+      .map(id => Number(id))
+      .filter(id => Number.isFinite(id))
+      .forEach(id => clearTimeout(id));
+  }
+  beedsTextPlace.removeAttribute("data-multiply-timers");
+
+  const steps = [
+    String(parsed.value),
+    "X",
+    String(parsed.count),
+    "=",
+    String(parsed.total),
+  ];
+
+  const intervalMs = 1000;
+  const timerIds: number[] = [];
+  steps.forEach((step, index) => {
+    const id = window.setTimeout(() => {
+      if (index === 0) {
+        beedsTextPlace.textContent = "";
+      }
+      const existing = (beedsTextPlace.textContent ?? "").trim();
+      beedsTextPlace.textContent = existing ? `${existing} ${step}` : step;
+    }, intervalMs * (index + 1));
+    timerIds.push(id);
+  });
+  beedsTextPlace.setAttribute("data-multiply-timers", timerIds.join(","));
 };
 
 export const triggerNextContainer = () => {
