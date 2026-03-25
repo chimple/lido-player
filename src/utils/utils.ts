@@ -932,7 +932,8 @@ const parseMultiplyBeedsText = (text: string) => {
   const allSame = terms.every(term => Number(term) === firstValue);
   if (!allSame) return null;
 
-  let total = Number((resultPart ?? "").trim());
+  const resultText = (resultPart ?? "").trim();
+  let total = resultText === "" ? NaN : Number(resultText);
   if (Number.isNaN(total)) {
     total = terms
       .map(term => Number(term))
