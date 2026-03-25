@@ -653,12 +653,14 @@ export class LidoHome {
       const htmlel = el as HTMLElement;
 
       if (tabIndex && Number(tabIndex) > 0) {
-        if(el && (el.getAttribute('disable-speak')!=='true') || !el.getAttribute("disable-speak")){
-          console.log("disbale speak thing : ", el.getAttribute("diable-speak"), !el.getAttribute("diable-speak"));
-          
+        const isVisible = (el: HTMLElement) => {
+          const rect = el.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.right > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
+        };
+        console.log('Element visibility', isVisible(htmlel));
+        if (htmlel && htmlel.getAttribute('disable-speak') !== 'true' && isVisible(htmlel)) {
           await AudioPlayer.getI().play(htmlel);
         }
-        
 
         if (getCancelBtnPopup()) {
           await AudioPlayer.getI().stop();
