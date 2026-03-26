@@ -1,8 +1,7 @@
 import { re } from 'mathjs';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey,DropToAttr } from '../constants';
 
-import {calculateScale,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore, getSortedValuesArrayFromMap } from '../utils';
-import { buildDropHasDragFromDOM, handleResetDragElement } from './dragDropHandler';
+import {calculateScale,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
 
 let preOverlap: HTMLElement;
 
@@ -209,8 +208,6 @@ export function enableReorderDrag(element: HTMLElement): void {
           const targetValue = element['value'];
           if (dragValues[tabKey]) {
             dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
-            const sortedValues = getSortedValuesArrayFromMap(dragValues);
-            container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
             // localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
           }
           optionArea.scrollTo({
