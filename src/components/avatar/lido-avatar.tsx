@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { Component, Host, h, Prop, Element, getAssetPath } from '@stencil/core';
 import { Rive, RuntimeLoader } from '@rive-app/canvas';
 import { RiveService } from '../../utils/rive-service';
 import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay} from '../../utils/utils';
@@ -21,8 +21,6 @@ import { convertUrlToRelative, initEventsForElement, setVisibilityWithDelay} fro
   assetsDirs: ['.'],
 })
 export class LidoAvatar {
-  private static readonly RIVE_WASM_URL = 'https://unpkg.com/@rive-app/canvas@2.32.0/rive.wasm';
-
   /**
    * The unique identifier for the column component.
    */
@@ -139,7 +137,7 @@ export class LidoAvatar {
    * It initializes events for the column based on the provided type.
    */
   async componentDidLoad() {
-    RuntimeLoader.setWasmUrl(LidoAvatar.RIVE_WASM_URL);
+    RuntimeLoader.setWasmUrl(getAssetPath("./rive.wasm"));
 
     setVisibilityWithDelay(this.el, this.delayVisible);
 
