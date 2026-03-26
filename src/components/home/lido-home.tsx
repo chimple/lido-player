@@ -48,7 +48,7 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
-  @Prop() commonAudioPath?: string="";
+  @Prop() commonAudioPath?: string = '';
 
   /** Boolean to show or hide navigation buttons */
   @Prop() showNav: boolean = true;
@@ -261,15 +261,14 @@ export class LidoHome {
     });
     await this.loadTemplateData();
 
-    const trimmed = (this.xmlData|| '').trim();
-    if (trimmed.includes("lido-container")) {
-        this.parseXMLData(this.xmlData);
-      } else {
-        const finalXml = await this.decompressBrotliBase64(this.xmlData);
-        this.parseXMLData(finalXml);
-      }
+    const trimmed = (this.xmlData || '').trim();
+    if (trimmed.includes('lido-container')) {
+      this.parseXMLData(this.xmlData);
+    } else {
+      const finalXml = await this.decompressBrotliBase64(this.xmlData);
+      this.parseXMLData(finalXml);
+    }
     // Parse the provided XML data
-    
 
     // Remove stored values in localStorage when the page is about to be unloaded
     window.addEventListener('beforeunload', () => {
@@ -284,7 +283,7 @@ export class LidoHome {
     }
 
     const candidatePaths = [`${this.baseUrl.replace(/\/+$/, '')}/data.json`];
-    
+
     for (const path of candidatePaths) {
       try {
         const resolvedPath = path.startsWith('http') ? path : getAssetPath(path);
@@ -305,9 +304,16 @@ export class LidoHome {
       }
     }
   }
-    private async decompressBrotliBase64(base64: string): Promise<string> {
+  private async decompressBrotliBase64(base64: string): Promise<string> {
     // Normalize payload (raw base64 / quoted / data URL / escaped newlines)
-    base64 = (base64 || '').trim().replace(/^data:.*;base64,/, '').replace(/^['"]|['"]$/g, '').replace(/\\n/g, '').replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+    base64 = (base64 || '')
+      .trim()
+      .replace(/^data:.*;base64,/, '')
+      .replace(/^['"]|['"]$/g, '')
+      .replace(/\\n/g, '')
+      .replace(/\s+/g, '')
+      .replace(/-/g, '+')
+      .replace(/_/g, '/');
     while (base64.length % 4) {
       base64 += '=';
     }
@@ -332,19 +338,15 @@ export class LidoHome {
     // Pure-JS fallback (no wasm asset required)
     try {
       const brotliDecodeModule = await import('brotli/dec/decode');
-      const brotliDecompressBuffer =
-        (brotliDecodeModule as any).BrotliDecompressBuffer ||
-        (brotliDecodeModule as any).default?.BrotliDecompressBuffer;
+      const brotliDecompressBuffer = (brotliDecodeModule as any).BrotliDecompressBuffer || (brotliDecodeModule as any).default?.BrotliDecompressBuffer;
       if (typeof brotliDecompressBuffer !== 'function') {
         throw new Error('BrotliDecompressBuffer function not found in brotli/dec/decode');
       }
       const decompressedBytes = brotliDecompressBuffer(bytes) as Uint8Array;
-      const decoded = new TextDecoder().decode(decompressedBytes);  
+      const decoded = new TextDecoder().decode(decompressedBytes);
       return decoded;
-    } catch (fallbackErr) {   
-      throw new Error(
-        `Brotli decompression failed (native + fallback): ${fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr)}`,
-      );
+    } catch (fallbackErr) {
+      throw new Error(`Brotli decompression failed (native + fallback): ${fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr)}`);
     }
   }
 
@@ -477,25 +479,22 @@ export class LidoHome {
   private applyDataToElement(sourceElement: Element, data: Record<string, any> | null): Element {
     if (!data) return sourceElement;
 
-    const allElements = [sourceElement,...Array.from(sourceElement.querySelectorAll('*'))];
+    const allElements = [sourceElement, ...Array.from(sourceElement.querySelectorAll('*'))];
 
     allElements.forEach(node => {
       Array.from(node.attributes).forEach(attr => {
-        const replacedValue = attr.value.replace(this.placeholderRegex,(_match, key: string) => {
-            const replacement = data[key];
-            return replacement === undefined || replacement === null
-              ? `{${key}}`
-              : String(replacement);
-          }
-        );
+        const replacedValue = attr.value.replace(this.placeholderRegex, (_match, key: string) => {
+          const replacement = data[key];
+          return replacement === undefined || replacement === null ? `{${key}}` : String(replacement);
+        });
 
         if (replacedValue !== attr.value) {
-            node.setAttribute(attr.name, replacedValue);
-          }
-        });
+          node.setAttribute(attr.name, replacedValue);
+        }
       });
+    });
 
-      return sourceElement;
+    return sourceElement;
   }
 
   @Watch('xmlData')
@@ -631,20 +630,20 @@ export class LidoHome {
 
   private async btnpopup() {
     const container = document.getElementById(LidoContainer) as HTMLElement;
-    console.log("game completed !");
-    
-    if (!container || container.getAttribute("game-completed") === "true") return;
+    console.log('game completed !');
+
+    if (!container || container.getAttribute('game-completed') === 'true') return;
     setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
     const allele = container.querySelectorAll('*');
-    const templateId = container.getAttribute(TemplateID)
-    if(templateId){
+    const templateId = container.getAttribute(TemplateID);
+    if (templateId) {
       const instructEl = this.el.querySelector(`#${templateId}`);
-      if(instructEl){
-        await executeActions("this.speak='true';", instructEl as HTMLElement)
+      if (instructEl) {
+        await executeActions("this.speak='true';", instructEl as HTMLElement);
       }
     }
-    
+
     for (const el of Array.from(allele)) {
       if (getCancelBtnPopup()) break;
 
@@ -658,7 +657,14 @@ export class LidoHome {
           return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.right > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
         };
         console.log('Element visibility', isVisible(htmlel));
-        if (htmlel && htmlel.getAttribute('disable-speak') !== 'true' && isVisible(htmlel)) {
+        const type = htmlel?.getAttribute('type');
+
+        if (htmlel && htmlel.getAttribute('disable-speak') !== 'true' && 
+          // If it has type → must be visible
+          ((type?.trim() && isVisible(htmlel)) ||
+            // If no type → speak anyway
+            !type || !type.trim())
+        ) {
           await AudioPlayer.getI().play(htmlel);
         }
 
@@ -678,11 +684,9 @@ export class LidoHome {
       if (res) {
         triggerNextContainer();
       }
-    }
-    else if(container.getAttribute("game-completed") === 'true'){
-         triggerNextContainer();
-    }
-    else {
+    } else if (container.getAttribute('game-completed') === 'true') {
+      triggerNextContainer();
+    } else {
       console.log('Not yet filled ');
     }
   }
@@ -789,7 +793,7 @@ export class LidoHome {
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} >
+        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
@@ -889,4 +893,3 @@ export class LidoHome {
     );
   }
 }
-
