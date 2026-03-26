@@ -12,6 +12,7 @@ export class AudioPlayer {
   private wordRects: DOMRect[] = [];
   private activeWordIndex = -1;
   private highlightRAF: number | null = null;
+  private endPromiseResolve: (() => void) | null = null;
 
   private constructor() {
     this.audioElement = document.createElement('audio');
@@ -38,6 +39,12 @@ export class AudioPlayer {
     //check if speechSynthesis is supported
     if (window?.speechSynthesis) {
       window.speechSynthesis.cancel();
+    }
+    // Resolve any pending "ended" wait so callers can continue.
+    if (this.endPromiseResolve) {
+      const resolve = this.endPromiseResolve;
+      this.endPromiseResolve = null;
+      resolve();
     }
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
@@ -163,7 +170,13 @@ export class AudioPlayer {
 
         // unified end
         await new Promise<void>(resolve => {
-          this.audioElement.onended = () => resolve();
+          this.endPromiseResolve = resolve;
+          this.audioElement.onended = () => {
+            if (this.endPromiseResolve === resolve) {
+              this.endPromiseResolve = null;
+            }
+            resolve();
+          };
         });
 
       }
