@@ -317,7 +317,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       const dropSelectedData = JSON.stringify(dropSelectedDataObject);
       const dropHasDrag = buildDropHasDragFromDOM();
 
-      handleResetDragElement(element, null, dropHasDrag, null, null, null);
+      handleResetDragElement(element, mostOverlappedElement, dropHasDrag, null, dragSelectedData, dropSelectedData);
       return;
     }
     onElementDropComplete(element, mostOverlappedElement);
@@ -511,7 +511,11 @@ export async function handleResetDragElement(
     // rebuild counts & balance after removing mapping
     const rebuiltMap2 = buildDragSelectedMapFromDOM();
     const sortedValues2 = getSortedValuesArrayFromMap(rebuiltMap2);
-    container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues2));
+    if(sortedValues2 && sortedValues2.length > 0){
+        container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues2));
+    } else {
+      container.removeAttribute(SelectedValuesKey)
+    }
     updateBalanceOnDrop(dragElement, dropElement);
   }
 
