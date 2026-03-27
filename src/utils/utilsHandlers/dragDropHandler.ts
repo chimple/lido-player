@@ -869,11 +869,13 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight-element");
   
   if (!selectedDropElement || element.classList.contains("dropped")) {
+    console.log("hello");
+    
     onClickDragElement(element);
     return;
   }
-
-  if (selectedDropElement && selectedDragElement) {
+  if(element.classList.contains("drop-element"))return;
+  if (selectedDropElement && selectedDragElement) {    
     if (selectedDragElement.getAttribute('drop-to')) return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move

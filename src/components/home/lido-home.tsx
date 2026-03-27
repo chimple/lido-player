@@ -370,6 +370,8 @@ export class LidoHome {
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
     });
+    window.addEventListener('touchstart', this.handleWindowTouch, { passive: true });
+    window.addEventListener('pointerdown', this.handleWindowPointer, { passive: true });
   }
   private publishCommonAudioPath(path?: string) {
     if (!path) return;
@@ -444,6 +446,8 @@ export class LidoHome {
     window.removeEventListener('resize', () => {
       this.scaleNavbarContainer(); // clean up
     });
+    window.removeEventListener('touchstart', this.handleWindowTouch);
+    window.removeEventListener('pointerdown', this.handleWindowPointer);
   }
 
   /**
@@ -628,24 +632,28 @@ export class LidoHome {
     });
   }
 
-  private async btnpopup() {
+  private async btnpopup(runId: number) {
+    const isStale = () => runId !== this.btnpopupRunId;
     const container = document.getElementById(LidoContainer) as HTMLElement;
     console.log('game completed !');
 
+    if (isStale()) return;
     if (!container || container.getAttribute('game-completed') === 'true') return;
     setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
+    if (isStale()) return;
     const allele = container.querySelectorAll('*');
     const templateId = container.getAttribute(TemplateID);
     if (templateId) {
       const instructEl = this.el.querySelector(`#${templateId}`);
       if (instructEl) {
         await executeActions("this.speak='true';", instructEl as HTMLElement);
+        if (isStale()) return;
       }
     }
 
     for (const el of Array.from(allele)) {
-      if (getCancelBtnPopup()) break;
+      if (getCancelBtnPopup() || isStale()) break;
 
       const tabIndex = el.getAttribute('tab-index');
 
@@ -668,14 +676,16 @@ export class LidoHome {
           await AudioPlayer.getI().play(htmlel);
         }
 
-        if (getCancelBtnPopup()) {
+        if (getCancelBtnPopup() || isStale()) {
           await AudioPlayer.getI().stop();
           break;
         }
 
         await new Promise(resolve => setTimeout(resolve, 300));
+        if (isStale()) break;
       }
     }
+    if (isStale()) return;
     if (this.areAllDropsFilled()) {
       const objectiveString = container['objective'];
       const objectiveArray = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
@@ -689,6 +699,33 @@ export class LidoHome {
     } else {
       console.log('Not yet filled ');
     }
+  }
+
+  private btnpopupRunId = 0;
+
+  private async cancelBtnpopupRun() {
+    this.btnpopupRunId++;
+    setCancelBtnPopup(true);
+    await AudioPlayer.getI().stop();
+  }
+
+  private handleWindowTouch = () => {
+    void this.cancelBtnpopupRun();
+  };
+
+  private handleWindowPointer = (event: PointerEvent) => {
+    if (event.pointerType !== 'touch') return;
+    void this.cancelBtnpopupRun();
+  };
+
+  private async handleBtnpopupClick() {
+    // Invalidate any in-flight run and stop audio immediately.
+    await this.cancelBtnpopupRun();
+
+    // Start fresh run.
+    const nextRunId = this.btnpopupRunId;
+    setCancelBtnPopup(false);
+    await this.btnpopup(nextRunId);
   }
 
   popUpClick = (comment: string) => {
@@ -793,7 +830,7 @@ export class LidoHome {
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()}>
+        <div id="main-audio" class="popup-button" onClick={() => this.handleBtnpopupClick()}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
