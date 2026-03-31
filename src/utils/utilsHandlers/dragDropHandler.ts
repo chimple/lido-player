@@ -969,6 +969,8 @@ export const appendingDragElementsInDrop = () => {
       if (isAllowOnlyCorrect === true) {
         if (drop['value'] === drag['value']) {
           drag.style.transform = 'translate(0,0)';
+          drag.style.width = "stretch";
+          drag.style.padding = '0'
           drop.appendChild(drag);
           appendedDragIds.add(drag.id);
           drag.style.pointerEvents = 'none';
@@ -977,6 +979,8 @@ export const appendingDragElementsInDrop = () => {
       } else {
         if (drop['value'].includes(drag['value'])) {
           drag.style.transform = 'translate(0,0)';
+          drag.style.width = "stretch";
+          drag.style.padding = '0'
           drop.appendChild(drag);
           appendedDragIds.add(drag.id);
           drag.style.pointerEvents = 'none';
