@@ -341,6 +341,27 @@ export class LidoContainer {
           "palEgraOptionWithAudio": templateAudio.palEgraOptionWithAudio,
           "palEgraWordFormation": templateAudio.palEgraWordFormation,
           "palEgraWordMatch": templateAudio.palEgraWordMatch,
+          "substractionWithImage" : templateAudio.substractionWithImage,
+          "substractionWithoutImage": templateAudio.substractionWithoutImage,
+          "numberIdentificationWithImage": templateAudio.numberIdentificationWithImage,
+          "numberIdentificationWithoutImage": templateAudio.numberIdentificationWithoutImage,
+          "wordBuildingWithImage": templateAudio.wordBuildingWithImage,
+          "wordBuildingWithoutImage": templateAudio.wordBuildingWithoutImage,
+          "pictureWordMatchMultipleImages":templateAudio.pictureWordMatchMultipleImages,
+          "pictureWordMatchSingleImage":templateAudio.pictureWordMatchSingleImage,
+          "sentenceMatch":templateAudio.sentenceMatch,
+          "imageMatch":templateAudio.imageMatch,
+          "palStoryTale":templateAudio.palStoryTale,
+          "palEgmaWordProblemDragnDrop":templateAudio.palEgmaWordProblemDragnDrop,
+          "palEgmaWordProblemClick":templateAudio.palEgmaWordProblemClick,
+          "palInventedSpelling":templateAudio.palInventedSpelling,
+          "palLetterIdentification":templateAudio.palLetterIdentification,
+          "palStoryMaking":templateAudio.palStoryMaking,
+          "palegmasumtogether":templateAudio.palegmasumtogether,
+          "palegmamultioption":templateAudio.palegmamultioption,
+          "palegraoptionaudio":templateAudio.palegraoptionaudio,
+          "palegrawordmatch":templateAudio.palegrawordmatch,
+          "palegramcqimages":templateAudio.palegramcqimages
 
        } as any
     )[this.templateId!] ?? '';
