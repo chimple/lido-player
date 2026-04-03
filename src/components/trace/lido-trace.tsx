@@ -842,9 +842,7 @@ export class LidoTrace {
 
     storingEachActivityScore(true);
 
-    if (this.el && this.onCorrect) {
-      await executeActions(this.onCorrect, this.el);
-    }
+
 
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
     const delay = 1000; // milliseconds
@@ -855,11 +853,20 @@ export class LidoTrace {
       const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
       svgContainer.style.visibility = 'visible';
       this.moving = false;
+      if (this.el && this.onCorrect) {
+        await executeActions(this.onCorrect, this.el);
+      }
       return;
     }
 
     calculateScore();
     console.log('All SVGs completed, hiding component.');
+    const container = document.querySelector(LidoContainer) as HTMLElement
+    const containerOnCorrect = container.getAttribute("onCorrect")
+    if(container && containerOnCorrect){
+      await new Promise(resolve => setTimeout(resolve, delay));
+      await executeActions(containerOnCorrect, this.el)
+    }
     triggerNextContainer();
   }
 
