@@ -207,6 +207,8 @@ export class LidoCalculator {
       }
       calculateScore()
       if (!isContinueOnCorrect) {
+        container.setAttribute("game-completed", "true");
+        calculateScore()
         triggerNextContainer();
       }
     }
