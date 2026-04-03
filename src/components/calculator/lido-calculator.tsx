@@ -205,7 +205,6 @@ export class LidoCalculator {
       }else{
         await executeActions(onInCorrect, container);
       }
-      calculateScore()
       if (!isContinueOnCorrect) {
         container.setAttribute("game-completed", "true");
         calculateScore()
