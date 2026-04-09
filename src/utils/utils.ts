@@ -1735,6 +1735,11 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
     targetY = startY + (dropCount * stepY);
   }
 
+// ------------ APPLY TRANSFORM SMOOTHLY --------------
+  // reset size first so centering and final placement use the resized bounds
+  dragElement.style.width = "auto";
+  dragElement.style.height = "auto";
+
   // ------------ APPLY TRANSFORM SMOOTHLY --------------
   const dx = (targetX - dragRect.left) / scale;
   const dy = (targetY - dragRect.top) / scale;
@@ -1742,11 +1747,27 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
   dragElement.style.transition = "transform .2s ease-out";
   dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
 
-  dropElement.dataset.dropCount = String(dropCount + 1);
+  const resizedDragRect = dragElement.getBoundingClientRect();
+  const dropCenterX = dropRect.left + dropWidth / 2;
+  const dropCenterY = dropRect.top + dropHeight / 2;
+  const resizedDragCenterX = resizedDragRect.left + resizedDragRect.width / 2;
+  const resizedDragCenterY = resizedDragRect.top + resizedDragRect.height / 2;
 
-  // reset size
-  dragElement.style.width = "auto";
-  dragElement.style.height = "auto";
+  const centerDx = (dropCenterX - resizedDragCenterX) / scale;
+  const centerDy = (dropCenterY - resizedDragCenterY) / scale;
+
+  dragElement.style.transition = "none";
+  dragElement.style.transform = `translate(${centerDx}px, ${centerDy}px)`;
+
+  // Force the browser to apply the centered position before animating to the stack slot.
+  dragElement.getBoundingClientRect();
+
+  requestAnimationFrame(() => {
+    dragElement.style.transition = "transform .2s ease-out";
+    dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
+  });
+
+  dropElement.dataset.dropCount = String(dropCount + 1);
 }
 
 export const updateCalculatorAnswer= (el:HTMLElement): void => {

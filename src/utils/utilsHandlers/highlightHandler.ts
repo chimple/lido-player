@@ -121,6 +121,7 @@ export function stopHighlightForSpeakingElement(element: HTMLElement): void {
 
 export function highlightElement(): void {
   const container = document.querySelector(LidoContainer);
+  if(container.getAttribute("template-id") === "blender")return;
   if (!container) return;
   const dropElements = buildDropHasDragFromDOM();
   const dropEls = container.querySelectorAll(`[type="drop"]`);

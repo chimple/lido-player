@@ -70,6 +70,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
   // Fetch the container element
   const container = document.getElementById(LidoContainer) as HTMLElement;
+  const templateId = container.getAttribute("template-id");
   if (!container) {
     console.error(`Container with ID "container" not found.`);
     return;
@@ -245,11 +246,13 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       const dropObject =buildDragSelectedMapFromDOM();
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
-        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && container.getAttribute("template-id") !== "blender") {
           if (otherElement) {
             otherElement.style.opacity = "0.3"
-          }
-          
+          } 
+        }
+        if(otherElement !== mostOverlappedElement){
+          otherElement.style.opacity = "1"
         }
       } else {
         if (otherElement) {
@@ -321,6 +324,13 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       return;
     }
     onElementDropComplete(element, mostOverlappedElement);
+    if(templateId === "blender" && element && mostOverlappedElement){
+      const allElements = document.querySelectorAll(`*`);
+      allElements.forEach(el => {
+        removeHighlight(el as HTMLElement);
+      });
+      mostOverlappedElement.classList.add("highlight-element");
+    }
     executeActions("this.updateCountBlender='true'",container);
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
@@ -800,7 +810,7 @@ export function updateDropBorder(element: HTMLElement): void {
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
 
-  if (dragSelectedElements.length > 0) {
+  if (dragSelectedElements.length > 0 && container.getAttribute("template-id") !== "blender") {
     element.classList.add('filled');
     element.classList.remove('empty');
     element.classList.remove('highlight-element')
@@ -899,10 +909,12 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
     selectedDragElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
     // Remove highlights after moving the element
-    const allElements = document.querySelectorAll(`*`);
-    allElements.forEach(el => {
-      removeHighlight(el as HTMLElement);
-    });
+    if(container.getAttribute("template-id") !== "blender"){
+      const allElements = document.querySelectorAll(`*`);
+      allElements.forEach(el => {
+        removeHighlight(el as HTMLElement);
+      });
+    }
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
