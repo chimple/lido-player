@@ -323,6 +323,8 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       handleResetDragElement(element, mostOverlappedElement, dropHasDrag, null, dragSelectedData, dropSelectedData);
       return;
     }
+    element.style.pointerEvents = 'none'; // Disable pointer events on drag element to prevent interference during drop handling
+    (mostOverlappedElement as HTMLElement).style.pointerEvents = 'none';
     onElementDropComplete(element, mostOverlappedElement);
     if(templateId === "blender" && element && mostOverlappedElement){
       const allElements = document.querySelectorAll(`*`);
@@ -332,6 +334,11 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       mostOverlappedElement.classList.add("highlight-element");
     }
     executeActions("this.updateCountBlender='true'",container);
+    setTimeout(() => {
+      element.style.pointerEvents = '';
+      (mostOverlappedElement as HTMLElement).style.pointerEvents = '';
+    }, 1000)
+    // element.style.pointerEvents = ''; // Re-enable pointer events on drag element after drop handling
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
@@ -851,6 +858,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
 
   highlightedElements.forEach(el => {
+    (el as HTMLElement).style.pointerEvents = ''; // Re-enable pointer events
     removeHighlight(el as HTMLElement);
   });
 
@@ -873,19 +881,25 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
 
   element?.classList.add('highlight-element');
+  element.style.pointerEvents = "none";
   element.ariaPressed = 'true';
 
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight-element");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight-element");
+   
   
   if (!selectedDropElement || element.classList.contains("dropped")) {
     console.log("hello");
     
     onClickDragElement(element);
+    element.style.pointerEvents = ""; // Re-enable pointer events if it was a drag element
     return;
   }
   if(element.classList.contains("drop-element"))return;
-  if (selectedDropElement && selectedDragElement) {    
+  if (selectedDropElement && selectedDragElement) { 
+    selectedDropElement.style.pointerEvents = 'none'; // Disable pointer events on drop element during animation
+    selectedDragElement.style.pointerEvents = 'none'; // Disable pointer events on drag element during animation
+    console.log("drop called!!!");
     if (selectedDragElement.getAttribute('drop-to')) return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
@@ -918,10 +932,13 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
+    selectedDragElement.style.pointerEvents = ''; // Re-enable pointer events on drag element after animation
+    selectedDropElement.style.pointerEvents = ''; // Re-enable pointer events on drop element after animation
     // ensure count update for click-to-drop flow
     await executeActions("this.updateCountBlender='true'", container);
     // await new Promise(resolve => setTimeout(resolve, 500));
     // selectedDragElement.style.transform = 'translate(0px, 0px)';
+    // selectedDropElement.style.pointerEvents = '';  
   }
 }
 
