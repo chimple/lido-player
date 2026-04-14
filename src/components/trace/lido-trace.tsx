@@ -632,8 +632,7 @@ export class LidoTrace {
     }
 
     const isFreeTraceMode = state.mode === TraceMode.FreeTrace || state.mode === TraceMode.BlindFreeTrace;
-    const SEARCH_WINDOW = 150;
-    const closestPoint = isFreeTraceMode? this.getClosestPointOnPath(currentPath, pointerPos): this.getClosestPointOnPathInRange(currentPath, pointerPos, state.lastLength - SEARCH_WINDOW, state.lastLength + SEARCH_WINDOW);
+    const closestPoint = this.getClosestPointOnPath(currentPath,pointerPos,isFreeTraceMode ? undefined : state.lastLength);
 
     // Ensure drawing happens only within proximity threshold
     const distanceToPathSquared = this.getDistanceSquared(pointerPos, closestPoint);
@@ -727,7 +726,7 @@ export class LidoTrace {
 
     // In normal modes, allow movement and drawing only within the general proximity threshold
     const BACKWARD_TOLERANCE = 20; // allow slight backward movement
-    const MAX_FORWARD_JUMP = 120; // prevent jumping to wrong segment
+    const MAX_FORWARD_JUMP = 80; // prevent jumping to wrong segment
     const RECOVERY_FORWARD_JUMP = Math.min(320, Math.max(160, state.totalPathLength * 0.45)); // recover on long strokes without skipping short paths
     const RECOVERY_END_BUFFER = Math.min(60, Math.max(24, state.totalPathLength * 0.12)); // don't let recovery auto-finish the last part
     const RECOVERY_POINTER_MOVE_THRESHOLD = 8; // only recover after a meaningful drag, not during slow tracing
@@ -921,59 +920,41 @@ export class LidoTrace {
   }
 
   // Find the closest point on the given path to the specified point using two-pass sampling (optimized)
-  getClosestPointOnPath(pathNode: SVGGeometryElement, point: { x: number; y: number }) {
-    const pathLength = pathNode.getTotalLength();
-    let closestPoint = { x: 0, y: 0, length: 0 };
-    let minDistanceSquared = Infinity;
-
-    // Optimized: Increase coarse steps for better performance
-    const coarseStep = 40; // was 20
-    let coarseClosestPoint = { x: 0, y: 0, length: 0 };
-    let coarseMinDistanceSquared = Infinity;
-
-    for (let i = 0; i <= pathLength; i += coarseStep) {
-      const pointOnPath = pathNode.getPointAtLength(i);
-      const distanceSquared = this.getDistanceSquared(point, pointOnPath);
-
-      if (distanceSquared < coarseMinDistanceSquared) {
-        coarseMinDistanceSquared = distanceSquared;
-        coarseClosestPoint = {
-          x: pointOnPath.x,
-          y: pointOnPath.y,
-          length: i,
-        };
-      }
-    }
-
-    // Second pass: fine sampling around coarseClosestPoint
-    const fineStep = 6; // was 2
-    const searchStart = Math.max(coarseClosestPoint.length - coarseStep, 0);
-    const searchEnd = Math.min(coarseClosestPoint.length + coarseStep, pathLength);
-
-    for (let i = searchStart; i <= searchEnd; i += fineStep) {
-      const pointOnPath = pathNode.getPointAtLength(i);
-      const distanceSquared = this.getDistanceSquared(point, pointOnPath);
-
-      if (distanceSquared < minDistanceSquared) {
-        minDistanceSquared = distanceSquared;
-        closestPoint = { x: pointOnPath.x, y: pointOnPath.y, length: i };
-      }
-    }
-
-    return closestPoint;
-  }
-  getClosestPointOnPathInRange( pathNode: SVGGeometryElement, point: { x: number; y: number }, startLength: number, endLength: number) {
+  getClosestPointOnPath(pathNode: SVGGeometryElement,point: { x: number; y: number },lastLength?: number) {
     const pathLength = pathNode.getTotalLength();
 
     let closestPoint = { x: 0, y: 0, length: 0 };
     let minDistanceSquared = Infinity;
+    const coarseStep = 40;
+    const fineStep = 6;
+    //  dynamic search window (prevents jump)
+    const SEARCH_WINDOW = 150;
+    let searchStart = 0;
+    let searchEnd = pathLength;
 
-    const clampedStart = Math.max(0, startLength);
-    const clampedEnd = Math.min(pathLength, endLength);
+    // If lastLength exists → restrict search (smooth tracing)
+    if (lastLength !== undefined) {
+      searchStart = Math.max(0, lastLength - SEARCH_WINDOW);
+      searchEnd = Math.min(pathLength, lastLength + SEARCH_WINDOW);
+    }
 
-    const step = 6;
+    let coarseClosest = { x: 0, y: 0, length: searchStart };
 
-    for (let i = clampedStart; i <= clampedEnd; i += step) {
+    for (let i = searchStart; i <= searchEnd; i += coarseStep) {
+      const pt = pathNode.getPointAtLength(i);
+      const dist = this.getDistanceSquared(point, pt);
+
+      if (dist < minDistanceSquared) {
+        minDistanceSquared = dist;
+        coarseClosest = { x: pt.x, y: pt.y, length: i };
+      }
+    }
+    const fineStart = Math.max(0, coarseClosest.length - coarseStep);
+    const fineEnd = Math.min(pathLength, coarseClosest.length + coarseStep);
+
+    minDistanceSquared = Infinity;
+
+    for (let i = fineStart; i <= fineEnd; i += fineStep) {
       const pt = pathNode.getPointAtLength(i);
       const dist = this.getDistanceSquared(point, pt);
 
