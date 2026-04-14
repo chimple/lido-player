@@ -887,20 +887,19 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight-element");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight-element");
-   
+  
+  setTimeout(() => {
+    element.style.pointerEvents = "";
+  }, 1000)
   
   if (!selectedDropElement || element.classList.contains("dropped")) {
-    console.log("hello");
-    
     onClickDragElement(element);
-    element.style.pointerEvents = ""; // Re-enable pointer events if it was a drag element
     return;
   }
   if(element.classList.contains("drop-element"))return;
   if (selectedDropElement && selectedDragElement) { 
     selectedDropElement.style.pointerEvents = 'none'; // Disable pointer events on drop element during animation
     selectedDragElement.style.pointerEvents = 'none'; // Disable pointer events on drag element during animation
-    console.log("drop called!!!");
     if (selectedDragElement.getAttribute('drop-to')) return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
@@ -939,9 +938,6 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
     selectedDropElement.style.pointerEvents = ''; // Re-enable pointer events on drop element after animation
     // ensure count update for click-to-drop flow
     await executeActions("this.updateCountBlender='true'", container);
-    // await new Promise(resolve => setTimeout(resolve, 500));
-    // selectedDragElement.style.transform = 'translate(0px, 0px)';
-    // selectedDropElement.style.pointerEvents = '';  
   }
 }
 

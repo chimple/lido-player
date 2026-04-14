@@ -1683,7 +1683,7 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
   const scale = typeof calculateScale === "function" ? calculateScale() : 1;
 
   if (!dropElement.dataset.dropCount) dropElement.dataset.dropCount = "0";
-  let dropCount = parseInt(dropElement.dataset.dropCount, 10);
+  let dropCount = parseInt(dropElement.childElementCount) - 1;
 
   // === READ DROP ZONE SIZE ===
   const dropWidth = dropRect.width;
