@@ -427,6 +427,9 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
         dragElement.style.width = dropElement.style.width;
         dragElement.style.height = dropElement.style.height;
         dragElement.setAttribute('hasDummy', 'true');
+        setTimeout(() => {
+          dummyElement.style.pointerEvents = "";
+        }, 1000)
       }
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
