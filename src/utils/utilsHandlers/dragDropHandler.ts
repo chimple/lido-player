@@ -142,6 +142,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         duplicateElement.style.transform = computedStyle.transform;
         duplicateElement.style.position = 'absolute';
         duplicateElement.style.zIndex = '0';
+        duplicateElement.style.pointerEvents = "";
         element.style.zIndex = '100';
         document.body.appendChild(duplicateElement);
       }
@@ -932,7 +933,9 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
-    selectedDragElement.style.pointerEvents = ''; // Re-enable pointer events on drag element after animation
+    if(container.getAttribute("drop-action") !== DropAction.InfiniteDrop){
+        selectedDragElement.style.pointerEvents = ''; 
+    }
     selectedDropElement.style.pointerEvents = ''; // Re-enable pointer events on drop element after animation
     // ensure count update for click-to-drop flow
     await executeActions("this.updateCountBlender='true'", container);
