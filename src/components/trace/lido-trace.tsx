@@ -198,6 +198,7 @@ export class LidoTrace {
       freeTraceLines: [] as SVGPathElement[],
       currentFreePath: [] as (SVGPathElement | null)[],
       lastPointerPos: null as { x: number; y: number } | null,
+      isCompletingPath: false,
     };
 
     const url = this.svgUrls[this.currentSvgIndex];
@@ -587,6 +588,7 @@ export class LidoTrace {
   async handlePointerMove(state: any) {
     if (!state.isDragging) return;
     if (!state.circle || !state.paths || state.paths.length === 0) return;
+    if (state.isCompletingPath) return;
 
     this.hideFingerHint(); // user is active, remove hint
 
@@ -787,6 +789,8 @@ export class LidoTrace {
 
       if (pathIsClosed && state.totalPathLength > 50) {
         if (percentComplete >= COMPLETION_THRESHOLD) {
+          if (state.isCompletingPath) return;
+          state.isCompletingPath = true;
           // Animate the draggable circle & green trace to the very end, then proceed
           await this.animatePathToEnd(state, currentPath);
           if (state.currentPathIndex < state.paths.length - 1) {
@@ -798,8 +802,12 @@ export class LidoTrace {
       } else {
         // For open paths, allow completion if near the end
         if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex < state.paths.length - 1) {
+          if (state.isCompletingPath) return;
+          state.isCompletingPath = true;
           this.moveToNextPath(state);
         } else if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex === state.paths.length - 1) {
+          if (state.isCompletingPath) return;
+          state.isCompletingPath = true;
           this.moveToNextContainer();
         }
       }
@@ -1021,6 +1029,7 @@ export class LidoTrace {
     state.isDragging = false;
     state.currentPathIndex++;
     state.lastLength = 0;
+    state.isCompletingPath = false;
 
     this.hideFingerHint(); // remove hint when changing path
 

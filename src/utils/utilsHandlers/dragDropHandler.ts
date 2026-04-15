@@ -932,7 +932,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
-    if(container.getAttribute("drop-action") !== DropAction.InfiniteDrop){
+    if(container.getAttribute("drop-action") !== DropAction.InfiniteDrop && container.getAttribute("drop-action") !== DropAction.Move){
         selectedDragElement.style.pointerEvents = ''; 
     }
     selectedDropElement.style.pointerEvents = ''; // Re-enable pointer events on drop element after animation
