@@ -165,7 +165,9 @@ export const enum templateAudio {
     palegmamultioption='palegmamultioptionAudio',
     palegraoptionaudio='palegraoptionAudio',
     palegrawordmatch='palegrawordmatchAudio',
-    palegramcqimages='palegramcqimagesAudio'
+    palegramcqimages='palegramcqimagesAudio',
+    drawShape = 'drawshape',
+    drawshape = 'drawshape'
 }
 
 export type WordTimelineEntry = {
