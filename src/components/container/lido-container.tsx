@@ -361,7 +361,9 @@ export class LidoContainer {
           "palegmamultioption":templateAudio.palegmamultioption,
           "palegraoptionaudio":templateAudio.palegraoptionaudio,
           "palegrawordmatch":templateAudio.palegrawordmatch,
-          "palegramcqimages":templateAudio.palegramcqimages
+          "palegramcqimages":templateAudio.palegramcqimages,
+          "drawShape": templateAudio.drawShape,
+          "drawshape": templateAudio.drawshape,
 
        } as any
     )[this.templateId!] ?? '';
