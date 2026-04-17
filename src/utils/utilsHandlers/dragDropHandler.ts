@@ -81,10 +81,12 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
   let verticalDistance;
   let horizontalDistance;
+  let dragingElementTransform;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
     if(container && container.getAttribute("game-completed") === "true") return;
-    console.log("moving start");
+
+    dragingElementTransform = element.style.transform    
     
     if (isDraggingDisabled) {
       isDragging = false;
@@ -326,7 +328,13 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     }
     element.style.pointerEvents = 'none'; // Disable pointer events on drag element to prevent interference during drop handling
     (mostOverlappedElement as HTMLElement).style.pointerEvents = 'none';
-    onElementDropComplete(element, mostOverlappedElement);
+
+    if(mostOverlappedElement.id === element.getAttribute("drop-to")){
+      element.style.transform = dragingElementTransform
+    } else {
+      onElementDropComplete(element, mostOverlappedElement);
+    }
+    
     if(templateId === "blender" && element && mostOverlappedElement){
       const allElements = document.querySelectorAll(`*`);
       allElements.forEach(el => {
