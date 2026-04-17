@@ -131,6 +131,11 @@ export class LidoHome {
   @State() currentContainerIndex: number | null = this.initialIndex;
 
   /**
+   * Tracks window resizes to force a complete unmount and remount of the container tree.
+   */
+  @State() resizeTrigger: number = 0;
+
+  /**
    * Boolean that controls the visibility of the exit confirmation popup.
    * This is set to true when the user attempts to exit the game.
    */
@@ -369,6 +374,8 @@ export class LidoHome {
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
+      this.resizeTrigger++; // Force Stencil to view the container as a new element
+      this.containers = [...this.containers]; // trigger a full re-render
     });
     window.addEventListener('touchstart', this.handleWindowTouch, { passive: true });
     window.addEventListener('pointerdown', this.handleWindowPointer, { passive: true });
@@ -542,7 +549,7 @@ export class LidoHome {
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
-        <lido-container {...props} canplay={this.canplay} baseUrl={this.baseUrl} height={this.height}>
+        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay} baseUrl={this.baseUrl} height={this.height}>
           {children}
         </lido-container>
       ),
