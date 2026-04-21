@@ -188,7 +188,7 @@ export class LidoTrace {
       circle: null as SVGCircleElement | null,
       paths: [] as SVGGeometryElement[],
       svg: null as SVGSVGElement | null,
-      proximityThreshold: 20, // Increased general proximity threshold (was 100)
+      proximityThreshold: 60, // Increased general proximity threshold (was 100)
       freeTraceProximityThreshold: 350, // Increased proximity for free trace (was 50)
       rafId: null as number | null,
       pointerMoveEvent: null as PointerEvent | null,
