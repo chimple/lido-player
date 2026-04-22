@@ -862,7 +862,7 @@ export function handleDropElement(element: HTMLElement): void {
 
 export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  if(container.getAttribute('canplay') === 'false') return;
+  if(container.getAttribute('canplay') === 'false' || container.getAttribute("game-completed") === "true") return;
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
 
