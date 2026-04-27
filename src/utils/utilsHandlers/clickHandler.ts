@@ -186,7 +186,9 @@ export function addClickListenerForClickType(element: HTMLElement): void {
 
       const isCorrect = objective.includes(element['value']);
       dispatchClickEvent(element, isCorrect);
-      AudioPlayer.getI().stop();
+      if(hasValidAudio) {
+        AudioPlayer.getI().stop();
+      }
       if (isCorrect) {
         const onCorrect = element.getAttribute('onCorrect');
         await executeActions(onCorrect, element);

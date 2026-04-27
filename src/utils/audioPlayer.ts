@@ -7,6 +7,8 @@ import { WordTimelineEntry, LANGUAGE_PROFILES, FAST_WORDS_BY_LANG } from './cons
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;
+  private currentTargetElement: HTMLElement | null = null;
+  private pendingReplayElement: HTMLElement | null = null;
 
   private highlightOverlay: HTMLElement | null = null;
   private wordRects: DOMRect[] = [];
@@ -20,6 +22,7 @@ export class AudioPlayer {
     document.body.appendChild(this.audioElement);
 
     this.registerGlobalStopEvents();
+    this.registerVisibilityEvents();
   }
 
   public static getI(): AudioPlayer {
@@ -29,7 +32,7 @@ export class AudioPlayer {
     return AudioPlayer.instance;
   }
 
-  public stop() {
+  public stop(preserveReplay: boolean = false) {
 
     const container = document.getElementById(LidoContainer);
     if(container && container.getAttribute('highlight-word-by-word')==='true'){
@@ -46,6 +49,10 @@ export class AudioPlayer {
       this.endPromiseResolve = null;
       resolve();
     }
+    if (!preserveReplay) {
+      this.pendingReplayElement = null;
+    }
+    this.currentTargetElement = null;
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
     this.audioElement.src = '';
@@ -64,9 +71,42 @@ export class AudioPlayer {
   }
 
   private handleUserClick = () => {
-    const container = document.getElementById(LidoContainer);
-    if (container?.getAttribute('game-completed') === 'true')return;
+  const container = document.getElementById(LidoContainer);
+  if (container?.getAttribute('game-completed') === 'true')return;
     this.stop();
+};
+
+  private isWindowVisible() {
+    return document.visibilityState === 'visible' && !document.hidden;
+  }
+
+  private waitUntilWindowIsVisible() {
+    if (this.isWindowVisible()) {
+      return Promise.resolve();
+    }
+
+    return new Promise<void>(resolve => {
+      const onVisibilityChange = () => {
+        if (!this.isWindowVisible()) return;
+        document.removeEventListener('visibilitychange', onVisibilityChange);
+        resolve();
+      };
+
+      document.addEventListener('visibilitychange', onVisibilityChange);
+    });
+  }
+
+  private handleVisibilityChange = async () => {
+    if (this.isWindowVisible()) {
+      return;
+    }
+
+    if (!this.currentTargetElement) {
+      return;
+    }
+
+    this.pendingReplayElement = this.currentTargetElement;
+    await this.stop(true);
   };
 
   private getLidoTextElement(el: HTMLElement): HTMLElement | null {
@@ -75,6 +115,18 @@ export class AudioPlayer {
   }
 
   public async play(targetElement: HTMLElement) {
+    if (!this.isWindowVisible()) {
+      this.pendingReplayElement = targetElement;
+      await this.stop(true);
+      await this.waitUntilWindowIsVisible();
+
+      if (this.pendingReplayElement !== targetElement) {
+        return;
+      }
+
+      this.pendingReplayElement = null;
+    }
+
     // Stop any currently playing audio first if target element has audio given
     try {
       await AudioPlayer.getI().stop();
@@ -104,6 +156,8 @@ export class AudioPlayer {
       targetElement = textElement;
     }
 
+    this.currentTargetElement = targetElement;
+
 
     // then play the target element audio.
     let audioUrl = targetElement.getAttribute('audio') || '';
@@ -124,7 +178,7 @@ export class AudioPlayer {
     {
       audioUrl = convertUrlToRelative(audioUrl);
       this.audioElement.src = audioUrl;
-      console.log('🚀 Playing audio:', this.audioElement.src);
+      // console.log('🚀 Playing audio:', this.audioElement.src);
 
       try {
         // setDraggingDisabled(true);
@@ -202,10 +256,10 @@ export class AudioPlayer {
     {
       try {
         highlightSpeakingElement(targetElement);
-        window.addEventListener('click', this.handleUserClick, true);
+        // window.addEventListener('click', this.handleUserClick, true);
         await speakText(targetElement.textContent, targetElement);
         const highlightedElements = document.querySelectorAll('.speaking-highlight');
-        highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));        
+        // highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));         
       } 
       catch (error) {
         console.log('🎧 TTS Error:', error);
@@ -213,6 +267,20 @@ export class AudioPlayer {
       finally {
         setDraggingDisabled(false);
       }
+    }
+
+    const shouldReplayFromStart = this.pendingReplayElement === targetElement;
+    if (shouldReplayFromStart) {
+      await this.waitUntilWindowIsVisible();
+
+      if (this.pendingReplayElement === targetElement) {
+        this.pendingReplayElement = null;
+        return this.play(targetElement);
+      }
+    }
+
+    if (this.currentTargetElement === targetElement) {
+      this.currentTargetElement = null;
     }
   }
 
@@ -228,11 +296,16 @@ export class AudioPlayer {
     });
   }
 
+  private registerVisibilityEvents() {
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
   // DESTROY (for hot-reload)
   public destroy() {
     console.log("AudioPlayer destroyed (hot-reload safe)");
 
     this.stop();
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
 
     // Remove DOM element
     if (this.audioElement.parentNode) {
