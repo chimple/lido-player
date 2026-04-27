@@ -1,1 +1,1 @@
-export{X as format}from"./p-DsbbZFoz.js";import"./p-B2VhG6RE.js";
+export{X as format}from"./p-Dv-Tlvaj.js";import"./p-B2VhG6RE.js";
