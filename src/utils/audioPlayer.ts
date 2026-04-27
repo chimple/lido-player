@@ -15,6 +15,8 @@ export class AudioPlayer {
   private activeWordIndex = -1;
   private highlightRAF: number | null = null;
   private endPromiseResolve: (() => void) | null = null;
+  private visibilityWaitResolvers: Array<() => void> = [];
+  private isVisibilityChangeRegistered = false;
 
   private constructor() {
     this.audioElement = document.createElement('audio');
@@ -30,6 +32,12 @@ export class AudioPlayer {
       AudioPlayer.instance = new AudioPlayer();
     }
     return AudioPlayer.instance;
+  }
+
+  public static destroyI() {
+    if (AudioPlayer.instance) {
+      AudioPlayer.instance.destroy();
+    }
   }
 
   public stop(preserveReplay: boolean = false) {
@@ -70,8 +78,9 @@ export class AudioPlayer {
     }
   }
 
-  private handleUserClick = () => {
+  private handleUserClick = (event?: MouseEvent) => {
   const container = document.getElementById(LidoContainer);
+  if (container && event?.target === container) return;
   if (container?.getAttribute('game-completed') === 'true')return;
     this.stop();
 };
@@ -85,19 +94,16 @@ export class AudioPlayer {
       return Promise.resolve();
     }
 
-    return new Promise<void>(resolve => {
-      const onVisibilityChange = () => {
-        if (!this.isWindowVisible()) return;
-        document.removeEventListener('visibilitychange', onVisibilityChange);
-        resolve();
-      };
+    this.registerVisibilityEvents();
 
-      document.addEventListener('visibilitychange', onVisibilityChange);
+    return new Promise<void>(resolve => {
+      this.visibilityWaitResolvers.push(resolve);
     });
   }
 
   private handleVisibilityChange = async () => {
     if (this.isWindowVisible()) {
+      this.resolveVisibilityWaiters();
       return;
     }
 
@@ -109,12 +115,19 @@ export class AudioPlayer {
     await this.stop(true);
   };
 
+  private resolveVisibilityWaiters() {
+    const resolvers = this.visibilityWaitResolvers.splice(0);
+    resolvers.forEach(resolve => resolve());
+  }
+
   private getLidoTextElement(el: HTMLElement): HTMLElement | null {
     if (el.tagName.toLowerCase() === 'lido-text') return el;
     return el.closest('lido-text');
   }
 
   public async play(targetElement: HTMLElement) {
+    this.registerVisibilityEvents();
+
     if (!this.isWindowVisible()) {
       this.pendingReplayElement = targetElement;
       await this.stop(true);
@@ -297,7 +310,22 @@ export class AudioPlayer {
   }
 
   private registerVisibilityEvents() {
+    if (this.isVisibilityChangeRegistered) {
+      return;
+    }
+
     document.addEventListener('visibilitychange', this.handleVisibilityChange);
+    this.isVisibilityChangeRegistered = true;
+  }
+
+  private unregisterVisibilityEvents() {
+    if (!this.isVisibilityChangeRegistered) {
+      return;
+    }
+
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    this.isVisibilityChangeRegistered = false;
+    this.resolveVisibilityWaiters();
   }
 
   // DESTROY (for hot-reload)
@@ -305,7 +333,7 @@ export class AudioPlayer {
     console.log("AudioPlayer destroyed (hot-reload safe)");
 
     this.stop();
-    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    this.unregisterVisibilityEvents();
 
     // Remove DOM element
     if (this.audioElement.parentNode) {

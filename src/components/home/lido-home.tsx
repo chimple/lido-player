@@ -441,6 +441,8 @@ export class LidoHome {
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
    */
   disconnectedCallback() {
+    AudioPlayer.destroyI();
+
     window.removeEventListener(NextContainerKey, () => {
       this.NextContainerKey();
     });
