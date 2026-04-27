@@ -441,6 +441,8 @@ export class LidoHome {
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
    */
   disconnectedCallback() {
+    AudioPlayer.destroyI();
+
     window.removeEventListener(NextContainerKey, () => {
       this.NextContainerKey();
     });
@@ -684,7 +686,9 @@ export class LidoHome {
         }
 
         if (getCancelBtnPopup() || isStale()) {
-          await AudioPlayer.getI().stop();
+          if (this.shouldStopActiveBtnpopupAudio) {
+            await AudioPlayer.getI().stop();
+          }
           break;
         }
 
@@ -709,20 +713,44 @@ export class LidoHome {
   }
 
   private btnpopupRunId = 0;
+  private activeBtnpopupRunId: number | null = null;
+  private shouldStopActiveBtnpopupAudio = true;
 
-  private async cancelBtnpopupRun() {
-    this.btnpopupRunId++;
-    setCancelBtnPopup(true);
-    await AudioPlayer.getI().stop();
+  private hasAudioOnInteractionTarget(target: EventTarget | null): boolean {
+    const element = target as HTMLElement | null;
+    if (!element) return false;
+
+    const hasValidAudio = (candidate: Element | null) => {
+      if (!(candidate instanceof HTMLElement)) return false;
+      const audioAttr = candidate.getAttribute('audio');
+      return !!audioAttr && audioAttr.trim().length > 0;
+    };
+
+    if (hasValidAudio(element)) return true;
+    if (hasValidAudio(element.closest('[audio]'))) return true;
+    if (hasValidAudio(element.querySelector('[audio]'))) return true;
+
+    return false;
   }
 
-  private handleWindowTouch = () => {
-    void this.cancelBtnpopupRun();
+  private async cancelBtnpopupRun(shouldStopAudio: boolean = true) {
+    this.btnpopupRunId++;
+    this.shouldStopActiveBtnpopupAudio = shouldStopAudio;
+    setCancelBtnPopup(true);
+    if (shouldStopAudio) {
+      await AudioPlayer.getI().stop();
+    }
+  }
+
+  private handleWindowTouch = (event: TouchEvent) => {
+    if (this.activeBtnpopupRunId === null) return;
+    void this.cancelBtnpopupRun(this.hasAudioOnInteractionTarget(event.target));
   };
 
   private handleWindowPointer = (event: PointerEvent) => {
     if (event.pointerType !== 'touch') return;
-    void this.cancelBtnpopupRun();
+    if (this.activeBtnpopupRunId === null) return;
+    void this.cancelBtnpopupRun(this.hasAudioOnInteractionTarget(event.target));
   };
 
   private async handleBtnpopupClick() {
@@ -732,7 +760,17 @@ export class LidoHome {
     // Start fresh run.
     const nextRunId = this.btnpopupRunId;
     setCancelBtnPopup(false);
-    await this.btnpopup(nextRunId);
+    this.activeBtnpopupRunId = nextRunId;
+    this.shouldStopActiveBtnpopupAudio = true;
+
+    try {
+      await this.btnpopup(nextRunId);
+    } finally {
+      if (this.activeBtnpopupRunId === nextRunId) {
+        this.activeBtnpopupRunId = null;
+      }
+      this.shouldStopActiveBtnpopupAudio = true;
+    }
   }
 
   popUpClick = (comment: string) => {
