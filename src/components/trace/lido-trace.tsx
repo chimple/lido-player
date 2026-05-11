@@ -345,6 +345,7 @@ export class LidoTrace {
 
     // After inserting, get the SVG element
     const svgElement = svgContainer.querySelector('svg') as SVGSVGElement;
+    svgElement.classList.add('lido-trace-svg');
 
     // Remove the width and height attributes from the SVG element
     svgElement.removeAttribute('width');
