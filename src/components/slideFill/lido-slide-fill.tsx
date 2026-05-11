@@ -191,7 +191,7 @@ export class LidoSlideFill {
 
       svgText = svgText.replace(
         /<svg([^>]*)>/,
-        `<svg$1>
+        `<svg class="lido-slide-svg"$1>
           ${clipPathDef}
         `,
       );
