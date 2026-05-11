@@ -191,7 +191,7 @@ export class LidoSlideFill {
 
       svgText = svgText.replace(
         /<svg([^>]*)>/,
-        `<svg$1>
+        `<svg class="lido-slide-svg"$1>
           ${clipPathDef}
         `,
       );
@@ -239,7 +239,7 @@ export class LidoSlideFill {
   }
 
   updateFill() {
-    const svgEl = this.el.querySelector('.svg-element')?.querySelector('svg');
+    const svgEl = this.el.querySelector('.lido-svg-element')?.querySelector('svg');
     if (!svgEl) return;
 
     const rect = svgEl.querySelector('#fillArea') as SVGRectElement;
@@ -296,7 +296,7 @@ export class LidoSlideFill {
   }
 
   addRulerNumbers() {
-    const svgEl = this.el.querySelector('.svg-element')?.querySelector('svg') as SVGSVGElement;
+    const svgEl = this.el.querySelector('.lido-svg-element')?.querySelector('svg') as SVGSVGElement;
     if (!svgEl) return;
 
     const rulerPath = svgEl.querySelector('#rulerPath') as SVGPathElement;
@@ -354,7 +354,7 @@ export class LidoSlideFill {
         type={this.type}
         disable-speak={this.disableSpeak}
       >
-        <div innerHTML={this.svgContent} class="svg-element"></div>
+        <div innerHTML={this.svgContent} class="lido-svg-element"></div>
       </Host>
     );
   }
