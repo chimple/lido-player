@@ -70,8 +70,8 @@ export function highlightSpeakingElement(element: HTMLElement): void {
   element.classList.add('speaking-highlight');
 
   // Inject keyframe animation and class styles into the document's head if it doesn't already exist
-  const styleId = '#speaking-highlight-style';
-  if (!document.querySelector(styleId)) {
+  const styleId = 'speaking-highlight-style';
+  if (!document.getElementById(styleId)) {
     const style = document.createElement('style');
     style.id = styleId;
     style.innerHTML = `

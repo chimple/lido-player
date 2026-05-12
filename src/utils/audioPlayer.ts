@@ -20,8 +20,6 @@ export class AudioPlayer {
 
   private constructor() {
     this.audioElement = document.createElement('audio');
-    this.audioElement.id = 'audio';
-    document.body.appendChild(this.audioElement);
 
     this.registerGlobalStopEvents();
     this.registerVisibilityEvents();
