@@ -7,12 +7,41 @@ function dispatchCustomEvent(eventName: string, detail: any) {
   window.dispatchEvent(event);
 }
 
-export function dispatchActivityEndEvent(totalIndex: number, currentIndex: number, score: number, rightMoves?: number, wrongMoves?: number, timeSpentForActivity?: number) {  
-  dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity});
+export interface LessonTrackingParams {
+  studentId: string;
+  studentName: string;
+  classId: string;
+  schoolId: string;
+  courseId: string;
+  courseName: string;
+  chapterId: string;
+  chapterName: string;
+  lessonId: string;
+  lessonName: string;
 }
 
-export function dispatchLessonEndEvent(totalIndex: number, rightMoves: number, wrongMoves: number, finalScore: number, timeSpendForLesson: number) {  
-  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson });
+export function dispatchActivityEndEvent(
+  totalIndex: number,
+  currentIndex: number,
+  score: number,
+  rightMoves?: number,
+  wrongMoves?: number,
+  timeSpentForActivity?: number,
+  lessonTrackingParams?: LessonTrackingParams,
+  gameCompleted?: boolean,
+) { 
+  dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity, ...lessonTrackingParams, gameCompleted,});
+}
+
+export function dispatchLessonEndEvent(
+  totalIndex: number,
+  rightMoves: number,
+  wrongMoves: number,
+  finalScore: number,
+  timeSpendForLesson: number,
+  lessonTrackingParams?: LessonTrackingParams,
+) {  
+  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
 }
 
 export function dispatchNextContainerEvent() {
@@ -42,3 +71,8 @@ export function dispatchElementDropEvent(dragElement: HTMLElement, dropElement: 
 export function dispatchClickEvent(element: HTMLElement, isCorrect: boolean) {
   dispatchCustomEvent(ElementClickKey, { element, isCorrect: isCorrect, createdAt: new Date().toISOString() });
 }
+
+
+// for nipun - to dispatch custom event
+
+

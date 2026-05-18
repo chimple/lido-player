@@ -13,6 +13,7 @@ import {
   CalculatorOk
 } from './constants';
 import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
+import type { LessonTrackingParams } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
@@ -745,6 +746,24 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   handleShowCheck();
 }
 
+const getLessonTrackingParams = (): LessonTrackingParams => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const getParam = (key: keyof LessonTrackingParams) => urlParams.get(key) ?? '';
+
+  return {
+    studentId: getParam('studentId'),
+    studentName: getParam('studentName'),
+    classId: getParam('classId'),
+    schoolId: getParam('schoolId'),
+    courseId: getParam('courseId'),
+    courseName: getParam('courseName'),
+    chapterId: getParam('chapterId'),
+    chapterName: getParam('chapterName'),
+    lessonId: getParam('lessonId'),
+    lessonName: getParam('lessonName'),
+  };
+};
+
 const storeActivityScore = (score: number) => {
   const appHome = document.querySelector('lido-home');
   if (!appHome) return;
@@ -759,7 +778,12 @@ const storeActivityScore = (score: number) => {
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
   const timeSpendForActivity = Math.floor(Timer.getI().getElapsed() / 1000);
   ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
-  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity);
+
+  const lessonTrackingParams = getLessonTrackingParams();
+  console.log("lessontracking params : ", lessonTrackingParams);
+  
+
+  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity, lessonTrackingParams, true);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
@@ -770,7 +794,7 @@ const storeActivityScore = (score: number) => {
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     const timeSpendForLesson = ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0);
-    dispatchLessonEndEvent(totalIndex, gameScore.rightMoves, gameScore.wrongMoves,finalScore, timeSpendForLesson);
+    dispatchLessonEndEvent(totalIndex, gameScore.rightMoves, gameScore.wrongMoves,finalScore, timeSpendForLesson, lessonTrackingParams);
     localStorage.removeItem(ActivityScoreKey);
   }
 };
