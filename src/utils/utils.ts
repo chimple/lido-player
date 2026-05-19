@@ -746,9 +746,10 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   handleShowCheck();
 }
 
-const getLessonTrackingParams = (): LessonTrackingParams => {
+export const getLessonTrackingParams = (): LessonTrackingParams => {
   const urlParams = new URLSearchParams(window.location.search);
-  const getParam = (key: keyof LessonTrackingParams) => urlParams.get(key) ?? '';
+  const getParam = (key: keyof LessonTrackingParams) =>
+  urlParams.get(key.toLowerCase()) ?? urlParams.get(key) ?? '';
 
   return {
     studentId: getParam('studentId'),
@@ -761,6 +762,8 @@ const getLessonTrackingParams = (): LessonTrackingParams => {
     chapterName: getParam('chapterName'),
     lessonId: getParam('lessonId'),
     lessonName: getParam('lessonName'),
+    lang: getParam('lang'),
+    end: getParam('end'),
   };
 };
 
@@ -1017,6 +1020,11 @@ export const triggerNextContainer = () => {
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
+  const lidoHome = document.querySelector('.lido-home') as HTMLElement;
+  if (lidoHome && (getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed") && Number(lidoHome.getAttribute('index')) >= Number(lidoHome.getAttribute('totalIndex')) - 1) {
+    console.log('🚀 ~ triggerNextContainer ~ lidoHome:', lidoHome);
+    return;
+  }
   dispatchNextContainerEvent();
 };
 
