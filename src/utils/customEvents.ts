@@ -1,10 +1,19 @@
 import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, NextContainerKey,PrevContainerKey } from './constants';
+import { getLessonTrackingParams } from './utils';
 import { Timer } from './utilsHandlers/timer';
 
 function dispatchCustomEvent(eventName: string, detail: any) {
   console.log("👍Event Name : " ,eventName, "Detail : ", detail.toString());
   const event = new CustomEvent(eventName, { detail });
   window.dispatchEvent(event);
+  window.parent?.postMessage(
+    {
+      eventName,
+      detail,
+      ...detail,
+    },
+    "*"
+  );
 }
 
 export interface LessonTrackingParams {
@@ -18,6 +27,8 @@ export interface LessonTrackingParams {
   chapterName: string;
   lessonId: string;
   lessonName: string;
+  lang: string;
+  end: string;
 }
 
 export function dispatchActivityEndEvent(
@@ -29,7 +40,7 @@ export function dispatchActivityEndEvent(
   timeSpentForActivity?: number,
   lessonTrackingParams?: LessonTrackingParams,
   gameCompleted?: boolean,
-) { 
+) {   
   dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity, ...lessonTrackingParams, gameCompleted,});
 }
 
@@ -41,6 +52,10 @@ export function dispatchLessonEndEvent(
   timeSpendForLesson: number,
   lessonTrackingParams?: LessonTrackingParams,
 ) {  
+  if(getLessonTrackingParams().end === "blank"){
+    console.log("Lesson end event skipped. Reason: Lesson end type is set to 'blank' in lesson tracking parameters.");
+    return;
+  }
   dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
 }
 
