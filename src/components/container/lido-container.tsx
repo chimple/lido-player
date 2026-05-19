@@ -163,11 +163,6 @@ export class LidoContainer {
   @Prop() baseUrl: string = '';
 
   /**
-   * Extracted ZIP asset map when running in ZIP mode.
-   */
-  @Prop() zipAssets: Record<string, string> = {};
-
-  /**
    * CSS margin value applied to each child element inside the container.
    * Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.).
    */

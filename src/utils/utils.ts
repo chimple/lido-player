@@ -1001,11 +1001,18 @@ export const triggerPrevcontainer = () => {
   console.log('⬅️ ~ triggerPrevContainer triggered');
   dispatchPrevContainerEvent();
 };
+  let activeZipAssets: Record<string, string> | undefined;
+  export function setActiveZipAssets(zipAssets: Record<string, string>) {
+    activeZipAssets = zipAssets;
+  }
+  export function clearActiveZipAssets() {
+    activeZipAssets = undefined;
+  }
 
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const baseUrl = container?.getAttribute('baseUrl');
-  const zipAssets = (container as any)?.zipAssets as Record<string, string> | undefined;
+  const zipAssets = activeZipAssets;
 
   if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;

@@ -30,6 +30,8 @@ import {
   triggerNextContainer,
   matchStringPattern,
   speakText,
+  setActiveZipAssets,
+  clearActiveZipAssets,
 } from '../../utils/utils';
 
 import { AudioPlayer } from '../../utils/audioPlayer';
@@ -121,7 +123,7 @@ export class LidoHome {
   /**
    * ZIP URL pointing to a package containing XML and asset files.
    */
-  @Prop({reflect: true }) zipUrl: string = '/assets/LIDO_kn4405.zip';
+  @Prop({reflect: true }) zipUrl: string = '';
 
   /**
    * Stores the resolved navigation bar icons.
@@ -394,6 +396,7 @@ export class LidoHome {
         this.extractedAssets[fileName] = URL.createObjectURL(fileBlob);
       }
     }
+    setActiveZipAssets(this.extractedAssets);
   }
 
   private revokeExtractedAssets() {
@@ -401,11 +404,11 @@ export class LidoHome {
       URL.revokeObjectURL(objectUrl);
     }
     this.extractedAssets = {};
+    clearActiveZipAssets();
   }
   private async loadXmlFromZip() {
     const xmlPath ='index.xml';
-    const baseName = xmlPath.replace(/^\/+/, '').replace(/^.*\//, '');
-    const xmlBlobUrl = this.resolveAsset(xmlPath) || this.resolveAsset(baseName);
+    const xmlBlobUrl = this.resolveAsset(xmlPath);
     if (!xmlBlobUrl) {
       console.warn('[LidoHome] ZIP extraction keys:', Object.keys(this.extractedAssets));
       throw new Error(`Unable to find XML file '${xmlPath}' inside ZIP`);
@@ -638,7 +641,7 @@ export class LidoHome {
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
-        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay}  {...(!this.zipUrl ? { baseUrl: this.baseUrl } : {})}  height={this.height}  zipAssets={this.extractedAssets}>
+        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay}  {...(!this.zipUrl ? { baseUrl: this.baseUrl } : {})}  height={this.height}>
           {children}
         </lido-container>
       ),
