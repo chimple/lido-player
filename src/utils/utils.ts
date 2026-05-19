@@ -1020,6 +1020,11 @@ export const triggerNextContainer = () => {
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
+  const lidoHome = document.querySelector('.lido-home') as HTMLElement;
+  if (lidoHome && (getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed") && Number(lidoHome.getAttribute('index')) >= Number(lidoHome.getAttribute('totalIndex')) - 1) {
+    console.log('🚀 ~ triggerNextContainer ~ lidoHome:', lidoHome);
+    return;
+  }
   dispatchNextContainerEvent();
 };
 
