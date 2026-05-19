@@ -1004,7 +1004,8 @@ export const triggerPrevcontainer = () => {
 
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  const baseUrl = container.getAttribute('baseUrl');
+  const baseUrl = container?.getAttribute('baseUrl');
+  const zipAssets = (container as any)?.zipAssets as Record<string, string> | undefined;
 
   if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
@@ -1012,7 +1013,21 @@ export function convertUrlToRelative(url: string): string {
   if ( url.startsWith('/Lido-CommonAudios/')) {  
     return url;
   }
-  if (baseUrl) {
+
+  if (zipAssets) {
+    const normalizedUrl = url.replace(/^\.\/?/, '');
+    const directMatch = zipAssets[url] || zipAssets[normalizedUrl];
+    if (directMatch) {
+      return directMatch;
+    }
+    const suffixMatch = Object.keys(zipAssets).find(
+      assetKey => assetKey === normalizedUrl || assetKey.endsWith(`/${normalizedUrl}`),
+    );
+    if (suffixMatch) {
+      return zipAssets[suffixMatch];
+    }
+  }
+  if (!zipAssets && baseUrl) {
     const newUrl = url.startsWith('/') ? url.slice(1) : url;
     if (newUrl.startsWith(baseUrl.replace(/^\/+|\/+$/g, ''))) return newUrl;
     return baseUrl.endsWith('/') ? baseUrl + newUrl : `${baseUrl}/${newUrl}`;
