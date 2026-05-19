@@ -368,6 +368,8 @@ export class LidoHome {
   }
 
   private async extractZipAndSetBase() {
+    this.revokeExtractedAssets();
+
     const normalizedZipPath = this.zipUrl.replace(/\\/g, '/');
     const zipUrl = normalizedZipPath.startsWith('http') || normalizedZipPath.startsWith('blob') || normalizedZipPath.startsWith('data')
       ? normalizedZipPath
@@ -394,6 +396,12 @@ export class LidoHome {
     }
   }
 
+  private revokeExtractedAssets() {
+    for (const objectUrl of Object.values(this.extractedAssets)) {
+      URL.revokeObjectURL(objectUrl);
+    }
+    this.extractedAssets = {};
+  }
   private async loadXmlFromZip() {
     const xmlPath ='index.xml';
     const baseName = xmlPath.replace(/^\/+/, '').replace(/^.*\//, '');
@@ -520,8 +528,7 @@ export class LidoHome {
    */
   disconnectedCallback() {
     AudioPlayer.destroyI();
-    Object.values(this.extractedAssets).forEach(objectUrl => URL.revokeObjectURL(objectUrl));
-    this.extractedAssets = {};
+    this.revokeExtractedAssets();
 
     window.removeEventListener(NextContainerKey, () => {
       this.NextContainerKey();
