@@ -389,8 +389,7 @@ export class LidoHome {
       if (!file.dir) {
         const fileBlob = await file.async('blob');
 
-        this.extractedAssets[fileName] =
-          URL.createObjectURL(fileBlob);
+        this.extractedAssets[fileName] = URL.createObjectURL(fileBlob);
       }
     }
   }
@@ -521,6 +520,8 @@ export class LidoHome {
    */
   disconnectedCallback() {
     AudioPlayer.destroyI();
+    Object.values(this.extractedAssets).forEach(objectUrl => URL.revokeObjectURL(objectUrl));
+    this.extractedAssets = {};
 
     window.removeEventListener(NextContainerKey, () => {
       this.NextContainerKey();
