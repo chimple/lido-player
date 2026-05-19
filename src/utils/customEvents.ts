@@ -52,7 +52,7 @@ export function dispatchLessonEndEvent(
   timeSpendForLesson: number,
   lessonTrackingParams?: LessonTrackingParams,
 ) {  
-  if(getLessonTrackingParams().end === "blank"){
+  if(getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed"){
     console.log("Lesson end event skipped. Reason: Lesson end type is set to 'blank' in lesson tracking parameters.");
     return;
   }
