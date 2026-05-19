@@ -43,6 +43,11 @@ export class LidoRoot {
   @Prop() baseUrl: string = '';
 
   /**
+   * ZIP URL pointing to a package containing XML and asset files.
+   */
+  @Prop() zipUrl: string = '';
+
+  /**
    * Custom URL for the Exit button icon.
    * Falls back to the default icon if not provided or invalid.
    */
@@ -91,11 +96,11 @@ export class LidoRoot {
     i18next.changeLanguage(effectiveLang);
   }
   async componentWillLoad() {
-    // Validate the xmlPath prop
-    // if (!this.xmlPath) {
-    //   console.error('XML path is not provided.');
-    //   return;
-    // }
+    // If a ZIP URL is provided, we will load XML from the ZIP rather than fetching an external xmlPath.
+    if (this.zipUrl) {
+      this.xmlData = '';
+      return;
+    }
     const xmlPath = this.xmlPath ?? this.baseUrl + (this.baseUrl?.endsWith('/') ? 'index.xml' : '/index.xml');
     console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.baseUrl:', this.baseUrl);
     console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.xmlPath:', this.xmlPath);
@@ -132,6 +137,6 @@ export class LidoRoot {
     }
 
     // Once the XML data is loaded, pass it to the `lido-home` component
-    return <lido-home showNav={true} activeContainerIndexes={[]} initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>;
+    return (<lido-home showNav={true} activeContainerIndexes={[]} initialIndex={this.initialIndex} canplay={this.canplay} xmlData={this.xmlData} baseUrl={this.baseUrl}  {...(this.zipUrl ? { zipUrl: this.zipUrl } : {})} exitButtonUrl={this.exitButtonUrl} prevButtonUrl={this.prevButtonUrl} nextButtonUrl={this.nextButtonUrl} speakerButtonUrl={this.speakerButtonUrl}></lido-home>);
   }
 }

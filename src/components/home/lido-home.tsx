@@ -1,4 +1,5 @@
 import { Component, Prop, h, State, Host, Watch, Element, getAssetPath } from '@stencil/core';
+import JSZip from 'jszip';
 import {
   DragSelectedMapKey,
   DragMapKey,
@@ -29,6 +30,8 @@ import {
   triggerNextContainer,
   matchStringPattern,
   speakText,
+  setActiveZipAssets,
+  clearActiveZipAssets,
 } from '../../utils/utils';
 
 import { AudioPlayer } from '../../utils/audioPlayer';
@@ -118,6 +121,11 @@ export class LidoHome {
   @Prop() uuid: string = generateUUIDFallback();
 
   /**
+   * ZIP URL pointing to a package containing XML and asset files.
+   */
+  @Prop({reflect: true }) zipUrl: string = '';
+
+  /**
    * Stores the resolved navigation bar icons.
    * Each key will hold either a valid custom URL or the default ConstNavIcons URL.
    */
@@ -155,6 +163,7 @@ export class LidoHome {
      with corresponding values from templateData during rendering.
   */
   private readonly placeholderRegex = /\{([a-zA-Z0-9_]+)\}/g;
+  private extractedAssets: Record<string, string> = {};
 
   @Watch('Lang')
   onLangChange(newLang: string) {
@@ -264,6 +273,11 @@ export class LidoHome {
     window.addEventListener('changeContainer', (e: any) => {
       this.NextContainerKey(e.detail.index);
     });
+    if (this.zipUrl) {
+      this.xmlData = '';
+      await this.extractZipAndSetBase();
+      await this.loadXmlFromZip();
+    }
     await this.loadTemplateData();
 
     const trimmed = (this.xmlData || '').trim();
@@ -283,15 +297,15 @@ export class LidoHome {
     });
   }
   private async loadTemplateData() {
-    if (!this.baseUrl) {
+    if (!this.baseUrl && !this.zipUrl) {
       return;
     }
 
-    const candidatePaths = [`${this.baseUrl.replace(/\/+$/, '')}/data.json`];
+    const candidatePaths = [this.resolveAsset('data.json')].filter(Boolean) as string[];
 
     for (const path of candidatePaths) {
       try {
-        const resolvedPath = path.startsWith('http') ? path : getAssetPath(path);
+        const resolvedPath = path.startsWith('http') || path.startsWith('blob') ? path : getAssetPath(path);
         const response = await fetch(resolvedPath);
         if (!response.ok) {
           continue;
@@ -353,6 +367,81 @@ export class LidoHome {
     } catch (fallbackErr) {
       throw new Error(`Brotli decompression failed (native + fallback): ${fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr)}`);
     }
+  }
+
+  private async extractZipAndSetBase() {
+    this.revokeExtractedAssets();
+
+    const normalizedZipPath = this.zipUrl.replace(/\\/g, '/');
+    const zipUrl = normalizedZipPath.startsWith('http') || normalizedZipPath.startsWith('blob') || normalizedZipPath.startsWith('data')
+      ? normalizedZipPath
+      : getAssetPath(normalizedZipPath);
+
+    const response = await fetch(zipUrl);
+
+    if (!response.ok) {
+      throw new Error('Unable to fetch ZIP');
+    }
+
+    const blob = await response.blob();
+
+    const zip = await JSZip.loadAsync(blob);
+
+    for (const fileName of Object.keys(zip.files)) {
+      const file = zip.files[fileName];
+
+      if (!file.dir) {
+        const fileBlob = await file.async('blob');
+
+        this.extractedAssets[fileName] = URL.createObjectURL(fileBlob);
+      }
+    }
+    setActiveZipAssets(this.extractedAssets);
+  }
+
+  private revokeExtractedAssets() {
+    for (const objectUrl of Object.values(this.extractedAssets)) {
+      URL.revokeObjectURL(objectUrl);
+    }
+    this.extractedAssets = {};
+    clearActiveZipAssets();
+  }
+  private async loadXmlFromZip() {
+    const xmlPath ='index.xml';
+    const xmlBlobUrl = this.resolveAsset(xmlPath);
+    if (!xmlBlobUrl) {
+      console.warn('[LidoHome] ZIP extraction keys:', Object.keys(this.extractedAssets));
+      throw new Error(`Unable to find XML file '${xmlPath}' inside ZIP`);
+    }
+    const response = await fetch(xmlBlobUrl);
+    if (!response.ok) {
+      throw new Error(`Unable to fetch XML from ZIP: ${response.statusText}`);
+    }
+    this.xmlData = await response.text();
+  }
+
+  private resolveAsset(path: string): string | undefined {
+    // ZIP mode
+    if (this.zipUrl) {
+      const normalizedPath = path.replace(/^\/+/, '');
+      const exactMatch = this.extractedAssets[path] || this.extractedAssets[normalizedPath];
+      if (exactMatch) {
+        return exactMatch;
+      }
+
+      const basename = normalizedPath.replace(/^.*\//, '');
+      const matchingKey = Object.keys(this.extractedAssets).find(
+        assetKey =>
+          assetKey === normalizedPath ||
+          assetKey === basename ||
+          assetKey.endsWith(`/${normalizedPath}`) ||
+          assetKey.endsWith(`/${basename}`),
+      );
+      return matchingKey ? this.extractedAssets[matchingKey] : undefined;
+    }
+
+    // Normal mode
+    return `${this.baseUrl.replace(/\/+$/, '')}/${path}`;
   }
 
   @State() showDotsandbtn: boolean = false;
@@ -442,6 +531,7 @@ export class LidoHome {
    */
   disconnectedCallback() {
     AudioPlayer.destroyI();
+    this.revokeExtractedAssets();
 
     window.removeEventListener(NextContainerKey, () => {
       this.NextContainerKey();
@@ -551,7 +641,7 @@ export class LidoHome {
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
-        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay} baseUrl={this.baseUrl} height={this.height}>
+        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay}  {...(!this.zipUrl ? { baseUrl: this.baseUrl } : {})}  height={this.height}>
           {children}
         </lido-container>
       ),
