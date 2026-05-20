@@ -193,7 +193,7 @@ export const FAST_WORDS_BY_LANG = {
     'है', 'था', 'थे',
   ]),
 
-  'ka': new Set([
+  'kn': new Set([
     'ಅದು', 'ಇದು',
     'ನಲ್ಲಿ', 'ಮೇಲೆ',
     'ಮತ್ತು', 'ಇದೆ',
@@ -224,7 +224,7 @@ export const LANGUAGE_PROFILES = {
     fastClusterMultiplier: 0.9,
   },
 
-  'ka': {
+  'kn': {
     expectedWPM: 85,
     minWordMs: 35,
     syllableWeight: 1.75,
