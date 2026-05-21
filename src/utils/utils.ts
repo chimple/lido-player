@@ -12,7 +12,7 @@ import {
   DropLength,
   CalculatorOk
 } from './constants';
-import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
+import { dispatchActivityEndEvent, dispatchGameCompletedEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import type { LessonTrackingParams } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
@@ -670,6 +670,8 @@ export const calculateScore = () => {
   }
   const rightMoves = gameScore.rightMoves;
   const wrongMoves = gameScore.wrongMoves;
+  gameScore.totalRightMovesCount += rightMoves;
+  gameScore.totalWrongMovesCount += wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
   storeActivityScore(finalScore);
   gameScore.rightMoves = 0;
@@ -797,7 +799,10 @@ const storeActivityScore = (score: number) => {
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     const timeSpendForLesson = ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0);
-    dispatchLessonEndEvent(totalIndex, gameScore.rightMoves, gameScore.wrongMoves,finalScore, timeSpendForLesson, lessonTrackingParams);
+    dispatchLessonEndEvent(totalIndex, gameScore.totalRightMovesCount, gameScore.totalWrongMovesCount, finalScore, timeSpendForLesson, lessonTrackingParams);
+    gameScore.totalRightMovesCount = 0;
+    gameScore.totalWrongMovesCount = 0;
+    dispatchGameCompletedEvent()
     localStorage.removeItem(ActivityScoreKey);
   }
 };
