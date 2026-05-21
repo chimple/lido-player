@@ -21,6 +21,11 @@ export const LIDO_COMMON_AUDIO_PATH = '__LIDO_COMMON_AUDIO_PATH__';
 export const LIDO_COMMON_AUDIO_READY_EVENT = 'lidoCommonAudioPathReady';
 export const TemplateID = 'template-id';
 export const CalculatorOk='calculator-ok';
+export const MicroProblemEndKey = 'problemEnd';
+export const MicroLessonEndKey = 'lessonEnd';
+export const MicroGameEndKey = 'gameEnd';
+export const MicroGameExitKey = 'gameExit';
+
 
 export enum TraceMode {
   NoFlow = 'noFlow',
@@ -31,6 +36,8 @@ export enum TraceMode {
 }
 
 export default class GameScore {
+  totalRightMovesCount: number = 0;
+  totalWrongMovesCount: number = 0;
   rightMoves: number = 0;
   wrongMoves: number = 0;
   finalScore: number = 0;

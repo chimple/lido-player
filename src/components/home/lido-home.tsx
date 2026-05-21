@@ -213,7 +213,7 @@ export class LidoHome {
       // const event = new CustomEvent('gameCompleted');
       // window.dispatchEvent(event);
       localStorage.removeItem(ActivityScoreKey);
-      dispatchGameCompletedEvent();
+      // dispatchGameCompletedEvent();
       this.currentContainerIndex = null;
     }
     // Reset the containers array to trigger a re-render
