@@ -688,6 +688,11 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   // storing each activity score based on isCorrect for (all drag-drop events)
     // storingEachActivityScore(isCorrect);
   if (isCorrect) {
+    if(dropElement.getAttribute('type') === "category"){
+      gameScore.rightMoves += 1;
+      console.log("Right Moves : ", gameScore.rightMoves);
+      console.log("Wrong Moves : ", gameScore.wrongMoves);
+    }
     const onCorrect = dropElement.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, dropElement, dragElement);
@@ -698,6 +703,11 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       multiplyBeedsCalculation(dropElement);
     }
   } else {
+    if(dropElement.getAttribute('type') === "category"){
+      gameScore.wrongMoves += 1;
+      console.log("Right Moves : ", gameScore.rightMoves);
+      console.log("Wrong Moves : ", gameScore.wrongMoves);
+    }
     const onInCorrect = dropElement.getAttribute('onInCorrect');
     if (onInCorrect) {
       await executeActions(onInCorrect, dropElement, dragElement);
