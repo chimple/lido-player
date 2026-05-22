@@ -70,8 +70,8 @@ export function highlightSpeakingElement(element: HTMLElement): void {
   element.classList.add('speaking-highlight');
 
   // Inject keyframe animation and class styles into the document's head if it doesn't already exist
-  const styleId = '#speaking-highlight-style';
-  if (!document.querySelector(styleId)) {
+  const styleId = 'speaking-highlight-style';
+  if (!document.getElementById(styleId)) {
     const style = document.createElement('style');
     style.id = styleId;
     style.innerHTML = `
@@ -121,6 +121,7 @@ export function stopHighlightForSpeakingElement(element: HTMLElement): void {
 
 export function highlightElement(): void {
   const container = document.querySelector(LidoContainer);
+  if(container.getAttribute("template-id") === "blender")return;
   if (!container) return;
   const dropElements = buildDropHasDragFromDOM();
   const dropEls = container.querySelectorAll(`[type="drop"]`);

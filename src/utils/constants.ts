@@ -21,6 +21,11 @@ export const LIDO_COMMON_AUDIO_PATH = '__LIDO_COMMON_AUDIO_PATH__';
 export const LIDO_COMMON_AUDIO_READY_EVENT = 'lidoCommonAudioPathReady';
 export const TemplateID = 'template-id';
 export const CalculatorOk='calculator-ok';
+export const MicroProblemEndKey = 'problemEnd';
+export const MicroLessonEndKey = 'lessonEnd';
+export const MicroGameEndKey = 'gameEnd';
+export const MicroGameExitKey = 'gameExit';
+
 
 export enum TraceMode {
   NoFlow = 'noFlow',
@@ -31,6 +36,8 @@ export enum TraceMode {
 }
 
 export default class GameScore {
+  totalRightMovesCount: number = 0;
+  totalWrongMovesCount: number = 0;
   rightMoves: number = 0;
   wrongMoves: number = 0;
   finalScore: number = 0;
@@ -136,15 +143,38 @@ export const enum templateAudio {
     sentenceMatchTemplate = 'sentenceMatch',
     pictureClues = 'pictureClues',
     palEgmaCalculateSumAndSumTogether = 'palEgmaCalculateSumAndSumTogether',
-    palEgmaPatternMatching = 'palEgmaPatternMatching',
     palEgmaWordProblem = "palEgmaWordProblem",
-    palEgraArrangePictures = 'palEgraArrangePictures',
-    palEgraBuildWord = 'palEgraBuildWord',
     palEgraMCQWithImage = 'palEgraMCQWithImage',
-    palEgraOddOneOut = 'palEgraOddOneOut',
     palEgraOptionWithAudio = 'palEgraOptionWithAudio',
-    palEgraWordFormation = 'palEgraWordFormation',
     palEgraWordMatch = 'palEgraWordMatch',
+    substractionWithImage = 'substractionWithImageAudio',
+    substractionWithoutImage='substractionWithoutImageAudio',
+    numberIdentificationWithImage= 'numberIdentificationWithImageAudio',
+    numberIdentificationWithoutImage= 'numberIdentificationWithoutImageAudio',
+    wordBuildingWithImage= 'wordBuildingWithImageAudio',
+    wordBuildingWithoutImage= 'wordBuildingWithoutImageAudio',
+    pictureWordMatchMultipleImages='pictureWordMatchMultipleImagesAudio',
+    pictureWordMatchSingleImage='pictureWordMatchSingleImageAudio',
+    sentenceMatch='sentenceMatchAudio',
+    imageMatch='imageMatchAudio',
+    palStoryTale='palStoryTaleAudio',
+    palEgmaPatternMatching='palEgmaPatternMatchingAudio',
+    palEgmaWordProblemDragnDrop='palEgmaWordProblemDragnDropAudio',
+    palEgmaWordProblemClick='palEgmaWordProblemClickAudio',
+    palEgraOddOneOut='palEgraOddOneOutAudio',
+    palEgraArrangePictures='palEgraArrangePicturesAudio',
+    palEgraBuildWord='palEgraBuildWordAudio',
+    palEgraWordFormation='palEgraWordFormationAudio',
+    palInventedSpelling='palInventedSpellingAudio',
+    palLetterIdentification='palLetterIdentificationAudio',
+    palStoryMaking='palStoryMakingAudio',
+    palegmasumtogether='palegmasumtogetherAudio',
+    palegmamultioption='palegmamultioptionAudio',
+    palegraoptionaudio='palegraoptionAudio',
+    palegrawordmatch='palegrawordmatchAudio',
+    palegramcqimages='palegramcqimagesAudio',
+    drawShape = 'drawshape',
+    drawshape = 'drawshape'
 }
 
 export type WordTimelineEntry = {
@@ -170,7 +200,7 @@ export const FAST_WORDS_BY_LANG = {
     'है', 'था', 'थे',
   ]),
 
-  'ka': new Set([
+  'kn': new Set([
     'ಅದು', 'ಇದು',
     'ನಲ್ಲಿ', 'ಮೇಲೆ',
     'ಮತ್ತು', 'ಇದೆ',
@@ -201,7 +231,7 @@ export const LANGUAGE_PROFILES = {
     fastClusterMultiplier: 0.9,
   },
 
-  'ka': {
+  'kn': {
     expectedWPM: 85,
     minWordMs: 35,
     syllableWeight: 1.75,

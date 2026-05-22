@@ -70,6 +70,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
   // Fetch the container element
   const container = document.getElementById(LidoContainer) as HTMLElement;
+  const templateId = container.getAttribute("template-id");
   if (!container) {
     console.error(`Container with ID "container" not found.`);
     return;
@@ -80,10 +81,12 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
   let verticalDistance;
   let horizontalDistance;
+  let dragingElementTransform;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
     if(container && container.getAttribute("game-completed") === "true") return;
-    console.log("moving start");
+
+    dragingElementTransform = element.style.transform    
     
     if (isDraggingDisabled) {
       isDragging = false;
@@ -141,6 +144,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
         duplicateElement.style.transform = computedStyle.transform;
         duplicateElement.style.position = 'absolute';
         duplicateElement.style.zIndex = '0';
+        duplicateElement.style.pointerEvents = "";
         element.style.zIndex = '100';
         document.body.appendChild(duplicateElement);
       }
@@ -245,11 +249,13 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       const dropObject =buildDragSelectedMapFromDOM();
       const storedTabIndexes = Object.keys(dropObject).map(Number);
       if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
-        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && container.getAttribute("template-id") !== "blender") {
           if (otherElement) {
             otherElement.style.opacity = "0.3"
-          }
-          
+          } 
+        }
+        if(otherElement !== mostOverlappedElement){
+          otherElement.style.opacity = "1"
         }
       } else {
         if (otherElement) {
@@ -320,8 +326,28 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       handleResetDragElement(element, mostOverlappedElement, dropHasDrag, null, dragSelectedData, dropSelectedData);
       return;
     }
-    onElementDropComplete(element, mostOverlappedElement);
+    element.style.pointerEvents = 'none'; // Disable pointer events on drag element to prevent interference during drop handling
+    (mostOverlappedElement as HTMLElement).style.pointerEvents = 'none';
+
+    if(mostOverlappedElement.id === element.getAttribute("drop-to")){
+      element.style.transform = dragingElementTransform
+    } else {
+      onElementDropComplete(element, mostOverlappedElement);
+    }
+    
+    if(templateId === "blender" && element && mostOverlappedElement){
+      const allElements = document.querySelectorAll(`*`);
+      allElements.forEach(el => {
+        removeHighlight(el as HTMLElement);
+      });
+      mostOverlappedElement.classList.add("highlight-element");
+    }
     executeActions("this.updateCountBlender='true'",container);
+    setTimeout(() => {
+      element.style.pointerEvents = '';
+      (mostOverlappedElement as HTMLElement).style.pointerEvents = '';
+    }, 1000)
+    // element.style.pointerEvents = ''; // Re-enable pointer events on drag element after drop handling
 
     if (element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) {
       if (mostOverlappedElement) {
@@ -800,7 +826,7 @@ export function updateDropBorder(element: HTMLElement): void {
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
 
-  if (dragSelectedElements.length > 0) {
+  if (dragSelectedElements.length > 0 && container.getAttribute("template-id") !== "blender") {
     element.classList.add('filled');
     element.classList.remove('empty');
     element.classList.remove('highlight-element')
@@ -836,11 +862,12 @@ export function handleDropElement(element: HTMLElement): void {
 
 export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop' | 'drag'): Promise<void> {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  if(container.getAttribute('canplay') === 'false') return;
+  if(container.getAttribute('canplay') === 'false' || container.getAttribute("game-completed") === "true") return;
   // Remove the highlight class from elements matching the selector
   const highlightedElements = document.querySelectorAll(`[type='${type}']`);
 
   highlightedElements.forEach(el => {
+    (el as HTMLElement).style.pointerEvents = ''; // Re-enable pointer events
     removeHighlight(el as HTMLElement);
   });
 
@@ -863,17 +890,24 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
 
 
   element?.classList.add('highlight-element');
+  element.style.pointerEvents = "none";
   element.ariaPressed = 'true';
 
   const selectedDropElement: HTMLElement = type === 'drop' ? element : document.querySelector("[type='drop'].highlight-element");
   const selectedDragElement: HTMLElement = type === 'drag' ? element : document.querySelector("[type='drag'].highlight-element");
   
+  setTimeout(() => {
+    element.style.pointerEvents = "";
+  }, 1000)
+  
   if (!selectedDropElement || element.classList.contains("dropped")) {
     onClickDragElement(element);
     return;
   }
-
-  if (selectedDropElement && selectedDragElement) {
+  if(element.classList.contains("drop-element"))return;
+  if (selectedDropElement && selectedDragElement) { 
+    selectedDropElement.style.pointerEvents = 'none'; // Disable pointer events on drop element during animation
+    selectedDragElement.style.pointerEvents = 'none'; // Disable pointer events on drag element during animation
     if (selectedDragElement.getAttribute('drop-to')) return;
     // Add a transition for a smooth, slower movement
     (selectedDragElement as HTMLElement).style.transition = 'transform 0.5s ease'; // 0.5s for a slower move
@@ -897,17 +931,21 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
     selectedDragElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
     // Remove highlights after moving the element
-    const allElements = document.querySelectorAll(`*`);
-    allElements.forEach(el => {
-      removeHighlight(el as HTMLElement);
-    });
+    if(container.getAttribute("template-id") !== "blender"){
+      const allElements = document.querySelectorAll(`*`);
+      allElements.forEach(el => {
+        removeHighlight(el as HTMLElement);
+      });
+    }
 
     // await new Promise(resolve => setTimeout(resolve, 500));
     await onElementDropComplete(selectedDragElement, selectedDropElement);
+    if(container.getAttribute("drop-action") !== DropAction.InfiniteDrop && container.getAttribute("drop-action") !== DropAction.Move){
+        selectedDragElement.style.pointerEvents = ''; 
+    }
+    selectedDropElement.style.pointerEvents = ''; // Re-enable pointer events on drop element after animation
     // ensure count update for click-to-drop flow
     await executeActions("this.updateCountBlender='true'", container);
-    // await new Promise(resolve => setTimeout(resolve, 500));
-    // selectedDragElement.style.transform = 'translate(0px, 0px)';
   }
 }
 
@@ -967,6 +1005,8 @@ export const appendingDragElementsInDrop = () => {
       if (isAllowOnlyCorrect === true) {
         if (drop['value'] === drag['value']) {
           drag.style.transform = 'translate(0,0)';
+          drag.style.width = "stretch";
+          drag.style.padding = '0'
           drop.appendChild(drag);
           appendedDragIds.add(drag.id);
           drag.style.pointerEvents = 'none';
@@ -975,6 +1015,8 @@ export const appendingDragElementsInDrop = () => {
       } else {
         if (drop['value'].includes(drag['value'])) {
           drag.style.transform = 'translate(0,0)';
+          drag.style.width = "stretch";
+          drag.style.padding = '0'
           drop.appendChild(drag);
           appendedDragIds.add(drag.id);
           drag.style.pointerEvents = 'none';

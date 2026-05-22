@@ -7,18 +7,22 @@ import { WordTimelineEntry, LANGUAGE_PROFILES, FAST_WORDS_BY_LANG } from './cons
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;
+  private currentTargetElement: HTMLElement | null = null;
+  private pendingReplayElement: HTMLElement | null = null;
 
   private highlightOverlay: HTMLElement | null = null;
   private wordRects: DOMRect[] = [];
   private activeWordIndex = -1;
   private highlightRAF: number | null = null;
+  private endPromiseResolve: (() => void) | null = null;
+  private visibilityWaitResolvers: Array<() => void> = [];
+  private isVisibilityChangeRegistered = false;
 
   private constructor() {
     this.audioElement = document.createElement('audio');
-    this.audioElement.id = 'audio';
-    document.body.appendChild(this.audioElement);
 
     this.registerGlobalStopEvents();
+    this.registerVisibilityEvents();
   }
 
   public static getI(): AudioPlayer {
@@ -28,7 +32,13 @@ export class AudioPlayer {
     return AudioPlayer.instance;
   }
 
-  public stop() {
+  public static destroyI() {
+    if (AudioPlayer.instance) {
+      AudioPlayer.instance.destroy();
+    }
+  }
+
+  public stop(preserveReplay: boolean = false) {
 
     const container = document.getElementById(LidoContainer);
     if(container && container.getAttribute('highlight-word-by-word')==='true'){
@@ -39,6 +49,16 @@ export class AudioPlayer {
     if (window?.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
+    // Resolve any pending "ended" wait so callers can continue.
+    if (this.endPromiseResolve) {
+      const resolve = this.endPromiseResolve;
+      this.endPromiseResolve = null;
+      resolve();
+    }
+    if (!preserveReplay) {
+      this.pendingReplayElement = null;
+    }
+    this.currentTargetElement = null;
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
     this.audioElement.src = '';
@@ -56,11 +76,47 @@ export class AudioPlayer {
     }
   }
 
-  private handleUserClick = () => {
-    const container = document.getElementById(LidoContainer);
-    if (container?.getAttribute('game-completed') === 'true')return;
+  private handleUserClick = (event?: MouseEvent) => {
+  const container = document.getElementById(LidoContainer);
+  if (container && event?.target === container) return;
+  if (container?.getAttribute('game-completed') === 'true')return;
     this.stop();
+};
+
+  private isWindowVisible() {
+    return document.visibilityState === 'visible' && !document.hidden;
+  }
+
+  private waitUntilWindowIsVisible() {
+    if (this.isWindowVisible()) {
+      return Promise.resolve();
+    }
+
+    this.registerVisibilityEvents();
+
+    return new Promise<void>(resolve => {
+      this.visibilityWaitResolvers.push(resolve);
+    });
+  }
+
+  private handleVisibilityChange = async () => {
+    if (this.isWindowVisible()) {
+      this.resolveVisibilityWaiters();
+      return;
+    }
+
+    if (!this.currentTargetElement) {
+      return;
+    }
+
+    this.pendingReplayElement = this.currentTargetElement;
+    await this.stop(true);
   };
+
+  private resolveVisibilityWaiters() {
+    const resolvers = this.visibilityWaitResolvers.splice(0);
+    resolvers.forEach(resolve => resolve());
+  }
 
   private getLidoTextElement(el: HTMLElement): HTMLElement | null {
     if (el.tagName.toLowerCase() === 'lido-text') return el;
@@ -68,6 +124,20 @@ export class AudioPlayer {
   }
 
   public async play(targetElement: HTMLElement) {
+    this.registerVisibilityEvents();
+
+    if (!this.isWindowVisible()) {
+      this.pendingReplayElement = targetElement;
+      await this.stop(true);
+      await this.waitUntilWindowIsVisible();
+
+      if (this.pendingReplayElement !== targetElement) {
+        return;
+      }
+
+      this.pendingReplayElement = null;
+    }
+
     // Stop any currently playing audio first if target element has audio given
     try {
       await AudioPlayer.getI().stop();
@@ -97,6 +167,8 @@ export class AudioPlayer {
       targetElement = textElement;
     }
 
+    this.currentTargetElement = targetElement;
+
 
     // then play the target element audio.
     let audioUrl = targetElement.getAttribute('audio') || '';
@@ -117,7 +189,7 @@ export class AudioPlayer {
     {
       audioUrl = convertUrlToRelative(audioUrl);
       this.audioElement.src = audioUrl;
-      console.log('🚀 Playing audio:', this.audioElement.src);
+      // console.log('🚀 Playing audio:', this.audioElement.src);
 
       try {
         // setDraggingDisabled(true);
@@ -163,7 +235,13 @@ export class AudioPlayer {
 
         // unified end
         await new Promise<void>(resolve => {
-          this.audioElement.onended = () => resolve();
+          this.endPromiseResolve = resolve;
+          this.audioElement.onended = () => {
+            if (this.endPromiseResolve === resolve) {
+              this.endPromiseResolve = null;
+            }
+            resolve();
+          };
         });
 
       }
@@ -189,10 +267,10 @@ export class AudioPlayer {
     {
       try {
         highlightSpeakingElement(targetElement);
-        window.addEventListener('click', this.handleUserClick, true);
+        // window.addEventListener('click', this.handleUserClick, true);
         await speakText(targetElement.textContent, targetElement);
         const highlightedElements = document.querySelectorAll('.speaking-highlight');
-        highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));        
+        // highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));         
       } 
       catch (error) {
         console.log('🎧 TTS Error:', error);
@@ -200,6 +278,20 @@ export class AudioPlayer {
       finally {
         setDraggingDisabled(false);
       }
+    }
+
+    const shouldReplayFromStart = this.pendingReplayElement === targetElement;
+    if (shouldReplayFromStart) {
+      await this.waitUntilWindowIsVisible();
+
+      if (this.pendingReplayElement === targetElement) {
+        this.pendingReplayElement = null;
+        return this.play(targetElement);
+      }
+    }
+
+    if (this.currentTargetElement === targetElement) {
+      this.currentTargetElement = null;
     }
   }
 
@@ -215,11 +307,31 @@ export class AudioPlayer {
     });
   }
 
+  private registerVisibilityEvents() {
+    if (this.isVisibilityChangeRegistered) {
+      return;
+    }
+
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+    this.isVisibilityChangeRegistered = true;
+  }
+
+  private unregisterVisibilityEvents() {
+    if (!this.isVisibilityChangeRegistered) {
+      return;
+    }
+
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    this.isVisibilityChangeRegistered = false;
+    this.resolveVisibilityWaiters();
+  }
+
   // DESTROY (for hot-reload)
   public destroy() {
     console.log("AudioPlayer destroyed (hot-reload safe)");
 
     this.stop();
+    this.unregisterVisibilityEvents();
 
     // Remove DOM element
     if (this.audioElement.parentNode) {

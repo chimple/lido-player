@@ -188,7 +188,7 @@ export class LidoTrace {
       circle: null as SVGCircleElement | null,
       paths: [] as SVGGeometryElement[],
       svg: null as SVGSVGElement | null,
-      proximityThreshold: 375, // Increased general proximity threshold (was 100)
+      proximityThreshold: 60, // Increased general proximity threshold (was 100)
       freeTraceProximityThreshold: 350, // Increased proximity for free trace (was 50)
       rafId: null as number | null,
       pointerMoveEvent: null as PointerEvent | null,
@@ -198,6 +198,7 @@ export class LidoTrace {
       freeTraceLines: [] as SVGPathElement[],
       currentFreePath: [] as (SVGPathElement | null)[],
       lastPointerPos: null as { x: number; y: number } | null,
+      isCompletingPath: false,
     };
 
     const url = this.svgUrls[this.currentSvgIndex];
@@ -344,6 +345,7 @@ export class LidoTrace {
 
     // After inserting, get the SVG element
     const svgElement = svgContainer.querySelector('svg') as SVGSVGElement;
+    svgElement.classList.add('lido-trace-svg');
 
     // Remove the width and height attributes from the SVG element
     svgElement.removeAttribute('width');
@@ -545,6 +547,7 @@ export class LidoTrace {
         state.isDragging = true;
         state.activePointerId = evt.pointerId;
         state.circle.setPointerCapture(evt.pointerId);
+        state.lastPointerPos = pointerPos;
       }
       this.hideFingerHint(); // ← NEW
       this.resetIdleTimer(state); // ← NEW
@@ -568,6 +571,7 @@ export class LidoTrace {
       if (evt.pointerId === state.activePointerId) {
         state.isDragging = false;
         state.activePointerId = null;
+        state.lastPointerPos = null;
         this.hideFingerHint(); // ← NEW
         this.resetIdleTimer(state); // ← NEW
       }
@@ -585,6 +589,7 @@ export class LidoTrace {
   async handlePointerMove(state: any) {
     if (!state.isDragging) return;
     if (!state.circle || !state.paths || state.paths.length === 0) return;
+    if (state.isCompletingPath) return;
 
     this.hideFingerHint(); // user is active, remove hint
 
@@ -597,10 +602,12 @@ export class LidoTrace {
 
     // Only update if pointer moved a minimum distance (to reduce unnecessary updates)
     const MOVE_THRESHOLD = 1; // px
+    let pointerMoveDistanceSquared = Infinity;
     if (state.lastPointerPos) {
       const dx = pointerPos.x - state.lastPointerPos.x;
       const dy = pointerPos.y - state.lastPointerPos.y;
-      if (dx * dx + dy * dy < MOVE_THRESHOLD * MOVE_THRESHOLD) {
+      pointerMoveDistanceSquared = dx * dx + dy * dy;
+      if (pointerMoveDistanceSquared < MOVE_THRESHOLD * MOVE_THRESHOLD) {
         return;
       }
     }
@@ -627,7 +634,8 @@ export class LidoTrace {
       return; // Skip any further actions
     }
 
-    const closestPoint = this.getClosestPointOnPath(currentPath, pointerPos);
+    const isFreeTraceMode = state.mode === TraceMode.FreeTrace || state.mode === TraceMode.BlindFreeTrace;
+    const closestPoint = this.getClosestPointOnPath(currentPath,pointerPos,isFreeTraceMode ? undefined : state.lastLength);
 
     // Ensure drawing happens only within proximity threshold
     const distanceToPathSquared = this.getDistanceSquared(pointerPos, closestPoint);
@@ -636,7 +644,7 @@ export class LidoTrace {
     }
 
     // For free trace mode and blind free trace mode, allow free drawing only if within the reduced proximity threshold
-    if (state.mode === TraceMode.FreeTrace || state.mode === TraceMode.BlindFreeTrace) {
+    if (isFreeTraceMode) {
       // Throttle: Only update every 2nd event (for reducing excessive dom updates)
       this.freeTraceUpdateCounter = (this.freeTraceUpdateCounter || 0) + 1;
       if (this.freeTraceUpdateCounter % 2 !== 0) {
@@ -720,12 +728,40 @@ export class LidoTrace {
     }
 
     // In normal modes, allow movement and drawing only within the general proximity threshold
-    if (state.isDragging && closestPoint.length >= state.lastLength) {
-      state.lastLength = closestPoint.length;
+    const BACKWARD_TOLERANCE = 20; // allow slight backward movement
+    const MAX_FORWARD_JUMP = 80; // prevent jumping to wrong segment
+    const RECOVERY_FORWARD_JUMP = Math.min(320, Math.max(160, state.totalPathLength * 0.45)); // recover on long strokes without skipping short paths
+    const RECOVERY_END_BUFFER = Math.min(60, Math.max(24, state.totalPathLength * 0.12)); // don't let recovery auto-finish the last part
+    const RECOVERY_POINTER_MOVE_THRESHOLD = 8; // only recover after a meaningful drag, not during slow tracing
+
+    let guidedClosestPoint = closestPoint;
+    let isValidProgress =
+      guidedClosestPoint.length >= state.lastLength - BACKWARD_TOLERANCE &&
+      guidedClosestPoint.length - state.lastLength <= MAX_FORWARD_JUMP;
+
+    if (!isValidProgress) {
+      const recoveryPoint = this.getClosestPointOnPath(currentPath, pointerPos);
+      const recoveryDistanceSquared = this.getDistanceSquared(pointerPos, recoveryPoint);
+      const canRecover =
+        pointerMoveDistanceSquared >= RECOVERY_POINTER_MOVE_THRESHOLD * RECOVERY_POINTER_MOVE_THRESHOLD &&
+        recoveryDistanceSquared <= proximitySquared &&
+        recoveryPoint.length >= state.lastLength - BACKWARD_TOLERANCE &&
+        recoveryPoint.length - state.lastLength <= RECOVERY_FORWARD_JUMP &&
+        recoveryPoint.length < state.totalPathLength - RECOVERY_END_BUFFER;
+
+      if (canRecover) {
+        guidedClosestPoint = recoveryPoint;
+        isValidProgress = true;
+      }
+    }
+
+    if (state.isDragging && isValidProgress) {
+      state.lastLength = Math.max(state.lastLength, guidedClosestPoint.length);
+      state.lastPointerPos = pointerPos;
       // Only update the circle if it moved enough
-      if (Math.abs(closestPoint.x - circlePos.x) > MOVE_THRESHOLD || Math.abs(closestPoint.y - circlePos.y) > MOVE_THRESHOLD) {
-        state.circle.setAttribute('cx', closestPoint.x.toString());
-        state.circle.setAttribute('cy', closestPoint.y.toString());
+      if (Math.abs(guidedClosestPoint.x - circlePos.x) > MOVE_THRESHOLD || Math.abs(guidedClosestPoint.y - circlePos.y) > MOVE_THRESHOLD) {
+        state.circle.setAttribute('cx', guidedClosestPoint.x.toString());
+        state.circle.setAttribute('cy', guidedClosestPoint.y.toString());
       }
 
       // Only re-append if not already children list
@@ -754,6 +790,8 @@ export class LidoTrace {
 
       if (pathIsClosed && state.totalPathLength > 50) {
         if (percentComplete >= COMPLETION_THRESHOLD) {
+          if (state.isCompletingPath) return;
+          state.isCompletingPath = true;
           // Animate the draggable circle & green trace to the very end, then proceed
           await this.animatePathToEnd(state, currentPath);
           if (state.currentPathIndex < state.paths.length - 1) {
@@ -765,8 +803,12 @@ export class LidoTrace {
       } else {
         // For open paths, allow completion if near the end
         if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex < state.paths.length - 1) {
+          if (state.isCompletingPath) return;
+          state.isCompletingPath = true;
           this.moveToNextPath(state);
         } else if (state.totalPathLength - 1 - state.lastLength < 5 && state.currentPathIndex === state.paths.length - 1) {
+          if (state.isCompletingPath) return;
+          state.isCompletingPath = true;
           this.moveToNextContainer();
         }
       }
@@ -842,9 +884,7 @@ export class LidoTrace {
 
     storingEachActivityScore(true);
 
-    if (this.el && this.onCorrect) {
-      await executeActions(this.onCorrect, this.el);
-    }
+
 
     console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
     const delay = 1000; // milliseconds
@@ -855,11 +895,20 @@ export class LidoTrace {
       const svgContainer = document.getElementById('lido-svgContainer') as HTMLElement;
       svgContainer.style.visibility = 'visible';
       this.moving = false;
+      if (this.el && this.onCorrect) {
+        await executeActions(this.onCorrect, this.el);
+      }
       return;
     }
 
     calculateScore();
     console.log('All SVGs completed, hiding component.');
+    const container = document.querySelector(LidoContainer) as HTMLElement
+    const containerOnCorrect = container.getAttribute("onCorrect")
+    if(container && containerOnCorrect){
+      await new Promise(resolve => setTimeout(resolve, delay));
+      await executeActions(containerOnCorrect, this.el)
+    }
     triggerNextContainer();
   }
 
@@ -880,48 +929,52 @@ export class LidoTrace {
   }
 
   // Find the closest point on the given path to the specified point using two-pass sampling (optimized)
-  getClosestPointOnPath(pathNode: SVGGeometryElement, point: { x: number; y: number }) {
+  getClosestPointOnPath(pathNode: SVGGeometryElement,point: { x: number; y: number },lastLength?: number) {
     const pathLength = pathNode.getTotalLength();
+
     let closestPoint = { x: 0, y: 0, length: 0 };
     let minDistanceSquared = Infinity;
+    const coarseStep = 40;
+    const fineStep = 6;
+    //  dynamic search window (prevents jump)
+    const SEARCH_WINDOW = 150;
+    let searchStart = 0;
+    let searchEnd = pathLength;
 
-    // Optimized: Increase coarse steps for better performance
-    const coarseStep = 40; // was 20
-    let coarseClosestPoint = { x: 0, y: 0, length: 0 };
-    let coarseMinDistanceSquared = Infinity;
-
-    for (let i = 0; i <= pathLength; i += coarseStep) {
-      const pointOnPath = pathNode.getPointAtLength(i);
-      const distanceSquared = this.getDistanceSquared(point, pointOnPath);
-
-      if (distanceSquared < coarseMinDistanceSquared) {
-        coarseMinDistanceSquared = distanceSquared;
-        coarseClosestPoint = {
-          x: pointOnPath.x,
-          y: pointOnPath.y,
-          length: i,
-        };
-      }
+    // If lastLength exists → restrict search (smooth tracing)
+    if (lastLength !== undefined) {
+      searchStart = Math.max(0, lastLength - SEARCH_WINDOW);
+      searchEnd = Math.min(pathLength, lastLength + SEARCH_WINDOW);
     }
 
-    // Second pass: fine sampling around coarseClosestPoint
-    const fineStep = 6; // was 2
-    const searchStart = Math.max(coarseClosestPoint.length - coarseStep, 0);
-    const searchEnd = Math.min(coarseClosestPoint.length + coarseStep, pathLength);
+    let coarseClosest = { x: 0, y: 0, length: searchStart };
 
-    for (let i = searchStart; i <= searchEnd; i += fineStep) {
-      const pointOnPath = pathNode.getPointAtLength(i);
-      const distanceSquared = this.getDistanceSquared(point, pointOnPath);
+    for (let i = searchStart; i <= searchEnd; i += coarseStep) {
+      const pt = pathNode.getPointAtLength(i);
+      const dist = this.getDistanceSquared(point, pt);
 
-      if (distanceSquared < minDistanceSquared) {
-        minDistanceSquared = distanceSquared;
-        closestPoint = { x: pointOnPath.x, y: pointOnPath.y, length: i };
+      if (dist < minDistanceSquared) {
+        minDistanceSquared = dist;
+        coarseClosest = { x: pt.x, y: pt.y, length: i };
+      }
+    }
+    const fineStart = Math.max(0, coarseClosest.length - coarseStep);
+    const fineEnd = Math.min(pathLength, coarseClosest.length + coarseStep);
+
+    minDistanceSquared = Infinity;
+
+    for (let i = fineStart; i <= fineEnd; i += fineStep) {
+      const pt = pathNode.getPointAtLength(i);
+      const dist = this.getDistanceSquared(point, pt);
+
+      if (dist < minDistanceSquared) {
+        minDistanceSquared = dist;
+        closestPoint = { x: pt.x, y: pt.y, length: i };
       }
     }
 
     return closestPoint;
   }
-
   // Load the next or previous SVG based on the isNext flag
   async loadAnotherSVG(state: any, isNext: boolean) {
     state.isDragging = false;
@@ -977,6 +1030,7 @@ export class LidoTrace {
     state.isDragging = false;
     state.currentPathIndex++;
     state.lastLength = 0;
+    state.isCompletingPath = false;
 
     this.hideFingerHint(); // remove hint when changing path
 

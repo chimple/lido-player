@@ -1,4 +1,5 @@
 import { Component, Prop, h, State, Host, Watch, Element, getAssetPath } from '@stencil/core';
+import JSZip from 'jszip';
 import {
   DragSelectedMapKey,
   DragMapKey,
@@ -29,6 +30,8 @@ import {
   triggerNextContainer,
   matchStringPattern,
   speakText,
+  setActiveZipAssets,
+  clearActiveZipAssets,
 } from '../../utils/utils';
 
 import { AudioPlayer } from '../../utils/audioPlayer';
@@ -48,7 +51,7 @@ import i18next from '../../utils/i18n';
   styleUrls: ['./../../css/index.css', './../../css/animation.css', './lido-home.css'],
 })
 export class LidoHome {
-  @Prop() commonAudioPath?: string="";
+  @Prop() commonAudioPath?: string = '';
 
   /** Boolean to show or hide navigation buttons */
   @Prop() showNav: boolean = true;
@@ -118,6 +121,11 @@ export class LidoHome {
   @Prop() uuid: string = generateUUIDFallback();
 
   /**
+   * ZIP URL pointing to a package containing XML and asset files.
+   */
+  @Prop({reflect: true }) zipUrl: string = '';
+
+  /**
    * Stores the resolved navigation bar icons.
    * Each key will hold either a valid custom URL or the default ConstNavIcons URL.
    */
@@ -129,6 +137,11 @@ export class LidoHome {
    * Current index of the container being displayed.
    */
   @State() currentContainerIndex: number | null = this.initialIndex;
+
+  /**
+   * Tracks window resizes to force a complete unmount and remount of the container tree.
+   */
+  @State() resizeTrigger: number = 0;
 
   /**
    * Boolean that controls the visibility of the exit confirmation popup.
@@ -150,6 +163,7 @@ export class LidoHome {
      with corresponding values from templateData during rendering.
   */
   private readonly placeholderRegex = /\{([a-zA-Z0-9_]+)\}/g;
+  private extractedAssets: Record<string, string> = {};
 
   @Watch('Lang')
   onLangChange(newLang: string) {
@@ -199,7 +213,7 @@ export class LidoHome {
       // const event = new CustomEvent('gameCompleted');
       // window.dispatchEvent(event);
       localStorage.removeItem(ActivityScoreKey);
-      dispatchGameCompletedEvent();
+      // dispatchGameCompletedEvent();
       this.currentContainerIndex = null;
     }
     // Reset the containers array to trigger a re-render
@@ -259,17 +273,21 @@ export class LidoHome {
     window.addEventListener('changeContainer', (e: any) => {
       this.NextContainerKey(e.detail.index);
     });
+    if (this.zipUrl) {
+      this.xmlData = '';
+      await this.extractZipAndSetBase();
+      await this.loadXmlFromZip();
+    }
     await this.loadTemplateData();
 
-    const trimmed = (this.xmlData|| '').trim();
-    if (trimmed.includes("lido-container")) {
-        this.parseXMLData(this.xmlData);
-      } else {
-        const finalXml = await this.decompressBrotliBase64(this.xmlData);
-        this.parseXMLData(finalXml);
-      }
+    const trimmed = (this.xmlData || '').trim();
+    if (trimmed.includes('lido-container')) {
+      this.parseXMLData(this.xmlData);
+    } else {
+      const finalXml = await this.decompressBrotliBase64(this.xmlData);
+      this.parseXMLData(finalXml);
+    }
     // Parse the provided XML data
-    
 
     // Remove stored values in localStorage when the page is about to be unloaded
     window.addEventListener('beforeunload', () => {
@@ -279,15 +297,15 @@ export class LidoHome {
     });
   }
   private async loadTemplateData() {
-    if (!this.baseUrl) {
+    if (!this.baseUrl && !this.zipUrl) {
       return;
     }
 
-    const candidatePaths = [`${this.baseUrl.replace(/\/+$/, '')}/data.json`];
-    
+    const candidatePaths = [this.resolveAsset('data.json')].filter(Boolean) as string[];
+
     for (const path of candidatePaths) {
       try {
-        const resolvedPath = path.startsWith('http') ? path : getAssetPath(path);
+        const resolvedPath = path.startsWith('http') || path.startsWith('blob') ? path : getAssetPath(path);
         const response = await fetch(resolvedPath);
         if (!response.ok) {
           continue;
@@ -305,9 +323,16 @@ export class LidoHome {
       }
     }
   }
-    private async decompressBrotliBase64(base64: string): Promise<string> {
+  private async decompressBrotliBase64(base64: string): Promise<string> {
     // Normalize payload (raw base64 / quoted / data URL / escaped newlines)
-    base64 = (base64 || '').trim().replace(/^data:.*;base64,/, '').replace(/^['"]|['"]$/g, '').replace(/\\n/g, '').replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+    base64 = (base64 || '')
+      .trim()
+      .replace(/^data:.*;base64,/, '')
+      .replace(/^['"]|['"]$/g, '')
+      .replace(/\\n/g, '')
+      .replace(/\s+/g, '')
+      .replace(/-/g, '+')
+      .replace(/_/g, '/');
     while (base64.length % 4) {
       base64 += '=';
     }
@@ -332,20 +357,91 @@ export class LidoHome {
     // Pure-JS fallback (no wasm asset required)
     try {
       const brotliDecodeModule = await import('brotli/dec/decode');
-      const brotliDecompressBuffer =
-        (brotliDecodeModule as any).BrotliDecompressBuffer ||
-        (brotliDecodeModule as any).default?.BrotliDecompressBuffer;
+      const brotliDecompressBuffer = (brotliDecodeModule as any).BrotliDecompressBuffer || (brotliDecodeModule as any).default?.BrotliDecompressBuffer;
       if (typeof brotliDecompressBuffer !== 'function') {
         throw new Error('BrotliDecompressBuffer function not found in brotli/dec/decode');
       }
       const decompressedBytes = brotliDecompressBuffer(bytes) as Uint8Array;
-      const decoded = new TextDecoder().decode(decompressedBytes);  
+      const decoded = new TextDecoder().decode(decompressedBytes);
       return decoded;
-    } catch (fallbackErr) {   
-      throw new Error(
-        `Brotli decompression failed (native + fallback): ${fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr)}`,
-      );
+    } catch (fallbackErr) {
+      throw new Error(`Brotli decompression failed (native + fallback): ${fallbackErr instanceof Error ? fallbackErr.message : String(fallbackErr)}`);
     }
+  }
+
+  private async extractZipAndSetBase() {
+    this.revokeExtractedAssets();
+
+    const normalizedZipPath = this.zipUrl.replace(/\\/g, '/');
+    const zipUrl = normalizedZipPath.startsWith('http') || normalizedZipPath.startsWith('blob') || normalizedZipPath.startsWith('data')
+      ? normalizedZipPath
+      : getAssetPath(normalizedZipPath);
+
+    const response = await fetch(zipUrl);
+
+    if (!response.ok) {
+      throw new Error('Unable to fetch ZIP');
+    }
+
+    const blob = await response.blob();
+
+    const zip = await JSZip.loadAsync(blob);
+
+    for (const fileName of Object.keys(zip.files)) {
+      const file = zip.files[fileName];
+
+      if (!file.dir) {
+        const fileBlob = await file.async('blob');
+
+        this.extractedAssets[fileName] = URL.createObjectURL(fileBlob);
+      }
+    }
+    setActiveZipAssets(this.extractedAssets);
+  }
+
+  private revokeExtractedAssets() {
+    for (const objectUrl of Object.values(this.extractedAssets)) {
+      URL.revokeObjectURL(objectUrl);
+    }
+    this.extractedAssets = {};
+    clearActiveZipAssets();
+  }
+  private async loadXmlFromZip() {
+    const xmlPath ='index.xml';
+    const xmlBlobUrl = this.resolveAsset(xmlPath);
+    if (!xmlBlobUrl) {
+      console.warn('[LidoHome] ZIP extraction keys:', Object.keys(this.extractedAssets));
+      throw new Error(`Unable to find XML file '${xmlPath}' inside ZIP`);
+    }
+    const response = await fetch(xmlBlobUrl);
+    if (!response.ok) {
+      throw new Error(`Unable to fetch XML from ZIP: ${response.statusText}`);
+    }
+    this.xmlData = await response.text();
+  }
+
+  private resolveAsset(path: string): string | undefined {
+    // ZIP mode
+    if (this.zipUrl) {
+      const normalizedPath = path.replace(/^\/+/, '');
+      const exactMatch = this.extractedAssets[path] || this.extractedAssets[normalizedPath];
+      if (exactMatch) {
+        return exactMatch;
+      }
+
+      const basename = normalizedPath.replace(/^.*\//, '');
+      const matchingKey = Object.keys(this.extractedAssets).find(
+        assetKey =>
+          assetKey === normalizedPath ||
+          assetKey === basename ||
+          assetKey.endsWith(`/${normalizedPath}`) ||
+          assetKey.endsWith(`/${basename}`),
+      );
+      return matchingKey ? this.extractedAssets[matchingKey] : undefined;
+    }
+
+    // Normal mode
+    return `${this.baseUrl.replace(/\/+$/, '')}/${path}`;
   }
 
   @State() showDotsandbtn: boolean = false;
@@ -367,7 +463,11 @@ export class LidoHome {
 
     window.addEventListener('resize', () => {
       this.scaleNavbarContainer(); // re-scale navbar on resize
+      this.resizeTrigger++; // Force Stencil to view the container as a new element
+      this.containers = [...this.containers]; // trigger a full re-render
     });
+    window.addEventListener('touchstart', this.handleWindowTouch, { passive: true });
+    window.addEventListener('pointerdown', this.handleWindowPointer, { passive: true });
   }
   private publishCommonAudioPath(path?: string) {
     if (!path) return;
@@ -430,6 +530,9 @@ export class LidoHome {
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
    */
   disconnectedCallback() {
+    AudioPlayer.destroyI();
+    this.revokeExtractedAssets();
+
     window.removeEventListener(NextContainerKey, () => {
       this.NextContainerKey();
     });
@@ -442,6 +545,8 @@ export class LidoHome {
     window.removeEventListener('resize', () => {
       this.scaleNavbarContainer(); // clean up
     });
+    window.removeEventListener('touchstart', this.handleWindowTouch);
+    window.removeEventListener('pointerdown', this.handleWindowPointer);
   }
 
   /**
@@ -477,25 +582,22 @@ export class LidoHome {
   private applyDataToElement(sourceElement: Element, data: Record<string, any> | null): Element {
     if (!data) return sourceElement;
 
-    const allElements = [sourceElement,...Array.from(sourceElement.querySelectorAll('*'))];
+    const allElements = [sourceElement, ...Array.from(sourceElement.querySelectorAll('*'))];
 
     allElements.forEach(node => {
       Array.from(node.attributes).forEach(attr => {
-        const replacedValue = attr.value.replace(this.placeholderRegex,(_match, key: string) => {
-            const replacement = data[key];
-            return replacement === undefined || replacement === null
-              ? `{${key}}`
-              : String(replacement);
-          }
-        );
+        const replacedValue = attr.value.replace(this.placeholderRegex, (_match, key: string) => {
+          const replacement = data[key];
+          return replacement === undefined || replacement === null ? `{${key}}` : String(replacement);
+        });
 
         if (replacedValue !== attr.value) {
-            node.setAttribute(attr.name, replacedValue);
-          }
-        });
+          node.setAttribute(attr.name, replacedValue);
+        }
       });
+    });
 
-      return sourceElement;
+    return sourceElement;
   }
 
   @Watch('xmlData')
@@ -539,7 +641,7 @@ export class LidoHome {
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
-        <lido-container {...props} canplay={this.canplay} baseUrl={this.baseUrl} height={this.height}>
+        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay}  {...(!this.zipUrl ? { baseUrl: this.baseUrl } : {})}  height={this.height}>
           {children}
         </lido-container>
       ),
@@ -629,24 +731,28 @@ export class LidoHome {
     });
   }
 
-  private async btnpopup() {
+  private async btnpopup(runId: number) {
+    const isStale = () => runId !== this.btnpopupRunId;
     const container = document.getElementById(LidoContainer) as HTMLElement;
-    console.log("game completed !");
-    
-    if (!container || container.getAttribute("game-completed") === "true") return;
+    console.log('game completed !');
+
+    if (isStale()) return;
+    if (!container || container.getAttribute('game-completed') === 'true') return;
     setCancelBtnPopup(false);
     await AudioPlayer.getI().stop();
+    if (isStale()) return;
     const allele = container.querySelectorAll('*');
-    const templateId = container.getAttribute(TemplateID)
-    if(templateId){
+    const templateId = container.getAttribute(TemplateID);
+    if (templateId) {
       const instructEl = this.el.querySelector(`#${templateId}`);
-      if(instructEl){
-        await executeActions("this.speak='true';", instructEl as HTMLElement)
+      if (instructEl) {
+        await executeActions("this.speak='true';", instructEl as HTMLElement);
+        if (isStale()) return;
       }
     }
-    
+
     for (const el of Array.from(allele)) {
-      if (getCancelBtnPopup()) break;
+      if (getCancelBtnPopup() || isStale()) break;
 
       const tabIndex = el.getAttribute('tab-index');
 
@@ -658,18 +764,29 @@ export class LidoHome {
           return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.right > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
         };
         console.log('Element visibility', isVisible(htmlel));
-        if (htmlel && htmlel.getAttribute('disable-speak') !== 'true' && isVisible(htmlel)) {
+        const type = htmlel?.getAttribute('type');
+
+        if (htmlel && htmlel.getAttribute('disable-speak') !== 'true' && 
+          // If it has type → must be visible
+          ((type?.trim() && isVisible(htmlel)) ||
+            // If no type → speak anyway
+            !type || !type.trim())
+        ) {
           await AudioPlayer.getI().play(htmlel);
         }
 
-        if (getCancelBtnPopup()) {
-          await AudioPlayer.getI().stop();
+        if (getCancelBtnPopup() || isStale()) {
+          if (this.shouldStopActiveBtnpopupAudio) {
+            await AudioPlayer.getI().stop();
+          }
           break;
         }
 
         await new Promise(resolve => setTimeout(resolve, 300));
+        if (isStale()) break;
       }
     }
+    if (isStale()) return;
     if (this.areAllDropsFilled()) {
       const objectiveString = container['objective'];
       const objectiveArray = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
@@ -678,12 +795,71 @@ export class LidoHome {
       if (res) {
         triggerNextContainer();
       }
-    }
-    else if(container.getAttribute("game-completed") === 'true'){
-         triggerNextContainer();
-    }
-    else {
+    } else if (container.getAttribute('game-completed') === 'true') {
+      triggerNextContainer();
+    } else {
       console.log('Not yet filled ');
+    }
+  }
+
+  private btnpopupRunId = 0;
+  private activeBtnpopupRunId: number | null = null;
+  private shouldStopActiveBtnpopupAudio = true;
+
+  private hasAudioOnInteractionTarget(target: EventTarget | null): boolean {
+    const element = target as HTMLElement | null;
+    if (!element) return false;
+
+    const hasValidAudio = (candidate: Element | null) => {
+      if (!(candidate instanceof HTMLElement)) return false;
+      const audioAttr = candidate.getAttribute('audio');
+      return !!audioAttr && audioAttr.trim().length > 0;
+    };
+
+    if (hasValidAudio(element)) return true;
+    if (hasValidAudio(element.closest('[audio]'))) return true;
+    if (hasValidAudio(element.querySelector('[audio]'))) return true;
+
+    return false;
+  }
+
+  private async cancelBtnpopupRun(shouldStopAudio: boolean = true) {
+    this.btnpopupRunId++;
+    this.shouldStopActiveBtnpopupAudio = shouldStopAudio;
+    setCancelBtnPopup(true);
+    if (shouldStopAudio) {
+      await AudioPlayer.getI().stop();
+    }
+  }
+
+  private handleWindowTouch = (event: TouchEvent) => {
+    if (this.activeBtnpopupRunId === null) return;
+    void this.cancelBtnpopupRun(this.hasAudioOnInteractionTarget(event.target));
+  };
+
+  private handleWindowPointer = (event: PointerEvent) => {
+    if (event.pointerType !== 'touch') return;
+    if (this.activeBtnpopupRunId === null) return;
+    void this.cancelBtnpopupRun(this.hasAudioOnInteractionTarget(event.target));
+  };
+
+  private async handleBtnpopupClick() {
+    // Invalidate any in-flight run and stop audio immediately.
+    await this.cancelBtnpopupRun();
+
+    // Start fresh run.
+    const nextRunId = this.btnpopupRunId;
+    setCancelBtnPopup(false);
+    this.activeBtnpopupRunId = nextRunId;
+    this.shouldStopActiveBtnpopupAudio = true;
+
+    try {
+      await this.btnpopup(nextRunId);
+    } finally {
+      if (this.activeBtnpopupRunId === nextRunId) {
+        this.activeBtnpopupRunId = null;
+      }
+      this.shouldStopActiveBtnpopupAudio = true;
     }
   }
 
@@ -789,7 +965,7 @@ export class LidoHome {
             <lido-image src={this.navBarIcons.next} />
           </div>
         </div>
-        <div id="main-audio" class="popup-button" onClick={() => this.btnpopup()} >
+        <div id="main-audio" class="popup-button" onClick={() => this.handleBtnpopupClick()}>
           <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
         </div>
       </div>
@@ -889,4 +1065,3 @@ export class LidoHome {
     );
   }
 }
-

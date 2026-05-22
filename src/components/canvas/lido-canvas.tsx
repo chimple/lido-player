@@ -132,7 +132,6 @@ export class LidoCanvas {
         class="lido-canvas"
         style={this.style}>
         <button id="lido-exit-button" onClick={() => this.clearCanvas()}>
-          <lido-text visible="true" height="92px" width="43px"  id="lido-exit-icon" font-color="white"  onEntry="this.font-weight='900';" font-size="96px" string='X'></lido-text>
         </button>
         <canvas id="lido-canvas" style={{ width: this.style.width, height: this.style.height,}}></canvas>
       </Host>

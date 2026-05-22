@@ -12,7 +12,8 @@ import {
   DropLength,
   CalculatorOk
 } from './constants';
-import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
+import { dispatchActivityEndEvent, dispatchGameCompletedEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
+import type { LessonTrackingParams } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
@@ -427,6 +428,9 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
         dragElement.style.width = dropElement.style.width;
         dragElement.style.height = dropElement.style.height;
         dragElement.setAttribute('hasDummy', 'true');
+        setTimeout(() => {
+          dummyElement.style.pointerEvents = "";
+        }, 1000)
       }
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
@@ -666,6 +670,8 @@ export const calculateScore = () => {
   }
   const rightMoves = gameScore.rightMoves;
   const wrongMoves = gameScore.wrongMoves;
+  gameScore.totalRightMovesCount += rightMoves;
+  gameScore.totalWrongMovesCount += wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
   storeActivityScore(finalScore);
   gameScore.rightMoves = 0;
@@ -742,6 +748,27 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   handleShowCheck();
 }
 
+export const getLessonTrackingParams = (): LessonTrackingParams => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const getParam = (key: keyof LessonTrackingParams) =>
+  urlParams.get(key.toLowerCase()) ?? urlParams.get(key) ?? '';
+
+  return {
+    studentId: getParam('studentId'),
+    studentName: getParam('studentName'),
+    classId: getParam('classId'),
+    schoolId: getParam('schoolId'),
+    courseId: getParam('courseId'),
+    courseName: getParam('courseName'),
+    chapterId: getParam('chapterId'),
+    chapterName: getParam('chapterName'),
+    lessonId: getParam('lessonId'),
+    lessonName: getParam('lessonName'),
+    lang: getParam('lang'),
+    end: getParam('end'),
+  };
+};
+
 const storeActivityScore = (score: number) => {
   const appHome = document.querySelector('lido-home');
   if (!appHome) return;
@@ -756,7 +783,12 @@ const storeActivityScore = (score: number) => {
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
   const timeSpendForActivity = Math.floor(Timer.getI().getElapsed() / 1000);
   ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
-  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity);
+
+  const lessonTrackingParams = getLessonTrackingParams();
+  console.log("lessontracking params : ", lessonTrackingParams);
+  
+
+  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity, lessonTrackingParams, true);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
@@ -767,7 +799,10 @@ const storeActivityScore = (score: number) => {
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     const timeSpendForLesson = ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0);
-    dispatchLessonEndEvent(totalIndex, gameScore.rightMoves, gameScore.wrongMoves,finalScore, timeSpendForLesson);
+    dispatchLessonEndEvent(totalIndex, gameScore.totalRightMovesCount, gameScore.totalWrongMovesCount, finalScore, timeSpendForLesson, lessonTrackingParams);
+    gameScore.totalRightMovesCount = 0;
+    gameScore.totalWrongMovesCount = 0;
+    dispatchGameCompletedEvent()
     localStorage.removeItem(ActivityScoreKey);
   }
 };
@@ -990,6 +1025,11 @@ export const triggerNextContainer = () => {
   // const event = new CustomEvent('nextContainer');
   console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
+  const lidoHome = document.querySelector('.lido-home') as HTMLElement;
+  if (lidoHome && (getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed") && Number(lidoHome.getAttribute('index')) >= Number(lidoHome.getAttribute('totalIndex')) - 1) {
+    console.log('🚀 ~ triggerNextContainer ~ lidoHome:', lidoHome);
+    return;
+  }
   dispatchNextContainerEvent();
 };
 
@@ -998,10 +1038,18 @@ export const triggerPrevcontainer = () => {
   console.log('⬅️ ~ triggerPrevContainer triggered');
   dispatchPrevContainerEvent();
 };
+  let activeZipAssets: Record<string, string> | undefined;
+  export function setActiveZipAssets(zipAssets: Record<string, string>) {
+    activeZipAssets = zipAssets;
+  }
+  export function clearActiveZipAssets() {
+    activeZipAssets = undefined;
+  }
 
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  const baseUrl = container.getAttribute('baseUrl');
+  const baseUrl = container?.getAttribute('baseUrl');
+  const zipAssets = activeZipAssets;
 
   if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
@@ -1009,7 +1057,21 @@ export function convertUrlToRelative(url: string): string {
   if ( url.startsWith('/Lido-CommonAudios/')) {  
     return url;
   }
-  if (baseUrl) {
+
+  if (zipAssets) {
+    const normalizedUrl = url.replace(/^\.\/?/, '');
+    const directMatch = zipAssets[url] || zipAssets[normalizedUrl];
+    if (directMatch) {
+      return directMatch;
+    }
+    const suffixMatch = Object.keys(zipAssets).find(
+      assetKey => assetKey === normalizedUrl || assetKey.endsWith(`/${normalizedUrl}`),
+    );
+    if (suffixMatch) {
+      return zipAssets[suffixMatch];
+    }
+  }
+  if (!zipAssets && baseUrl) {
     const newUrl = url.startsWith('/') ? url.slice(1) : url;
     if (newUrl.startsWith(baseUrl.replace(/^\/+|\/+$/g, ''))) return newUrl;
     return baseUrl.endsWith('/') ? baseUrl + newUrl : `${baseUrl}/${newUrl}`;
@@ -1680,7 +1742,7 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
   const scale = typeof calculateScale === "function" ? calculateScale() : 1;
 
   if (!dropElement.dataset.dropCount) dropElement.dataset.dropCount = "0";
-  let dropCount = parseInt(dropElement.dataset.dropCount, 10);
+  let dropCount = parseInt(dropElement.childElementCount) - 1;
 
   // === READ DROP ZONE SIZE ===
   const dropWidth = dropRect.width;
@@ -1735,6 +1797,11 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
     targetY = startY + (dropCount * stepY);
   }
 
+// ------------ APPLY TRANSFORM SMOOTHLY --------------
+  // reset size first so centering and final placement use the resized bounds
+  dragElement.style.width = "auto";
+  dragElement.style.height = "auto";
+
   // ------------ APPLY TRANSFORM SMOOTHLY --------------
   const dx = (targetX - dragRect.left) / scale;
   const dy = (targetY - dragRect.top) / scale;
@@ -1742,11 +1809,27 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
   dragElement.style.transition = "transform .2s ease-out";
   dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
 
-  dropElement.dataset.dropCount = String(dropCount + 1);
+  const resizedDragRect = dragElement.getBoundingClientRect();
+  const dropCenterX = dropRect.left + dropWidth / 2;
+  const dropCenterY = dropRect.top + dropHeight / 2;
+  const resizedDragCenterX = resizedDragRect.left + resizedDragRect.width / 2;
+  const resizedDragCenterY = resizedDragRect.top + resizedDragRect.height / 2;
 
-  // reset size
-  dragElement.style.width = "auto";
-  dragElement.style.height = "auto";
+  const centerDx = (dropCenterX - resizedDragCenterX) / scale;
+  const centerDy = (dropCenterY - resizedDragCenterY) / scale;
+
+  dragElement.style.transition = "none";
+  dragElement.style.transform = `translate(${centerDx}px, ${centerDy}px)`;
+
+  // Force the browser to apply the centered position before animating to the stack slot.
+  dragElement.getBoundingClientRect();
+
+  requestAnimationFrame(() => {
+    dragElement.style.transition = "transform .2s ease-out";
+    dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
+  });
+
+  dropElement.dataset.dropCount = String(dropCount + 1);
 }
 
 export const updateCalculatorAnswer= (el:HTMLElement): void => {
