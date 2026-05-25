@@ -206,30 +206,20 @@ export class AudioPlayer {
 
         // If word-by-word highlighting is enabled prepare timeline & rects
         if (isWordByWord) {
-          this.audioElement.onloadedmetadata = () => {
-            const durationMs = this.audioElement.duration * 1000;
-            const textContent = targetElement.textContent || '';
+          await this.waitForAudioMetadata();
+          const durationMs = this.audioElement.duration * 1000;
+          const textContent = targetElement.textContent || '';
 
-            timeline = this.buildWordTimeline(textContent,durationMs,profile,language);
-            this.wordRects = this.computeWordRects(targetElement);
-          };
-        } 
-        else {
+          timeline = this.buildWordTimeline(textContent, durationMs, profile, language);
+          this.wordRects = this.computeWordRects(targetElement);
+        } else {
           highlightSpeakingElement(targetElement);
         }
 
         // PLAY ONCE
         await this.audioElement.play();
 
-        // ensure metadata processed before overlay
-        if(isWordByWord && timeline.length === 0) 
-        {
-          await new Promise<void>(resolve => {
-            this.audioElement.onloadedmetadata = () => resolve();
-          });
-          this.startOverlayHighlightLoop(timeline, profile);
-        } 
-        else if (isWordByWord) {
+        if (isWordByWord) {
           this.startOverlayHighlightLoop(timeline, profile);
         }
 
@@ -363,20 +353,6 @@ export class AudioPlayer {
 
   private buildWordTimeline(text: string, totalDurationMs: number, profile: any,language: string): WordTimelineEntry[] {
     const tokens = this.tokenize(text).filter(t => t.trim());
-    console.log('[buildTimeline] words:', tokens);
-
-    const expectedDurationMs = (tokens.length / profile.expectedWPM) * 60000;
-
-    let speedScale = 1;
-
-    // Only scale if mismatch is significant
-    if (expectedDurationMs > 0) {
-      const ratio = totalDurationMs / expectedDurationMs;
-
-      if (ratio > 1.15) speedScale = 1.1;   // audio slower
-      else if (ratio < 0.85) speedScale = 0.9; // audio faster
-    }
-
 
     const weights = tokens.map((word,i) => {
       const prev = tokens[i - 1]?.toLowerCase();
@@ -413,8 +389,6 @@ export class AudioPlayer {
     const timeline = tokens.map((word, i) => {
       let duration = (weights[i] / totalWeight) * totalDurationMs;
 
-      // NEW: minimum readable duration
-      duration *= speedScale;
       duration = Math.max(profile.minWordMs, duration);
 
       const entry = {
@@ -430,7 +404,7 @@ export class AudioPlayer {
     });
 
     const last = timeline[timeline.length - 1];
-    if (last && last.endMs > totalDurationMs) {
+    if (last && last.endMs !== totalDurationMs) {
       const scale = totalDurationMs / last.endMs;
 
       timeline.forEach(t => {
@@ -440,6 +414,30 @@ export class AudioPlayer {
     }
 
     return timeline;
+  }
+
+  private waitForAudioMetadata(): Promise<void> {
+    if (Number.isFinite(this.audioElement.duration) && this.audioElement.duration > 0) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+      const cleanup = () => {
+        this.audioElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        this.audioElement.removeEventListener('error', handleError);
+      };
+      const handleLoadedMetadata = () => {
+        cleanup();
+        resolve();
+      };
+      const handleError = () => {
+        cleanup();
+        reject(new Error('Audio metadata failed to load'));
+      };
+
+      this.audioElement.addEventListener('loadedmetadata', handleLoadedMetadata, { once: true });
+      this.audioElement.addEventListener('error', handleError, { once: true });
+    });
   }
 
 
@@ -499,15 +497,41 @@ export class AudioPlayer {
   private moveOverlay(rect: DOMRect) {
     if (!this.highlightOverlay) return;
 
-    this.highlightOverlay.style.left = `${rect.left}px`;
-    this.highlightOverlay.style.top = `${rect.top}px`;
+    this.highlightOverlay.style.transform = `translate3d(${rect.left}px, ${rect.top}px, 0)`;
     this.highlightOverlay.style.width = `${rect.width}px`;
     this.highlightOverlay.style.height = `${rect.height}px`;
+  }
+
+  private getHighlightLeadMs(timeline: WordTimelineEntry[], profile: any) {
+    if (!timeline.length) return profile.preemptiveOffsetMs;
+
+    const duration = timeline[timeline.length - 1].endMs - timeline[0].startMs;
+    const averageWordMs = duration / timeline.length;
+    const speedLead = averageWordMs < 190 ? 120 : averageWordMs < 260 ? 90 : 60;
+
+    return Math.max(profile.preemptiveOffsetMs, speedLead);
+  }
+
+  private getTimelineIndex(timeline: WordTimelineEntry[], currentMs: number) {
+    if (!timeline.length) return -1;
+    if (currentMs <= timeline[0].startMs) return 0;
+
+    for (let i = 0; i < timeline.length; i++) {
+      if (currentMs >= timeline[i].startMs && currentMs < timeline[i].endMs) {
+        return i;
+      }
+      if (timeline[i + 1] && currentMs < timeline[i + 1].startMs) {
+        return i;
+      }
+    }
+
+    return timeline.length - 1;
   }
 
   private startOverlayHighlightLoop(timeline: WordTimelineEntry[], profile: any) {
     this.ensureOverlay();
     this.activeWordIndex = -1;
+    const highlightLeadMs = this.getHighlightLeadMs(timeline, profile);
 
     const tick = () => {
       if (this.audioElement.paused || this.audioElement.ended) {
@@ -515,13 +539,8 @@ export class AudioPlayer {
         return;
       }
 
-      const currentMs = this.audioElement.currentTime * 1000 + profile.preemptiveOffsetMs;
-
-      const index = timeline.findIndex(
-        w => 
-        (currentMs+profile.smoothingMs >= w.startMs) && 
-        (currentMs-profile.smoothingMs < w.endMs)
-      );
+      const currentMs = this.audioElement.currentTime * 1000 + highlightLeadMs;
+      const index = this.getTimelineIndex(timeline, currentMs);
 
       // NEW: drift correction
       if (index >= 0 && this.activeWordIndex >= 0 && index - this.activeWordIndex >= 2) {
