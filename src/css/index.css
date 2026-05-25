@@ -280,6 +280,8 @@ body {
 
 .lido-tts-highlight-overlay {
   position: fixed;
+  left: 0;
+  top: 0;
   pointer-events: none;
   z-index: 9999;
 
@@ -298,14 +300,13 @@ body {
 
   /* Motion */
   transition:
-    left 55ms linear,
-    top 55ms linear,
-    width 55ms ease-out,
-    height 55ms ease-out,
+    width 25ms ease-out,
+    height 25ms ease-out,
     opacity 80ms ease-out;
 
   opacity: 0.95;
 
   /* Safety */
   will-change: transform, width, height;
+  contain: layout paint style;
 }
