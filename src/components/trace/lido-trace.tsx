@@ -198,6 +198,7 @@ export class LidoTrace {
       freeTraceLines: [] as SVGPathElement[],
       currentFreePath: [] as (SVGPathElement | null)[],
       lastPointerPos: null as { x: number; y: number } | null,
+      dragOffset: null as { x: number; y: number } | null,
       isCompletingPath: false,
     };
 
@@ -521,7 +522,7 @@ export class LidoTrace {
     circle.setAttribute('id', 'lido-draggableCircle');
     circle.setAttribute('cx', firstPathStart.x.toString());
     circle.setAttribute('cy', firstPathStart.y.toString());
-    circle.setAttribute('r', `calc(20)`); // Radius of the draggable circle
+    circle.setAttribute('r', `20`); // Radius of the draggable circle
     circle.setAttribute('fill', '#CF1565'); // fill the color for the circle
     state.svg?.appendChild(circle);
     state.circle = circle;
@@ -534,6 +535,10 @@ export class LidoTrace {
     // Ensure the circle exists before adding events
     if (!state.circle || !state.paths || state.paths.length === 0) return;
 
+    state.svg.style.touchAction = 'none';
+    state.circle.style.touchAction = 'none';
+
+
     // Handle pointerdown on the circle to start dragging
     state.circle.addEventListener('pointerdown', (evt: PointerEvent) => {
       evt.preventDefault(); // Prevent default actions like text selection
@@ -543,19 +548,31 @@ export class LidoTrace {
         y: parseFloat(state.circle.getAttribute('cy')!),
       };
       const distance = this.getDistanceSquared(pointerPos, circlePos);
-      if (distance <= state.proximityThreshold * state.proximityThreshold) {
+      const startThreshold = this.getProximityThresholdForEvent(state, evt);
+      const isWithinStartThreshold = distance <= startThreshold * startThreshold;
+
+      if (isWithinStartThreshold || evt.pointerType === 'touch') {
         state.isDragging = true;
         state.activePointerId = evt.pointerId;
-        state.circle.setPointerCapture(evt.pointerId);
-        state.lastPointerPos = pointerPos;
+        state.dragOffset = {
+          x: pointerPos.x - circlePos.x,
+          y: pointerPos.y - circlePos.y,
+        };
+        try {
+          state.circle.setPointerCapture(evt.pointerId);
+        } catch {
+          // iOS/Safari can be fussy with pointer capture on SVG nodes.
+        }
+        state.lastPointerPos = circlePos;
       }
       this.hideFingerHint(); // ← NEW
       this.resetIdleTimer(state); // ← NEW
-    });
+    }, { passive: false });
 
     // Handle pointermove on the SVG to update the circle position
     state.svg?.addEventListener('pointermove', (evt: PointerEvent) => {
       if (!state.isDragging || evt.pointerId !== state.activePointerId) return;
+      evt.preventDefault();
 
       state.pointerMoveEvent = evt;
       if (!state.rafId) {
@@ -572,6 +589,7 @@ export class LidoTrace {
         state.isDragging = false;
         state.activePointerId = null;
         state.lastPointerPos = null;
+        state.dragOffset = null;
         this.hideFingerHint(); // ← NEW
         this.resetIdleTimer(state); // ← NEW
       }
@@ -594,7 +612,13 @@ export class LidoTrace {
     this.hideFingerHint(); // user is active, remove hint
 
     const evt = state.pointerMoveEvent as PointerEvent;
-    const pointerPos = this.getPointerPosition(evt, state.svg!);
+    const rawPointerPos = this.getPointerPosition(evt, state.svg!);
+    const pointerPos = state.dragOffset
+      ? {
+        x: rawPointerPos.x - state.dragOffset.x,
+        y: rawPointerPos.y - state.dragOffset.y,
+      }
+      : rawPointerPos;
     const circlePos = {
       x: parseFloat(state.circle.getAttribute('cx')!),
       y: parseFloat(state.circle.getAttribute('cy')!),
@@ -619,12 +643,8 @@ export class LidoTrace {
     }
 
     // Use a reduced proximity threshold for free trace mode
-    let proximitySquared;
-    if (state.mode === TraceMode.FreeTrace || state.mode === TraceMode.BlindFreeTrace) {
-      proximitySquared = state.freeTraceProximityThreshold * state.freeTraceProximityThreshold;
-    } else {
-      proximitySquared = state.proximityThreshold * state.proximityThreshold;
-    }
+    const proximityThreshold = this.getProximityThresholdForEvent(state, evt);
+    const proximitySquared = proximityThreshold * proximityThreshold;
 
     // Calculate the distance between the pointer and the draggable circle
     const distanceSquared = this.getDistanceSquared(pointerPos, circlePos);
@@ -635,7 +655,7 @@ export class LidoTrace {
     }
 
     const isFreeTraceMode = state.mode === TraceMode.FreeTrace || state.mode === TraceMode.BlindFreeTrace;
-    const closestPoint = this.getClosestPointOnPath(currentPath,pointerPos,isFreeTraceMode ? undefined : state.lastLength);
+    const closestPoint = this.getClosestPointOnPath(currentPath, pointerPos, isFreeTraceMode ? undefined : state.lastLength);
 
     // Ensure drawing happens only within proximity threshold
     const distanceToPathSquared = this.getDistanceSquared(pointerPos, closestPoint);
@@ -905,7 +925,7 @@ export class LidoTrace {
     console.log('All SVGs completed, hiding component.');
     const container = document.querySelector(LidoContainer) as HTMLElement
     const containerOnCorrect = container.getAttribute("onCorrect")
-    if(container && containerOnCorrect){
+    if (container && containerOnCorrect) {
       await new Promise(resolve => setTimeout(resolve, delay));
       await executeActions(containerOnCorrect, this.el)
     }
@@ -914,12 +934,86 @@ export class LidoTrace {
 
   // Get the pointer position relative to the SVG
   getPointerPosition(evt: PointerEvent, svg: SVGSVGElement) {
+    const viewBoxPoint = this.getPointerPositionFromViewBox(evt, svg);
+    if (viewBoxPoint) return viewBoxPoint;
+
     const svgPoint = svg.createSVGPoint();
     svgPoint.x = evt.clientX;
     svgPoint.y = evt.clientY;
     const ctm = svg.getScreenCTM()?.inverse();
     return ctm ? svgPoint.matrixTransform(ctm) : { x: evt.clientX, y: evt.clientY };
   }
+
+  private getPointerPositionFromViewBox(evt: PointerEvent, svg: SVGSVGElement) {
+    const rect = svg.getBoundingClientRect();
+    const viewBox = svg.viewBox.baseVal;
+
+    if (!rect.width || !rect.height || !viewBox.width || !viewBox.height) {
+      return null;
+    }
+
+    const { offsetX, offsetY, scaleX, scaleY } = this.getSvgViewBoxTransform(svg, rect);
+
+    return {
+      x: viewBox.x + (evt.clientX - rect.left - offsetX) / scaleX,
+      y: viewBox.y + (evt.clientY - rect.top - offsetY) / scaleY,
+    };
+  }
+
+  private getSvgViewBoxTransform(svg: SVGSVGElement, rect = svg.getBoundingClientRect()) {
+    const viewBox = svg.viewBox.baseVal;
+    const preserveAspectRatio = svg.preserveAspectRatio.baseVal;
+    const scaleX = rect.width / viewBox.width;
+    const scaleY = rect.height / viewBox.height;
+
+    const SVG_PRESERVEASPECTRATIO_NONE = 1;
+    const SVG_MEETORSLICE_SLICE = 2;
+
+    if (preserveAspectRatio.align === SVG_PRESERVEASPECTRATIO_NONE) {
+      return { offsetX: 0, offsetY: 0, scaleX, scaleY };
+    }
+
+    const scale = preserveAspectRatio.meetOrSlice === SVG_MEETORSLICE_SLICE ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
+    const renderedWidth = viewBox.width * scale;
+    const renderedHeight = viewBox.height * scale;
+
+    let offsetX = 0;
+    let offsetY = 0;
+    const align = preserveAspectRatio.align;
+    if (align === 3 || align === 6 || align === 9) {
+      offsetX = (rect.width - renderedWidth) / 2;
+    } else if (align === 4 || align === 7 || align === 10) {
+      offsetX = rect.width - renderedWidth;
+    }
+
+    if (align === 5 || align === 6 || align === 7) {
+      offsetY = (rect.height - renderedHeight) / 2;
+    } else if (align === 8 || align === 9 || align === 10) {
+      offsetY = rect.height - renderedHeight;
+    }
+
+    return { offsetX, offsetY, scaleX: scale, scaleY: scale };
+  }
+
+  private getProximityThresholdForEvent(state: any, evt?: PointerEvent) {
+    const baseThreshold =
+      state.mode === TraceMode.FreeTrace || state.mode === TraceMode.BlindFreeTrace ? state.freeTraceProximityThreshold : state.proximityThreshold;
+
+    if (evt?.pointerType !== 'touch' || !state.svg) {
+      return baseThreshold;
+    }
+
+    const rect = state.svg.getBoundingClientRect();
+    const viewBox = state.svg.viewBox.baseVal;
+    if (!rect.width || !rect.height || !viewBox.width || !viewBox.height) {
+      return baseThreshold;
+    }
+
+    const { scaleX, scaleY } = this.getSvgViewBoxTransform(state.svg, rect);
+    const touchTargetInSvgUnits = 44 * Math.max(1 / scaleX, 1 / scaleY);
+    return Math.max(baseThreshold, touchTargetInSvgUnits);
+  }
+
 
   // Calculate the squared Euclidean distance between two points
   getDistanceSquared(p1: { x: number; y: number }, p2: { x: number; y: number }) {
@@ -929,7 +1023,7 @@ export class LidoTrace {
   }
 
   // Find the closest point on the given path to the specified point using two-pass sampling (optimized)
-  getClosestPointOnPath(pathNode: SVGGeometryElement,point: { x: number; y: number },lastLength?: number) {
+  getClosestPointOnPath(pathNode: SVGGeometryElement, point: { x: number; y: number }, lastLength?: number) {
     const pathLength = pathNode.getTotalLength();
 
     let closestPoint = { x: 0, y: 0, length: 0 };
