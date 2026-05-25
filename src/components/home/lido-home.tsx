@@ -123,7 +123,7 @@ export class LidoHome {
   /**
    * ZIP URL pointing to a package containing XML and asset files.
    */
-  @Prop({reflect: true }) zipUrl: string = '';
+  @Prop({ reflect: true }) zipUrl: string = '';
 
   /**
    * Stores the resolved navigation bar icons.
@@ -407,7 +407,7 @@ export class LidoHome {
     clearActiveZipAssets();
   }
   private async loadXmlFromZip() {
-    const xmlPath ='index.xml';
+    const xmlPath = 'index.xml';
     const xmlBlobUrl = this.resolveAsset(xmlPath);
     if (!xmlBlobUrl) {
       console.warn('[LidoHome] ZIP extraction keys:', Object.keys(this.extractedAssets));
@@ -641,7 +641,7 @@ export class LidoHome {
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
-        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay}  {...(!this.zipUrl ? { baseUrl: this.baseUrl } : {})}  height={this.height}>
+        <lido-container key={this.resizeTrigger} {...props} canplay={this.canplay}  {...(!this.zipUrl ? { baseUrl: this.baseUrl } : {})} height={this.height}>
           {children}
         </lido-container>
       ),
@@ -766,7 +766,7 @@ export class LidoHome {
         console.log('Element visibility', isVisible(htmlel));
         const type = htmlel?.getAttribute('type');
 
-        if (htmlel && htmlel.getAttribute('disable-speak') !== 'true' && 
+        if (htmlel && htmlel.getAttribute('disable-speak') !== 'true' &&
           // If it has type → must be visible
           ((type?.trim() && isVisible(htmlel)) ||
             // If no type → speak anyway
@@ -921,15 +921,14 @@ export class LidoHome {
     return (
       <div id="lido-dot-indicator" class="lido-dot-container" style={{ visibility: 'hidden' }}>
         <div
-          class="lido-exit-button popup
-        -button"
+          class="lido-exit-button popup-button"
           onClick={() => {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
           }}
-          // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
+        // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
         >
-          <lido-image src={this.navBarIcons.exit}></lido-image>
+          <lido-image src={this.navBarIcons.exit} width="strentch"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
@@ -938,9 +937,9 @@ export class LidoHome {
             onClick={() => {
               triggerPrevcontainer();
             }}
-            // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
+          // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
-            <lido-image src={this.navBarIcons.prev} />
+            <lido-image src={this.navBarIcons.prev} width="strentch" />
           </div>
 
           {this.containers.map((_, index) => (
@@ -960,13 +959,13 @@ export class LidoHome {
               console.log('✅ Button clicked - nextBtn action triggered');
               executeActions("this.nextBtn='true'", event.currentTarget as HTMLElement);
             }}
-            // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
+          // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
-            <lido-image src={this.navBarIcons.next} />
+            <lido-image src={this.navBarIcons.next} width="strentch" />
           </div>
         </div>
         <div id="main-audio" class="popup-button" onClick={() => this.handleBtnpopupClick()}>
-          <lido-image visible="true" src={this.navBarIcons.speak}></lido-image>
+          <lido-image visible="true" src={this.navBarIcons.speak} width="strentch"></lido-image>
         </div>
       </div>
     );

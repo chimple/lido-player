@@ -1002,7 +1002,6 @@ export namespace Components {
          */
         "canplay": boolean;
         /**
-          * @default ""
          */
         "commonAudioPath"?: string;
         /**
@@ -1046,6 +1045,11 @@ export namespace Components {
           * @default ''
          */
         "xmlData": string;
+        /**
+          * ZIP URL pointing to a package containing XML and asset files.
+          * @default ''
+         */
+        "zipUrl": string;
     }
     /**
      * @component LidoImage
@@ -1691,6 +1695,11 @@ export namespace Components {
           * @default ''
          */
         "xmlPath": string;
+        /**
+          * ZIP URL pointing to a package containing XML and asset files.
+          * @default ''
+         */
+        "zipUrl": string;
     }
     /**
      * @component LidoRow
@@ -3698,7 +3707,7 @@ declare namespace LocalJSX {
          */
         "canplay"?: boolean;
         /**
-          * @default ""
+          * @default ''
          */
         "commonAudioPath"?: string;
         /**
@@ -3742,6 +3751,11 @@ declare namespace LocalJSX {
           * @default ''
          */
         "xmlData"?: string;
+        /**
+          * ZIP URL pointing to a package containing XML and asset files.
+          * @default ''
+         */
+        "zipUrl"?: string;
     }
     /**
      * @component LidoImage
@@ -4387,6 +4401,11 @@ declare namespace LocalJSX {
           * @default ''
          */
         "xmlPath"?: string;
+        /**
+          * ZIP URL pointing to a package containing XML and asset files.
+          * @default ''
+         */
+        "zipUrl"?: string;
     }
     /**
      * @component LidoRow
@@ -5366,6 +5385,7 @@ declare namespace LocalJSX {
         "speakerButtonUrl": string;
         "avatarUrl": string;
         "uuid": string;
+        "zipUrl": string;
     }
     interface LidoImageAttributes {
         "showSpeakIcon": boolean;
@@ -5508,6 +5528,7 @@ declare namespace LocalJSX {
         "margin": string;
         "canplay": boolean;
         "baseUrl": string;
+        "zipUrl": string;
         "exitButtonUrl": string;
         "prevButtonUrl": string;
         "nextButtonUrl": string;
