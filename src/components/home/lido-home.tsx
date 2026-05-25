@@ -928,7 +928,7 @@ export class LidoHome {
           }}
         // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
         >
-          <lido-image src={this.navBarIcons.exit} width="strentch"></lido-image>
+          <lido-image src={this.navBarIcons.exit} width="stretch"></lido-image>
         </div>
         <div class="lido-btn-dot-container">
           {/* Navigation arrows and dots for container navigation */}
@@ -939,7 +939,7 @@ export class LidoHome {
             }}
           // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
-            <lido-image src={this.navBarIcons.prev} width="strentch" />
+            <lido-image src={this.navBarIcons.prev} width="stretch"></lido-image>
           </div>
 
           {this.containers.map((_, index) => (
@@ -961,11 +961,11 @@ export class LidoHome {
             }}
           // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
           >
-            <lido-image src={this.navBarIcons.next} width="strentch" />
+            <lido-image src={this.navBarIcons.next} width="stretch" ></lido-image>
           </div>
         </div>
         <div id="main-audio" class="popup-button" onClick={() => this.handleBtnpopupClick()}>
-          <lido-image visible="true" src={this.navBarIcons.speak} width="strentch"></lido-image>
+          <lido-image visible="true" src={this.navBarIcons.speak} width="stretch" ></lido-image>
         </div>
       </div>
     );
