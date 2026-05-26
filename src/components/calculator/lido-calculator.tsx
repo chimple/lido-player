@@ -220,7 +220,7 @@ export class LidoCalculator {
     return (
       <Host onEntry={this.onEntry} id="lidoCalculator" style={{ width: this.width, height: this.height, backgroundColor: this.bgColor,left:this.x, top:this.y }}>
           <lido-cell visible="true" height="94px" width="60px">
-            <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="176%" width="89px" onEntry="this.position='relative';" class="top-icon">
+            <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="204%" width="89px" onEntry="this.position='relative';" class="top-icon">
               <img src={convertUrlToRelative(this.penIcon)} alt="pen" style={{ width: '100%', height: '100%' }} />
             </lido-text>
           </lido-cell>
