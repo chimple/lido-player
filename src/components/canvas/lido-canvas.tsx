@@ -18,6 +18,12 @@ export class LidoCanvas {
   // Height of the canvas container
   @Prop() height: string = '700px';
 
+  // Controls component visibility
+  @Prop() visible: boolean | string = false;
+
+  // Z-index for stacking order
+  @Prop() z: string = '0';
+
   // X-offset position for the canvas
   @Prop() x: string = '0px';
   
@@ -45,6 +51,8 @@ export class LidoCanvas {
     height: parseProp(this.height, orientation),
     left: parseProp(this.x, orientation),
     top: parseProp(this.y, orientation),
+    zIndex: this.z,
+    display: parseProp(`${this.visible}`, orientation) === 'true' ? 'block' : 'none',
     position: 'absolute',
   };
 
@@ -133,7 +141,7 @@ export class LidoCanvas {
         style={this.style}>
         <button id="lido-exit-button" onClick={() => this.clearCanvas()}>
         </button>
-        <canvas id="lido-canvas" style={{ width: this.style.width, height: this.style.height,}}></canvas>
+        <canvas id="lido-canvas"></canvas>
       </Host>
     );
   }
