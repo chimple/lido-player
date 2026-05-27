@@ -1,4 +1,4 @@
-import"./lit-element-DByy2wOb.js";import{b as c}from"./lit-html-BGZAEiha.js";const x={title:"Templates/CheckerBlock",argTypes:{shapeNumber:{control:"number"}}},a={args:{shapeNumber:1},render:t=>{const e=m();return c`<lido-home .xmlData="${e}"></lido-home>`}};function m(t){const e=d();return console.log("shape : ",e),`<main>
+import"./lit-element-DByy2wOb.js";import{b as r}from"./lit-html-BGZAEiha.js";const c={title:"Templates/CheckerBlock",argTypes:{shapeNumber:{control:"number"}}},e={args:{shapeNumber:1},render:i=>{const o=s();return r`<lido-home .xmlData="${o}"></lido-home>`}};function s(i){return`<main>
     <lido-container visible="true" show-next-button="true" dropAttr="math-matrix" objective="nammadha" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Checker%20blocks.png" onCorrect="this.sleep='120000';">
     <lido-math-matrix id="matrix3" visible="true" rows="10" cols="10" top-index="false" left-index="false" bottom-index="false" active-only-visible="false" defualtFill="100" active-bg-color="#deb3f2" clickable="false" type="checkerBlock"></lido-math-matrix>
 
@@ -11,7 +11,7 @@ import"./lit-element-DByy2wOb.js";import{b as c}from"./lit-html-BGZAEiha.js";con
     </lido-cell>
 
 </lido-container>
-  </main>`}function d(){const t={};let e=0;for(;e<8;){const l=Math.floor(Math.random()*3),s=l===0?2:3,n=l===0?3:l===1?2:3;return e++,t[`slot-${e}`]={width:s,height:n},t}}var o,i,r;a.parameters={...a.parameters,docs:{...(o=a.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  </main>`}var t,a,l;e.parameters={...e.parameters,docs:{...(t=e.parameters)==null?void 0:t.docs,source:{originalSource:`{
   args: {
     shapeNumber: 1
   },
@@ -19,4 +19,4 @@ import"./lit-element-DByy2wOb.js";import{b as c}from"./lit-html-BGZAEiha.js";con
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(r=(i=a.parameters)==null?void 0:i.docs)==null?void 0:r.source}}};const b=["CheckerBlock"];export{a as CheckerBlock,b as __namedExportsOrder,x as default};
+}`,...(l=(a=e.parameters)==null?void 0:a.docs)==null?void 0:l.source}}};const d=["CheckerBlock"];export{e as CheckerBlock,d as __namedExportsOrder,c as default};
