@@ -1,4 +1,4 @@
-import { convertUrlToRelative, speakText } from './utils';
+﻿import { convertUrlToRelative, speakText } from './utils';
 import { highlightSpeakingElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { setDraggingDisabled } from './utilsHandlers/dragDropHandler';
 import { NextContainerKey, PrevContainerKey, ActivityChangeKey, GameCompletedKey, GameExitKey, ActivityEndKey, LessonEndKey, LidoContainer } from './constants';
@@ -17,6 +17,11 @@ export class AudioPlayer {
   private endPromiseResolve: (() => void) | null = null;
   private visibilityWaitResolvers: Array<() => void> = [];
   private isVisibilityChangeRegistered = false;
+  private readonly stopEvents = [
+    NextContainerKey, PrevContainerKey, LessonEndKey, ActivityChangeKey,
+    ActivityEndKey, GameCompletedKey, GameExitKey
+  ];
+  private handleGlobalStopEvent = () => this.stop();
 
   private constructor() {
     this.audioElement = document.createElement('audio');
@@ -189,8 +194,6 @@ export class AudioPlayer {
     {
       audioUrl = convertUrlToRelative(audioUrl);
       this.audioElement.src = audioUrl;
-      // console.log('🚀 Playing audio:', this.audioElement.src);
-
       try {
         // setDraggingDisabled(true);
 
@@ -235,9 +238,7 @@ export class AudioPlayer {
         });
 
       }
-      catch (error) {
-        console.log('🎧 Audio play error:', error);
-      }
+      catch (error) {}
       finally {
         this.audioElement.onended = null;
         this.audioElement.onloadedmetadata = null;
@@ -262,9 +263,7 @@ export class AudioPlayer {
         const highlightedElements = document.querySelectorAll('.speaking-highlight');
         // highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));         
       } 
-      catch (error) {
-        console.log('🎧 TTS Error:', error);
-      }
+      catch (error) {}
       finally {
         setDraggingDisabled(false);
       }
@@ -287,13 +286,14 @@ export class AudioPlayer {
 
   // GLOBAL STOP EVENTS (container change, activity change…)
   private registerGlobalStopEvents() {
-    const stopEvents = [
-      NextContainerKey, PrevContainerKey, LessonEndKey, ActivityChangeKey,
-      ActivityEndKey, GameCompletedKey, GameExitKey
-    ];
+    this.stopEvents.forEach(key => {
+      window.addEventListener(key, this.handleGlobalStopEvent);
+    });
+  }
 
-    stopEvents.forEach(key => {
-      window.addEventListener(key, () => this.stop());
+  private unregisterGlobalStopEvents() {
+    this.stopEvents.forEach(key => {
+      window.removeEventListener(key, this.handleGlobalStopEvent);
     });
   }
 
@@ -318,9 +318,8 @@ export class AudioPlayer {
 
   // DESTROY (for hot-reload)
   public destroy() {
-    console.log("AudioPlayer destroyed (hot-reload safe)");
-
     this.stop();
+    this.unregisterGlobalStopEvents();
     this.unregisterVisibilityEvents();
 
     // Remove DOM element
@@ -375,15 +374,10 @@ export class AudioPlayer {
         weight *= profile.fastClusterMultiplier;  // compress phrase
       }
 
-      console.log(
-        `[buildTimeline] "${word}" syllables=${syllables}, weight=${weight}`
-      );
-
       return weight;
     });
 
     const totalWeight = weights.reduce((a, b) => a + b, 0);
-    console.log('[buildTimeline] totalWeight:', totalWeight);
 
     let cursor = 0;
     const timeline = tokens.map((word, i) => {
@@ -397,8 +391,6 @@ export class AudioPlayer {
         startMs: cursor,
         endMs: cursor + duration,
       };
-      console.log('[timeline]', entry);
-
       cursor += duration;
       return entry;
     });

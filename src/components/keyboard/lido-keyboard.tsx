@@ -90,6 +90,9 @@ export class LidoKeyboard {
   /** Dynamic style object that stores resolved styles based on props */
   @State() style: { [key: string]: string } = {};
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   /** Reference to the host element */
   @Element() el: HTMLElement;
 
@@ -179,13 +182,13 @@ export class LidoKeyboard {
    */
   componentWillLoad() {
     this.updateStyles();
-    window.addEventListener('resize', this.updateStyles.bind(this));
-    window.addEventListener('load', this.updateStyles.bind(this));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   updateStyles() {

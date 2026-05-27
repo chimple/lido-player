@@ -97,7 +97,6 @@ export class LidoCalculator {
     if (!container) return;
 
     if (this.objective && this.objective !='' && !this.objective.includes(',')) {
-      console.log("hi iscorrect verified");
       isCorrect = Number(userInput) === Number(this.objective);
     } 
 
@@ -131,7 +130,7 @@ export class LidoCalculator {
       try {
         const calculatedValue = equationCheck(equationAttr);
         isCorrect = Number(calculatedValue) === Number(userInput.trim());
-        console.log('Equation check:', calculatedValue, userInput, isCorrect);
+        
       } 
       catch (err) {
         console.error('Error evaluating equation:', err);

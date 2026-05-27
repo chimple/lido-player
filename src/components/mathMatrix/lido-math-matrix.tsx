@@ -104,6 +104,9 @@ export class LidoMathMatrix {
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   /** Reference to the host element of this component */
   @Element() el: HTMLElement;
 
@@ -145,13 +148,13 @@ export class LidoMathMatrix {
   componentWillLoad() {
     this.updateStyles();
     this.updateSlots();
-    window.addEventListener('resize', this.updateStyles.bind(this));
-    window.addEventListener('load', this.updateStyles.bind(this));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   updateSlots() {
@@ -207,7 +210,6 @@ export class LidoMathMatrix {
       rows: parseProp(`${this.rows}`, orientation),
     };
 
-    // console.log("cols and rows : ", );
     
   }
 

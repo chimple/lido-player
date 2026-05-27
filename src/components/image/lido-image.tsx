@@ -177,6 +177,9 @@ export class LidoImage {
    */
   @State() style: { [key: string]: string };
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   /**
    * Delay in milliseconds to make the cell visible after mount.
    */
@@ -214,13 +217,13 @@ export class LidoImage {
   componentWillLoad() {
     this.updateStyles();
 
-    window.addEventListener('resize', this.updateStyles.bind(this)); // Update on screen rotation
-    window.addEventListener('load', this.updateStyles.bind(this)); // Update on screen rotation
+    window.addEventListener('resize', this.handleWindowResize); // Update on screen rotation
+    window.addEventListener('load', this.handleWindowLoad); // Update on screen rotation
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   updateStyles() {

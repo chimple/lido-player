@@ -1,4 +1,4 @@
-import {
+﻿import {
   ActivityScoreKey,
   DragSelectedMapKey,
   DragMapKey,
@@ -151,8 +151,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const container = document.getElementById(LidoContainer) as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
-          console.log('logg alinmatch');
-
           const dropRect = dropElement.getBoundingClientRect();
           const dragRect = dragElement.getBoundingClientRect();
 
@@ -271,8 +269,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'highlightStarsAndDisapper': {
           const value = action.value;
           if (value && targetElement) {
-            console.log('highlightStar action triggered');
-            console.log('Target Element:', targetElement);
             await HighlightStarsOneByOne(targetElement as HTMLElement, value);
           }
           break;
@@ -382,10 +378,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           if (hundredsBox) {
             hundredsBox.setAttribute("string", hundredsValue.toString());
           }
-          console.log(`Units = ${units} → ${unitsValue}`);
-          console.log(`Tens = ${tens} → ${tensValue}`);
-          console.log(`Hundreds = ${hundreds} → ${hundredsValue}`);
-          console.log(`✅ Total Value = ${totalValue}`);
           break;
         }
         case 'updateCalculatorAnswer': {
@@ -795,9 +787,6 @@ const storeActivityScore = (score: number) => {
   ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
 
   const lessonTrackingParams = getLessonTrackingParams();
-  console.log("lessontracking params : ", lessonTrackingParams);
-  
-
   dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity, lessonTrackingParams, true);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
@@ -850,7 +839,6 @@ export const validateObjectiveStatus = async () => {
   const objectiveString = container['objective'];
   const additionalCheck = container.getAttribute('equationCheck');
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true' || '';
-  console.log('🚀 ~ validateObjectiveStatus ~ additionalCheck:', additionalCheck);
   let equationGiven = false;
   if (objectiveString == null || objectiveString.length === 0) 
   { 
@@ -887,7 +875,6 @@ export const validateObjectiveStatus = async () => {
     {
       res = balanceResult(container, objectiveString);
     }
-    console.log('🚀 ~ handleShowCheck ~ res:', res);
   } 
   else 
   {
@@ -1033,11 +1020,9 @@ const animateMultiplyBeedsResult = (beedsTextPlace: HTMLElement) => {
 export const triggerNextContainer = () => {
   AudioPlayer.getI().stop();
   // const event = new CustomEvent('nextContainer');
-  console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
   const lidoHome = document.querySelector('.lido-home') as HTMLElement;
   if (lidoHome && (getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed") && Number(lidoHome.getAttribute('index')) >= Number(lidoHome.getAttribute('totalIndex')) - 1) {
-    console.log('🚀 ~ triggerNextContainer ~ lidoHome:', lidoHome);
     return;
   }
   dispatchNextContainerEvent();
@@ -1045,7 +1030,6 @@ export const triggerNextContainer = () => {
 
 export const triggerPrevcontainer = () => {
   AudioPlayer.getI().stop();
-  console.log('⬅️ ~ triggerPrevContainer triggered');
   dispatchPrevContainerEvent();
 };
   let activeZipAssets: Record<string, string> | undefined;
@@ -1277,9 +1261,7 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
 };
 
 export const equationCheck = (additionalCheck: string): boolean => {
-  console.log('🚀 ~ equationCheck ~ additionalCheck:', additionalCheck);
   if (!additionalCheck) {
-    console.log('Input string is empty.');
     return undefined;
   }
 
@@ -1287,12 +1269,9 @@ export const equationCheck = (additionalCheck: string): boolean => {
   const parts: string[] = additionalCheck.split(',');
   // 2. Map through the parts, replacing those that start with '#'
   const modifiedParts: string[] = parts.map(part => {
-    console.log('🚀 ~ equationCheck ~ part:', part);
     if (part.startsWith('$')) {
       const cleanWord = part.substring(1);
-      console.log('🚀 ~ equationCheck ~ part starts with $:', cleanWord);
       const dragSelectedElements = getElementsForQueries(cleanWord);
-      console.log('🚀 ~ equationCheck ~ dragSelectedElements:', dragSelectedElements);
       const randomReplacement = isArray(dragSelectedElements)
         ? dragSelectedElements?.map(val => val.getAttribute('value'))
         : dragSelectedElements.getAttribute('value') || document.getElementById(cleanWord)?.['value'];
@@ -1302,15 +1281,10 @@ export const equationCheck = (additionalCheck: string): boolean => {
       return part;
     }
   });
-  console.log('🚀 ~ equationCheck ~ modifiedParts:', modifiedParts);
-
-
   // 3. Join the modified parts back into one string
   const resultString = modifiedParts.join('');
-  console.log('🚀 ~ equationCheck ~ resultString:', resultString);
   // 4. Evaluate the final string as a mathematical expression
 const finalRes = evaluate(resultString);
-  console.log('🚀 ~ equationCheck ~ finalRes:', finalRes);
   return finalRes;
 };
 
@@ -1540,7 +1514,6 @@ export const HighlightStarsOneByOne = async (element: HTMLElement, value: string
 
   // Dynamically find the parent row of stars
   const stars = Array.from(element.children) as HTMLElement[];
-  console.log('starRow', stars);
 
   for (const star of stars) {
     // Highlight the star
@@ -1566,7 +1539,6 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
 
   // Select all cells with the attribute type="box"
   const boxCells = Array.from(element.children) as HTMLElement[];
-  console.log('boxCells', boxCells);
   if (!boxCells) return;
 
   boxCells.forEach(cell => {
@@ -1600,7 +1572,6 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
   // Now select each box cell's text child and play them one by one
   for(const box of boxCells) {
     const text = box.querySelector<HTMLElement>('lido-text');
-    console.log('box text', text);  
     if (!text) continue;
 
     await AudioPlayer.getI().play(text);
@@ -1762,7 +1733,6 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
 
   // ---------------- LANDSCAPE WATERFALL ----------------
   if (orientation === "landscape" && dropAttr.toLowerCase() === "stackcascade") {
-    console.log("🌄 Landscape waterfall");
 
     const shiftX = dropWidth * 0.02;  // proportional (5% of width)
     const shiftY = dropHeight * 0.02; // proportional (5% of height)
@@ -1790,7 +1760,6 @@ function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr)
 
   // ---------------- PORTRAIT VERTICAL ----------------
   else {
-    console.log("📱 Portrait vertical stack");
     let startX
     const stepY = dropHeight * 0.05; // 8% vertical step
     if (dropElement.id === "unitsDrop") {

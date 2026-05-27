@@ -432,7 +432,7 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
 
 // Drop Completed
 const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
-  console.log("worddrop");  
+    
   const container = document.getElementById(LidoContainer);
   const objective = container.getAttribute('objective');
   const objectiveArray = objective.split(',');

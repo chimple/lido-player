@@ -43,6 +43,10 @@ export class LidoCanvas {
   private drawing = false;
 
   @State() style: { [key: string]: string } = {};
+
+  private handleWindowPointerUp = () => this.stop();
+  private handleWindowResize = () => this.updateStyles();
+
   updateStyles() {
   const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
 
@@ -82,8 +86,13 @@ export class LidoCanvas {
 
     this.canvas.addEventListener('pointerdown', e => this.start(e));
     this.canvas.addEventListener('pointermove', e => this.move(e));
-    window.addEventListener('pointerup', () => this.stop());
-    window.addEventListener('resize', () => this.updateStyles());
+    window.addEventListener('pointerup', this.handleWindowPointerUp);
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('pointerup', this.handleWindowPointerUp);
+    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   loadBackground() {
