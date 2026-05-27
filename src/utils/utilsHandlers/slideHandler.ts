@@ -1,4 +1,4 @@
-import { LidoContainer, SelectedValuesKey } from '../constants';
+import { LIDO_INTERACTION_CLEANUP_EVENT, LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
 import { calculateScale, executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
@@ -27,6 +27,10 @@ const slideNumbers = (element: HTMLElement) => {
 };
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+type CleanupElement = HTMLElement & {
+  __lidoSlideCleanup?: () => void;
+};
 
 export const slideAnimation = async () => {
   const container = document.getElementById(LidoContainer);
@@ -80,6 +84,9 @@ export const slideAnimation = async () => {
 };
 
 export function slidingWithScaling(element: HTMLElement): void {
+  const cleanupElement = element as CleanupElement;
+  cleanupElement.__lidoSlideCleanup?.();
+
   let overlapElement = false;
   let isDragging = false;
   let startX = 0;
@@ -268,12 +275,16 @@ export function slidingWithScaling(element: HTMLElement): void {
     }
   };
 
-  const onEnd = (endEv): void => {
-    isDragging = false;
+  const removeDocumentDragListeners = () => {
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
     document.removeEventListener('touchmove', onMove);
     document.removeEventListener('touchend', onEnd);
+  };
+
+  const onEnd = (endEv): void => {
+    isDragging = false;
+    removeDocumentDragListeners();
 
     // Reset styles when dragging ends
     element.style.opacity = '';
@@ -287,12 +298,27 @@ export function slidingWithScaling(element: HTMLElement): void {
       }
     }, 300);
   };
+  const cleanup = () => {
+    isDragging = false;
+    observer.disconnect();
+    removeDocumentDragListeners();
+    element.removeEventListener('mousedown', onStart);
+    element.removeEventListener('touchstart', onStart);
+    element.removeEventListener(LIDO_INTERACTION_CLEANUP_EVENT, cleanup);
+    if (cleanupElement.__lidoSlideCleanup === cleanup) {
+      delete cleanupElement.__lidoSlideCleanup;
+    }
+  };
+
+  cleanupElement.__lidoSlideCleanup = cleanup;
+
   // Initialize draggable element styles
   element.style.cursor = 'move';
   element.style.transform = 'translate(0, 0)'; // Initialize transform for consistent dragging
 
   element.addEventListener('mousedown', onStart);
   element.addEventListener('touchstart', onStart);
+  element.addEventListener(LIDO_INTERACTION_CLEANUP_EVENT, cleanup);
 }
 
 const slideCompleted = (slideElement: HTMLElement) => {

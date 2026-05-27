@@ -269,6 +269,10 @@ export namespace Components {
          */
         "onEntry": string;
         /**
+          * @default false
+         */
+        "visible": boolean | string;
+        /**
           * @default '800px'
          */
         "width": string;
@@ -280,6 +284,10 @@ export namespace Components {
           * @default '0px'
          */
         "y": string;
+        /**
+          * @default '0'
+         */
+        "z": string;
     }
     /**
      * @component LidoCell
@@ -1002,6 +1010,7 @@ export namespace Components {
          */
         "canplay": boolean;
         /**
+          * @default ''
          */
         "commonAudioPath"?: string;
         /**
@@ -2974,6 +2983,10 @@ declare namespace LocalJSX {
          */
         "onEntry"?: string;
         /**
+          * @default false
+         */
+        "visible"?: boolean | string;
+        /**
           * @default '800px'
          */
         "width"?: string;
@@ -2985,6 +2998,10 @@ declare namespace LocalJSX {
           * @default '0px'
          */
         "y"?: string;
+        /**
+          * @default '0'
+         */
+        "z"?: string;
     }
     /**
      * @component LidoCell
@@ -5217,6 +5234,8 @@ declare namespace LocalJSX {
         "bgImage": string;
         "width": string;
         "height": string;
+        "visible": string;
+        "z": string;
         "x": string;
         "y": string;
         "onEntry": string;

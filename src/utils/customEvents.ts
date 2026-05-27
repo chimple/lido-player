@@ -3,7 +3,7 @@ import { getLessonTrackingParams } from './utils';
 import { Timer } from './utilsHandlers/timer';
 
 function dispatchCustomEvent(eventName: string, detail: any) {
-  console.log("👍Event Name : " ,eventName, "Detail : ", detail.toString());
+  
   const event = new CustomEvent(eventName, { detail });
   window.dispatchEvent(event);
 
@@ -72,7 +72,6 @@ export function dispatchLessonEndEvent(
 ) {    
   dispatchCustomEvent(MicroLessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
   if(getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed"){
-    console.log("Lesson end event skipped. Reason: Lesson end type is set to 'blank' in lesson tracking parameters.");
     return;
   }
   dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
@@ -89,7 +88,6 @@ export function dispatchPrevContainerEvent(){
 export function dispatchGameCompletedEvent() {
   dispatchCustomEvent(MicroGameEndKey, {});
   if(getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed"){
-    console.log("Game end event skipped. Reason: Lesson end type is set to 'blank' in lesson tracking parameters.");
     return;
   }
   dispatchCustomEvent(GameCompletedKey, {});
@@ -98,7 +96,6 @@ export function dispatchGameCompletedEvent() {
 export function dispatchGameExitEvent() {
   dispatchCustomEvent(MicroGameExitKey, {});
   if(getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed"){
-    console.log("Game exit event skipped. Reason: Lesson end type is set to 'blank' in lesson tracking parameters.");
     return;
   }
   dispatchCustomEvent(GameExitKey, {});

@@ -44,7 +44,7 @@ const splitSlots = (container: HTMLElement, defualtMatrix: HTMLElement) => {
       }
       if (rowCount === 2 && colCount === 1) {
         const pairs = generateDoubleSquares(10);
-        console.log('pairs double : ', pairs);
+        
         allDropMatrixes.forEach((item, index) => {
           const dropElement = item as HTMLElement;
           const dropPosition = defualtElements[pairs[index][0] - 1] as HTMLElement;
@@ -278,10 +278,7 @@ function generateHalfHorizontalStripes(index: number) {
 
   const startSlot = numbers[randomPlace];
 
-  console.log(
-    'kedachuruchu',
-    Array.from({ length: 5 }, (_, i) => startSlot + i * 10),
-  );
+  
 
   return Array.from({ length: 5 }, (_, i) => startSlot + i * 10);
 }

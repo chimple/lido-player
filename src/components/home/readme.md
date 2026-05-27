@@ -14,7 +14,7 @@
 | `avatarUrl`              | `avatar-url`         | URL for the avatar Rive file.                                                                            | `string`   | `undefined`              |
 | `baseUrl`                | `base-url`           | Base URL for the containers.                                                                             | `string`   | `''`                     |
 | `canplay`                | `canplay`            | Boolean that controls the playability of the game.                                                       | `boolean`  | `true`                   |
-| `commonAudioPath`        | `common-audio-path`  |                                                                                                          | `string`   | `""`                     |
+| `commonAudioPath`        | `common-audio-path`  |                                                                                                          | `string`   | `''`                     |
 | `exitButtonUrl`          | `exit-button-url`    | Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.          | `string`   | `undefined`              |
 | `height`                 | `height`             | The height of the container (CSS value).                                                                 | `string`   | `''`                     |
 | `initialIndex`           | `initial-index`      | Initial index of the container being displayed.                                                          | `number`   | `0`                      |
@@ -24,6 +24,7 @@
 | `speakerButtonUrl`       | `speaker-button-url` | Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.       | `string`   | `undefined`              |
 | `uuid`                   | `uuid`               | Unique identifier for the component instance. If not provided, a UUID is generated to ensure uniqueness. | `string`   | `generateUUIDFallback()` |
 | `xmlData`                | `xml-data`           | XML data passed to the component, which is parsed and used to render various containers.                 | `string`   | `''`                     |
+| `zipUrl`                 | `zip-url`            | ZIP URL pointing to a package containing XML and asset files.                                            | `string`   | `''`                     |
 
 
 ## Dependencies
@@ -82,7 +83,6 @@ graph TD;
   lido-keyboard --> lido-text
   lido-calculator --> lido-cell
   lido-calculator --> lido-text
-  lido-canvas --> lido-text
   lido-root --> lido-home
   style lido-home fill:#f9f,stroke:#333,stroke-width:4px
 ```

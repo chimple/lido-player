@@ -66,34 +66,34 @@ export const QuestionBoard: StoryObj = {
 const parseExpression = (expressionText: string): { num1: string; num2: string; operator: string; result: string } => {
     // Clean up input
     const text = expressionText.trim();
-    console.log('Expression Text:', text);
+    
 
     const [left, right] = text.split('=').map(part => part.trim());
-    console.log('Left:', left);
-    console.log('Right:', right);
+    
+    
 
     // Determine which side contains the result
     const isLeftResult = right.trim().includes('+') || right.trim().includes('-') || right.trim().includes('x') || right.trim().includes('X') || right.trim().includes('*');
     const isRightResult = left.trim().includes('+') || left.trim().includes('-') || left.trim().includes('x') || left.trim().includes('X') || left.trim().includes('*');
 
-    console.log('isLeftResult:', isLeftResult);
-    console.log('isRightResult:', isRightResult);
+    
+    
 
     const result = isLeftResult ? left.trim().replace(/[<>]/g, '') : isRightResult ? right.trim().replace(/[<>]/g, '') : '';
-    console.log('Result:', result);
+    
 
     if(isLeftResult) {
 
         const operatorMatch = right.match(/(\+|-|x|X|\*)/);
         const operator = operatorMatch ? operatorMatch[1] : '';
-        console.log('Operator:', operator);
+        
 
         const [rawNum1, rawNum2] = right.split(/(\+|-|x|X|\*)/).filter(v => !['+', '-', 'x', 'X', '*'].includes(v)).map(v => v.trim());
 
         const num1 = rawNum1 ? rawNum1.replace(/[<>]/g, '').trim() : '';
         const num2 = rawNum2 ? rawNum2.replace(/[<>]/g, '').trim() : '';
-        console.log('Num1:', num1);
-        console.log('Num2:', num2);
+        
+        
 
         return { num1, num2, operator, result };
     }
@@ -102,14 +102,14 @@ const parseExpression = (expressionText: string): { num1: string; num2: string; 
 
         const operatorMatch = left.match(/(\+|-|x|X|\*)/);
         const operator = operatorMatch ? operatorMatch[1] : '';
-        console.log('Operator:', operator);
+        
 
         const [rawNum1, rawNum2] = left.split(/(\+|-|x|X|\*)/).filter(v => !['+', '-', 'x', 'X', '*'].includes(v)).map(v => v.trim());
         
         const num1 = rawNum1 ? rawNum1.replace(/[<>]/g, '').trim() : '';
         const num2 = rawNum2 ? rawNum2.replace(/[<>]/g, '').trim() : '';
-        console.log('Num1:', num1);
-        console.log('Num2:', num2);
+        
+        
 
         return { num1, num2, operator, result };
     }
@@ -147,7 +147,7 @@ function getContainerXml(args : QuestionBoardArgs) {
     ` : multiplication_animation ? `
         background-animation-multiplication.opacity='1';
     ` : ``;
-    console.log('Expression Animation: ',expressionAnimation);
+    
 
     const { num1, num2, operator, result } = parseExpression(expressionText);
 
@@ -157,7 +157,7 @@ function getContainerXml(args : QuestionBoardArgs) {
     let val1 = parseInt(num1) <= 10 ? '1' : '2';
     let val2 = parseInt(num2) <= 10 ? '1' : '2';
 
-    console.log('Expression Text: ',escapedExpressionText);
+    
     
     return `
         <main>

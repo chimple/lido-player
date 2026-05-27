@@ -102,9 +102,9 @@ export class LidoRoot {
       return;
     }
     const xmlPath = this.xmlPath ?? this.baseUrl + (this.baseUrl?.endsWith('/') ? 'index.xml' : '/index.xml');
-    console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.baseUrl:', this.baseUrl);
-    console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ this.xmlPath:', this.xmlPath);
-    console.log('🚀 ~ LidoRoot ~ componentWillLoad ~ xmlPath:', xmlPath);
+    
+    
+    
     // Fetch the XML data
     try {
       const resolvedPath = xmlPath.startsWith('http')

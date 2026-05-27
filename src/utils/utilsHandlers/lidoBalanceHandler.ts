@@ -9,7 +9,7 @@ export function updateBalanceOnDrop(dragElement: HTMLElement, dropElement?: HTML
 
   balanceEl.leftVal = calculateValue(leftDrag, balanceEl.operation);
   balanceEl.rightVal = calculateValue(rightDrag, balanceEl.operation);
-  console.log("leftpan:", balanceEl.leftVal, "rightpan:", balanceEl.rightVal);
+  
    if (balanceEl.updateTilt) {
     balanceEl.updateTilt(balanceEl.leftVal, balanceEl.rightVal);
   }
@@ -69,6 +69,6 @@ export function balanceResult(container: HTMLElement, objectiveString: string): 
   const symbol = leftVal > rightVal ? '>' : leftVal < rightVal ? '<' : '=';
   const res = objectiveString === symbol;
 
-  console.log("Result:", res);
+  
   return res;
 }

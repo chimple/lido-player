@@ -3,7 +3,7 @@ import { convertUrlToRelative, initEventsForElement, calculateScale } from '../.
 import { string } from 'mathjs';
 import i18next from '../../utils/i18n';
 import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
-import { templateAudio, TemplateID } from '../../utils/constants';
+import { LIDO_INTERACTION_CLEANUP_EVENT, templateAudio, TemplateID } from '../../utils/constants';
 import { Timer } from '../../utils/utilsHandlers/timer';
 import { resetFloatState } from '../../utils/utilsHandlers/floatHandler';
 /**
@@ -236,6 +236,15 @@ export class LidoContainer {
    * Indicates whether the speak action is currently active or in progress.
    */
   @State() speakFlag: boolean = false;
+
+  private handleWindowResize = () => this.scaleContainer(this.el);
+  private handleWindowLoad = () => this.scaleContainer(this.el);
+
+  private cleanupInteractionHandlers() {
+    this.el.querySelectorAll<HTMLElement>('[type="drag"], [type="slide"]').forEach(element => {
+      element.dispatchEvent(new Event(LIDO_INTERACTION_CLEANUP_EVENT));
+    });
+  }
 
 
   @Watch('Lang')
@@ -489,8 +498,8 @@ export class LidoContainer {
     document.body.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
 
     // Re-scale the container on window resize or load events
-    window.addEventListener('resize', () => this.scaleContainer(this.el));
-    window.addEventListener('load', () => this.scaleContainer(this.el));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
 
     if(this.templateId){
       setTimeout(() => {
@@ -515,8 +524,9 @@ export class LidoContainer {
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', () => this.scaleContainer(this.el));
-    window.removeEventListener('load', () => this.scaleContainer(this.el));
+    this.cleanupInteractionHandlers();
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
     document.body.style.backgroundColor = '';
     document.body.style.backgroundImage = '';
     resetFloatState();
@@ -534,7 +544,7 @@ export class LidoContainer {
       margin: this.margin,
       userSelect: 'none', // Prevent any field selection
     };
-    console.log('🚀 ~ LidoContainer ~ canplay:', this.canplay);
+    
 
     return (
       <Host

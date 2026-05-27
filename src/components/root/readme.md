@@ -19,6 +19,7 @@
 | `prevButtonUrl`    | `prev-button-url`    | Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.                                        | `string`  | `undefined` |
 | `speakerButtonUrl` | `speaker-button-url` | Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.                                         | `string`  | `undefined` |
 | `xmlPath`          | `xml-path`           | Prop to hold the XML file path or URL. This can be a relative path or an external URL.                                                     | `string`  | `''`        |
+| `zipUrl`           | `zip-url`            | ZIP URL pointing to a package containing XML and asset files.                                                                              | `string`  | `''`        |
 
 
 ## Dependencies
@@ -55,7 +56,6 @@ graph TD;
   lido-keyboard --> lido-text
   lido-calculator --> lido-cell
   lido-calculator --> lido-text
-  lido-canvas --> lido-text
   style lido-root fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

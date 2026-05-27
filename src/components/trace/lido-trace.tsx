@@ -159,6 +159,9 @@ export class LidoTrace {
 
   @State() style: { [key: string]: string } = {};
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   @State() fileIndex: number = -1;
   @State() isDragging: boolean = false;
   @State() activePointerId: number | null = null;
@@ -203,13 +206,13 @@ export class LidoTrace {
     };
 
     const url = this.svgUrls[this.currentSvgIndex];
-    console.log('Loading SVG from URL:', url);
+    
     if (!url || url.trim() === '') {
       console.error('No SVG URL provided or index out of bounds.');
       return;
     }
     const svgText = await this.fetchSVG(convertUrlToRelative(url));
-    console.log('SVG fetched successfully\n');
+    
 
     await this.loadAnotherSVG(state, true); // Load the first SVG
   }
@@ -220,13 +223,13 @@ export class LidoTrace {
 
   componentWillLoad() {
     this.updateStyles();
-    window.addEventListener('resize', this.updateStyles.bind(this));
-    window.addEventListener('load', this.updateStyles.bind(this));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
 
     this.svgUrls = this.svgSource.split(';').map(s => s.trim());
-    console.log('svgUrls', this.svgUrls);
+    
     this.currentSvgIndex = 0;
-    console.log('curentSvgIndex', this.currentSvgIndex);
+    
     if (this.showSpeakIcon) {
       speakIcon(this.el);
       this.el.append(speakIcon(this.el));
@@ -235,8 +238,8 @@ export class LidoTrace {
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   /** ───────────────────────────────────────────────────────────
@@ -305,7 +308,7 @@ export class LidoTrace {
 
   // Fetch the SVG file asynchronously
   async fetchSVG(url: string): Promise<string> {
-    console.log(`Fetching SVG from: ${url}`);
+    
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch SVG (${url}): ${response.statusText}`);
@@ -906,7 +909,7 @@ export class LidoTrace {
 
 
 
-    console.log(`Moving to next container after SVG index: ${this.currentSvgIndex}`);
+    
     const delay = 1000; // milliseconds
     if (this.currentSvgIndex < this.svgUrls.length - 1) {
       await new Promise(resolve => setTimeout(resolve, delay));
@@ -922,7 +925,7 @@ export class LidoTrace {
     }
 
     calculateScore();
-    console.log('All SVGs completed, hiding component.');
+    
     const container = document.querySelector(LidoContainer) as HTMLElement
     const containerOnCorrect = container.getAttribute("onCorrect")
     if (container && containerOnCorrect) {
@@ -1181,7 +1184,7 @@ export class LidoTrace {
     if (!audioList) return;
 
     this.audioUrls = audioList.split(';').map(s => s.trim());
-    console.log('audioUrls', this.audioUrls);
+    
 
     // Check if the textElem has a span-type attribute
     const spanType = textElem.getAttribute('span-type');
@@ -1213,7 +1216,7 @@ export class LidoTrace {
         }, 500);
 
         if (this.audioUrls[this.currentSvgIndex]) {
-          console.log('Playing audio:', this.audioUrls[this.currentSvgIndex]);
+          
           const audio = new Audio(convertUrlToRelative(this.audioUrls[this.currentSvgIndex]));
           await audio.play();
         }
