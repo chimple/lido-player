@@ -793,8 +793,9 @@ const storeActivityScore = (score: number) => {
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
   const timeSpendForActivity = Math.floor(Timer.getI().getElapsed() / 1000);
   ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
-  
+
   const lessonTrackingParams = getLessonTrackingParams();
+  console.log("lessontracking params : ", lessonTrackingParams);
   
 
   dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity, lessonTrackingParams, true);
@@ -808,7 +809,6 @@ const storeActivityScore = (score: number) => {
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
     const timeSpendForLesson = ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0);
-    console.log("Time spend for Lesson : ", timeSpendForLesson);
     
     dispatchLessonEndEvent(totalIndex, gameScore.totalRightMovesCount, gameScore.totalWrongMovesCount, finalScore, timeSpendForLesson, lessonTrackingParams);
     gameScore.totalRightMovesCount = 0;

@@ -1,6 +1,6 @@
 import { Component, Prop, h, State, Host, Watch, Element, getAssetPath } from '@stencil/core';
 import JSZip from 'jszip';
-import GameScore, {
+import {
   DragSelectedMapKey,
   DragMapKey,
   SelectedValuesKey,
@@ -37,7 +37,6 @@ import {
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 import i18next from '../../utils/i18n';
-const gamescore = new GameScore()
 
 /**
  * @component LidoHome
