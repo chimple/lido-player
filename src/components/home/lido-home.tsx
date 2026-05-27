@@ -1,6 +1,6 @@
 import { Component, Prop, h, State, Host, Watch, Element, getAssetPath } from '@stencil/core';
 import JSZip from 'jszip';
-import {
+import GameScore, {
   DragSelectedMapKey,
   DragMapKey,
   SelectedValuesKey,
@@ -37,6 +37,8 @@ import {
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 import i18next from '../../utils/i18n';
+import { Timer } from '../../utils/utilsHandlers/timer';
+const gameScore = new GameScore();
 
 /**
  * @component LidoHome
@@ -870,6 +872,9 @@ export class LidoHome {
       if (comment === 'exit') {
         dispatchGameExitEvent();
         AudioPlayer.getI().stop();
+        Timer.getI().stop();
+        gameScore.rightMoves = 0;
+        gameScore.wrongMoves = 0;
         localStorage.removeItem(ActivityScoreKey);
         // clearmemoryStorage();
         alertElement.remove();
