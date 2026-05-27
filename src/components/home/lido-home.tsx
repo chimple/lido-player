@@ -875,6 +875,8 @@ export class LidoHome {
         Timer.getI().stop();
         gameScore.rightMoves = 0;
         gameScore.wrongMoves = 0;
+        gameScore.totalRightMovesCount = 0;
+        gameScore.totalWrongMovesCount = 0;
         localStorage.removeItem(ActivityScoreKey);
         // clearmemoryStorage();
         alertElement.remove();
