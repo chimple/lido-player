@@ -793,10 +793,8 @@ const storeActivityScore = (score: number) => {
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
   const timeSpendForActivity = Math.floor(Timer.getI().getElapsed() / 1000);
   ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
-  console.log("Time Spend for Activity : ", timeSpendForActivity);
   
   const lessonTrackingParams = getLessonTrackingParams();
-  console.log("lessontracking params : ", lessonTrackingParams);
   
 
   dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity, lessonTrackingParams, true);

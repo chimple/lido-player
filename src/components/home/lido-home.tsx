@@ -871,8 +871,6 @@ export class LidoHome {
       if (comment === 'exit') {
         dispatchGameExitEvent();
         AudioPlayer.getI().stop();
-        gamescore.rightMoves = 0;
-        gamescore.wrongMoves = 0;
         localStorage.removeItem(ActivityScoreKey);
         // clearmemoryStorage();
         alertElement.remove();
