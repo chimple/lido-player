@@ -189,18 +189,9 @@ export class LidoHome {
     this.containers = [...this.containers]; // trigger a full re-render
   };
 
-  @Watch('Lang')
-  onLangChange(newLang: string) {
-    this.setLanguage(newLang);
-    // re-render all containers with updated locale
-    this.containers = [...this.containers];
-  }
-
-  private setLanguage(lang?: string) {
-    const effectiveLang = lang || i18next.language; // fallback to current
-    i18next.changeLanguage(effectiveLang);
-    // Trigger re-render of containers to update <lido-text> dynamically
-    this.containers = [...this.containers];
+  private translateHomeText(key: string): string {
+    const lang = this.Lang?.trim();
+    return lang ? i18next.getFixedT(lang)(key) : i18next.t(key);
   }
   /**
    * Event handler for transitioning to the next container in the sequence.
@@ -997,7 +988,7 @@ export class LidoHome {
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
                 <lido-text
                   visible="true"
-                  string="Do you want to exit?"
+                  string={this.translateHomeText('Do you want to exit?')}
                   width="294px"
                   height="38px"
                   class="popup-exit-text"
@@ -1007,7 +998,7 @@ export class LidoHome {
                 <lido-cell visible="true" layout="row" width="294px" class="btn-cell">
                   <lido-text
                     visible="true"
-                    string="Exit"
+                    string={this.translateHomeText('Exit')}
                     width="92px"
                     height="53px"
                     font-size="16px"
@@ -1023,7 +1014,7 @@ export class LidoHome {
                   ></lido-text>
                   <lido-text
                     visible="true"
-                    string="Continue playing"
+                    string={this.translateHomeText('Continue playing')}
                     width="155px"
                     height="53px"
                     font-size="16px"

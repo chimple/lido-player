@@ -393,9 +393,6 @@ export class LidoContainer {
     const rootEl = this.el.closest('lido-root') as any;
     const rootLang = rootEl?.Lang || '';
     if (rootLang?.trim()) return rootLang;
-    const homeEl = this.el.closest('lido-home') as any;
-    const homeLang = homeEl?.Lang || '';
-    if (homeLang?.trim()) return homeLang;
     if (this.Lang?.trim()) return this.Lang;
     const xmlLang = this.el.getAttribute('Lang');
     if (xmlLang?.trim()) return xmlLang;
