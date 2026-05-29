@@ -1,7 +1,7 @@
 {
-  "Do you want to exit?": "Você deseja sair?",
-  "Exit": "Sair",
-  "Continue playing": "Continuar jogando",
+  "Do you want to exit? button": "Você deseja sair?",
+  "Exit button": "Sair",
+  "Continue playing button": "Continuar jogando",
   "Drop the elements to match the given symbol order": "Solte os elementos para corresponder à ordem dos símbolos fornecida",
   "Fill  in  the  blanks": "Preencha os espaços em branco"
 }
