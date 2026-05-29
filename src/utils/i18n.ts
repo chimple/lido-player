@@ -7,8 +7,8 @@ import fr from '../i18n/fr.json';
 import hi from '../i18n/hi.json';
 import kn from '../i18n/kn.json';
 import te from '../i18n/te.json';
-import port from '../i18n/port.json';
-import ma from '../i18n/ma.json';
+import pt from '../i18n/pt.json';
+import mr from '../i18n/mr.json';
 
 i18next
   .use(LanguageDetector)
@@ -19,8 +19,8 @@ i18next
       hi: { translation: hi },
       kn: { translation: kn },
       te: { translation: te },
-      port: { translation: port },
-      ma: { translation: ma },
+      pt: { translation: pt },
+      mr: { translation: mr },
     },
     fallbackLng: 'en', // fallback if current lang not found
     debug: false,
