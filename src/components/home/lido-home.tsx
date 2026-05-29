@@ -62,7 +62,7 @@ export class LidoHome {
   @Prop() activeContainerIndexes: number[] = [];
 
   /** Language to apply to all texts */
-  @Prop() Lang?: string = '';
+  @Prop() Lang?: string = 'en';
   /**
    * XML data passed to the component, which is parsed and used to render various containers.
    */
@@ -995,7 +995,7 @@ export class LidoHome {
                 {/* onEntry="this.box-shadow= '0 4px 8px 0 rgba(0, 0, 0, 0.25)'; this.margin-bottom = ' -36px';" */}
                 <lido-text
                   visible="true"
-                  string={this.translateHomeText('Do you want to exit?')}
+                  string={this.translateHomeText('Do you want to exit? button')}
                   width="294px"
                   height="38px"
                   class="popup-exit-text"
@@ -1005,7 +1005,7 @@ export class LidoHome {
                 <lido-cell visible="true" layout="row" width="294px" class="btn-cell">
                   <lido-text
                     visible="true"
-                    string={this.translateHomeText('Exit')}
+                    string={this.translateHomeText('Exit button')}
                     width="92px"
                     height="53px"
                     font-size="16px"
@@ -1021,7 +1021,7 @@ export class LidoHome {
                   ></lido-text>
                   <lido-text
                     visible="true"
-                    string={this.translateHomeText('Continue playing')}
+                    string={this.translateHomeText('Continue playing button')}
                     width="155px"
                     height="53px"
                     font-size="16px"

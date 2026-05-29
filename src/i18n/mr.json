@@ -1,4 +1,7 @@
-{
+{ "Do you want to exit? button": "तुम्हाला बाहेर पडायचे आहे का?",
+  "Exit button": "बाहेर पडा",
+  "Continue playing button": "खेळ सुरू ठेवा",
+
     "instruction": {
   "dragAndDrop": "वस्तू योग्य ठिकाणी ओढून आणि सोडून जुळवा.",
   "mcq": "दिलेल्या पर्यायांमधून योग्य उत्तर निवडा.",
