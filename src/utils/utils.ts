@@ -638,6 +638,7 @@ export const countPatternWords = (pattern: string): number => {
 };
 
 export let countOfMistakes = 0;
+let previousActivityElapsedMs = 0;
 
 export const storingEachActivityScore = (flag: boolean, scoreTrigger?: typeof CalculatorOk) => {
   const hasCalculator = document.querySelector('lido-calculator') !== null;
@@ -783,7 +784,11 @@ const storeActivityScore = (score: number) => {
   activityScore[activityScoreKey] = score;  
   //send Custom Event to parent
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
-  const timeSpendForActivity = Math.floor(Timer.getI().getElapsed() / 1000);
+  const totalElapsedMs = Timer.getI().getElapsed();
+  const prevElapsedMs = previousActivityElapsedMs;
+  const activityElapsedMs = Math.max(totalElapsedMs - prevElapsedMs, 0);
+  const timeSpendForActivity = Math.round(activityElapsedMs / 1000);
+  previousActivityElapsedMs = totalElapsedMs;
   ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
 
   const lessonTrackingParams = getLessonTrackingParams();
@@ -803,6 +808,8 @@ const storeActivityScore = (score: number) => {
     gameScore.totalWrongMovesCount = 0;
     dispatchGameCompletedEvent()
     localStorage.removeItem(ActivityScoreKey);
+    previousActivityElapsedMs = 0;
+    ACTIVYTY_TIME_SPEND_ARRAY.length = 0;
   }
 };
 
