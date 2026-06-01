@@ -846,7 +846,6 @@ export class LidoHome {
     this.exitFlag = false;
     if (alertElement) {
       if (comment === 'exit') {
-        dispatchGameExitEvent();
         AudioPlayer.getI().stop();
         Timer.getI().stop();
         gameScore.rightMoves = 0;
@@ -857,6 +856,7 @@ export class LidoHome {
         // clearmemoryStorage();
         alertElement.remove();
         this.currentContainerIndex = 0;
+        dispatchGameExitEvent();
       } else {
         alertElement.remove();
       }

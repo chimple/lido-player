@@ -638,7 +638,7 @@ export const countPatternWords = (pattern: string): number => {
 };
 
 export let countOfMistakes = 0;
-let previousActivityElapsedMs = 0;
+let previousActivityTimeSeconds = 0;
 
 export const storingEachActivityScore = (flag: boolean, scoreTrigger?: typeof CalculatorOk) => {
   const hasCalculator = document.querySelector('lido-calculator') !== null;
@@ -779,17 +779,14 @@ const storeActivityScore = (score: number) => {
   const totalIndex = Number(appHome.getAttribute('totalIndex') ?? 0);
 
   const activityScore = JSON.parse(localStorage.getItem(ActivityScoreKey) ?? '{}');
-  
   const activityScoreKey = index.toString();
-  activityScore[activityScoreKey] = score;  
+  activityScore[activityScoreKey] = score; 
   //send Custom Event to parent
-  // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
-  const totalElapsedMs = Timer.getI().getElapsed();
-  const prevElapsedMs = previousActivityElapsedMs;
-  const activityElapsedMs = Math.max(totalElapsedMs - prevElapsedMs, 0);
-  const timeSpendForActivity = Math.round(activityElapsedMs / 1000);
-  previousActivityElapsedMs = totalElapsedMs;
-  ACTIVYTY_TIME_SPEND_ARRAY.push(timeSpendForActivity);
+  // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } })); 
+  const actualActivitySeconds = Math.floor(Timer.getI().getElapsed() / 1000);
+  const timeSpendForActivity = previousActivityTimeSeconds + actualActivitySeconds;
+  ACTIVYTY_TIME_SPEND_ARRAY.push(actualActivitySeconds);
+  previousActivityTimeSeconds = timeSpendForActivity;
 
   const lessonTrackingParams = getLessonTrackingParams();
   dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, timeSpendForActivity, lessonTrackingParams, true);
@@ -808,7 +805,7 @@ const storeActivityScore = (score: number) => {
     gameScore.totalWrongMovesCount = 0;
     dispatchGameCompletedEvent()
     localStorage.removeItem(ActivityScoreKey);
-    previousActivityElapsedMs = 0;
+    previousActivityTimeSeconds = 0;
     ACTIVYTY_TIME_SPEND_ARRAY.length = 0;
   }
 };
@@ -862,6 +859,7 @@ export const validateObjectiveStatus = async () => {
       }
       storingEachActivityScore(true);
       storeActivityScore(100);
+      gameScore.totalRightMovesCount++;
       gameScore.rightMoves = 0;
       gameScore.wrongMoves = 0;
       triggerNextContainer();
