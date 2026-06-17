@@ -259,10 +259,10 @@ export class LidoContainer {
     this.resolveInstructionAudio();
   }
 
- private resolveInstructionAudio() {
-  this.instructName =
-    (
-      {
+  private resolveInstructionAudio() {
+    this.instructName =
+      (
+        {
           flashcard: templateAudio.flashcards,
           mcq: templateAudio.mcq,
           tracing: templateAudio.tracing,
@@ -329,12 +329,12 @@ export class LidoContainer {
           "storyTale": templateAudio.storyTale,
           "sumTogether": templateAudio.sumTogether,
           "tag": templateAudio.tag,
-          "total":templateAudio.total ,  
-          "writeCard": templateAudio.writeCard, 
+          "total": templateAudio.total,
+          "writeCard": templateAudio.writeCard,
           "writeLetter": templateAudio.writeLetter,
           "writeNumber": templateAudio.writeNumber,
           "writeSet": templateAudio.writeSet,
-          "writeWord": templateAudio.writeWord, 
+          "writeWord": templateAudio.writeWord,
           "numberIdentification": templateAudio.numberIdentification,
           "wordBuildingWithAndWithoutImage": templateAudio.wordBuildingWithAndWithoutImage,
           "subsWithAndWithoutImage": templateAudio.subsWithAndWithoutImage,
@@ -350,32 +350,32 @@ export class LidoContainer {
           "palEgraOptionWithAudio": templateAudio.palEgraOptionWithAudio,
           "palEgraWordFormation": templateAudio.palEgraWordFormation,
           "palEgraWordMatch": templateAudio.palEgraWordMatch,
-          "substractionWithImage" : templateAudio.substractionWithImage,
+          "substractionWithImage": templateAudio.substractionWithImage,
           "substractionWithoutImage": templateAudio.substractionWithoutImage,
           "numberIdentificationWithImage": templateAudio.numberIdentificationWithImage,
           "numberIdentificationWithoutImage": templateAudio.numberIdentificationWithoutImage,
           "wordBuildingWithImage": templateAudio.wordBuildingWithImage,
           "wordBuildingWithoutImage": templateAudio.wordBuildingWithoutImage,
-          "pictureWordMatchMultipleImages":templateAudio.pictureWordMatchMultipleImages,
-          "pictureWordMatchSingleImage":templateAudio.pictureWordMatchSingleImage,
-          "sentenceMatch":templateAudio.sentenceMatch,
-          "imageMatch":templateAudio.imageMatch,
-          "palStoryTale":templateAudio.palStoryTale,
-          "palEgmaWordProblemDragnDrop":templateAudio.palEgmaWordProblemDragnDrop,
-          "palEgmaWordProblemClick":templateAudio.palEgmaWordProblemClick,
-          "palInventedSpelling":templateAudio.palInventedSpelling,
-          "palLetterIdentification":templateAudio.palLetterIdentification,
-          "palStoryMaking":templateAudio.palStoryMaking,
-          "palegmasumtogether":templateAudio.palegmasumtogether,
-          "palegmamultioption":templateAudio.palegmamultioption,
-          "palegraoptionaudio":templateAudio.palegraoptionaudio,
-          "palegrawordmatch":templateAudio.palegrawordmatch,
-          "palegramcqimages":templateAudio.palegramcqimages,
+          "pictureWordMatchMultipleImages": templateAudio.pictureWordMatchMultipleImages,
+          "pictureWordMatchSingleImage": templateAudio.pictureWordMatchSingleImage,
+          "sentenceMatch": templateAudio.sentenceMatch,
+          "imageMatch": templateAudio.imageMatch,
+          "palStoryTale": templateAudio.palStoryTale,
+          "palEgmaWordProblemDragnDrop": templateAudio.palEgmaWordProblemDragnDrop,
+          "palEgmaWordProblemClick": templateAudio.palEgmaWordProblemClick,
+          "palInventedSpelling": templateAudio.palInventedSpelling,
+          "palLetterIdentification": templateAudio.palLetterIdentification,
+          "palStoryMaking": templateAudio.palStoryMaking,
+          "palegmasumtogether": templateAudio.palegmasumtogether,
+          "palegmamultioption": templateAudio.palegmamultioption,
+          "palegraoptionaudio": templateAudio.palegraoptionaudio,
+          "palegrawordmatch": templateAudio.palegrawordmatch,
+          "palegramcqimages": templateAudio.palegramcqimages,
           "drawShape": templateAudio.drawShape,
           "drawshape": templateAudio.drawshape,
 
-       } as any
-    )[this.templateId!] ?? '';
+        } as any
+      )[this.templateId!] ?? '';
 
     const home = document.querySelector('lido-home') as HTMLElement;
     if (!home) return;
@@ -489,20 +489,24 @@ export class LidoContainer {
   componentDidLoad() {
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
+    const standalone = this.el.closest('lido-standalone') as HTMLElement | null;
+    const backgroundTarget = standalone?.getAttribute('bg-image') === 'true' ? standalone : document.body;
+
+    backgroundTarget.style.backgroundColor = this.bgColor;
+    backgroundTarget.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
+    backgroundTarget.style.backgroundPosition = backGroundImage ? 'bottom' : 'none';
+
     document.body.style.pointerEvents = 'auto';
-    document.body.style.backgroundColor = this.bgColor;
-    document.body.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
-    document.body.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
 
     // Re-scale the container on window resize or load events
     window.addEventListener('resize', this.handleWindowResize);
     window.addEventListener('load', this.handleWindowLoad);
 
-    if(this.templateId){
+    if (this.templateId) {
       setTimeout(() => {
-        this.el.setAttribute("onEntry",`${this.templateId}.speak='${!this.speakFlag}'; `+this.el.getAttribute("onEntry"))
+        this.el.setAttribute("onEntry", `${this.templateId}.speak='${!this.speakFlag}'; ` + this.el.getAttribute("onEntry"))
         initEventsForElement(this.el, this.type);
-      },100)
+      }, 100)
     } else {
       initEventsForElement(this.el, this.type)
     }
@@ -515,7 +519,7 @@ export class LidoContainer {
     this.updateChildTextLanguage(langToApply);
     setTimeout(() => {
       highlightElement();
-    },100)
+    }, 100)
     resetFloatState()
     Timer.getI().start();
   }
@@ -541,7 +545,7 @@ export class LidoContainer {
       margin: this.margin,
       userSelect: 'none', // Prevent any field selection
     };
-    
+
 
     return (
       <Host
