@@ -141,10 +141,10 @@ export class LidoKeyboard {
         localStorage.removeItem(SelectedValuesKey);
 
         if (this.numberOfClick === this.letterLength) {
-          calculateScore();
           const onCorrrect = container.getAttribute('onCorrect');
           container.style.pointerEvents = 'none';
           await executeActions(onCorrrect, this.el);
+          calculateScore();
           triggerNextContainer();
         } else {
           handleFloatElementPosition(matchedBubble);

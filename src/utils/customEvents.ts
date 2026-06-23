@@ -60,6 +60,7 @@ export function dispatchActivityEndEvent(
 ) {   
   dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity, ...lessonTrackingParams, gameCompleted,});
   dispatchCustomEvent(MicroProblemEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity, ...lessonTrackingParams, gameCompleted,});
+  console.log(`[Activity End]Activity ${currentIndex + 1}/${totalIndex} - Time Spent: ${timeSpentForActivity}`)
 }
 
 export function dispatchLessonEndEvent(
@@ -75,6 +76,7 @@ export function dispatchLessonEndEvent(
     return;
   }
   dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
+  console.log( `[Lesson End]  Lesson: ${lessonTrackingParams?.lessonName} (${lessonTrackingParams?.lessonId}) - Total Time Spent: ${timeSpendForLesson}`);
 }
 
 export function dispatchNextContainerEvent() {
