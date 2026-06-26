@@ -1,6 +1,6 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore, triggerNextContainer, convertUrlToRelative } from '../../utils/utils';
-import { NextContainerKey,LidoContainer, SelectedValuesKey ,CalculatorOk} from '../../utils/constants';
+import { LidoContainer, SelectedValuesKey ,CalculatorOk} from '../../utils/constants';
 import { AudioPlayer } from '../../utils/audioPlayer';
 
 @Component({
@@ -178,14 +178,14 @@ export class LidoCalculator {
       if (!hasScrollAction) {
         if (!isMultiObjective) {
           calculateScore();
-          window.dispatchEvent(new CustomEvent(NextContainerKey));
+          triggerNextContainer();
         } else {
           const objectives = this.objective.split(',').map(obj => obj.trim());
           const allSolved = this.userAnswers.length >= objectives.length;
           if (allSolved) {
             container.setAttribute("game-completed", "true");
             calculateScore();
-            window.dispatchEvent(new CustomEvent(NextContainerKey));
+            triggerNextContainer();
           }
         }
       }

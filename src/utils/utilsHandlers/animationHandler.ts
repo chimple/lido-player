@@ -1,5 +1,5 @@
-import { NextContainerKey, SelectedValuesKey } from "../constants";
-import { calculateScore, executeActions } from "../utils";
+import { SelectedValuesKey } from "../constants";
+import { calculateScore, executeActions, triggerNextContainer } from "../utils";
 
 const tempVanishedValues: any[] = [];
 export function dragDropAnimation(container: HTMLElement, dragElement: HTMLElement, dropElement: HTMLElement): void {
@@ -57,8 +57,8 @@ export function dragDropAnimation(container: HTMLElement, dragElement: HTMLEleme
                    const onCorrect = container?.getAttribute('onCorrect') || '';
                    
                    await executeActions(onCorrect, container);
-                    window.dispatchEvent(new CustomEvent(NextContainerKey));
                     calculateScore();
+                    triggerNextContainer();
                      tempVanishedValues.length = 0;
                  })();
               }

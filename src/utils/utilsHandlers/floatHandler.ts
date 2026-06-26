@@ -34,8 +34,8 @@ export async function handleElementClick(element: HTMLElement) {
       container.style.pointerEvents = 'none';
       if(!container.getAttribute('game-completed') || container.getAttribute('game-completed') === 'false' || container.getAttribute('game-completed') === null || container.getAttribute('game-completed') === undefined || container.getAttribute('game-completed') === '') {
         container.setAttribute('game-completed', 'true');
-        triggerNextContainer();
         calculateScore();
+        triggerNextContainer();
       }
 
     } else {

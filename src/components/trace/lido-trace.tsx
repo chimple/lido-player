@@ -924,14 +924,13 @@ export class LidoTrace {
       return;
     }
 
-    calculateScore();
-    
     const container = document.querySelector(LidoContainer) as HTMLElement
     const containerOnCorrect = container.getAttribute("onCorrect")
     if (container && containerOnCorrect) {
       await new Promise(resolve => setTimeout(resolve, delay));
       await executeActions(containerOnCorrect, this.el)
     }
+    calculateScore();
     triggerNextContainer();
   }
 
