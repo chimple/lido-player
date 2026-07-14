@@ -1,14 +1,9 @@
 import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, MicroGameEndKey, MicroGameExitKey, MicroLessonEndKey, MicroProblemEndKey, NextContainerKey,PrevContainerKey } from './constants';
 import { getLessonTrackingParams } from './utils';
-import { logAnalyticsEvent } from './firebaseAnalytics';
-
+import { Timer } from './utilsHandlers/timer';
 
 function dispatchCustomEvent(eventName: string, detail: any) {
-
-  const serializableDetail = toSerializableDetail(detail);
-
-  logAnalyticsEvent(eventName, serializableDetail);
-
+  
   const event = new CustomEvent(eventName, { detail });
   window.dispatchEvent(event);
 
@@ -16,7 +11,7 @@ function dispatchCustomEvent(eventName: string, detail: any) {
     window.parent?.postMessage(
       {
         eventName,
-        detail: serializableDetail,
+        detail: toSerializableDetail(detail),
       },
       "*"
     );
@@ -122,4 +117,5 @@ export function dispatchClickEvent(element: HTMLElement, isCorrect: boolean) {
 
 
 // for nipun - to dispatch custom event
+
 
