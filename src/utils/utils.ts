@@ -685,7 +685,10 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       console.log("Right Moves : ", gameScore.rightMoves);
       console.log("Wrong Moves : ", gameScore.wrongMoves);
     }
-    const onCorrect = dropElement.getAttribute('onCorrect');
+    const onCorrect =
+      container.getAttribute('dropAttr')?.toLowerCase() === DropMode.EnableAnimation.toLowerCase()
+        ? ''
+        : dropElement.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
@@ -825,7 +828,7 @@ export const handleShowCheck = () => {
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
   } else {
-    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")){
+    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")  &&  container.getAttribute('dropAttr')?.toLowerCase() !== DropMode.EnableAnimation.toLowerCase()){
       validateObjectiveStatus();
     }
 
