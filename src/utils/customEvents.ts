@@ -7,7 +7,9 @@ function dispatchCustomEvent(eventName: string, detail: any) {
 
   const serializableDetail = toSerializableDetail(detail);
 
-  logAnalyticsEvent(eventName, serializableDetail);
+  if (eventName === ActivityEndKey || eventName === LessonEndKey) {
+    logAnalyticsEvent(eventName, serializableDetail);
+  }
 
   const event = new CustomEvent(eventName, { detail });
   window.dispatchEvent(event);
@@ -122,4 +124,3 @@ export function dispatchClickEvent(element: HTMLElement, isCorrect: boolean) {
 
 
 // for nipun - to dispatch custom event
-
