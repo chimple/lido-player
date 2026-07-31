@@ -45,12 +45,12 @@ export function dragDropAnimation(container: HTMLElement, dragElement: HTMLEleme
              tempVanishedValues.map(v => v.trim()).sort().join(',') ===
                objective.split(',').map(v => v.trim()).sort().join(',');
 
-           if (isObjectiveComplete) {
-             if (dropElement.getAttribute('type') === 'drop') {
-               const dropOnCorrect = dropElement.getAttribute('onCorrect') || '';
-               await executeActions(dropOnCorrect, dropElement, dragElement);
-             }
+           if (dropElement.getAttribute('type') === 'drop') {
+             const dropOnCorrect = dropElement.getAttribute('onCorrect') || '';
+             await executeActions(dropOnCorrect, dropElement, dragElement);
+           }
 
+           if (isObjectiveComplete) {
              const containerOnCorrect = container?.getAttribute('onCorrect') || '';
              await executeActions(containerOnCorrect, container);
            }
