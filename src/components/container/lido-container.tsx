@@ -241,7 +241,7 @@ export class LidoContainer {
   private handleWindowLoad = () => this.scaleContainer(this.el);
 
   private cleanupInteractionHandlers() {
-    this.el.querySelectorAll<HTMLElement>('[type="drag"], [type="slide"]').forEach(element => {
+    this.el.querySelectorAll<HTMLElement>('[type="drag"], [type="slide"], [move="true"]').forEach(element => {
       element.dispatchEvent(new Event(LIDO_INTERACTION_CLEANUP_EVENT));
     });
   }
