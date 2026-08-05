@@ -21,6 +21,7 @@ import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation } from './utilsHandlers/dragDropHandler';
+import { enableFreeMove } from './utilsHandlers/moveHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
@@ -73,6 +74,9 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
   }
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
+  if (element.getAttribute('move') === 'true') {
+    enableFreeMove(element);
+  }
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
