@@ -22,7 +22,7 @@ export const CheckerBlock: StoryObj = {
 
 function getContainerXml(args) {
   const shape = generateSlots();
-  console.log("shape : ", shape);
+  
   
 
   return `<main>

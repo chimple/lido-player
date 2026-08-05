@@ -18,6 +18,12 @@ export class LidoCanvas {
   // Height of the canvas container
   @Prop() height: string = '700px';
 
+  // Controls component visibility
+  @Prop() visible: boolean | string = false;
+
+  // Z-index for stacking order
+  @Prop() z: string = '0';
+
   // X-offset position for the canvas
   @Prop() x: string = '0px';
   
@@ -37,6 +43,10 @@ export class LidoCanvas {
   private drawing = false;
 
   @State() style: { [key: string]: string } = {};
+
+  private handleWindowPointerUp = () => this.stop();
+  private handleWindowResize = () => this.updateStyles();
+
   updateStyles() {
   const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
 
@@ -45,6 +55,8 @@ export class LidoCanvas {
     height: parseProp(this.height, orientation),
     left: parseProp(this.x, orientation),
     top: parseProp(this.y, orientation),
+    zIndex: this.z,
+    display: parseProp(`${this.visible}`, orientation) === 'true' ? 'block' : 'none',
     position: 'absolute',
   };
 
@@ -56,7 +68,7 @@ export class LidoCanvas {
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
 
-    this.loadBackground();
+    // this.loadBackground();
   }
 }
 
@@ -70,12 +82,17 @@ export class LidoCanvas {
     this.ctx.lineJoin = 'round';
     this.updateStyles();
 
-    this.loadBackground();
+    // this.loadBackground();
 
     this.canvas.addEventListener('pointerdown', e => this.start(e));
     this.canvas.addEventListener('pointermove', e => this.move(e));
-    window.addEventListener('pointerup', () => this.stop());
-    window.addEventListener('resize', () => this.updateStyles());
+    window.addEventListener('pointerup', this.handleWindowPointerUp);
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('pointerup', this.handleWindowPointerUp);
+    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   loadBackground() {
@@ -122,7 +139,7 @@ export class LidoCanvas {
   }
 
   clearCanvas() {
-    this.loadBackground();
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   render() {
@@ -132,9 +149,8 @@ export class LidoCanvas {
         class="lido-canvas"
         style={this.style}>
         <button id="lido-exit-button" onClick={() => this.clearCanvas()}>
-          <lido-text visible="true" height="92px" width="43px"  id="lido-exit-icon" font-color="white"  onEntry="this.font-weight='900';" font-size="96px" string='X'></lido-text>
         </button>
-        <canvas id="lido-canvas" style={{ width: this.style.width, height: this.style.height,}}></canvas>
+        <canvas id="lido-canvas"></canvas>
       </Host>
     );
   }

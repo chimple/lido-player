@@ -31,8 +31,8 @@ export const palEgra_OddOneOut: StoryObj = {
 function getContainerXml(args) {
  const option_cells = args.options.map((q, index) => {
   return `
-      <lido-cell layout="row" id="text${1+index}" tab-index="${12+index}" template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${q.startsWith('@') ? q.slice(1) : q}">
-        <lido-text visible="true" value="${q.startsWith('@') ? q.slice(1) : q}" string="${q.startsWith('@') ? q.slice(1) : q}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.79px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
+      <lido-cell layout="row" id="text${1+index}"  template-id="mcq" visible="true" margin="" onEntry="this.border-radius='14px'; this.justify-content='center'; this.alignItems='center';" height="landscape.280px,portrait.244px" width="landscape.328px,portrait.244px" bg-color="orange"  type="click" value="${q.startsWith('@') ? q.slice(1) : q}">
+        <lido-text visible="true" value="${q.startsWith('@') ? q.slice(1) : q}" tab-index="${13+index}" string="${q.startsWith('@') ? q.slice(1) : q}" disable-speak="true" font-family="'Baloo Bhai 2'" font-color="black" font-size="landscape.79px, portrait.100px"  bg-color="orange" onEntry="this.fontWeight='700';">
         </lido-text>
       </lido-cell>
   `;
@@ -41,7 +41,7 @@ function getContainerXml(args) {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container  visible="true" id="lido-container" template-id="mcq" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/fb207af37ae5d938778718e0095fc36abef7c694.png" objective="${(args.options.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#text {
+<lido-container disable-speak="true"  visible="true" id="lido-container" template-id="mcq" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/fb207af37ae5d938778718e0095fc36abef7c694.png" objective="${(args.options.find(q => q.startsWith('@')) || '').slice(1)}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" custom-style= "#text {
         box-shadow: none !important;
         }" onEntry="questionText.speak='true';">
 	 <!-- Chimple Avatar -->

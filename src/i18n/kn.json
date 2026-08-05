@@ -1,0 +1,42 @@
+{
+"Do you want to exit? button": "ನೀವು ನಿರ್ಗಮಿಸಲು ಬಯಸುವಿರಾ?",
+  "Exit button": "ನಿರ್ಗಮಿಸು",
+  "Continue playing button": "ಆಟವನ್ನು ಮುಂದುವರಿಸಿ",
+  "Drop the elements to match the given symbol order":"ನೀಡಿರುವ ಸಂಕೇತಕ್ಕೆ ಹೊಂದುವಂತೆ ಅಂಶಗಳನ್ನು ಬಿಡಿ",
+  "Fill  in  the  blanks":"ಖಾಲಿ ಸ್ಥಳಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ",
+  "instruction": {
+    "dragAndDrop": "Match the items by dragging and dropping them into the correct places.",
+    "mcq": "Select the correct answer from the options provided.",
+    "tracing": "Trace the shape by following the outline carefully.",
+    "flashcards": "Review the flashcards to reinforce your learning.",
+    "substractionWithImage":"substractionWithImageKaAudio",
+    "substractionWithoutImage":"substractionWithoutImageKaAudio",
+    "numberIdentificationWithImage":"numberIdentificationWithImageKaAudio",
+    "numberIdentificationWithoutImage":"numberIdentificationWithoutImageKaAudio",
+    "wordBuildingWithImage":"wordBuildingWithImageKaAudio",
+    "wordBuildingWithoutImage":"wordBuildingWithoutImageKaAudio",
+    "pictureClues":"pictureCluesKaAudio",
+    "pictureWordMatchMultipleImages":"pictureWordMatchMultipleImagesKaAudio",
+    "pictureWordMatchSingleImage":"pictureWordMatchSingleImageKaAudio",
+    "sentenceMatch":"sentenceMatchKaAudio",
+    "imageMatch":"imageMatchKaAudio",
+    "palStoryTale":"palStoryTaleKaAudio",
+    "palEgmaPatternMatching":"palEgmaPatternMatchingKaAudio",
+    "palEgmaWordProblemDragnDrop":"palEgmaWordProblemDragnDropKaAudio",
+    "palEgmaWordProblemClick":"palEgmaWordProblemClickKaAudio",
+    "palEgraOddOneOut":"palEgraOddOneOutKaAudio",
+    "palEgraArrangePictures":"palEgraArrangePicturesKaAudio",
+    "palEgraBuildWord":"palEgraBuildWordKaAudio",
+    "palEgraWordFormation":"palEgraWordFormationKaAudio",
+    "palInventedSpelling":"palInventedSpellingKaAudio",
+    "palLetterIdentification":"palLetterIdentificationKaAudio",
+    "palStoryMaking":"palStoryMakingKaAudio",
+    "palegmasumtogether":"palegmasumtogetherKaAudio",
+    "palegmamultioption":"palegmamultioptionKaAudio",
+    "palegraoptionaudio":"palegraoptionaudioKaAudio",
+    "palegrawordmatch":"palegrawordmatchKaAudio",
+    "palegramcqimages":"palegramcqimagesKaAudio"
+
+  }
+  
+}

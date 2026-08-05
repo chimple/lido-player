@@ -69,7 +69,7 @@ function getContainerXml(args : WriteWordArgs) {
         console.error('Trace image is missing');
         return '';
     }
-    console.log("SVG Source:", `${traceImage1}; ${traceImage2}; ${traceImage3}`);
+    
 
     
     return `

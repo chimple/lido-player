@@ -5,10 +5,10 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import en from '../i18n/en.json';
 import fr from '../i18n/fr.json';
 import hi from '../i18n/hi.json';
-import ka from '../i18n/ka.json';
+import kn from '../i18n/kn.json';
 import te from '../i18n/te.json';
-import port from '../i18n/port.json';
-import ma from '../i18n/ma.json';
+import pt from '../i18n/pt.json';
+import mr from '../i18n/mr.json';
 
 i18next
   .use(LanguageDetector)
@@ -17,10 +17,10 @@ i18next
       en: { translation: en },
       fr: { translation: fr },
       hi: { translation: hi },
-      ka: { translation: ka },
+      kn: { translation: kn },
       te: { translation: te },
-      port: { translation: port },
-      ma: { translation: ma },
+      pt: { translation: pt },
+      mr: { translation: mr },
     },
     fallbackLng: 'en', // fallback if current lang not found
     debug: false,

@@ -45,7 +45,7 @@ function getContainerXml(args) {
   const dropCells = objectiveArray
     .map(
       (cell, i) => `
-       <lido-text id="drop${i}" disable-edit="true" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px dashed #f34d08'" border-image="">
+       <lido-text id="drop${i}" disable-edit="true" tab-index="${10+i}" height="landscape.190px, portrait.auto" width="125px" visible="true" value="${cell}" string="?" font-family="'Baloo Bhai 2'" font-color="black" type="drop" font-size="landscape.130px, portrait.100px"  bg-color="white"  onEntry="this.fontWeight='800'; this.borderRadius='20px'; this.border='4px dashed #f34d08'" border-image="">
       </lido-text>
       `,
     )
@@ -56,7 +56,7 @@ function getContainerXml(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer.split('').join(',',)}" tab-index="" template-id="dragAndDrop" show-drop-border="false" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="question.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
+  <lido-container id="lido-container" disable-speak="true" objective="${args.answer.split('').join(',',)}" tab-index="" template-id="dragAndDrop" show-drop-border="false" is-allow-only-correct="${args.PracticeMode}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/new.svg" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="question.speak='true'" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false" custom-style= "#question11 {
         box-shadow: none !important;
         }">
 

@@ -1,5 +1,6 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
 import { convertUrlToRelative, initEventsForElement, parseProp ,validateObjectiveStatus } from '../../utils/utils';
+import { LidoContainer } from '../../utils/constants';
 
 @Component({
   tag: 'lido-math-matrix',
@@ -103,6 +104,9 @@ export class LidoMathMatrix {
   /** Holds dynamically generated inline styles for the container */
   @State() style: { [key: string]: string | undefined } = {};
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   /** Reference to the host element of this component */
   @Element() el: HTMLElement;
 
@@ -124,7 +128,7 @@ export class LidoMathMatrix {
       slot.style.color = this.fontColor;
 
       if (slot.className.includes('slot-active')) {
-        slot.style.visibility = 'visible';
+        slot.style.visibility = '';
         if (this.matrixImage) {
           slot.style.setProperty('--bg-image', `url(${convertUrlToRelative(this.matrixImage)})`);
         }
@@ -144,21 +148,28 @@ export class LidoMathMatrix {
   componentWillLoad() {
     this.updateStyles();
     this.updateSlots();
-    window.addEventListener('resize', this.updateStyles.bind(this));
-    window.addEventListener('load', this.updateStyles.bind(this));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   updateSlots() {
     const slotElement = this.el.querySelectorAll('.slot');
     const fristElement = this.el.querySelector('.slot') as HTMLElement;
     if (!slotElement.length || !fristElement) return;
-    const elementSize = Number(this.rows) < Number(this.cols) ? this.el.offsetHeight : this.el.offsetWidth;
-    const numberOfSlots = Number(this.rows) > Number(this.cols) ? Number(this.rows) : Number(this.cols);
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    let numOfRows = this.rows
+    let numOfCols = this.cols
+    if(container && container.getAttribute("template-id") === "multiplyBeeds"){
+      numOfCols = "9"
+      numOfRows = "1"
+    }
+    const elementSize = Number(numOfRows) < Number(numOfCols) ? this.el.offsetHeight : this.el.offsetWidth;
+    const numberOfSlots = Number(numOfRows) > Number(numOfCols) ? Number(numOfRows) : Number(numOfCols);
     const slotParent = this.el.querySelectorAll('.slot-parent');
     const slotMaxValues = elementSize / numberOfSlots
     slotParent.forEach(parent => {
@@ -199,7 +210,6 @@ export class LidoMathMatrix {
       rows: parseProp(`${this.rows}`, orientation),
     };
 
-    // console.log("cols and rows : ", );
     
   }
 

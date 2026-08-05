@@ -1,18 +1,33 @@
-import { convertUrlToRelative, speakText } from './utils';
+﻿import { convertUrlToRelative, speakText } from './utils';
 import { highlightSpeakingElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { setDraggingDisabled } from './utilsHandlers/dragDropHandler';
-import { NextContainerKey, PrevContainerKey, ActivityChangeKey, GameCompletedKey, GameExitKey, ActivityEndKey, LessonEndKey } from './constants';
+import { NextContainerKey, PrevContainerKey, ActivityChangeKey, GameCompletedKey, GameExitKey, ActivityEndKey, LessonEndKey, LidoContainer } from './constants';
+import { WordTimelineEntry, LANGUAGE_PROFILES, FAST_WORDS_BY_LANG } from './constants';
 
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;
+  private currentTargetElement: HTMLElement | null = null;
+  private pendingReplayElement: HTMLElement | null = null;
+
+  private highlightOverlay: HTMLElement | null = null;
+  private wordRects: DOMRect[] = [];
+  private activeWordIndex = -1;
+  private highlightRAF: number | null = null;
+  private endPromiseResolve: (() => void) | null = null;
+  private visibilityWaitResolvers: Array<() => void> = [];
+  private isVisibilityChangeRegistered = false;
+  private readonly stopEvents = [
+    NextContainerKey, PrevContainerKey, LessonEndKey, ActivityChangeKey,
+    ActivityEndKey, GameCompletedKey, GameExitKey
+  ];
+  private handleGlobalStopEvent = () => this.stop();
 
   private constructor() {
     this.audioElement = document.createElement('audio');
-    this.audioElement.id = 'audio';
-    document.body.appendChild(this.audioElement);
 
     this.registerGlobalStopEvents();
+    this.registerVisibilityEvents();
   }
 
   public static getI(): AudioPlayer {
@@ -22,16 +37,41 @@ export class AudioPlayer {
     return AudioPlayer.instance;
   }
 
-  public stop() {
+  public static destroyI() {
+    if (AudioPlayer.instance) {
+      AudioPlayer.instance.destroy();
+    }
+  }
+
+  public stop(preserveReplay: boolean = false) {
+
+    const container = document.getElementById(LidoContainer);
+    if(container && container.getAttribute('highlight-word-by-word')==='true'){
+      // stop any highlight loop
+      this.stopOverlayHighlightLoop(); 
+    }
     //check if speechSynthesis is supported
     if (window?.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
+    // Resolve any pending "ended" wait so callers can continue.
+    if (this.endPromiseResolve) {
+      const resolve = this.endPromiseResolve;
+      this.endPromiseResolve = null;
+      resolve();
+    }
+    if (!preserveReplay) {
+      this.pendingReplayElement = null;
+    }
+    this.currentTargetElement = null;
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
     this.audioElement.src = '';
-    const highlightedElements = document.querySelectorAll('.speaking-highlight');
-    highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));
+
+    if(container && container.getAttribute('highlight-word-by-word')!=='true'){
+      const highlightedElements = document.querySelectorAll('.speaking-highlight');
+      highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));
+    }
 
     const playElement = document.querySelector('#play') as HTMLElement;
     const pauseElement = document.querySelector('#pause') as HTMLElement;
@@ -40,10 +80,69 @@ export class AudioPlayer {
       pauseElement.style.visibility = 'hidden';
     }
   }
-    private handleUserClick = () => {
-      this.stop();
-    };
+
+  private handleUserClick = (event?: MouseEvent) => {
+  const container = document.getElementById(LidoContainer);
+  if (container && event?.target === container) return;
+  if (container?.getAttribute('game-completed') === 'true')return;
+    this.stop();
+};
+
+  private isWindowVisible() {
+    return document.visibilityState === 'visible' && !document.hidden;
+  }
+
+  private waitUntilWindowIsVisible() {
+    if (this.isWindowVisible()) {
+      return Promise.resolve();
+    }
+
+    this.registerVisibilityEvents();
+
+    return new Promise<void>(resolve => {
+      this.visibilityWaitResolvers.push(resolve);
+    });
+  }
+
+  private handleVisibilityChange = async () => {
+    if (this.isWindowVisible()) {
+      this.resolveVisibilityWaiters();
+      return;
+    }
+
+    if (!this.currentTargetElement) {
+      return;
+    }
+
+    this.pendingReplayElement = this.currentTargetElement;
+    await this.stop(true);
+  };
+
+  private resolveVisibilityWaiters() {
+    const resolvers = this.visibilityWaitResolvers.splice(0);
+    resolvers.forEach(resolve => resolve());
+  }
+
+  private getLidoTextElement(el: HTMLElement): HTMLElement | null {
+    if (el.tagName.toLowerCase() === 'lido-text') return el;
+    return el.closest('lido-text');
+  }
+
   public async play(targetElement: HTMLElement) {
+    this.registerVisibilityEvents();
+
+    if (!this.isWindowVisible()) {
+      this.pendingReplayElement = targetElement;
+      await this.stop(true);
+      await this.waitUntilWindowIsVisible();
+
+      if (this.pendingReplayElement !== targetElement) {
+        return;
+      }
+
+      this.pendingReplayElement = null;
+    }
+
     // Stop any currently playing audio first if target element has audio given
     try {
       await AudioPlayer.getI().stop();
@@ -51,10 +150,30 @@ export class AudioPlayer {
     catch (e) {
       console.error('Error stopping audio before speak action:', e);
     }
-  const text=targetElement.closest('lido-text') as HTMLElement;
-  if(text && text.getAttribute('disable-speak')==='true'){
-    return;
-  }
+    const container = document.getElementById(LidoContainer);
+    if(!container){
+      console.warn('[AudioPlayer] No lido-container found');
+      return;
+    }
+    // Check if speaking is disabled on the target element or its closest lido-text parent
+    const text = targetElement.closest('lido-text') as HTMLElement;
+    // if(text && text.getAttribute('disable-speak')==='true'){
+    //   return;
+    // }
+
+    if(container.getAttribute('highlight-word-by-word') === 'true') {
+      const textElement = this.getLidoTextElement(targetElement);
+      if (!textElement) {
+        console.warn('[AudioPlayer] No lido-text found');
+        return;
+      }
+      // HARD RESET previous sentence
+      this.stopOverlayHighlightLoop(); // stop any highlight loop;
+      targetElement = textElement;
+    }
+
+    this.currentTargetElement = targetElement;
+
 
     // then play the target element audio.
     let audioUrl = targetElement.getAttribute('audio') || '';
@@ -75,28 +194,63 @@ export class AudioPlayer {
     {
       audioUrl = convertUrlToRelative(audioUrl);
       this.audioElement.src = audioUrl;
-      console.log('🚀 Playing audio:', this.audioElement.src);
-
       try {
-        setDraggingDisabled(true);
-        highlightSpeakingElement(targetElement);
-        window.addEventListener('click', this.handleUserClick, true);
+        // setDraggingDisabled(true);
+
+        const language = container.getAttribute('Lang') || 'en';
+        const profile = LANGUAGE_PROFILES[language] || LANGUAGE_PROFILES[language.split('-')[0]] || LANGUAGE_PROFILES['en'];
+        let timeline: WordTimelineEntry[] = [];
+
+        const isWordByWord = container.getAttribute('highlight-word-by-word') === 'true';
+
+        // ALWAYS clear handlers first (important)
+        this.audioElement.onloadedmetadata = null;
+        this.audioElement.onended = null;
+
+        // If word-by-word highlighting is enabled prepare timeline & rects
+        if (isWordByWord) {
+          await this.waitForAudioMetadata();
+          const durationMs = this.audioElement.duration * 1000;
+          const textContent = targetElement.textContent || '';
+
+          timeline = this.buildWordTimeline(textContent, durationMs, profile, language);
+          this.wordRects = this.computeWordRects(targetElement);
+        } else {
+          highlightSpeakingElement(targetElement);
+        }
+
+        // PLAY ONCE
         await this.audioElement.play();
 
+        if (isWordByWord) {
+          this.startOverlayHighlightLoop(timeline, profile);
+        }
+
+        // unified end
         await new Promise<void>(resolve => {
+          this.endPromiseResolve = resolve;
           this.audioElement.onended = () => {
+            if (this.endPromiseResolve === resolve) {
+              this.endPromiseResolve = null;
+            }
             resolve();
           };
         });
+
       }
-      catch (error) {
-        console.log('🎧 Audio play error:', error);
-      }
+      catch (error) {}
       finally {
+        this.audioElement.onended = null;
+        this.audioElement.onloadedmetadata = null;
+        this.stopOverlayHighlightLoop();
+
         window.removeEventListener('click', this.handleUserClick, true);
         this.audioElement.onended = null;  // cleanup
         setDraggingDisabled(false);
-        stopHighlightForSpeakingElement(targetElement);
+        if(container.getAttribute('highlight-word-by-word') !== 'true')
+        {
+          stopHighlightForSpeakingElement(targetElement);
+        }
       }
     }
     // If no audio, use text-to-speech
@@ -104,37 +258,69 @@ export class AudioPlayer {
     {
       try {
         highlightSpeakingElement(targetElement);
-        window.addEventListener('click', this.handleUserClick, true);
+        // window.addEventListener('click', this.handleUserClick, true);
         await speakText(targetElement.textContent, targetElement);
         const highlightedElements = document.querySelectorAll('.speaking-highlight');
-        highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));        
+        // highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));         
       } 
-      catch (error) {
-        console.log('🎧 TTS Error:', error);
-      }
+      catch (error) {}
       finally {
         setDraggingDisabled(false);
       }
+    }
+
+    const shouldReplayFromStart = this.pendingReplayElement === targetElement;
+    if (shouldReplayFromStart) {
+      await this.waitUntilWindowIsVisible();
+
+      if (this.pendingReplayElement === targetElement) {
+        this.pendingReplayElement = null;
+        return this.play(targetElement);
+      }
+    }
+
+    if (this.currentTargetElement === targetElement) {
+      this.currentTargetElement = null;
     }
   }
 
   // GLOBAL STOP EVENTS (container change, activity change…)
   private registerGlobalStopEvents() {
-    const stopEvents = [
-      NextContainerKey, PrevContainerKey, LessonEndKey, ActivityChangeKey,
-      ActivityEndKey, GameCompletedKey, GameExitKey
-    ];
-
-    stopEvents.forEach(key => {
-      window.addEventListener(key, () => this.stop());
+    this.stopEvents.forEach(key => {
+      window.addEventListener(key, this.handleGlobalStopEvent);
     });
+  }
+
+  private unregisterGlobalStopEvents() {
+    this.stopEvents.forEach(key => {
+      window.removeEventListener(key, this.handleGlobalStopEvent);
+    });
+  }
+
+  private registerVisibilityEvents() {
+    if (this.isVisibilityChangeRegistered) {
+      return;
+    }
+
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+    this.isVisibilityChangeRegistered = true;
+  }
+
+  private unregisterVisibilityEvents() {
+    if (!this.isVisibilityChangeRegistered) {
+      return;
+    }
+
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    this.isVisibilityChangeRegistered = false;
+    this.resolveVisibilityWaiters();
   }
 
   // DESTROY (for hot-reload)
   public destroy() {
-    console.log("AudioPlayer destroyed (hot-reload safe)");
-
     this.stop();
+    this.unregisterGlobalStopEvents();
+    this.unregisterVisibilityEvents();
 
     // Remove DOM element
     if (this.audioElement.parentNode) {
@@ -143,4 +329,240 @@ export class AudioPlayer {
 
     AudioPlayer.instance = undefined as any;
   }
+
+  private countSyllables(word: string, language: string): number {
+    if (language !== 'en') {
+      return Math.max(2, Math.ceil(word.length / 3)); // average syllable count for Indic words
+    }
+    const cleaned = word.toLowerCase().replace(/[^a-z]/g, "");
+    if (cleaned.length <= 3) return 1;
+    const matches = cleaned.match(/[aeiouy]{1,2}/g);
+    return matches ? matches.length : 1;
+  }
+
+  private tokenize(text: string): string[] {
+    return text.split(/(\s+)/).filter(Boolean);
+  }
+
+  private isFastCluster(prev?: string, curr?: string, language?: string) {
+    if (!prev || !curr || !language) return false;
+    const fastWords = FAST_WORDS_BY_LANG[language];
+    return fastWords?.has(prev) && fastWords?.has(curr);
+  }
+
+  private buildWordTimeline(text: string, totalDurationMs: number, profile: any,language: string): WordTimelineEntry[] {
+    const tokens = this.tokenize(text).filter(t => t.trim());
+
+    const weights = tokens.map((word,i) => {
+      const prev = tokens[i - 1]?.toLowerCase();
+      const curr = word.toLowerCase();
+
+      const syllables = this.countSyllables(word,language);
+      const hasPunctuation = /[.,!?]$/.test(word);
+
+      let weight = syllables * profile.syllableWeight;
+
+      // punctuation pause boost
+      if (hasPunctuation) {
+        weight += profile.punctuationPauseWeight;
+      }
+
+      if (FAST_WORDS_BY_LANG[language]?.has(curr)) {
+        weight *= profile.fastWordMultiplier     // faster words get less weight
+      }
+      if (this.isFastCluster(prev, curr, language)) {
+        weight *= profile.fastClusterMultiplier;  // compress phrase
+      }
+
+      return weight;
+    });
+
+    const totalWeight = weights.reduce((a, b) => a + b, 0);
+
+    let cursor = 0;
+    const timeline = tokens.map((word, i) => {
+      let duration = (weights[i] / totalWeight) * totalDurationMs;
+
+      duration = Math.max(profile.minWordMs, duration);
+
+      const entry = {
+        word,
+        index: i,
+        startMs: cursor,
+        endMs: cursor + duration,
+      };
+      cursor += duration;
+      return entry;
+    });
+
+    const last = timeline[timeline.length - 1];
+    if (last && last.endMs !== totalDurationMs) {
+      const scale = totalDurationMs / last.endMs;
+
+      timeline.forEach(t => {
+        t.startMs *= scale;
+        t.endMs *= scale;
+      });
+    }
+
+    return timeline;
+  }
+
+  private waitForAudioMetadata(): Promise<void> {
+    if (Number.isFinite(this.audioElement.duration) && this.audioElement.duration > 0) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+      const cleanup = () => {
+        this.audioElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        this.audioElement.removeEventListener('error', handleError);
+      };
+      const handleLoadedMetadata = () => {
+        cleanup();
+        resolve();
+      };
+      const handleError = () => {
+        cleanup();
+        reject(new Error('Audio metadata failed to load'));
+      };
+
+      this.audioElement.addEventListener('loadedmetadata', handleLoadedMetadata, { once: true });
+      this.audioElement.addEventListener('error', handleError, { once: true });
+    });
+  }
+
+
+  private ensureOverlay() {
+    if (this.highlightOverlay) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'lido-tts-highlight-overlay';
+    document.body.appendChild(overlay);
+    this.highlightOverlay = overlay;
+  }
+
+  private clearOverlay() {
+    if (this.highlightOverlay) {
+      this.highlightOverlay.remove();
+      this.highlightOverlay = null;
+    }
+  }
+
+  private computeWordRects(element: HTMLElement): DOMRect[] {
+    const walker = document.createTreeWalker(
+      element,
+      NodeFilter.SHOW_TEXT,
+      null
+    );
+
+    const rects: DOMRect[] = [];
+    let node: Text | null;
+    let globalIndex = 0;
+
+    while ((node = walker.nextNode() as Text | null)) {
+      const text = node.textContent || '';
+      const words = text.split(/\s+/).filter(Boolean);
+
+      let offset = 0;
+      words.forEach(word => {
+        const start = text.indexOf(word, offset);
+        const end = start + word.length;
+
+        if (start >= 0) {
+          const range = document.createRange();
+          range.setStart(node, start);
+          range.setEnd(node, end);
+
+          const rect = range.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            rects[globalIndex++] = rect;
+          }
+        }
+        offset = end;
+      });
+    }
+
+    return rects;
+  }
+
+  private moveOverlay(rect: DOMRect) {
+    if (!this.highlightOverlay) return;
+
+    this.highlightOverlay.style.transform = `translate3d(${rect.left}px, ${rect.top}px, 0)`;
+    this.highlightOverlay.style.width = `${rect.width}px`;
+    this.highlightOverlay.style.height = `${rect.height}px`;
+  }
+
+  private getHighlightLeadMs(timeline: WordTimelineEntry[], profile: any) {
+    if (!timeline.length) return profile.preemptiveOffsetMs;
+
+    const duration = timeline[timeline.length - 1].endMs - timeline[0].startMs;
+    const averageWordMs = duration / timeline.length;
+    const speedLead = averageWordMs < 190 ? 120 : averageWordMs < 260 ? 90 : 60;
+
+    return Math.max(profile.preemptiveOffsetMs, speedLead);
+  }
+
+  private getTimelineIndex(timeline: WordTimelineEntry[], currentMs: number) {
+    if (!timeline.length) return -1;
+    if (currentMs <= timeline[0].startMs) return 0;
+
+    for (let i = 0; i < timeline.length; i++) {
+      if (currentMs >= timeline[i].startMs && currentMs < timeline[i].endMs) {
+        return i;
+      }
+      if (timeline[i + 1] && currentMs < timeline[i + 1].startMs) {
+        return i;
+      }
+    }
+
+    return timeline.length - 1;
+  }
+
+  private startOverlayHighlightLoop(timeline: WordTimelineEntry[], profile: any) {
+    this.ensureOverlay();
+    this.activeWordIndex = -1;
+    const highlightLeadMs = this.getHighlightLeadMs(timeline, profile);
+
+    const tick = () => {
+      if (this.audioElement.paused || this.audioElement.ended) {
+        this.stopOverlayHighlightLoop();
+        return;
+      }
+
+      const currentMs = this.audioElement.currentTime * 1000 + highlightLeadMs;
+      const index = this.getTimelineIndex(timeline, currentMs);
+
+      // NEW: drift correction
+      if (index >= 0 && this.activeWordIndex >= 0 && index - this.activeWordIndex >= 2) {
+        const nextIndex = this.activeWordIndex + 1;
+
+        if (this.wordRects[nextIndex]) {
+          this.moveOverlay(this.wordRects[nextIndex]);
+          this.activeWordIndex = nextIndex;
+        }
+        // DO NOT return — allow normal sync logic to continue
+      }
+
+      if (index !== this.activeWordIndex && this.wordRects[index]) {
+        this.moveOverlay(this.wordRects[index]);
+        this.activeWordIndex = index;
+      }
+
+      this.highlightRAF = requestAnimationFrame(tick);
+    };
+
+    this.highlightRAF = requestAnimationFrame(tick);
+  }
+
+  private stopOverlayHighlightLoop() {
+    if (this.highlightRAF !== null) {
+      cancelAnimationFrame(this.highlightRAF);
+      this.highlightRAF = null;
+    }
+
+    this.clearOverlay();
+    this.activeWordIndex = -1;
+  }  
 }

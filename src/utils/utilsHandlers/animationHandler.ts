@@ -1,10 +1,10 @@
-import { NextContainerKey, SelectedValuesKey } from "../constants";
-import { calculateScore, executeActions } from "../utils";
+import { SelectedValuesKey } from "../constants";
+import { calculateScore, executeActions, triggerNextContainer } from "../utils";
 
 const tempVanishedValues: any[] = [];
 export function dragDropAnimation(container: HTMLElement, dragElement: HTMLElement, dropElement: HTMLElement): void {
  container.style.pointerEvents = "none";
-         setTimeout(() => {
+         setTimeout(async () => {
            const div = document.createElement('div');
            container.append(div);
            div.classList.add('after-drop-popup-container');
@@ -39,30 +39,37 @@ export function dragDropAnimation(container: HTMLElement, dragElement: HTMLEleme
  
            dropElement.classList.remove('empty');
  
-           setTimeout(() => {
+           const objective = container.getAttribute('objective');
+           const isObjectiveComplete =
+             !!objective &&
+             tempVanishedValues.map(v => v.trim()).sort().join(',') ===
+               objective.split(',').map(v => v.trim()).sort().join(',');
+
+           if (dropElement.getAttribute('type') === 'drop') {
+             const dropOnCorrect = dropElement.getAttribute('onCorrect') || '';
+             await executeActions(dropOnCorrect, dropElement, dragElement);
+           }
+
+           if (isObjectiveComplete) {
+             const containerOnCorrect = container?.getAttribute('onCorrect') || '';
+             await executeActions(containerOnCorrect, container);
+           }
+
              dragElement.classList.remove('zoom-fade-in');
              dropElement.classList.remove('zoom-fade-in');
  
              dragElement.classList.add('zoom-fade-out');
              dropElement.classList.add('zoom-fade-out');
  
-             setTimeout(() => {
-               div.remove();
-               container.style.pointerEvents = 'auto';
-               const objective = container.getAttribute('objective');
+           setTimeout(() => {
+             div.remove();
+             container.style.pointerEvents = 'auto';
  
-              if (objective && tempVanishedValues.map(v => v.trim()).sort().join(',')  === objective.split(',').map(v => v.trim()).sort().join(',')) {             
-                 (async() => {
-                   // isCorrect=true;
-                   const onCorrect = container?.getAttribute('onCorrect') || '';
-                   
-                   await executeActions(onCorrect, container);
-                    window.dispatchEvent(new CustomEvent(NextContainerKey));
-                    calculateScore();
-                     tempVanishedValues.length = 0;
-                 })();
-              }
-             }, 800); // match animation duration
-           }, 2000); // stay for 2 seconds
+            if (isObjectiveComplete) {
+              calculateScore();
+              triggerNextContainer();
+              tempVanishedValues.length = 0;
+            }
+           }, 800); // match animation duration
          }, 250);
 }

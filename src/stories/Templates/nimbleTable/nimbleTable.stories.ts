@@ -7,8 +7,7 @@ const meta: Meta = {
   argTypes: {
     equations: { control: 'object' },
     values: { control: 'object' },
-    isContinueOnCorrect: { control: 'boolean' },
-    isAllowOnlyCorrect: { control: 'boolean' },
+    PracticeMode: { control: 'boolean' },
   },
 };
 
@@ -26,8 +25,7 @@ export const nimbletable: StoryObj = {
       "3 + 2 = ?"
     ],
     answers: ["2", "4", "6", "8", "10", "12", "5"],
-    isContinueOnCorrect: true,
-    isAllowOnlyCorrect: true,
+    PracticeMode: false,
   },
   render: args => {
     const xml = getContainerXml(args);
@@ -38,14 +36,14 @@ export const nimbletable: StoryObj = {
 
 function getContainerXml(args) {
   let tabCounter = 1;
-  const { equations = [], answers = [], isContinueOnCorrect = true, isAllowOnlyCorrect = true } = args;
+  const { equations = [], answers = [],  PracticeMode = false } = args;
   
 
     const SlidingEquationCells = equations
   .map((equation, index) => {
     const answer = answers[index]; // one-to-one mapping
     return `
-      <lido-text visible="true" audio="" onTouch="" type="calculate"
+      <lido-text visible="true" disable-speak="true" audio="" onTouch="" type="calculate"
         id="equation${index + 1}" tab-index="${tabCounter++}"
         height="landscape.140px, portrait.126px" width="landscape.100%, portrait.96%"
         bg-Color="transparent" font-family="'Baloo Bhai 2'" font-size="84px"
@@ -63,11 +61,11 @@ function getContainerXml(args) {
 
 
   return `<main>
- <lido-container id="lido-container" is-allow-only-correct="${isAllowOnlyCorrect}" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Nimble%20table.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around'; audio.speak='true';" onInCorrect="this.scrollCellAfterEquationSolved='true'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" 
- is-continue-on-correct="${isContinueOnCorrect}">
+ <lido-container id="lido-container" is-allow-only-correct="${PracticeMode}" tab-index="1" value="mainContainer1"  bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Nimble%20table.png" objective="${answers.join(',')}" height="100%" width="100%" bg-color="transparent" visible="true" onCorrect="this.scrollCellAfterEquationSolved='true'; this.sleep='1000';lido-avatar.avatarAnimate='Success';this.sleep='2000'; " onEntry="this.justifyContent='space-around';" onInCorrect="this.scrollCellAfterEquationSolved='true'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" 
+ is-continue-on-correct="${PracticeMode}">
 
    <!-- Audio -->
-  <lido-text visible="false" id="audio" onEntry="this.display='none';" string="Solve the question at the third board and select the correct answer from the calculator."></lido-text>
+  <lido-text visible="false" id="audio" tab-index="221" onEntry="this.display='none'; this.speak='true'" string="Solve the question at the third board and select the correct answer from the calculator." ></lido-text>
 
 <!-- Chimple Avatar -->
 	<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.718px, portrait.-8%" y="landscape.502px, portrait.73%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">

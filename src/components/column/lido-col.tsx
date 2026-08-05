@@ -172,6 +172,9 @@ export class LidoCol {
    */
   @State() style: { [key: string]: string } = {};
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   /**
    * This lifecycle hook is called after the component is rendered in the DOM.
    * It initializes events for the column based on the provided type.
@@ -190,13 +193,13 @@ export class LidoCol {
    */
   componentWillLoad() {
     this.updateStyles();
-    window.addEventListener('resize', this.updateStyles.bind(this));
-    window.addEventListener('load', this.updateStyles.bind(this));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   updateStyles() {

@@ -1,4 +1,4 @@
-import {
+﻿import {
   ActivityScoreKey,
   DragSelectedMapKey,
   DragMapKey,
@@ -10,22 +10,26 @@ import {
   DropAction,
   DropHasDrag,
   DropLength,
+  CalculatorOk
 } from './constants';
-import { dispatchActivityEndEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
+import { dispatchActivityEndEvent, dispatchGameCompletedEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
+import type { LessonTrackingParams } from './customEvents';
 import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation } from './utilsHandlers/dragDropHandler';
+import { enableFreeMove } from './utilsHandlers/moveHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
-import { evaluate, isArray } from 'mathjs';
+import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
 import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/lidoCalculatorHandler'; 
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
 import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
+import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from './utilsHandlers/timer';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -70,8 +74,9 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
   }
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
-  // const canplay = container.getAttribute('canplay');
-  // if (canplay != null && canplay === 'false') return;
+  if (element.getAttribute('move') === 'true') {
+    enableFreeMove(element);
+  }
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
@@ -150,8 +155,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           const container = document.getElementById(LidoContainer) as HTMLElement;
           const containerScale = getElementScale(container);
           dragElement.style.transform = 'translate(0,0)';
-          console.log('logg alinmatch');
-
           const dropRect = dropElement.getBoundingClientRect();
           const dragRect = dragElement.getBoundingClientRect();
 
@@ -203,11 +206,25 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         }
         case 'nextBtn': {
           const container = document.getElementById(LidoContainer) as HTMLElement;
+          if(container.getAttribute('canplay') === 'false')return;
+          const balanceEl = document.querySelector('lido-balance') as any;
+          if (balanceEl) {
+            const objectiveString = container['objective'];
+            res = balanceResult(container, objectiveString);
+            if (res) {
+              await executeActions("this.showBalanceSymbol='true'", targetElement);
+            } else {
+              await executeActions("this.hideBalanceSymbol='true'", targetElement);
+            }
+          }
           if (container.getAttribute('is-continue-on-correct') !== 'true') {
             targetElement.style.pointerEvents = 'none';
             AudioPlayer.getI().stop();
           }
-          await validateObjectiveStatus();
+          if (!container.getAttribute("game-completed") || container.getAttribute("game-completed") === 'false') {
+            await validateObjectiveStatus();
+          }
+          targetElement.style.pointerEvents = 'auto';
           break;
         }
         case 'prevBtn': {
@@ -256,8 +273,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
         case 'highlightStarsAndDisapper': {
           const value = action.value;
           if (value && targetElement) {
-            console.log('highlightStar action triggered');
-            console.log('Target Element:', targetElement);
             await HighlightStarsOneByOne(targetElement as HTMLElement, value);
           }
           break;
@@ -367,10 +382,6 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           if (hundredsBox) {
             hundredsBox.setAttribute("string", hundredsValue.toString());
           }
-          console.log(`Units = ${units} → ${unitsValue}`);
-          console.log(`Tens = ${tens} → ${tensValue}`);
-          console.log(`Hundreds = ${hundreds} → ${hundredsValue}`);
-          console.log(`✅ Total Value = ${totalValue}`);
           break;
         }
         case 'updateCalculatorAnswer': {
@@ -386,9 +397,9 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
           break;
         }
       }
-    }
+    } 
   }
-  body.style.pointerEvents = 'auto';
+  // body.style.pointerEvents = 'auto';
 };
 
 const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElement) => {
@@ -409,9 +420,13 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
         dummyElement.classList.remove('dropped');
         dummyElement.removeAttribute('drop-to');
         dummyElement.removeAttribute('drop-time');
+        dummyElement.style.opacity = "1"
         dragElement.style.width = dropElement.style.width;
         dragElement.style.height = dropElement.style.height;
         dragElement.setAttribute('hasDummy', 'true');
+        setTimeout(() => {
+          dummyElement.style.pointerEvents = "";
+        }, 100)
       }
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
@@ -499,6 +514,7 @@ function cloneElementWithComputedStyles(originalEl: HTMLElement): HTMLElement {
   clone.style.margin = originalEl.style.margin;
   clone.style.opacity = originalEl.style.opacity;
   clone.style.transform = originalEl.style.transform;
+  clone.style.borderRadius = originalEl.style.borderRadius;
 
   clone.setAttribute("visible", "true");
   clone.setAttribute("data-dummy", "true");
@@ -544,42 +560,58 @@ export const matchStringPattern = (pattern: string, arr: string[]): boolean => {
     if (arr.length === 0) return false; // If pattern is not empty but user provided array is empty, return false
   }
 
-  for (const group of patternGroups) {
-    if (group.startsWith('(') && group.endsWith(')')) {
-      // Inside parentheses: '|' acts like "OR" condition
-      const choices = group
-        .slice(1, -1)
-        .split('|')
-        .map(option => option.trim());
+  for (const group of patternGroups) 
+  {
+    if (group.startsWith('(') && group.endsWith(')')) 
+    {
+      // Parenthesized group: treat choices as a set (order-insensitive)
+      const choices = group.slice(1, -1).split('|').map(option => option.trim());
 
-      const arrChoice = arr[arrIndex]
-        .slice(1, -1)
-        .split('|')
-        .map(option => option.trim());
+      const arrVal = arr[arrIndex] ?? '';
+      let arrChoice: string[] = [];
 
-      if (arrIndex > arrChoice.length) return false;
-      for (let i = 0; i < choices.length; i++) {
-        if (!choices.includes(arrChoice[i])) return false;
+      if (arrVal.startsWith('(') && arrVal.endsWith(')')) {
+        arrChoice = arrVal.slice(1, -1).split('|').map(option => option.trim());
+      } else if (arrVal.includes('|')) {
+        arrChoice = arrVal.split('|').map(option => option.trim());
+      } else if (arrVal !== '') {
+        arrChoice = [arrVal.trim()];
+      } else {
+        return false;
       }
+
+      const normalize = (items: string[]) => items.map(s => s.trim()).sort().join('|');
+      if (normalize(choices) !== normalize(arrChoice)) return false;
+
       arrIndex++;
-    } else if (group.includes('|')) {
+    }
+    else if (group.includes('|')) 
+    {
       // Outside parentheses: '|' acts as optional order
       const choices = group.split('|').map(option => option.trim());
 
-      for (const choice of choices) {
+      for (const choice of choices) 
+      {
         options.add(choice);
       }
-    } else {
+    } 
+    else 
+    {
       // Exact match required
-      if (arrIndex >= arr.length || arr[arrIndex] !== group) return false;
+      if (arrIndex >= arr.length || arr[arrIndex] !== group) 
+      {
+        return false;
+      }
 
       arrIndex++;
     }
   }
 
   // Validate the optional ordered items against the remaining array elements
-  while (arrIndex < arr.length) {
-    if (!options.has(arr[arrIndex])) {
+  while (arrIndex < arr.length)
+  {
+    if (!options.has(arr[arrIndex])) 
+    {
       return false;
     }
     options.delete(arr[arrIndex]);
@@ -611,7 +643,9 @@ export const countPatternWords = (pattern: string): number => {
 
 export let countOfMistakes = 0;
 
-export const storingEachActivityScore = (flag: boolean) => {
+export const storingEachActivityScore = (flag: boolean, scoreTrigger?: typeof CalculatorOk) => {
+  const hasCalculator = document.querySelector('lido-calculator') !== null;
+  if (hasCalculator && scoreTrigger !== CalculatorOk) return;
   if (flag) {
     gameScore.rightMoves += 1;
     countOfMistakes = 0;
@@ -625,8 +659,15 @@ export const storingEachActivityScore = (flag: boolean) => {
 };
 
 export const calculateScore = () => {
+  const container = document.getElementById(LidoContainer) as HTMLElement;
+  const hasCalculator = document.querySelector('lido-calculator') !== null;
+  if (hasCalculator && container && container.getAttribute('game-completed') !== 'true') {
+    return;
+  }
   const rightMoves = gameScore.rightMoves;
   const wrongMoves = gameScore.wrongMoves;
+  gameScore.totalRightMovesCount += rightMoves;
+  gameScore.totalWrongMovesCount += wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
   storeActivityScore(finalScore);
   gameScore.rightMoves = 0;
@@ -641,21 +682,45 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     if (dragElement && dropElement) {
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   // storing each activity score based on isCorrect for (all drag-drop events)
-    storingEachActivityScore(isCorrect);
+    // storingEachActivityScore(isCorrect);
   if (isCorrect) {
-    const onCorrect = dropElement.getAttribute('onCorrect');
+    if(dropElement.getAttribute('type') === "category"){
+      gameScore.rightMoves += 1;
+      console.log("Right Moves : ", gameScore.rightMoves);
+      console.log("Wrong Moves : ", gameScore.wrongMoves);
+    }
+    const onCorrect =
+      container.getAttribute('dropAttr')?.toLowerCase() === DropMode.EnableAnimation.toLowerCase()
+        ? ''
+        : dropElement.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
+
+    //for multiply beeds
+    if(container.getAttribute("template-id") === "multiplyBeeds"){
+      multiplyBeedsCalculation(dropElement);
+    }
+  } else {
+    if(dropElement.getAttribute('type') === "category"){
+      gameScore.wrongMoves += 1;
+      console.log("Right Moves : ", gameScore.rightMoves);
+      console.log("Wrong Moves : ", gameScore.wrongMoves);
+    }
+    const onInCorrect = dropElement.getAttribute('onInCorrect');
+    if (onInCorrect) {
+      await executeActions(onInCorrect, dropElement, dragElement);
+    }
   }
+
 }
 
   let dragScore =buildDragSelectedMapFromDOM();
 
  const sortedValues = getSortedValuesArrayFromMap(dragScore);
  container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
- 
 
+ 
   //localStorage
   let drag = JSON.parse(localStorage.getItem(DragMapKey) ?? '{}');
   const index = dropElement.getAttribute('tab-index');
@@ -670,9 +735,15 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   allElements.forEach(otherElement => {
     const storedTabIndexes = Object.keys(dragScore).map(Number);
     if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
-      if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal)) {
+      if (!(otherElement.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && !(container.getAttribute('drop-action')?.toLowerCase() === DropMode.InfiniteDrop)) {
         if (otherElement) {
-          otherElement.style.opacity="0"
+        const append=container.getAttribute('appendToDropOnCompletion');
+          if (append === 'true') {
+            otherElement.style.opacity="1";
+          }
+          else{
+          otherElement.style.opacity = '0';
+          }
         }
       }
     } else {
@@ -686,6 +757,27 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   handleShowCheck();
 }
 
+export const getLessonTrackingParams = (): LessonTrackingParams => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const getParam = (key: keyof LessonTrackingParams) =>
+  urlParams.get(key.toLowerCase()) ?? urlParams.get(key) ?? '';
+
+  return {
+    studentId: getParam('studentId'),
+    studentName: getParam('studentName'),
+    classId: getParam('classId'),
+    schoolId: getParam('schoolId'),
+    courseId: getParam('courseId'),
+    courseName: getParam('courseName'),
+    chapterId: getParam('chapterId'),
+    chapterName: getParam('chapterName'),
+    lessonId: getParam('lessonId'),
+    lessonName: getParam('lessonName'),
+    lang: getParam('lang'),
+    end: getParam('end'),
+  };
+};
+
 const storeActivityScore = (score: number) => {
   const appHome = document.querySelector('lido-home');
   if (!appHome) return;
@@ -693,12 +785,16 @@ const storeActivityScore = (score: number) => {
   const totalIndex = Number(appHome.getAttribute('totalIndex') ?? 0);
 
   const activityScore = JSON.parse(localStorage.getItem(ActivityScoreKey) ?? '{}');
-  
   const activityScoreKey = index.toString();
-  activityScore[activityScoreKey] = score;
+  activityScore[activityScoreKey] = score; 
   //send Custom Event to parent
-  // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } }));
-  dispatchActivityEndEvent(index, totalIndex, score);
+  // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } })); 
+  const actualActivitySeconds = Math.ceil(Timer.getI().getElapsed() / 1000);
+  ACTIVYTY_TIME_SPEND_ARRAY.push(actualActivitySeconds);
+  console.log(`[Utils][Activity Time] Activity ${index + 1}/${totalIndex} - Time spent: ${actualActivitySeconds}s`);
+
+  const lessonTrackingParams = getLessonTrackingParams();
+  dispatchActivityEndEvent(totalIndex, index, score, gameScore.rightMoves, gameScore.wrongMoves, actualActivitySeconds, lessonTrackingParams, true);
 
   localStorage.setItem(ActivityScoreKey, JSON.stringify(activityScore));
   if (totalIndex - 1 == index) {
@@ -708,8 +804,14 @@ const storeActivityScore = (score: number) => {
     gameScore.finalScore = Math.floor(finalScore);
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
-    dispatchLessonEndEvent(finalScore);
+    const timeSpendForLesson = ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0);
+    console.log(`[Utils][Lesson Time] Total lesson time spent: ${timeSpendForLesson}s`);
+    dispatchLessonEndEvent(totalIndex, gameScore.totalRightMovesCount, gameScore.totalWrongMovesCount, finalScore, timeSpendForLesson, lessonTrackingParams);
+    gameScore.totalRightMovesCount = 0;
+    gameScore.totalWrongMovesCount = 0;
+    dispatchGameCompletedEvent()
     localStorage.removeItem(ActivityScoreKey);
+    ACTIVYTY_TIME_SPEND_ARRAY.length = 0;
   }
 };
 
@@ -729,18 +831,12 @@ export const handleShowCheck = () => {
 
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
-    const balanceEl = document.querySelector('lido-balance') as any;
-    if (balanceEl) {
-     if (!checkButton.hasAttribute('data-balance-listener')) {
-    checkButton.addEventListener('click', async function onClick() {
-    if(balanceResult && res){
-      await executeActions("this.showBalanceSymbol='true'", checkButton);
-      checkButton.removeEventListener('click', onClick);}
-    });
-    checkButton.setAttribute('data-balance-listener', 'true'); 
-  }}
   } else {
-    validateObjectiveStatus();
+    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")  &&  container.getAttribute('dropAttr')?.toLowerCase() !== DropMode.EnableAnimation.toLowerCase()){
+      validateObjectiveStatus();
+    }
+
+    
   }
 };
 
@@ -752,7 +848,6 @@ export const validateObjectiveStatus = async () => {
   const objectiveString = container['objective'];
   const additionalCheck = container.getAttribute('equationCheck');
   const isAllowOnlyCorrect = container.getAttribute('isAllowOnlyCorrect') === 'true' || '';
-  console.log('🚀 ~ validateObjectiveStatus ~ additionalCheck:', additionalCheck);
   let equationGiven = false;
   if (objectiveString == null || objectiveString.length === 0) 
   { 
@@ -763,11 +858,15 @@ export const validateObjectiveStatus = async () => {
     if(!equationGiven)
     {
       const onCorrect = container.getAttribute('onCorrect');
+      container.setAttribute("game-completed", "true");
       if (onCorrect) {
         await executeActions(onCorrect, container);
       }
-      storeActivityScore(100);
       storingEachActivityScore(true);
+      storeActivityScore(100);
+      gameScore.totalRightMovesCount++;
+      gameScore.rightMoves = 0;
+      gameScore.wrongMoves = 0;
       triggerNextContainer();
       return;
     }
@@ -786,7 +885,6 @@ export const validateObjectiveStatus = async () => {
     {
       res = balanceResult(container, objectiveString);
     }
-    console.log('🚀 ~ handleShowCheck ~ res:', res);
   } 
   else 
   {
@@ -794,6 +892,7 @@ export const validateObjectiveStatus = async () => {
   }
   if (res) 
   {
+    container.setAttribute("game-completed", "true");
     const attach = container.getAttribute('appendToDropOnCompletion');
 
     const onCorrect = container.getAttribute('onCorrect');
@@ -803,9 +902,21 @@ export const validateObjectiveStatus = async () => {
       {
         appendingDragElementsInDrop();
       }
-      storingEachActivityScore(true);
+      
+      if(container.querySelectorAll("[type='click']").length > 0 || container.getAttribute("template-id") === "blender"){
+        storingEachActivityScore(true);
+      }
+
+      if(container.getAttribute("template-id") === "multiplyBeeds"){
+        const beedsTextPlace = container.querySelector("#beedsText") as HTMLElement;
+        if (!beedsTextPlace) return;
+
+        await animateMultiplyBeedsResult(beedsTextPlace);
+      }
+      
       await executeActions(onCorrect, container);
     }
+    calculateScore();
     if (container.getAttribute('dropAttr') === 'EnableAnimation') 
     {
       setTimeout(() => {
@@ -817,44 +928,132 @@ export const validateObjectiveStatus = async () => {
       triggerNextContainer();
     }
 
-    await calculateScore();
+    
   } 
   else 
   {
     const isContinueOnCorrect = container.getAttribute('is-continue-on-correct') === 'true';
     const onCorrect = container.getAttribute('onCorrect');
+
+    if(container.querySelectorAll("[type='click']").length > 0 || container.getAttribute("template-id") === "blender"){
+        storingEachActivityScore(false);
+      }
+
     if (!isContinueOnCorrect) 
     {
-      await calculateScore();
+      container.setAttribute("game-completed", "true");
       await executeActions(onCorrect, container);
+      calculateScore();
       triggerNextContainer()
     } 
     else 
     {
       const onInCorrect = container.getAttribute('onInCorrect');
-      storingEachActivityScore(false);
       await executeActions(onInCorrect, container);
     }    
   }
 };
 
+const parseMultiplyBeedsText = (text: string) => {
+  const trimmed = text.trim();
+  if (!trimmed) return null;
+
+  const [expressionPart, resultPart] = trimmed.split("=");
+  const expression = (expressionPart ?? "").trim();
+  if (!expression) return null;
+
+  const terms = expression
+    .split("+")
+    .map(part => part.trim())
+    .filter(Boolean);
+  if (terms.length === 0) return null;
+
+  const firstValue = Number(terms[0]);
+  if (Number.isNaN(firstValue)) return null;
+
+  const allSame = terms.every(term => Number(term) === firstValue);
+  if (!allSame) return null;
+
+  const resultText = (resultPart ?? "").trim();
+  let total = resultText === "" ? NaN : Number(resultText);
+  if (Number.isNaN(total)) {
+    total = terms
+      .map(term => Number(term))
+      .reduce((acc, val) => (Number.isNaN(val) ? NaN : acc + val), 0);
+  }
+  if (Number.isNaN(total)) return null;
+
+  return {
+    value: firstValue,
+    count: terms.length,
+    total,
+  };
+};
+
+const animateMultiplyBeedsResult = (beedsTextPlace: HTMLElement) => {
+  const parsed = parseMultiplyBeedsText(beedsTextPlace.textContent ?? "");
+  if (!parsed) return;
+
+  const existingTimerIds = beedsTextPlace.getAttribute("data-multiply-timers");
+  if (existingTimerIds) {
+    existingTimerIds
+      .split(",")
+      .map(id => Number(id))
+      .filter(id => Number.isFinite(id))
+      .forEach(id => clearTimeout(id));
+  }
+  beedsTextPlace.removeAttribute("data-multiply-timers");
+
+  const steps = [
+    String(parsed.value),
+    "X",
+    String(parsed.count),
+    "=",
+    String(parsed.total),
+  ];
+
+  const intervalMs = 1000;
+  const timerIds: number[] = [];
+  steps.forEach((step, index) => {
+    const id = window.setTimeout(() => {
+      if (index === 0) {
+        beedsTextPlace.textContent = "";
+      }
+      const existing = (beedsTextPlace.textContent ?? "").trim();
+      beedsTextPlace.textContent = existing ? `${existing} ${step}` : step;
+    }, intervalMs * (index + 1));
+    timerIds.push(id);
+  });
+  beedsTextPlace.setAttribute("data-multiply-timers", timerIds.join(","));
+};
+
 export const triggerNextContainer = () => {
   AudioPlayer.getI().stop();
   // const event = new CustomEvent('nextContainer');
-  console.log('🚀 ~ triggerNextContainer ~ event:', event);
   // window.dispatchEvent(event);
+  const lidoHome = document.querySelector('.lido-home') as HTMLElement;
+  if (lidoHome && (getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed") && Number(lidoHome.getAttribute('index')) >= Number(lidoHome.getAttribute('totalIndex')) - 1) {
+    return;
+  }
   dispatchNextContainerEvent();
 };
 
 export const triggerPrevcontainer = () => {
   AudioPlayer.getI().stop();
-  console.log('⬅️ ~ triggerPrevContainer triggered');
   dispatchPrevContainerEvent();
 };
+  let activeZipAssets: Record<string, string> | undefined;
+  export function setActiveZipAssets(zipAssets: Record<string, string>) {
+    activeZipAssets = zipAssets;
+  }
+  export function clearActiveZipAssets() {
+    activeZipAssets = undefined;
+  }
 
 export function convertUrlToRelative(url: string): string {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  const baseUrl = container.getAttribute('baseUrl');
+  const baseUrl = container?.getAttribute('baseUrl');
+  const zipAssets = activeZipAssets;
 
   if (url?.startsWith('http') || url?.startsWith('blob') || url?.startsWith('data')) {
     return url;
@@ -862,7 +1061,21 @@ export function convertUrlToRelative(url: string): string {
   if ( url.startsWith('/Lido-CommonAudios/')) {  
     return url;
   }
-  if (baseUrl) {
+
+  if (zipAssets) {
+    const normalizedUrl = url.replace(/^\.\/?/, '');
+    const directMatch = zipAssets[url] || zipAssets[normalizedUrl];
+    if (directMatch) {
+      return directMatch;
+    }
+    const suffixMatch = Object.keys(zipAssets).find(
+      assetKey => assetKey === normalizedUrl || assetKey.endsWith(`/${normalizedUrl}`),
+    );
+    if (suffixMatch) {
+      return zipAssets[suffixMatch];
+    }
+  }
+  if (!zipAssets && baseUrl) {
     const newUrl = url.startsWith('/') ? url.slice(1) : url;
     if (newUrl.startsWith(baseUrl.replace(/^\/+|\/+$/g, ''))) return newUrl;
     return baseUrl.endsWith('/') ? baseUrl + newUrl : `${baseUrl}/${newUrl}`;
@@ -1059,7 +1272,6 @@ export const handlingElementFlexibleWidth = (element: HTMLElement, type: string)
 
 export const equationCheck = (additionalCheck: string): boolean => {
   if (!additionalCheck) {
-    console.log('Input string is empty.');
     return undefined;
   }
 
@@ -1079,13 +1291,10 @@ export const equationCheck = (additionalCheck: string): boolean => {
       return part;
     }
   });
-
   // 3. Join the modified parts back into one string
   const resultString = modifiedParts.join('');
-  console.log('🚀 ~ equationCheck ~ resultString:', resultString);
   // 4. Evaluate the final string as a mathematical expression
-  const finalRes = evaluate(resultString);
-  console.log('🚀 ~ equationCheck ~ finalRes:', finalRes);
+const finalRes = evaluate(resultString);
   return finalRes;
 };
 
@@ -1103,6 +1312,7 @@ const getElementsForQueries = (query: string) => {
   const sortedDragSelectedElements = Array.from(dragSelectedElements).sort((a, b) => parseInt(a.getAttribute(DropTimeAttr)) - parseInt(b.getAttribute(DropTimeAttr)));
   return sortedDragSelectedElements;
 };
+
 
 let currentlySpeakingElement: HTMLElement | null = null;
 export const speakIcon = (targetElement: HTMLElement) => {
@@ -1314,7 +1524,6 @@ export const HighlightStarsOneByOne = async (element: HTMLElement, value: string
 
   // Dynamically find the parent row of stars
   const stars = Array.from(element.children) as HTMLElement[];
-  console.log('starRow', stars);
 
   for (const star of stars) {
     // Highlight the star
@@ -1340,7 +1549,6 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
 
   // Select all cells with the attribute type="box"
   const boxCells = Array.from(element.children) as HTMLElement[];
-  console.log('boxCells', boxCells);
   if (!boxCells) return;
 
   boxCells.forEach(cell => {
@@ -1362,19 +1570,18 @@ export const animateBoxCells = async (element: HTMLElement, value: string) : Pro
     cell.classList.remove('lido-box-highlight');
   }
 
-  // checkout parent cell first then pick the first text child inside cell
+  // checkout parent cell first then pick the second text child inside cell
   const parentCell = document.getElementById(LidoContainer) as HTMLElement | null;
   if (!parentCell) return;
-  const firstTextChild = parentCell.querySelector('lido-text') as HTMLElement | null;
-  if (firstTextChild) {
+  const instructionText = parentCell.children[2] as HTMLElement | null; 
+  if (instructionText) {
     // play the text child inside parent cell
-    await AudioPlayer.getI().play(firstTextChild);
+    await AudioPlayer.getI().play(instructionText);
   }
 
   // Now select each box cell's text child and play them one by one
   for(const box of boxCells) {
     const text = box.querySelector<HTMLElement>('lido-text');
-    console.log('box text', text);  
     if (!text) continue;
 
     await AudioPlayer.getI().play(text);
@@ -1390,23 +1597,21 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
 
   // Ensure all drag childrens which is dropped disappear
   dragElements.forEach(dragElement => {
-    if(dragElement.hasAttribute('drop-to')){
+    const dropToAttr = dragElement.getAttribute('drop-to');
+    if(dropToAttr && dropToAttr !== '') {
       dragElement.style.transition = 'opacity 0.5s ease';
       dragElement.style.opacity = '0'; // Fade out
 
-      setTimeout(() => {
-        dragElement.remove() // Remove from view after fade-out
-      }, 500); 
-    }
-  });
+      const dropEl = document.getElementById(dropToAttr) as HTMLElement | null;
 
-  // Reveal all drop childrens which is hidden
-  const dropElements = Array.from(element.querySelectorAll("[type='drop']")) as HTMLElement[];
-  let check = false;
-  dropElements.forEach(dropEl => {
-    const dropVal = dropEl.getAttribute("value");
-    if (dropVal && dropEl.innerText.trim() === "?") {
-      dropEl.innerText = dropVal;
+      const dragVal = dragElement.getAttribute("value");
+      if (dragVal && dropEl.innerText.trim() === "?") {
+        dropEl.innerText = dragVal;
+      }
+
+      // setTimeout(() => {
+      //   // dragElement.remove() // Remove from view after fade-out
+      // }, 500); 
     }
   });
 }
@@ -1416,9 +1621,9 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
   if (!value) return;
 
   // Expecting structure: [_, TopRow, questionRow, optionRow, ...]
-  const TopRow = Array.from(element.children)[2] as HTMLElement | null;
-  const questionRow = Array.from(element.children)[3] as HTMLElement | null;
-  const optionRow = Array.from(element.children)[4] as HTMLElement | null;
+  const TopRow = Array.from(element.children)[3] as HTMLElement | null;
+  const questionRow = Array.from(element.children)[4] as HTMLElement | null;
+  const optionRow = Array.from(element.children)[5] as HTMLElement | null;
 
   if (!TopRow || !questionRow || !optionRow) return;
 
@@ -1520,14 +1725,15 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
     elementAppearance(false);
   }
 }
-  function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr) {
+
+function placeElementInDropZone(dropElement, dragElement, orientation, dropAttr) {
   const dropRect = dropElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
 
   const scale = typeof calculateScale === "function" ? calculateScale() : 1;
 
   if (!dropElement.dataset.dropCount) dropElement.dataset.dropCount = "0";
-  let dropCount = parseInt(dropElement.dataset.dropCount, 10);
+  let dropCount = parseInt(dropElement.childElementCount) - 1;
 
   // === READ DROP ZONE SIZE ===
   const dropWidth = dropRect.width;
@@ -1537,13 +1743,26 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
 
   // ---------------- LANDSCAPE WATERFALL ----------------
   if (orientation === "landscape" && dropAttr.toLowerCase() === "stackcascade") {
-    console.log("🌄 Landscape waterfall");
 
     const shiftX = dropWidth * 0.02;  // proportional (5% of width)
     const shiftY = dropHeight * 0.02; // proportional (5% of height)
 
-    const startX = dropRect.left + dropWidth * 0.36;  // 10% inside
-    const startY = dropRect.top + dropHeight * -0.09; // slightly above
+    let startX, startY;
+
+    if(dropElement.id === "unitsDrop") {
+        startX = dropRect.left + dropWidth * 0.15;  // 15% from left for better centering of multiple items
+        startY = dropRect.top + dropHeight * -0.10; // slightly above
+    }
+    else if(dropElement.id === "tensDrop")
+    {
+        startX = dropRect.left + dropWidth * 0.40;  // 40% from left for better centering of multiple items
+        startY = dropRect.top + dropHeight * -0.10; // slightly above
+    }
+    else
+    { 
+        startX = dropRect.left + dropWidth * 0.10;  // 10% from left for better centering of multiple items
+        startY = dropRect.top + dropHeight * -0.10; // slightly above
+    }
 
     targetX = startX + (dropCount * shiftX);
     targetY = startY + (dropCount * shiftY);
@@ -1551,7 +1770,6 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
 
   // ---------------- PORTRAIT VERTICAL ----------------
   else {
-    console.log("📱 Portrait vertical stack");
     let startX
     const stepY = dropHeight * 0.05; // 8% vertical step
     if (dropElement.id === "unitsDrop") {
@@ -1568,6 +1786,11 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
     targetY = startY + (dropCount * stepY);
   }
 
+// ------------ APPLY TRANSFORM SMOOTHLY --------------
+  // reset size first so centering and final placement use the resized bounds
+  dragElement.style.width = "auto";
+  dragElement.style.height = "auto";
+
   // ------------ APPLY TRANSFORM SMOOTHLY --------------
   const dx = (targetX - dragRect.left) / scale;
   const dy = (targetY - dragRect.top) / scale;
@@ -1575,11 +1798,27 @@ export const SumTogetherAnimation = async (element : HTMLElement,value : string)
   dragElement.style.transition = "transform .2s ease-out";
   dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
 
-  dropElement.dataset.dropCount = String(dropCount + 1);
+  const resizedDragRect = dragElement.getBoundingClientRect();
+  const dropCenterX = dropRect.left + dropWidth / 2;
+  const dropCenterY = dropRect.top + dropHeight / 2;
+  const resizedDragCenterX = resizedDragRect.left + resizedDragRect.width / 2;
+  const resizedDragCenterY = resizedDragRect.top + resizedDragRect.height / 2;
 
-  // reset size
-  dragElement.style.width = "auto";
-  dragElement.style.height = "auto";
+  const centerDx = (dropCenterX - resizedDragCenterX) / scale;
+  const centerDy = (dropCenterY - resizedDragCenterY) / scale;
+
+  dragElement.style.transition = "none";
+  dragElement.style.transform = `translate(${centerDx}px, ${centerDy}px)`;
+
+  // Force the browser to apply the centered position before animating to the stack slot.
+  dragElement.getBoundingClientRect();
+
+  requestAnimationFrame(() => {
+    dragElement.style.transition = "transform .2s ease-out";
+    dragElement.style.transform = `translate(${dx}px, ${dy}px)`;
+  });
+
+  dropElement.dataset.dropCount = String(dropCount + 1);
 }
 
 export const updateCalculatorAnswer= (el:HTMLElement): void => {

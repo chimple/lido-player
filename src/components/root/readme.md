@@ -9,16 +9,17 @@
 
 | Property           | Attribute            | Description                                                                                                                                | Type      | Default     |
 | ------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ----------- |
+| `Lang`             | `lang`               | Language to apply to all texts                                                                                                             | `string`  | `''`        |
 | `baseUrl`          | `base-url`           | Base URL for the containers.                                                                                                               | `string`  | `''`        |
 | `canplay`          | `canplay`            | Boolean that controls the playability of the game.                                                                                         | `boolean` | `true`      |
 | `exitButtonUrl`    | `exit-button-url`    | Custom URL for the Exit button icon. Falls back to the default icon if not provided or invalid.                                            | `string`  | `undefined` |
 | `initialIndex`     | `initial-index`      | Initial index of the container being displayed.                                                                                            | `number`  | `0`         |
-| `locale`           | `locale`             | Language to apply to all texts                                                                                                             | `string`  | `''`        |
 | `margin`           | `margin`             | CSS margin value applied to each child element inside the container. Accepts standard CSS margin formats (e.g., '10px', '5px 10px', etc.). | `string`  | `''`        |
 | `nextButtonUrl`    | `next-button-url`    | Custom URL for the Next button icon. Falls back to the default icon if not provided or invalid.                                            | `string`  | `undefined` |
 | `prevButtonUrl`    | `prev-button-url`    | Custom URL for the Previous button icon. Falls back to the default icon if not provided or invalid.                                        | `string`  | `undefined` |
 | `speakerButtonUrl` | `speaker-button-url` | Custom URL for the Speaker button icon. Falls back to the default icon if not provided or invalid.                                         | `string`  | `undefined` |
 | `xmlPath`          | `xml-path`           | Prop to hold the XML file path or URL. This can be a relative path or an external URL.                                                     | `string`  | `''`        |
+| `zipUrl`           | `zip-url`            | ZIP URL pointing to a package containing XML and asset files.                                                                              | `string`  | `''`        |
 
 
 ## Dependencies
@@ -55,7 +56,6 @@ graph TD;
   lido-keyboard --> lido-text
   lido-calculator --> lido-cell
   lido-calculator --> lido-text
-  lido-canvas --> lido-text
   style lido-root fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

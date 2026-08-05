@@ -196,9 +196,9 @@ export class LidoBalance {
   @Element() el: HTMLElement;
   async componentWillLoad() {
     this.updateStyles();
-    this.pivotSvg = await this.fetchAndApplyFill(this.pivotimage);
-    this.scaleSvg = await this.fetchAndApplyFill(this.scaleimage);
-    this.handlerSvg = await this.fetchAndApplyFill(this.handlerimage);
+    this.pivotSvg = await this.fetchAndApplyFill(convertUrlToRelative(this.pivotimage));
+    this.scaleSvg = await this.fetchAndApplyFill(convertUrlToRelative(this.scaleimage));
+    this.handlerSvg = await this.fetchAndApplyFill(convertUrlToRelative(this.handlerimage));
    }
 
   componentDidLoad() {
@@ -307,7 +307,12 @@ export class LidoBalance {
         class="lido-balance"
         tilt={this.tilt.toString()}
         style={this.style} 
-        operation={this.operation.toString()}>
+        operation={this.operation.toString()}
+        pivot-image={this.pivotSvg}
+        scale-image={this.scaleSvg}
+        handler-image={this.handlerSvg}
+        >
+
         {/* <div   > */}
           <div innerHTML={this.pivotSvg} id="pivotimg" class="pivot"></div>
           <div innerHTML={this.scaleSvg} id="scaleimg" class="scale" ref={(el) => (this.scaleEl = el as HTMLElement)}></div>

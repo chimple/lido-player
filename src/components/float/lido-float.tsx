@@ -75,6 +75,9 @@ export class LidoFloat {
    */
   @State() style: { [key: string]: string };
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   @Element() el: HTMLElement;
 
   componentDidLoad() {
@@ -89,21 +92,27 @@ export class LidoFloat {
    */
   componentWillLoad() {
     this.updateStyles();
-    window.addEventListener('resize', this.updateStyles.bind(this));
-    window.addEventListener('load', this.updateStyles.bind(this));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   initializeFloatElement() {
     const floatElements = this.el.children as HTMLCollection;
 
+    let delay = 0;
     Array.from(floatElements).forEach((el: Element) => {
       const element = el as HTMLElement;
-      handleFloatElementPosition(element);
+      element.style.visibility = 'hidden';
+      setTimeout(() => {
+        element.style.visibility = 'visible';
+        handleFloatElementPosition(element);
+      }, delay);
+      delay += 1000; // Stagger the visibility of each element by 1 second
       el.addEventListener('click', () => {
         handleElementClick(element);
       });

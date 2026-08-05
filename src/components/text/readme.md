@@ -49,7 +49,6 @@
 ### Used by
 
  - [lido-calculator](../calculator)
- - [lido-canvas](../canvas)
  - [lido-container](../container)
  - [lido-home](../home)
  - [lido-keyboard](../keyboard)
@@ -58,7 +57,6 @@
 ```mermaid
 graph TD;
   lido-calculator --> lido-text
-  lido-canvas --> lido-text
   lido-container --> lido-text
   lido-home --> lido-text
   lido-keyboard --> lido-text

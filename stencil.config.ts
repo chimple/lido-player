@@ -22,11 +22,10 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
-      copy: [{ src: 'components/avatar/rive.wasm', dest: 'build/rive.wasm' }],
     },
   ],
   sourceMap: false,
   testing: {
-    browserHeadless: 'new',
-  }
+    browserHeadless: true,
+  },
 };

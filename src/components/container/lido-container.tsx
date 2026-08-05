@@ -3,8 +3,9 @@ import { convertUrlToRelative, initEventsForElement, calculateScale } from '../.
 import { string } from 'mathjs';
 import i18next from '../../utils/i18n';
 import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
-import { templateAudio, TemplateID } from '../../utils/constants';
+import { LIDO_INTERACTION_CLEANUP_EVENT, templateAudio, TemplateID } from '../../utils/constants';
 import { Timer } from '../../utils/utilsHandlers/timer';
+import { resetFloatState } from '../../utils/utilsHandlers/floatHandler';
 /**
  * @component LidoContainer
  *
@@ -222,6 +223,11 @@ export class LidoContainer {
   @Prop() templateId = '';
 
   /**
+   * When set to true, highlights each word individually during speech playback.
+   */
+  @Prop() highlightWordByWord: boolean = false;
+
+  /**
    * Stores the instruction audio/text key based on the current template.
    */
   @State() instructName: string = '';
@@ -230,6 +236,15 @@ export class LidoContainer {
    * Indicates whether the speak action is currently active or in progress.
    */
   @State() speakFlag: boolean = false;
+
+  private handleWindowResize = () => this.scaleContainer(this.el);
+  private handleWindowLoad = () => this.scaleContainer(this.el);
+
+  private cleanupInteractionHandlers() {
+    this.el.querySelectorAll<HTMLElement>('[type="drag"], [type="slide"], [move="true"]').forEach(element => {
+      element.dispatchEvent(new Event(LIDO_INTERACTION_CLEANUP_EVENT));
+    });
+  }
 
 
   @Watch('Lang')
@@ -245,16 +260,122 @@ export class LidoContainer {
   }
 
   private resolveInstructionAudio() {
-   const key =
+    this.instructName =
       (
         {
           flashcard: templateAudio.flashcards,
           mcq: templateAudio.mcq,
           tracing: templateAudio.tracing,
           dragAndDrop: templateAudio.dragAndDrop,
+          "arrangeLetters": templateAudio.arrangeLetters,
+          "balancing": templateAudio.balancing,
+          "balloonPop": templateAudio.balloonPop,
+          "blender": templateAudio.blender,
+          "bubbleType": templateAudio.bubbleType,
+          "calculator": templateAudio.calculator,
+          "categorize": templateAudio.categorize,
+          "checkerBlocks": templateAudio.checkerBlocks,
+          "createSentence": templateAudio.createSentence,
+          "fillAnswer": templateAudio.fillAnswer,
+          "fillBlank": templateAudio.fillBlank,
+          "fillUp": templateAudio.fillUp,
+          "flashcardtemplate": templateAudio.flashcardtemplate,
+          "foodJar": templateAudio.foodJar,
+          "grid": templateAudio.grid,
+          "imageMatchWithQuestionImageAndMultiOption": templateAudio.imageMatchWithQuestionImageAndMultiOption,
+          "inventedSpelling": templateAudio.inventedSpelling,
+          "jumpSentence": templateAudio.jumpSentence,
+          "letterBoard": templateAudio.letterBoard,
+          "letterIdentification": templateAudio.letterIdentification,
+          "letterPairing": templateAudio.letterPairing,
+          "makeSentence": templateAudio.makeSentence,
+          "matchingCard": templateAudio.matchingCard,
+          "multiplyBeeds": templateAudio.multiplyBeeds,
+          "nimbleTable": templateAudio.nimbleTable,
+          "numberBoardOneTwo": templateAudio.numberBoardOneTwo,
+          "numberPair": templateAudio.numberPair,
+          "openWindow": templateAudio.openWindow,
+          "orderTractor": templateAudio.orderTractor,
+          "phonicTractor": templateAudio.phonicTractor,
+          "pictureMeaningCocos": templateAudio.pictureMeaningCocos,
+          "pictureWordMatch1": templateAudio.pictureWordMatch1,
+          "pictureWordMatch2": templateAudio.pictureWordMatch2,
+          "puzzleGame": templateAudio.puzzleGame,
+          "questionBoard": templateAudio.questionBoard,
+          "quizLiteracySentenceSentence": templateAudio.quizLiteracySentenceSentence,
+          "quizLiteracySoundOnlyImage": templateAudio.quizLiteracySoundOnlyImage,
+          "quizLiteracySoundOnlySentence": templateAudio.quizLiteracySoundOnlySentence,
+          "quizLiteracySoundOnlyWord": templateAudio.quizLiteracySoundOnlyWord,
+          "quizLiteracyAndShapes1": templateAudio.quizLiteracyAndShapes1,
+          "quizLiteracyImageWithText": templateAudio.quizLiteracyImageWithText,
+          "quizliteracyImageWord": templateAudio.quizliteracyImageWord,
+          "quizMathBiggerAndSmaller": templateAudio.quizMathBiggerAndSmaller,
+          "quizMathBiggestAndSmallest": templateAudio.quizMathBiggestAndSmallest,
+          "quizmathCustomNumberMagnitude": templateAudio.quizmathCustomNumberMagnitude,
+          "quizMathHowMany": templateAudio.quizMathHowMany,
+          "quizmathMissingnumberDrag": templateAudio.quizmathMissingnumberDrag,
+          "quizMathNumberIdentification": templateAudio.quizMathNumberIdentification,
+          "quizMathOperationWithobjects": templateAudio.quizMathOperationWithobjects,
+          "quizMathoperationWithoutObjects": templateAudio.quizMathoperationWithoutObjects,
+          "quizMathRecognizeNumber": templateAudio.quizMathRecognizeNumber,
+          "quizMathShapes": templateAudio.quizMathShapes,
+          "reorder": templateAudio.reorder,
+          "rocketGame": templateAudio.rocketGame,
+          "rowBlock": templateAudio.rowBlock,
+          "sequenceBox1": templateAudio.sequenceBox1,
+          "shapeTractor": templateAudio.shapeTractor,
+          "spellDoor": templateAudio.spellDoor,
+          "storyMaking": templateAudio.storyMaking,
+          "storyTale": templateAudio.storyTale,
+          "sumTogether": templateAudio.sumTogether,
+          "tag": templateAudio.tag,
+          "total": templateAudio.total,
+          "writeCard": templateAudio.writeCard,
+          "writeLetter": templateAudio.writeLetter,
+          "writeNumber": templateAudio.writeNumber,
+          "writeSet": templateAudio.writeSet,
+          "writeWord": templateAudio.writeWord,
+          "numberIdentification": templateAudio.numberIdentification,
+          "wordBuildingWithAndWithoutImage": templateAudio.wordBuildingWithAndWithoutImage,
+          "subsWithAndWithoutImage": templateAudio.subsWithAndWithoutImage,
+          "sentenceMatchTemplate": templateAudio.sentenceMatchTemplate,
+          "pictureClues": templateAudio.pictureClues,
+          "palEgmaCalculateSumAndSumTogether": templateAudio.palEgmaCalculateSumAndSumTogether,
+          "palEgmaPatternMatching": templateAudio.palEgmaPatternMatching,
+          "palEgmaWordProblem": templateAudio.palEgmaWordProblem,
+          "palEgraArrangePictures": templateAudio.palEgraArrangePictures,
+          "palEgraBuildWord": templateAudio.palEgraBuildWord,
+          "palEgraMCQWithImage": templateAudio.palEgraMCQWithImage,
+          "palEgraOddOneOut": templateAudio.palEgraOddOneOut,
+          "palEgraOptionWithAudio": templateAudio.palEgraOptionWithAudio,
+          "palEgraWordFormation": templateAudio.palEgraWordFormation,
+          "palEgraWordMatch": templateAudio.palEgraWordMatch,
+          "substractionWithImage": templateAudio.substractionWithImage,
+          "substractionWithoutImage": templateAudio.substractionWithoutImage,
+          "numberIdentificationWithImage": templateAudio.numberIdentificationWithImage,
+          "numberIdentificationWithoutImage": templateAudio.numberIdentificationWithoutImage,
+          "wordBuildingWithImage": templateAudio.wordBuildingWithImage,
+          "wordBuildingWithoutImage": templateAudio.wordBuildingWithoutImage,
+          "pictureWordMatchMultipleImages": templateAudio.pictureWordMatchMultipleImages,
+          "pictureWordMatchSingleImage": templateAudio.pictureWordMatchSingleImage,
+          "sentenceMatch": templateAudio.sentenceMatch,
+          "imageMatch": templateAudio.imageMatch,
+          "palStoryTale": templateAudio.palStoryTale,
+          "palEgmaWordProblemDragnDrop": templateAudio.palEgmaWordProblemDragnDrop,
+          "palEgmaWordProblemClick": templateAudio.palEgmaWordProblemClick,
+          "palInventedSpelling": templateAudio.palInventedSpelling,
+          "palLetterIdentification": templateAudio.palLetterIdentification,
+          "palStoryMaking": templateAudio.palStoryMaking,
+          "palegmasumtogether": templateAudio.palegmasumtogether,
+          "palegmamultioption": templateAudio.palegmamultioption,
+          "palegraoptionaudio": templateAudio.palegraoptionaudio,
+          "palegrawordmatch": templateAudio.palegrawordmatch,
+          "palegramcqimages": templateAudio.palegramcqimages,
+          "drawShape": templateAudio.drawShape,
+          "drawshape": templateAudio.drawshape,
+
         } as any
       )[this.templateId!] ?? '';
-        this.instructName = key ? i18next.t(key) : '';
 
     const home = document.querySelector('lido-home') as HTMLElement;
     if (!home) return;
@@ -272,9 +393,6 @@ export class LidoContainer {
     const rootEl = this.el.closest('lido-root') as any;
     const rootLang = rootEl?.Lang || '';
     if (rootLang?.trim()) return rootLang;
-    const homeEl = this.el.closest('lido-home') as any;
-    const homeLang = homeEl?.Lang || '';
-    if (homeLang?.trim()) return homeLang;
     if (this.Lang?.trim()) return this.Lang;
     const xmlLang = this.el.getAttribute('Lang');
     if (xmlLang?.trim()) return xmlLang;
@@ -371,20 +489,24 @@ export class LidoContainer {
   componentDidLoad() {
     this.scaleContainer(this.el);
     const backGroundImage = this.bgImage ? convertUrlToRelative(this.bgImage) : '';
+    const standalone = this.el.closest('lido-standalone') as HTMLElement | null;
+    const backgroundTarget = standalone?.getAttribute('bg-image') === 'true' ? standalone : document.body;
+
+    backgroundTarget.style.backgroundColor = this.bgColor;
+    backgroundTarget.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
+    backgroundTarget.style.backgroundPosition = backGroundImage ? 'bottom' : 'none';
+
     document.body.style.pointerEvents = 'auto';
-    document.body.style.backgroundColor = this.bgColor;
-    document.body.style.backgroundImage = backGroundImage ? `url(${backGroundImage})` : 'none';
-    document.body.style.backgroundPosition = backGroundImage ? `bottom` : 'none';
 
     // Re-scale the container on window resize or load events
-    window.addEventListener('resize', () => this.scaleContainer(this.el));
-    window.addEventListener('load', () => this.scaleContainer(this.el));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
 
-    if(this.templateId){
+    if (this.templateId) {
       setTimeout(() => {
-        this.el.setAttribute("onEntry",`${this.templateId}.speak='${!this.speakFlag}'; `+this.el.getAttribute("onEntry"))
+        this.el.setAttribute("onEntry", `${this.templateId}.speak='${!this.speakFlag}'; ` + this.el.getAttribute("onEntry"))
         initEventsForElement(this.el, this.type);
-      },100)
+      }, 100)
     } else {
       initEventsForElement(this.el, this.type)
     }
@@ -397,16 +519,18 @@ export class LidoContainer {
     this.updateChildTextLanguage(langToApply);
     setTimeout(() => {
       highlightElement();
-    },100)
-
+    }, 100)
+    resetFloatState()
     Timer.getI().start();
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', () => this.scaleContainer(this.el));
-    window.removeEventListener('load', () => this.scaleContainer(this.el));
+    this.cleanupInteractionHandlers();
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
     document.body.style.backgroundColor = '';
     document.body.style.backgroundImage = '';
+    resetFloatState();
     Timer.getI().stop();
   }
 
@@ -421,7 +545,7 @@ export class LidoContainer {
       margin: this.margin,
       userSelect: 'none', // Prevent any field selection
     };
-    console.log('🚀 ~ LidoContainer ~ canplay:', this.canplay);
+
 
     return (
       <Host
@@ -451,9 +575,10 @@ export class LidoContainer {
         prev-button-url={this.prevButtonUrl}
         next-button-url={this.nextButtonUrl}
         speaker-button-url={this.speakerButtonUrl}
-        disable-speak={this.disableSpeak}
+        disable-speak={`${this.disableSpeak}`}
         template-id={this.templateId}
         audio={this.audio}
+        highlight-word-by-word={`${this.highlightWordByWord}`}
       >
         <lido-text visible="false" id={this.templateId} audio="" string={this.instructName} ></lido-text>
         <slot />

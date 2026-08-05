@@ -1,6 +1,7 @@
 import { Component, h, Host, State, Prop, Event, EventEmitter, Element } from '@stencil/core';
-import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore } from '../../utils/utils';
-import { NextContainerKey,LidoContainer } from '../../utils/constants';
+import { parseProp,executeActions,equationCheck,storingEachActivityScore, calculateScore, triggerNextContainer, convertUrlToRelative } from '../../utils/utils';
+import { LidoContainer, SelectedValuesKey ,CalculatorOk} from '../../utils/constants';
+import { AudioPlayer } from '../../utils/audioPlayer';
 
 @Component({
   tag: 'lido-calculator',
@@ -84,6 +85,7 @@ export class LidoCalculator {
   }
 
   private userAnswers: Number[] = []; // store all calculator inputs
+  private tempInputs: string[] = []; // store inputs before clearing display
   
   private async verifyAnswer() { 
     const userInput = this.displayValue.trim();
@@ -95,9 +97,7 @@ export class LidoCalculator {
     if (!container) return;
 
     if (this.objective && this.objective !='' && !this.objective.includes(',')) {
-      console.log("hi iscorrect verified");
-      
-      isCorrect = userInput === this.objective;
+      isCorrect = Number(userInput) === Number(this.objective);
     } 
 
   // --- Multiple Objectives ---
@@ -130,7 +130,7 @@ export class LidoCalculator {
       try {
         const calculatedValue = equationCheck(equationAttr);
         isCorrect = Number(calculatedValue) === Number(userInput.trim());
-        console.log('Equation check:', calculatedValue, userInput, isCorrect);
+        
       } 
       catch (err) {
         console.error('Error evaluating equation:', err);
@@ -138,30 +138,79 @@ export class LidoCalculator {
       }
     }
     this.onOk.emit(isCorrect);
-
+    
+    const okbtn = document.getElementById("btn-11") as HTMLElement;
     if (isCorrect) {
+      const isNimbleTable = container.getAttribute('template-id') === 'nimbleTable';
+      const isMultiObjective = this.objective.includes(',');
+      if (!(isNimbleTable && isMultiObjective)) {
+        container.setAttribute("game-completed", "true");
+      }
+      this.tempInputs.push(userInput);
+      const existingSelected = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]');
+      const cleanedSelected = Array.isArray(existingSelected)
+        ? existingSelected.filter(v => String(v).trim() !== '')
+        : [];
+      const tempValue = this.tempInputs[this.tempInputs.length - 1];
+      if (String(tempValue).trim() !== '') {
+        cleanedSelected.push(tempValue);
+      }
+      container.setAttribute(SelectedValuesKey, JSON.stringify(cleanedSelected));
+      okbtn.style.pointerEvents = 'none'; // Disable OK button to prevent multiple clicks
       this.displayValue = "";
-      storingEachActivityScore(isCorrect);
+      storingEachActivityScore(isCorrect, CalculatorOk);
+
+      if (isNimbleTable && isMultiObjective) {
+        const activeCell = container.querySelector("[type='calculate']") as HTMLElement | null;
+        if (activeCell) {
+          const activeCellAudio = activeCell.getAttribute('audio') || '';
+          if (activeCellAudio.trim()) {
+            activeCell.style.boxShadow = 'none !important';
+            activeCell.setAttribute('onCorrect', "this.speak='true'");
+            AudioPlayer.getI().play(activeCell);
+          }
+        }
+      }
+
       const onCorrect = container?.getAttribute('onCorrect') || '';
       await executeActions(onCorrect, container);
-      if(onCorrect.includes('scrollCellAfterEquationSolved')){
-        if(this.objective.length===0){
-        calculateScore()
-        window.dispatchEvent(new CustomEvent(NextContainerKey));
+      const hasScrollAction = onCorrect.includes('scrollCellAfterEquationSolved');
+      if (!hasScrollAction) {
+        if (!isMultiObjective) {
+          calculateScore();
+          triggerNextContainer();
+        } else {
+          const objectives = this.objective.split(',').map(obj => obj.trim());
+          const allSolved = this.userAnswers.length >= objectives.length;
+          if (allSolved) {
+            container.setAttribute("game-completed", "true");
+            calculateScore();
+            triggerNextContainer();
+          }
+        }
       }
-      }else{
-        calculateScore()
-        window.dispatchEvent(new CustomEvent(NextContainerKey));
-      }
-      
     }
 
     else{
+      okbtn.style.pointerEvents = 'none'; // Disable OK button to prevent multiple clicks
       this.displayValue = "";
-      storingEachActivityScore(isCorrect);
+      storingEachActivityScore(isCorrect,CalculatorOk);
       const onInCorrect = container?.getAttribute('onInCorrect') || '';
-      await executeActions(onInCorrect, container);
+      const onCorrect = container?.getAttribute('onCorrect') || '';
+      const isContinueOnCorrect =
+        container.getAttribute('is-continue-on-correct') === 'true';
+      if(!isContinueOnCorrect){
+        await executeActions(onCorrect, container);  
+      }else{
+        await executeActions(onInCorrect, container);
+      }
+      if (!isContinueOnCorrect) {
+        container.setAttribute("game-completed", "true");
+        calculateScore()
+        triggerNextContainer();
+      }
     }
+    okbtn.style.pointerEvents = 'auto'; // Re-enable OK button after processing
   }
 
   render() {
@@ -170,8 +219,8 @@ export class LidoCalculator {
     return (
       <Host onEntry={this.onEntry} id="lidoCalculator" style={{ width: this.width, height: this.height, backgroundColor: this.bgColor,left:this.x, top:this.y }}>
           <lido-cell visible="true" height="94px" width="60px">
-            <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="176%" width="89px" onEntry="this.position='relative';" class="top-icon">
-              <img src={this.penIcon} alt="pen" style={{ width: '100%', height: '100%' }} />
+            <lido-text visible="true" id="lido-calculator-penIcon" type="click" height="80px" x="204%" width="89px" onEntry="this.position='relative';" class="top-icon">
+              <img src={convertUrlToRelative(this.penIcon)} alt="pen" style={{ width: '100%', height: '100%' }} />
             </lido-text>
           </lido-cell>
 

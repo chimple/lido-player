@@ -12,6 +12,8 @@ type QuestionBoardArgs = {
     optionText: string;
     objective: string;
     isAllowOnlyCorrect?: boolean;
+    highlightWord?: boolean;
+    audioURL?: string;
 }
 
 const meta: Meta<QuestionBoardArgs> = {
@@ -27,6 +29,8 @@ const meta: Meta<QuestionBoardArgs> = {
         optionText: { control: 'text', name: 'Option Text' },
         objective: { control: 'text', name: 'Objective', description: 'Objective to achieve the task. (E.g. 5)' },
         isAllowOnlyCorrect: { control: 'boolean', name: 'isAllowOnlyCorrect' },
+        highlightWord: { control: 'boolean', name: 'Highlight Word by Word' },
+        audioURL: { control: 'text', name: 'Audio URL' },
     },
     args: {
         questionBoardImage: ['https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/question-board/wordwindow_frame_question.png'],
@@ -39,6 +43,8 @@ const meta: Meta<QuestionBoardArgs> = {
         optionText: 'tables',
         objective: '7',
         isAllowOnlyCorrect: true,
+        highlightWord: true,
+        audioURL: '',
     }
 }
 
@@ -60,34 +66,34 @@ export const QuestionBoard: StoryObj = {
 const parseExpression = (expressionText: string): { num1: string; num2: string; operator: string; result: string } => {
     // Clean up input
     const text = expressionText.trim();
-    console.log('Expression Text:', text);
+    
 
     const [left, right] = text.split('=').map(part => part.trim());
-    console.log('Left:', left);
-    console.log('Right:', right);
+    
+    
 
     // Determine which side contains the result
     const isLeftResult = right.trim().includes('+') || right.trim().includes('-') || right.trim().includes('x') || right.trim().includes('X') || right.trim().includes('*');
     const isRightResult = left.trim().includes('+') || left.trim().includes('-') || left.trim().includes('x') || left.trim().includes('X') || left.trim().includes('*');
 
-    console.log('isLeftResult:', isLeftResult);
-    console.log('isRightResult:', isRightResult);
+    
+    
 
     const result = isLeftResult ? left.trim().replace(/[<>]/g, '') : isRightResult ? right.trim().replace(/[<>]/g, '') : '';
-    console.log('Result:', result);
+    
 
     if(isLeftResult) {
 
         const operatorMatch = right.match(/(\+|-|x|X|\*)/);
         const operator = operatorMatch ? operatorMatch[1] : '';
-        console.log('Operator:', operator);
+        
 
         const [rawNum1, rawNum2] = right.split(/(\+|-|x|X|\*)/).filter(v => !['+', '-', 'x', 'X', '*'].includes(v)).map(v => v.trim());
 
         const num1 = rawNum1 ? rawNum1.replace(/[<>]/g, '').trim() : '';
         const num2 = rawNum2 ? rawNum2.replace(/[<>]/g, '').trim() : '';
-        console.log('Num1:', num1);
-        console.log('Num2:', num2);
+        
+        
 
         return { num1, num2, operator, result };
     }
@@ -96,14 +102,14 @@ const parseExpression = (expressionText: string): { num1: string; num2: string; 
 
         const operatorMatch = left.match(/(\+|-|x|X|\*)/);
         const operator = operatorMatch ? operatorMatch[1] : '';
-        console.log('Operator:', operator);
+        
 
         const [rawNum1, rawNum2] = left.split(/(\+|-|x|X|\*)/).filter(v => !['+', '-', 'x', 'X', '*'].includes(v)).map(v => v.trim());
         
         const num1 = rawNum1 ? rawNum1.replace(/[<>]/g, '').trim() : '';
         const num2 = rawNum2 ? rawNum2.replace(/[<>]/g, '').trim() : '';
-        console.log('Num1:', num1);
-        console.log('Num2:', num2);
+        
+        
 
         return { num1, num2, operator, result };
     }
@@ -141,7 +147,7 @@ function getContainerXml(args : QuestionBoardArgs) {
     ` : multiplication_animation ? `
         background-animation-multiplication.opacity='1';
     ` : ``;
-    console.log('Expression Animation: ',expressionAnimation);
+    
 
     const { num1, num2, operator, result } = parseExpression(expressionText);
 
@@ -151,11 +157,11 @@ function getContainerXml(args : QuestionBoardArgs) {
     let val1 = parseInt(num1) <= 10 ? '1' : '2';
     let val2 = parseInt(num2) <= 10 ? '1' : '2';
 
-    console.log('Expression Text: ',escapedExpressionText);
+    
     
     return `
         <main>
-            	<lido-container id="question-board-container" disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Question%20board.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" >
+            	<lido-container id="question-board-container" highlight-word-by-word="${args.highlightWord}"  disable-speak="true" objective="${objective}" tab-index="1"  value="questionBoard" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Question%20board.png"  height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000'; question-board-image.transition='transform 1s ease'; question-board-image.transform='rotateY(180deg)'; question-board-text.transition='opacity 0.5s ease'; question-board-text.opacity='0'; option-row.opacity='0'; invisible-text.transition='opacity 0.5s ease'; invisible-text.opacity='1'; invisible-text.visibility='visible'; ${expressionAnimation} this.sleep='4000';" onEntry="this.justifyContent='space-around';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" show-check="false" is-continue-on-correct="true" is-allow-only-correct="${isAllowOnlyCorrect}" >
 
                     <!-- Chimple Avatar -->
                     <lido-cell layout="pos" id="pos1" disableEdit="true" value="pos1" height="landscape.570px, portrait.700px" width="landscape.380px, portrait.485px" x="landscape.110px, portrait.195px" y="landscape.160px, portrait.1050px" ariaHidden="true" bg-color="transparent" visible="true"  onEntry="this.flex-shrink='0'; this.z-index='2';">
@@ -173,7 +179,7 @@ function getContainerXml(args : QuestionBoardArgs) {
                     </lido-text>
 
                     <lido-cell layout="pos" id="pos3" value="pos3" x="landscape.445px, portrait.45px" y="landscape.115px, portrait.145px" visible="true" height="landscape.60%,portrait.10%" width="landscape.55%,portrait.92%" border-radius="7px" bg-color="transparent" onEntry="this.z-index='1';">
-                        <lido-text visible="true" id="question-board-text" tab-index="3" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
+                        <lido-text visible="true" audio="${args.audioURL}" id="question-board-text" tab-index="3" audio="" font-family="'Baloo 2', serif" font-size="landscape.60px, portrait.52px" font-color="black" string="${questionBoardText}" bg-Color="transparent" onEntry="this.font-weight='700'; this.textAlign='left'; this.lineHeight='1.25';" >
                         </lido-text>
                     </lido-cell>
 

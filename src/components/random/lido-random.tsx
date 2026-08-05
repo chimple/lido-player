@@ -151,15 +151,15 @@ export class LidoRandom {
         const childWidth = child.offsetWidth;
         const childHeight = child.offsetHeight;
 
-        console.log('child width', childWidth);
+        
         const maxLeft = parentWidth - childWidth;
         const maxTop = parentHeight - childHeight;
 
         const randLeft = Math.random() * maxLeft;
         const randTop = Math.random() * maxTop;
 
-        console.log('randomleft', randLeft);
-        console.log('randomtop', randTop);
+        
+        
 
         child.style.position = 'absolute';
         child.style.left = `${randLeft}px`;

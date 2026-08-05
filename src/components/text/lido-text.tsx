@@ -75,6 +75,11 @@ export class LidoText {
   @Prop() ariaHidden: string = '';
 
   /**
+   * Allows the text element to be freely moved by pointer/touch and persists the final x/y attributes.
+   */
+  @Prop() move: string = 'false';
+
+  /**
    * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
    */
   @Prop() x: string = '0px';
@@ -183,6 +188,9 @@ export class LidoText {
    */
   @State() style: { [key: string]: string } = {};
 
+  private handleWindowResize = () => this.updateStyles();
+  private handleWindowLoad = () => this.updateStyles();
+
   /**
    * Delay in milliseconds to make the cell visible after mount.
    */
@@ -214,7 +222,7 @@ export class LidoText {
         const autoAudio = this.resolveAutoAudio();
         if (autoAudio) {
           this.audio = autoAudio;
-          console.log("[LidoText] Auto audio applied:", autoAudio);
+          
         }
       };
       // If path is already available, apply immediately
@@ -231,7 +239,7 @@ export class LidoText {
   const base = (window as any)[LIDO_COMMON_AUDIO_PATH];
   if (!base || !this.string) return null;
   const fileName = this.string;
-  console.log(fileName,"filename😂");
+  
   return `${base}/${fileName}.mp3`;
   }
 
@@ -241,13 +249,13 @@ export class LidoText {
    */
   componentWillLoad() {
     this.updateStyles();
-    window.addEventListener('resize', this.updateStyles.bind(this));
-    window.addEventListener('load', this.updateStyles.bind(this));
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('load', this.handleWindowLoad);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('resize', this.updateStyles.bind(this));
-    window.removeEventListener('load', this.updateStyles.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('load', this.handleWindowLoad);
   }
 
   updateStyles() {
@@ -321,8 +329,9 @@ export class LidoText {
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        move={this.move}
         span-type={this.spanType}
-        disable-speak={this.disableSpeak}
+        disable-speak={`${this.disableSpeak}`}
       >
         {this.spanType !== '' ? <div class="lido-text-content"> {i18next.t(this.string)}</div> :  i18next.t(this.string)}
       </Host>

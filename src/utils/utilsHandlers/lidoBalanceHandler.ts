@@ -9,15 +9,15 @@ export function updateBalanceOnDrop(dragElement: HTMLElement, dropElement?: HTML
 
   balanceEl.leftVal = calculateValue(leftDrag, balanceEl.operation);
   balanceEl.rightVal = calculateValue(rightDrag, balanceEl.operation);
-  console.log("leftpan:", balanceEl.leftVal, "rightpan:", balanceEl.rightVal);
+  
    if (balanceEl.updateTilt) {
     balanceEl.updateTilt(balanceEl.leftVal, balanceEl.rightVal);
   }
 }
 
 
-function calculateValue(elements: HTMLElement[], operation: string): number {
-  if (elements.length === 0) return 0;
+function calculateValue(elements: HTMLElement[], operation: string): number |null {
+  if (elements.length === 0) return null;
   if (operation === "count") {
     return elements.length;
   }
@@ -57,18 +57,18 @@ export function balanceResult(container: HTMLElement, objectiveString: string): 
   const balanceEl = document.querySelector('lido-balance') as any;
   if (!balanceEl) return false;
 
-  const leftVal = Number(balanceEl.leftVal ?? balanceEl.dataset?.leftVal ?? 0);
-  const rightVal = Number(balanceEl.rightVal ?? balanceEl.dataset?.rightVal ?? 0);
+  const leftVal = balanceEl.leftVal as number | null;
+  const rightVal = balanceEl.rightVal as number | null;
   const hasLeft = !isNaN(leftVal) 
   const hasRight = !isNaN(rightVal) 
 
-  if (!hasLeft || !hasRight) {
+  if (leftVal==null || rightVal==null) {
     return false; 
   }
 
   const symbol = leftVal > rightVal ? '>' : leftVal < rightVal ? '<' : '=';
   const res = objectiveString === symbol;
 
-  console.log("Result:", res);
+  
   return res;
 }

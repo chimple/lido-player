@@ -1,6 +1,8 @@
+import { re } from 'mathjs';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey,DropToAttr } from '../constants';
 
-import {calculateScale,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore } from '../utils';
+import {calculateScale,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore, getSortedValuesArrayFromMap } from '../utils';
+import { buildDropHasDragFromDOM, handleResetDragElement } from './dragDropHandler';
 
 let preOverlap: HTMLElement;
 
@@ -47,6 +49,10 @@ export function enableReorderDrag(element: HTMLElement): void {
   let startY = 0;
 
   const container = document.getElementById(LidoContainer) as HTMLElement;
+  if(!container || container.getAttribute("canplay") === "false") return;
+  Array.from(element.children).forEach(child => {
+    (child as HTMLElement).style.pointerEvents = 'none';
+  });
   const blankArea = document.querySelector('[type="blank"]') as HTMLElement;
   const wordParent = element.parentElement !== blankArea ? element.parentElement : null;
   const elementType = element.getAttribute('type');
@@ -203,6 +209,8 @@ export function enableReorderDrag(element: HTMLElement): void {
           const targetValue = element['value'];
           if (dragValues[tabKey]) {
             dragValues[tabKey] = dragValues[tabKey].filter((el: string) => el !== targetValue);
+            const sortedValues = getSortedValuesArrayFromMap(dragValues);
+            container.setAttribute(SelectedValuesKey, JSON.stringify(sortedValues));
             // localStorage.setItem(DragSelectedMapKey, JSON.stringify(dragValues));
           }
           optionArea.scrollTo({
@@ -246,6 +254,8 @@ export function enableReorderDrag(element: HTMLElement): void {
   };
 
   const onClickElement = (element: HTMLElement) => {
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    if(container.getAttribute('canplay') === 'false')return;
     if (elementType === 'option') {
       const categoryArr = container.querySelectorAll('[type="category"]');
       let category = Array.from(categoryArr).find(el => el.parentElement.className.includes('highlight-element')) as HTMLElement;
@@ -422,7 +432,7 @@ function moveWithAnimation(target: HTMLElement, overlapped: HTMLElement): void {
 
 // Drop Completed
 const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
-  console.log("worddrop");  
+    
   const container = document.getElementById(LidoContainer);
   const objective = container.getAttribute('objective');
   const objectiveArray = objective.split(',');

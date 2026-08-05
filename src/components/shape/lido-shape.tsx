@@ -175,7 +175,6 @@ export class LidoShape {
         const face = item as HTMLElement
         face.style.setProperty("--face-width", parseProp(`${this.width}`, orientation),)
         const translateValue = parseInt(parseProp(`${this.width}`, orientation))/2;
-        console.log("translate : ", translateValue)
         face.style.setProperty("--face-translate",`${translateValue}px`)
         face.style.setProperty("--face-bg-color",this.bgColor)
       })
