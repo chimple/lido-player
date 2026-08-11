@@ -1,6 +1,7 @@
 export const DragSelectedMapKey = 'lidoDragSelectedMap';
 export const DragMapKey = 'lidoDragMap';
 export const SelectedValuesKey = 'lidoSelectedValues';
+export const AnimationVanishedValuesKey = 'data-animation-vanished-values';
 export const ActivityScoreKey = 'lidoActivityScore';
 export const ActivityEndKey = 'lidoActivityEnd';
 export const LessonEndKey = 'lidoLessonEnd';
