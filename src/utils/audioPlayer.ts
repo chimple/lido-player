@@ -9,6 +9,7 @@ export class AudioPlayer {
   private audioElement: HTMLAudioElement;
   private currentTargetElement: HTMLElement | null = null;
   private pendingReplayElement: HTMLElement | null = null;
+  private playbackHasStarted = false;
 
   private highlightOverlay: HTMLElement | null = null;
   private wordRects: DOMRect[] = [];
@@ -22,6 +23,16 @@ export class AudioPlayer {
     ActivityEndKey, GameCompletedKey, GameExitKey
   ];
   private handleGlobalStopEvent = () => this.stop();
+
+  private resolvePlaybackWait() {
+    if (!this.endPromiseResolve) {
+      return;
+    }
+
+    const resolve = this.endPromiseResolve;
+    this.endPromiseResolve = null;
+    resolve();
+  }
 
   private constructor() {
     this.audioElement = document.createElement('audio');
@@ -44,7 +55,6 @@ export class AudioPlayer {
   }
 
   public stop(preserveReplay: boolean = false) {
-
     const container = document.getElementById(LidoContainer);
     if(container && container.getAttribute('highlight-word-by-word')==='true'){
       // stop any highlight loop
@@ -55,15 +65,12 @@ export class AudioPlayer {
       window.speechSynthesis.cancel();
     }
     // Resolve any pending "ended" wait so callers can continue.
-    if (this.endPromiseResolve) {
-      const resolve = this.endPromiseResolve;
-      this.endPromiseResolve = null;
-      resolve();
-    }
+    this.resolvePlaybackWait();
     if (!preserveReplay) {
       this.pendingReplayElement = null;
     }
     this.currentTargetElement = null;
+    this.playbackHasStarted = false;
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
     this.audioElement.src = '';
@@ -130,6 +137,7 @@ export class AudioPlayer {
 
   public async play(targetElement: HTMLElement) {
     this.registerVisibilityEvents();
+    this.playbackHasStarted = false;
 
     if (!this.isWindowVisible()) {
       this.pendingReplayElement = targetElement;
@@ -194,6 +202,24 @@ export class AudioPlayer {
     {
       audioUrl = convertUrlToRelative(audioUrl);
       this.audioElement.src = audioUrl;
+      this.audioElement.onplaying = () => {
+        this.playbackHasStarted = true;
+      };
+      this.audioElement.onpause = () => {
+        if (this.playbackHasStarted && !this.audioElement.ended) {
+          this.resolvePlaybackWait();
+        }
+      };
+      this.audioElement.onstalled = () => {
+        if (this.playbackHasStarted) {
+          this.resolvePlaybackWait();
+        }
+      };
+      this.audioElement.onerror = () => {
+        if (this.playbackHasStarted) {
+          this.resolvePlaybackWait();
+        }
+      };
       try {
         // setDraggingDisabled(true);
 
@@ -230,10 +256,7 @@ export class AudioPlayer {
         await new Promise<void>(resolve => {
           this.endPromiseResolve = resolve;
           this.audioElement.onended = () => {
-            if (this.endPromiseResolve === resolve) {
-              this.endPromiseResolve = null;
-            }
-            resolve();
+            this.resolvePlaybackWait();
           };
         });
 
