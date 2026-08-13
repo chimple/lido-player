@@ -7,8 +7,12 @@ import { WordTimelineEntry, LANGUAGE_PROFILES, FAST_WORDS_BY_LANG } from './cons
 export class AudioPlayer {
   private static instance: AudioPlayer;
   private audioElement: HTMLAudioElement;
+  private originalPause: (() => void) | null = null;
   private currentTargetElement: HTMLElement | null = null;
   private pendingReplayElement: HTMLElement | null = null;
+  private playbackHasStarted = false;
+  private playbackCompletionReason: string | null = null;
+  private internalAudioStopInProgress = false;
 
   private highlightOverlay: HTMLElement | null = null;
   private wordRects: DOMRect[] = [];
@@ -21,10 +25,28 @@ export class AudioPlayer {
     NextContainerKey, PrevContainerKey, LessonEndKey, ActivityChangeKey,
     ActivityEndKey, GameCompletedKey, GameExitKey
   ];
-  private handleGlobalStopEvent = () => this.stop();
+  private handleGlobalStopEvent = (event?: Event) => this.stop(false, event?.type || 'global-stop');
+
+  private completePlayback(reason: string) {
+    if (this.playbackCompletionReason) {
+      return;
+    }
+
+    this.playbackCompletionReason = reason;
+
+    if (this.endPromiseResolve) {
+      const resolve = this.endPromiseResolve;
+      this.endPromiseResolve = null;
+      resolve();
+    }
+  }
 
   private constructor() {
     this.audioElement = document.createElement('audio');
+    this.originalPause = this.audioElement.pause.bind(this.audioElement);
+    this.audioElement.pause = () => {
+      this.originalPause?.();
+    };
 
     this.registerGlobalStopEvents();
     this.registerVisibilityEvents();
@@ -43,8 +65,7 @@ export class AudioPlayer {
     }
   }
 
-  public stop(preserveReplay: boolean = false) {
-
+  public stop(preserveReplay: boolean = false, reason: string = 'unspecified') {
     const container = document.getElementById(LidoContainer);
     if(container && container.getAttribute('highlight-word-by-word')==='true'){
       // stop any highlight loop
@@ -56,17 +77,20 @@ export class AudioPlayer {
     }
     // Resolve any pending "ended" wait so callers can continue.
     if (this.endPromiseResolve) {
-      const resolve = this.endPromiseResolve;
-      this.endPromiseResolve = null;
-      resolve();
+      this.completePlayback(reason);
     }
     if (!preserveReplay) {
       this.pendingReplayElement = null;
     }
     this.currentTargetElement = null;
-    this.audioElement.pause();
-    this.audioElement.currentTime = 0;
-    this.audioElement.src = '';
+    this.internalAudioStopInProgress = true;
+    try {
+      this.audioElement.pause();
+      this.audioElement.currentTime = 0;
+      this.audioElement.src = '';
+    } finally {
+      this.internalAudioStopInProgress = false;
+    }
 
     if(container && container.getAttribute('highlight-word-by-word')!=='true'){
       const highlightedElements = document.querySelectorAll('.speaking-highlight');
@@ -85,7 +109,7 @@ export class AudioPlayer {
   const container = document.getElementById(LidoContainer);
   if (container && event?.target === container) return;
   if (container?.getAttribute('game-completed') === 'true')return;
-    this.stop();
+    this.stop(false, 'user-click-stop');
 };
 
   private isWindowVisible() {
@@ -115,7 +139,7 @@ export class AudioPlayer {
     }
 
     this.pendingReplayElement = this.currentTargetElement;
-    await this.stop(true);
+    await this.stop(true, 'visibility-change-hidden');
   };
 
   private resolveVisibilityWaiters() {
@@ -130,10 +154,12 @@ export class AudioPlayer {
 
   public async play(targetElement: HTMLElement) {
     this.registerVisibilityEvents();
+    this.playbackHasStarted = false;
+    this.playbackCompletionReason = null;
 
     if (!this.isWindowVisible()) {
       this.pendingReplayElement = targetElement;
-      await this.stop(true);
+      await this.stop(true, 'play-waiting-for-visibility');
       await this.waitUntilWindowIsVisible();
 
       if (this.pendingReplayElement !== targetElement) {
@@ -145,14 +171,13 @@ export class AudioPlayer {
 
     // Stop any currently playing audio first if target element has audio given
     try {
-      await AudioPlayer.getI().stop();
+      await AudioPlayer.getI().stop(false, 'pre-play-cleanup');
     } 
     catch (e) {
       console.error('Error stopping audio before speak action:', e);
     }
     const container = document.getElementById(LidoContainer);
     if(!container){
-      console.warn('[AudioPlayer] No lido-container found');
       return;
     }
     // Check if speaking is disabled on the target element or its closest lido-text parent
@@ -164,7 +189,6 @@ export class AudioPlayer {
     if(container.getAttribute('highlight-word-by-word') === 'true') {
       const textElement = this.getLidoTextElement(targetElement);
       if (!textElement) {
-        console.warn('[AudioPlayer] No lido-text found');
         return;
       }
       // HARD RESET previous sentence
@@ -173,7 +197,6 @@ export class AudioPlayer {
     }
 
     this.currentTargetElement = targetElement;
-
 
     // then play the target element audio.
     let audioUrl = targetElement.getAttribute('audio') || '';
@@ -194,6 +217,40 @@ export class AudioPlayer {
     {
       audioUrl = convertUrlToRelative(audioUrl);
       this.audioElement.src = audioUrl;
+      this.audioElement.onabort = null;
+      this.audioElement.onemptied = null;
+      this.audioElement.onplay = null;
+      this.audioElement.onplaying = () => {
+        this.playbackHasStarted = true;
+      };
+      this.audioElement.onpause = () => {
+        if (
+          this.playbackHasStarted &&
+          !this.internalAudioStopInProgress &&
+          !this.audioElement.ended
+        ) {
+          this.completePlayback('unexpected-pause');
+        }
+      };
+      this.audioElement.onwaiting = null;
+      this.audioElement.onstalled = () => {
+        if (this.playbackHasStarted && !this.internalAudioStopInProgress) {
+          this.completePlayback('stalled');
+        }
+      };
+      this.audioElement.onsuspend = null;
+      this.audioElement.onratechange = null;
+      this.audioElement.onseeked = null;
+      this.audioElement.onloadeddata = null;
+      this.audioElement.ondurationchange = null;
+      this.audioElement.onloadedmetadata = null;
+      this.audioElement.oncanplay = null;
+      this.audioElement.oncanplaythrough = null;
+      this.audioElement.onerror = () => {
+        if (this.playbackHasStarted && !this.internalAudioStopInProgress) {
+          this.completePlayback('error');
+        }
+      };
       try {
         // setDraggingDisabled(true);
 
@@ -220,22 +277,34 @@ export class AudioPlayer {
         }
 
         // PLAY ONCE
-        await this.audioElement.play();
+        const playPromise = this.audioElement.play();
+        if (playPromise) {
+          try {
+            await playPromise;
+          } catch (error) {
+            throw error;
+          }
+        }
 
         if (isWordByWord) {
           this.startOverlayHighlightLoop(timeline, profile);
         }
 
         // unified end
-        await new Promise<void>(resolve => {
+        const endedPromise = new Promise<void>(resolve => {
           this.endPromiseResolve = resolve;
           this.audioElement.onended = () => {
-            if (this.endPromiseResolve === resolve) {
-              this.endPromiseResolve = null;
-            }
-            resolve();
+            this.completePlayback('ended');
           };
+
+          if (this.playbackCompletionReason) {
+            this.completePlayback(this.playbackCompletionReason);
+          }
         });
+
+        await endedPromise;
+        this.playbackCompletionReason = null;
+        this.playbackHasStarted = false;
 
       }
       catch (error) {}
@@ -258,6 +327,7 @@ export class AudioPlayer {
     {
       try {
         highlightSpeakingElement(targetElement);
+        const synth = window.speechSynthesis;
         // window.addEventListener('click', this.handleUserClick, true);
         await speakText(targetElement.textContent, targetElement);
         const highlightedElements = document.querySelectorAll('.speaking-highlight');
