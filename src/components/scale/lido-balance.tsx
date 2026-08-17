@@ -243,7 +243,7 @@ export class LidoBalance {
   async updateTilt(leftVal: number, rightVal: number) {
   const diff = rightVal - leftVal;
   const newTilt = Math.max(-5, Math.min(5, diff));
-  await new Promise(res => setTimeout(res, 350));
+  await new Promise(res => setTimeout(res, 700));
   this.tiltf = newTilt;   
   }
 
