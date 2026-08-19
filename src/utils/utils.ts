@@ -21,6 +21,7 @@ import { AudioPlayer } from './audioPlayer';
 import { enableReorderDrag } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation } from './utilsHandlers/dragDropHandler';
+import { enableFreeMove } from './utilsHandlers/moveHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
@@ -73,6 +74,9 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
   }
   const onEntry = element.getAttribute('onEntry');
   await executeActions(onEntry, element);
+  if (element.getAttribute('move') === 'true') {
+    enableFreeMove(element);
+  }
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
@@ -685,7 +689,10 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       console.log("Right Moves : ", gameScore.rightMoves);
       console.log("Wrong Moves : ", gameScore.wrongMoves);
     }
-    const onCorrect = dropElement.getAttribute('onCorrect');
+    const onCorrect =
+      container.getAttribute('dropAttr')?.toLowerCase() === DropMode.EnableAnimation.toLowerCase()
+        ? ''
+        : dropElement.getAttribute('onCorrect');
     if (onCorrect) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
@@ -825,7 +832,7 @@ export const handleShowCheck = () => {
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
   } else {
-    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")){
+    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")  &&  container.getAttribute('dropAttr')?.toLowerCase() !== DropMode.EnableAnimation.toLowerCase()){
       validateObjectiveStatus();
     }
 
