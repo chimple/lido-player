@@ -8,7 +8,13 @@ function dispatchCustomEvent(eventName: string, detail: any) {
   const serializableDetail = toSerializableDetail(detail);
 
   if (eventName === ActivityEndKey || eventName === LessonEndKey) {
+    console.log("logged events: ", eventName);
+    
     logAnalyticsEvent(eventName, serializableDetail);
+  }
+
+  if(eventName === LessonEndKey && getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed"){
+    return;
   }
 
   const event = new CustomEvent(eventName, { detail });
@@ -79,9 +85,6 @@ export function dispatchLessonEndEvent(
   lessonTrackingParams?: LessonTrackingParams,
 ) {    
   dispatchCustomEvent(MicroLessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
-  if(getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed"){
-    return;
-  }
   dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
   console.log( `[Lesson End]  Lesson: ${lessonTrackingParams?.lessonName} (${lessonTrackingParams?.lessonId}) - Total Time Spent: ${timeSpendForLesson}`);
 }

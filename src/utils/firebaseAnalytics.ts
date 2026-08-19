@@ -23,6 +23,36 @@ const hasRequiredFirebaseConfig = () => {
   return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId && firebaseConfig.measurementId);
 };
 
+const getMissingFirebaseConfigKeys = () => {
+  return ['apiKey', 'projectId', 'appId', 'measurementId'].filter(key => !firebaseConfig[key as keyof FirebaseAnalyticsConfig]);
+};
+
+const isLocalDebugHost = () => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+};
+
+const logLocalAnalyticsDebug = (message: string, detail?: Record<string, any>) => {
+  if (isLocalDebugHost()) {
+    console.info(`[Firebase Analytics] ${message}`, detail ?? '');
+  }
+};
+
+const toAnalyticsEventParams = (eventParams?: Record<string, any>) => {
+  if (!eventParams) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(eventParams).filter(([, value]) => {
+      return ['string', 'number', 'boolean'].includes(typeof value);
+    }),
+  );
+};
+
 const getFirebaseApp = (): FirebaseApp => {
   return getApps()[0] ?? initializeApp(firebaseConfig);
 };
@@ -30,11 +60,30 @@ const getFirebaseApp = (): FirebaseApp => {
 const getFirebaseAnalytics = async (): Promise<Analytics | undefined> => {
   if (!analyticsPromise) {
     analyticsPromise = (async () => {
-      if (!hasRequiredFirebaseConfig() || typeof window === 'undefined' || !(await isSupported())) {
+      if (!hasRequiredFirebaseConfig()) {
+        logLocalAnalyticsDebug('missing config; event will not be sent', {
+          missingKeys: getMissingFirebaseConfigKeys(),
+        });
         return undefined;
       }
 
-      return getAnalytics(getFirebaseApp());
+      if (typeof window === 'undefined') {
+        return undefined;
+      }
+
+      if (!(await isSupported())) {
+        logLocalAnalyticsDebug('analytics is not supported in this browser/session');
+        return undefined;
+      }
+
+      const analytics = getAnalytics(getFirebaseApp());
+
+      logLocalAnalyticsDebug('initialized', {
+        projectId: firebaseConfig.projectId,
+        measurementId: firebaseConfig.measurementId,
+      });
+
+      return analytics;
     })().catch(err => {
       console.error('Analytics init error:', err);
       return undefined;
@@ -48,7 +97,13 @@ export const logAnalyticsEvent = (eventName: string, eventParams?: Record<string
   getFirebaseAnalytics()
     .then(analytics => {
       if (analytics) {
-        logEvent(analytics, eventName, eventParams);
+        const analyticsParams = {
+          ...toAnalyticsEventParams(eventParams),
+          ...(isLocalDebugHost() ? { debug_mode: true } : {}),
+        };
+
+        logEvent(analytics, eventName, analyticsParams);
+        logLocalAnalyticsDebug('event sent to SDK', { eventName, eventParams: analyticsParams });
       }
     })
     .catch(err => {
