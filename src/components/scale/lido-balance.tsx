@@ -11,19 +11,19 @@ export class LidoBalance {
    * URL of the pivot (base stand) image used in the balance visualization.
    */
   @Prop() pivotimage: string =
-    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Display%20stand.svg';
+    'offline-assets/svg/balancing/Display%20stand.svg';
 
   /**
    * URL of the scale (bar) image that tilts based on the weight difference.
    */
   @Prop() scaleimage: string =
-    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Bar.svg';
+    'offline-assets/svg/balancing/Bar.svg';
 
   /**
    * URL of the handler (side stands / hooks) image for the balance.
    */
   @Prop() handlerimage: string =
-    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Stands.svg';
+    'offline-assets/svg/balancing/Stands.svg';
 
   /**
    * Fill color applied to all loaded SVGs (pivot, scale, handler).

@@ -9,7 +9,7 @@ import {
   storingEachActivityScore,
   calculateScore,
 } from '../../utils/utils';
-import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
+import { LidoContainer, TraceMode } from '../../utils/constants';
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { trace } from 'console';
 
@@ -123,7 +123,7 @@ export class LidoTrace {
   /**
    * URL for the finger hint image
    */
-  @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg';
+  @Prop() fingerHintUrl: string = '';
 
   /**
    * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.
@@ -257,6 +257,7 @@ export class LidoTrace {
 
   private showFingerHint(state: any) {
     if (this.fingerImg) return; // already showing
+    if (!this.fingerHintUrl.trim()) return;
 
     const currentPath = state.paths[state.currentPathIndex];
     if (!currentPath) return;
@@ -265,14 +266,7 @@ export class LidoTrace {
     const IMG_SIZE = 40; // width & height of finger.png
 
     const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    const testImage = new Image();
-    testImage.onload = () => {
-      img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(this.fingerHintUrl));
-    };
-    testImage.onerror = () => {
-      img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(fingerUrl));
-    };
-    testImage.src = convertUrlToRelative(this.fingerHintUrl || fingerUrl);
+    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(this.fingerHintUrl));
 
     img.setAttribute('width', `${IMG_SIZE}`);
     img.setAttribute('height', `${IMG_SIZE}`);
