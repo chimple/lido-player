@@ -75,6 +75,11 @@ export class LidoText {
   @Prop() ariaHidden: string = '';
 
   /**
+   * Allows the text element to be freely moved by pointer/touch and persists the final x/y attributes.
+   */
+  @Prop() move: string = 'false';
+
+  /**
    * X-axis (horizontal) position of the text component (CSS value, e.g., '10px', '5vw').
    */
   @Prop() x: string = '0px';
@@ -324,6 +329,7 @@ export class LidoText {
         style={this.style}
         aria-label={this.ariaLabel}
         aria-hidden={this.ariaHidden}
+        move={this.move}
         span-type={this.spanType}
         disable-speak={`${this.disableSpeak}`}
       >
