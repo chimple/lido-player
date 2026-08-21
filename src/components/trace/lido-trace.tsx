@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
+import { Component, Prop, h, Host, State, Watch, Element, getAssetPath } from '@stencil/core';
 import {
   convertUrlToRelative,
   executeActions,
@@ -19,7 +19,7 @@ import { trace } from 'console';
   tag: 'lido-trace',
   styleUrl: 'lido-trace.css',
   shadow: false,
-  assetsDirs: ['svg', 'images'], //  ← added “images” so finger.png is bundled
+  assetsDirs: ['assets'],
 })
 export class LidoTrace {
   /**
@@ -257,7 +257,6 @@ export class LidoTrace {
 
   private showFingerHint(state: any) {
     if (this.fingerImg) return; // already showing
-    if (!this.fingerHintUrl.trim()) return;
 
     const currentPath = state.paths[state.currentPathIndex];
     if (!currentPath) return;
@@ -266,7 +265,7 @@ export class LidoTrace {
     const IMG_SIZE = 40; // width & height of finger.png
 
     const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', convertUrlToRelative(this.fingerHintUrl));
+    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.getFingerHintAssetUrl());
 
     img.setAttribute('width', `${IMG_SIZE}`);
     img.setAttribute('height', `${IMG_SIZE}`);
@@ -298,6 +297,15 @@ export class LidoTrace {
       this.fingerImg.parentNode.removeChild(this.fingerImg);
     }
     this.fingerImg = null;
+  }
+
+  private getFingerHintAssetUrl() {
+    const providedUrl = this.fingerHintUrl.trim();
+    if (providedUrl) {
+      return convertUrlToRelative(providedUrl);
+    }
+
+    return getAssetPath('assets/Tracing-hand.svg');
   }
 
   // Fetch the SVG file asynchronously
