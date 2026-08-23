@@ -55,7 +55,7 @@
   transform: translateX(-50%);
   width: 120%;        
   height: 60px;     
-  background-image: url("https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Shadow.svg");
+  background-image: var(--lido-balance-shadow-url);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
