@@ -38,7 +38,7 @@ export class LidoCalculator {
   @Prop() bgColor: string = '#60DADA';
 
   /** Icon URL for the pen image shown on the calculator UI */
-  @Prop() penIcon: string = "https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/calculator/penIcon.png";
+  @Prop() penIcon: string = '';
 
 
   /** Current display value shown in the calculator screen */

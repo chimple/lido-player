@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, State, Watch, Element } from '@stencil/core';
+import { Component, Prop, h, Host, State, Watch, Element, getAssetPath } from '@stencil/core';
 import {
   convertUrlToRelative,
   executeActions,
@@ -19,7 +19,7 @@ import { trace } from 'console';
   tag: 'lido-trace',
   styleUrl: 'lido-trace.css',
   shadow: false,
-  assetsDirs: ['svg', 'images'], //  ← added “images” so finger.png is bundled
+  assetsDirs: ['assets'],
 })
 export class LidoTrace {
   /**
@@ -123,7 +123,7 @@ export class LidoTrace {
   /**
    * URL for the finger hint image
    */
-  @Prop() fingerHintUrl: string = 'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Tracing-hand.svg';
+  @Prop() fingerHintUrl: string = getAssetPath('assets/Tracing-hand.svg');
 
   /**
    * Event handler for an Incorrect Trace, which can be used to trigger custom logic when the action is incorrect.

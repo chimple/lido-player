@@ -1,29 +1,27 @@
-import { Component, h, Host, Prop, Element, State,  Method ,Watch} from '@stencil/core';
+import { Component, h, Host, Prop, Element, State,  Method ,Watch, getAssetPath} from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp } from '../../utils/utils';
 
 @Component({
   tag: 'lido-balance',
   styleUrl: 'lido-balance.css',
   shadow: false,
+  assetsDirs: ['assets'],
 })
 export class LidoBalance {
-   /**
+  /**
    * URL of the pivot (base stand) image used in the balance visualization.
    */
-  @Prop() pivotimage: string =
-    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Display%20stand.svg';
+  @Prop() pivotimage: string = '';
 
   /**
    * URL of the scale (bar) image that tilts based on the weight difference.
    */
-  @Prop() scaleimage: string =
-    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Bar.svg';
+  @Prop() scaleimage: string = '';
 
   /**
    * URL of the handler (side stands / hooks) image for the balance.
    */
-  @Prop() handlerimage: string =
-    'https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/balancing/Stands.svg';
+  @Prop() handlerimage: string = '';
 
   /**
    * Fill color applied to all loaded SVGs (pivot, scale, handler).
@@ -295,6 +293,7 @@ export class LidoBalance {
       display: parseProp(`${this.visible}`, orientation) === "true" ? 'flex' : 'none', 
       margin: parseProp(this.margin, orientation),
       padding: parseProp(this.padding, orientation),
+      '--lido-balance-shadow-url': `url(${getAssetPath('assets/Shadow.svg')})`,
      
     };
   }
