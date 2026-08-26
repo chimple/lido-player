@@ -1,5 +1,5 @@
 import { Component, Host, Prop, State, h, Element } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, parseProp ,validateObjectiveStatus } from '../../utils/utils';
+import { convertUrlToRelative, equationCheck, initEventsForElement, parseProp, storingEachActivityScore, validateObjectiveStatus } from '../../utils/utils';
 import { LidoContainer } from '../../utils/constants';
 
 @Component({
@@ -265,6 +265,19 @@ export class LidoMathMatrix {
     }
 
     this.updateValue(index.toString());
+
+    const container = document.getElementById(LidoContainer) as HTMLElement;
+    const isWriteSetGrid =
+      this.clickable &&
+      this.type === 'checkerBlock' &&
+      this.el.id === 'mat1' &&
+      !!container?.getAttribute('equationCheck');
+
+    if (isWriteSetGrid && container) {
+      const result = !!equationCheck(container.getAttribute('equationCheck') as string);
+      console.log('Write Set checkerBlock click:', { result });
+      storingEachActivityScore(result);
+    }
 
     // trigger the next container if right slot was clicked
     validateObjectiveStatus();
