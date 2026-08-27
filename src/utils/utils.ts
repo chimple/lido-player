@@ -1592,6 +1592,9 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
   if (!element) return;
   if (!value) return;
 
+  const container = document.getElementById(LidoContainer) as HTMLElement | null;
+  const shouldRevealEditedString = container?.getAttribute('reveal-from-string') === 'true';
+
   // Select all drag elements and drop elements
   const dragElements = Array.from(element.querySelectorAll("[type='drag']")) as HTMLElement[];
 
@@ -1602,11 +1605,28 @@ export const questionBoxAnimation = async (element: HTMLElement, value: string) 
       dragElement.style.transition = 'opacity 0.5s ease';
       dragElement.style.opacity = '0'; // Fade out
 
-      const dropEl = document.getElementById(dropToAttr) as HTMLElement | null;
+    const dropEl = document.getElementById(dropToAttr) as HTMLElement | null;
+    if (!dropEl) return;
 
-      const dragVal = dragElement.getAttribute("value");
-      if (dragVal && dropEl.innerText.trim() === "?") {
-        dropEl.innerText = dragVal;
+      const dragVal = dragElement.getAttribute("value") || "";
+      const dragString = (
+        dragElement.getAttribute("string") ||
+        (dragElement as any).string ||
+        dragElement.textContent ||
+        dragVal
+      ).toString().trim();
+
+      const visibleText = shouldRevealEditedString ? dragString : dragVal.trim();
+      if (visibleText) {
+        dropEl.setAttribute("string", visibleText);
+        (dropEl as any).string = visibleText;
+
+        const firstTextNode = Array.from(dropEl.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+        if (firstTextNode) {
+          firstTextNode.textContent = visibleText;
+        } else {
+          dropEl.textContent = visibleText;
+        }
       }
 
       // setTimeout(() => {
