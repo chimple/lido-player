@@ -70,16 +70,23 @@ export function dragDropAnimation(container: HTMLElement, dragElement: HTMLEleme
  
              dragElement.classList.add('zoom-fade-out');
              dropElement.classList.add('zoom-fade-out');
- 
-           setTimeout(() => {
+
+           const cleanup = () => {
              div.remove();
              container.style.pointerEvents = 'auto';
- 
+
             if (isObjectiveComplete) {
               calculateScore();
               triggerNextContainer();
               container.removeAttribute(AnimationVanishedValuesKey);
             }
-           }, 800); // match animation duration
+           };
+
+           const templateId = (container.getAttribute('template-id') || '').toLowerCase();
+           if (templateId === 'letterpairing' || templateId === 'numberpair') {
+             cleanup();
+           } else {
+             setTimeout(cleanup, 800); // match animation duration
+           }
          }, 250);
 }
