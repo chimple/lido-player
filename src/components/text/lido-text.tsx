@@ -312,6 +312,8 @@ export class LidoText {
   }
 
   render() {
+    const displayText = i18next.t(this.string).replace(/_phonics?/gi, '');
+
     return (
       <Host
         class="lido-text"
@@ -333,7 +335,7 @@ export class LidoText {
         span-type={this.spanType}
         disable-speak={`${this.disableSpeak}`}
       >
-        {this.spanType !== '' ? <div class="lido-text-content"> {i18next.t(this.string)}</div> :  i18next.t(this.string)}
+        {this.spanType !== '' ? <div class="lido-text-content"> {displayText}</div> : displayText}
       </Host>
     );
   }
