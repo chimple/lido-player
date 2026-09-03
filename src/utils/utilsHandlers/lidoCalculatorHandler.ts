@@ -12,35 +12,28 @@ const animationToRemoveEquationSolvedCellForNimbleTable = (
   container: HTMLElement
 ) => {
   return new Promise<void>((resolve) => {
-    const keyframes = `
-      @keyframes widthDecrease {
-        0% { 
-          background-color: ${activeCell.style.backgroundColor};
-          height: ${activeCell.style.height};
-          margin: ${activeCell.style.margin};
-        }
-        100% { background-color: transparent; height: 0px; margin: 0px; }
-      }`;
+    let removed = false;
 
-    const styleSheet = document.styleSheets[0];
-    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+    const removeActiveCell = () => {
+      if (removed) return;
+      removed = true;
 
-    activeCell.style.animation = `widthDecrease 0s`;
-
-    activeCell.addEventListener(
-      "animationend",
-      () => {
+      if (activeCell.isConnected) {
         activeCell.remove();
-        // Trigger next container only after the last calculate cell is removed
-        const remainingCalculateTypes = container.querySelectorAll("[type='calculate']");
-        if (remainingCalculateTypes.length === 0) {
-          setTimeout(() => triggerNextContainer(), 2000);
-        }
+      }
 
-        resolve();
-      },
-      { once: true }
-    );
+      // Trigger next container only after the last calculate cell is removed
+      const remainingCalculateTypes = container.querySelectorAll("[type='calculate']");
+      if (remainingCalculateTypes.length === 0) {
+        setTimeout(() => triggerNextContainer(), 2000);
+      }
+
+      resolve();
+    };
+
+    // Nimble uses a zero-duration removal; remove synchronously so progression
+    // does not depend on a browser animationend event.
+    removeActiveCell();
   });
 };
 
