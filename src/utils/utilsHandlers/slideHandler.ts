@@ -32,6 +32,14 @@ type CleanupElement = HTMLElement & {
   __lidoSlideCleanup?: () => void;
 };
 
+const syncSlideOrder = (container: HTMLElement): string[] => {
+  const slideOrder = Array.from(container.querySelectorAll<HTMLElement>("[type='slide']"))
+    .map(item => item['value']);
+
+  container.setAttribute(SelectedValuesKey, JSON.stringify(slideOrder));
+  return slideOrder;
+};
+
 export const slideAnimation = async () => {
   const container = document.getElementById(LidoContainer);
   if (!container) return;
@@ -107,6 +115,10 @@ export function slidingWithScaling(element: HTMLElement): void {
 
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if(container.getAttribute('canplay') === 'false')return;
+
+  // Slide activities can start in the correct order. Keep their initial DOM
+  // order available to the Next/check validation before the first swap occurs.
+  syncSlideOrder(container);
 
   let verticalDistance;
   let horizontalDistance;
@@ -323,14 +335,7 @@ export function slidingWithScaling(element: HTMLElement): void {
 
 const slideCompleted = (slideElement: HTMLElement) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  const slideArr = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ;
-  const allSlideElements = document.querySelectorAll("[type='slide']");
-
-  let index = 0;
-  allSlideElements.forEach(item => {
-    slideArr[index++] = item['value'];
-  });
- container.setAttribute(SelectedValuesKey, JSON.stringify(slideArr));
+  const slideArr = syncSlideOrder(container);
 
   const objectiveString = document.getElementById(LidoContainer)['objective'];
   const objectiveArray = objectiveString.split(',');
