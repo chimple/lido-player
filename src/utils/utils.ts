@@ -789,7 +789,7 @@ const storeActivityScore = (score: number) => {
   activityScore[activityScoreKey] = score; 
   //send Custom Event to parent
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } })); 
-  const actualActivitySeconds = Math.max(1, Number((Timer.getI().getElapsed() / 1000).toFixed(1)));
+  const actualActivitySeconds = Number((Timer.getI().getElapsed() / 1000).toFixed(1));
   ACTIVYTY_TIME_SPEND_ARRAY.push(actualActivitySeconds);
   console.log(`[Utils][Activity Time] Activity ${index + 1}/${totalIndex} - Time spent: ${actualActivitySeconds}s`);
 
