@@ -1,1 +1,1 @@
-export{$ as format}from"./p-BOWVUMVC.js";import"./p-Dfj4noku.js";
+export{$ as format}from"./p-gkKsw3a6.js";import"./p-Dnvog_Mm.js";
