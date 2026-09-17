@@ -669,6 +669,7 @@ export const calculateScore = () => {
   gameScore.totalRightMovesCount += rightMoves;
   gameScore.totalWrongMovesCount += wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
+  console.log('[Activity Score]', { rightMoves, wrongMoves, activityScore: finalScore });
   storeActivityScore(finalScore);
   gameScore.rightMoves = 0;
   gameScore.wrongMoves = 0;
@@ -789,7 +790,7 @@ const storeActivityScore = (score: number) => {
   activityScore[activityScoreKey] = score; 
   //send Custom Event to parent
   // window.dispatchEvent(new CustomEvent(ActivityEndKey, { detail: { index: index, totalIndex: totalIndex, score: score } })); 
-  const actualActivitySeconds = Math.ceil(Timer.getI().getElapsed() / 1000);
+  const actualActivitySeconds = Number((Timer.getI().getElapsed() / 1000).toFixed(1));
   ACTIVYTY_TIME_SPEND_ARRAY.push(actualActivitySeconds);
   console.log(`[Utils][Activity Time] Activity ${index + 1}/${totalIndex} - Time spent: ${actualActivitySeconds}s`);
 
@@ -804,7 +805,7 @@ const storeActivityScore = (score: number) => {
     gameScore.finalScore = Math.floor(finalScore);
     console.log('Total Score : ', gameScore.finalScore);
     // window.dispatchEvent(new CustomEvent(LessonEndKey, { detail: { score: finalScore } }));
-    const timeSpendForLesson = ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0);
+    const timeSpendForLesson = Number(ACTIVYTY_TIME_SPEND_ARRAY.reduce((sum, current) => sum + current, 0).toFixed(1));
     console.log(`[Utils][Lesson Time] Total lesson time spent: ${timeSpendForLesson}s`);
     dispatchLessonEndEvent(totalIndex, gameScore.totalRightMovesCount, gameScore.totalWrongMovesCount, finalScore, timeSpendForLesson, lessonTrackingParams);
     gameScore.totalRightMovesCount = 0;
