@@ -1,7 +1,14 @@
-import { SelectedValuesKey } from "../constants";
+import { AnimationVanishedValuesKey, SelectedValuesKey } from "../constants";
 import { calculateScore, executeActions, triggerNextContainer } from "../utils";
 
-const tempVanishedValues: any[] = [];
+const readVanishedValues = (container: HTMLElement): string[] => {
+  try {
+    const values = JSON.parse(container.getAttribute(AnimationVanishedValuesKey) ?? '[]');
+    return Array.isArray(values) ? values : [];
+  } catch {
+    return [];
+  }
+};
 export function dragDropAnimation(container: HTMLElement, dragElement: HTMLElement, dropElement: HTMLElement): void {
  container.style.pointerEvents = "none";
          setTimeout(async () => {
@@ -15,10 +22,12 @@ export function dragDropAnimation(container: HTMLElement, dragElement: HTMLEleme
            const allDragElements = container.querySelectorAll('[type="drag"]');
            const dragParents = Array.from(allDragElements).map(el => el.parentElement);
            const allSameParent = dragParents.every(parent => parent === dragElement.parentElement);
-           const selectedValues: any[] = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]');
+           const vanishedValues = readVanishedValues(container);
            const vanishedValue = dragElement.getAttribute('value') ?? dragElement.textContent?.trim();
            if (vanishedValue) {
-             tempVanishedValues.push(vanishedValue);}
+             vanishedValues.push(vanishedValue);
+             container.setAttribute(AnimationVanishedValuesKey, JSON.stringify(vanishedValues));
+           }
  
            // Remove from old parents
            if (allSameParent) {
@@ -40,10 +49,11 @@ export function dragDropAnimation(container: HTMLElement, dragElement: HTMLEleme
            dropElement.classList.remove('empty');
  
            const objective = container.getAttribute('objective');
+           const normalizedVanishedValues = vanishedValues.map(v => v.trim()).sort().join(',');
+           const normalizedObjective = objective?.split(',').map(v => v.trim()).sort().join(',');
            const isObjectiveComplete =
              !!objective &&
-             tempVanishedValues.map(v => v.trim()).sort().join(',') ===
-               objective.split(',').map(v => v.trim()).sort().join(',');
+             normalizedVanishedValues === normalizedObjective;
 
            if (dropElement.getAttribute('type') === 'drop') {
              const dropOnCorrect = dropElement.getAttribute('onCorrect') || '';
@@ -60,16 +70,23 @@ export function dragDropAnimation(container: HTMLElement, dragElement: HTMLEleme
  
              dragElement.classList.add('zoom-fade-out');
              dropElement.classList.add('zoom-fade-out');
- 
-           setTimeout(() => {
+
+           const cleanup = () => {
              div.remove();
              container.style.pointerEvents = 'auto';
- 
+
             if (isObjectiveComplete) {
               calculateScore();
               triggerNextContainer();
-              tempVanishedValues.length = 0;
+              container.removeAttribute(AnimationVanishedValuesKey);
             }
-           }, 800); // match animation duration
+           };
+
+           const templateId = (container.getAttribute('template-id') || '').toLowerCase();
+           if (templateId === 'letterpairing' || templateId === 'numberpair') {
+             cleanup();
+           } else {
+             setTimeout(cleanup, 800); // match animation duration
+           }
          }, 250);
 }

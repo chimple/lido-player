@@ -75,6 +75,18 @@ export function addClickListenerForClickType(element: HTMLElement): void {
   handlingElementFlexibleWidth(element, 'click');
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if(container.getAttribute('canplay') === 'false')return;
+
+  const isBubbleTypeKeyboardKey =
+    container?.getAttribute('template-id') === 'bubbleType' &&
+    element.closest('lido-keyboard') !== null;
+
+  // BubbleType manages key clicks and audio in lido-keyboard.tsx directly.
+  // Letting the generic click handler attach here creates a competing stop/play
+  // path that can interrupt the first bubble audio.
+  if (isBubbleTypeKeyboardKey) {
+    return;
+  }
+
   element.style.cursor = 'pointer';
   if (!element) {
     console.error('No element provided.');

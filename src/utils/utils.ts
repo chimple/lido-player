@@ -669,6 +669,7 @@ export const calculateScore = () => {
   gameScore.totalRightMovesCount += rightMoves;
   gameScore.totalWrongMovesCount += wrongMoves;
   let finalScore = Math.floor((rightMoves / (rightMoves + wrongMoves)) * 100);
+  console.log('[Activity Score]', { rightMoves, wrongMoves, activityScore: finalScore });
   storeActivityScore(finalScore);
   gameScore.rightMoves = 0;
   gameScore.wrongMoves = 0;
