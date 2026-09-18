@@ -11,7 +11,6 @@ import {
 } from '../../utils/utils';
 import { fingerUrl, LidoContainer, TraceMode } from '../../utils/constants';
 import { AudioPlayer } from '../../utils/audioPlayer';
-import { trace } from 'console';
 
 // Enum for different tracing modes
 
@@ -167,7 +166,9 @@ export class LidoTrace {
   @State() activePointerId: number | null = null;
 
   // Counter for throttling free trace updates
-  @State() freeTraceUpdateCounter = 0;
+  // This is only an internal counter. Keeping it out of @State prevents a
+  // Stencil component re-render while the user is dragging.
+  private freeTraceUpdateCounter = 0;
 
   /** ───────────────────────────────────────────────────────────
    *  NEW: idle‑timer + finger‑hint state
@@ -203,6 +204,7 @@ export class LidoTrace {
       lastPointerPos: null as { x: number; y: number } | null,
       dragOffset: null as { x: number; y: number } | null,
       isCompletingPath: false,
+      touchProximityThreshold: null as number | null,
     };
 
     const url = this.svgUrls[this.currentSvgIndex];
@@ -474,6 +476,12 @@ export class LidoTrace {
   setupDrawingPath(state: any) {
     state.paths.forEach((path: any, index: number) => {
       const pathLength = path.getTotalLength();
+      // Geometry calls are expensive on slower SVG implementations. Cache
+      // the length once and reuse it during pointer movement.
+      path._lidoTraceLength = pathLength;
+      path._lidoTraceStart = path.getPointAtLength(0);
+      path._lidoTraceEnd = path.getPointAtLength(pathLength);
+      path._lidoTraceIsClosed = this.getDistanceSquared(path._lidoTraceStart, path._lidoTraceEnd) < 200;
 
       // /** give every path an id so <mpath> can follow it */
       path.setAttribute('id', 'lido-path-' + index); //  ← NEW
@@ -720,18 +728,8 @@ export class LidoTrace {
       state.circle.setAttribute('cx', pointerPos.x.toString());
       state.circle.setAttribute('cy', pointerPos.y.toString());
 
-      // Only re-append if not already children list
-      const childNodes = state.svg?.childNodes;
-      let circleFound = false;
-      for (let i = 0; i < (childNodes?.length || 0); i++) {
-        const child = childNodes?.item(i) as SVGElement;
-        if (child && child.tagName === 'circle') {
-          circleFound = true;
-          break; // No need to continue once found
-        }
-      }
-      // If not found, append the circle
-      if (!circleFound && state.circle) {
+      // Keep the original safety check without scanning every SVG child.
+      if (state.circle.parentNode !== state.svg) {
         state.svg?.appendChild(state.circle);
       }
 
@@ -787,18 +785,8 @@ export class LidoTrace {
         state.circle.setAttribute('cy', guidedClosestPoint.y.toString());
       }
 
-      // Only re-append if not already children list
-      const childNodes = state.svg?.childNodes;
-      let circleFound = false;
-      for (let i = 0; i < (childNodes?.length || 0); i++) {
-        const child = childNodes?.item(i) as SVGElement;
-        if (child && child.tagName === 'circle') {
-          circleFound = true;
-          break; // No need to continue once found
-        }
-      }
-      // If not found, append the circle
-      if (!circleFound && state.circle) {
+      // Keep the original safety check without scanning every SVG child.
+      if (state.circle.parentNode !== state.svg) {
         state.svg?.appendChild(state.circle);
       }
 
@@ -807,9 +795,7 @@ export class LidoTrace {
       // Completion logic for closed paths: only allow completion if almost all points are traced
       const COMPLETION_THRESHOLD = 0.95; // 95% of the path must be traced
       let percentComplete = state.lastLength / state.totalPathLength;
-      let startPoint = currentPath.getPointAtLength(0);
-      let endPoint = currentPath.getPointAtLength(currentPath.getTotalLength());
-      let pathIsClosed = this.getDistanceSquared(startPoint, endPoint) < 200; // threshold for overlap
+      const pathIsClosed = (currentPath as any)._lidoTraceIsClosed ?? false;
 
       if (pathIsClosed && state.totalPathLength > 50) {
         if (percentComplete >= COMPLETION_THRESHOLD) {
@@ -1026,7 +1012,7 @@ export class LidoTrace {
 
   // Find the closest point on the given path to the specified point using two-pass sampling (optimized)
   getClosestPointOnPath(pathNode: SVGGeometryElement, point: { x: number; y: number }, lastLength?: number) {
-    const pathLength = pathNode.getTotalLength();
+    const pathLength = (pathNode as any)._lidoTraceLength ?? pathNode.getTotalLength();
 
     let closestPoint = { x: 0, y: 0, length: 0 };
     let minDistanceSquared = Infinity;
