@@ -163,7 +163,7 @@ export class LidoAvatar {
     this.riveInstance = new Rive({
       src: rivSrc,
       canvas: canvas,
-      stateMachines: 'Idle',
+      stateMachines: 'State Machine 1',
       autoplay: true,
       onLoad: () => {
         this.riveInstance.resizeDrawingSurfaceToCanvas();
