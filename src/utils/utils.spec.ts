@@ -1,5 +1,5 @@
 import { format } from './utils';
-import { isArrangeLettersComplete, updateArrangeLettersCorrectness } from './utilsHandlers/slideHandler';
+import { getSlideValuesForValidation, isArrangeLettersComplete, isReorderComplete, updateArrangeLettersCorrectness, updateReorderCorrectness } from './utilsHandlers/slideHandler';
 
 describe('format', () => {
   it('returns empty string for no names defined', () => {
@@ -63,6 +63,50 @@ describe('Arrange Letters slide validation', () => {
     expect(slides[0].style.boxShadow).not.toContain('#65BC46');
     expect(slides[1].style.boxShadow).toContain('#65BC46');
     expect(slides[2].style.boxShadow).toContain('#65BC46');
+    expect(slides.every(slide => !slide.hasAttribute('disabled'))).toBe(true);
+  });
+});
+
+describe('Reorder slide validation', () => {
+  const createSlides = (ids: string[]): HTMLElement[] => {
+    const container = document.createElement('div');
+    container.setAttribute('template-id', 'reorder');
+    ids.forEach(id => {
+      const slide = document.createElement('div');
+      slide.setAttribute('type', 'slide');
+      slide.id = id;
+      slide.setAttribute('value', id.replace('option_', 'displayed-value-'));
+      container.appendChild(slide);
+    });
+    document.body.appendChild(container);
+    return Array.from(container.querySelectorAll('[type="slide"]')) as HTMLElement[];
+  };
+
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  it('validates the complete option ID order, not displayed values', () => {
+    expect(isReorderComplete(['option_1', 'option_2', 'option_3', 'option_4'], 'option_1,option_2,option_3,option_4')).toBe(true);
+    expect(isReorderComplete(['option_1', 'option_3', 'option_2', 'option_4'], 'option_1,option_2,option_3,option_4')).toBe(false);
+  });
+
+  it('uses option IDs for runtime validation instead of displayed values', () => {
+    const slides = createSlides(['option_1', 'option_2', 'option_3', 'option_4']);
+    const container = slides[0].parentElement as HTMLElement;
+
+    expect(getSlideValuesForValidation(container, slides)).toEqual(['option_1', 'option_2', 'option_3', 'option_4']);
+  });
+
+  it('applies positional correctness feedback without locking reordered items', () => {
+    const slides = createSlides(['option_1', 'option_3', 'option_2', 'option_4']);
+    const container = slides[0].parentElement as HTMLElement;
+
+    updateReorderCorrectness(container, ['option_1', 'option_3', 'option_2', 'option_4'], ['option_1', 'option_2', 'option_3', 'option_4']);
+    expect(slides[0].style.boxShadow).toContain('#65BC46');
+    expect(slides[1].style.boxShadow).not.toContain('#65BC46');
+    expect(slides[2].style.boxShadow).not.toContain('#65BC46');
+    expect(slides[3].style.boxShadow).toContain('#65BC46');
     expect(slides.every(slide => !slide.hasAttribute('disabled'))).toBe(true);
   });
 });
