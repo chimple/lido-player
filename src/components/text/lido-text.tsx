@@ -26,8 +26,14 @@ export class LidoText {
 
   /**
    * Value associated with the text element, typically used for internal logic or tracking.
-   */
+  */
   @Prop() value: string = '';
+
+  /**
+   * Number of drag elements required for count-based drop interactions.
+   * Used by the Blender template to determine the correct and incorrect border state.
+   */
+  @Prop() requiredDrops: string = '';
 
   /**
    * The string of text to be displayed in the component.
@@ -318,6 +324,7 @@ export class LidoText {
       <Host
         class="lido-text"
         value={this.value}
+        required-drops={this.requiredDrops}
         type={this.type}
         tab-index={this.tabIndex}
         audio={this.audio}

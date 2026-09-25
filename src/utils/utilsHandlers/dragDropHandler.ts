@@ -6,6 +6,9 @@ import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValues
 import { dispatchElementDropEvent } from '../customEvents';
 import { highlightElement, removeHighlight } from './highlightHandler';
 import { dragDropAnimation } from './animationHandler';
+
+const isBlenderTemplate = (container: HTMLElement): boolean =>
+  container?.getAttribute('template-id') === 'blender';
 export function buildDropHasDragFromDOM(): Record<string, { drop: string; isFull: boolean }> {
   const dropHasDrag: Record<string, { drop: string; isFull: boolean }> = {};
 
@@ -78,7 +81,6 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
 
   // Fetch the container element
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  const templateId = container.getAttribute("template-id");
   if (!container) {
     console.error(`Container with ID "container" not found.`);
     return;
@@ -264,7 +266,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
     // Reset styles for all elements
     allElements.forEach(otherElement => {
       if (storedTabIndexes.includes(JSON.parse(otherElement.getAttribute('tab-index')))) {
-        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && container.getAttribute("template-id") !== "blender") {
+        if (!(element.getAttribute('dropAttr')?.toLowerCase() === DropMode.Diagonal) && !isBlenderTemplate(container)) {
           if (otherElement) {
             setOpacityIfChanged(otherElement, "0.3")
           } 
@@ -355,7 +357,7 @@ export function enableDraggingWithScaling(element: HTMLElement): void {
       onElementDropComplete(element, mostOverlappedElement);
     }
     
-    if(templateId === "blender" && element && mostOverlappedElement){
+    if(isBlenderTemplate(container) && element && mostOverlappedElement){
       const allElements = document.querySelectorAll(`*`);
       allElements.forEach(el => {
         removeHighlight(el as HTMLElement);
@@ -843,7 +845,7 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
   // Add pulse and highlight effect for a successful match
   const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
   dispatchElementDropEvent(dragElement, dropElement, isCorrect);
-  if(container.getAttribute("template-id") !== "blender"){
+  if(!isBlenderTemplate(container)){
       storingEachActivityScore(isCorrect);
   }
 
@@ -851,6 +853,19 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   const allDropElements = document.querySelectorAll<HTMLElement>('.drop-element');
   allDropElements.forEach(el => updateDropBorder(el));
+
+  if (isBlenderTemplate(container)) {
+    const requiredDrops = Number(dropElement.getAttribute('required-drops') ?? 0);
+    const placedDrops = document.querySelectorAll(`[${DropToAttr}="${dropElement.id}"]`).length;
+    const action = placedDrops > 0 && placedDrops <= requiredDrops
+      ? dropElement.getAttribute('onCorrect')
+      : dropElement.getAttribute('onInCorrect');
+
+    if (action) {
+      await executeActions(action, dropElement, dragElement);
+    }
+  }
+
   highlightElement();
   await onActivityComplete(dragElement, dropElement);
 }
@@ -860,13 +875,28 @@ export function updateDropBorder(element: HTMLElement): void {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const showBorder = container.getAttribute('show-drop-border');
-  if (showBorder !== 'true') {
+  if (showBorder !== 'true' && !isBlenderTemplate(container)) {
     return;
   }
   const dropId = element.id;
   const dragSelectedElements = document.querySelectorAll(`[${DropToAttr}="${dropId}"]`);
 
-  if (dragSelectedElements.length > 0 && container.getAttribute("template-id") !== "blender") {
+  if (isBlenderTemplate(container)) {
+    const requiredDrops = Number(element.getAttribute('required-drops') ?? 0);
+    const placedDrops = dragSelectedElements.length;
+    const showCorrectBorder = placedDrops > 0 && placedDrops <= requiredDrops;
+
+    element.classList.toggle('empty', !showCorrectBorder);
+    element.classList.remove('filled');
+    element.style.setProperty(
+      'border',
+      showCorrectBorder ? '5px dashed green' : '5px dashed #f34d08',
+      'important',
+    );
+    return;
+  }
+
+  if (dragSelectedElements.length > 0 && !isBlenderTemplate(container)) {
     element.classList.add('filled');
     element.classList.remove('empty');
     element.classList.remove('highlight-element')
@@ -971,7 +1001,7 @@ export async function onClickDropOrDragElement(element: HTMLElement, type: 'drop
     selectedDragElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
     // Remove highlights after moving the element
-    if(container.getAttribute("template-id") !== "blender"){
+    if(!isBlenderTemplate(container)){
       const allElements = document.querySelectorAll(`*`);
       allElements.forEach(el => {
         removeHighlight(el as HTMLElement);

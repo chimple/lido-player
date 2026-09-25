@@ -363,10 +363,11 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             if (dropTo === "hundredsDrop") hundreds++;
           });
 
-          const unitsValue = units * 1;
-          const tensValue = tens * 10;
-          const hundredsValue = hundreds * 100;
-          const totalValue = unitsValue + tensValue + hundredsValue;
+          // Blender displays the number of blocks placed in each column.
+          // Blender's drag/drop values are also the required block counts.
+          const unitsValue = units;
+          const tensValue = tens;
+          const hundredsValue = hundreds;
 
           // ✅ Update Lido Text Boxes
           const unitsBox = document.getElementById("units");
@@ -678,10 +679,21 @@ export const calculateScore = () => {
 export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
+  const isBlender = container.getAttribute('template-id') === 'blender';
   await executeActions("this.alignMatch='true'", dropElement, dragElement);
 
-    if (dragElement && dropElement) {
-  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  if (dragElement && dropElement) {
+  let isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  if (isBlender) {
+    const requiredDrops = Number(dropElement.getAttribute('required-drops') ?? 0);
+    const placedDrops = document.querySelectorAll(
+      `[drop-to="${dropElement.id}"]`,
+    ).length;
+
+    // Blender accepts every count from 1 through the required count.
+    // Zero or an overfilled drop zone uses the incorrect action.
+    isCorrect = placedDrops > 0 && placedDrops <= requiredDrops;
+  }
   // storing each activity score based on isCorrect for (all drag-drop events)
     // storingEachActivityScore(isCorrect);
   if (isCorrect) {
@@ -694,7 +706,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       container.getAttribute('dropAttr')?.toLowerCase() === DropMode.EnableAnimation.toLowerCase()
         ? ''
         : dropElement.getAttribute('onCorrect');
-    if (onCorrect) {
+    if (onCorrect && !isBlender) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
 
@@ -709,7 +721,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       console.log("Wrong Moves : ", gameScore.wrongMoves);
     }
     const onInCorrect = dropElement.getAttribute('onInCorrect');
-    if (onInCorrect) {
+    if (onInCorrect && !isBlender) {
       await executeActions(onInCorrect, dropElement, dragElement);
     }
   }
