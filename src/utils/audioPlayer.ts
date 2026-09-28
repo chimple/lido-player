@@ -210,11 +210,8 @@ export class AudioPlayer {
           this.resolvePlaybackWait();
         }
       };
-      this.audioElement.onstalled = () => {
-        if (this.playbackHasStarted) {
-          this.resolvePlaybackWait();
-        }
-      };
+      // Buffering is temporary: keep waiting for the clip to finish.
+      this.audioElement.onstalled = null;
       this.audioElement.onerror = () => {
         if (this.playbackHasStarted) {
           this.resolvePlaybackWait();

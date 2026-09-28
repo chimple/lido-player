@@ -478,7 +478,7 @@ export const findMostoverlappedElement = (element: HTMLElement, type: string) =>
 
   return mostOverlappedElement;
 };
-function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElement, container: HTMLElement, transition: string = 'transform 0.5s ease'): void {
+export function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElement, container: HTMLElement, transition: string = 'transform 0.5s ease'): void {
   if (!targetElement || !dragElement || !container) return;
   const dropRect = targetElement.getBoundingClientRect();
   const dragRect = dragElement.getBoundingClientRect();
@@ -493,7 +493,7 @@ function animateDragToTarget(dragElement: HTMLElement, targetElement: HTMLElemen
   const finalX = currentX + dx * (1 / calculateScale());
   const finalY = currentY + dy * (1 / calculateScale());
 
-  dragElement.style.transition = 'transform 0.5s ease';
+  dragElement.style.transition = 'transform 1s ease';
   dragElement.style.transform = `translate(${finalX}px, ${finalY}px)`;
 }
 export async function handleResetDragElement(

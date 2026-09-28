@@ -18,9 +18,9 @@ import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
-import { enableReorderDrag } from './utilsHandlers/sortHandler';
+import { categoriseCompleted, enableReorderDrag, resetElementStyles } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation, animateDragToTarget } from './utilsHandlers/dragDropHandler';
 import { enableFreeMove } from './utilsHandlers/moveHandler';
 import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { cos, evaluate, isArray } from 'mathjs';
@@ -30,6 +30,7 @@ import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/li
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
 import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
 import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from './utilsHandlers/timer';
+import { dragDropAnimation } from './utilsHandlers/animationHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -698,6 +699,8 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     // storingEachActivityScore(isCorrect);
   if (isCorrect) {
     if(dropElement.getAttribute('type') === "category"){
+      dragElement.classList.remove("category-dropped-onInCorrect")
+      dragElement.classList.add("category-dropped-onCorrect")
       gameScore.rightMoves += 1;
       console.log("Right Moves : ", gameScore.rightMoves);
       console.log("Wrong Moves : ", gameScore.wrongMoves);
@@ -716,9 +719,39 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     }
   } else {
     if(dropElement.getAttribute('type') === "category"){
+      dragElement.classList.remove("category-dropped-onCorrect")
+      dragElement.classList.add("category-dropped-onInCorrect")
+
       gameScore.wrongMoves += 1;
       console.log("Right Moves : ", gameScore.rightMoves);
       console.log("Wrong Moves : ", gameScore.wrongMoves);
+      const categorizeArea = container.querySelector(`[type="optionArea"]`) as HTMLElement
+      const sameElArr = Array.from(container.querySelectorAll(`[value="${dragElement.getAttribute('value')}"]`));
+      const divEl = sameElArr.find(el => el !== dragElement && el.tagName === 'DIV') as HTMLElement;
+      
+
+      setTimeout(() => {
+        const dummyEl = document.createElement("div") as HTMLElement
+        dummyEl.style.width = dragElement.offsetWidth + "px"
+        dummyEl.style.height = dragElement.offsetHeight + "px"
+        categorizeArea.appendChild(dummyEl)
+        const dragX = dragElement.offsetLeft
+        const dragY = dragElement.offsetTop
+        dragElement.style.position = "absolute"
+        dragElement.style.transition = '';
+        
+        dragElement.style.transform = `translate(${dragX}px, ${dragY}px)`;
+        animateDragToTarget(dragElement, dummyEl, container)
+          setTimeout(() => {
+            dummyEl.replaceWith(dragElement);
+            resetElementStyles(dragElement);
+            dragElement.classList.remove("category-dropped-onInCorrect")
+            dragElement.classList.remove("dropped")
+            dragElement.removeAttribute("drop-to")
+          }, 1000)  
+        }, 2000)   
+      
+      
     }
     const onInCorrect = dropElement.getAttribute('onInCorrect');
     if (onInCorrect && !isBlender) {
@@ -828,7 +861,9 @@ const storeActivityScore = (score: number) => {
   }
 };
 
-export const handleShowCheck = () => {
+const pendingCategoryChecks = new WeakSet<HTMLElement>();
+
+export const handleShowCheck = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const objectiveString = container['objective'];
   const selectValues = container.getAttribute(SelectedValuesKey) ?? '';
@@ -845,8 +880,22 @@ export const handleShowCheck = () => {
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
   } else {
-    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")  &&  container.getAttribute('dropAttr')?.toLowerCase() !== DropMode.EnableAnimation.toLowerCase()){
+    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']")  &&  container.getAttribute('dropAttr')?.toLowerCase() !== DropMode.EnableAnimation.toLowerCase()){
+      
+      if(container.querySelector("[type='category']")){
+        if (pendingCategoryChecks.has(container)) return;
+        pendingCategoryChecks.add(container);
+        try {
+          await categoriseCompleted(container);
+          await validateObjectiveStatus();
+        } finally {
+          pendingCategoryChecks.delete(container);
+        }
+        return;
+      }
+
       validateObjectiveStatus();
+      
     }
 
     
