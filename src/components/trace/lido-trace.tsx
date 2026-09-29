@@ -164,6 +164,7 @@ export class LidoTrace {
   @State() fileIndex: number = -1;
   @State() isDragging: boolean = false;
   @State() activePointerId: number | null = null;
+  private activeTraceState: any = null;
 
   // Counter for throttling free trace updates
   // This is only an internal counter. Keeping it out of @State prevents a
@@ -183,6 +184,8 @@ export class LidoTrace {
   @Watch('svgSource')
   @Watch('mode')
   async initializeSVG() {
+    this.cleanupTraceState(this.activeTraceState);
+
     let state = {
       fileIndex: -1,
       currentPathIndex: 0,
@@ -205,7 +208,10 @@ export class LidoTrace {
       dragOffset: null as { x: number; y: number } | null,
       isCompletingPath: false,
       touchProximityThreshold: null as number | null,
+      pointerTransform: null as { offsetX: number; offsetY: number; scaleX: number; scaleY: number } | null,
+      pointerRect: null as DOMRect | null,
     };
+    this.activeTraceState = state;
 
     const url = this.svgUrls[this.currentSvgIndex];
     
@@ -242,6 +248,25 @@ export class LidoTrace {
   disconnectedCallback() {
     window.removeEventListener('resize', this.handleWindowResize);
     window.removeEventListener('load', this.handleWindowLoad);
+    this.cleanupTraceState(this.activeTraceState);
+    this.activeTraceState = null;
+  }
+
+  /** Release listeners, pending frames, timers, and cached SVG geometry. */
+  private cleanupTraceState(state: any) {
+    if (!state) return;
+    state.cleanup?.();
+    if (state.rafId) cancelAnimationFrame(state.rafId);
+    state.rafId = null;
+    state.pointerMoveEvent = null;
+    state.pathSamples = [];
+    state.paths = [];
+    state.svg = null;
+    if (this.idleTimer !== null) {
+      clearTimeout(this.idleTimer);
+      this.idleTimer = null;
+    }
+    this.hideFingerHint();
   }
 
   /** ───────────────────────────────────────────────────────────
@@ -483,6 +508,19 @@ export class LidoTrace {
       path._lidoTraceEnd = path.getPointAtLength(pathLength);
       path._lidoTraceIsClosed = this.getDistanceSquared(path._lidoTraceStart, path._lidoTraceEnd) < 200;
 
+      // Index the path once. Repeated getPointAtLength calls are expensive on
+      // low-end SVG implementations and used to dominate every pointer frame.
+      const sampleCount = 192;
+      const sampleStep = pathLength / sampleCount || 1;
+      const samples: { x: number; y: number; length: number }[] = [];
+      for (let sampleIndex = 0; sampleIndex <= sampleCount; sampleIndex++) {
+        const length = Math.min(pathLength, sampleIndex * sampleStep);
+        const point = path.getPointAtLength(length);
+        samples.push({ x: point.x, y: point.y, length });
+      }
+      path._lidoTraceSamples = samples;
+      path._lidoTraceSampleStep = sampleStep;
+
       // /** give every path an id so <mpath> can follow it */
       path.setAttribute('id', 'lido-path-' + index); //  ← NEW
 
@@ -522,7 +560,7 @@ export class LidoTrace {
       }
     });
 
-    state.totalPathLength = state.paths[state.currentPathIndex].getTotalLength();
+    state.totalPathLength = state.paths[state.currentPathIndex]._lidoTraceLength;
   }
 
   // Set up the draggable circle at the start of the first path
@@ -550,10 +588,14 @@ export class LidoTrace {
     state.circle.style.touchAction = 'none';
 
 
-    // Handle pointerdown on the circle to start dragging
-    state.circle.addEventListener('pointerdown', (evt: PointerEvent) => {
+    // Keep named handlers so the detached SVG can be fully released when the
+    // next trace starts. Anonymous handlers here previously retained every
+    // completed trace for the lifetime of the page.
+    const onPointerDown = (evt: PointerEvent) => {
       evt.preventDefault(); // Prevent default actions like text selection
-      const pointerPos = this.getPointerPosition(evt, state.svg!);
+      state.pointerRect = state.svg!.getBoundingClientRect();
+      state.pointerTransform = this.getSvgViewBoxTransform(state.svg!, state.pointerRect!);
+      const pointerPos = this.getPointerPosition(evt, state.svg!, state.pointerTransform, state.pointerRect);
       const circlePos = {
         x: parseFloat(state.circle.getAttribute('cx')!),
         y: parseFloat(state.circle.getAttribute('cy')!),
@@ -578,10 +620,10 @@ export class LidoTrace {
       }
       this.hideFingerHint(); // ← NEW
       this.resetIdleTimer(state); // ← NEW
-    }, { passive: false });
+    };
 
     // Handle pointermove on the SVG to update the circle position
-    state.svg?.addEventListener('pointermove', (evt: PointerEvent) => {
+    const onPointerMove = (evt: PointerEvent) => {
       if (!state.isDragging || evt.pointerId !== state.activePointerId) return;
       evt.preventDefault();
 
@@ -592,7 +634,7 @@ export class LidoTrace {
           state.rafId = null;
         });
       }
-    });
+    };
 
     // Handle pointerup and pointercancel on the SVG to stop dragging
     const endDrag = (evt: PointerEvent) => {
@@ -609,9 +651,23 @@ export class LidoTrace {
     state.svg?.addEventListener('pointercancel', endDrag);
 
     // Optional: Prevent context menu on long press
-    state.svg?.addEventListener('contextmenu', (evt: MouseEvent) => {
+    const onContextMenu = (evt: MouseEvent) => {
       evt.preventDefault();
-    });
+    };
+
+    state.circle.addEventListener('pointerdown', onPointerDown, { passive: false });
+    state.svg?.addEventListener('pointermove', onPointerMove);
+    state.svg?.addEventListener('contextmenu', onContextMenu);
+
+    state.cleanup = () => {
+      state.circle?.removeEventListener('pointerdown', onPointerDown);
+      state.svg?.removeEventListener('pointermove', onPointerMove);
+      state.svg?.removeEventListener('pointerup', endDrag);
+      state.svg?.removeEventListener('pointercancel', endDrag);
+      state.svg?.removeEventListener('contextmenu', onContextMenu);
+      state.isDragging = false;
+      state.activePointerId = null;
+    };
   }
 
   // Modified handlePointerMove function
@@ -623,7 +679,7 @@ export class LidoTrace {
     this.hideFingerHint(); // user is active, remove hint
 
     const evt = state.pointerMoveEvent as PointerEvent;
-    const rawPointerPos = this.getPointerPosition(evt, state.svg!);
+    const rawPointerPos = this.getPointerPosition(evt, state.svg!, state.pointerTransform, state.pointerRect);
     const pointerPos = state.dragOffset
       ? {
         x: rawPointerPos.x - state.dragOffset.x,
@@ -921,8 +977,13 @@ export class LidoTrace {
   }
 
   // Get the pointer position relative to the SVG
-  getPointerPosition(evt: PointerEvent, svg: SVGSVGElement) {
-    const viewBoxPoint = this.getPointerPositionFromViewBox(evt, svg);
+  getPointerPosition(
+    evt: PointerEvent,
+    svg: SVGSVGElement,
+    cachedTransform?: { offsetX: number; offsetY: number; scaleX: number; scaleY: number },
+    cachedRect?: DOMRect,
+  ) {
+    const viewBoxPoint = this.getPointerPositionFromViewBox(evt, svg, cachedTransform, cachedRect);
     if (viewBoxPoint) return viewBoxPoint;
 
     const svgPoint = svg.createSVGPoint();
@@ -932,15 +993,20 @@ export class LidoTrace {
     return ctm ? svgPoint.matrixTransform(ctm) : { x: evt.clientX, y: evt.clientY };
   }
 
-  private getPointerPositionFromViewBox(evt: PointerEvent, svg: SVGSVGElement) {
-    const rect = svg.getBoundingClientRect();
+  private getPointerPositionFromViewBox(
+    evt: PointerEvent,
+    svg: SVGSVGElement,
+    cachedTransform?: { offsetX: number; offsetY: number; scaleX: number; scaleY: number },
+    cachedRect?: DOMRect,
+  ) {
+    const rect = cachedRect || svg.getBoundingClientRect();
     const viewBox = svg.viewBox.baseVal;
 
     if (!rect.width || !rect.height || !viewBox.width || !viewBox.height) {
       return null;
     }
 
-    const { offsetX, offsetY, scaleX, scaleY } = this.getSvgViewBoxTransform(svg, rect);
+    const { offsetX, offsetY, scaleX, scaleY } = cachedTransform || this.getSvgViewBoxTransform(svg, rect);
 
     return {
       x: viewBox.x + (evt.clientX - rect.left - offsetX) / scaleX,
@@ -1013,6 +1079,42 @@ export class LidoTrace {
   // Find the closest point on the given path to the specified point using two-pass sampling (optimized)
   getClosestPointOnPath(pathNode: SVGGeometryElement, point: { x: number; y: number }, lastLength?: number) {
     const pathLength = (pathNode as any)._lidoTraceLength ?? pathNode.getTotalLength();
+
+    const samples = (pathNode as any)._lidoTraceSamples as { x: number; y: number; length: number }[] | undefined;
+    const sampleStep = (pathNode as any)._lidoTraceSampleStep as number | undefined;
+    if (samples?.length && sampleStep) {
+      const searchWindow = lastLength === undefined ? pathLength : 150;
+      const searchStart = lastLength === undefined ? 0 : Math.max(0, lastLength - searchWindow);
+      const searchEnd = lastLength === undefined ? pathLength : Math.min(pathLength, lastLength + searchWindow);
+      let nearest = samples[Math.max(0, Math.min(samples.length - 1, Math.round((lastLength || 0) / sampleStep)))];
+      let nearestDistance = Infinity;
+
+      for (const sample of samples) {
+        if (sample.length < searchStart || sample.length > searchEnd) continue;
+        const distance = this.getDistanceSquared(point, sample);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearest = sample;
+        }
+      }
+
+      // Refine only around the cached winner. This keeps the path accurate
+      // while reducing hot-path geometry calls from roughly 50 to a handful.
+      const refinementStep = 6;
+      const refineStart = Math.max(searchStart, nearest.length - sampleStep);
+      const refineEnd = Math.min(searchEnd, nearest.length + sampleStep);
+      let closestPoint = { ...nearest };
+      let minDistanceSquared = nearestDistance;
+      for (let length = refineStart; length <= refineEnd; length += refinementStep) {
+        const candidate = pathNode.getPointAtLength(length);
+        const distance = this.getDistanceSquared(point, candidate);
+        if (distance < minDistanceSquared) {
+          minDistanceSquared = distance;
+          closestPoint = { x: candidate.x, y: candidate.y, length };
+        }
+      }
+      return closestPoint;
+    }
 
     let closestPoint = { x: 0, y: 0, length: 0 };
     let minDistanceSquared = Infinity;
