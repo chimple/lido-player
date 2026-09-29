@@ -1,6 +1,6 @@
 {
   "name": "lido-player",
-  "version": "0.0.2-beta-19-dev",
+  "version": "0.0.2-beta-21-dev",
   "description": "Stencil Component For  Lido Player",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",
-    "@stencil/core": "^4.7.0",
+    "@stencil/core": "4.43.5",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/blocks": "^8.6.12",
     "@storybook/experimental-addon-test": "^8.6.12",
