@@ -26,3 +26,21 @@
 .card-back {
   transform: rotateY(180deg);
 }
+
+/* Flash Card's local next button is positioned against the 1600x900 Lido
+   canvas, rather than against the viewport or the global navigation bar. */
+lido-container[template-id="flashcardtemplate"] #arrow {
+  position: absolute !important;
+  left: auto !important;
+  top: 50% !important;
+  right: 13.3% !important;
+  transform: translateY(-50%);
+  z-index: 4 !important;
+  overflow: visible;
+}
+
+@media (orientation: portrait) {
+  lido-container[template-id="flashcardtemplate"] #arrow {
+    right: -4.3% !important;
+  }
+}

@@ -433,8 +433,8 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
-      
 
+      
       const keyframes = `
       @keyframes widthDecrease {
         0% { width: ${dragElement.style.width}; height: ${dragElement.style.height}; margin: ${dragElement.style.margin}; }
@@ -681,7 +681,17 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
   const isBlender = container.getAttribute('template-id') === 'blender';
-  await executeActions("this.alignMatch='true'", dropElement, dragElement);
+  const isBalancing = !!container.querySelector('lido-balance');
+  const usesBalancePlacement = isBalancing
+    && container.getAttribute('drop-action') !== DropAction.Move
+    && container.getAttribute('drop-action') !== DropAction.InfiniteDrop;
+
+  // Balance plates perform their own single placement pass after this method.
+  // Running alignMatch first makes two transforms compete and produces a visible
+  // horizontal drift as the item is re-parented.
+  if (!usesBalancePlacement) {
+    await executeActions("this.alignMatch='true'", dropElement, dragElement);
+  }
 
   if (dragElement && dropElement) {
   let isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
@@ -709,7 +719,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       container.getAttribute('dropAttr')?.toLowerCase() === DropMode.EnableAnimation.toLowerCase()
         ? ''
         : dropElement.getAttribute('onCorrect');
-    if (onCorrect && !isBlender) {
+    if (onCorrect && !isBlender && !isBalancing) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
 
@@ -754,7 +764,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       
     }
     const onInCorrect = dropElement.getAttribute('onInCorrect');
-    if (onInCorrect && !isBlender) {
+    if (onInCorrect && !isBlender && !isBalancing) {
       await executeActions(onInCorrect, dropElement, dragElement);
     }
   }
@@ -952,6 +962,14 @@ export const validateObjectiveStatus = async () => {
   {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
+
+  const isBalancing = !!container.querySelector('lido-balance');
+  if (isBalancing && !res) {
+    const dropElements = Array.from(container.querySelectorAll<HTMLElement>('[type="drop"]'));
+    const filledDropCount = dropElements.filter(drop => !!container.querySelector(`[drop-to="${drop.id}"]`)).length;
+    if (filledDropCount < dropElements.length) return;
+  }
+
   if (res) 
   {
     container.setAttribute("game-completed", "true");

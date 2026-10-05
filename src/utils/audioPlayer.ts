@@ -135,7 +135,7 @@ export class AudioPlayer {
     return el.closest('lido-text');
   }
 
-  public async play(targetElement: HTMLElement) {
+  public async play(targetElement: HTMLElement, suppressHighlight: boolean = false) {
     this.registerVisibilityEvents();
     this.playbackHasStarted = false;
 
@@ -163,12 +163,6 @@ export class AudioPlayer {
       console.warn('[AudioPlayer] No lido-container found');
       return;
     }
-    // Check if speaking is disabled on the target element or its closest lido-text parent
-    const text = targetElement.closest('lido-text') as HTMLElement;
-    // if(text && text.getAttribute('disable-speak')==='true'){
-    //   return;
-    // }
-
     if(container.getAttribute('highlight-word-by-word') === 'true') {
       const textElement = this.getLidoTextElement(targetElement);
       if (!textElement) {
@@ -181,6 +175,7 @@ export class AudioPlayer {
     }
 
     this.currentTargetElement = targetElement;
+    window.dispatchEvent(new CustomEvent('lidoAudioStarted', { detail: { target: targetElement } }));
 
 
     // then play the target element audio.
@@ -239,7 +234,7 @@ export class AudioPlayer {
           timeline = this.buildWordTimeline(textContent, durationMs, profile, language);
           this.wordRects = this.computeWordRects(targetElement);
         } else {
-          highlightSpeakingElement(targetElement);
+          if (!suppressHighlight) highlightSpeakingElement(targetElement);
         }
 
         // PLAY ONCE
@@ -269,7 +264,7 @@ export class AudioPlayer {
         setDraggingDisabled(false);
         if(container.getAttribute('highlight-word-by-word') !== 'true')
         {
-          stopHighlightForSpeakingElement(targetElement);
+          if (!suppressHighlight) stopHighlightForSpeakingElement(targetElement);
         }
       }
     }
@@ -277,11 +272,8 @@ export class AudioPlayer {
     else if (targetElement.textContent) 
     {
       try {
-        highlightSpeakingElement(targetElement);
-        // window.addEventListener('click', this.handleUserClick, true);
+        if (!suppressHighlight) highlightSpeakingElement(targetElement);
         await speakText(targetElement.textContent, targetElement);
-        const highlightedElements = document.querySelectorAll('.speaking-highlight');
-        // highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));         
       } 
       catch (error) {}
       finally {
@@ -302,6 +294,7 @@ export class AudioPlayer {
     if (this.currentTargetElement === targetElement) {
       this.currentTargetElement = null;
     }
+    window.dispatchEvent(new CustomEvent('lidoAudioEnded', { detail: { target: targetElement } }));
   }
 
   // GLOBAL STOP EVENTS (container change, activity change…)

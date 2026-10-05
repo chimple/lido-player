@@ -6,6 +6,7 @@
 
 import { Component, Host, Prop, h, Element, State, Watch } from '@stencil/core';
 import { parseProp, initEventsForElement, setVisibilityWithDelay, executeActions } from '../../utils/utils';
+import { AudioPlayer } from '../../utils/audioPlayer';
 
 @Component({
   tag: 'lido-flash-card',
@@ -122,6 +123,31 @@ export class LidoFlash {
    * `reflect` keeps the `<lido-flash-card flipped>` attribute in sync.
    */
   @Prop({ mutable: true, reflect: true }) flipped: boolean = false;
+  @Prop() autoFlipAfter: number = 4500;
+  private autoFlipTimer?: number;
+  private instructionDone = false;
+
+  private onAudioEnded = (event: Event) => {
+    const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
+    const instruction = this.instructionText();
+    if (!target || (target !== instruction && target.id !== 'lido-avatar' && !this.el.contains(target))) return;
+    if (target === this.instructionText()) {
+      this.instructionDone = true;
+      window.setTimeout(() => {
+        this.speakFront();
+      }, 1200);
+    } else if (target === this.frontText()) {
+      if (this.flipped) return;
+      if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+      this.autoFlipTimer = window.setTimeout(() => {
+        if (!this.flipped) this.handleFlip();
+      }, this.autoFlipAfter);
+    } else if (target === this.backText()) {
+      if (this.flipped) this.showArrow();
+    } else if (target.id === 'lido-avatar') {
+      executeActions("this.avatarAnimate='Idle'", target);
+    }
+  };
 
   /**
    * CSS margin value applied to each child element inside the container.
@@ -163,19 +189,14 @@ export class LidoFlash {
 
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);    
-    const card = this.el.querySelector('.card') as HTMLElement;
-    if (card) {
-      setTimeout(() => {
-        card.classList.add('flipped');
-        setTimeout(() => {
-          card.classList.remove('flipped');}, 500)
-      }, 500)
-    }
     initEventsForElement(this.el, this.type);
+    window.addEventListener('lidoAudioEnded', this.onAudioEnded);
     // handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'inline-block');
   }
 
   disconnectedCallback() {
+    window.removeEventListener('lidoAudioEnded', this.onAudioEnded);
+    if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
     window.removeEventListener('resize', this.updateStyles);
     window.removeEventListener('load', this.updateStyles);
   }
@@ -201,7 +222,67 @@ export class LidoFlash {
 
   /** Toggle the card when it is clicked. */
   private handleFlip = () => {
+    if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+    AudioPlayer.getI().stop();
+    const goingBack = !this.flipped;
     this.flipped = !this.flipped;
+    this.setArrowVisible(false);
+    if (goingBack) {
+      const text = this.backText();
+      if (text && text.textContent?.trim()) executeActions("this.speak='true'", text);
+      else this.showArrow();
+    } else {
+      this.speakFront();
+    }
+  };
+
+  private instructionText = () => document.getElementById(this.el.closest('lido-container')?.getAttribute('template-id') || '');
+  private frontText = () => this.el.querySelector('.card-front lido-text') as HTMLElement | null;
+  private backText = () => this.el.querySelector('.card-back lido-text') as HTMLElement | null;
+  private speakFront = () => {
+    const text = this.frontText();
+    if (this.instructionDone && !this.flipped && text && text.textContent?.trim()) {
+      executeActions("this.speak='true'", text);
+    }
+  };
+  private showArrow = () => {
+    if (!this.flipped) return;
+    const arrow = document.getElementById('arrow');
+    if (!arrow) return;
+    // Existing ZIPs may not have the newer template onTouch action. Reuse
+    // the same direct nextBtn action as the shared home arrow for them.
+    if (!arrow.getAttribute('onTouch')) arrow.setAttribute('onTouch', "this.nextBtn='true';");
+    const mascot = document.getElementById('lido-avatar') as HTMLElement | null;
+    const scaffoldAudio = arrow.getAttribute('audio');
+    if (mascot && scaffoldAudio) {
+      mascot.setAttribute('audio', scaffoldAudio);
+      arrow.removeAttribute('audio');
+    }
+    this.setArrowVisible(true);
+    if (mascot) {
+      executeActions("this.avatarAnimate='Idle speak'", mascot);
+      AudioPlayer.getI().play(mascot, true);
+    }
+  };
+
+  private setArrowVisible = (visible: boolean) => {
+    const arrow = document.getElementById('arrow') as any;
+    if (!arrow) return;
+    arrow.visible = visible;
+    arrow.setAttribute('visible', String(visible));
+    // lido-cell's visible prop is a non-reflected string prop; keep the
+    // rendered host in sync as well so an attribute update cannot leave its
+    // previous inline display:none in place.
+    arrow.style.display = visible ? 'block' : 'none';
+    arrow.style.visibility = visible ? 'visible' : 'hidden';
+    arrow.style.opacity = visible ? '1' : '0';
+    const arrowImage = arrow.querySelector('lido-image') as HTMLElement | null;
+    if (arrowImage) {
+      arrowImage.style.display = visible ? 'flex' : 'none';
+      arrowImage.style.visibility = visible ? 'visible' : 'hidden';
+      arrowImage.style.opacity = visible ? '1' : '0';
+    }
+    if (typeof arrow.updateStyles === 'function') arrow.updateStyles();
   };
 
   /* ---------- Render ---------- */
