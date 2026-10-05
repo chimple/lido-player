@@ -1,6 +1,6 @@
 
 import { calculateScale, countPatternWords, buildDragSelectedMapFromDOM, getSortedValuesArrayFromMap, executeActions, handleShowCheck, handlingElementFlexibleWidth, onActivityComplete, storingEachActivityScore, calculateScore } from '../utils';
-import { updateBalanceOnDrop } from './lidoBalanceHandler';
+import { placeDragOnBalancePlate, updateBalanceOnDrop } from './lidoBalanceHandler';
 import { AudioPlayer } from '../audioPlayer';
 import { DragSelectedMapKey, DragMapKey, DropHasDrag, DropLength, SelectedValuesKey, DropMode, DropToAttr, DropTimeAttr, LidoContainer, DropAction,NextContainerKey, LIDO_INTERACTION_CLEANUP_EVENT } from '../constants';
 import { dispatchElementDropEvent } from '../customEvents';
@@ -507,7 +507,8 @@ export async function handleResetDragElement(
   dragElement.classList.remove('dropped');
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const cloneArray = container.querySelectorAll(`#${dragElement.id}`);
-  const cloneDragElement = Array.from(cloneArray).find(item => dragElement !== item && !item.classList.contains('dropped')) as HTMLElement;
+  const balanceHome = (dragElement as HTMLElement & { __lidoBalanceHome?: HTMLElement }).__lidoBalanceHome;
+  const cloneDragElement = (balanceHome?.isConnected ? balanceHome : Array.from(cloneArray).find(item => dragElement !== item && !item.classList.contains('dropped'))) as HTMLElement;
   dragElement.style.transition = 'transform 0.5s ease';
 
   if (cloneDragElement) {
@@ -525,6 +526,7 @@ export async function handleResetDragElement(
       dragElement.style.transform = 'translate(0,0)';
       dragElement.style.position = 'unset';
       cloneDragElement.replaceWith(dragElement);
+      delete (dragElement as HTMLElement & { __lidoBalanceHome?: HTMLElement }).__lidoBalanceHome;
     }, 500);
   } else {
     dragElement.style.transform = 'translate(0,0)';
@@ -868,6 +870,10 @@ export async function onElementDropComplete(dragElement: HTMLElement, dropElemen
 
   highlightElement();
   await onActivityComplete(dragElement, dropElement);
+  const dropAction = container.getAttribute('drop-action');
+  if (container.querySelector('lido-balance') && dropAction !== DropAction.Move && dropAction !== DropAction.InfiniteDrop) {
+    placeDragOnBalancePlate(dragElement, dropElement);
+  }
 }
 
 export function updateDropBorder(element: HTMLElement): void {
