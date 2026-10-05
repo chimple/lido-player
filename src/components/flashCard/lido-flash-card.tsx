@@ -126,7 +126,6 @@ export class LidoFlash {
   @Prop() autoFlipAfter: number = 4500;
   private autoFlipTimer?: number;
   private instructionDone = false;
-  private initialFrontNarration = false;
 
   private onAudioEnded = (event: Event) => {
     const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
@@ -135,16 +134,14 @@ export class LidoFlash {
     if (target === this.instructionText()) {
       this.instructionDone = true;
       window.setTimeout(() => {
-        this.initialFrontNarration = true;
         this.speakFront();
       }, 1200);
     } else if (target === this.frontText()) {
-      if (this.initialFrontNarration) {
-        this.initialFrontNarration = false;
-        this.autoFlipTimer = window.setTimeout(() => {
-          if (!this.flipped) this.handleFlip();
-        }, this.autoFlipAfter);
-      }
+      if (this.flipped) return;
+      if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+      this.autoFlipTimer = window.setTimeout(() => {
+        if (!this.flipped) this.handleFlip();
+      }, this.autoFlipAfter);
     } else if (target === this.backText()) {
       if (this.flipped) this.showArrow();
     } else if (target.id === 'lido-avatar') {
