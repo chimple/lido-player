@@ -127,18 +127,31 @@ export class LidoFlash {
   private autoFlipTimer?: number;
   private instructionStartTimer?: number;
   private frontStartTimer?: number;
+  private narrationGraceTimer?: number;
+  private narrationTarget: HTMLElement | null = null;
+  private narrationHandled = false;
+  private static readonly narrationStartGrace = 800;
   private instructionDone = false;
   private instructionStarted = false;
 
   private onAudioStarted = (event: Event) => {
     const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
     if (target === this.instructionText()) this.instructionStarted = true;
+    if (target && target === this.narrationTarget && !this.narrationHandled) {
+      if (this.narrationGraceTimer) window.clearTimeout(this.narrationGraceTimer);
+      this.narrationGraceTimer = undefined;
+    }
   };
 
   private onAudioEnded = (event: Event) => {
     const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
     const instruction = this.instructionText();
     if (!target || (target !== instruction && target.id !== 'lido-avatar' && !this.el.contains(target))) return;
+    if (target === this.narrationTarget && !this.narrationHandled) {
+      this.finishNarration(target);
+      return;
+    }
+    if (this.narrationHandled && target === this.narrationTarget) return;
     if (target === this.instructionText()) {
       this.instructionDone = true;
       this.frontStartTimer = window.setTimeout(() => {
@@ -205,7 +218,7 @@ export class LidoFlash {
       this.instructionStartTimer = window.setTimeout(() => {
         if (!this.instructionStarted && !this.instructionDone) {
           const instruction = this.instructionText();
-          if (instruction) executeActions("this.speak='true';", instruction);
+          if (instruction) this.startNarration(instruction);
         }
       }, 150);
     }
@@ -218,6 +231,7 @@ export class LidoFlash {
     if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
     if (this.instructionStartTimer) window.clearTimeout(this.instructionStartTimer);
     if (this.frontStartTimer) window.clearTimeout(this.frontStartTimer);
+    this.clearNarrationTimers();
     window.removeEventListener('resize', this.updateStyles);
     window.removeEventListener('load', this.updateStyles);
   }
@@ -245,12 +259,13 @@ export class LidoFlash {
   private handleFlip = () => {
     if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
     AudioPlayer.getI().stop();
+    this.clearNarrationTimers();
     const goingBack = !this.flipped;
     this.flipped = !this.flipped;
     this.setArrowVisible(false);
     if (goingBack) {
       const text = this.backText();
-      if (text && text.textContent?.trim()) executeActions("this.speak='true'", text);
+      if (text && text.textContent?.trim()) this.startNarration(text);
       else this.showArrow();
     } else {
       this.speakFront();
@@ -267,17 +282,58 @@ export class LidoFlash {
   private speakFront = () => {
     const text = this.frontText();
     if (this.instructionDone && !this.flipped && text && text.textContent?.trim()) {
-      executeActions("this.speak='true'", text);
+      this.startNarration(text);
     }
+  };
+
+  private clearNarrationTimers = () => {
+    if (this.narrationGraceTimer) window.clearTimeout(this.narrationGraceTimer);
+    this.narrationGraceTimer = undefined;
+    this.narrationTarget = null;
+    this.narrationHandled = false;
+  };
+
+  private continueAfterNarration = (target: HTMLElement) => {
+    if (target === this.instructionText()) {
+      this.instructionDone = true;
+      this.frontStartTimer = window.setTimeout(() => this.speakFront(), 1200);
+    } else if (target === this.frontText()) {
+      if (this.flipped) return;
+      if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+      this.autoFlipTimer = window.setTimeout(() => {
+        if (!this.flipped) this.handleFlip();
+      }, this.autoFlipAfter);
+    } else if (target === this.backText()) {
+      if (this.flipped) this.showArrow();
+    }
+  };
+
+  private finishNarration = (target: HTMLElement) => {
+    if (target !== this.narrationTarget || this.narrationHandled) return;
+    this.narrationHandled = true;
+    if (this.narrationGraceTimer) window.clearTimeout(this.narrationGraceTimer);
+    this.narrationGraceTimer = undefined;
+    this.continueAfterNarration(target);
+  };
+
+  private startNarration = (target: HTMLElement) => {
+    this.clearNarrationTimers();
+    this.narrationTarget = target;
+    this.narrationGraceTimer = window.setTimeout(() => {
+      if (!this.narrationHandled) this.finishNarration(target);
+    }, LidoFlash.narrationStartGrace);
+    executeActions("this.speak='true'", target);
   };
   private showArrow = () => {
     if (!this.flipped) return;
-    const arrow = document.getElementById('arrow');
+    const container = this.el.closest('lido-container');
+    if (container?.getAttribute('template-id') !== 'flashcardtemplate') return;
+    const arrow = container.querySelector('#arrow') as HTMLElement | null;
     if (!arrow) return;
     // Existing ZIPs may not have the newer template onTouch action. Reuse
     // the same direct nextBtn action as the shared home arrow for them.
     if (!arrow.getAttribute('onTouch')) arrow.setAttribute('onTouch', "this.nextBtn='true';");
-    const mascot = document.getElementById('lido-avatar') as HTMLElement | null;
+    const mascot = container.querySelector('#lido-avatar') as HTMLElement | null;
     const scaffoldAudio = arrow.getAttribute('audio');
     if (mascot && scaffoldAudio) {
       mascot.setAttribute('audio', scaffoldAudio);
@@ -291,7 +347,9 @@ export class LidoFlash {
   };
 
   private setArrowVisible = (visible: boolean) => {
-    const arrow = document.getElementById('arrow') as any;
+    const container = this.el.closest('lido-container');
+    if (container?.getAttribute('template-id') !== 'flashcardtemplate') return;
+    const arrow = container.querySelector('#arrow') as any;
     if (!arrow) return;
     arrow.visible = visible;
     arrow.setAttribute('visible', String(visible));
@@ -301,6 +359,7 @@ export class LidoFlash {
     arrow.style.display = visible ? 'block' : 'none';
     arrow.style.visibility = visible ? 'visible' : 'hidden';
     arrow.style.opacity = visible ? '1' : '0';
+    arrow.style.pointerEvents = visible ? 'auto' : 'none';
     const arrowImage = arrow.querySelector('lido-image') as HTMLElement | null;
     if (arrowImage) {
       arrowImage.style.display = visible ? 'flex' : 'none';
