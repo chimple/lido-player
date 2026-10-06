@@ -125,7 +125,15 @@ export class LidoFlash {
   @Prop({ mutable: true, reflect: true }) flipped: boolean = false;
   @Prop() autoFlipAfter: number = 4500;
   private autoFlipTimer?: number;
+  private instructionStartTimer?: number;
+  private frontStartTimer?: number;
   private instructionDone = false;
+  private instructionStarted = false;
+
+  private onAudioStarted = (event: Event) => {
+    const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
+    if (target === this.instructionText()) this.instructionStarted = true;
+  };
 
   private onAudioEnded = (event: Event) => {
     const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
@@ -133,7 +141,7 @@ export class LidoFlash {
     if (!target || (target !== instruction && target.id !== 'lido-avatar' && !this.el.contains(target))) return;
     if (target === this.instructionText()) {
       this.instructionDone = true;
-      window.setTimeout(() => {
+      this.frontStartTimer = window.setTimeout(() => {
         this.speakFront();
       }, 1200);
     } else if (target === this.frontText()) {
@@ -190,13 +198,26 @@ export class LidoFlash {
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);    
     initEventsForElement(this.el, this.type);
+    window.addEventListener('lidoAudioStarted', this.onAudioStarted);
     window.addEventListener('lidoAudioEnded', this.onAudioEnded);
+    const container = this.el.closest('lido-container');
+    if (container?.getAttribute('template-id') === 'flashcardtemplate') {
+      this.instructionStartTimer = window.setTimeout(() => {
+        if (!this.instructionStarted && !this.instructionDone) {
+          const instruction = this.instructionText();
+          if (instruction) executeActions("this.speak='true';", instruction);
+        }
+      }, 150);
+    }
     // handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'inline-block');
   }
 
   disconnectedCallback() {
     window.removeEventListener('lidoAudioEnded', this.onAudioEnded);
+    window.removeEventListener('lidoAudioStarted', this.onAudioStarted);
     if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+    if (this.instructionStartTimer) window.clearTimeout(this.instructionStartTimer);
+    if (this.frontStartTimer) window.clearTimeout(this.frontStartTimer);
     window.removeEventListener('resize', this.updateStyles);
     window.removeEventListener('load', this.updateStyles);
   }
@@ -236,7 +257,11 @@ export class LidoFlash {
     }
   };
 
-  private instructionText = () => document.getElementById(this.el.closest('lido-container')?.getAttribute('template-id') || '');
+  private instructionText = () => {
+    const container = this.el.closest('lido-container');
+    const id = container?.getAttribute('template-id');
+    return id ? container?.querySelector(`[id="${id}"]`) as HTMLElement | null : null;
+  };
   private frontText = () => this.el.querySelector('.card-front lido-text') as HTMLElement | null;
   private backText = () => this.el.querySelector('.card-back lido-text') as HTMLElement | null;
   private speakFront = () => {
