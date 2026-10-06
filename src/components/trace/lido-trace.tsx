@@ -764,7 +764,7 @@ export class LidoTrace {
       }
 
       // Limit the number of points in the free trace path for performance
-      const MAX_FREE_TRACE_POINTS = 10;
+      const MAX_FREE_TRACE_POINTS = 5;
       state.freeTracePointsCount = (state.freeTracePointsCount || 1) + 1;
       if (state.freeTracePointsCount > MAX_FREE_TRACE_POINTS) {
         // If limit reached, skip adding more points
