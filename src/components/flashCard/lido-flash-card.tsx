@@ -166,6 +166,7 @@ export class LidoFlash {
     } else if (target === this.backText()) {
       if (this.flipped) this.showArrow();
     } else if (target.id === 'lido-avatar') {
+      target.removeAttribute('audio');
       executeActions("this.avatarAnimate='Idle'", target);
     }
   };
@@ -215,6 +216,7 @@ export class LidoFlash {
     window.addEventListener('lidoAudioEnded', this.onAudioEnded);
     const container = this.el.closest('lido-container');
     if (container?.getAttribute('template-id') === 'flashcardtemplate') {
+      container.querySelector('#lido-avatar')?.setAttribute('disable-speak', 'true');
       this.instructionStartTimer = window.setTimeout(() => {
         if (!this.instructionStarted && !this.instructionDone) {
           const instruction = this.instructionText();
@@ -262,6 +264,10 @@ export class LidoFlash {
     this.clearNarrationTimers();
     const goingBack = !this.flipped;
     this.flipped = !this.flipped;
+    if (!goingBack) {
+      const mascot = this.el.closest('lido-container')?.querySelector('#lido-avatar') as HTMLElement | null;
+      mascot?.removeAttribute('audio');
+    }
     this.setArrowVisible(false);
     if (goingBack) {
       const text = this.backText();
@@ -385,7 +391,10 @@ export class LidoFlash {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
         type={this.type}
-        onClick={this.handleFlip}
+        onClick={(event: MouseEvent) => {
+          if ((event.target as HTMLElement)?.closest?.('#lido-avatar')) return;
+          this.handleFlip();
+        }}
         disable-speak={this.disableSpeak}
       >
         <div class={`card ${this.flipped ? 'flipped' : ''}`} >
