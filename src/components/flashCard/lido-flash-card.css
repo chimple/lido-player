@@ -37,6 +37,32 @@ lido-container[template-id="flashcardtemplate"] #arrow {
   transform: translateY(-50%);
   z-index: 4 !important;
   overflow: visible;
+  box-sizing: border-box;
+  border: 10px solid transparent;
+  box-shadow: 0px 8px 0px 0px #8b310f !important;
+}
+
+lido-container[template-id="flashcardtemplate"] #arrow.flash-card-next-glowing {
+  animation: flash-card-next-attention 1.4s ease-in-out infinite;
+}
+
+@keyframes flash-card-next-attention {
+  0%,
+  100% {
+    border-color: #ffc34d;
+    filter: drop-shadow(0 0 0 rgba(255, 195, 77, 0));
+  }
+  50% {
+    border-color: #fff1a8;
+    filter: drop-shadow(0 0 10px rgba(255, 195, 77, 0.95));
+  }
+}
+
+/* Match the shared top Next arrow's raised press behavior without changing
+   the Flash Card arrow's existing size or right-side positioning. */
+lido-container[template-id="flashcardtemplate"] #arrow:active {
+  transform: translateY(calc(-50% + 8px)) !important;
+  box-shadow: 0px 0px 0px 0px !important;
 }
 
 @media (orientation: portrait) {

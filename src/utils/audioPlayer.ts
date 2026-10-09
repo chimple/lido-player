@@ -10,6 +10,7 @@ export class AudioPlayer {
   private currentTargetElement: HTMLElement | null = null;
   private pendingReplayElement: HTMLElement | null = null;
   private playbackHasStarted = false;
+  private playbackSequence = 0;
 
   private highlightOverlay: HTMLElement | null = null;
   private wordRects: DOMRect[] = [];
@@ -135,7 +136,7 @@ export class AudioPlayer {
     return el.closest('lido-text');
   }
 
-  public async play(targetElement: HTMLElement, suppressHighlight: boolean = false) {
+  public async play(targetElement: HTMLElement, suppressHighlight: boolean = false, playbackContext?: unknown) {
     this.registerVisibilityEvents();
     this.playbackHasStarted = false;
 
@@ -150,6 +151,8 @@ export class AudioPlayer {
 
       this.pendingReplayElement = null;
     }
+
+    const playbackId = ++this.playbackSequence;
 
     // Stop any currently playing audio first if target element has audio given
     try {
@@ -175,7 +178,7 @@ export class AudioPlayer {
     }
 
     this.currentTargetElement = targetElement;
-    window.dispatchEvent(new CustomEvent('lidoAudioStarted', { detail: { target: targetElement } }));
+    window.dispatchEvent(new CustomEvent('lidoAudioStarted', { detail: { target: targetElement, playbackId, playbackContext } }));
 
 
     // then play the target element audio.
@@ -199,6 +202,7 @@ export class AudioPlayer {
       this.audioElement.src = audioUrl;
       this.audioElement.onplaying = () => {
         this.playbackHasStarted = true;
+        window.dispatchEvent(new CustomEvent('lidoAudioPlaying', { detail: { target: targetElement, playbackId, playbackContext } }));
       };
       this.audioElement.onpause = () => {
         if (this.playbackHasStarted && !this.audioElement.ended) {
@@ -287,14 +291,14 @@ export class AudioPlayer {
 
       if (this.pendingReplayElement === targetElement) {
         this.pendingReplayElement = null;
-        return this.play(targetElement);
+        return this.play(targetElement, suppressHighlight, playbackContext);
       }
     }
 
     if (this.currentTargetElement === targetElement) {
       this.currentTargetElement = null;
     }
-    window.dispatchEvent(new CustomEvent('lidoAudioEnded', { detail: { target: targetElement } }));
+    window.dispatchEvent(new CustomEvent('lidoAudioEnded', { detail: { target: targetElement, playbackId, playbackContext } }));
   }
 
   // GLOBAL STOP EVENTS (container change, activity change…)
