@@ -36,7 +36,7 @@ import {
 
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
-import i18next from '../../utils/i18n';
+import i18next, { translateText } from '../../utils/i18n';
 import { Timer } from '../../utils/utilsHandlers/timer';
 const gameScore = new GameScore();
 
@@ -619,11 +619,11 @@ export class LidoHome {
       })
       .filter(Boolean);
     if (tagName === 'lido-text' && props.string) {
-      props.string = i18next.t(props.string);
+      props.string = translateText(props.string);
     }
 
     if (tagName === 'lido-text' && props.string) {
-      props.string = i18next.t(props.string);
+      props.string = translateText(props.string);
     }
     // Map XML tags to Stencil components
     const componentMapping = {
