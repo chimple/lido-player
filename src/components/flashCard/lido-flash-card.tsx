@@ -130,6 +130,8 @@ export class LidoFlash {
   private narrationGraceTimer?: number;
   private narrationTarget: HTMLElement | null = null;
   private narrationHandled = false;
+  private goodJobPlaybackId?: number;
+  private goodJobPlaybackContext?: object;
   private static readonly narrationStartGrace = 800;
   private instructionDone = false;
   private instructionStarted = false;
@@ -141,6 +143,17 @@ export class LidoFlash {
       if (this.narrationGraceTimer) window.clearTimeout(this.narrationGraceTimer);
       this.narrationGraceTimer = undefined;
     }
+  };
+
+  private onAudioPlaying = (event: Event) => {
+    const detail = (event as CustomEvent).detail;
+    const target = detail?.target as HTMLElement | undefined;
+    if (target?.id !== 'lido-avatar') return;
+    if (detail.playbackContext !== this.goodJobPlaybackContext) return;
+    const arrow = this.nextArrow();
+    if (!arrow || !this.flipped) return;
+    this.goodJobPlaybackId = detail.playbackId;
+    arrow.classList.add('flash-card-next-glowing');
   };
 
   private onAudioEnded = (event: Event) => {
@@ -166,7 +179,11 @@ export class LidoFlash {
     } else if (target === this.backText()) {
       if (this.flipped) this.showArrow();
     } else if (target.id === 'lido-avatar') {
-      target.removeAttribute('audio');
+      const playbackId = (event as CustomEvent).detail?.playbackId;
+      const playbackContext = (event as CustomEvent).detail?.playbackContext;
+      if (playbackContext !== this.goodJobPlaybackContext || playbackId !== this.goodJobPlaybackId) return;
+      this.goodJobPlaybackId = undefined;
+      this.nextArrow()?.classList.remove('flash-card-next-glowing');
       executeActions("this.avatarAnimate='Idle'", target);
     }
   };
@@ -213,6 +230,7 @@ export class LidoFlash {
     setVisibilityWithDelay(this.el, this.delayVisible);    
     initEventsForElement(this.el, this.type);
     window.addEventListener('lidoAudioStarted', this.onAudioStarted);
+    window.addEventListener('lidoAudioPlaying', this.onAudioPlaying);
     window.addEventListener('lidoAudioEnded', this.onAudioEnded);
     const container = this.el.closest('lido-container');
     if (container?.getAttribute('template-id') === 'flashcardtemplate') {
@@ -229,6 +247,7 @@ export class LidoFlash {
 
   disconnectedCallback() {
     window.removeEventListener('lidoAudioEnded', this.onAudioEnded);
+    window.removeEventListener('lidoAudioPlaying', this.onAudioPlaying);
     window.removeEventListener('lidoAudioStarted', this.onAudioStarted);
     if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
     if (this.instructionStartTimer) window.clearTimeout(this.instructionStartTimer);
@@ -264,10 +283,7 @@ export class LidoFlash {
     this.clearNarrationTimers();
     const goingBack = !this.flipped;
     this.flipped = !this.flipped;
-    if (!goingBack) {
-      const mascot = this.el.closest('lido-container')?.querySelector('#lido-avatar') as HTMLElement | null;
-      mascot?.removeAttribute('audio');
-    }
+    this.stopGoodJobGlow();
     this.setArrowVisible(false);
     if (goingBack) {
       const text = this.backText();
@@ -285,6 +301,12 @@ export class LidoFlash {
   };
   private frontText = () => this.el.querySelector('.card-front lido-text') as HTMLElement | null;
   private backText = () => this.el.querySelector('.card-back lido-text') as HTMLElement | null;
+  private nextArrow = () => this.el.closest('lido-container')?.querySelector('#arrow') as HTMLElement | null;
+  private stopGoodJobGlow = () => {
+    this.goodJobPlaybackId = undefined;
+    this.goodJobPlaybackContext = undefined;
+    this.nextArrow()?.classList.remove('flash-card-next-glowing');
+  };
   private speakFront = () => {
     const text = this.frontText();
     if (this.instructionDone && !this.flipped && text && text.textContent?.trim()) {
@@ -334,7 +356,7 @@ export class LidoFlash {
     if (!this.flipped) return;
     const container = this.el.closest('lido-container');
     if (container?.getAttribute('template-id') !== 'flashcardtemplate') return;
-    const arrow = container.querySelector('#arrow') as HTMLElement | null;
+    const arrow = this.nextArrow();
     if (!arrow) return;
     // Existing ZIPs may not have the newer template onTouch action. Reuse
     // the same direct nextBtn action as the shared home arrow for them.
@@ -343,12 +365,13 @@ export class LidoFlash {
     const scaffoldAudio = arrow.getAttribute('audio');
     if (mascot && scaffoldAudio) {
       mascot.setAttribute('audio', scaffoldAudio);
-      arrow.removeAttribute('audio');
     }
     this.setArrowVisible(true);
     if (mascot) {
+      this.goodJobPlaybackContext = {};
+      this.goodJobPlaybackId = undefined;
       executeActions("this.avatarAnimate='Idle speak'", mascot);
-      AudioPlayer.getI().play(mascot, true);
+      AudioPlayer.getI().play(mascot, true, this.goodJobPlaybackContext);
     }
   };
 
