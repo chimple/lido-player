@@ -238,11 +238,12 @@ export function addClickListenerForClickType(element: HTMLElement): void {
       }, 50);
     }
   });
-  clickableElementStyle(element);
+  initializeClickableElementStyle(element);
 }
 
-const clickableElementStyle = (element: HTMLElement) => {
-  const elementShadow = element.offsetHeight * 0.08;
+export const initializeClickableElementStyle = (element: HTMLElement) => {
+  const elementHeight = Number.isFinite(element.offsetHeight) ? element.offsetHeight : 0;
+  const elementShadow = elementHeight * 0.08;
   const backGroundColor = element.style?.backgroundColor || '#FFB742';
   element.style.setProperty('--btn-bg-color', backGroundColor);
   element.style.setProperty('--btn-shadow-px', `0px ${elementShadow}px 0px`);

@@ -22,7 +22,7 @@ import { categoriseCompleted, enableReorderDrag, resetElementStyles } from './ut
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
 import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation, animateDragToTarget } from './utilsHandlers/dragDropHandler';
 import { enableFreeMove } from './utilsHandlers/moveHandler';
-import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
+import { addClickListenerForClickType, initializeClickableElementStyle, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
@@ -65,6 +65,43 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
+type ActionExecutionOptions = {
+  visualOnly?: boolean;
+};
+
+type InitializedElement = HTMLElement & {
+  __lidoInitializationKey?: string;
+};
+
+// These actions have side effects beyond declarative element styling. They must
+// not run while the player is being displayed in edit mode.
+const nonVisualActions = new Set([
+  'revealImageValue',
+  'scrollCellAfterEquationSolved',
+  'alignMatch',
+  'removeClone',
+  'speak',
+  'fill-slide',
+  'nextBtn',
+  'prevBtn',
+  'stop',
+  'sleep',
+  'avatarAnimate',
+  'cellBorderAnimate',
+  'vibrate',
+  'highlightStarsAndDisapper',
+  'boxAnimationOneByOne',
+  'questionBoxAnimate',
+  'slideAnimation',
+  'showBalanceSymbol',
+  'hideBalanceSymbol',
+  'sumTogetherAnimation',
+  'addText',
+  'disableType',
+  'updateCountBlender',
+  'updateCalculatorAnswer',
+]);
+
 export const initEventsForElement = async (element: HTMLElement, type?: string) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) {
@@ -74,10 +111,31 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
     return;
   }
   const onEntry = element.getAttribute('onEntry');
-  await executeActions(onEntry, element);
+  const canPlay = container.getAttribute('canplay') !== 'false';
+  await executeActions(onEntry, element, undefined, { visualOnly: !canPlay });
+
+  // Free movement is an editor interaction and is intentionally available in
+  // edit mode; all gameplay handlers below remain disabled there.
   if (element.getAttribute('move') === 'true') {
     enableFreeMove(element);
   }
+
+  // The click visual treatment is independent from the click listener. Edit
+  // mode needs the class and custom properties that draw the configured button
+  // background/shadow, but must not install answer-selection behavior.
+  if (!canPlay && type === 'click') {
+    initializeClickableElementStyle(element);
+  }
+
+  // Edit mode still needs visual initialization, but must not install any
+  // gameplay or touch handlers. In play mode, avoid duplicating listeners if a
+  // component invokes its load hook more than once.
+  if (!canPlay) return;
+  const initializedElement = element as InitializedElement;
+  const initializationKey = `${type || ''}:${canPlay}`;
+  if (initializedElement.__lidoInitializationKey === initializationKey) return;
+  initializedElement.__lidoInitializationKey = initializationKey;
+
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
@@ -119,11 +177,17 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
 };
 
 // Function to execute actions parsed from the onMatch string
-export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
+export const executeActions = async (
+  actionsString: string,
+  thisElement: HTMLElement,
+  element?: HTMLElement,
+  options: ActionExecutionOptions = {},
+): Promise<void> => {
   const actions = parseActions(actionsString);  
   // body.style.pointerEvents = 'none';
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
+    if (options.visualOnly && nonVisualActions.has(action.action)) continue;
 
     const queriedElement = document.querySelector(action.actor) as HTMLElement | null;
     const targetElement = action.actor === 'this' ? thisElement : action.actor === 'element' ? element : queriedElement ? queriedElement : document.getElementById(action.actor);

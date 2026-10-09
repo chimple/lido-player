@@ -1,4 +1,4 @@
-import { format } from './utils';
+import { format, initEventsForElement } from './utils';
 import { getSlideValuesForValidation, isArrangeLettersComplete, isReorderComplete, updateArrangeLettersCorrectness, updateReorderCorrectness } from './utilsHandlers/slideHandler';
 
 describe('format', () => {
@@ -16,6 +16,105 @@ describe('format', () => {
 
   it('formats first, middle and last names', () => {
     expect(format('Joseph', 'Quincy', 'Publique')).toEqual('Joseph Quincy Publique');
+  });
+});
+
+describe('element initialization and canplay', () => {
+  const addContainer = (canplay: 'true' | 'false') => {
+    const container = document.createElement('div');
+    container.id = 'lido-container';
+    container.setAttribute('canplay', canplay);
+    container.setAttribute('objective', 'correct');
+    document.body.appendChild(container);
+    return container;
+  };
+
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  it('keeps onEntry styling and click initialization in play mode', async () => {
+    addContainer('true');
+    const option = document.createElement('div');
+    option.setAttribute('onEntry', "this.backgroundColor='#FFB366'; this.borderRadius='10px';");
+    document.body.appendChild(option);
+
+    await initEventsForElement(option, 'click');
+
+    expect(option.style.backgroundColor).toBe('#FFB366');
+    expect(option.style.borderRadius).toBe('10px');
+    expect(option.style.cursor).toBe('pointer');
+  });
+
+  it('runs visual onEntry actions in edit mode without running gameplay actions', async () => {
+    addContainer('false');
+    const option = document.createElement('div');
+    option.textContent = 'option';
+    option.setAttribute('onEntry', "this.backgroundColor='#FFB366'; this.borderRadius='10px'; this.addText='should-not-run';");
+    document.body.appendChild(option);
+
+    await initEventsForElement(option, 'click');
+
+    expect(option.style.backgroundColor).toBe('#FFB366');
+    expect(option.style.borderRadius).toBe('10px');
+    expect(option.textContent).toBe('option');
+    expect(option.style.cursor).toBe('');
+    expect(option.classList.contains('click-element')).toBe(true);
+    expect(option.style.getPropertyValue('--btn-bg-color')).toBe('#FFB366');
+    expect(option.style.getPropertyValue('--btn-shadow-px')).toBe('0px 0px 0px');
+  });
+
+  it('does not install click or touch gameplay handlers in edit mode', async () => {
+    const container = addContainer('false');
+    const option = document.createElement('div');
+    option.setAttribute('type', 'click');
+    option.setAttribute('value', 'correct');
+    option.setAttribute('onTouch', "this.backgroundColor='red';");
+    document.body.appendChild(option);
+
+    await initEventsForElement(option, 'click');
+    option.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    option.dispatchEvent(new Event('pointerup', { bubbles: true }));
+
+    expect(container.getAttribute('lidoSelectedValues')).toBeNull();
+    expect(option.style.backgroundColor).toBe('');
+  });
+
+  it('does not duplicate interaction handlers when initialized repeatedly', async () => {
+    addContainer('true');
+    const option = document.createElement('div');
+    const addEventListener = jest.spyOn(option, 'addEventListener');
+    document.body.appendChild(option);
+
+    await initEventsForElement(option, 'click');
+    const clickListenersAfterFirstInit = addEventListener.mock.calls.filter(([event]) => event === 'click').length;
+    await initEventsForElement(option, 'click');
+
+    expect(clickListenersAfterFirstInit).toBe(1);
+    expect(addEventListener.mock.calls.filter(([event]) => event === 'click')).toHaveLength(1);
+  });
+
+  it('preserves questionBoard option styling in edit mode', async () => {
+    addContainer('false');
+    const option = document.createElement('div');
+    option.setAttribute('bg-color', '#FFB366');
+    option.setAttribute('height', '215px');
+    option.setAttribute('width', 'auto');
+    option.setAttribute('onEntry', "this.borderRadius='10px'; this.flexFlow='column-reverse';");
+    option.style.backgroundColor = '#FFB366';
+    option.style.height = '215px';
+    option.style.width = 'auto';
+    option.style.boxShadow = '0 4px 0 #E99500';
+    document.body.appendChild(option);
+
+    await initEventsForElement(option, 'click');
+
+    expect(option.style.backgroundColor).toBe('#FFB366');
+    expect(option.style.borderRadius).toBe('10px');
+    expect(option.style.boxShadow).toBe('0 4px 0 #E99500');
+    expect(option.style.height).toBe('215px');
+    expect(option.style.width).toBe('auto');
+    expect(option.style.flexFlow).toBe('column-reverse');
   });
 });
 
