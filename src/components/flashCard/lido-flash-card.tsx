@@ -311,6 +311,11 @@ export class LidoFlash {
     const text = this.frontText();
     if (this.instructionDone && !this.flipped && text && text.textContent?.trim()) {
       this.startNarration(text);
+    } else if (this.instructionDone && !this.flipped && (!text || !text.textContent?.trim())) {
+      if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+      this.autoFlipTimer = window.setTimeout(() => {
+        if (!this.flipped) this.handleFlip();
+      }, this.autoFlipAfter);
     }
   };
 
