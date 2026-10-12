@@ -1,6 +1,6 @@
-import"./lit-element-DByy2wOb.js";import{b as g}from"./lit-html-BGZAEiha.js";const B={title:"Templates/blender",argTypes:{number:{control:"text"},isAllowOnlyCorrect:{control:"boolean"}}},r={args:{number:"211",isAllowOnlyCorrect:"true"},render:t=>{const e=m(t);return g`<lido-home .xmlData="${e}"></lido-home>`}};function f(t){t=parseInt(t);const e=Math.floor(t/100),s=Math.floor(t%100/10),c=t%10,i=(o,b)=>{if(o===0)return"";let a="";for(let l=0;l<o;l++)a+=b,l<o-1&&(a+="|");return`(${a})`},x=i(e,"100"),h=i(s,"10"),u=i(c,"1");return{objective:[x,h,u].filter(o=>o!=="").join(",")}}function m(t){const{objective:e}=f(t.number);return`
+import"./lit-element-DByy2wOb.js";import{b as g}from"./lit-html-BGZAEiha.js";const B={title:"Templates/blender",argTypes:{number:{control:"text"},isAllowOnlyCorrect:{control:"boolean"}}},l={args:{number:"211",isAllowOnlyCorrect:"true"},render:t=>{const e=m(t);return g`<lido-home .xmlData="${e}"></lido-home>`}};function f(t){t=parseInt(t);const e=Math.floor(t/100),i=Math.floor(t%100/10),a=t%10,o=(r,b)=>{if(r===0)return"";let n="";for(let p=0;p<r;p++)n+=b,p<r-1&&(n+="|");return`(${n})`},x=o(e,"100"),h=o(i,"10"),u=o(a,"1");return{objective:[x,h,u].filter(r=>r!=="").join(","),hundreds:e,tens:i,ones:a}}function m(t){const{objective:e,hundreds:i,tens:a,ones:o}=f(t.number);return`
     <main>
-        <lido-container id="lido-container" visible="true" template-id="dragAndDrop" objective="${e}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Blender.png" drop-action="infinite-drop" is-allow-only-correct="${t.isAllowOnlyCorrect}">
+        <lido-container id="lido-container" visible="true" template-id="blender" objective="${e}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Blender.png" drop-action="infinite-drop" is-allow-only-correct="${t.isAllowOnlyCorrect}">
 
             <!-- Chimple Avatar -->
             <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1332px, portrait.-8%" y="landscape.547px, portrait.1%" aria-hidden="true" z="0" bg-color="transparent" visible="true" onEntry="">
@@ -20,7 +20,7 @@ import"./lit-element-DByy2wOb.js";import{b as g}from"./lit-html-BGZAEiha.js";con
                         <lido-text id="hundreds" height="70px" width="108px" visible="true" value="000" string="000" font-family="'Baloo Bhai 2'" font-color="#182A4F" border-radius="21px" bg-color="white" font-size="52px" onInCorrect="" onEntry="this.fontWeight='800';" border-image="">
                         </lido-text>
                     </lido-cell>
-                    <lido-text id="hundredsDrop" value="100" dropAttr="landscape.stackcascade,portrait.verticalstack" is-allow-only-one-drop="false" type="drop" tab-index="1" layout="row" bg-color="white" visible="true" height="landscape.359px,portrait.752px" width="landscape.698px,portrait.290px" onEntry="this.justify-content='flex-start';">
+                    <lido-text id="hundredsDrop" value="100" required-drops="${i}" dropAttr="landscape.stackcascade,portrait.verticalstack" is-allow-only-one-drop="false" type="drop" tab-index="1" layout="row" bg-color="white" visible="true" height="landscape.359px,portrait.752px"  width="landscape.698px,portrait.290px" onEntry="this.justify-content='flex-start';">
                     </lido-text>
                 </lido-cell>
 
@@ -32,7 +32,8 @@ import"./lit-element-DByy2wOb.js";import{b as g}from"./lit-html-BGZAEiha.js";con
                         <lido-text id="tens" height="70px" width="77px" visible="true"  value="00" string="00" font-family="'Baloo Bhai 2'" font-color="#182A4F" border-radius="21px" bg-color="white" font-size="52px" onInCorrect="" onEntry="this.fontWeight='800';" border-image="">
                         </lido-text>
                     </lido-cell>
-                    <lido-text id="tensDrop" value="10" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="2" layout="row" bg-color="white" visible="true" height="landscape.357px,portrait.752px" width="landscape.414px,portrait.290px" onEntry="this.justify-content='flex-start';" >
+                    <lido-text id="tensDrop" value="10" required-drops="${a}" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="2" layout="row" bg-color="white" visible="true" 
+                 height="landscape.357px,portrait.752px" width="landscape.414px,portrait.290px" onEntry="this.justify-content='flex-start';" >
                     </lido-text>
                 </lido-cell>
 
@@ -44,7 +45,7 @@ import"./lit-element-DByy2wOb.js";import{b as g}from"./lit-html-BGZAEiha.js";con
                         <lido-text id="units" height="70px" width="55px" visible="true"  value="0" string="0" font-family="'Baloo Bhai 2'" font-color="#182A4F" border-radius="21px" bg-color="white" font-size="52px" onInCorrect="" onEntry="this.fontWeight='800';" border-image="">
                         </lido-text>
                     </lido-cell>
-                    <lido-text id="unitsDrop" value="1" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="3" layout="row" bg-color="white" visible="true" height="landscape.360px,portrait.752px" width="landscape.310px,portrait.290px" onEntry="this.justify-content='flex-start';">
+                    <lido-text id="unitsDrop" value="1" required-drops="${o}" dropAttr="landscape.stackcascade,portrait.verticalstack" type="drop" is-allow-only-one-drop="false" tab-index="3" layout="row" bg-color="white" visible="true" height="landscape.360px,portrait.752px" width="landscape.310px,portrait.290px" onEntry="this.justify-content='flex-start';">
                     </lido-text>
                 </lido-cell>
             </lido-cell>
@@ -56,7 +57,7 @@ import"./lit-element-DByy2wOb.js";import{b as g}from"./lit-html-BGZAEiha.js";con
             </lido-cell>		
         </lido-container>
     </main>
-  `}var n,p,d;r.parameters={...r.parameters,docs:{...(n=r.parameters)==null?void 0:n.docs,source:{originalSource:`{
+  `}var d,s,c;l.parameters={...l.parameters,docs:{...(d=l.parameters)==null?void 0:d.docs,source:{originalSource:`{
   args: {
     number: '211',
     isAllowOnlyCorrect: 'true'
@@ -65,4 +66,4 @@ import"./lit-element-DByy2wOb.js";import{b as g}from"./lit-html-BGZAEiha.js";con
     const xml = getContainerXml(args);
     return html\`<lido-home .xmlData="\${xml}"></lido-home>\`;
   }
-}`,...(d=(p=r.parameters)==null?void 0:p.docs)==null?void 0:d.source}}};const C=["Blender"];export{r as Blender,C as __namedExportsOrder,B as default};
+}`,...(c=(s=l.parameters)==null?void 0:s.docs)==null?void 0:c.source}}};const C=["Blender"];export{l as Blender,C as __namedExportsOrder,B as default};
