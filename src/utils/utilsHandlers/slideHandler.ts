@@ -32,6 +32,25 @@ type CleanupElement = HTMLElement & {
   __lidoSlideCleanup?: () => void;
 };
 
+const isArrangeLettersContainer = (container: HTMLElement): boolean => container.getAttribute('template-id') === 'arrangeLetters';
+const isReorderContainer = (container: HTMLElement): boolean => container.getAttribute('template-id') === 'reorder';
+
+export const getSlideValuesForValidation = (container: HTMLElement, slideElements: HTMLElement[]): string[] => {
+  if (isReorderContainer(container)) {
+    return slideElements.map(element => element.id);
+  }
+
+  return slideElements.map(element => element['value']);
+};
+
+const syncSlideOrder = (container: HTMLElement): string[] => {
+  const slideElements = Array.from(container.querySelectorAll<HTMLElement>("[type='slide']"));
+  const slideOrder = getSlideValuesForValidation(container, slideElements);
+
+  container.setAttribute(SelectedValuesKey, JSON.stringify(slideOrder));
+  return slideOrder;
+};
+
 export const slideAnimation = async () => {
   const container = document.getElementById(LidoContainer);
   if (!container) return;
@@ -107,6 +126,10 @@ export function slidingWithScaling(element: HTMLElement): void {
 
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if(container.getAttribute('canplay') === 'false')return;
+
+  // Slide activities can start in the correct order. Keep their initial DOM
+  // order available to the Next/check validation before the first swap occurs.
+  syncSlideOrder(container);
 
   let verticalDistance;
   let horizontalDistance;
@@ -323,17 +346,6 @@ export function slidingWithScaling(element: HTMLElement): void {
   element.addEventListener('touchstart', onStart);
   element.addEventListener(LIDO_INTERACTION_CLEANUP_EVENT, cleanup);
 }
-
-const isArrangeLettersContainer = (container: HTMLElement): boolean => container.getAttribute('template-id') === 'arrangeLetters';
-const isReorderContainer = (container: HTMLElement): boolean => container.getAttribute('template-id') === 'reorder';
-
-export const getSlideValuesForValidation = (container: HTMLElement, slideElements: HTMLElement[]): string[] => {
-  if (isReorderContainer(container)) {
-    return slideElements.map(element => element.id);
-  }
-
-  return slideElements.map(element => element['value']);
-};
 
 export const updateArrangeLettersCorrectness = (container: HTMLElement, slideValues: string[], objectiveValues: string[]): void => {
   const slideElements = Array.from(container.querySelectorAll('[type="slide"]')) as HTMLElement[];
