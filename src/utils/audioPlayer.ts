@@ -10,6 +10,7 @@ export class AudioPlayer {
   private currentTargetElement: HTMLElement | null = null;
   private pendingReplayElement: HTMLElement | null = null;
   private playbackHasStarted = false;
+  private playbackSequence = 0;
 
   private highlightOverlay: HTMLElement | null = null;
   private wordRects: DOMRect[] = [];
@@ -135,7 +136,7 @@ export class AudioPlayer {
     return el.closest('lido-text');
   }
 
-  public async play(targetElement: HTMLElement) {
+  public async play(targetElement: HTMLElement, suppressHighlight: boolean = false, playbackContext?: unknown) {
     this.registerVisibilityEvents();
     this.playbackHasStarted = false;
 
@@ -151,6 +152,8 @@ export class AudioPlayer {
       this.pendingReplayElement = null;
     }
 
+    const playbackId = ++this.playbackSequence;
+
     // Stop any currently playing audio first if target element has audio given
     try {
       await AudioPlayer.getI().stop();
@@ -163,12 +166,6 @@ export class AudioPlayer {
       console.warn('[AudioPlayer] No lido-container found');
       return;
     }
-    // Check if speaking is disabled on the target element or its closest lido-text parent
-    const text = targetElement.closest('lido-text') as HTMLElement;
-    // if(text && text.getAttribute('disable-speak')==='true'){
-    //   return;
-    // }
-
     if(container.getAttribute('highlight-word-by-word') === 'true') {
       const textElement = this.getLidoTextElement(targetElement);
       if (!textElement) {
@@ -181,6 +178,7 @@ export class AudioPlayer {
     }
 
     this.currentTargetElement = targetElement;
+    window.dispatchEvent(new CustomEvent('lidoAudioStarted', { detail: { target: targetElement, playbackId, playbackContext } }));
 
 
     // then play the target element audio.
@@ -204,17 +202,15 @@ export class AudioPlayer {
       this.audioElement.src = audioUrl;
       this.audioElement.onplaying = () => {
         this.playbackHasStarted = true;
+        window.dispatchEvent(new CustomEvent('lidoAudioPlaying', { detail: { target: targetElement, playbackId, playbackContext } }));
       };
       this.audioElement.onpause = () => {
         if (this.playbackHasStarted && !this.audioElement.ended) {
           this.resolvePlaybackWait();
         }
       };
-      this.audioElement.onstalled = () => {
-        if (this.playbackHasStarted) {
-          this.resolvePlaybackWait();
-        }
-      };
+      // Buffering is temporary: keep waiting for the clip to finish.
+      this.audioElement.onstalled = null;
       this.audioElement.onerror = () => {
         if (this.playbackHasStarted) {
           this.resolvePlaybackWait();
@@ -242,7 +238,7 @@ export class AudioPlayer {
           timeline = this.buildWordTimeline(textContent, durationMs, profile, language);
           this.wordRects = this.computeWordRects(targetElement);
         } else {
-          highlightSpeakingElement(targetElement);
+          if (!suppressHighlight) highlightSpeakingElement(targetElement);
         }
 
         // PLAY ONCE
@@ -272,7 +268,7 @@ export class AudioPlayer {
         setDraggingDisabled(false);
         if(container.getAttribute('highlight-word-by-word') !== 'true')
         {
-          stopHighlightForSpeakingElement(targetElement);
+          if (!suppressHighlight) stopHighlightForSpeakingElement(targetElement);
         }
       }
     }
@@ -280,11 +276,8 @@ export class AudioPlayer {
     else if (targetElement.textContent) 
     {
       try {
-        highlightSpeakingElement(targetElement);
-        // window.addEventListener('click', this.handleUserClick, true);
+        if (!suppressHighlight) highlightSpeakingElement(targetElement);
         await speakText(targetElement.textContent, targetElement);
-        const highlightedElements = document.querySelectorAll('.speaking-highlight');
-        // highlightedElements.forEach(element => stopHighlightForSpeakingElement(element as HTMLElement));         
       } 
       catch (error) {}
       finally {
@@ -298,13 +291,14 @@ export class AudioPlayer {
 
       if (this.pendingReplayElement === targetElement) {
         this.pendingReplayElement = null;
-        return this.play(targetElement);
+        return this.play(targetElement, suppressHighlight, playbackContext);
       }
     }
 
     if (this.currentTargetElement === targetElement) {
       this.currentTargetElement = null;
     }
+    window.dispatchEvent(new CustomEvent('lidoAudioEnded', { detail: { target: targetElement, playbackId, playbackContext } }));
   }
 
   // GLOBAL STOP EVENTS (container change, activity change…)

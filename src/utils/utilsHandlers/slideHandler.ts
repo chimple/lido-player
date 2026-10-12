@@ -1,6 +1,6 @@
 import { LIDO_INTERACTION_CLEANUP_EVENT, LidoContainer, SelectedValuesKey } from '../constants';
 import { findMostoverlappedElement, getElementScale } from './dragDropHandler';
-import { calculateScale, executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore, triggerNextContainer } from '../utils';
+import { applyBorderToClickableCell, calculateScale, executeActions, handleShowCheck, matchStringPattern, storingEachActivityScore, triggerNextContainer, validateObjectiveStatus } from '../utils';
 import { onClickDropOrDragElement } from './dragDropHandler';
 import { removeHighlight } from './highlightHandler';
 
@@ -32,9 +32,20 @@ type CleanupElement = HTMLElement & {
   __lidoSlideCleanup?: () => void;
 };
 
+const isArrangeLettersContainer = (container: HTMLElement): boolean => container.getAttribute('template-id') === 'arrangeLetters';
+const isReorderContainer = (container: HTMLElement): boolean => container.getAttribute('template-id') === 'reorder';
+
+export const getSlideValuesForValidation = (container: HTMLElement, slideElements: HTMLElement[]): string[] => {
+  if (isReorderContainer(container)) {
+    return slideElements.map(element => element.id);
+  }
+
+  return slideElements.map(element => element['value']);
+};
+
 const syncSlideOrder = (container: HTMLElement): string[] => {
-  const slideOrder = Array.from(container.querySelectorAll<HTMLElement>("[type='slide']"))
-    .map(item => item['value']);
+  const slideElements = Array.from(container.querySelectorAll<HTMLElement>("[type='slide']"));
+  const slideOrder = getSlideValuesForValidation(container, slideElements);
 
   container.setAttribute(SelectedValuesKey, JSON.stringify(slideOrder));
   return slideOrder;
@@ -124,6 +135,9 @@ export function slidingWithScaling(element: HTMLElement): void {
   let horizontalDistance;
 
   const onStart = (event: MouseEvent | TouchEvent): void => {
+    const templateId = container.getAttribute('template-id');
+    if ((templateId === 'arrangeLetters' || templateId === 'reorder') && container.getAttribute('game-completed') === 'true') return;
+
     removeHighlight(element);
     isDragging = true;
     elementRect = element.getBoundingClientRect();
@@ -305,7 +319,7 @@ export function slidingWithScaling(element: HTMLElement): void {
 
     setTimeout(() => {
       if (overlapElement) {
-        slideCompleted(element);
+        void slideCompleted(element);
         overlapElement = false;
       }
     }, 300);
@@ -333,31 +347,91 @@ export function slidingWithScaling(element: HTMLElement): void {
   element.addEventListener(LIDO_INTERACTION_CLEANUP_EVENT, cleanup);
 }
 
-const slideCompleted = (slideElement: HTMLElement) => {
+export const updateArrangeLettersCorrectness = (container: HTMLElement, slideValues: string[], objectiveValues: string[]): void => {
+  const slideElements = Array.from(container.querySelectorAll('[type="slide"]')) as HTMLElement[];
+
+  slideElements.forEach((element, index) => {
+    const isCorrect = index < objectiveValues.length && slideValues[index] === objectiveValues[index].trim();
+    if (isCorrect) {
+      applyBorderToClickableCell(element, '#65BC46');
+    } else {
+      element.style.removeProperty('box-shadow');
+    }
+  });
+};
+
+export const isArrangeLettersComplete = (slideValues: string[], objectiveString: string): boolean => {
+  if (!objectiveString) return false;
+  const objectiveValues = objectiveString.split(',').map(value => value.trim());
+  return slideValues.length === objectiveValues.length
+    && slideValues.every((value, index) => value === objectiveValues[index]);
+};
+
+export const updateReorderCorrectness = (container: HTMLElement, slideValues: string[], objectiveValues: string[]): void => {
+  const slideElements = Array.from(container.querySelectorAll('[type="slide"]')) as HTMLElement[];
+
+  slideElements.forEach((element, index) => {
+    const isCorrect = index < objectiveValues.length && slideValues[index] === objectiveValues[index].trim();
+    if (isCorrect) {
+      applyBorderToClickableCell(element, '#65BC46');
+    } else {
+      element.style.removeProperty('box-shadow');
+    }
+  });
+};
+
+export const isReorderComplete = (slideValues: string[], objectiveString: string): boolean => {
+  if (!objectiveString) return false;
+  const objectiveValues = objectiveString.split(',').map(value => value.trim());
+  return slideValues.length === objectiveValues.length
+    && slideValues.every((value, index) => value === objectiveValues[index]);
+};
+
+const slideCompleted = async (slideElement: HTMLElement): Promise<void> => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  const slideArr = syncSlideOrder(container);
+  const slideArr = JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]');
+  const allSlideElements = Array.from(document.querySelectorAll("[type='slide']")) as HTMLElement[];
+
+  const slideValues = getSlideValuesForValidation(container, allSlideElements);
+  slideValues.forEach((value, index) => {
+    slideArr[index] = value;
+  });
+  container.setAttribute(SelectedValuesKey, JSON.stringify(slideArr));
 
   const objectiveString = document.getElementById(LidoContainer)['objective'];
   const objectiveArray = objectiveString.split(',');
-  const elementIndex = slideArr.indexOf(slideElement['value']);
-  const isCorrect = matchStringPattern(slideElement['value'], [objectiveArray[elementIndex].trim()]);
+  const elementIndex = allSlideElements.indexOf(slideElement);
+  const isCorrect = elementIndex >= 0 && elementIndex < objectiveArray.length
+    ? matchStringPattern(slideValues[elementIndex], [objectiveArray[elementIndex].trim()])
+    : false;
+
+  if (isArrangeLettersContainer(container)) {
+    updateArrangeLettersCorrectness(container, slideValues, objectiveArray);
+  } else if (isReorderContainer(container)) {
+    updateReorderCorrectness(container, slideValues, objectiveArray);
+  }
 
   if(container.getAttribute('is-continue-on-correct') === 'true'){
     storingEachActivityScore(true);
-    // validationForSlideHandler();
   } else {
     storingEachActivityScore(isCorrect);
   }
 
+  if (isArrangeLettersContainer(container) || isReorderContainer(container)) {
+    await validationForSlideHandler(slideValues);
+  }
+
 };
 
-const validationForSlideHandler = async () => {
+const validationForSlideHandler = async (slideValues: string[]): Promise<void> => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
-  if (!container) return;
-  const objectiveArray =  JSON.parse(container.getAttribute(SelectedValuesKey) ?? '[]') ?? [];
+  if (!container || (!isArrangeLettersContainer(container) && !isReorderContainer(container)) || container.getAttribute('game-completed') === 'true') return;
+
   const objectiveString = document.getElementById(LidoContainer)['objective'];
-  const res = matchStringPattern(objectiveString, objectiveArray);
-  if (res) {
-    await executeActions(container.getAttribute('onCorrect'), container);
+  const isComplete = isArrangeLettersContainer(container)
+    ? isArrangeLettersComplete(slideValues, objectiveString)
+    : isReorderComplete(slideValues, objectiveString);
+  if (isComplete) {
+    await validateObjectiveStatus();
   }
-}
+};

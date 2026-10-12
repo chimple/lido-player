@@ -255,6 +255,11 @@ export class LidoHome {
    * between containers and parses the XML data into containers.
    */
   async componentWillLoad() {
+    // Publish the current player's common-audio path before parsing XML so
+    // child lido-text components cannot resolve auto-audio against the
+    // previous player's global path.
+    this.publishCommonAudioPath(this.commonAudioPath);
+
     this.navBarIcons = {
       exit: this.exitButtonUrl || exitUrl,
       prev: this.prevButtonUrl || prevUrl,
@@ -442,7 +447,6 @@ export class LidoHome {
 
   @State() showDotsandbtn: boolean = false;
   componentDidLoad() {
-    this.publishCommonAudioPath(this.commonAudioPath);
     setTimeout(() => {
       this.showDotsandbtn = true;
     }, 10);

@@ -6,6 +6,7 @@
 
 import { Component, Host, Prop, h, Element, State, Watch } from '@stencil/core';
 import { parseProp, initEventsForElement, setVisibilityWithDelay, executeActions } from '../../utils/utils';
+import { AudioPlayer } from '../../utils/audioPlayer';
 
 @Component({
   tag: 'lido-flash-card',
@@ -122,6 +123,70 @@ export class LidoFlash {
    * `reflect` keeps the `<lido-flash-card flipped>` attribute in sync.
    */
   @Prop({ mutable: true, reflect: true }) flipped: boolean = false;
+  @Prop() autoFlipAfter: number = 4500;
+  private autoFlipTimer?: number;
+  private instructionStartTimer?: number;
+  private frontStartTimer?: number;
+  private narrationGraceTimer?: number;
+  private narrationTarget: HTMLElement | null = null;
+  private narrationHandled = false;
+  private goodJobPlaybackId?: number;
+  private goodJobPlaybackContext?: object;
+  private static readonly narrationStartGrace = 800;
+  private instructionDone = false;
+  private instructionStarted = false;
+
+  private onAudioStarted = (event: Event) => {
+    const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
+    if (target === this.instructionText()) this.instructionStarted = true;
+    if (target && target === this.narrationTarget && !this.narrationHandled) {
+      if (this.narrationGraceTimer) window.clearTimeout(this.narrationGraceTimer);
+      this.narrationGraceTimer = undefined;
+    }
+  };
+
+  private onAudioPlaying = (event: Event) => {
+    const detail = (event as CustomEvent).detail;
+    const target = detail?.target as HTMLElement | undefined;
+    if (target?.id !== 'lido-avatar') return;
+    if (detail.playbackContext !== this.goodJobPlaybackContext) return;
+    const arrow = this.nextArrow();
+    if (!arrow || !this.flipped) return;
+    this.goodJobPlaybackId = detail.playbackId;
+    arrow.classList.add('flash-card-next-glowing');
+  };
+
+  private onAudioEnded = (event: Event) => {
+    const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
+    const instruction = this.instructionText();
+    if (!target || (target !== instruction && target.id !== 'lido-avatar' && !this.el.contains(target))) return;
+    if (target === this.narrationTarget && !this.narrationHandled) {
+      this.finishNarration(target);
+      return;
+    }
+    if (this.narrationHandled && target === this.narrationTarget) return;
+    if (target === this.instructionText()) {
+      this.instructionDone = true;
+      this.frontStartTimer = window.setTimeout(() => {
+        this.speakFront();
+      }, 1200);
+    } else if (target === this.frontText()) {
+      if (this.flipped) return;
+      if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+      this.autoFlipTimer = window.setTimeout(() => {
+        if (!this.flipped) this.handleFlip();
+      }, this.autoFlipAfter);
+    } else if (target === this.backText()) {
+      if (this.flipped) this.showArrow();
+    } else if (target.id === 'lido-avatar') {
+      const playbackId = (event as CustomEvent).detail?.playbackId;
+      const playbackContext = (event as CustomEvent).detail?.playbackContext;
+      if (playbackContext !== this.goodJobPlaybackContext || playbackId !== this.goodJobPlaybackId) return;
+      this.goodJobPlaybackId = undefined;
+      this.nextArrow()?.classList.remove('flash-card-next-glowing');
+      executeActions("this.avatarAnimate='Idle'", target);
+    }
+  };
 
   /**
    * CSS margin value applied to each child element inside the container.
@@ -163,19 +228,31 @@ export class LidoFlash {
 
   componentDidLoad() {
     setVisibilityWithDelay(this.el, this.delayVisible);    
-    const card = this.el.querySelector('.card') as HTMLElement;
-    if (card) {
-      setTimeout(() => {
-        card.classList.add('flipped');
-        setTimeout(() => {
-          card.classList.remove('flipped');}, 500)
-      }, 500)
-    }
     initEventsForElement(this.el, this.type);
+    window.addEventListener('lidoAudioStarted', this.onAudioStarted);
+    window.addEventListener('lidoAudioPlaying', this.onAudioPlaying);
+    window.addEventListener('lidoAudioEnded', this.onAudioEnded);
+    const container = this.el.closest('lido-container');
+    if (container?.getAttribute('template-id') === 'flashcardtemplate') {
+      container.querySelector('#lido-avatar')?.setAttribute('disable-speak', 'true');
+      this.instructionStartTimer = window.setTimeout(() => {
+        if (!this.instructionStarted && !this.instructionDone) {
+          const instruction = this.instructionText();
+          if (instruction) this.startNarration(instruction);
+        }
+      }, 150);
+    }
     // handlingChildElements(this.el, this.minLength, this.maxLength, this.childElementsLength, 'inline-block');
   }
 
   disconnectedCallback() {
+    window.removeEventListener('lidoAudioEnded', this.onAudioEnded);
+    window.removeEventListener('lidoAudioPlaying', this.onAudioPlaying);
+    window.removeEventListener('lidoAudioStarted', this.onAudioStarted);
+    if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+    if (this.instructionStartTimer) window.clearTimeout(this.instructionStartTimer);
+    if (this.frontStartTimer) window.clearTimeout(this.frontStartTimer);
+    this.clearNarrationTimers();
     window.removeEventListener('resize', this.updateStyles);
     window.removeEventListener('load', this.updateStyles);
   }
@@ -201,7 +278,124 @@ export class LidoFlash {
 
   /** Toggle the card when it is clicked. */
   private handleFlip = () => {
+    if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+    AudioPlayer.getI().stop();
+    this.clearNarrationTimers();
+    const goingBack = !this.flipped;
     this.flipped = !this.flipped;
+    this.stopGoodJobGlow();
+    this.setArrowVisible(false);
+    if (goingBack) {
+      const text = this.backText();
+      if (text && text.textContent?.trim()) this.startNarration(text);
+      else this.showArrow();
+    } else {
+      this.speakFront();
+    }
+  };
+
+  private instructionText = () => {
+    const container = this.el.closest('lido-container');
+    const id = container?.getAttribute('template-id');
+    return id ? container?.querySelector(`[id="${id}"]`) as HTMLElement | null : null;
+  };
+  private frontText = () => this.el.querySelector('.card-front lido-text') as HTMLElement | null;
+  private backText = () => this.el.querySelector('.card-back lido-text') as HTMLElement | null;
+  private nextArrow = () => this.el.closest('lido-container')?.querySelector('#arrow') as HTMLElement | null;
+  private stopGoodJobGlow = () => {
+    this.goodJobPlaybackId = undefined;
+    this.goodJobPlaybackContext = undefined;
+    this.nextArrow()?.classList.remove('flash-card-next-glowing');
+  };
+  private speakFront = () => {
+    const text = this.frontText();
+    if (this.instructionDone && !this.flipped && text && text.textContent?.trim()) {
+      this.startNarration(text);
+    }
+  };
+
+  private clearNarrationTimers = () => {
+    if (this.narrationGraceTimer) window.clearTimeout(this.narrationGraceTimer);
+    this.narrationGraceTimer = undefined;
+    this.narrationTarget = null;
+    this.narrationHandled = false;
+  };
+
+  private continueAfterNarration = (target: HTMLElement) => {
+    if (target === this.instructionText()) {
+      this.instructionDone = true;
+      this.frontStartTimer = window.setTimeout(() => this.speakFront(), 1200);
+    } else if (target === this.frontText()) {
+      if (this.flipped) return;
+      if (this.autoFlipTimer) window.clearTimeout(this.autoFlipTimer);
+      this.autoFlipTimer = window.setTimeout(() => {
+        if (!this.flipped) this.handleFlip();
+      }, this.autoFlipAfter);
+    } else if (target === this.backText()) {
+      if (this.flipped) this.showArrow();
+    }
+  };
+
+  private finishNarration = (target: HTMLElement) => {
+    if (target !== this.narrationTarget || this.narrationHandled) return;
+    this.narrationHandled = true;
+    if (this.narrationGraceTimer) window.clearTimeout(this.narrationGraceTimer);
+    this.narrationGraceTimer = undefined;
+    this.continueAfterNarration(target);
+  };
+
+  private startNarration = (target: HTMLElement) => {
+    this.clearNarrationTimers();
+    this.narrationTarget = target;
+    this.narrationGraceTimer = window.setTimeout(() => {
+      if (!this.narrationHandled) this.finishNarration(target);
+    }, LidoFlash.narrationStartGrace);
+    executeActions("this.speak='true'", target);
+  };
+  private showArrow = () => {
+    if (!this.flipped) return;
+    const container = this.el.closest('lido-container');
+    if (container?.getAttribute('template-id') !== 'flashcardtemplate') return;
+    const arrow = this.nextArrow();
+    if (!arrow) return;
+    // Existing ZIPs may not have the newer template onTouch action. Reuse
+    // the same direct nextBtn action as the shared home arrow for them.
+    if (!arrow.getAttribute('onTouch')) arrow.setAttribute('onTouch', "this.nextBtn='true';");
+    const mascot = container.querySelector('#lido-avatar') as HTMLElement | null;
+    const scaffoldAudio = arrow.getAttribute('audio');
+    if (mascot && scaffoldAudio) {
+      mascot.setAttribute('audio', scaffoldAudio);
+    }
+    this.setArrowVisible(true);
+    if (mascot) {
+      this.goodJobPlaybackContext = {};
+      this.goodJobPlaybackId = undefined;
+      executeActions("this.avatarAnimate='Idle speak'", mascot);
+      AudioPlayer.getI().play(mascot, true, this.goodJobPlaybackContext);
+    }
+  };
+
+  private setArrowVisible = (visible: boolean) => {
+    const container = this.el.closest('lido-container');
+    if (container?.getAttribute('template-id') !== 'flashcardtemplate') return;
+    const arrow = container.querySelector('#arrow') as any;
+    if (!arrow) return;
+    arrow.visible = visible;
+    arrow.setAttribute('visible', String(visible));
+    // lido-cell's visible prop is a non-reflected string prop; keep the
+    // rendered host in sync as well so an attribute update cannot leave its
+    // previous inline display:none in place.
+    arrow.style.display = visible ? 'block' : 'none';
+    arrow.style.visibility = visible ? 'visible' : 'hidden';
+    arrow.style.opacity = visible ? '1' : '0';
+    arrow.style.pointerEvents = visible ? 'auto' : 'none';
+    const arrowImage = arrow.querySelector('lido-image') as HTMLElement | null;
+    if (arrowImage) {
+      arrowImage.style.display = visible ? 'flex' : 'none';
+      arrowImage.style.visibility = visible ? 'visible' : 'hidden';
+      arrowImage.style.opacity = visible ? '1' : '0';
+    }
+    if (typeof arrow.updateStyles === 'function') arrow.updateStyles();
   };
 
   /* ---------- Render ---------- */
@@ -220,7 +414,10 @@ export class LidoFlash {
         onInCorrect={this.onInCorrect}
         onEntry={this.onEntry}
         type={this.type}
-        onClick={this.handleFlip}
+        onClick={(event: MouseEvent) => {
+          if ((event.target as HTMLElement)?.closest?.('#lido-avatar')) return;
+          this.handleFlip();
+        }}
         disable-speak={this.disableSpeak}
       >
         <div class={`card ${this.flipped ? 'flipped' : ''}`} >

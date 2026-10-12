@@ -313,3 +313,12 @@ body {
   will-change: transform, width, height;
   contain: layout paint style;
 }
+
+
+.category-dropped-onCorrect{
+  box-shadow: rgba(129, 193, 39, 1) 0px 8px 8px 0px !important;
+}
+
+.category-dropped-onInCorrect{
+  box-shadow: rgba(255, 4, 16, 1) 0px 8px 8px 0px !important;
+}

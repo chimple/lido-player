@@ -2,7 +2,8 @@ import { re } from 'mathjs';
 import { DragSelectedMapKey, LidoContainer, SelectedValuesKey,DropToAttr } from '../constants';
 
 import {calculateScale,buildDragSelectedMapFromDOM, executeActions, handleShowCheck, matchStringPattern, onActivityComplete, storingEachActivityScore, getSortedValuesArrayFromMap } from '../utils';
-import { buildDropHasDragFromDOM, handleResetDragElement } from './dragDropHandler';
+import { animateDragToTarget, buildDropHasDragFromDOM, handleResetDragElement } from './dragDropHandler';
+import { AudioPlayer } from '../audioPlayer';
 
 let preOverlap: HTMLElement;
 
@@ -198,10 +199,15 @@ export function enableReorderDrag(element: HTMLElement): void {
             divEl.remove();
           });
         }
+        resetElementStyles(element);
       } else {
         if (element.parentElement['type'] !== 'category') {
-          executeActions('this.alignMatch=true', divEl, element);
-          divEl.replaceWith(element);
+          animateDragToTarget(element, divEl, container)
+          // executeActions('this.alignMatch=true', divEl, element);
+          setTimeout(() => {
+            divEl.replaceWith(element);
+            resetElementStyles(element);
+          }, 500)
         } else {
           const categoryElement = element.parentElement;
           const dragValues = buildDragSelectedMapFromDOM();
@@ -220,13 +226,16 @@ export function enableReorderDrag(element: HTMLElement): void {
 
           optionArea.appendChild(element);
           element.classList.remove('dropped');
-           element.removeAttribute('drop-to');
+          element.classList.remove("category-dropped-onCorrect")
+          element.classList.remove("category-dropped-onInCorrect")
+          element.removeAttribute('drop-to');
           if (dummy) {
             dummy.remove();
           }
+          resetElementStyles(element);
         }
       }
-      resetElementStyles(element);
+      // resetElementStyles(element);
       return;
     }
 
@@ -283,6 +292,8 @@ export function enableReorderDrag(element: HTMLElement): void {
           resetElementStyles(element);
           dummy.replaceWith(element);
            element.classList.remove('dropped');
+           element.classList.remove("category-dropped-onCorrect")
+           element.classList.remove("category-dropped-onInCorrect")
             element.removeAttribute('drop-to');
         }, 100);
         return;
@@ -333,7 +344,7 @@ export function enableReorderDrag(element: HTMLElement): void {
   element.addEventListener('pointerdown', onStart);
 }
 
-const resetElementStyles = (el: HTMLElement): void => {
+export const resetElementStyles = (el: HTMLElement): void => {
   el.style.opacity = '';
   el.style.cursor = 'move';
   el.style.zIndex = '';
@@ -456,8 +467,40 @@ const wordDropComplete = (block: HTMLElement, element?: HTMLElement) => {
   }
 };
 
+
+const categoryPlayback = new WeakMap<HTMLElement, Promise<void>>();
+
+export const categoriseCompleted = (container: HTMLElement): Promise<void> => {
+  const pendingPlayback = categoryPlayback.get(container);
+  if (pendingPlayback) return pendingPlayback;
+
+  const playback = playCategories(container).finally(() => {
+    categoryPlayback.delete(container);
+  });
+  categoryPlayback.set(container, playback);
+  return playback;
+};
+
+const playCategories = async (container: HTMLElement) => {
+  const allCategoriseBox = container.querySelectorAll<HTMLElement>('[type="category"]');
+  const audioPlayer = AudioPlayer.getI();
+
+  for (const categoryBox of Array.from(allCategoriseBox)) {
+    const headingElement = categoryBox.parentElement.children[0];
+    await audioPlayer.play(headingElement as HTMLElement)
+    
+    for (const child of Array.from(categoryBox.children)) {
+      child.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'end' // Aligns the bottom of the child with the bottom of the container
+      });
+      await audioPlayer.play(child as HTMLElement);
+    }
+  }
+};
+
 async function onDropToCategory(dragElement: HTMLElement, categoryElement: HTMLElement) {
-  dragElement.classList.add('dropped');
+  // dragElement.classList.add('dropped');
   
   let dragSelected = buildDragSelectedMapFromDOM();
   let elementArr = dragSelected[categoryElement.getAttribute('tab-index')];

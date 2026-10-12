@@ -146,6 +146,8 @@ export class LidoBalance {
    */
   @State() rightVal: number = 0;
 
+  @State() feedbackColor: string = '';
+
     /**
    * Reference to the scale (bar) DOM element.  
    * Used to apply rotation transforms during balance animation.
@@ -182,6 +184,9 @@ export class LidoBalance {
    */
   private rightParentEl!: HTMLElement;
 
+  private leftFeedbackEl!: HTMLElement;
+  private rightFeedbackEl!: HTMLElement;
+
   @Method()
   async revealSymbol() {
    this.showSymbol = true;
@@ -191,13 +196,25 @@ export class LidoBalance {
   async hideSymbol() {
    this.showSymbol = false;
   }
+  @Method()
+  async setFeedbackColor(color: string = '') {
+    this.feedbackColor = color;
+  }
   @Element() el: HTMLElement;
   async componentWillLoad() {
+    this.initializeInitialSymbol();
     this.updateStyles();
     this.pivotSvg = await this.fetchAndApplyFill(convertUrlToRelative(this.pivotimage));
     this.scaleSvg = await this.fetchAndApplyFill(convertUrlToRelative(this.scaleimage));
     this.handlerSvg = await this.fetchAndApplyFill(convertUrlToRelative(this.handlerimage));
    }
+
+  private initializeInitialSymbol() {
+    const container = this.el?.closest('lido-container') as HTMLElement | null;
+    const objective = container?.getAttribute('objective')?.trim();
+    if (objective === '>' || objective === '<' || objective === '=') this.balanceSymbol = objective;
+    this.showSymbol = true;
+  }
 
   componentDidLoad() {
   this.animateBalance();
@@ -277,6 +294,9 @@ export class LidoBalance {
       const offset = (this.currentAngle / this.maxTilt) * maxOffset;
       this.leftHandleEl.style.transform = `translateY(${-offset}px)`;
       this.rightHandleEl.style.transform = `translateY(${offset}px)`;
+      const feedbackOffset = (this.currentAngle / this.maxTilt) * maxOffset;
+      if (this.leftFeedbackEl) this.leftFeedbackEl.style.transform = `translateY(${-feedbackOffset}px)`;
+      if (this.rightFeedbackEl) this.rightFeedbackEl.style.transform = `translateY(${feedbackOffset}px)`;
     }
   this.animationFrameId = requestAnimationFrame(rotate);
   };
@@ -317,6 +337,8 @@ export class LidoBalance {
           <div innerHTML={this.scaleSvg} id="scaleimg" class="scale" ref={(el) => (this.scaleEl = el as HTMLElement)}></div>
           <div innerHTML={this.handlerSvg} id="handlerimg" class="handler" ref={(el) => (this.leftHandleEl = el as HTMLElement)}></div> 
           <div innerHTML={this.handlerSvg} id="handimg" class="hand" ref={(el) => (this.rightHandleEl = el as HTMLElement)}></div> 
+          <div class="balance-plate-feedback left" ref={(el) => (this.leftFeedbackEl = el as HTMLElement)} style={{ backgroundColor: this.feedbackColor }} aria-hidden={!this.feedbackColor}></div>
+          <div class="balance-plate-feedback right" ref={(el) => (this.rightFeedbackEl = el as HTMLElement)} style={{ backgroundColor: this.feedbackColor }} aria-hidden={!this.feedbackColor}></div>
           <div id="balanceSymbol" class="lido-balance-symbol" aria-hidden={!this.showSymbol}>{this.showSymbol ? this.balanceSymbol : ''}</div>
         {/* </div> */}
       </Host>

@@ -18,11 +18,11 @@ import GameScore from './constants';
 import { RiveService } from './rive-service';
 import { getAssetPath } from '@stencil/core';
 import { AudioPlayer } from './audioPlayer';
-import { enableReorderDrag } from './utilsHandlers/sortHandler';
+import { categoriseCompleted, enableReorderDrag, resetElementStyles } from './utilsHandlers/sortHandler';
 import { slideAnimation, slidingWithScaling } from './utilsHandlers/slideHandler';
-import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation } from './utilsHandlers/dragDropHandler';
+import { enableDraggingWithScaling, enableOptionArea, getElementScale, handleDropElement, appendingDragElementsInDrop, multiplyBeedsCalculation, animateDragToTarget } from './utilsHandlers/dragDropHandler';
 import { enableFreeMove } from './utilsHandlers/moveHandler';
-import { addClickListenerForClickType, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
+import { addClickListenerForClickType, initializeClickableElementStyle, onTouchListenerForOnTouch } from './utilsHandlers/clickHandler';
 import { cos, evaluate, isArray } from 'mathjs';
 import { fillSlideHandle } from './utilsHandlers/floatHandler';
 import { highlightElement, stopHighlightForSpeakingElement } from './utilsHandlers/highlightHandler';
@@ -30,6 +30,7 @@ import { handleSolvedEquationSubmissionAndScoreUpdate } from './utilsHandlers/li
 import { handlingMatrix } from './utilsHandlers/matrixHandler';
 import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
 import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from './utilsHandlers/timer';
+import { dragDropAnimation } from './utilsHandlers/animationHandler';
 const gameScore = new GameScore();
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
@@ -64,6 +65,43 @@ export function format(first?: string, middle?: string, last?: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
 
+type ActionExecutionOptions = {
+  visualOnly?: boolean;
+};
+
+type InitializedElement = HTMLElement & {
+  __lidoInitializationKey?: string;
+};
+
+// These actions have side effects beyond declarative element styling. They must
+// not run while the player is being displayed in edit mode.
+const nonVisualActions = new Set([
+  'revealImageValue',
+  'scrollCellAfterEquationSolved',
+  'alignMatch',
+  'removeClone',
+  'speak',
+  'fill-slide',
+  'nextBtn',
+  'prevBtn',
+  'stop',
+  'sleep',
+  'avatarAnimate',
+  'cellBorderAnimate',
+  'vibrate',
+  'highlightStarsAndDisapper',
+  'boxAnimationOneByOne',
+  'questionBoxAnimate',
+  'slideAnimation',
+  'showBalanceSymbol',
+  'hideBalanceSymbol',
+  'sumTogetherAnimation',
+  'addText',
+  'disableType',
+  'updateCountBlender',
+  'updateCalculatorAnswer',
+]);
+
 export const initEventsForElement = async (element: HTMLElement, type?: string) => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) {
@@ -73,10 +111,31 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
     return;
   }
   const onEntry = element.getAttribute('onEntry');
-  await executeActions(onEntry, element);
+  const canPlay = container.getAttribute('canplay') !== 'false';
+  await executeActions(onEntry, element, undefined, { visualOnly: !canPlay });
+
+  // Free movement is an editor interaction and is intentionally available in
+  // edit mode; all gameplay handlers below remain disabled there.
   if (element.getAttribute('move') === 'true') {
     enableFreeMove(element);
   }
+
+  // The click visual treatment is independent from the click listener. Edit
+  // mode needs the class and custom properties that draw the configured button
+  // background/shadow, but must not install answer-selection behavior.
+  if (!canPlay && type === 'click') {
+    initializeClickableElementStyle(element);
+  }
+
+  // Edit mode still needs visual initialization, but must not install any
+  // gameplay or touch handlers. In play mode, avoid duplicating listeners if a
+  // component invokes its load hook more than once.
+  if (!canPlay) return;
+  const initializedElement = element as InitializedElement;
+  const initializationKey = `${type || ''}:${canPlay}`;
+  if (initializedElement.__lidoInitializationKey === initializationKey) return;
+  initializedElement.__lidoInitializationKey = initializationKey;
+
   switch (type) {
     case 'drag': {
       enableDraggingWithScaling(element);
@@ -118,11 +177,17 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
 };
 
 // Function to execute actions parsed from the onMatch string
-export const executeActions = async (actionsString: string, thisElement: HTMLElement, element?: HTMLElement): Promise<void> => {
+export const executeActions = async (
+  actionsString: string,
+  thisElement: HTMLElement,
+  element?: HTMLElement,
+  options: ActionExecutionOptions = {},
+): Promise<void> => {
   const actions = parseActions(actionsString);  
   // body.style.pointerEvents = 'none';
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
+    if (options.visualOnly && nonVisualActions.has(action.action)) continue;
 
     const queriedElement = document.querySelector(action.actor) as HTMLElement | null;
     const targetElement = action.actor === 'this' ? thisElement : action.actor === 'element' ? element : queriedElement ? queriedElement : document.getElementById(action.actor);
@@ -371,10 +436,11 @@ export const executeActions = async (actionsString: string, thisElement: HTMLEle
             if (dropTo === "hundredsDrop") hundreds++;
           });
 
-          const unitsValue = units * 1;
-          const tensValue = tens * 10;
-          const hundredsValue = hundreds * 100;
-          const totalValue = unitsValue + tensValue + hundredsValue;
+          // Blender displays the number of blocks placed in each column.
+          // Blender's drag/drop values are also the required block counts.
+          const unitsValue = units;
+          const tensValue = tens;
+          const hundredsValue = hundreds;
 
           // ✅ Update Lido Text Boxes
           const unitsBox = document.getElementById("units");
@@ -439,8 +505,8 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
       dragElement.replaceWith(dummyElement);
-      
 
+      
       const keyframes = `
       @keyframes widthDecrease {
         0% { width: ${dragElement.style.width}; height: ${dragElement.style.height}; margin: ${dragElement.style.margin}; }
@@ -686,14 +752,37 @@ export const calculateScore = () => {
 export async function onActivityComplete(dragElement?: HTMLElement, dropElement?: HTMLElement) {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   if (!container) return;
-  await executeActions("this.alignMatch='true'", dropElement, dragElement);
+  const isBlender = container.getAttribute('template-id') === 'blender';
+  const isBalancing = !!container.querySelector('lido-balance');
+  const usesBalancePlacement = isBalancing
+    && container.getAttribute('drop-action') !== DropAction.Move
+    && container.getAttribute('drop-action') !== DropAction.InfiniteDrop;
 
-    if (dragElement && dropElement) {
-  const isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  // Balance plates perform their own single placement pass after this method.
+  // Running alignMatch first makes two transforms compete and produces a visible
+  // horizontal drift as the item is re-parented.
+  if (!usesBalancePlacement) {
+    await executeActions("this.alignMatch='true'", dropElement, dragElement);
+  }
+
+  if (dragElement && dropElement) {
+  let isCorrect = dropElement['value'].toLowerCase().includes(dragElement['value'].toLowerCase());
+  if (isBlender) {
+    const requiredDrops = Number(dropElement.getAttribute('required-drops') ?? 0);
+    const placedDrops = document.querySelectorAll(
+      `[drop-to="${dropElement.id}"]`,
+    ).length;
+
+    // Blender accepts every count from 1 through the required count.
+    // Zero or an overfilled drop zone uses the incorrect action.
+    isCorrect = placedDrops > 0 && placedDrops <= requiredDrops;
+  }
   // storing each activity score based on isCorrect for (all drag-drop events)
     // storingEachActivityScore(isCorrect);
   if (isCorrect) {
     if(dropElement.getAttribute('type') === "category"){
+      dragElement.classList.remove("category-dropped-onInCorrect")
+      dragElement.classList.add("category-dropped-onCorrect")
       gameScore.rightMoves += 1;
       console.log("Right Moves : ", gameScore.rightMoves);
       console.log("Wrong Moves : ", gameScore.wrongMoves);
@@ -702,7 +791,7 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
       container.getAttribute('dropAttr')?.toLowerCase() === DropMode.EnableAnimation.toLowerCase()
         ? ''
         : dropElement.getAttribute('onCorrect');
-    if (onCorrect) {
+    if (onCorrect && !isBlender && !isBalancing) {
       await executeActions(onCorrect, dropElement, dragElement);
     }
 
@@ -712,12 +801,42 @@ export async function onActivityComplete(dragElement?: HTMLElement, dropElement?
     }
   } else {
     if(dropElement.getAttribute('type') === "category"){
+      dragElement.classList.remove("category-dropped-onCorrect")
+      dragElement.classList.add("category-dropped-onInCorrect")
+
       gameScore.wrongMoves += 1;
       console.log("Right Moves : ", gameScore.rightMoves);
       console.log("Wrong Moves : ", gameScore.wrongMoves);
+      const categorizeArea = container.querySelector(`[type="optionArea"]`) as HTMLElement
+      const sameElArr = Array.from(container.querySelectorAll(`[value="${dragElement.getAttribute('value')}"]`));
+      const divEl = sameElArr.find(el => el !== dragElement && el.tagName === 'DIV') as HTMLElement;
+      
+
+      setTimeout(() => {
+        const dummyEl = document.createElement("div") as HTMLElement
+        dummyEl.style.width = dragElement.offsetWidth + "px"
+        dummyEl.style.height = dragElement.offsetHeight + "px"
+        categorizeArea.appendChild(dummyEl)
+        const dragX = dragElement.offsetLeft
+        const dragY = dragElement.offsetTop
+        dragElement.style.position = "absolute"
+        dragElement.style.transition = '';
+        
+        dragElement.style.transform = `translate(${dragX}px, ${dragY}px)`;
+        animateDragToTarget(dragElement, dummyEl, container)
+          setTimeout(() => {
+            dummyEl.replaceWith(dragElement);
+            resetElementStyles(dragElement);
+            dragElement.classList.remove("category-dropped-onInCorrect")
+            dragElement.classList.remove("dropped")
+            dragElement.removeAttribute("drop-to")
+          }, 1000)  
+        }, 2000)   
+      
+      
     }
     const onInCorrect = dropElement.getAttribute('onInCorrect');
-    if (onInCorrect) {
+    if (onInCorrect && !isBlender && !isBalancing) {
       await executeActions(onInCorrect, dropElement, dragElement);
     }
   }
@@ -824,7 +943,9 @@ const storeActivityScore = (score: number) => {
   }
 };
 
-export const handleShowCheck = () => {
+const pendingCategoryChecks = new WeakSet<HTMLElement>();
+
+export const handleShowCheck = async () => {
   const container = document.getElementById(LidoContainer) as HTMLElement;
   const objectiveString = container['objective'];
   const selectValues = container.getAttribute(SelectedValuesKey) ?? '';
@@ -841,8 +962,22 @@ export const handleShowCheck = () => {
   if (showCheck) {
     checkButton?.classList?.remove('lido-disable-check-button');
   } else {
-    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']") && !container.querySelector("[type='category']")  &&  container.getAttribute('dropAttr')?.toLowerCase() !== DropMode.EnableAnimation.toLowerCase()){
+    if(!container.getAttribute("game-completed") && !container.querySelector("[type='slide']")  &&  container.getAttribute('dropAttr')?.toLowerCase() !== DropMode.EnableAnimation.toLowerCase()){
+      
+      if(container.querySelector("[type='category']")){
+        if (pendingCategoryChecks.has(container)) return;
+        pendingCategoryChecks.add(container);
+        try {
+          await categoriseCompleted(container);
+          await validateObjectiveStatus();
+        } finally {
+          pendingCategoryChecks.delete(container);
+        }
+        return;
+      }
+
       validateObjectiveStatus();
+      
     }
 
     
@@ -899,6 +1034,14 @@ export const validateObjectiveStatus = async () => {
   {
     res = matchStringPattern(objectiveString, objectiveArray);
   }
+
+  const isBalancing = !!container.querySelector('lido-balance');
+  if (isBalancing && !res) {
+    const dropElements = Array.from(container.querySelectorAll<HTMLElement>('[type="drop"]'));
+    const filledDropCount = dropElements.filter(drop => !!container.querySelector(`[drop-to="${drop.id}"]`)).length;
+    if (filledDropCount < dropElements.length) return;
+  }
+
   if (res) 
   {
     container.setAttribute("game-completed", "true");
