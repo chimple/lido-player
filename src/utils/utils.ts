@@ -314,7 +314,15 @@ export const executeActions = async (
           const riveInstance = riveService.getRiveInstance();
 
           if (riveInstance && action.value) {
-            riveInstance.play(action.value);
+            const input = riveInstance
+              .stateMachineInputs('State Machine 1')
+              ?.find(input => input.name === action.value);
+
+            if (input) {
+              input.fire();
+            } else {
+              console.warn(`Avatar reaction input "${action.value}" was not found in State Machine 1.`);
+            }
           }
           break;
         }
