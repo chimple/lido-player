@@ -192,8 +192,8 @@ export class LidoHome {
   };
 
   private translateHomeText(key: string): string {
-    const lang = this.Lang?.trim();
-    return lang ? i18next.getFixedT(lang)(key) : i18next.t(key);
+    const lang = this.Lang?.trim() || i18next.language || 'en';
+    return i18next.getFixedT(lang)(key) as string;
   }
   /**
    * Event handler for transitioning to the next container in the sequence.
@@ -303,7 +303,6 @@ export class LidoHome {
     }
 
     const candidatePaths = [this.resolveAsset('data.json')].filter(Boolean) as string[];
-
     for (const path of candidatePaths) {
       try {
         const resolvedPath = path.startsWith('http') || path.startsWith('blob') ? path : getAssetPath(path);
@@ -619,12 +618,9 @@ export class LidoHome {
       })
       .filter(Boolean);
     if (tagName === 'lido-text' && props.string) {
-      props.string = i18next.t(props.string);
+      props.string = this.translateHomeText(props.string);
     }
 
-    if (tagName === 'lido-text' && props.string) {
-      props.string = i18next.t(props.string);
-    }
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
