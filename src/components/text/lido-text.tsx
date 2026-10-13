@@ -317,8 +317,7 @@ export class LidoText {
   }
 
   render() {
-    const translatedText = i18next.t(this.string);
-    const displayText = (typeof translatedText === 'string' ? translatedText : String(translatedText)).replace(/_phonics?/gi, '');
+    const displayText = i18next.t(this.string).replace(/_phonics?/gi, '');
 
     return (
       <Host
