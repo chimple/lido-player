@@ -239,6 +239,35 @@ export class LidoContainer {
 
   private handleWindowResize = () => this.scaleContainer(this.el);
   private handleWindowLoad = () => this.scaleContainer(this.el);
+  private writeCardArrowObserver?: MutationObserver;
+
+  private isWriteCardContainer = () => this.templateId === 'writeCard';
+
+  private syncWriteCardArrowHighlight = () => {
+    if (!this.isWriteCardContainer()) return;
+    const arrow = this.el.querySelector('#arrow') as HTMLElement | null;
+    if (!arrow) return;
+
+    const style = window.getComputedStyle(arrow);
+    const hidden =
+      style.display === 'none' ||
+      style.visibility === 'hidden' ||
+      style.opacity === '0';
+
+    arrow.classList.toggle('flash-card-next-glowing', !hidden);
+  };
+
+  private observeWriteCardArrow = () => {
+    if (!this.isWriteCardContainer()) return;
+    this.writeCardArrowObserver?.disconnect();
+    this.writeCardArrowObserver = new MutationObserver(() => this.syncWriteCardArrowHighlight());
+    this.writeCardArrowObserver.observe(this.el, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style', 'visible'],
+    });
+    this.syncWriteCardArrowHighlight();
+  };
 
   private cleanupInteractionHandlers() {
     this.el.querySelectorAll<HTMLElement>('[type="drag"], [type="slide"], [move="true"]').forEach(element => {
@@ -506,9 +535,11 @@ export class LidoContainer {
       setTimeout(() => {
         this.el.setAttribute("onEntry", `${this.templateId}.speak='${!this.speakFlag}'; ` + this.el.getAttribute("onEntry"))
         initEventsForElement(this.el, this.type);
+        this.observeWriteCardArrow();
       }, 100)
     } else {
       initEventsForElement(this.el, this.type)
+      this.observeWriteCardArrow();
     }
     if (this.customStyle) {
       const styleElement = document.createElement('style');
@@ -528,6 +559,8 @@ export class LidoContainer {
     this.cleanupInteractionHandlers();
     window.removeEventListener('resize', this.handleWindowResize);
     window.removeEventListener('load', this.handleWindowLoad);
+    this.writeCardArrowObserver?.disconnect();
+    this.writeCardArrowObserver = undefined;
     document.body.style.backgroundColor = '';
     document.body.style.backgroundImage = '';
     resetFloatState();
