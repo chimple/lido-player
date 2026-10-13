@@ -10,9 +10,6 @@ import te from '../i18n/te.json';
 import pt from '../i18n/pt.json';
 import mr from '../i18n/mr.json';
 
-export const translateText = (key: string = '', options?: any) =>
-  i18next.t(key, options);
-
 i18next
   .use(LanguageDetector)
   .init({
@@ -38,7 +35,7 @@ i18next
   });
 
 // Helper wrappers (simplify usage in components)
-export const t = (key: string, options?: any) => translateText(key, options);
+export const t = (key: string, options?: any) => i18next.t(key, options);
 export const setLanguage = (lang: string) => i18next.changeLanguage(lang);
 export const getLanguage = () => i18next.language;
 
