@@ -36,7 +36,7 @@ import {
 
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
-import i18next, { translateText } from '../../utils/i18n';
+import i18next, { getTranslationKey } from '../../utils/i18n';
 import { Timer } from '../../utils/utilsHandlers/timer';
 const gameScore = new GameScore();
 
@@ -192,8 +192,8 @@ export class LidoHome {
   };
 
   private translateHomeText(key: string): string {
-    const lang = this.Lang?.trim();
-    return lang ? i18next.getFixedT(lang)(key) : i18next.t(key);
+    const lang = this.Lang?.trim() || i18next.language || 'en';
+    return i18next.getFixedT(lang)(key) as string;
   }
   /**
    * Event handler for transitioning to the next container in the sequence.
@@ -303,7 +303,6 @@ export class LidoHome {
     }
 
     const candidatePaths = [this.resolveAsset('data.json')].filter(Boolean) as string[];
-
     for (const path of candidatePaths) {
       try {
         const resolvedPath = path.startsWith('http') || path.startsWith('blob') ? path : getAssetPath(path);
@@ -619,12 +618,11 @@ export class LidoHome {
       })
       .filter(Boolean);
     if (tagName === 'lido-text' && props.string) {
-      props.string = translateText(props.string);
+      props.string = /^\s+\S+$/.test(props.string)
+        ? this.translateHomeText(getTranslationKey(props.string))
+        : this.translateHomeText(props.string);
     }
 
-    if (tagName === 'lido-text' && props.string) {
-      props.string = translateText(props.string);
-    }
     // Map XML tags to Stencil components
     const componentMapping = {
       'lido-container': (
