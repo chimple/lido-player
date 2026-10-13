@@ -183,7 +183,6 @@ export class LidoFlash {
       const playbackContext = (event as CustomEvent).detail?.playbackContext;
       if (playbackContext !== this.goodJobPlaybackContext || playbackId !== this.goodJobPlaybackId) return;
       this.goodJobPlaybackId = undefined;
-      this.nextArrow()?.classList.remove('flash-card-next-glowing');
       executeActions("this.avatarAnimate='Idle'", target);
     }
   };
@@ -372,6 +371,8 @@ export class LidoFlash {
       mascot.setAttribute('audio', scaffoldAudio);
     }
     this.setArrowVisible(true);
+    // Keep the next action highlighted after mascot audio ends.
+    arrow.classList.add('flash-card-next-glowing');
     if (mascot) {
       this.goodJobPlaybackContext = {};
       this.goodJobPlaybackId = undefined;
