@@ -200,6 +200,7 @@ export function slidingWithScaling(element: HTMLElement): void {
 
   // Start observing the element
   observer.observe(parentElement, observerConfig);
+  let mostOverlappedElement: HTMLElement;
 
   const onMove = (event: MouseEvent | TouchEvent): void => {
     if (!isDragging) return;
@@ -224,12 +225,14 @@ export function slidingWithScaling(element: HTMLElement): void {
     const containerRect = parentElement.getBoundingClientRect();
     const elementRect = element.getBoundingClientRect();
 
-    const numbers = element.style.transform.match(/-?\d+(\.\d+)?/g);
-    const result = numbers.map(Number);
-    const initialElementLeftPx = elementRect.left / parentElementScale - result[0];
-    const initialElementTopPx = elementRect.top - result[1];
-    const initialElementRightPx = elementRect.right / parentElementScale - result[0];
-    const initialElementBottomPx = elementRect.bottom - result[1];
+    // Firefox serializes translate(x, 0) as translate(x), so parsing the
+    // inline string can lose Y and produce NaN. Read the computed matrix instead.
+    const transform = window.getComputedStyle(element).transform;
+    const translation = new DOMMatrixReadOnly(transform === 'none' ? undefined : transform);
+    const initialElementLeftPx = elementRect.left / parentElementScale - translation.m41;
+    const initialElementTopPx = elementRect.top - translation.m42;
+    const initialElementRightPx = elementRect.right / parentElementScale - translation.m41;
+    const initialElementBottomPx = elementRect.bottom - translation.m42;
 
     const maxRight = containerRect.right - initialElementRightPx;
     const maxLeft = containerRect.left - initialElementLeftPx;
@@ -243,7 +246,7 @@ export function slidingWithScaling(element: HTMLElement): void {
     element.style.transform = `translate(${newLeftClamp}px, ${newTopClamp}px)`;
 
     // Check for overlaps and highlight only the most overlapping element
-    let mostOverlappedElement: HTMLElement = findMostoverlappedElement(element, 'slide');
+    mostOverlappedElement = findMostoverlappedElement(element, 'slide');
 
     // Apply styles only to the most overlapped element
     if (mostOverlappedElement) {
@@ -320,6 +323,7 @@ export function slidingWithScaling(element: HTMLElement): void {
     setTimeout(() => {
       if (overlapElement) {
         void slideCompleted(element);
+        updateReorderCorrectness(container, element, mostOverlappedElement);
         overlapElement = false;
       }
     }, 300);
@@ -367,18 +371,49 @@ export const isArrangeLettersComplete = (slideValues: string[], objectiveString:
     && slideValues.every((value, index) => value === objectiveValues[index]);
 };
 
-export const updateReorderCorrectness = (container: HTMLElement, slideValues: string[], objectiveValues: string[]): void => {
-  const slideElements = Array.from(container.querySelectorAll('[type="slide"]')) as HTMLElement[];
+export const updateReorderCorrectness = (container: HTMLElement, slideElement: HTMLElement, overlappedElement: HTMLElement): void => {
+  const allSlideElements = Array.from(container.querySelectorAll('[type="slide"]')) as HTMLElement[];
+  const elementIndex = allSlideElements.indexOf(slideElement);
+  const overlappedElementIndex = allSlideElements.indexOf(overlappedElement);
+  const objectiveString = document.getElementById(LidoContainer)['objective'];
+  const objectiveArray = objectiveString.split(',');
+  const slideValues = getSlideValuesForValidation(container, allSlideElements);
+  const isCorrect = elementIndex >= 0 && elementIndex < objectiveArray.length
+    ? matchStringPattern(slideValues[elementIndex], [objectiveArray[elementIndex].trim()])
+    : false;
+  const isCorrectOverlap = overlappedElementIndex >= 0 && overlappedElementIndex < objectiveArray.length
+    ? matchStringPattern(slideValues[overlappedElementIndex], [objectiveArray[overlappedElementIndex].trim()])
+    : false;
 
-  slideElements.forEach((element, index) => {
-    const isCorrect = index < objectiveValues.length && slideValues[index] === objectiveValues[index].trim();
-    if (isCorrect) {
-      applyBorderToClickableCell(element, '#65BC46');
-    } else {
-      element.style.removeProperty('box-shadow');
-    }
-  });
+  if (isCorrect && isCorrectOverlap) {
+    updateElementCategoryClass(slideElement, true);
+    updateElementCategoryClass(overlappedElement, true);
+  } else if (isCorrect) {
+    updateElementCategoryClass(slideElement, true);
+    updateElementCategoryClass(overlappedElement, false);
+  } else if (isCorrectOverlap) {
+    updateElementCategoryClass(slideElement, false);
+    updateElementCategoryClass(overlappedElement, true);
+  } else {
+    updateElementCategoryClass(slideElement, false);
+    updateElementCategoryClass(overlappedElement, false);
+  }
 };
+
+function updateElementCategoryClass(element, isCorrect) {
+  if (!element) return;
+  
+  const correctClass = 'category-dropped-onCorrect';
+  const incorrectClass = 'category-dropped-onInCorrect';
+
+  if (isCorrect) {
+    element.classList.add(correctClass);
+    element.classList.remove(incorrectClass);
+  } else {
+    element.classList.add(incorrectClass);
+    element.classList.remove(correctClass);
+  }
+}
 
 export const isReorderComplete = (slideValues: string[], objectiveString: string): boolean => {
   if (!objectiveString) return false;
@@ -404,11 +439,14 @@ const slideCompleted = async (slideElement: HTMLElement): Promise<void> => {
   const isCorrect = elementIndex >= 0 && elementIndex < objectiveArray.length
     ? matchStringPattern(slideValues[elementIndex], [objectiveArray[elementIndex].trim()])
     : false;
-
+  
   if (isArrangeLettersContainer(container)) {
     updateArrangeLettersCorrectness(container, slideValues, objectiveArray);
-  } else if (isReorderContainer(container)) {
-    updateReorderCorrectness(container, slideValues, objectiveArray);
+  } else if (isReorderContainer(container)) {   
+    if(isReorderComplete(slideValues, objectiveString)) {
+      allSlideElements.forEach(item => updateElementCategoryClass(item as HTMLElement, true))
+    }
+    // updateReorderCorrectness(container, slideValues, objectiveArray);
   }
 
   if(container.getAttribute('is-continue-on-correct') === 'true'){
