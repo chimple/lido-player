@@ -10,17 +10,8 @@ import te from '../i18n/te.json';
 import pt from '../i18n/pt.json';
 import mr from '../i18n/mr.json';
 
-// Digital Skills game content uses a leading-space marker, for example
-// ` box`. The marker is removed before looking up the translated value.
-const DIGITAL_SKILLS_MARKER = /^\s+(\S+)$/;
-
-export const getTranslationKey = (key: string = ''): string => {
-  const match = key.match(DIGITAL_SKILLS_MARKER);
-  return match ? ` ${match[1]}` : key;
-};
-
 export const translateText = (key: string = '', options?: any) =>
-  i18next.t(getTranslationKey(key), options);
+  i18next.t(key, options);
 
 i18next
   .use(LanguageDetector)

@@ -1,6 +1,6 @@
 import { Component, Prop, h, Element, Host, State,Watch } from '@stencil/core';
 import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
-import { getTranslationKey, translateText } from '../../utils/i18n';
+import { translateText } from '../../utils/i18n';
 import { LangChangeEvent,LIDO_COMMON_AUDIO_PATH,LIDO_COMMON_AUDIO_READY_EVENT} from '../../utils/constants';
 /**
  * @component LidoText
@@ -243,7 +243,7 @@ export class LidoText {
  private resolveAutoAudio(): string | null {
   const base = (window as any)[LIDO_COMMON_AUDIO_PATH];
   if (!base || !this.string) return null;
-   const fileName = getTranslationKey(this.string);
+   const fileName = this.string;
   
   return `${base}/${fileName}.mp3`;
   }

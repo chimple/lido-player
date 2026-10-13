@@ -36,7 +36,7 @@ import {
 
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
-import i18next, { getTranslationKey } from '../../utils/i18n';
+import i18next from '../../utils/i18n';
 import { Timer } from '../../utils/utilsHandlers/timer';
 const gameScore = new GameScore();
 
@@ -618,9 +618,7 @@ export class LidoHome {
       })
       .filter(Boolean);
     if (tagName === 'lido-text' && props.string) {
-      props.string = /^\s+\S+$/.test(props.string)
-        ? this.translateHomeText(getTranslationKey(props.string))
-        : this.translateHomeText(props.string);
+      props.string = this.translateHomeText(props.string);
     }
 
     // Map XML tags to Stencil components
