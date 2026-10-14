@@ -160,7 +160,7 @@ describe('Arrange Letters slide validation', () => {
 
     updateArrangeLettersCorrectness(container, ['A', 'C', 'T'], ['C', 'A', 'T']);
     expect(slides[0].style.boxShadow).not.toContain('#65BC46');
-    expect(slides[1].style.boxShadow).toContain('#65BC46');
+    expect(slides[1].style.boxShadow).not.toContain('#65BC46');
     expect(slides[2].style.boxShadow).toContain('#65BC46');
     expect(slides.every(slide => !slide.hasAttribute('disabled'))).toBe(true);
   });
@@ -170,6 +170,8 @@ describe('Reorder slide validation', () => {
   const createSlides = (ids: string[]): HTMLElement[] => {
     const container = document.createElement('div');
     container.setAttribute('template-id', 'reorder');
+    container.id = 'lido-container';
+    Object.assign(container, { objective: 'option_1,option_2,option_3,option_4' });
     ids.forEach(id => {
       const slide = document.createElement('div');
       slide.setAttribute('type', 'slide');
@@ -197,15 +199,33 @@ describe('Reorder slide validation', () => {
     expect(getSlideValuesForValidation(container, slides)).toEqual(['option_1', 'option_2', 'option_3', 'option_4']);
   });
 
-  it('applies positional correctness feedback without locking reordered items', () => {
+  it.each<[number, number, boolean, boolean]>([
+    [0, 3, true, true],
+    [0, 1, true, false],
+    [1, 0, false, true],
+    [1, 2, false, false],
+  ])('styles dragged item %i and overlapped item %i with correctness %s/%s', (dragIndex, overlapIndex, dragCorrect, overlapCorrect) => {
     const slides = createSlides(['option_1', 'option_3', 'option_2', 'option_4']);
     const container = slides[0].parentElement as HTMLElement;
+    const dragged = slides[dragIndex];
+    const overlapped = slides[overlapIndex];
+    const correctClass = 'category-dropped-onCorrect';
+    const incorrectClass = 'category-dropped-onInCorrect';
 
-    updateReorderCorrectness(container, ['option_1', 'option_3', 'option_2', 'option_4'], ['option_1', 'option_2', 'option_3', 'option_4']);
-    expect(slides[0].style.boxShadow).toContain('#65BC46');
-    expect(slides[1].style.boxShadow).not.toContain('#65BC46');
-    expect(slides[2].style.boxShadow).not.toContain('#65BC46');
-    expect(slides[3].style.boxShadow).toContain('#65BC46');
+    // Simulate feedback left over from a previous swap.
+    dragged.classList.add(dragCorrect ? incorrectClass : correctClass);
+    overlapped.classList.add(overlapCorrect ? incorrectClass : correctClass);
+
+    updateReorderCorrectness(container, dragged, overlapped);
+
+    expect(dragged.classList.contains(correctClass)).toBe(dragCorrect);
+    expect(dragged.classList.contains(incorrectClass)).toBe(!dragCorrect);
+    expect(overlapped.classList.contains(correctClass)).toBe(overlapCorrect);
+    expect(overlapped.classList.contains(incorrectClass)).toBe(!overlapCorrect);
+    slides.filter(slide => slide !== dragged && slide !== overlapped).forEach(slide => {
+      expect(slide.classList.contains(correctClass)).toBe(false);
+      expect(slide.classList.contains(incorrectClass)).toBe(false);
+    });
     expect(slides.every(slide => !slide.hasAttribute('disabled'))).toBe(true);
   });
 });
