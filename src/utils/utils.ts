@@ -482,13 +482,27 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
   const element = dragElement;
   const isAppend = container.getAttribute('drop-action') === DropAction.Move;
   const isInfinite = container.getAttribute('drop-action') === DropAction.InfiniteDrop;
+  const isCreateSentence = container.getAttribute('template-id') === 'createSentence';
+
+  // Reserve the source slot synchronously so an overlapping drag sees the
+  // updated source layout before the dropped element is reparented.
+  let sourcePlaceholder: HTMLElement | null = null;
+  if (isAppend && isCreateSentence) {
+    const computedStyle = window.getComputedStyle(dragElement);
+    sourcePlaceholder = document.createElement('div');
+    sourcePlaceholder.style.width = `${dragElement.offsetWidth}px`;
+    sourcePlaceholder.style.height = `${dragElement.offsetHeight}px`;
+    sourcePlaceholder.style.margin = computedStyle.margin;
+    sourcePlaceholder.style.visibility = 'hidden';
+    dragElement.replaceWith(sourcePlaceholder);
+  }
 
   if (isAppend || isInfinite) {
-    setTimeout(() => {
+    const finishDrop = () => {
       dragElement.style.transform = 'translate(0,0)';
       dragElement.style.transition = '';
 
-      let dummyElement = document.createElement('div') as HTMLElement;
+      let dummyElement = sourcePlaceholder || document.createElement('div') as HTMLElement;
       if (isInfinite) {
         dummyElement = cloneElementWithComputedStyles(dragElement);
         dummyElement.classList.remove('dropped');
@@ -504,7 +518,9 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       }
 
       dummyElement.setAttribute('id', dragElement.getAttribute('id'));
-      dragElement.replaceWith(dummyElement);
+      if (!sourcePlaceholder) {
+        dragElement.replaceWith(dummyElement);
+      }
 
       
       const keyframes = `
@@ -515,9 +531,15 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
     `;
 
       if (!isInfinite) {
-        dummyElement.style.width = element.style.width;
-        dummyElement.style.height = element.style.height;
-        dummyElement.style.margin = element.style.margin;
+        dummyElement.style.width = sourcePlaceholder
+          ? sourcePlaceholder.style.width
+          : element.style.width;
+        dummyElement.style.height = sourcePlaceholder
+          ? sourcePlaceholder.style.height
+          : element.style.height;
+        dummyElement.style.margin = sourcePlaceholder
+          ? sourcePlaceholder.style.margin
+          : element.style.margin;
         const styleSheet = document.styleSheets[0];
         styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
         dummyElement.style.animation = `widthDecrease 0.5s`;
@@ -554,7 +576,13 @@ const afterDropDragHandling = (dragElement: HTMLElement, dropElement: HTMLElemen
       const scaledTop = (dropCenterY - dragCenterY) / containerScale;
 
       dragElement.style.transform = `translate(${scaledLeft}px, ${scaledTop}px)`;
-    }, 700);
+    };
+
+    if (isAppend && isCreateSentence) {
+      finishDrop();
+    } else {
+      setTimeout(finishDrop, 700);
+    }
   }
 };
 
