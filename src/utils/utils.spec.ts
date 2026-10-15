@@ -1,4 +1,4 @@
-import { format, initEventsForElement } from './utils';
+import { format, initEventsForElement, initializePlayModeDragDropElements } from './utils';
 import { getSlideValuesForValidation, isArrangeLettersComplete, isReorderComplete, updateArrangeLettersCorrectness, updateReorderCorrectness } from './utilsHandlers/slideHandler';
 
 describe('format', () => {
@@ -92,6 +92,46 @@ describe('element initialization and canplay', () => {
 
     expect(clickListenersAfterFirstInit).toBe(1);
     expect(addEventListener.mock.calls.filter(([event]) => event === 'click')).toHaveLength(1);
+  });
+
+  it('initializes Food Jar drag and drop elements after edit mode', async () => {
+    const container = addContainer('false');
+    container.setAttribute('template-id', 'foodJar');
+
+    const drag = document.createElement('div');
+    drag.setAttribute('type', 'drag');
+    drag.setAttribute('onEntry', "this.fontWeight='1000';");
+    const drop = document.createElement('div');
+    drop.setAttribute('type', 'drop');
+    container.append(drag, drop);
+
+    await initEventsForElement(drag, 'drag');
+    await initEventsForElement(drop, 'drop');
+    expect(drag.classList.contains('drag-element')).toBe(false);
+    expect(drop.classList.contains('drop-element')).toBe(false);
+    expect(drag.style.fontWeight).toBe('1000');
+
+    container.setAttribute('canplay', 'true');
+    await initializePlayModeDragDropElements(container);
+
+    expect(drag.classList.contains('drag-element')).toBe(true);
+    expect(drop.classList.contains('drop-element')).toBe(true);
+    expect(typeof drop.onclick).toBe('function');
+  });
+
+  it('does not duplicate Food Jar handlers across repeated play initialization', async () => {
+    const container = addContainer('true');
+    container.setAttribute('template-id', 'foodJar');
+    const drag = document.createElement('div');
+    drag.setAttribute('type', 'drag');
+    const addEventListener = jest.spyOn(drag, 'addEventListener');
+    container.appendChild(drag);
+
+    await initializePlayModeDragDropElements(container);
+    await initializePlayModeDragDropElements(container);
+
+    expect(addEventListener.mock.calls.filter(([event]) => event === 'mousedown')).toHaveLength(1);
+    expect(addEventListener.mock.calls.filter(([event]) => event === 'pointerdown')).toHaveLength(1);
   });
 
   it('preserves questionBoard option styling in edit mode', async () => {
