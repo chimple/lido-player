@@ -176,6 +176,24 @@ export const initEventsForElement = async (element: HTMLElement, type?: string) 
   onTouchListenerForOnTouch(element);
 };
 
+/**
+ * Re-enable the gameplay handlers for interactive children that were created
+ * while the player was in edit mode. This is intentionally limited to the
+ * drag/drop elements used by Food Jar; other templates retain their existing
+ * component-load initialization path.
+ */
+export const initializePlayModeDragDropElements = async (root: HTMLElement): Promise<void> => {
+  const elements = root.querySelectorAll<HTMLElement>('[type="drag"], [type="drop"]');
+
+  for (const element of Array.from(elements)) {
+    const type = element.getAttribute('type') || undefined;
+    const initializedElement = element as InitializedElement;
+    if (initializedElement.__lidoInitializationKey === `${type || ''}:true`) continue;
+
+    await initEventsForElement(element, type);
+  }
+};
+
 // Function to execute actions parsed from the onMatch string
 export const executeActions = async (
   actionsString: string,

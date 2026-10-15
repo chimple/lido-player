@@ -1,5 +1,5 @@
 import { Component, Host, Prop, h, Element, Watch, State } from '@stencil/core';
-import { convertUrlToRelative, initEventsForElement, calculateScale } from '../../utils/utils';
+import { convertUrlToRelative, initEventsForElement, calculateScale, initializePlayModeDragDropElements } from '../../utils/utils';
 import { string } from 'mathjs';
 import i18next from '../../utils/i18n';
 import { highlightElement } from '../../utils/utilsHandlers/highlightHandler';
@@ -240,6 +240,7 @@ export class LidoContainer {
   private handleWindowResize = () => this.scaleContainer(this.el);
   private handleWindowLoad = () => this.scaleContainer(this.el);
   private writeCardArrowObserver?: MutationObserver;
+  private shouldInitializePlayModeDragDrop = false;
 
   private isWriteCardContainer = () => this.templateId === 'writeCard';
 
@@ -280,6 +281,20 @@ export class LidoContainer {
   languageChanged(newLang: string) {
     const langToApply = newLang || this.resolveLanguage();
     this.updateChildTextLanguage(langToApply);
+  }
+
+  @Watch('canplay')
+  canplayChanged(newValue: boolean, oldValue: boolean) {
+    if (this.templateId !== 'foodJar' || !newValue || oldValue !== false) return;
+
+    this.shouldInitializePlayModeDragDrop = true;
+  }
+
+  componentDidRender() {
+    if (!this.shouldInitializePlayModeDragDrop || !this.canplay) return;
+
+    this.shouldInitializePlayModeDragDrop = false;
+    void initializePlayModeDragDropElements(this.el);
   }
 
   componentWillLoad() {
