@@ -1,7 +1,8 @@
 import { Component, Prop, h, Element, Host, State,Watch } from '@stencil/core';
-import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon } from '../../utils/utils';
+import { initEventsForElement, convertUrlToRelative, parseProp, speakIcon, setVisibilityWithDelay, attachSpeakIcon, executeActions } from '../../utils/utils';
 import i18next from '../../utils/i18n';
 import { LangChangeEvent,LIDO_COMMON_AUDIO_PATH,LIDO_COMMON_AUDIO_READY_EVENT} from '../../utils/constants';
+import { AudioPlayer } from '../../utils/audioPlayer';
 /**
  * @component LidoText
  *
@@ -19,6 +20,12 @@ export class LidoText {
    * Controls whether the speak icon should appear directly on the top right corner of targeted element if it is true.
    */
   @Prop() showSpeakIcon: boolean = false;
+
+  /**
+   * Reveals the container's next arrow after this text finishes speaking.
+   * Back-side text in a flash card gets the same behavior automatically.
+   */
+  @Prop() showNextAfterAudio: boolean = false;
   /**
    * Unique identifier for the text element.
    */
@@ -196,6 +203,69 @@ export class LidoText {
 
   private handleWindowResize = () => this.updateStyles();
   private handleWindowLoad = () => this.updateStyles();
+  private mascotPlaybackContext?: object;
+  private textPlaybackId?: number;
+
+  private isFlashCardBackText = () =>
+    Boolean(this.el.closest('.card-back')?.closest('lido-flash-card'));
+
+  private onAudioPlaying = (event: Event) => {
+    const detail = (event as CustomEvent).detail;
+    if (detail?.target === this.el) this.textPlaybackId = detail.playbackId;
+  };
+
+  private onAudioEnded = (event: Event) => {
+    const detail = (event as CustomEvent).detail;
+    const target = detail?.target as HTMLElement | undefined;
+
+    if (target === this.el && (this.showNextAfterAudio || this.isFlashCardBackText())) {
+      // AudioPlayer also reports an end after a media-playback error. For an
+      // explicit audio file, reveal the next arrow only after it truly began.
+      if (this.audio.trim() && detail?.playbackId !== this.textPlaybackId) return;
+      this.textPlaybackId = undefined;
+      this.revealNextArrow();
+      return;
+    }
+
+    if (target?.id === 'lido-avatar' && detail?.playbackContext === this.mascotPlaybackContext) {
+      this.mascotPlaybackContext = undefined;
+      executeActions("this.avatarAnimate='Idle'", target);
+    }
+  };
+
+  private revealNextArrow = () => {
+    const container = this.el.closest('lido-container');
+    const arrow = container?.querySelector('#arrow') as HTMLElement | null;
+    if (!arrow) return;
+
+    if (!arrow.getAttribute('onTouch')) arrow.setAttribute('onTouch', "this.nextBtn='true';");
+    (arrow as any).visible = true;
+    arrow.setAttribute('visible', 'true');
+    arrow.style.display = 'block';
+    arrow.style.visibility = 'visible';
+    arrow.style.opacity = '1';
+    arrow.style.pointerEvents = 'auto';
+    const arrowImage = arrow.querySelector('lido-image') as HTMLElement | null;
+    if (arrowImage) {
+      arrowImage.style.display = 'flex';
+      arrowImage.style.visibility = 'visible';
+      arrowImage.style.opacity = '1';
+    }
+    if (typeof (arrow as any).updateStyles === 'function') (arrow as any).updateStyles();
+
+    arrow.classList.add('flash-card-next-glowing');
+    const mascot = container?.querySelector('#lido-avatar') as HTMLElement | null;
+    const scaffoldAudio = arrow.getAttribute('audio');
+    if (!mascot) return;
+
+    // Generic text templates can define the success audio directly on the
+    // avatar. Flash-card scaffolds keep it on the arrow, so retain that
+    // convention when it is present.
+    if (scaffoldAudio) mascot.setAttribute('audio', scaffoldAudio);
+    this.mascotPlaybackContext = {};
+    executeActions("this.avatarAnimate='Idle speak'", mascot);
+    AudioPlayer.getI().play(mascot, true, this.mascotPlaybackContext);
+  };
 
   /**
    * Delay in milliseconds to make the cell visible after mount.
@@ -254,6 +324,10 @@ export class LidoText {
    */
   componentWillLoad() {
     this.updateStyles();
+    // Register before entry actions: an onEntry speak action can start audio
+    // while the component is still mounting.
+    window.addEventListener('lidoAudioPlaying', this.onAudioPlaying);
+    window.addEventListener('lidoAudioEnded', this.onAudioEnded);
     window.addEventListener('resize', this.handleWindowResize);
     window.addEventListener('load', this.handleWindowLoad);
   }
@@ -261,6 +335,8 @@ export class LidoText {
   disconnectedCallback() {
     window.removeEventListener('resize', this.handleWindowResize);
     window.removeEventListener('load', this.handleWindowLoad);
+    window.removeEventListener('lidoAudioPlaying', this.onAudioPlaying);
+    window.removeEventListener('lidoAudioEnded', this.onAudioEnded);
   }
 
   updateStyles() {
@@ -339,6 +415,7 @@ export class LidoText {
         aria-hidden={this.ariaHidden}
         move={this.move}
         span-type={this.spanType}
+        show-next-after-audio={this.showNextAfterAudio}
         disable-speak={`${this.disableSpeak}`}
       >
         {this.spanType !== '' ? <div class="lido-text-content"> {displayText}</div> : displayText}
