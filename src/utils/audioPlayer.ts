@@ -518,7 +518,9 @@ export class AudioPlayer {
     const averageWordMs = duration / timeline.length;
     const speedLead = averageWordMs < 190 ? 120 : averageWordMs < 260 ? 90 : 60;
 
-    return Math.max(profile.preemptiveOffsetMs, speedLead);
+    // Advance the estimated highlight slightly to compensate for perceived lag.
+    const playbackLeadAdjustmentMs = 40;
+    return Math.max(profile.preemptiveOffsetMs, speedLead) + playbackLeadAdjustmentMs;
   }
 
   private getTimelineIndex(timeline: WordTimelineEntry[], currentMs: number) {
