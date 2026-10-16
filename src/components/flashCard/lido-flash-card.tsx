@@ -176,8 +176,6 @@ export class LidoFlash {
       this.autoFlipTimer = window.setTimeout(() => {
         if (!this.flipped) this.handleFlip();
       }, this.autoFlipAfter);
-    } else if (target === this.backText()) {
-      if (this.flipped) this.showArrow();
     } else if (target.id === 'lido-avatar') {
       const playbackId = (event as CustomEvent).detail?.playbackId;
       const playbackContext = (event as CustomEvent).detail?.playbackContext;
