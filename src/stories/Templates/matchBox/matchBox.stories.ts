@@ -41,7 +41,7 @@ function getContainerXml(args) {
   return `
   <main>
 
-	<lido-container visible="true" dropAttr="EnableAnimation" is-allow-only-correct="true" objective="${args.ans1},${args.ans2},${args.ans3},${args.ans4},${args.ans5}" id="ldo-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" is-continue-on-correct="true">
+	<lido-container highlight-word-by-word="true" visible="true" dropAttr="EnableAnimation" is-allow-only-correct="true" objective="${args.ans1},${args.ans2},${args.ans3},${args.ans4},${args.ans5}" id="ldo-container" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2000';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" is-continue-on-correct="true">
 		<lido-cell visible="true"  onEntry="this.position='relative';" y="landscape.57%,portrait.77%">	
 				<lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="360px" width="485px"  y="landscape.200px,portrait.0px" onEntry="this.position='relative';" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">
 				</lido-avatar>

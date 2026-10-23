@@ -49,7 +49,7 @@ const drag_cells = shuffledOptions.map((q, index) => {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container disable-speak="true"  visible="true" id="lido-container" template-id="dragAndDrop" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.options.join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}"
+<lido-container highlight-word-by-word="true" disable-speak="true"  visible="true" id="lido-container" template-id="dragAndDrop" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.options.join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}"
 custom-style = "#audioCell:active {
   box-shadow: 0px 0px 0px !important;
   transform: translateY(7px);

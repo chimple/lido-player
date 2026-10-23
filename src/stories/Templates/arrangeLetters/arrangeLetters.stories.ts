@@ -35,7 +35,7 @@ export const arrangeLetters: StoryObj = {
 
 function getContainerXml(args) {
   return `<main>
-<lido-container visible="true" objective="${args.answers}" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Arrange%20letters.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';word.speak='true'" onEntry="this.sleep='1000'; this.slideAnimation='true';" show-next-button="true">
+<lido-container highlight-word-by-word="true" visible="true" objective="${args.answers}" is-continue-on-correct="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Arrange%20letters.png" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';word.speak='true'" onEntry="this.sleep='1000'; this.slideAnimation='true';" show-next-button="true">
 
  <lido-text id="word" visible="false" string="${args.answers.join('')}"></lido-text>
 

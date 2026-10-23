@@ -73,7 +73,7 @@ function getContainerXml(args: PalEgma1Args) {
 
   return `
     <main>
-        <lido-container id="lido-container" disable-speak="true" objective="${objectiveString}" tab-index="1" template-id="dragAndDrop" show-drop-border="false" is-continue-on-correct="${isAllowOnlyCorrect}"  is-allow-only-correct="${isAllowOnlyCorrect}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/pal_egma_temp_3.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; invisibleText.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false">
+        <lido-container highlight-word-by-word="true" id="lido-container" disable-speak="true" objective="${objectiveString}" tab-index="1" template-id="dragAndDrop" show-drop-border="false" is-continue-on-correct="${isAllowOnlyCorrect}"  is-allow-only-correct="${isAllowOnlyCorrect}" value="mainContainer1" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGMA/pal_egma_temp_3.png" height="100%" width="100%" bg-color="transparent"  visible="true" onCorrect="this.questionBoxAnimate='true'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onEntry="this.justifyContent='space-around'; invisibleText.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" drop-action="infinite-drop" show-check="false">
 
         
             <!-- Chimple Avatar -->

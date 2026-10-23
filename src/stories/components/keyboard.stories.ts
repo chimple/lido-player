@@ -30,7 +30,7 @@ export const Keyboard: StoryObj = {
 
 const getContainerXml = args => {
   return `<main>
-            <lido-container objective="${args.objective}" is-continue-on-correct="true" drop-action="infinite-drop" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
+            <lido-container highlight-word-by-word="true" objective="${args.objective}" is-continue-on-correct="true" drop-action="infinite-drop" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';">
               <!-- Chimple Avatar -->
               <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="305px" width="227px" x="-50px" y="landscape.560px, portrait.1220px" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">
                   <lido-avatar id="lido-avatar" disable-edit="true" visible="true" height="462px" width="356px" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" alt-text="{chimpleCharacterRive}">

@@ -76,7 +76,7 @@ function getContainerXml(args) {
   const optionImage4 = args.optionImg4 && args.optionImg4.length > 0 ? `<lido-image visible="true" bg-color="white" height="landscape.60%, portrait.67%" src="${args.optionImg4}" border-radius="6px" onEntry="this.border='5px solid white';"></lido-image>` : "";
 
   return `<main>
-    <lido-container id="lido-container" value="maincontainer" objective="${args.correctAns}"
+    <lido-container highlight-word-by-word="true" id="lido-container" value="maincontainer" objective="${args.correctAns}"
     aria-label="This is a multiple-option question. Select one option from the list."
     height="100vh" width="100vw" x="0" y="0" z="0" bg-color="transparent"
     bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/MCQ.png"

@@ -39,7 +39,7 @@ export const Blanks: StoryObj = {
 function getContainerXml(args) {
   return `
   <main>
-		<lido-container id="lido-container" is-allow-only-correct="true" is-continue-on-correct="true" objective="${args.drop1},${args.drop2},${args.drop3},${args.drop4}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" dropAttr="EnableAnimation" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="this.sleep='2000';">
+		<lido-container highlight-word-by-word="true" id="lido-container" is-allow-only-correct="true" is-continue-on-correct="true" objective="${args.drop1},${args.drop2},${args.drop3},${args.drop4}" visible="true" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/phonic-tractor/bg-image.png" dropAttr="EnableAnimation" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="this.sleep='2000';">
 		<!-- Chimple Avatar -->
 		<lido-cell layout="pos" id="pos1" disableEdit="true" value="pos2" height="landscape.205px,portrait.195px" width="landscape.209px,portrait.209px" x="landscape.-30px,portrait.80%" y="landscape.700px,portrait.146px" ariaHidden="true" bgColor="transparent" visible="true" z="1"  onEntry="">
 				<lido-avatar id="lido-avatar" disableEdit="true" visible="true"  height="100%"  width="100%" src="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/temp2/chimplecharacter.riv" >

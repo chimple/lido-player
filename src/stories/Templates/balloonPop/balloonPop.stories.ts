@@ -48,7 +48,7 @@ function getContainerXml(args) {
   `).join('');
 
   return `<main>
-    <lido-container id="lido-container" tab-index="1" visible="true" objective="${args.objective}"
+    <lido-container highlight-word-by-word="true" id="lido-container" tab-index="1" visible="true" objective="${args.objective}"
       onCorrect="lido-slide-fill.fill-slide='${args.Increment}'; lido-avatar.avatarAnimate='Success'; this.sleep='2000';"
       onInCorrect="lido-slide-fill.fill-slide='${args.Decrement}'; lido-avatar.avatarAnimate='Fail'; this.sleep='2000';"
       is-continue-on-correct="true" show-check="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" disable-speak="true">

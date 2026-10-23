@@ -77,7 +77,7 @@ const getContainerXml = (args: any) => {
 	const answer = answerNumbers(args.num1, args.num2, args.operator, args.num3);
     return `
     <main>
-    <lido-container visible="true" objective="${answer.toString().split("").join(",")}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Tenbox/tenbox.png" is-continue-on-correct="true" onCorrect="this.sleep='1500';" drop-action="infinite-drop" id="lido-container" >
+    <lido-container highlight-word-by-word="true" visible="true" objective="${answer.toString().split("").join(",")}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/Tenbox/tenbox.png" is-continue-on-correct="true" onCorrect="this.sleep='1500';" drop-action="infinite-drop" id="lido-container" >
 	<lido-cell visible="true" layout="col" height="100%" width="100%" bg-color="transparent">
 		<lido-cell visible="true" layout="landscape.row, portrait.col" height="53%" width="auto" gap="20px" bg-color="transparent">
 			<lido-cell visible="true" layout="col" height="100%" width="500px" bg-color="transparent">
