@@ -57,7 +57,7 @@ function getContainerXml(args) {
     .join(',');
 
   return `<main>
-    <lido-container id="lido-container" visible="true" objective="${objective}" 
+    <lido-container highlight-word-by-word="true" id="lido-container" visible="true" objective="${objective}" 
       onCorrect="lido-avatar.avatarAnimate='Success'; sentenceText.speak='true'; this.sleep='2000';" 
       onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="sentenceText.speak='true';"
       is-continue-on-correct="false" bg-color="transparent" 

@@ -56,7 +56,7 @@ function getContainerXml(args) {
   return `
 <main>
 
-    <lido-container id="lido-container" visible="true" objective="${answers.join(',')}" onEntry="audio12.speak='true';"
+    <lido-container highlight-word-by-word="true" id="lido-container" visible="true" objective="${answers.join(',')}" onEntry="audio12.speak='true';"
         onCorrect="lido-avatar.avatarAnimate='Success';  sentenceText.speak='true'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" is-continue-on-correct="${isContinueOnCorrect}" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Row%20blocks.png" custom-style= ".dropping {
         border: 5px dashed #2C3836 !important;
         background-color: #6D8C87 !important;

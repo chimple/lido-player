@@ -30,7 +30,7 @@ export const PuzzleGame: StoryObj = {
 function getContainerXml(args) {
 
   return `<main>
- <lido-container  id="lido-container" show-drop-border="false" tab-index="1" is-continue-on-correct="true" objective="i1,i2" bgImage="" bgColor="grey" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="false" visible="true">
+ <lido-container highlight-word-by-word="true"  id="lido-container" show-drop-border="false" tab-index="1" is-continue-on-correct="true" objective="i1,i2" bgImage="" bgColor="grey" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" showCheck="false" visible="true">
     	<lido-image  id="img1" disableEdit="true"  visible="true" width="landscape.68%,portrait.134%" margin="landscape.-5px 0px 188px,portrait.-5px 0px 188px -133px" height="landscape.59%,portrait.53%" src="${args.dropimg}" z="0"  onEntry="this.backgroundImage='none';" > 
 			 <!-- drop elements -->
 			  <lido-text id="t1" tab-index="2" type="drop" tabIndex="2" value="i1" border-image="transparent"  bgColor="transparent" z="5" height="132px" width="132px" is-allow-only-one-drop="true" x="landscape.583px,portrait.643px" y="-97px"  onEntry=" this.position='relative';"></lido-text>

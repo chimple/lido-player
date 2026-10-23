@@ -93,7 +93,7 @@ function getContainerXml(args) {
 
   return `
 <main>
-  <lido-container visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" is-allow-only-correct="${isAllowOnlyCorrect}" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answers[0]}" is-continue-on-correct="${isContinueOnCorrect}" show-Check="true">
+  <lido-container highlight-word-by-word="true" visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" is-allow-only-correct="${isAllowOnlyCorrect}" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answers[0]}" is-continue-on-correct="${isContinueOnCorrect}" show-Check="true">
 
     <!--Chimple Avatar -->
     <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.370px,portrait.332px" width="landscape.342px,portrait.320px" x="landscape.27%, portrait.-4%" y="landscape.34%, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true">
@@ -236,7 +236,7 @@ function getContainerXml1(args) {
   return `
 <main>
 
-<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${
+<lido-container highlight-word-by-word="true"  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${
     hasImages ? args.answer1 : args.answer2
   }" is-continue-on-correct="${args.isContinueOnCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}" custom-style="#question{box-shadow: none !important;}">
 
@@ -535,7 +535,7 @@ function getContainerXml2(args) {
 
   return `
 <main>
-<lido-container visible="true" id="lido-container"
+<lido-container highlight-word-by-word="true" visible="true" id="lido-container"
   onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';"
   bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answer}" is-continue-on-correct="${
     args.isContinueOnCorrect
@@ -661,7 +661,7 @@ function getContainerXml3(args) {
   return `
 <main>
 
-  <lido-container id="lido-container" objective="${args.answer
+  <lido-container highlight-word-by-word="true" id="lido-container" objective="${args.answer
     .split('')
     .join(
       ',',
@@ -774,7 +774,7 @@ function getContainerXml4(args) {
 
   return `
 <main>
-   <lido-container id="lido-container" objective="${args.answer
+   <lido-container highlight-word-by-word="true" id="lido-container" objective="${args.answer
      .split('')
      .join(
        ',',
@@ -888,7 +888,7 @@ function getContainerXml5(args) {
 
   return `
 <main>
-<lido-container  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answers.join(
+<lido-container highlight-word-by-word="true"  visible="true" id="lido-container" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answers.join(
     ',',
   )}"  is-continue-on-correct="${args.isContinueOnCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}" custom-style= "#t11 {
         box-shadow: none !important;
@@ -1121,7 +1121,7 @@ function getContainerXml6(args) {
 
   return `
 <main>
-<lido-container visible="true" id="lido-container"
+<lido-container highlight-word-by-word="true" visible="true" id="lido-container"
   onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';"
   bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/trace/Sky.png" objective="${args.answer}" is-continue-on-correct="${args.isContinueOnCorrect}" is-allow-only-correct="${args.isAllowOnlyCorrect}" custom-style= "#text11, .shape {box-shadow: none !important;}">
 

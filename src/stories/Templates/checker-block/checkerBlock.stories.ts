@@ -47,7 +47,7 @@ function getContainerXml(args) {
   
 
   return `<main>
-    <lido-container id="lido-container" visible="true" dropAttr="math-matrix" objective="${objective}" onCorrect="this.sleep='2000'; all.animation='placeToLeft 1.5s linear'; this.sleep='1500';" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Checker%20blocks.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" disable-speak="true">
+    <lido-container highlight-word-by-word="true" id="lido-container" visible="true" dropAttr="math-matrix" objective="${objective}" onCorrect="this.sleep='2000'; all.animation='placeToLeft 1.5s linear'; this.sleep='1500';" is-continue-on-correct="true" is-allow-only-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Checker%20blocks.png" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" disable-speak="true">
 
     <lido-text visible="false" tab-index="1" string="drag the missing numbers from right to its correct place and complete the puzzle" onEntry="this.sleep='2000'; this.speak='true';"></lido-text>
 

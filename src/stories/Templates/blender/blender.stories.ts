@@ -57,7 +57,7 @@ function getContainerXml(args) {
 
   return `
     <main>
-        <lido-container id="lido-container" visible="true" template-id="blender" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Blender.png" drop-action="infinite-drop" is-allow-only-correct="${args.isAllowOnlyCorrect}">
+        <lido-container highlight-word-by-word="true" id="lido-container" visible="true" template-id="blender" objective="${objective}" onCorrect="lido-avatar.avatarAnimate='Success'; this.sleep='2000';" onInCorrect="lido-avatar.avatarAnimate='Fail'; this.sleep='2000';" onEntry="" is-continue-on-correct="true" bg-color="transparent" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/background-images/Blender.png" drop-action="infinite-drop" is-allow-only-correct="${args.isAllowOnlyCorrect}">
 
 			<!-- Chimple Avatar -->
 			<lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.448px,portrait.402px" width="landscape.350px,portrait.398px" x="landscape.1332px, portrait.-8%" y="landscape.547px, portrait.1%" aria-hidden="true" z="0" bg-color="transparent" visible="true" onEntry="">

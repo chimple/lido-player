@@ -35,7 +35,7 @@ function getContainerXml(args: Args) {
   const fontSize = 'landscape.48px, portrait.40px';
 
   let xml = `<main>
-  <lido-container
+  <lido-container highlight-word-by-word="true"
     id="main-container"
     value="mainContainer1"
     objective="${args.correctAns}"

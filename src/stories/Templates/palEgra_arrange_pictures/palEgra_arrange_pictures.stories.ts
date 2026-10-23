@@ -49,7 +49,7 @@ const drag_cells = shuffledOptions.map((img, index) => {
     // ---------------------- FINAL XML ----------------------
   return `
 <main>
-<lido-container disable-speak="true" visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop"  is-allow-only-one-drop = "true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.images.map(img => img.id).join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}">
+<lido-container highlight-word-by-word="true" disable-speak="true" visible="true" id="lido-container" onEntry="lido-question.speak='true';" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" template-id="dragAndDrop"  is-allow-only-one-drop = "true" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/PAL-EGRA/palEgraTemp6_bg.png" objective="${args.images.map(img => img.id).join(',')}" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}">
 	 <!-- Chimple Avatar -->
       <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.290px,portrait.378px" width="landscape.262px,portrait.382px"
        x="landscape.87%, portrait.30%" y="landscape.40%, portrait.78%" aria-hidden="true" z="1" bg-color="transparent" visible="true" onEntry="">

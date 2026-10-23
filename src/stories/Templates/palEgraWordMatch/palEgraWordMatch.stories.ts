@@ -53,7 +53,7 @@ function getContainerXml(args) {
     let tabCounter = 1;   
 
   return `<main>
-        <lido-container disable-speak="true"  visible="true" template-id="dragAndDrop" id="lido-container" objective="${args.answer1},${args.answer2},${args.answer3},${args.answer4},${args.answer5}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/bgImg.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" onEntry="inst.speak='true';">
+        <lido-container highlight-word-by-word="true" disable-speak="true"  visible="true" template-id="dragAndDrop" id="lido-container" objective="${args.answer1},${args.answer2},${args.answer3},${args.answer4},${args.answer5}" bg-image="https://aeakbcdznktpsbrfsgys.supabase.co/storage/v1/object/public/template-assets/palEgra-pictureWordMatch/bgImg.png" onInCorrect="lido-avatar.avatarAnimate='Fail';this.sleep='2000';" onCorrect="lido-avatar.avatarAnimate='Success';this.sleep='2300';" is-continue-on-correct="${args.PracticeMode}" is-allow-only-correct="${args.PracticeMode}" onEntry="inst.speak='true';">
 
             <!-- Chimple Avatar -->
             <lido-cell layout="pos" id="pos1" disable-edit="true" value="pos2" height="landscape.395px,portrait.402px" width="landscape.330px,portrait.398px" x="landscape.640px, portrait.28%" y="landscape.350px, portrait.77%" aria-hidden="true" z="1" bg-color="transparent" visible="true" >
