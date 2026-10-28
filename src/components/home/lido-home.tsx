@@ -32,6 +32,7 @@ import {
   speakText,
   setActiveZipAssets,
   clearActiveZipAssets,
+  resetGoodJobAudioTracking,
 } from '../../utils/utils';
 
 import { AudioPlayer } from '../../utils/audioPlayer';
@@ -255,6 +256,7 @@ export class LidoHome {
    * between containers and parses the XML data into containers.
    */
   async componentWillLoad() {
+    resetGoodJobAudioTracking(this.el);
     // Publish the current player's common-audio path before parsing XML so
     // child lido-text components cannot resolve auto-audio against the
     // previous player's global path.
@@ -730,6 +732,7 @@ export class LidoHome {
         await executeActions("this.speak='true';", instructEl as HTMLElement);
         if (isStale()) return;
       }
+
     }
 
     for (const el of Array.from(allele)) {
@@ -765,6 +768,14 @@ export class LidoHome {
         await new Promise(resolve => setTimeout(resolve, 300));
         if (isStale()) break;
       }
+    }
+    if (getCancelBtnPopup() || isStale()) return;
+    if (templateId === 'flashcardtemplate') {
+      const flashCard = this.el.querySelector('lido-flash-card') as HTMLElement & {
+        replayGoodJobAudio?: () => Promise<void>;
+      };
+      await flashCard?.replayGoodJobAudio?.();
+      if (isStale()) return;
     }
     if (isStale()) return;
     if (this.areAllDropsFilled()) {

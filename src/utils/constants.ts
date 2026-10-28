@@ -20,6 +20,11 @@ export const LidoContainer = 'lido-container';
 export const LangChangeEvent = 'languageChanged';
 export const LIDO_COMMON_AUDIO_PATH = '__LIDO_COMMON_AUDIO_PATH__';
 export const LIDO_COMMON_AUDIO_READY_EVENT = 'lidoCommonAudioPathReady';
+
+export const resolveCommonAudioPath = (basePath: string | undefined, fileName: string): string | undefined => {
+  if (!basePath || !fileName) return undefined;
+  return `${basePath}/${fileName}`;
+};
 export const LIDO_INTERACTION_CLEANUP_EVENT = 'lido:interaction-cleanup';
 export const TemplateID = 'template-id';
 export const CalculatorOk='calculator-ok';

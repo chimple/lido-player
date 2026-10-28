@@ -10,7 +10,9 @@
   DropAction,
   DropHasDrag,
   DropLength,
-  CalculatorOk
+  CalculatorOk,
+  LIDO_COMMON_AUDIO_PATH,
+  resolveCommonAudioPath
 } from './constants';
 import { dispatchActivityEndEvent, dispatchGameCompletedEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import type { LessonTrackingParams } from './customEvents';
@@ -32,6 +34,45 @@ import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
 import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from './utilsHandlers/timer';
 import { dragDropAnimation } from './utilsHandlers/animationHandler';
 const gameScore = new GameScore();
+
+const GOOD_JOB_TEMPLATES = new Set(['flashcardtemplate', 'writeCard', 'drawShape']);
+
+type GoodJobTrackingHome = HTMLElement & {
+  __lidoGoodJobTemplates?: Set<string>;
+};
+
+export const isGoodJobAudioTarget = (element: HTMLElement): boolean => {
+  const templateId = element?.closest('lido-container')?.getAttribute('template-id');
+  return element?.id === 'arrow' && GOOD_JOB_TEMPLATES.has(templateId || '');
+};
+
+export const resetGoodJobAudioTracking = (home: HTMLElement): void => {
+  (home as GoodJobTrackingHome).__lidoGoodJobTemplates = new Set<string>();
+};
+
+export const shouldPlayGoodJobAudio = (element: HTMLElement): boolean => {
+  if (!isGoodJobAudioTarget(element)) return false;
+
+  // Standalone templates and editor previews have no lesson host. Preserve
+  // their existing behavior rather than making them depend on lido-home.
+  const home = element.closest('lido-home') as GoodJobTrackingHome | null;
+  if (!home) return true;
+
+  const templateId = element.closest('lido-container')?.getAttribute('template-id');
+  if (!templateId) return true;
+
+  const played = home.__lidoGoodJobTemplates || (home.__lidoGoodJobTemplates = new Set<string>());
+  if (played.has(templateId)) return false;
+  played.add(templateId);
+  return true;
+};
+
+export const getGoodJobAudio = (element: HTMLElement): string | undefined => {
+  if (!element) return undefined;
+  const templateId = element.closest('lido-container')?.getAttribute('template-id');
+  if (element.id !== 'arrow' || !GOOD_JOB_TEMPLATES.has(templateId || '')) return undefined;
+  return resolveCommonAudioPath((window as any)[LIDO_COMMON_AUDIO_PATH], 'goodJob.mp3');
+};
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {
   const map: Record<string, string[]> = {};
@@ -275,7 +316,11 @@ export const executeActions = async (
           const val = (action.value || '').toString().trim().toLowerCase();
           if (val === 'true' || val === '1' || val === 'yes') {
             try {
-              await AudioPlayer.getI().play(targetElement);
+              if (isGoodJobAudioTarget(targetElement) && !shouldPlayGoodJobAudio(targetElement)) break;
+              const originalAudio = targetElement.getAttribute('audio') || undefined;
+              const localizedAudio = getGoodJobAudio(targetElement);
+              if (localizedAudio) targetElement.setAttribute('audio', localizedAudio);
+              await AudioPlayer.getI().play(targetElement, false, undefined, originalAudio);
             } 
             catch (err) {
               console.error('Error playing audio for speak action:', err);

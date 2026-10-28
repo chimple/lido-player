@@ -4,9 +4,10 @@
  *  controllable `flipped` prop.
  * ------------------------------------------------------------------*/
 
-import { Component, Host, Prop, h, Element, State, Watch } from '@stencil/core';
-import { parseProp, initEventsForElement, setVisibilityWithDelay, executeActions } from '../../utils/utils';
+import { Component, Host, Prop, h, Element, State, Watch, Method } from '@stencil/core';
+import { parseProp, initEventsForElement, setVisibilityWithDelay, executeActions, getGoodJobAudio, shouldPlayGoodJobAudio } from '../../utils/utils';
 import { AudioPlayer } from '../../utils/audioPlayer';
+import { TemplateID } from '../../utils/constants';
 
 @Component({
   tag: 'lido-flash-card',
@@ -135,6 +136,7 @@ export class LidoFlash {
   private static readonly narrationStartGrace = 800;
   private instructionDone = false;
   private instructionStarted = false;
+  private shouldPlayTemplateInstruction = true;
 
   private onAudioStarted = (event: Event) => {
     const target = (event as CustomEvent).detail?.target as HTMLElement | undefined;
@@ -233,9 +235,17 @@ export class LidoFlash {
     window.addEventListener('lidoAudioEnded', this.onAudioEnded);
     const container = this.el.closest('lido-container');
     if (container?.getAttribute('template-id') === 'flashcardtemplate') {
+      const home = container.closest('lido-home');
+      const playedTemplates = home?.getAttribute(TemplateID)?.split(',').map(value => value.trim()).filter(Boolean) || [];
+      this.shouldPlayTemplateInstruction = !playedTemplates.includes('flashcardtemplate');
       container.querySelector('#lido-avatar')?.setAttribute('disable-speak', 'true');
       this.instructionStartTimer = window.setTimeout(() => {
         if (!this.instructionStarted && !this.instructionDone) {
+          if (!this.shouldPlayTemplateInstruction) {
+            this.instructionDone = true;
+            this.speakFront();
+            return;
+          }
           const instruction = this.instructionText();
           if (instruction) this.startNarration(instruction);
         }
@@ -366,20 +376,47 @@ export class LidoFlash {
     // the same direct nextBtn action as the shared home arrow for them.
     if (!arrow.getAttribute('onTouch')) arrow.setAttribute('onTouch', "this.nextBtn='true';");
     const mascot = container.querySelector('#lido-avatar') as HTMLElement | null;
-    const scaffoldAudio = arrow.getAttribute('audio');
-    if (mascot && scaffoldAudio) {
+    const originalAudio = mascot?.getAttribute('audio') || undefined;
+    const scaffoldAudio = getGoodJobAudio(arrow) || originalAudio;
+    const shouldPlayGoodJob = shouldPlayGoodJobAudio(arrow);
+    if (mascot && scaffoldAudio && shouldPlayGoodJob) {
       mascot.setAttribute('audio', scaffoldAudio);
     }
     this.setArrowVisible(true);
     // Keep the next action highlighted after mascot audio ends.
     arrow.classList.add('flash-card-next-glowing');
-    if (mascot) {
+    if (mascot && shouldPlayGoodJob) {
       this.goodJobPlaybackContext = {};
       this.goodJobPlaybackId = undefined;
       executeActions("this.avatarAnimate='Idle speak'", mascot);
-      AudioPlayer.getI().play(mascot, true, this.goodJobPlaybackContext);
+      AudioPlayer.getI().play(mascot, true, this.goodJobPlaybackContext, originalAudio);
     }
   };
+
+  @Method()
+  public async replayGoodJobAudio(): Promise<void> {
+    const container = this.el.closest('lido-container');
+    if (container?.getAttribute('template-id') !== 'flashcardtemplate') return;
+
+    const arrow = this.nextArrow();
+    const mascot = container.querySelector('#lido-avatar') as HTMLElement | null;
+    if (!arrow || !mascot) return;
+
+    const arrowVisible = arrow.getAttribute('visible') === 'true'
+      || (arrow as HTMLElement).style.visibility === 'visible';
+    if (!arrowVisible) return;
+
+    const originalAudio = mascot.getAttribute('audio') || undefined;
+    const localizedAudio = getGoodJobAudio(arrow);
+    const replayAudio = localizedAudio || originalAudio;
+    if (!replayAudio) return;
+
+    mascot.setAttribute('audio', replayAudio);
+    this.goodJobPlaybackContext = {};
+    this.goodJobPlaybackId = undefined;
+    executeActions("this.avatarAnimate='Idle speak'", mascot);
+    await AudioPlayer.getI().play(mascot, true, this.goodJobPlaybackContext, originalAudio);
+  }
 
   private setArrowVisible = (visible: boolean) => {
     const container = this.el.closest('lido-container');
