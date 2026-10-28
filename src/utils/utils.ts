@@ -12,7 +12,8 @@
   DropLength,
   CalculatorOk,
   LIDO_COMMON_AUDIO_PATH,
-  resolveCommonAudioPath
+  resolveCommonAudioPath,
+  GOOD_JOB_AUDIO_FILE
 } from './constants';
 import { dispatchActivityEndEvent, dispatchGameCompletedEvent, dispatchLessonEndEvent, dispatchNextContainerEvent, dispatchPrevContainerEvent } from './customEvents';
 import type { LessonTrackingParams } from './customEvents';
@@ -72,7 +73,7 @@ export const shouldPlayGoodJobAudio = (element: HTMLElement): boolean => {
 export const getGoodJobAudio = (element: HTMLElement): string | undefined => {
   if (!element) return undefined;
   if (!isGoodJobAudioTarget(element)) return undefined;
-  return resolveCommonAudioPath((window as any)[LIDO_COMMON_AUDIO_PATH], 'goodJob.mp3');
+  return resolveCommonAudioPath((window as any)[LIDO_COMMON_AUDIO_PATH], GOOD_JOB_AUDIO_FILE);
 };
 
 export function buildDragSelectedMapFromDOM(): Record<string, string[]> {

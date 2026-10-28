@@ -20,6 +20,7 @@ export const LidoContainer = 'lido-container';
 export const LangChangeEvent = 'languageChanged';
 export const LIDO_COMMON_AUDIO_PATH = '__LIDO_COMMON_AUDIO_PATH__';
 export const LIDO_COMMON_AUDIO_READY_EVENT = 'lidoCommonAudioPathReady';
+export const GOOD_JOB_AUDIO_FILE = 'goodJob.mp3';
 
 export const resolveCommonAudioPath = (basePath: string | undefined, fileName: string): string | undefined => {
   if (!basePath || !fileName) return undefined;
