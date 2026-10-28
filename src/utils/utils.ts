@@ -35,7 +35,7 @@ import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from './utilsHandlers/timer';
 import { dragDropAnimation } from './utilsHandlers/animationHandler';
 const gameScore = new GameScore();
 
-const GOOD_JOB_TEMPLATES = new Set(['flashcardtemplate', 'writeCard', 'drawShape']);
+const GOOD_JOB_TEMPLATES = new Set(['flashcardtemplate', 'writeCard', 'drawShape', 'storyTale']);
 
 type GoodJobTrackingHome = HTMLElement & {
   __lidoGoodJobTemplates?: Set<string>;
@@ -43,7 +43,9 @@ type GoodJobTrackingHome = HTMLElement & {
 
 export const isGoodJobAudioTarget = (element: HTMLElement): boolean => {
   const templateId = element?.closest('lido-container')?.getAttribute('template-id');
-  return element?.id === 'arrow' && GOOD_JOB_TEMPLATES.has(templateId || '');
+  if (!GOOD_JOB_TEMPLATES.has(templateId || '')) return false;
+  if (element?.id === 'arrow') return true;
+  return templateId === 'storyTale' && element?.id === 'arrow1' && !!element.closest('#arrow');
 };
 
 export const resetGoodJobAudioTracking = (home: HTMLElement): void => {
@@ -69,8 +71,7 @@ export const shouldPlayGoodJobAudio = (element: HTMLElement): boolean => {
 
 export const getGoodJobAudio = (element: HTMLElement): string | undefined => {
   if (!element) return undefined;
-  const templateId = element.closest('lido-container')?.getAttribute('template-id');
-  if (element.id !== 'arrow' || !GOOD_JOB_TEMPLATES.has(templateId || '')) return undefined;
+  if (!isGoodJobAudioTarget(element)) return undefined;
   return resolveCommonAudioPath((window as any)[LIDO_COMMON_AUDIO_PATH], 'goodJob.mp3');
 };
 
@@ -317,9 +318,18 @@ export const executeActions = async (
           if (val === 'true' || val === '1' || val === 'yes') {
             try {
               if (isGoodJobAudioTarget(targetElement) && !shouldPlayGoodJobAudio(targetElement)) break;
-              const originalAudio = targetElement.getAttribute('audio') || undefined;
+              const isGoodJobTarget = isGoodJobAudioTarget(targetElement);
+              const currentAudio = targetElement.getAttribute('audio') || undefined;
+              const originalAudio = isGoodJobTarget
+                ? (targetElement.getAttribute('data-lido-original-audio') || currentAudio)
+                : currentAudio;
               const localizedAudio = getGoodJobAudio(targetElement);
-              if (localizedAudio) targetElement.setAttribute('audio', localizedAudio);
+              if (localizedAudio) {
+                if (currentAudio && !targetElement.hasAttribute('data-lido-original-audio')) {
+                  targetElement.setAttribute('data-lido-original-audio', currentAudio);
+                }
+                targetElement.setAttribute('audio', localizedAudio);
+              }
               await AudioPlayer.getI().play(targetElement, false, undefined, originalAudio);
             } 
             catch (err) {

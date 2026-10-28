@@ -33,6 +33,7 @@ import {
   setActiveZipAssets,
   clearActiveZipAssets,
   resetGoodJobAudioTracking,
+  getGoodJobAudio,
 } from '../../utils/utils';
 
 import { AudioPlayer } from '../../utils/audioPlayer';
@@ -776,6 +777,23 @@ export class LidoHome {
       };
       await flashCard?.replayGoodJobAudio?.();
       if (isStale()) return;
+    }
+    if (templateId === 'storyTale') {
+      const pageGoodJob = container.querySelector('#arrow1') as HTMLElement | null;
+      if (pageGoodJob) {
+        const originalAudio = pageGoodJob.getAttribute('data-lido-original-audio')
+          || pageGoodJob.getAttribute('audio')
+          || undefined;
+        const localizedAudio = getGoodJobAudio(pageGoodJob);
+        if (localizedAudio) {
+          if (!pageGoodJob.hasAttribute('data-lido-original-audio') && originalAudio) {
+            pageGoodJob.setAttribute('data-lido-original-audio', originalAudio);
+          }
+          pageGoodJob.setAttribute('audio', localizedAudio);
+        }
+        await AudioPlayer.getI().play(pageGoodJob, false, undefined, originalAudio);
+        if (isStale()) return;
+      }
     }
     if (isStale()) return;
     if (this.areAllDropsFilled()) {
