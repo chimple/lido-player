@@ -136,7 +136,7 @@ export class AudioPlayer {
     return el.closest('lido-text');
   }
 
-  public async play(targetElement: HTMLElement, suppressHighlight: boolean = false, playbackContext?: unknown) {
+  public async play(targetElement: HTMLElement, suppressHighlight: boolean = false, playbackContext?: unknown, fallbackAudio?: string) {
     this.registerVisibilityEvents();
     this.playbackHasStarted = false;
 
@@ -257,7 +257,12 @@ export class AudioPlayer {
         });
 
       }
-      catch (error) {}
+      catch (error) {
+        if (fallbackAudio && fallbackAudio !== audioUrl) {
+          targetElement.setAttribute('audio', fallbackAudio);
+          await this.play(targetElement, suppressHighlight, playbackContext);
+        }
+      }
       finally {
         this.audioElement.onended = null;
         this.audioElement.onloadedmetadata = null;

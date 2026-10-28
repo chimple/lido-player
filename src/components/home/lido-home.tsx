@@ -32,6 +32,8 @@ import {
   speakText,
   setActiveZipAssets,
   clearActiveZipAssets,
+  resetGoodJobAudioTracking,
+  getGoodJobAudio,
 } from '../../utils/utils';
 
 import { AudioPlayer } from '../../utils/audioPlayer';
@@ -255,6 +257,7 @@ export class LidoHome {
    * between containers and parses the XML data into containers.
    */
   async componentWillLoad() {
+    resetGoodJobAudioTracking(this.el);
     // Publish the current player's common-audio path before parsing XML so
     // child lido-text components cannot resolve auto-audio against the
     // previous player's global path.
@@ -730,6 +733,7 @@ export class LidoHome {
         await executeActions("this.speak='true';", instructEl as HTMLElement);
         if (isStale()) return;
       }
+
     }
 
     for (const el of Array.from(allele)) {
@@ -764,6 +768,31 @@ export class LidoHome {
 
         await new Promise(resolve => setTimeout(resolve, 300));
         if (isStale()) break;
+      }
+    }
+    if (getCancelBtnPopup() || isStale()) return;
+    if (templateId === 'flashcardtemplate') {
+      const flashCard = this.el.querySelector('lido-flash-card') as HTMLElement & {
+        replayGoodJobAudio?: () => Promise<void>;
+      };
+      await flashCard?.replayGoodJobAudio?.();
+      if (isStale()) return;
+    }
+    if (templateId === 'storyTale') {
+      const pageGoodJob = container.querySelector('#arrow1') as HTMLElement | null;
+      if (pageGoodJob) {
+        const originalAudio = pageGoodJob.getAttribute('data-lido-original-audio')
+          || pageGoodJob.getAttribute('audio')
+          || undefined;
+        const localizedAudio = getGoodJobAudio(pageGoodJob);
+        if (localizedAudio) {
+          if (!pageGoodJob.hasAttribute('data-lido-original-audio') && originalAudio) {
+            pageGoodJob.setAttribute('data-lido-original-audio', originalAudio);
+          }
+          pageGoodJob.setAttribute('audio', localizedAudio);
+        }
+        await AudioPlayer.getI().play(pageGoodJob, false, undefined, originalAudio);
+        if (isStale()) return;
       }
     }
     if (isStale()) return;
