@@ -1029,6 +1029,7 @@ export class LidoHome {
                   height="38px"
                   class="popup-exit-text"
                   font-size="22px"
+                  font-weight="600"
                   onEntry="this.margin-bottom =' -36px';"
                 ></lido-text>
                 <lido-cell visible="true" layout="row" width="294px" class="btn-cell">
@@ -1042,9 +1043,9 @@ export class LidoHome {
                     class="popup-button"
                     onClick={() => this.popUpClick('exit')}
                     borderRadius="16px"
-                    onEntry='this.color="#F34D08"; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";'
+                    onEntry='this.color="#F34D08"; this.font-weight="600"; this.box-shadow="0 2px 0 #F34D08";'
                     fontFamily="Baloo Bhai 2"
-                    font-weight="700"
+                    font-weight="600"
                     bgColor="white"
                     border-radius="16px"
                   ></lido-text>
@@ -1057,9 +1058,9 @@ export class LidoHome {
                     class="popup-button"
                     onClick={() => this.popUpClick('cancel')}
                     borderRadius="16px"
-                    onEntry='this.color=white; this.font-weight="700"; this.box-shadow="0 2px 0 #F34D08";'
+                    onEntry='this.color=white; this.font-weight="600"; this.box-shadow="0 2px 0 #F34D08";'
                     font-family="Baloo Bhai 2"
-                    font-weight="700"
+                    font-weight="600"
                     bgColor="#F34D08"
                     border-radius="16px"
                   ></lido-text>
