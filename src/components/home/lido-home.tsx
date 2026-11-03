@@ -209,13 +209,11 @@ export class LidoHome {
     if (index != undefined && index < this.containers.length) {
       // Move to the next container
       this.currentContainerIndex = index;
-      Timer.getI().stop();
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex < this.containers.length - 1) {
       // Move to the next container
       this.currentContainerIndex++;
-      Timer.getI().stop();
       // window.dispatchEvent(new CustomEvent('activityChange', { detail: { index: this.currentContainerIndex } }));
       dispatchActivityChangeEvent(this.currentContainerIndex);
     } else if (this.currentContainerIndex >= this.containers.length - 1) {
@@ -238,7 +236,6 @@ export class LidoHome {
 
     // Move to the previous container
     this.currentContainerIndex--;
-    Timer.getI().stop();
 
     // Dispatch event to update the UI or state
     dispatchActivityChangeEvent(this.currentContainerIndex);
