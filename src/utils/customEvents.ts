@@ -58,12 +58,9 @@ export function dispatchActivityEndEvent(
   lessonTrackingParams?: LessonTrackingParams,
   gameCompleted?: boolean,
 ) {   
-  const wholeSeconds = timeSpentForActivity == null
-    ? timeSpentForActivity
-    : Math.max(0, Math.round(timeSpentForActivity));
-  dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity: wholeSeconds, ...lessonTrackingParams, gameCompleted,});
-  dispatchCustomEvent(MicroProblemEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity: wholeSeconds, ...lessonTrackingParams, gameCompleted,});
-  console.log(`[Activity End]Activity ${currentIndex + 1}/${totalIndex} - Time Spent: ${wholeSeconds}`)
+  dispatchCustomEvent(ActivityEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity, ...lessonTrackingParams, gameCompleted,});
+  dispatchCustomEvent(MicroProblemEndKey, { currentIndex, totalIndex, score, rightMoves, wrongMoves, timeSpentForActivity, ...lessonTrackingParams, gameCompleted,});
+  console.log(`[Activity End]Activity ${currentIndex + 1}/${totalIndex} - Time Spent: ${timeSpentForActivity}`)
 }
 
 export function dispatchLessonEndEvent(
@@ -74,13 +71,12 @@ export function dispatchLessonEndEvent(
   timeSpendForLesson: number,
   lessonTrackingParams?: LessonTrackingParams,
 ) {    
-  const wholeSeconds = Math.max(0, Math.round(timeSpendForLesson));
-  dispatchCustomEvent(MicroLessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson: wholeSeconds, ...lessonTrackingParams });
+  dispatchCustomEvent(MicroLessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
   if(getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed"){
     return;
   }
-  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson: wholeSeconds, ...lessonTrackingParams });
-  console.log( `[Lesson End]  Lesson: ${lessonTrackingParams?.lessonName} (${lessonTrackingParams?.lessonId}) - Total Time Spent: ${wholeSeconds}`);
+  dispatchCustomEvent(LessonEndKey, { totalIndex, rightMoves, wrongMoves, finalScore, score:finalScore, timeSpendForLesson, ...lessonTrackingParams });
+  console.log( `[Lesson End]  Lesson: ${lessonTrackingParams?.lessonName} (${lessonTrackingParams?.lessonId}) - Total Time Spent: ${timeSpendForLesson}`);
 }
 
 export function dispatchNextContainerEvent() {
