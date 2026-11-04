@@ -37,7 +37,7 @@ import {
 import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 import i18next from '../../utils/i18n';
-import { Timer } from '../../utils/utilsHandlers/timer';
+import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from '../../utils/utilsHandlers/timer';
 const gameScore = new GameScore();
 
 /**
@@ -851,6 +851,7 @@ export class LidoHome {
       if (comment === 'exit') {
         AudioPlayer.getI().stop();
         Timer.getI().stop();
+        ACTIVYTY_TIME_SPEND_ARRAY.length = 0;
         gameScore.rightMoves = 0;
         gameScore.wrongMoves = 0;
         gameScore.totalRightMovesCount = 0;
@@ -861,6 +862,7 @@ export class LidoHome {
         this.currentContainerIndex = 0;
         dispatchGameExitEvent();
       } else {
+        Timer.getI().resume();
         alertElement.remove();
       }
     }
@@ -911,6 +913,7 @@ export class LidoHome {
           onClick={() => {
             this.exitFlag = true;
             AudioPlayer.getI().stop();
+            Timer.getI().pause();
           }}
         // style={{ visibility: this.showNav ? 'visible' : 'hidden' }}
         >
