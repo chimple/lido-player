@@ -12,6 +12,10 @@ export const config: Config = {
       esmLoaderPath: '../loader',
       copy: [
         {
+          src: 'css/fonts.css',
+          dest: 'css/fonts.css',
+        },
+        {
           src: 'assets/offline-assets/fonts/Baloo-Bhai-2',
           dest: 'assets/offline-assets/fonts/Baloo-Bhai-2',
         },

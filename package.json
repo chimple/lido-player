@@ -21,7 +21,8 @@
       "import": "./loader/index.js",
       "require": "./loader/index.cjs",
       "types": "./loader/index.d.ts"
-    }
+    },
+    "./styles.css": "./dist/lido-player/css/fonts.css"
   },
   "repository": {
     "type": "git",
