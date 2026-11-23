@@ -10,6 +10,7 @@ export const PrevContainerKey = 'lidoPrevContainer';
 export const ActivityChangeKey = 'lidoActivityChange';
 export const GameCompletedKey = 'lidoGameCompleted';
 export const GameExitKey = 'lidoGameExit';
+export const PlayerErrorKey = 'lidoPlayerError';
 export const ElementDropKey = 'lidoElementDrop';
 export const ElementClickKey = 'lidoElementClick';
 export const DropLength = 'dropLength';

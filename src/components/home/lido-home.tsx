@@ -18,7 +18,7 @@ import GameScore, {
   LIDO_COMMON_AUDIO_PATH,
   TemplateID,
 } from '../../utils/constants';
-import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent } from '../../utils/customEvents';
+import { dispatchActivityChangeEvent, dispatchGameCompletedEvent, dispatchGameExitEvent, dispatchPlayerErrorEvent } from '../../utils/customEvents';
 
 import {
   calculateScale,
@@ -281,24 +281,43 @@ export class LidoHome {
     window.addEventListener(PrevContainerKey, this.handlePrevContainerEvent);
 
     window.addEventListener('changeContainer', this.handleChangeContainerEvent as EventListener);
-    if (this.zipUrl) {
-      this.xmlData = '';
-      await this.extractZipAndSetBase();
-      await this.loadXmlFromZip();
-    }
-    await this.loadTemplateData();
+    try {
+      if (this.zipUrl) {
+        this.xmlData = '';
+        await this.extractZipAndSetBase();
+        await this.loadXmlFromZip();
+      }
+      await this.loadTemplateData();
 
-    const trimmed = (this.xmlData || '').trim();
-    if (trimmed.includes('lido-container')) {
-      this.parseXMLData(this.xmlData);
-    } else {
-      const finalXml = await this.decompressBrotliBase64(this.xmlData);
-      this.parseXMLData(finalXml);
+      const trimmed = (this.xmlData || '').trim();
+      if (trimmed.includes('lido-container')) {
+        this.parseXMLData(this.xmlData);
+      } else {
+        const finalXml = await this.decompressBrotliBase64(this.xmlData);
+        this.parseXMLData(finalXml);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error('[LidoHome] Unable to load lesson package', error);
+      if (this.zipUrl) {
+        dispatchPlayerErrorEvent({
+          code: this.getZipLoadErrorCode(message),
+          message,
+          zipUrl: this.zipUrl,
+        });
+      }
     }
     // Parse the provided XML data
 
     // Remove stored values in localStorage when the page is about to be unloaded
     window.addEventListener('beforeunload', this.handleBeforeUnload);
+  }
+
+  private getZipLoadErrorCode(message: string): 'zip-fetch-failed' | 'zip-invalid' | 'zip-missing-index-xml' | 'zip-parse-failed' {
+    if (message === 'Unable to fetch ZIP') return 'zip-fetch-failed';
+    if (message.includes("Unable to find XML file 'index.xml'")) return 'zip-missing-index-xml';
+    if (message.includes('Brotli decompression failed')) return 'zip-parse-failed';
+    return 'zip-invalid';
   }
   private async loadTemplateData() {
     if (!this.baseUrl && !this.zipUrl) {

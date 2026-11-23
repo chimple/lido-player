@@ -1,4 +1,4 @@
-import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, MicroGameEndKey, MicroGameExitKey, MicroLessonEndKey, MicroProblemEndKey, NextContainerKey,PrevContainerKey } from './constants';
+import { ActivityChangeKey, ActivityEndKey, ElementClickKey, ElementDropKey, GameCompletedKey, GameExitKey, LessonEndKey, MicroGameEndKey, MicroGameExitKey, MicroLessonEndKey, MicroProblemEndKey, NextContainerKey, PlayerErrorKey, PrevContainerKey } from './constants';
 import { getLessonTrackingParams } from './utils';
 import { Timer } from './utilsHandlers/timer';
 
@@ -7,7 +7,7 @@ function dispatchCustomEvent(eventName: string, detail: any) {
   const event = new CustomEvent(eventName, { detail });
   window.dispatchEvent(event);
 
-  if (eventName === ActivityEndKey || eventName === LessonEndKey || eventName === GameCompletedKey || eventName === GameExitKey || eventName === MicroGameEndKey || eventName === MicroGameExitKey || eventName === MicroLessonEndKey || eventName === MicroProblemEndKey) {    
+  if (eventName === ActivityEndKey || eventName === LessonEndKey || eventName === GameCompletedKey || eventName === GameExitKey || eventName === PlayerErrorKey || eventName === MicroGameEndKey || eventName === MicroGameExitKey || eventName === MicroLessonEndKey || eventName === MicroProblemEndKey) {
     window.parent?.postMessage(
       {
         eventName,
@@ -101,6 +101,14 @@ export function dispatchGameExitEvent() {
     return;
   }
   dispatchCustomEvent(GameExitKey, {});
+}
+
+export function dispatchPlayerErrorEvent(detail: {
+  code: 'zip-fetch-failed' | 'zip-invalid' | 'zip-missing-index-xml' | 'zip-parse-failed';
+  message: string;
+  zipUrl?: string;
+}) {
+  dispatchCustomEvent(PlayerErrorKey, detail);
 }
 
 export function dispatchActivityChangeEvent(index: number) {
