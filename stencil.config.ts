@@ -19,10 +19,6 @@ export const config: Config = {
           src: 'assets/offline-assets/fonts/Baloo-Bhai-2',
           dest: 'assets/offline-assets/fonts/Baloo-Bhai-2',
         },
-        {
-          src: 'assets/offline-assets/fonts/Noto-Sans-Tamil',
-          dest: 'assets/offline-assets/fonts/Noto-Sans-Tamil',
-        },
       ],
     },
     {

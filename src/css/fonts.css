@@ -6,18 +6,3 @@
   src: url('../assets/offline-assets/fonts/Baloo-Bhai-2/Baloo-Bhai-2-Variable.woff2')
     format('woff2');
 }
-
-/*
- * Noto Sans Tamil v2.004
- * Copyright 2022 The Noto Project Authors
- * Licensed under the SIL Open Font License, Version 1.1.
- * See ../assets/offline-assets/fonts/Noto-Sans-Tamil/OFL.txt.
- */
-@font-face {
-  font-family: 'Noto Sans Tamil';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../assets/offline-assets/fonts/Noto-Sans-Tamil/NotoSansTamil-Variable.ttf')
-    format('truetype');
-}
