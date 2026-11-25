@@ -9,6 +9,7 @@ import kn from '../i18n/kn.json';
 import te from '../i18n/te.json';
 import pt from '../i18n/pt.json';
 import mr from '../i18n/mr.json';
+import ta from '../i18n/ta.json';
 
 i18next
   .use(LanguageDetector)
@@ -21,6 +22,7 @@ i18next
       te: { translation: te },
       pt: { translation: pt },
       mr: { translation: mr },
+      ta: { translation: ta },
     },
     fallbackLng: 'en', // fallback if current lang not found
     debug: false,
