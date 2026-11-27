@@ -40,6 +40,7 @@ import { AudioPlayer } from '../../utils/audioPlayer';
 import { generateUUIDFallback } from '../../utils/utils';
 import i18next from '../../utils/i18n';
 import { Timer } from '../../utils/utilsHandlers/timer';
+import { startTransitionInputTracking, stopTransitionInputTracking } from '../../utils/transitionInputGuard';
 const gameScore = new GameScore();
 
 /**
@@ -257,6 +258,7 @@ export class LidoHome {
    * between containers and parses the XML data into containers.
    */
   async componentWillLoad() {
+    startTransitionInputTracking();
     resetGoodJobAudioTracking(this.el);
     // Publish the current player's common-audio path before parsing XML so
     // child lido-text components cannot resolve auto-audio against the
@@ -545,6 +547,7 @@ export class LidoHome {
    * Lifecycle method that cleans up event listeners when the component is removed from the DOM.
    */
   disconnectedCallback() {
+    stopTransitionInputTracking();
     AudioPlayer.destroyI();
     this.revokeExtractedAssets();
 
