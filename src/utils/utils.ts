@@ -34,6 +34,7 @@ import { handlingMatrix } from './utilsHandlers/matrixHandler';
 import {balanceResult} from './utilsHandlers/lidoBalanceHandler';
 import { ACTIVYTY_TIME_SPEND_ARRAY, Timer } from './utilsHandlers/timer';
 import { dragDropAnimation } from './utilsHandlers/animationHandler';
+import { armTransitionInputGuard } from './transitionInputGuard';
 const gameScore = new GameScore();
 
 const GOOD_JOB_TEMPLATES = new Set(['flashcardtemplate', 'writeCard', 'drawShape', 'storyTale']);
@@ -1261,11 +1262,13 @@ export const triggerNextContainer = () => {
   if (lidoHome && (getLessonTrackingParams().end === "blank" || getLessonTrackingParams().end === "complete" || getLessonTrackingParams().end === "completed") && Number(lidoHome.getAttribute('index')) >= Number(lidoHome.getAttribute('totalIndex')) - 1) {
     return;
   }
+  armTransitionInputGuard();
   dispatchNextContainerEvent();
 };
 
 export const triggerPrevcontainer = () => {
   AudioPlayer.getI().stop();
+  armTransitionInputGuard();
   dispatchPrevContainerEvent();
 };
   let activeZipAssets: Record<string, string> | undefined;
